@@ -1,0 +1,14 @@
+\documentclass{article}
+\usepackage{etoolbox}
+
+\newcounter{myc}[subsubsection]
+\patchcmd{\subsubsection}{\bfseries}{\bfseries\setcounter{myc}{1}}{}{}
+
+\begin{document}
+
+\subsubsection{Test}
+\themyc
+\subsubsection{Test}
+\themyc
+
+\end{document}

@@ -1,0 +1,127 @@
+% Header aus der Vorlage
+\input{../LaTeX_master/LaTeX_master_HTW}
+
+\bibliography{../Literatur/HTW_Literatur.bib}
+
+% Definition von Titel, Autor usw.
+\DTitel{Elektronik}
+\DUntertitel{Übungsskript}
+\DAutor{Falk Jonatan Strube}
+\DNotiz{Übung von Prof. Dr.-Ing. Flach (bis 12/2015)}
+
+\begin{document}
+
+\pagenumbering{Roman}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+
+\section{Übung 1}
+
+\section*{1.2}
+
+$\boxed{P=M\cdot 2\pi \cdot n}$\\
+P … mech. Leistung\\
+M … Drehmoment\\
+n … Drezahl
+\paragraph{a)} ges.: $P$ für\\
+$M_1= 1Nm$, $n=1000 min^{-1}$\\
+$M_2= 2Nm$, $n=1000 min^{-1}$\vspace*{1em}\\
+$P_1=1\underset{Ws}{Nm} \cdot 2\pi \cdot 1000 \underset{\frac{1}{60}s^{-1}}{min^{-1}}=\resultul{104,72W}$\\
+$P_2=\resultul{209,44W}$
+
+\paragraph{b)} zugeschnittene Größengleichung für $P$, $M$ in $Nm$, $n$ in $min^{-1}$, $P$ in $Watt$\\
+$\frac{P}{W}=\frac{M}{Nm} \cdot 2 \pi \cdot \frac{n}{\underbrace{s^{-1}}_{60\cdot min^{-1}}}=2\pi \cdot \frac{1}{60} \cdot \frac{M}{Nm} \cdot \frac{n}{min^{-1}}=\underset{\text{zugeschnittene Größengleichung}}{\boxed{0,105\frac{M}{Nm}\cdot \frac{n}{min^{-1}}=\frac{P}{W}}}$
+
+\section*{1.3}
+$\boxed{W=P\cdot t}$
+\paragraph{a)} Zugeschnitten Größengleichung für $W$ in $kWh$, $P$ in $kW$, $t$ in $s$\\
+$\frac{W}{kWh}=\frac{P}{kW}\cdot \frac{t}{\underbrace{h}_{3600s}}=\frac{1}{3600}\cdot \frac{P}{kW} \cdot \frac{t}{s}$
+
+\paragraph{b)} ges.: $W$ für\\
+$P_1=0,4kW$, $t=7200s$\\
+$P_2=1,2kW$, $t=3600s$\medskip\\
+$W_1=\frac{1}{3600} \cdot 0,4 \cdot 7200kWh=\resultul{0,8kWh}$\smallskip\\
+$W_2=\resultul{1,2kWh}$
+
+\section*{1.4}
+Luftgeschwindigkeit\\
+Staurohr nach Prandl: $\Delta p = (\frac{\varrho}{2})v^2$ mit $\varrho$ … Luftdichte $1,1 \frac{kg}{m^3}$\\
+ges.: $v$ in $\frac{km}{h}$ bei $\varrho$ in $\frac{kg}{m^3}$, $\Delta p$ in $Pa \Rightarrow 1 Pa = 1\frac{N}{m^2}= 1 \frac{kg}{s^2}$\\
+$v=\sqrt{\frac{2\cdot \Delta p}{\varrho}}=\sqrt{\frac{2\Delta \frac{p}{\frac{kg}{m\cdot s^2}}}{\frac{\varrho}{\frac{kg}{m^3}}}}=\sqrt{\frac{\frac{2\Delta p}{\varrho}}{\frac{m^2}{s^2}}}=\sqrt{\frac{\frac{2 \Delta p}{\varrho}}{(\frac{10^{-3}\cdot km}{\frac{1}{3600}h})^2}}=\sqrt{\frac{2}{3,6^2\cdot 1,1}}\sqrt{\Delta p}\frac{km}{h}$\\
+$v=\resultul{0,37\sqrt{\Delta p}\frac{km}{h}}$\medskip\\
+ges.: $v_i$\\
+$\Delta p = 10,30,50,100 Pa$\\
+$v_1=\resultul{0,37\cdot \sqrt{10}\frac{km}{h}=1,17\frac{km}{h}}$\\
+$v_2=\resultul{2,03\frac{km}{h}}$\\
+$v_3=\resultul{2,62\frac{km}{h}}$\\
+$v_4=\resultul{3,7 \frac{km}{h}}$
+
+\section*{2.1}
+
+geg.: $I=2mA$, $t=2 min$\\
+ges.: $Q$\\
+Lösung: $\boxed{I=\frac{\Delta Q}{\Delta t}=\frac{Q}{t}}$\\
+$Q=I\cdot t=2mA \cdot 2 \cdot 60s = 240 mAs = \resultul{0,24 As}$
+
+\section*{2.2}
+
+geg.: $I=125mA$, $t=3,2s$\\
+ges.: Anzahl Elektronen $n$\\
+$e = 1,602 \cdot 10^{-19}C$\\
+Lösung: $Q=I\cdot t=n\cdot e$\\
+$n=\frac{I\cdot t}{e}=\frac{125mA \cdot 3,2s}{1,602\cdot 10^{-19}As}=\resultul{250\cdot 10^{16}\; Elektronen}$
+
+\section*{2.3}
+
+geg.: $n_p=0,2\cdot 10^{11}$, $n_n=10^9$, $e=1,602\cdot 10^{-10} C$, $t=1s$\\
+ges.: $I$\\
+Lösung: $I=\frac{\Delta Q}{\Delta t}=\frac{e(n_n+n_p)}{\Delta p}=\frac{1,602\cdot 10^{-19}As(26\cdot 10^9}{1s}=\resultul{41,652 \cdot 10^{-10}A}$
+
+\section*{2.4}
+
+geg.: $Q=20mAh$, $I=1 \mu A$\\
+ges.: $t$, $n$\\
+Lösung: $t=\frac{Q}{I}=\frac{20\cdot 10^{-3}Ah}{1 \cdot 10^{-6}A}=\resultul{20000h}$\\
+$n=\frac{Q}{e}=\frac{20\cdot 10^{-3}\cdot 3600 As}{1,602\cdot 10^{-19} As}=\resultul{4,944\cdot 10^{20}}$
+
+\section*{2.5}
+Die Stromstärke beim Laden und Entladen einer Autobatterie hat folgenden Zeitverlauf:\\
+\begin{tabular}{l | l}
+Zeitintervall & Stromstärke \\
+\hline
+$0 \leq t < 3h$ & $2A$\\
+$3 \leq t < 4h$ & $-0,5A$\\
+$t\geq 4h$ & $0A$
+\end{tabular}\\
+Welche Ladung hat die Batterie nach $4h$, wenn Anfangsladung $0$ war?\\
+Zeitverlauf von $I$ und $Q$ ist darzustellen.
+
+\paragraph{Lösung:} $Q=2A \cdot 3h + (-0,5 A) \cdot 1 h = 6Ah - 0,5Ah = \resultul{5,5Ah}$\\
+\begin{tikzpicture}
+% Achsen zeichnen, zuerst hier, da clip die Zeichenflaeche beschneidet
+\draw[->,thick] (0,0) -- (4.5,0) node[right] {$\frac{t}{h}$};
+\draw[->,thick] (0,-.75) -- (0,2.8) node[above right] {$\frac{I}{A},\textcolor{cyan}{\frac{Q}{Ah}}$};
+% Achsen beschriften
+\foreach \x in {1,2,3,4}
+\draw (\x,-.1) -- (\x,.1) node[below=5pt] {$\scriptstyle\x$};
+\foreach \y in {-0.5,1,2}
+\draw (-.1,\y) -- (.1,\y) node[left=5pt] {$\scriptstyle\y$};
+\draw[cyan] (-.1,2) -- (.1,2) node[left=10pt] {$\scriptstyle6$};
+
+\draw[gray, thick] (0,2) -- (3,2) -- (3,-0.5) -- (4,-0.5) -- (4,0);
+\draw[cyan, thick] (0,0) -- (3,2) -- (4,1.83);
+\end{tikzpicture}
+
+
+
+
+
+
+\newpage
+%\printbibliography
+\end{document}

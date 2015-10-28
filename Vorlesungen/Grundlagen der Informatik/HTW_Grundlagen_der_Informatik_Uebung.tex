@@ -1,0 +1,78 @@
+% Header aus der Vorlage
+\input{../LaTeX_master/LaTeX_master_HTW}
+
+\bibliography{../Literatur/HTW_Literatur.bib}
+
+% Definition von Titel, Autor usw.
+\DTitel{Grundlagen der Informatik}
+\DUntertitel{Übungsskript}
+\DAutor{Falk Jonatan Strube}
+\DNotiz{Vorlesung von Dr. Boris Hollas}
+
+\begin{document}
+
+\pagenumbering{Roman}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+
+\section{Übung 1}
+
+\subsection*{Aufgabe 2.1}
+
+$t_1=150 \qquad B_1=3,7 \cdot 10^9$\\
+$t_2=250 \qquad B_2=9,5 \cdot 10^9$\\
+
+\begin{align}
+B_1 &= B_0 \cdot e^{r\cdot t_1}\\
+B_2 &= B_0 \cdot e^{r\cdot t_2}
+\end{align}
+\begin{align*}
+B_0 &= \frac{B_1}{e^{r t_1}}  &\text{ aus (1)}\\
+B_2 &= \frac{B_1}{e^{r t_1}} \cdot e^{r t_2}  &\text{ in (2)}\\
+\frac{B_2}{B_1}&=\frac{e^{r t_2}}{e^{r t_1}}\\
+ln(\frac{B_2}{B_1})&= r t_2 - r t_1\\
+r&= \frac{ln (\frac{B_2}{B_1})}{t_2-t_1}\\
+r&= 9,42959... \cdot 10^{-3}\\
+B_0 &= \frac{B_1}{e^{r t_1}} \qquad\text{ in (1)}\\
+B_0 &= 0,899330... \cdot 10^9 
+\end{align*}
+
+\subsection*{Aufgabe 2.2}
+\begin{tikzpicture}
+%\draw [domain=-2.1:2.1] plot[smooth] (\x,{0.9*10^9*e^(9.43*10^(-3)*\x)});
+%\draw [gray,thick, domain=-2.1:2.1] plot[smooth] (\x,{\x*\x});
+\begin{axis}[domain=0:360,%,restrict y to domain =-20:100]
+    grid = both,
+    minor tick num=3,
+    every major grid/.style={red, opacity=0.5},
+    width = 0.8\textwidth,
+    thick,
+    axis lines=center,
+    samples=500,
+    line join=bevel,
+    xlabel=t,
+    major tick length=0pt,
+    minor tick length=0pt]
+\addplot[very thick]plot (\x, {0.9*10^9*e^(9.43*10^(-3)*\x)});
+\end{axis}
+\end{tikzpicture}
+
+\subsection*{Augabe 2.3}
+
+\begin{align*}
+2 \cdot B_0 \cdot e^{r t} &= B_0 \cdot e^{r(t+\Delta t)}&/ :B_0 \Rightarrow&\\
+2 \cdot e^{r t} &= e^{r t} \cdot e^{r \Delta t} & / :e^{r t} \Rightarrow  & \text{(hier wird die Gleichung unabhängig gemacht)}\\
+2 &= e^{r \Delta t}&/ ln(...)  \Rightarrow  &\\
+ln(2) &= r \cdot \Delta t&\:r  \Rightarrow  &\\
+\Delta t &= \frac{ln(2)}{r}& \Rightarrow  &\\
+\Delta t &= 73,5045...&&
+\end{align*}
+
+\newpage
+\printbibliography
+\end{document}
