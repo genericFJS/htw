@@ -1,0 +1,314 @@
+% Header aus der Vorlage
+\input{../LaTeX_master/LaTeX_master_HTW}
+
+\bibliography{../Literatur/HTW_Literatur.bib}
+
+% Definition von Titel, Autor usw.
+\DTitel{Elektronik}
+\DUntertitel{Vorlesungsskript}
+\DAutor{Falk Jonatan Strube}
+\DNotiz{Vorlesung von Prof. Dr.-Ing. Flach (bis 12/2015)}
+
+\begin{document}
+
+\pagenumbering{Roman}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+
+\section*{Einführung}
+
+Passwort Materialien: lvf\_ws2015
+
+Prüfung: 1 Blatt A4 hanbeschrieben, doppelseitig beschrieben
+
+\section{Anliegen der Lehrveranstaltung}
+
+\begin{tabular}{c c}
+\mpb[0.4]
+Analyse/Synthese
+\begin{itemize}
+\item Modellbildung
+\item unterschiedliche Anregungen
+\end{itemize}
+\hspace*{1em}
+\mpe& \mpb[0.4]
+\begin{itemize}
+\item Bauelemente\\
+aktiv, passiv, Halbleiter
+\item Netzwerke (linear, nichtlinear)
+\item Schaltungen (analog, digital)
+\end{itemize}
+\mpe\\
+\end{tabular}\\
+\begin{tabular}{c c c}
+&\boxed{SYSTEM}&\\ 
+& analog/digital \emph{WIRKUNG}&\\
+$\swarrow$&$\downarrow$&$\searrow$\\ \hline
+Kommunikation \vline & Informationsverarbeitung \vline& Steuern / Regeln\\ \hline
+&COMPUTER&\\
+\hline
+\end{tabular}
+
+Informatik: automatisierte Informationsverarbeitung
+
+\emph{FAZIT: Grundkenntnisse, gemeinsames Vokabular mit HW-Ingenieuren}
+
+\section{Grundlagen der Elektrotechnik}
+
+\subsection{Grundgrößen und Grundbeziehungen}
+
+\paragraph{Bsp.:} Elektrophor mit Bernsteinplatte und Katzenfell\\
+\begin{tikzpicture}[scale=0.4, remember picture]%, overlay]
+\draw (3,0.5) ellipse (3 and 1);
+\draw (0,0) -- (0,0.5);
+\draw (6,0) -- (6,0.5);
+\begin{scope}
+\begin{pgfinterruptboundingbox}
+%\draw [clip] (3,0) ellipse (3 and 1) [reverseclip];
+\path[clip] (0,0) -- (6,0) -- (6,1.5) -- (0,1.5)-- cycle [reverseclip];
+\end{pgfinterruptboundingbox}
+\draw(3,0) ellipse (3 and 1);
+\end{scope}
+%\draw (5,5) node{test};
+\end{tikzpicture}
+
+\paragraph{Modellbildung:} Erklärung für beobachteten Sachverhalt
+\begin{itemize}
+\item möglichtst einfaches Modell
+\item vollständige widerspruchsfreie Definition
+\item Beschreibung über mathematische Gleichung
+\end{itemize}
+
+\paragraph{Bohr-Sommerfeldsches Atommodell:} ABB2
+
+Atommodell ist elektrisch neutral. Aber:
+\begin{itemize}
+\item unter bestimmten Bediengungen entstehen positive und negative Ladungen (Energiezufuhr)
+\item Elementarladung $e=1,6\cdot 10^{-19}C$
+\end{itemize}
+
+\paragraph{Beobachtung:} Ladungen ziehen sich an / Ladung stoßen sich ab.
+
+ABB 3
+
+Kraftwirkung\\
+$F \sim Q_1 \cdot Q_2$\\
+$F \sim \frac{1}{r^2}$\\
+\boxed{F=k\frac{Q_1 \cdot Q_2}{r^2}}
+
+\subsection{Potential und Spannung}
+
+\begin{itemize}
+\item Ladungen im elektrischen Feld haben unterschiedliche Potenziale.
+\item Einheit des Potenzial: Volt $[V]$
+\item Spannung ist Potentialdifferenz
+\item Einführen eines Bezugspotentials $\varphi = 0 V$
+\end{itemize}
+
+\paragraph{Beispiele für Spannungen:}
+\begin{itemize}
+\item Antennen … $\mu V$
+\item Microfon … $m V $
+\item Batterie (AA) … $1,2 V $
+\item Netzteile … $\pm 5 V, \pm 12 V$
+\item Haushalt … $230V$
+\item Freileitungen … $380 kV$
+\end{itemize}
+
+\subsection{Stromfluss, Ladungsausgleich}
+
+ABB 4
+
+\begin{itemize}
+\item Strom $I=\frac{\Delta Q}{\Delta t}$, $i(t)=\frac{dQ}{dt}$
+\item Ursache: Potentialdifferenz
+\item Voraussetzung: leitfähiger Kanal, bewegliche Ladungen
+\item „Fließgeschwindigkeit“ bestimmt Größe des Stroms
+\end{itemize}
+
+Analogie: Fluß\\
+Höhenunterschied - Potential\\
+Flussbett - Leitung\\
+Wasser - Leiter
+
+\subsection{Widerstand}
+
+\paragraph{Beobachtung:} $I\sim U$, $I=G\cdot U$ mit \quad $G$ … Leitwert
+
+je größer der Leitwert, desto kleiner der Widerstand $\Rightarrow G=\frac{1}{R}$ mit \quad $R$ … ohmscher Widerstand
+
+\paragraph{Ohmsches Gesetz:}
+
+$R\left(=\frac{U}{I}\right)=const. \quad U= R\cdot I \quad I = \frac{U}{R} $\\
+mit $[I]=A$ (Ampere) \quad $[U]=V$ (Volt) \quad $[R]=\frac{V}{A}=\Omega$ (Ohm) \quad $[G]=\frac{A}{V} = S$ (Siemens)
+
+Wiederstand ist eine Materialeigenschaft.\\
+$R \sim l$ \quad $R\sim \frac{1}{A}$ \quad $R=k \cdot \frac{l}{A}$ mit  \quad $k=\varrho$ … spezifischer Widerstand $[\varrho]=\Omega \cdot m = \Omega \frac{mm^2}{m}$\\
+$G=\frac{1}{R}=\frac{A}{\varrho \cdot l}=\frac{\kappa A}{l}$ mit \quad $\kappa = \frac{1}{\varrho}$\medskip\\
+\begin{tabular}{l l}
+\multirow{2}{*}{Widerstand:} & $\nearrow$ Materialeigenschaft\\
+& $\searrow$ Bauelement ABB 5\\
+\end{tabular}
+
+\subsection{Zusammenschaltung von Widerständen}
+
+\begin{enumerate} [label=\alph*)]
+\item Reihenschaltung ABB21\\
+\emph{Maschensatz}: $\sum_{\circlearrowleft}U=0$
+\begin{align*}
+U_{ges}&= U_1 + U_2+...+U_n\\
+U_{ges} &= I R_1+IR_2+...+IR_n\\
+\frac{U_{ges}}{I}&=R_{ges}=R_1+R_2+...+R_n
+\end{align*}
+$\boxed{R_{ges}=\sum_{i=1}^n R_i}$
+\item Parallelschaltung ABB 22\\
+\emph{Knotensatz:} $\sum_{\cdot}I=0$
+\begin{align*}
+I_{ges}&= I_1 + I_2 + ... + I_n\\
+I_{ges} &= \frac{U}{R_1}+\frac{U}{R_2}+...+\frac{U}{R_n}\\
+\frac{I_{ges}}{U}&=\frac{1}{R_{ges}}=\frac{1}{R_1}+\frac{1}{R_2}+...+\frac{1}{R_n}
+\end{align*}
+$\boxed{\frac{1}{R_{ges}}=\sum_{i=1}^n \frac{1}{R_i}}$
+\end{enumerate}
+
+\paragraph{Beispiel:}
+ABB23\\
+$R_{ges}= R_1 + R_2\\
+R_1=R_2 = R \quad \Rightarrow \quad R_{ges}=2R\\
+R_1\gg R_2 \quad \Rightarrow \quad R_{ges}\approx R_1$ \medskip\\
+ABB24\\
+$R_{ges}=\frac{R_1 R_2}{R_1+R_2}\\
+R_1=R_2=R  \quad \Rightarrow \quad  R_{ges}=\frac{R}{2}\\
+R_1 \gg R_2  \quad \Rightarrow \quad  R_{ges} \approx R_2$ \medskip\\
+ABB25\\
+$R^*=R||2R=\frac{2R \cdot R}{3R}=\frac{2}{3}R\\
+R'=R|| (R+R^*)=\frac{R\cdot \frac{5}{3}R}{\frac{8}{3}R}=\frac{5}{8}R\\
+R_{ges}=R+ R' + R = 2R + \frac{5}{8}R = \frac{21}{8}R$
+
+\subsection{Leistung und Energie}
+ABB 26\\
+$P=U\cdot I \overset{U=R\cdot I}{=}I^2 \cdot R = \frac{U^2}{R}\\
+W=P\cdot t=U \cdot I \cdot t = \frac{U^2}{R}\cdot t = I^2 \cdot R \cdot t$
+
+\subsection{Stromkreise und Schaltbilder}
+\begin{itemize}
+\item Modellierung elektronischer Erscheinungen
+\item Berechnung von Stromkreisen
+\end{itemize}
+ABB 27
+
+\paragraph{Bsp.:} Ein Kondensator wird zum Aufladen an eine Spannungsquelle mit dem Innenwiderstand $R_i$ angeschlossen und zum Entladen an einen Widerstand $R_E$. Das Laden erfolgt über den Strombegrenzungswiderstand $R_L$.
+\begin{itemize}
+\item Umschalter
+\item Kondensater $C$, Widerstand $R_i$, $R_E$, $R_L$
+\item Spannungsquelle
+\end{itemize}
+ABB28
+
+\section{Berechnung von Stromkreisen}
+
+\subsection{Spannungsteiler}
+
+ABB29\\
+$U_{R_1}=IR_1 \quad U_{R_2}=IR_2 \quad U_q= I(R_1+R_2)$\\
+$\frac{U_{R_2}}{U_q}=\frac{R_2}{R_1+R_2} \quad \frac{U_{R_1}}{U_{R_2}}=\frac{R_1}{R_2}$\\
+Anwendungsbeispiel: Potenziometer\\
+ABB210\\
+$\frac{U_{out}}{U_{in}}=\frac{x\cdot R_{Pot}}{R_{Pot}}\Rightarrow U_{out} = x \cdot U_{in}$
+\paragraph{belasteter Spannungsteiler:}
+ABB211\\
+$\frac{U_{out}}{U_{in}}=\frac{R_2||R_L}{R_1+R_2||R_L}$\\
+Bspw.: $R_1=5 \Omega$, $R_2=R_L=5 \Omega$\\
+unbelasteter Fall: $\frac{U_{out}}{U_{in}}=\frac{5 \Omega}{10 \Omega} \Rightarrow U_{out}=5V$\\
+belasteter Fall: $\frac{U_{out}}{U_{in}}=\frac{2,5 \Omega}{7,5 \Omega}\Rightarrow U_{out}=3,33V$
+
+\paragraph{doppelter Spannungsteiler}
+ABB212\\
+$\frac{U_{out}}{U_{in}}=\underbrace{\frac{R_2|| (R_3+R_4)}{R_1+R_2||(R_3+R_4}}_{\frac{U_{R_2}}{U_{in}}} \underbrace{\frac{R_4}{R_3+R_4}}_{=\frac{U_{out}}{U_{R_2}}}$
+
+\paragraph{gesteuerter Spannungsteiler}
+ABB31
+
+\subsection{Stromteiler}
+
+ABB 32\\
+$U_{out}=I_3 \cdot R_3 = I_2 \cdot R_2 = I_1 \cdot (R_2||R_3)$\\
+$\frac{I_3}{I_2}=\frac{R_2}{R_3}$\\
+$\frac{I_3}{I_1}=\frac{R_2||R_3}{R_3}=\frac{R_2 \cdot R_3}{(R_2+R_3)\cdot R_3}=\frac{R_2}{R_2+R_3}$\\
+$\frac{I_2}{I_1}=\frac{R_2||R_3}{R_2}=\frac{R_3}{R_2+R_3}$
+
+\subparagraph{Beispiel:}
+geg.: ABB 33\\
+ges.: $R_{AB}, R_{CD}, u_{out}$, alle Ströme\medskip\\
+$R_{AB}=R_1+R_2||(R_3+R_4)$\\
+$R_{CD}=R_4||(R_3+R_2)$\\
+$\frac{U_{out}}{U_{h}}=\frac{R_4}{R_3+R_4}$
+$\frac{U_h}{U_{in}}=\frac{R_2||(R_3+R_4)}{R_1+R_2||(R_3+R_4)}$\\
+$U_{out}=U_{in}\frac{R_2||(R_3+R_4)}{R_1+R_2||(R_3+R_4)}\cdot\frac{R_4}{R_3+R_4}$\\
+$I_1=\frac{U_{in}}{R_{AB}}$\\
+$\frac{I_2}{I_1}=\frac{R_3+R_4}{R_2+R_3+R_4} \Rightarrow I_2=\frac{U_{in}}{R_{AB}}\cdot \frac{R_3+R_4}{R_2+R_3+R_4}$\\
+$\frac{I_3}{I_1}=\frac{R_2}{R_2+R_3+R_4}\Rightarrow I_3 = \frac{U_{in}}{R_{AB}}\cdot \frac{R_2}{R_2+R_3+R_4}$
+
+\subsection{Strom-Spannungskennlinie}
+Ziel: anschauliche Beschreibung des Klemmverhaltens von Bauelementen\\
+ABB 34
+\begin{itemize}
+\item Verbraucher: ohmscher Widerstand\\
+ABB 35\\
+$R=\frac{U}{I}$
+$I=f(U)=\frac{1}{R}\cdot U = G \cdot U$
+\item Verbraucher: Diode\\
+ABB 36\\
+? $\Rightarrow$ nichtlinear\\
+$I=f(U)=I_s\left(e^{\frac{U}{U_T}}-1\right)$\\
+$I_S$ … Sperrstrom\\
+$U_T$ … Temperaturspannung 
+\end{itemize}
+
+\subsection{Spannungsquelle}
+
+Was ist eine Spannungsquelle?
+
+Batterie, Netzteil, Antenne, Mikrophon, Steckdose, …\smallskip\\
+Unterteilung in:
+\begin{itemize}
+\item Signalquellen (irgendein $u(t)$, wenig Energie)
+\item Spannungsquellen (Gleichspannung/Wechselspannung)
+\end{itemize}
+\emph{Modell:}
+\begin{enumerate}
+\item ABB 37 Quelle im Leerlauf
+\item ABB 38 Quelle kurzgeschlossen
+\end{enumerate}
+Ersatzschaltbild einer realen Quelle:\\
+ABB 39 (mit $I_k=\frac{U_q}{R_i}$)\\
+$U_q$ … Leerlaufspannung\\
+$R_i$ … Innenwiderstand\\
+$I_k$ … Kurzschlussstrom
+
+\subsection{Grundstromkreis}
+reale Quelle + Verbraucher\\
+ABB 310\\
+Strom-Spannungs-Kennlinienfeld des Grundstromkreises\\
+Last: $I=f(U)=\frac{U_{AB}}{R_V}$\\
+Quelle: $I=f(U)$ \\
+(mit Maschensatz: $I\cdot R_i + U_{AB}-U_q=0$ \qquad $I=\frac{1}{R_i}(U_q-U_{AB})=-\frac{1}{R_i}U_{AB}+I_k$)\\
+ABB 311\\
+Grundstomkreis mit nichtlinearm Verbraucher\\
+ABB 312\\
+Leistung am Lastwiderstand\\
+ABB 313\\
+$\rightarrow P_V = I\cdot U_{AB}$ \quad mit $U_{AB}=U_q-I\cdot R_i$\quad $I\cdot R_i + U_{AB}-U_q=0$\\
+$P_V=U_q\cdot I + I^2 \cdot R_i$ \quad $I=\frac{U_{AB}}{R_V}$\\
+$P_V=f(R_V)$\\
+maximale Leistung am Verbraucher: $\frac{d P_V}{dR_V}=0 \Rightarrow P_{V,max}$ für $R_V=R_i$ (dann $P_{V,max}=\frac{I_k \cdot U_q}{4}$)
+
+
+\newpage
+%\printbibliography
+\end{document}

@@ -1,0 +1,468 @@
+% Header aus der Vorlage
+\input{../LaTeX_master/LaTeX_master_HTW}
+
+% Definition von Titel, Autor usw.
+\DTitel{Programmierung I}
+\DUntertitel{Vorlesungsskript}
+\DAutor{Falk Jonatan Strube}
+\DNotiz{Vorlesung von Prof. Dr.-Ing. Beck}
+
+\lstset{
+%basicstyle=\footnotesize\sffamily\color{black},
+commentstyle=\color{gray},
+%frame=single,
+%numbers=left,
+%numbersep=5pt,
+numberstyle=\tiny\color{gray},
+keywordstyle=\color{green},
+%showspaces=false,
+showstringspaces=false,
+stringstyle=\color{orange},
+tabsize=2,
+literate=%
+    {Ö}{{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}1
+    {ü}{{\"u}}1
+    {ä}{{\"a}}1
+    {ö}{{\"o}}1
+    {~}{{\textasciitilde}}1
+}
+
+\begin{document}
+
+\pagenumbering{Roman}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+\section*{Hinweise}
+
+Zugelassene Hilfsmittel Klausur: Spickzettel A-4 Blatt, doppelseitig (, man-page c++.com)
+
+\section{Einführung}
+
+Bilde Durchschnitt aus folgender Notenübersicht:
+
+\begin{tabular}{c c}
+Index & Note\\
+\hline
+0&3\\
+1&4\\
+2&1\\
+3&3\\
+4&3\\
+5&5\\
+6&3\\
+7&4\\
+8&0\\
+9&-\\
+\end{tabular}
+
+\subsection{Algorithmus}
+\begin{enumerate}
+\item Lösche Akku $\rightarrow$  2.
+\item Lösche Counter $\rightarrow$  3.
+\item Gibt es eine Zahl an Stelle Count? 
+\begin{itemize}
+\item Ja: $\rightarrow$  4.
+\item Nein: $\rightarrow$  6.
+\end{itemize}
+\item Addiere markierte Zahl zu Akku $\rightarrow$  5.
+\item Addiere 1 zu Counter $\rightarrow$  3.
+\item Dividiere Wert in Akku durch Wert in Counter und speichere Akku $\rightarrow $ 7.
+\item Ergebnis: Ausgabe des Akku $\rightarrow$ ENDE
+\end{enumerate}
+
+\subsection{Programmablaufplan (PAP)}
+
+\begin{tikzpicture}[scale=0.3]
+\draw (-3,6) ellipse (3 and 1) node{Start};
+\draw[-latex] (-3,5) -> (-3,3);
+\draw  (-7,3) rectangle (1,1) node[pos =.5]{Akk:=0};
+\draw[-latex] (-3,1) -> (-3,-1);
+\draw  (-7,-1) rectangle (1,-3) node[pos =.5]{Count:=0};
+\draw[-latex] (-3,-3) -- (-3,-5);
+\draw (-3,-5) -- (-10,-11) -- (-3,-17) -- (4,-11) -- cycle;
+\draw  (-3,-11) node[align=center] {Gibt es eine\\ gültige Note an der\\ Stelle Count?};
+
+\draw[-latex] (-3,-17) -- (-3,-19);
+\draw (-2,-18) node{ja};
+\draw  (-13,-19) rectangle (8,-21) node[pos =.5]{Akku := Akku + Noten[Count]};
+\draw[-latex] (-3,-21) -- (-3,-23);
+\draw (-10,-23) rectangle (5,-25) node[pos =.5]{Count := Count +1};
+\draw[-latex] (-3,-25) -- (-3,-27) -- (10,-27) -- (10, -4) -- (-3,-4);
+
+\draw[-latex] (-10,-11) -- (-19,-11) -- (-19,-13);
+\draw (-19,-13) -- (-24,-17) -- (-19,-21) -- (-14,-17) -- cycle;
+\draw  (-19,-17) node[align=center] {Count > 0?};
+\draw[-latex] (-14,-17) -- (-12,-17);
+\draw (-13,-16) node{nein};
+\draw (-9,-17) ellipse (3 and 1) node {Fehler};
+\draw[-latex] (-19,-21) -- (-19,-23);
+\draw (-18,-22) node{ja};
+\draw  (-27,-23) rectangle (-11,-25) node[pos =.5]{Akku := Akku/Count};
+\draw[-latex] (-19,-25) -- (-19,-27);
+\draw (-26,-27) -- (-10,-27) -- (-11,-29) -- (-27,-29) -- cycle;
+\draw (-19,-28) node{Ausgabe Akku};
+\draw[-latex] (-19,-29) -- (-19,-31);
+\draw (-19,-32) ellipse (3 and 1) node{Erfolg};
+
+\end{tikzpicture} 
+
+\subsection[Struktogramm]{Struktogramm / Nassi-Shneiderman-Diagramm}
+
+\begin{tikzpicture} [scale = 0.3]
+\draw  (0,0) rectangle (28,2);
+\draw (0,1) node[anchor=west]{Akku = 0}; 
+\draw  (0,-6) rectangle (28,0);
+\draw (0,-1) node[anchor=west]{while (Noten[Count]!=0)};
+\draw  (4,-4) rectangle (28,-2);
+\draw (4,-3) node[anchor=west]{Akku = Akku + Noten[Count]}; 
+\draw  (4,-6) rectangle (28,-4);
+\draw (4,-5) node[anchor=west]{Count :=  Count + 1}; 
+\draw  (0,-8) rectangle (28,-6);
+\draw (0,-7) node[anchor=west]{if (Count>0)}; 
+\draw  (0,-12) rectangle (28,-8);
+\draw (0,-11) node[anchor=west]{ja}; 
+\draw (28,-11) node[anchor=east]{nein};
+\draw (0,-8) -- (14,-12) -- (28,-8);
+\draw (0,-12) rectangle (14,-16);
+\draw (0,-14) node[anchor=west, align=left]{Akku = Akku/Count\\ Ausgabe Akku}; 
+\draw (14,-12) rectangle (28,-16);
+\draw (14,-14) node[anchor=west, align=left]{Fehler}; 
+\end{tikzpicture}
+
+\subsection{Quelltext in C}
+
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+int Noten []={5,2,3,4,5,5,2,3,4,5,0}; //38/10
+
+int main(){
+	int Akku=0, Count=0;
+	while (Noten[Count]!=0){
+		Akku = Akku+Noten[Count];
+		Count = Count+1;
+	}
+	if(Count>0){
+		Akku = Akku/Count;
+		printf("Durchschnitt: %d\n",Akku);
+	} else
+		printf("Fehler - Division durch 0\n");
+	return 0;
+}
+\end{lstlisting}
+
+Compilieren durch: 
+\begin{lstlisting}
+gcc SOURCE.c -0 DESTINATION
+\end{lstlisting}
+
+Ergebnis:\\
+„10“ … aber: 38/10 = 3,8. Integer im Source-Code $\Rightarrow$ abgerundet
+
+Lösung:
+\begin{lstlisting}[language=C]
+// Ergebnis mit Runden (innerhalb der if(Count>0)-Klammer)
+Akku = Akku*10/Count;
+printf("Durchschnitt: %d.%d\n",Akku/10,Akku%10);
+\end{lstlisting}
+
+Alternativ:
+\begin{lstlisting}[language=C]
+// anstatt int Akku=0, Count=0;
+double Akku=0;
+int Count =0;
+\end{lstlisting}
+
+\section{gcc}
+
+gcc Ablauf für eine „hello.c“ Datei.
+
+\begin{enumerate}
+\item Pre-Prozessor (hello.c $\rightarrow$ hello.e $\Rightarrow$ gcc -E hello.c > hello.e) \\
+Jede Zeile im Quelltext mit \emph{\#} werden hier interpretiert.
+\item Compiler (hello.e $\rightarrow$ hello.o $\Rightarrow$ gcc -c hello.c)
+\item Linker (hello.o $\rightarrow$ a.out / hello.exe | gcc hello.c $\rightarrow$ a.out $\Rightarrow$ gcc -o hello hello.c [oder auch gcc hello.c -o hello])\\
+Bindet Objekt-Datei (xxx.o) mit Librarys zusammen.
+\end{enumerate}
+
+\section{Grundlagen von C}
+
+FOLIE „Grundlagen von C“
+
+\subsection{Datentypen}
+was in Folien grau markiert ist, kann weggelassen auch werden $\Rightarrow$ „unsigned int i;“ = „unsigned i;“
+
+\paragraph{Bsp.:}
+
+\begin{lstlisting}[language=C]
+unsigned int i;	// Variablen-Definition
+i = 12;		// Wertzuweisung
+
+printf("Wert von i: %d - Adresse von i: %p\n", i, &i);
+// Hinweis: 
+// %d - Dezimalwert, 
+// %p - Adresswert, 
+// &i - Adresse vor Variable
+\end{lstlisting}
+Erstellung einer Variablen (int i;): \emph{uninitialisierte Variable / Variablen-Definition}\\
+Wertbelegung einer Variable während Definition einer Variablen (int i=0;): \emph{Initialisierung}\\
+Wertbelegung zu späterem Zeitpunkt (i=2;): \emph{Wertzuweisung}
+
+\subsection{Ausdrücke}
+Programmiersprachliche Konstruktion zur Berechnung von Werten.
+\subsubsection{Assoziativität}
+(Folie Operatoren: Gewichtung der Operatoren von oben nach unten)\medskip\\
+Unäre Operatoren (bspw. $-$ (negativ-Zeichen), $++$ (Inkrementierung) oder Klammern(cast))\\
+Binäre Operatoren (bspw. $+$, $-$ (Rechenzeichen), $<=$ usw.)
+\begin{lstlisting}[language=C]
+int i;
+long d;
+
+i=(int)d;	// cast: Typwandlung
+
+i++; // Postfixoperator (wird im Rahmen eines groesseren 
+			Ausdrucks als letztes ausgefuehrt:)
+i=1;
+j=6;
+k=j+i++; // k=7, i=2
+++i; // Praefixoperator (wird im Rahmen eines groesseren 
+			Ausdrucks als erstes ausgefuehrt:)
+i=1;
+j=6;
+k=j+ ++i; // k=8, i=2
+
+// Vorsicht! negativ-Bsp, wie ++ nicht zu verwenden ist:
+i=2;
+printf("%d\n", i++ + ++i);	\\ i= 6
+printf("%d\n", i);	\\ i=4
+\end{lstlisting}
+Bei Division mit ganzen Zahlen wird der Rest abgeschnitten (nicht gerundet)!\medskip\\
+Kurzschlussverfahren von Aneinanderkettung von Bedingungen ( i<0 || i<6) $\Rightarrow$ wenn die erste Prüfung wahr ist, wird der Test weiterer Bedingungen abgebrochen (bei \&\& wenn das erste falsch ist).\bigskip\\
+\&\& im Vergleich zu \& (\& ist eine Bit-weise Operation): \\
+01101100 \& 00001111 = 00001100 bzw. \\
+01101100 | 11110000 = 11111100 \smallskip\\
+Andere Zeichen: \\
+$\wedge$ = XOR\\
+$\sim$ = Bit-weise Negation\\
+<\! < = shift (nach links) (bsp. i=4; i= i <\! < 2; $\Rightarrow$ i wird 16:\\
+00000100 <\! < 2 $\Rightarrow$ 00010000\\
+Achtung: bei negativen Zahlen (also Typ signed) bleibt bei Shift an der ersten Stelle das entsprechende Vorzeichenbit.\\
+Bsp. für Abarbeitungsreihenfolge der Operatoren:\\
+i*= 3+1		// i*(3+1)
+\subsection{Anweisungen}
+\begin{itemize}
+\item Berechnungen
+\item Alternative
+\item Iteration
+\item Sequenz
+\end{itemize}
+
+\subsubsection[Ausdrucksanweisung]{Ausdrucksanweisung (Expressionstatement)}
+Eine Ausdrucksanweisung besteht aus einem Ausdruck gefolgt von einem Semikolon:
+\begin{lstlisting}
+<expr_stmnt>:: <expr> ';' .
+\end{lstlisting}
+
+Bsp.:
+\begin{lstlisting}
+printf("%d\n", i);
+\end{lstlisting}
+Zu Ausdrucksanweisungen gehören:
+\begin{itemize}
+\item Berechnungen
+\item Aufrufe von Funktionen
+\end{itemize}
+
+\paragraph{Block}
+Konstruktion, die Anweisungen kapselt -- nach außen einzelne Anweilungen enthält
+\begin{itemize}
+\item Vereinbarungen
+\item Anweisungen
+\end{itemize}
+\begin{lstlisting}
+<block>:: '{' { <statement> } '}' .
+\end{lstlisting}
+
+Bsp.:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+char vbuf[128];	// Vereinbarung
+
+int main() {
+	int i;	// Vereinbarung
+	double x;	// Vereinbarung
+	fgets(vbuf, 128, stdin);	// Anweisungen ...
+	x=atof(vbuf);
+	i = 1;
+	x=x*10+i;
+	printf("x: %lf\n",x);
+}
+\end{lstlisting}
+
+\subsubsection[Alternativanweisung]{Alternativanweisung (if-statement)}
+
+\begin{lstlisting}
+<if-stmnt>:: 'if' '(' <condition> ')' 
+				<statement>
+			['else' <statement>] .
+\end{lstlisting}
+
+Bsp.:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+char vbuf[128];
+
+int main() {
+	double x;
+	fgets(vbuf, 128, stdin);
+	x=atof(vbuf);
+	printf("x: %lf\n",x);
+	if (x>1) printf("Groesser als 1\n");
+	else printf("Kleiner als 1\n");	// optional
+	puts("Hier geht es weiter");	
+	// " " Strings (Zeichenketten), einzelnes Zeichen: '*'
+}
+\end{lstlisting}
+
+\subsubsection{Leeranweisung}
+\begin{lstlisting}
+<empty_stmnt>:: ';'
+\end{lstlisting}
+
+\subsubsection[Iteration]{Iteration (Schleife/Loop)}
+\paragraph{abweisende Schleife (kopfgesteuert)} while-Schleife
+\begin{lstlisting}
+<while_statement>:: 'while' '(' <condition> ')' <statement> .
+\end{lstlisting}
+
+Beispiel: $e^x$\\
+e hoch x = 1 + x/1! + x*x /2! + x*x*x /3! …
+\begin{enumerate} [label= \arabic* .]
+\item  Summand: $x^0=1$
+\item  Summand: $x^1/1! = x$
+\item  Summand: $(x^1/1!)*x/2 = x^2/2!$
+\item  Summand: $(x^2/2!) + x/3 = x^3/3!$
+\end{enumerate}
+Vereinfachung der Rechnung (für den Rechner) $\Rightarrow$ Nutzung des vorhergehenden Summanden.
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+char vbuf[128];
+
+int main() {
+	int i=1;
+	double x, y=1.0, summand = 1.0;
+	printf("Eingabe von x: ");
+	fgets(vbuf, 128, stdin);
+	x=atof(vbuf);
+	while (summand>0,00005){
+		summand = summand *x/i;
+		y += summand;
+		printf("Summand %d: %lf\n", i, summand);
+		i++;
+	}
+	printf("e^%lf: %lf\n", x, y);
+	return 0;
+}
+\end{lstlisting}
+
+\paragraph{Nicht abweisende Schleife (fußgesteuert)} do-while-Schleife
+\begin{lstlisting}
+<do_stmnt>:: 'do' <statement> 'while' '(' <condition> ')' ';' .
+\end{lstlisting}
+
+Bsp.:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+char vbuf[128];
+
+int main() {
+	int i=1;
+	double x, y=1.0, summand = 1.0;
+	printf("Eingabe von x: ");
+	fgets(vbuf, 128, stdin);
+	x=atof(vbuf);
+	do{
+		summand = summand *x/i;
+		y += summand;
+		printf("Summand %d: %lf\n", i, summand);
+		i++;
+	} while (summand>0,00005);
+	printf("e^%lf: %lf\n", x, y);
+	return 0;
+}
+\end{lstlisting}
+
+\paragraph{for-Schleife}
+\begin{lstlisting}
+<for-stmnt>:: 'for' '(' <expr>';' <expr>';' <expr> ')' <statement> .
+\end{lstlisting}
+
+Bsp.:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+char vbuf[128];
+
+int main() {
+	int i=1;
+	double x, y=1.0, summand = 1.0;
+	printf("Eingabe von x: ");
+	fgets(vbuf, 128, stdin);
+	x=atof(vbuf);
+	for (i=1; 	// Schleifeninitialisierung
+	summand > 0.0005; 	// Abbruchbedingung / Condition
+	i++){	// Iterationsausdruck
+		summand = summand *x/i;
+		y += summand;
+		printf("Summand %d: %lf\n", i, summand);
+	}
+	printf("e^%lf: %lf\n", x, y);
+	return 0;
+}
+\end{lstlisting}
+
+Alternativ-Bsp der for-Schleife mit Komma-Operator:
+\begin{lstlisting} [language=C]
+int main() {
+	int i=1;
+	double x, y, summand;
+	printf("Eingabe von x: ");
+	fgets(vbuf, 128, stdin);
+	x=atof(vbuf);
+	for (i=1, y=1.0, summand=1.0;
+	summand > 0.0005;
+	summand*=x/i, y+=summand,
+		 printf("Summand %d: %lf\n", i, summand), i++){
+	}
+	printf("e^%lf: %lf\n", x, y);
+	return 0;
+}
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+\end{document}

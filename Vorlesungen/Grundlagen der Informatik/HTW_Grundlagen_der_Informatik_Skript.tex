@@ -1,0 +1,238 @@
+% Header aus der Vorlage
+\input{../LaTeX_master/LaTeX_master_HTW}
+
+\bibliography{../Literatur/HTW_Literatur}
+
+% Definition von Titel, Autor usw.
+\DTitel{Grundlagen der Informatik}
+\DUntertitel{Vorlesungsskript}
+\DAutor{Falk Jonatan Strube}
+\DNotiz{Vorlesung von Dr. Boris Hollas}
+
+\begin{document}
+
+\pagenumbering{Roman}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+
+\section*{Allgemeine Informationen}
+
+Zugelassene Hilfsmittel Klausur: A-4 Blatt (doppelseitig, handbeschrieben)
+
+Prüfungsvorleistung: alle paar Woche eine Lernabfrage in der Vorlesung (Bestanden wenn insgesamt im Schnitt 50\%)
+
+Grundlage der Vorlesung: Grundkurs theoretische Informatik \cite{hollas2007grundkurs}
+
+Lernkontrolle ab 23.10.2015 alle zwei Wochen.
+
+\section{Aussagenlogik}
+
+Mit der Aussagenlogik lassen sich Aussagen formulieren, die entweder wahr oder falsch sind. Aussagen sind atomare Aussagen wie „die Straße ist nass“ oder mit Hilfe von logischen Operatoren zusammengesetzte Aussagen.
+
+\subsection{Syntax und Semantik}
+
+\paragraph{Definition:} Die \emph{Formeln der Aussagenlogik} sind induktiv definiert.
+
+\begin{itemize}
+\item Jede atomare Aussage ist eine Formel der Aussagenlogik. Diese heißen Atomformeln oder Variablen. 
+Atomformeln bezeichnen wir mit Kleinbuchstaben oder durch Wörter in Kleinbuchstaben.
+\item Wenn $F$, $G$ Formeln der Aussagenlogik sind, dann auch $(F \wedge G)$, $(F\vee G)$, $(\neg F)$.
+\end{itemize}
+
+\subparagraph{Bsp.:} Formeln der Aussagenlogik sind $x$, $y$, $x\wedge y$, $( x\wedge (y \wedge z)) \vee (\neg x \wedge (y \wedge \neg z))$, $regnet$, $regnet \wedge nass$, da sie jeweils aus atomaren Aussagen die nach der Definition zusammensetzen lassen bestehen.\\
+Keine Formeln der Aussagenlogik sind $x\wedge$, $\vee x$, $x\wedge \vee y$.\\
+
+Um Klammern zu sparen, legen wir Prioritäten fest:
+
+\begin{tabular}{c | c}
+Operator & Priorität \\
+\hline
+$\neg$ & höchste\\
+$\wedge ,\; \vee$ & \\
+$\rightarrow , \; \leftrightarrow$ & niedrigste\\
+\end{tabular}
+
+\paragraph{Definition:} Eine \emph{Belegung} einer Formel $F$ der Aussagenlogik ist eine Zuordnung von Wahrheitswerten „wahr“ (1) oder „falsch“ (0) zu den Atomarformeln in $F$.
+Daraus ergibt sich der \emph{Wahrheitswert} einer Formel:
+\begin{itemize}
+\item Eine Atomformel ist genau dann wahr, wenn sie mit „wahr“ belegt ist.
+\item Die Formel $F\wedge G $ ist genau dann wahr, wenn $F$ „wahr“ ist und $G$ „wahr“ ist. \\
+$F\vee G$ ist wahr, wenn $F$ wahr ist oder $G$ wahr.\\
+$\neg F$ ist wahr, wenn $F$ falsch ist.\\
+
+\begin{tabular}{c c | c c c c c}
+$F$&$G$&$F\wedge G$&$F\vee G$&$\neg F$&$F\rightarrow G$& $F\leftrightarrow G$\\
+\hline
+0&0&0&0&1&1&1\\
+0&1&0&1&1&1&0\\
+1&0&0&1&0&0&0\\
+1&1&1&1&0&1&1\\
+\end{tabular}
+\end{itemize}
+
+\subparagraph{Bsp.:} Wenn $regnet$ bedeutet: „Es regnet.“\\
+Wenn $nass$ bedeutet: „Die Straße ist nass.“\\
+Dann bedeutet $regnet \wedge nass$: „Es regnet und die Straße ist nass.“\\
+
+„Wenn es regnet, dann ist die Straße nass“ ($regnet \rightarrow nass$). Es muss nur der Fall ausgeschlossen werden, der nicht eintreffen kann: $\neg (regnet \wedge \neg nass)$ $\Rightarrow$ Folgendes darf nicht eintreffen: „Es regnet und die Straße ist nicht nass“. 
+
+Alles andere („Es regnet nicht und die Straße ist nicht nass“, „Es regnet nicht und die Straße ist nass“ und „Es regnet und die Straße ist nass“) darf eintreffen.\\
+\begin{tabular}{c c | c}
+$regnet$ & $nass$ & $\neg (regnet \wedge \neg nass) = \neg regnet \vee nass$\\
+\hline
+0&0&1\\
+0&1&1\\
+1&0&0\\
+1&1&1\\
+\end{tabular}
+
+\paragraph{Definition:} Die Operatoren $\rightarrow$ (\emph{Implikation}) und $\leftrightarrow$ (\emph{Äquivalenz}) sind definiert durch:
+\begin{itemize}
+\item $F\rightarrow G = \neg F \vee G$
+\item $F\leftrightarrow G = (F \rightarrow G) \wedge (G \rightarrow F)$
+\end{itemize}
+(Siehe Tabelle oberhalb)
+
+\subparagraph{Bsp.:} Berechnen des Betrags $y$ einer Zahl $x$:
+\begin{lstlisting}
+if (x>= 0)
+	y=x;
+else 
+	y=-x;
+\end{lstlisting}
+Dargestellt als Formel der Assagenlogik: $((x\geq 0) \rightarrow y=x)\wedge(\neg (x\geq 0) \rightarrow y=-x)$
+
+\paragraph{Definition:} Eine Formel $F$ der Aussagenlogik heißt
+\begin{itemize}
+
+\item \emph{erfüllbar}, wenn es eine Belegung gibt, sodass $F$ wahr ist, sonst \emph{unerfüllbar}. Mit $\bot$ bezeichnen wir eine unerfüllbare Formel (Widerspruch).
+\item \emph{Tautologie} oder \emph{gültig}, wenn $F$ für jede Belegung wahr ist. Bezeichnung: $\top$
+\end{itemize}
+
+\subparagraph{Bsp.:}
+\begin{itemize}
+\item $x\wedge y$ ist erfüllbar.
+\item $((\neg x \wedge y)\vee (x\wedge \neg y)) \wedge \neg (x\vee y)$ ist unerfüllbar (linke Seite: entweder x oder y falsch - rechte Seite: x oder y falsch)
+\item $x \vee \neg x$ ist eine Tautologie
+\end{itemize}
+
+\paragraph{Definition:} Wir schreiben $F \equiv G$ („$F$ ist äquivalent zu $G$“), wenn für jede Belegung gilt: $F \leftrightarrow G$ wahr (d.h., $F\leftrightarrow G$ ist gültig).
+
+\subsection{Rechenregeln}
+siehe Mathematik I
+
+\section{Beweistechniken}
+
+ABB21
+
+\paragraph{Direkter Beweis}
+\subparagraph{Bsp.:} Wenn $a \in \mathbb{Z}$ gerade ist, dann ist auch $a^2$ gerade.\\
+$(a \in \mathbb{Z} \text{ gerade } \Rightarrow a^2 \text{ gerade})$
+
+\emph{Beweis:} 
+\begin{itemize}
+\item Wenn $a$ gerade ist, gibt es ein $n$ mit $a=2\cdot n$.
+\item Dann gilt $a^2=4\cdot n^2=2\cdot 2 n^2$, 
+\item woraus $a^2$ gerade folgt.
+\end{itemize}
+
+\paragraph{Indirekter Beweis} Mit einem indirekten Beweis wird $A\Rightarrow B$ bewiesen, indem die äquivalente Aussage $\neg B \Rightarrow \neg A$ bewiesen wird.
+
+\subparagraph{Bsp.:} Wenn $a^2$ gerade ist, dann auch $a$.\\
+$(a^2 \text{ gerade } \Rightarrow a \text{ gerade})$
+
+\emph{Beweis:} Wir zeigen: Wenn $a$ ungerade ist, dann auch $a^2$.
+\begin{itemize}
+\item Aus $a$ ungerade folgt $a=2n-1$ für ein $n$. 
+\item Dann ist $a^2=4 n^2 - 4 n + 1 = \underbrace{4( n^2-n)}_{gerade} + \underbrace{1}_{ungerade}$, 
+\item Aus gerade + ungerade folgt ungerade, woraus $a^2$ ungerade folgt.
+\end{itemize}
+
+\paragraph{Beweis durch Widerspruch} Mit einem Beweis durch Widerspruch wird eine Aussage $A$ bewiesen, indem gezeigt wird, dass die Annahme „$A$ ist falsch“ zu einem Widerspruch führt.\\
+(D.h., es wird $\neg A \rightarrow \bot$ gezeigt)
+
+\subparagraph{Bsp.:} $\sqrt{2}$ ist irrational. Siehe Mathematik I.
+
+\paragraph{Vollständige Induktion} Mit einer vollständigen Induktion lassen sich Aussagen der Art „für alle $n \in \mathbb{N}$ gilt …“ beweisen.
+
+Prinzip: Gegeben eine Aussage der Form „für alle $n \in \mathbb{N}$ gilt $A(n)$“
+
+\begin{itemize}
+\item \emph{Induktionsanfang}: Man zeigt, die Wahrheit der Aussage für $n=1$ (mit anderen Worten: Man zeigt, dass $A(1)$ wahr ist) [$1$: die kleinste mögliche Zahl $\Rightarrow$ kann auch 0 oder eine andere sein]
+\item \emph{Induktionsvorussetzung}: Die Aussage ist für $n$ wahr.
+\item \emph{Induktionsschritt}: Wenn IV wahr ist, dann ist die Aussage auch für $n+1$ wahr.
+\end{itemize}
+In Formeln: Man zeigt
+\begin{itemize}
+\item IA: $A(1)$
+\item IV: $A(n)$
+\item IS: für alle $n$: $A(n)\Rightarrow A(n+1)$
+\end{itemize}
+ABB22
+\subparagraph{Bsp.:} Für alle $n\geq 1$ gilt $\sum_{k=1}^{n}k=\frac{n(n+1)}{2}$
+
+\emph{Beweis (Induktion):}
+\begin{itemize}
+\item[IA] $n=1$: $1=\frac{1 \cdot 2}{2}$ ist wahr.
+\item[IV] Es gelte $\sum_{k=1}^{n}k=\frac{n(n+1)}{2}$ ist wahr.
+\item[IS] $n \rightarrow n+1$: Zu zeigen: $\sum_{k=1}^{n+1}k=\frac{(n+1)(n+2)}{2}$ Es gilt:
+\begin{align*}
+\sum_{k=1}^{n+1}k&=(\sum_{k=1}^{n}k)+n+1\\
+&\overset{IV}{=}\frac{n(n+1)}{2}+n+1\\
+&=...=\frac{(n+1)(n+2)}{2}
+\#
+\end{align*}
+\end{itemize}
+
+\section{Elementare Kombinatorik}
+
+Kreuzprodukt:\\
+$A\times B = \{(a,b)|a \in A, b \in B\}$\\
+$A^n=\underbrace{A\times ... \times A}_{n}$\\
+Die \emph{Potenzmenge} einer Menge $M$ ist die Menge aller Teilmengen von $M$:
+$\mathcal{P}(M)=\{A|A\subseteq M\}$
+\subparagraph{Bsp.:} $\mathcal{P}(\{1,2\})=\{\emptyset, \{1\}, \{2\}, \{1,2\}\}$
+
+\paragraph{Definition:} Die Mächtigkeit einer Menge $A$ ist die Anzahl ihrer Elemente. Notation: $|A|$
+
+\paragraph{Satz:} Es gilt $|A^n|=|A|^n$
+\subparagraph{Beweis:} 
+Nach Def. ist $A^n=\{(a_1,...,a_n)|a_1,...,a_n \in A\}$. Um das n-Tupel $(a_1,...,a_n)$ zu erzeugen, gibt es $|A|$ viele Möglichkeiten. Insgesamt gibt es daher $|A|^n$ Möglichkeiten das n-Tupel $(a_1,...,a_n)$ auszuwählen.
+
+\subparagraph{Bsp.:} Eine PIN bestehe aus 6 Ziffern. Mit $A=\{0,...,9\}$ ist $A^6$ die Menge aller PINs. Mit obigen Satz folgt: Die Anzahl aller PINs ist $|A^6|=|A|^6 = 10^6$
+
+\subparagraph{Bsp.:} In dem Programm
+\begin{lstlisting}
+for (i=1 to n)
+	for (j=1 to n)
+		a[i][j]=i+j;
+\end{lstlisting}
+werden alle Paare (i,j) erzeugt. Die Anzahl der Paare ist $|\{1,...,n\}^2|=|\{1,...,n\}|^2=n^2$. Es gibt daher $n^2$ Schleifendurchläufe.
+
+\paragraph{Satz:} $|\mathcal{P}(M)|=2^{|M|}$
+\subparagraph{Beweis:} Für $M=\{m_1, ...,m_n\}$ identifizieren wir eine Teilmenge $A\subseteq M$ durch das n-Tupel $(a_1, ..., a_n)$ mit $a_k\begin{cases}0\text{ für }M_k \not \in A\\ 1\text{ für }m_k \in A\end{cases}$. Nach obigen Satz gibt es $|\{0,1\}^n|=2^n=2^{|M|}$ derartige Tupel.
+
+\paragraph{Definition:} Für eine n-elementige Menge ist $\begin{pmatrix}n\\k\end{pmatrix}$ die Anzahl ihrer k-elementigen Teilmengen $(n\geq k \geq 0)$.
+
+\subparagraph{Bsp.:} $\begin{pmatrix}n\\0\end{pmatrix}=1$, da $\emptyset$ die einzige 0-elementige Teilmenge ist.\\
+$\begin{pmatrix}n\\n\end{pmatrix}=1$, da es nur eine n-elementige Teilmenge gibt (die Menge selber).\\
+$\begin{pmatrix}n\\1\end{pmatrix}=n$, da es $n$ 1-elementige Teilmengen gibt.\\
+$\begin{pmatrix}n\\2\end{pmatrix}=\frac{n(n-1)}{2}$, denn für das 1. Element gibt es $n$ Möglichkeiten, für das 2. Element $n-1$ Möglichkeiten. Da das Element $\{a,b\}=\{b,a\}$ hierbei doppelt gezählt wird, müssen wir durch 2 teilen.
+
+\paragraph{Definition:} Eine Permutation der Folge $1,...,n$ ist eine neue Anordnung dieser Folge.
+
+\subparagraph{Bsp.:} Alle Permutationen von $1,2,3$ sind $1,2,3$; $1,3,2$; $2,1,3$; $2,3,1$; $3,1,2$; $3,2,1$.
+
+\paragraph{Definition:} $n!=1\cdot ... \cdot n \qquad 0! =1$.
+\paragraph{Satz:} Es gibt $n!$ Permutationen von $n$ Zahlen.
+
+\subparagraph{Beweis:} Für die 1. Stelle gibt es $n$ Möglichkeiten, für die 2. Stelle $n-1$ usw. Für die letzte Stelle nur noch eine Möglichkeit. Insgesamt also $n\cdot ... \cdot 1=n!$ Möglichkeiten.
+
+\newpage
+\printbibliography
+\end{document}

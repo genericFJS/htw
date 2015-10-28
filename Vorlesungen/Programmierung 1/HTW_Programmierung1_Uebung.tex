@@ -1,0 +1,96 @@
+% Header aus der Vorlage
+\input{../LaTeX_master/LaTeX_master_HTW}
+
+\bibliography{../Literatur/HTW_Literatur.bib}
+
+% Definition von Titel, Autor usw.
+\DTitel{Programmierung 1}
+\DUntertitel{Übungsskript}
+\DAutor{Falk Jonatan Strube}
+\DNotiz{Übung von Prof. Dr.-Ing. Beck}
+
+\begin{document}
+
+\pagenumbering{Roman}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+
+\section{Eingebaute Datentypen}
+
+\subsection{Zahlentypen}
+Zahl: $\underset{8\cdot 10^0}{1} \; \underset{0 \cdot 10^1}{0} \;\underset{1\cdot 10^2}{8}$\\
+$\Rightarrow$ 10er-System (Decimal)\\
+Zahl: $0110\underset{\leftarrow usw.}{1}\;\underset{1\cdot 2^2}{0}\;\underset{0\cdot 2^1}{0}\;\underset{0\cdot 2^0}{0} = 0 + 0 + 4+8+0+32+64+0 =108$\\
+$\Rightarrow$ 2er-System (Binär)\\
+Zahl: $\underset{1}{001}|\underset{5}{101}|\underset{4}{100}=108$\\
+$\Rightarrow$ 8er-System (Octal)\\
+Zahl: $\underset{6}{0110}|\underset{C}{1100}=108$\\
+$\Rightarrow$ 16er-System (Hexa)\\
+Unterschied: $108_{/10}$, $01101100_{/2}$, $154_{/8}$ (in C gekennzeichnet durch $0154\rightarrow$ Octalzahl) und $6C_{/16}$ (in C gekennzeichnet durch $0x6C$)\\
+
+\paragraph{Veranschaulichung}
+\begin{align*}
+108:2&=54 &R \emptyset\\
+65:2 &= 27 &R \emptyset\\
+27:2&= 13 &R 1\\
+13:2 &= 6 &R 1\\
+6:2 &=3 &R \emptyset\\
+3:2 &= 1 &R 1\\
+1:2&= 0 &R 1\\
+&\Rightarrow 1101100 \text{ von unten nach oben gelesen}&
+\end{align*}
+
+\begin{align*}
+108:8 &= 13 &R4\\
+13:8 &= 1 &R5\\
+1:8 &= 0 &R1\\
+&\Rightarrow 154&
+\end{align*}
+
+\begin{align*}
+108: 16 &= 6 &R12 = RC\\
+6:16 &= 0 &R6\\
+&\Rightarrow 6C&
+\end{align*}
+
+Beispielzahl 0x12AB\\
+
+Speicherblock:\\
+\begin{tabular}{|l|l|l|l|}
+\hline
+1&2&A&B\\
+\hline
+\end{tabular} big-endian\\
+\begin{tabular}{|l|l|l|l|}
+\hline
+B&A&1&2\\
+\hline
+\end{tabular}\\
+\begin{tabular}{|l|l|l|l|}
+\hline
+A&B&1&2\\
+\hline
+\end{tabular} little-endian\\
+Letzte Version ist die, die heutzutage meistens (Intel) verwendet wird: Das niederwertigste Byte liegt auf der niedrigsten Adresse.
+
+\paragraph{2er Komplement}
+positive Zahl: $\boxed{0}110 \: 1100$\\
+Negation: $1001\: 0011$\\
+$+1$\\
+Komplement: $1001 \: 0100 = -108 = 0x94$\\
+\begin{tabular}{r | l l l l l l l l l}
+ & $0$&$1$&$1$&$0$&$0$&$1$&$1$&$0$ & +108\\
+$_1$&$1_1$&$0_1$&$0_1$&$1_1$&$0_1$&$1$&$0$&$0$ & -108\\
+\hline
+$1$&$0$&$0$&$0$&$0$&$0$&$0$&$0$&$0$&\\
+
+\end{tabular}
+
+\newpage
+%\printbibliography
+\end{document}

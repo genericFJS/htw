@@ -1,0 +1,136 @@
+\documentclass[a4paper,11pt]{scrartcl}
+\usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
+\geometry{a4paper, top=30mm, left=20mm, right=20mm, bottom=25mm,headsep=10mm, footskip=12mm}
+
+% Input inkl. Umlaute, Silbentrennung
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{csquotes}	% Anführungszeichen
+
+% HTW Corporate Design: Arial (Helvetica)
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Style-Aufhübschung
+\usepackage{soul, color}	% Kapitälchen, Unterstrichen, Durchgestrichen usw. im Text
+\usepackage{scrlayer-scrpage}	% Kopf-/Fußzeile
+%\usepackage{titleref}
+
+% Mathe usw.
+\usepackage{amssymb}
+\usepackage[fleqn]{amsmath}	% fleqn: align-Umgebung rechtsbündig
+\usepackage{xcolor}
+\usepackage{esint}	% Schönere Integrale, \oiint vorhanden
+\everymath=\expandafter{\the\everymath\displaystyle}	% Mathe Inhalte werden weniger verkleinert
+
+% tikz usw.
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.11}	% Umgeht Fehlermeldung
+\usetikzlibrary{graphs}
+%\usetikzlibrary{through}	% ???
+\usetikzlibrary{arrows}
+\usetikzlibrary{arrows.meta}	% Pfeile verändern / vergrößern: \draw[-{>[scale=1.5]}] (-3,5) -> (-3,3);
+\usetikzlibrary{automata,positioning} % Zeilenumbruch im Node node[align=center] {Text\\nächste Zeile}
+\usetikzlibrary{patterns}	% Schraffierte Füllung
+\tikzstyle{reverseclip}=[insert path={	% Inverser Clip \clip
+	(current page.north east) --
+	(current page.south east) --
+	(current page.south west) --
+	(current page.north west) --
+	(current page.north east)}
+% Nutzen: 
+%\begin{tikzpicture}[remember picture]
+%\begin{scope}
+%\begin{pgfinterruptboundingbox}
+%\draw [clip] DIE FLÄCHE, IN DER OBJEKT NICHT ERSCHEINEN SOLL [reverseclip];
+%\end{pgfinterruptboundingbox}
+%\draw DAS OBJEKT;
+%\end{scope}
+%\end{tikzpicture}
+]
+\usepackage{graphpap}	% Grid für Graphen
+
+% Tabular
+\usepackage{longtable}	% Große Tabellen über mehrere Seiten
+\usepackage{multirow}	% Multirow/-column: \multirow{2[Anzahl der Zeilen]}{*[Format]}{Test[Inhalt]} oder \multicolumn{7[Anzahl der Reihen]}{|c|[Format]}{Test2[Inhalt]}
+\renewcommand{\arraystretch}{1.3} % Tabellenlinien nicht zu dicht
+\usepackage{colortbl}
+\arrayrulecolor{gray}	% heller Tabellenlinien
+
+% Nützliches
+\usepackage{verbatim}	% u.a. zum auskommentieren via \begin{comment} \end{comment}
+\usepackage{tabto}	% Tabs: /tab zum nächsten Tab oder /tabto{.5 \CurrentLineWidth} zur Stelle in der Linie
+\NumTabs{6}	% Anzahl von Tabs pro Zeile zum springen
+\usepackage{listings} % Source-Code mit Tabs
+\usepackage{lstautogobble} 
+\lstset{basicstyle=\ttfamily, mathescape=true, escapeinside=||, autogobble, tabsize=2}
+\usepackage{enumitem}	% Anpassung der enumerates
+\setlist[enumerate,1]{label=\arabic*.)}	% global andere Enum-Items
+\usepackage{letltxmacro} % neue Definiton von Grundbefehlen
+% Nutzen:
+%\LetLtxMacro{\oldemph}{\emph}
+%\renewcommand{\emph}[1]{\oldemph{#1}}
+
+% BibTeX
+\usepackage[backend=bibtex, bibencoding=ascii]{biblatex}	% BibTeX
+\usepackage{makeidx}
+%\makeglossary
+%\makeindex
+
+% Grafiken
+\usepackage{graphicx}
+\usepackage{epstopdf}	% eps-Vektorgrafiken einfügen
+
+% pdf-Setup
+\usepackage{pdfpages}
+\usepackage[bookmarks,%
+bookmarksopen=false,% Klappt die Bookmarks in Acrobat aus
+colorlinks=true,%
+linkcolor=black,%
+citecolor=red,%
+urlcolor=green,%
+]{hyperref}
+
+% Titel, Autor usw. werden vor dem Anfang des Dokuments in einem Rutsch definiert…
+\newcommand{\DTitel}[1]{\newcommand{\Dokumententitel}{#1}}
+\newcommand{\DUntertitel}[1]{\newcommand{\Dokumentenuntertitel}{#1}}
+\newcommand{\DAutor}[1]{\newcommand{\Dokumentenautor}{#1}}
+\newcommand{\DNotiz}[1]{\newcommand{\Dokumentennotiz}{#1}}
+% … Deswegen folgendes erst Nach Dokumentenbeginn ausführen:
+\AtBeginDocument{
+	\hypersetup{
+		pdfauthor={\Dokumentenautor},
+		pdftitle={HTW Dresden | \Dokumententitel - \Dokumentenuntertitel},
+	}
+	\automark[section]{section}
+	\automark*[subsection]{subsection}
+	\pagestyle{scrheadings}
+	\ihead{\includegraphics[height=1.7em]{../LaTeX_master/HTW-Logo.eps}}
+	\ohead{\Dokumententitel}
+	% Titelseite
+	\title{\includegraphics[width=0.35\textwidth]{../LaTeX_master/HTW-Logo.eps}\\\vspace{0.5em}
+	\Huge\textbf{\Dokumententitel} \\\vspace*{0,5cm}
+	\Large \Dokumentenuntertitel \\\vspace*{4cm}}
+	\author{\vspace*{1cm}\Dokumentenautor \\\Dokumentennotiz}
+}
+
+%% EIGENE BEFEHLE
+
+%Farbdefinitionen
+\definecolor{red}{RGB}{180,0,0}
+\definecolor{green}{RGB}{75,160,0}
+\definecolor{blue}{RGB}{0,75,200}
+\definecolor{orange}{RGB}{255,128,0}
+\definecolor{yellow}{RGB}{255,245,0}
+\definecolor{purple}{RGB}{75,0,160}
+\definecolor{cyan}{RGB}{0,160,160}
+\definecolor{brown}{RGB}{120,60,10}
+
+% Umstellen der Tabellen Definition
+\newcommand{\mpb}[1][.3]{\begin{minipage}{#1\textwidth}\vspace*{3pt}}
+\newcommand{\mpe}{\vspace*{3pt}\end{minipage}}
+
+\newcommand{\resultul}[1]{\underline{\underline{#1}}}
+\newcommand{\parskp}{$ $\\}	% new line after paragraph
