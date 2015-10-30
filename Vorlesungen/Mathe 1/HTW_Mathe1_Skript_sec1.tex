@@ -1,0 +1,197 @@
+\subsection{Aussagen, Wahrheitswert}
+
+\paragraph{Aussage:} (im weiteren Sinne) Sprachlich sinnvoller, konsatierender Satz. In diesem Abschnitt werden nur zweiwertige Aussagen betrachtet, d.h. Aussagen, die entwoder wahr oder falsch sind.
+
+\subparagraph{Bsp. 1:} 
+\begin{itemize}
+\item[(1)] Es gibt unendlich viele Primzahlen (wahr)
+\item[(2)] Es gibt unendlich viele Primzahlzwillinge, z.B. (3,5), (5,7), (11,13), (17,19) usw. (Wahrheitswert nicth bekannt!)
+\item[(3)] $5+7=13$ (falsch)
+\item[(4)] Wie spät ist es? (keine Aussage)
+\item[(5)] Diese Aussage ist falsch! (keine Aussage, paradox)
+\item[(6)] Am 30.06.2016 wird es in Dresden regnen.
+\end{itemize}
+
+(1)--(3) sind zweiwertige Aussagen, (4) und (5) sind keine Aussagen, (6) ist keine zweiwertige Aussage (Wahrscheinlichkeit, d.h. Zahl zwischen 0 und 1 angebbar).
+
+\subparagraph{Bezeichnungen:} \parskp
+\begin{tabular}{l l}
+p, q, r, &… Aussagen,\\
+0 &… falsche Aussage, \\
+1 &… wahre Aussage\\
+\end{tabular}
+
+\paragraph{Wahrheitswert:} \parskp
+$w(p)=\begin{cases}
+1 & \text{(falls p wahr)} \\
+0 & \text{(fallls p falsch)}
+\end{cases}$
+    
+$p \equiv q$ (p \emph{identisch} q) … p und q haben denselben Wahrheitswert
+    
+\subsection{Aussagesverschiebung}
+
+\begin{enumerate}
+\item \emph{Negation} $\overline{p}$ („nicht p“) [oft auch $p!$ bzw. $\neg p$]\\
+\begin{tabular}{c | c}
+$p$ & $\overline{p}$\\
+\hline
+0 & 1 \\
+1 & 0 \\
+\end{tabular}
+
+\item \emph{Konjunktion} $p \wedge q$ („p und q“)
+\item \emph{Disjunktion} $ p \vee q $ („p oder q“) [Alternative -- nicht ausschließendes Oder!]\\
+\begin{tabular}{c | c |c |c}
+$p$ & $q$ & $p \wedge q$ & $p \vee q$\\
+\hline
+1 & 1 &1&1\\
+1 & 0 &0&1\\
+0 & 1 &0&1\\
+0 & 0 &0&0\\
+\end{tabular}
+
+\item \emph{Implikation} $(p \Rightarrow q ):\equiv \overline{p} \vee q$ („aus p folgt q“, „wenn p, dann q“)\\
+\begin{tabular}{c | c |c|c}
+$p$ & $q$ & $\overline{p}$ & $p\Rightarrow q$\\
+\hline
+1&1&0&1 \\
+1&0&0&0\\
+1&1&1&1\\
+1&0&1&1\\
+\end{tabular}\\
+Begriffe: $p \Rightarrow q$ (p: \emph{Prämisse}, q: \emph{Konklusion})\\
+Eine Implikation ist genau dann falsch, wenn die Prämisse richtig und die Konklusion falsch ist!
+\paragraph{Bsp. 2:}
+\begin{itemize}
+\item $-1=1$ (falsch) $\Rightarrow$ $1=1$ (wahr) [durch Quadrieren]
+\item $-1=1$ (falsch) $\Rightarrow$ $0=2$ (falsch) [Addition von 1]
+\end{itemize}
+Aus einer falschen Aussage lassen sich durch richtiges Schließen sowohl falsche als auch richtige Aussagen gewinnen.
+
+Andere Sprechweisen: „p ist \emph{hinreichend} für q“, „q ist \emph{notwendig} für p“
+\item \emph{Äquivalenz} $(p\Leftrightarrow q):\equiv (p\Rightarrow q) \wedge (q \Rightarrow p)$ („p äquivalent q“, „p ist notwendig und hinreichend für q“, „p genau dann wenn q“)\\
+(ist genau dann wahr, wenn p und q den selben Wahrheitswert besitzen)
+\end{enumerate}
+
+\subsection{Logische Gesetze (Tautologien)}
+Eine Tautologie $t$ ist eine Aussagenverbindung, die unabhängig vom Wahrheitswert der einzelnen Aussagen stets wahr ist (d.h. $t\equiv 1$).
+\paragraph{Bsp. 3:}\parskp
+Einige wichtige Tautologien
+\begin{enumerate}
+\item $p\Leftrightarrow \overline{\overline{p}}$ \tab \tab(Negation der Negation)
+\item $p \vee \overline{p}$\tab \tab (Satz vom ausgeschlossenem Dritten)
+\item a) $\overline{p\wedge q} \equiv (\overline{p \vee \overline{q}})$\\
+b) $\overline{p\vee q} \equiv (\overline{p \wedge \overline{q}})$ \tab(de Morgansche Regeln)
+\item $(p\Rightarrow q) \equiv (\overline{q} \Rightarrow \overline{p})$ \tab(Kontrapositionsgesetz)
+\item $p\wedge (p\Rightarrow q)) \Rightarrow q$ \tab(direkter Beweis)
+\item $p\wedge (\overline{q} \Rightarrow \overline{p})) \Rightarrow q$ \tab(indirekter Beweis)
+\end{enumerate}
+Beweise mittels Wahrheitstafeln (vgl. Übung 1).\\
+Bemerkung zu 1., 3., 4.: Eine Äquivalenz ist genau dann eine Tautologie, wenn beide Seiten identisch sind, z.B. $p\equiv \overline{\overline{p}}$.
+
+\paragraph{Beweistechniken:} \parskp
+Zu beweisen ist $q$.
+\begin{enumerate}
+\item Direkter Beweis:
+\begin{itemize}
+\item Nachweis von $p$ (Voraussetzung)
+\item Richtiger Schluss $p\Rightarrow q$\\
+Dann $q$ wahr (Behauptung)
+\end{itemize}
+\item Indirekter Beweis: Annahme von $\overline{q}$ auf Wiederspruch führen (auf unterschiedliche Weise möglich, vgl. folgendes Bsp).
+\end{enumerate}
+
+\subparagraph{Bsp. 4:}\parskp
+$q = $„$\sqrt{2}$ ist irrational“ (keine rationale Zahl)
+
+Beweis indirekt: \\
+Es gelte $\overline{q}$, d.h. $\sqrt{2}$ ist rational, dann gelten folgende Schlüsse: $\sqrt{2} = \frac{m}{n}$ mit teilerfremden natürlichen Zahlen $m$ und $n$.\\
+$\Rightarrow 2=\frac{m^2}{n^2} \Rightarrow 2 \cdot n^2 = m^2 \Rightarrow 2|m^2$\\
+$\Rightarrow \boxed{2|m}$ (2 ist Teiler von m)\\
+$\Rightarrow 4|m^2$ (mit $m^2=2n^2$)\\
+$\Rightarrow 4|2n^2 \Rightarrow 2|n^2 \Rightarrow \boxed{2|n}$\\
+Widerspruch: Da $m$ und $n$ teilerfremd sind.	\#
+
+\paragraph{Weitere Gesetze}
+
+\begin{itemize}
+\item $p\wedge q \equiv q \wedge p$\\$p\vee q \equiv q \vee p$ \tab \tab \tab(Kommutativgesetze)
+\item $(p\wedge q)\wedge r \equiv p\wedge (q\wedge r)$\\$(p\vee q)\vee r \equiv p\vee (q \vee r)$ \tab \tab(Assoziativgesetze)
+\item $(p\wedge q)\vee r \equiv (p \vee r) \wedge (q \vee r)$\\$(p\vee q)\wedge r \equiv (p\wedge r) \vee (q \wedge r)$ \tab(Distributivgesetze)
+\item $p\wedge 1 \equiv p$, $p\vee 1 \equiv 1$, $p\wedge p \equiv p$\\$p\wedge 0 \equiv 0$, $p\vee 0 \equiv p$, $p\wedge p \equiv p$
+\item $p \vee (p\wedge q ) \equiv p$ \tab \tab(Absorptionsgesetz)
+\end{itemize}
+
+\subsection{Aussagefunktionen, Quantoren, Prädikatenlogik} \label{subsec:Aussagefunktionen}
+$X$ sei eine Menge (Gesamtheit von Objekten $x$ mit einem gemeinsamen Merkmal, vgl.  Abschnitt \ref{sec:Mengen})\\
+$x\in X$ … $x$ ist Element von $X$. Die Objekte haben Eigenschaften (\emph{Prädikate})
+
+\paragraph{Aussagefunktion} (auch Aussageform) $p(x)$:
+Jedem $x\in X$ ist eine Aussage $p(x)$ zugeordnet. Dabei steht $x$ für ein Objekt, $p$ für ein Prädikat.
+\subparagraph{Bsp. 5:}\parskp
+$X$ … Menge der positiven natürlichen Zahlen (1, 2, 3, …)\\
+$p(x):=$„$x$ ist eine Primzahl“\\
+$p(5)$ … wahr, $p(10)$ … falsch
+
+\paragraph{Quantoren:} \parskp
+Betrachtet werden folgende Aussagen:
+\begin{enumerate}
+\item „Für alle $x$ (aus $X$) gilt $p(x)$“ $\equiv$ $\boxed{\forall x\; p(x)}$ (\emph{universeller Quantor} / Allquantor)
+\item „Es existiert (wenigstens) ein $x$, für welches $p(x)$ gilt“ $\equiv$ $\boxed{\exists x \; p(x)}$ (\emph{existenzieller Quantor})
+\end{enumerate}
+Zur Schreibweise: 
+\begin{itemize}
+\item Bei Anwendungen (außerhalb der reinen Logik) wird oft die Grundmenke $X$ mit angegeben: \\
+$\forall x \in X\; p(x)$ usw.
+\item Falls sich Quantoren auf eine Teilmenge $M$ von $X$ beziehen sollen, dann können folgende Schreibweisen verwendet werden:\\
+$a = \forall x \in M \; p(x)$, $b=\exists x\in M \; p(x)$.
+\item Die Schreibweisen in der formalen Logik sind dann:\\
+$a = \forall x \;(x \in M \Rightarrow p(x))$
+\end{itemize}
+
+\paragraph{Rechenregeln:}\parskp
+$\boxed{\overline{\forall x \; p(x)} \equiv \exists x \; \overline{p(x)}}$\\
+$\boxed{\overline{\exists x \; p(x)} \equiv \forall x \; \overline{p(x)}}$
+
+\paragraph{Mehrstellige Aussagefunktionen}
+
+\begin{itemize}
+\item $p(x_1, x_2,\: ..., x_n)$,\quad $x_1 \in X_1, x_2 \in X_2,\: ... , x_n \in X_n$\\
+Die Grundmengen $X_i$ können, müssen aber nicht für jede Stelle gleich sein.
+\item Wird ein Quantor auf eine n-stellige Aussagefunktion angewandt, so entsteht eine (n-1)-stellige Aussagefunktion (eine 0-stellige Aussagefunktion ist eine Aussage)\\
+z.B.: $\exists y \; p(x,y,z)=: q(x,z)$, die Variable $y$ wird durch den Quantor $\exists$ gebunden ($y$… gebundene Variable). Wichtig ist der Platz, nicht der Name der Variable.\\
+$x, z$ … freie Variable, können durch weitere Quantoren gebunden werden.
+\end{itemize}
+
+\subparagraph{Bsp. 6:} \parskp
+Ein Dorf bestehe aus 2 Teilen (Ober- und Unterdorf). Es sei $M$ die Menge aller Bewohner des Dorfes. $M_1$ bzw. $M_2$ seien die Teilmengen von $M$, die dem Ober- bzw. Unterdorf entsprechen. 
+
+Wir betrachten folgende zweistellige Aussagefunktionen:\\
+$k(x,y)$… Person $x$ (aus $M$) kennt Person $y$ (aus $M$)
+\begin{enumerate} [label=\alph*)]
+\item $a(x):= \forall y \; k(x,y)$… Person $x$ kennt jeden ($\Rightarrow$ „Für alle $y$ gilt: $x$ kennt $y$“)\\
+$b(y):= \exists x \; k(x,y)$ … es gibt jemanden, der $y$ kennt\\
+$c := \forall x \forall y \; k(x,y)$ … jeder kennt jeden\\
+$d := \forall y \exists x \: k(x,y)$ … jeder wird von wenigstens einer Person gekannt\\
+$e := \exists x \forall y \; k(x,y)$ … es gibt mindestens eine Person, die alle Personen kennt\\
+Man beachte: \begin{itemize}
+\item $d$ und $e$ sind nicht das Gleiche: Die Reihenfolge unterschiedlicher Quantoren muss beachtet werden. Bei $d$ kann für jedes $y$ ein anderes $x$ mit $k(x,y)$ existieren. Diese Abhängigkeit von $y$ wird manchmal in Anwendungen durch $\forall y \: \exists x(y) \; k(x,y)$ ausgedrückt.
+\item Es gilt aber $e \Rightarrow d$ (stets wahr: Tautologie). Der Wahrheitsgehalt von z.B. $c, d, e$ kann dagegen nicht mit logischen Mitteln bestimmt werden.
+\end{itemize}
+\item Negation der Aussagen  bzw. Aussageformen aus a).\\
+$\overline{a(x)}\equiv \exists y \; \overline{k(x,y)}$… $x$ kennt wenigstens eine Person nicht\\
+$\overline{b(x)} \equiv \forall x \; \overline{k(x,y)}$ … keiner kennt $y$\\
+$\overline{c} \equiv \exists x \; \overline{\forall y \; k(x,y)}\equiv \exists x \; \exists y \; \overline{k(x,y)}$ … es gibt jemanden der wenigstens eine Person nicht kennt (jemanden, der nicht alle kennt)\\
+$\overline{d} \equiv \exists y \; \forall x \; \overline{k(x,y)}$… es gibt jemanden, der von keiner Person gekannt wird
+$\overline{e}\equiv \forall x \; \exists y \; \overline{k(x,y)}$ … jeder kennt wenigstens eine Person nicht.
+\item Folgende Aussagen sind mit Hilfe von Quantoren auszudrücken:\\
+$f$… jeder aus dem Oberdorf kennt wenigstens eine Person aus dem Unterdorf.\\
+$g$… es gibt jemanden im Unterdorf, der alle Personen des Oberdorfs kennt.
+\begin{align*}f&=\forall x \in M_1 \; \exists y \in M_2 \; k(x,y)\\
+&=\forall x \; (x \in M_1 \Rightarrow \exists y \; (y \in M_2 \wedge k(x,y)))\end{align*}
+\begin{align*}
+g&= \exists x \in M_2 \; \forall y \in M_1 \; k(x,y)\\
+&= \exists x \; (x\in M_2 \wedge \forall y \; (y \in M_1 \Rightarrow k(x,y)))
+\end{align*}
+\end{enumerate}

@@ -21,204 +21,7 @@
 \part{Elementare Grundlagen}
 
 \section{Aussagen und Grundzüge der Logik}
-
-\subsection{Aussagen, Wahrheitswert}
-
-\paragraph{Aussage:} (im weiteren Sinne) Sprachlich sinnvoller, konsatierender Satz. In diesem Abschnitt werden nur zweiwertige Aussagen betrachtet, d.h. Aussagen, die entwoder wahr oder falsch sind.
-
-\subparagraph{Bsp. 1:} 
-\begin{itemize}
-\item[(1)] Es gibt unendlich viele Primzahlen (wahr)
-\item[(2)] Es gibt unendlich viele Primzahlzwillinge, z.B. (3,5), (5,7), (11,13), (17,19) usw. (Wahrheitswert nicth bekannt!)
-\item[(3)] $5+7=13$ (falsch)
-\item[(4)] Wie spät ist es? (keine Aussage)
-\item[(5)] Diese Aussage ist falsch! (keine Aussage, paradox)
-\item[(6)] Am 30.06.2016 wird es in Dresden regnen.
-\end{itemize}
-
-(1)--(3) sind zweiwertige Aussagen, (4) und (5) sind keine Aussagen, (6) ist keine zweiwertige Aussage (Wahrscheinlichkeit, d.h. Zahl zwischen 0 und 1 angebbar).
-
-\subparagraph{Bezeichnungen:} \parskp
-\begin{tabular}{l l}
-p, q, r, &… Aussagen,\\
-0 &… falsche Aussage, \\
-1 &… wahre Aussage\\
-\end{tabular}
-
-\paragraph{Wahrheitswert:} \parskp
-$w(p)=\begin{cases}
-1 & \text{(falls p wahr)} \\
-0 & \text{(fallls p falsch)}
-\end{cases}$
-    
-$p \equiv q$ (p \emph{identisch} q) … p und q haben denselben Wahrheitswert
-    
-\subsection{Aussagesverschiebung}
-
-\begin{enumerate}
-\item \emph{Negation} $\overline{p}$ („nicht p“) [oft auch $p!$ bzw. $\neg p$]\\
-\begin{tabular}{c | c}
-$p$ & $\overline{p}$\\
-\hline
-0 & 1 \\
-1 & 0 \\
-\end{tabular}
-
-\item \emph{Konjunktion} $p \wedge q$ („p und q“)
-\item \emph{Disjunktion} $ p \vee q $ („p oder q“) [Alternative -- nicht ausschließendes Oder!]\\
-\begin{tabular}{c | c |c |c}
-$p$ & $q$ & $p \wedge q$ & $p \vee q$\\
-\hline
-1 & 1 &1&1\\
-1 & 0 &0&1\\
-0 & 1 &0&1\\
-0 & 0 &0&0\\
-\end{tabular}
-
-\item \emph{Implikation} $(p \Rightarrow q ):\equiv \overline{p} \vee q$ („aus p folgt q“, „wenn p, dann q“)\\
-\begin{tabular}{c | c |c|c}
-$p$ & $q$ & $\overline{p}$ & $p\Rightarrow q$\\
-\hline
-1&1&0&1 \\
-1&0&0&0\\
-1&1&1&1\\
-1&0&1&1\\
-\end{tabular}\\
-Begriffe: $p \Rightarrow q$ (p: \emph{Prämisse}, q: \emph{Konklusion})\\
-Eine Implikation ist genau dann falsch, wenn die Prämisse richtig und die Konklusion falsch ist!
-\paragraph{Bsp. 2:}
-\begin{itemize}
-\item $-1=1$ (falsch) $\Rightarrow$ $1=1$ (wahr) [durch Quadrieren]
-\item $-1=1$ (falsch) $\Rightarrow$ $0=2$ (falsch) [Addition von 1]
-\end{itemize}
-Aus einer falschen Aussage lassen sich durch richtiges Schließen sowohl falsche als auch richtige Aussagen gewinnen.
-
-Andere Sprechweisen: „p ist \emph{hinreichend} für q“, „q ist \emph{notwendig} für p“
-\item \emph{Äquivalenz} $(p\Leftrightarrow q):\equiv (p\Rightarrow q) \wedge (q \Rightarrow p)$ („p äquivalent q“, „p ist notwendig und hinreichend für q“, „p genau dann wenn q“)\\
-(ist genau dann wahr, wenn p und q den selben Wahrheitswert besitzen)
-\end{enumerate}
-
-\subsection{Logische Gesetze (Tautologien)}
-Eine Tautologie $t$ ist eine Aussagenverbindung, die unabhängig vom Wahrheitswert der einzelnen Aussagen stets wahr ist (d.h. $t\equiv 1$).
-\paragraph{Bsp. 3:}\parskp
-Einige wichtige Tautologien
-\begin{enumerate}
-\item $p\Leftrightarrow \overline{\overline{p}}$ \tab \tab(Negation der Negation)
-\item $p \vee \overline{p}$\tab \tab (Satz vom ausgeschlossenem Dritten)
-\item a) $\overline{p\wedge q} \equiv (\overline{p \vee \overline{q}})$\\
-b) $\overline{p\vee q} \equiv (\overline{p \wedge \overline{q}})$ \tab(de Morgansche Regeln)
-\item $(p\Rightarrow q) \equiv (\overline{q} \Rightarrow \overline{p})$ \tab(Kontrapositionsgesetz)
-\item $p\wedge (p\Rightarrow q)) \Rightarrow q$ \tab(direkter Beweis)
-\item $p\wedge (\overline{q} \Rightarrow \overline{p})) \Rightarrow q$ \tab(indirekter Beweis)
-\end{enumerate}
-Beweise mittels Wahrheitstafeln (vgl. Übung 1).\\
-Bemerkung zu 1., 3., 4.: Eine Äquivalenz ist genau dann eine Tautologie, wenn beide Seiten identisch sind, z.B. $p\equiv \overline{\overline{p}}$.
-
-\paragraph{Beweistechniken:} \parskp
-Zu beweisen ist $q$.
-\begin{enumerate}
-\item Direkter Beweis:
-\begin{itemize}
-\item Nachweis von $p$ (Voraussetzung)
-\item Richtiger Schluss $p\Rightarrow q$\\
-Dann $q$ wahr (Behauptung)
-\end{itemize}
-\item Indirekter Beweis: Annahme von $\overline{q}$ auf Wiederspruch führen (auf unterschiedliche Weise möglich, vgl. folgendes Bsp).
-\end{enumerate}
-
-\subparagraph{Bsp. 4:}\parskp
-$q = $„$\sqrt{2}$ ist irrational“ (keine rationale Zahl)
-
-Beweis indirekt: \\
-Es gelte $\overline{q}$, d.h. $\sqrt{2}$ ist rational, dann gelten folgende Schlüsse: $\sqrt{2} = \frac{m}{n}$ mit teilerfremden natürlichen Zahlen $m$ und $n$.\\
-$\Rightarrow 2=\frac{m^2}{n^2} \Rightarrow 2 \cdot n^2 = m^2 \Rightarrow 2|m^2$\\
-$\Rightarrow \boxed{2|m}$ (2 ist Teiler von m)\\
-$\Rightarrow 4|m^2$ (mit $m^2=2n^2$)\\
-$\Rightarrow 4|2n^2 \Rightarrow 2|n^2 \Rightarrow \boxed{2|n}$\\
-Widerspruch: Da $m$ und $n$ teilerfremd sind.	\#
-
-\paragraph{Weitere Gesetze}
-
-\begin{itemize}
-\item $p\wedge q \equiv q \wedge p$\\$p\vee q \equiv q \vee p$ \tab \tab \tab(Kommutativgesetze)
-\item $(p\wedge q)\wedge r \equiv p\wedge (q\wedge r)$\\$(p\vee q)\vee r \equiv p\vee (q \vee r)$ \tab \tab(Assoziativgesetze)
-\item $(p\wedge q)\vee r \equiv (p \vee r) \wedge (q \vee r)$\\$(p\vee q)\wedge r \equiv (p\wedge r) \vee (q \wedge r)$ \tab(Distributivgesetze)
-\item $p\wedge 1 \equiv p$, $p\vee 1 \equiv 1$, $p\wedge p \equiv p$\\$p\wedge 0 \equiv 0$, $p\vee 0 \equiv p$, $p\wedge p \equiv p$
-\item $p \vee (p\wedge q ) \equiv p$ \tab \tab(Absorptionsgesetz)
-\end{itemize}
-
-\subsection{Aussagefunktionen, Quantoren, Prädikatenlogik} \label{subsec:Aussagefunktionen}
-$X$ sei eine Menge (Gesamtheit von Objekten $x$ mit einem gemeinsamen Merkmal, vgl.  Abschnitt \ref{sec:Mengen})\\
-$x\in X$ … $x$ ist Element von $X$. Die Objekte haben Eigenschaften (\emph{Prädikate})
-
-\paragraph{Aussagefunktion} (auch Aussageform) $p(x)$:
-Jedem $x\in X$ ist eine Aussage $p(x)$ zugeordnet. Dabei steht $x$ für ein Objekt, $p$ für ein Prädikat.
-\subparagraph{Bsp. 5:}\parskp
-$X$ … Menge der positiven natürlichen Zahlen (1, 2, 3, …)\\
-$p(x):=$„$x$ ist eine Primzahl“\\
-$p(5)$ … wahr, $p(10)$ … falsch
-
-\paragraph{Quantoren:} \parskp
-Betrachtet werden folgende Aussagen:
-\begin{enumerate}
-\item „Für alle $x$ (aus $X$) gilt $p(x)$“ $\equiv$ $\boxed{\forall x\; p(x)}$ (\emph{universeller Quantor} / Allquantor)
-\item „Es existiert (wenigstens) ein $x$, für welches $p(x)$ gilt“ $\equiv$ $\boxed{\exists x \; p(x)}$ (\emph{existenzieller Quantor})
-\end{enumerate}
-Zur Schreibweise: 
-\begin{itemize}
-\item Bei Anwendungen (außerhalb der reinen Logik) wird oft die Grundmenke $X$ mit angegeben: \\
-$\forall x \in X\; p(x)$ usw.
-\item Falls sich Quantoren auf eine Teilmenge $M$ von $X$ beziehen sollen, dann können folgende Schreibweisen verwendet werden:\\
-$a = \forall x \in M \; p(x)$, $b=\exists x\in M \; p(x)$.
-\item Die Schreibweisen in der formalen Logik sind dann:\\
-$a = \forall x \;(x \in M \Rightarrow p(x))$
-\end{itemize}
-
-\paragraph{Rechenregeln:}\parskp
-$\boxed{\overline{\forall x \; p(x)} \equiv \exists x \; \overline{p(x)}}$\\
-$\boxed{\overline{\exists x \; p(x)} \equiv \forall x \; \overline{p(x)}}$
-
-\paragraph{Mehrstellige Aussagefunktionen}
-
-\begin{itemize}
-\item $p(x_1, x_2,\: ..., x_n)$,\quad $x_1 \in X_1, x_2 \in X_2,\: ... , x_n \in X_n$\\
-Die Grundmengen $X_i$ können, müssen aber nicht für jede Stelle gleich sein.
-\item Wird ein Quantor auf eine n-stellige Aussagefunktion angewandt, so entsteht eine (n-1)-stellige Aussagefunktion (eine 0-stellige Aussagefunktion ist eine Aussage)\\
-z.B.: $\exists y \; p(x,y,z)=: q(x,z)$, die Variable $y$ wird durch den Quantor $\exists$ gebunden ($y$… gebundene Variable). Wichtig ist der Platz, nicht der Name der Variable.\\
-$x, z$ … freie Variable, können durch weitere Quantoren gebunden werden.
-\end{itemize}
-
-\subparagraph{Bsp. 6:} \parskp
-Ein Dorf bestehe aus 2 Teilen (Ober- und Unterdorf). Es sei $M$ die Menge aller Bewohner des Dorfes. $M_1$ bzw. $M_2$ seien die Teilmengen von $M$, die dem Ober- bzw. Unterdorf entsprechen. 
-
-Wir betrachten folgende zweistellige Aussagefunktionen:\\
-$k(x,y)$… Person $x$ (aus $M$) kennt Person $y$ (aus $M$)
-\begin{enumerate} [label=\alph*)]
-\item $a(x):= \forall y \; k(x,y)$… Person $x$ kennt jeden ($\Rightarrow$ „Für alle $y$ gilt: $x$ kennt $y$“)\\
-$b(y):= \exists x \; k(x,y)$ … es gibt jemanden, der $y$ kennt\\
-$c := \forall x \forall y \; k(x,y)$ … jeder kennt jeden\\
-$d := \forall y \exists x \: k(x,y)$ … jeder wird von wenigstens einer Person gekannt\\
-$e := \exists x \forall y \; k(x,y)$ … es gibt mindestens eine Person, die alle Personen kennt\\
-Man beachte: \begin{itemize}
-\item $d$ und $e$ sind nicht das Gleiche: Die Reihenfolge unterschiedlicher Quantoren muss beachtet werden. Bei $d$ kann für jedes $y$ ein anderes $x$ mit $k(x,y)$ existieren. Diese Abhängigkeit von $y$ wird manchmal in Anwendungen durch $\forall y \: \exists x(y) \; k(x,y)$ ausgedrückt.
-\item Es gilt aber $e \Rightarrow d$ (stets wahr: Tautologie). Der Wahrheitsgehalt von z.B. $c, d, e$ kann dagegen nicht mit logischen Mitteln bestimmt werden.
-\end{itemize}
-\item Negation der Aussagen  bzw. Aussageformen aus a).\\
-$\overline{a(x)}\equiv \exists y \; \overline{k(x,y)}$… $x$ kennt wenigstens eine Person nicht\\
-$\overline{b(x)} \equiv \forall x \; \overline{k(x,y)}$ … keiner kennt $y$\\
-$\overline{c} \equiv \exists x \; \overline{\forall y \; k(x,y)}\equiv \exists x \; \exists y \; \overline{k(x,y)}$ … es gibt jemanden der wenigstens eine Person nicht kennt (jemanden, der nicht alle kennt)\\
-$\overline{d} \equiv \exists y \; \forall x \; \overline{k(x,y)}$… es gibt jemanden, der von keiner Person gekannt wird
-$\overline{e}\equiv \forall x \; \exists y \; \overline{k(x,y)}$ … jeder kennt wenigstens eine Person nicht.
-\item Folgende Aussagen sind mit Hilfe von Quantoren auszudrücken:\\
-$f$… jeder aus dem Oberdorf kennt wenigstens eine Person aus dem Unterdorf.\\
-$g$… es gibt jemanden im Unterdorf, der alle Personen des Oberdorfs kennt.
-\begin{align*}f&=\forall x \in M_1 \; \exists y \in M_2 \; k(x,y)\\
-&=\forall x \; (x \in M_1 \Rightarrow \exists y \; (y \in M_2 \wedge k(x,y)))\end{align*}
-\begin{align*}
-g&= \exists x \in M_2 \; \forall y \in M_1 \; k(x,y)\\
-&= \exists x \; (x\in M_2 \wedge \forall y \; (y \in M_1 \Rightarrow k(x,y)))
-\end{align*}
-\end{enumerate}
+%\input{HTW_Mathe1_Skript_sec1}
 
 \section{Mengen}\label{sec:Mengen}
 
@@ -812,7 +615,7 @@ Es sei $T \subseteq M \times M$ eine binäre Relation. Dann gilt:
 
 \subparagraph{Disskussion:}
 \begin{enumerate}
-\item Beweise ergeben sich unmittelbar aus Def. 8, vgl. Übungs-Aufgabe 1.24 (für b) und e))
+\item Beweise ergeben sich unmittelbar aus Def. 8, vgl. Übungsaufgabe 1.24 (für b) und e))
 \item Aus c) und d) ergibt sich z.B.\\
 $\boxed{T \text{ asymmetrisch}}\Rightarrow \boxed{T \text{ antisymmetrisch}}$ (da $\emptyset$ Teilmenge jeder Menge ist)
 \end{enumerate}
@@ -838,12 +641,12 @@ Aufgrund der 3. Eigenschaft aus Def. 13 erhält eine Äquivalenzklasse alle Elem
 \item $(x,y) \in T : \equiv$ „$x$ und $y$ lassen bei Division durch $m$ den gleichen Rest“
 \item Bezeichunung $x \equiv y (mod\; m)$ … $x$ kongruent $y$ (modulo $m$), z.B. $29 \equiv 8 (mod\; 7)$
 \item $T$ ist eine Äquivalenzrelation auf $\mathbb{Z}$, Äquivalenzklassen:\\
-Restklassen modulo $m$ (siehe Übungs-Aufgabe 1.19)
+Restklassen modulo $m$ (siehe Übungsaufgabe 1.19)
 \end{itemize}
 \item $M$ … Menge aller Geraden einer Ebene, $T\subseteq M \times M$ mit
 \begin{itemize}
 \item $(x,y) \in T :\equiv$ „$x$ ist zu $y$ parallel“, Bezeichnung: $x||y$\\
-$\curvearrowright T$ ist Äquivalenzrelation auf $M$ (siehe Übungs-Aufgabe 1.21.)
+$\curvearrowright T$ ist Äquivalenzrelation auf $M$ (siehe Übungsaufgabe 1.21.)
 \end{itemize}
 \end{enumerate}
 
@@ -855,7 +658,7 @@ $\curvearrowright T$ ist Äquivalenzrelation auf $M$ (siehe Übungs-Aufgabe 1.21
 \end{enumerate}
 
 \paragraph{Def. 15:} \parskp
-Eine Relation $T\subseteq M \times M$ heißt \emph{strikte Ordnungsrelation} auf $M$, wenn sie asymmetrisch und transitiv ist. Eine strikte Ordnungsrelation heißt vollständig, wenn für alle $x,y \in M$ mit $x\neg = y$ gilt $(x,y) \in T \vee (y,x) \in T$.
+Eine Relation $T\subseteq M \times M$ heißt \emph{strikte Ordnungsrelation} auf $M$, wenn sie asymmetrisch und transitiv ist. Eine strikte Ordnungsrelation heißt vollständig, wenn für alle $x,y \in M$ mit $x\not = y$ gilt $(x,y) \in T \vee (y,x) \in T$.
 
 \subparagraph{Bsp. 10:}
 \begin{enumerate} [label=\alph*)]
@@ -889,7 +692,7 @@ $\forall x \in A \quad x \leq a \quad (x \leq a$ d.h. $(x,a) \in T$, vgl. 3.) de
 \begin{tikzpicture}[scale = 0.5]
 \draw[-latex] (0,0) node[left] {a} -- (2,0) node[right]{b};
 \end{tikzpicture}
-$(a\neg = b)$ bedeutet $(a,b) \in T$ und es gibt kein Zwischenglied $c \neg = a$ und $c\neg = b$ mit $(a,c) \in T \wedge (c,b) \in T$ ($a$ ist unmittelbarer Vorgänger von $b$ bzw. $b$ Nachfolger von $a$).\\
+$(a\not = b)$ bedeutet $(a,b) \in T$ und es gibt kein Zwischenglied $c \not = a$ und $c\not = b$ mit $(a,c) \in T \wedge (c,b) \in T$ ($a$ ist unmittelbarer Vorgänger von $b$ bzw. $b$ Nachfolger von $a$).\\
 Diesem Diagramm entspricht eine Teilrelation $U \subseteq T$, deren transitiv-reflexive Hülle (bzw. transitive Hülle bei strikten Ordnungen) $T$ ist.
 \item Veranschaulichung von Def. 16 mit einem HASSE-Diagramm einer nicht vollständingen Ordnung (nicht linear)\\
 \begin{tikzpicture}[scale=.5]
@@ -916,11 +719,11 @@ Diesem Diagramm entspricht eine Teilrelation $U \subseteq T$, deren transitiv-re
 z.B. Arbeitsgänge, die in einer bestimmten Reihenfolge durchgeführt werden müssen, $A$ bspw. Teilarbeiten einer Zweigfirma\\
 \emph{obere Schranken:} $e,f,g$\\
 \emph{$sup\, A$}$=e$\\
-\emph{Maximum von $A$:} existiert nicht, da $e \neg \in A$\\
+\emph{Maximum von $A$:} existiert nicht, da $e \not \in A$\\
 \emph{maximale Elemente von $A$:} $c,d$
 \item Bei nichtlinearen Ordnungen müssene obere Schranken, Supremum und Maximum nicht existieren, es kann mehrere maximale Elemente $A\subseteq M$ geben.\\
 Bei linearen Ordungen auf \emph{endlichen} Mengen gibt es genau ein maximales Element $=max\, A =max\, B$
-\item Analog zur Def. 16 werden die Begriffe \emph{untere Schranken} $a$ von $A$ ($\forall x \in A \quad a \leq x$), \emph{größte untere Schranke} (\emph{Infinum}) $s$ von $A$ ($B\neg = \emptyset$ … Menge der unteren Schranken, $\exists s \in B \quad \forall a \in B \forall a \leq s$), \emph{Minimum von $A$} ($min \, A = inf\, A = s$ falls $s \in A$) und minimales Element $m$ von $A$ ($\forall x \in A \quad (x\leq m \Rightarrow x = m)$) definiert.
+\item Analog zur Def. 16 werden die Begriffe \emph{untere Schranken} $a$ von $A$ ($\forall x \in A \quad a \leq x$), \emph{größte untere Schranke} (\emph{Infinum}) $s$ von $A$ ($B\not = \emptyset$ … Menge der unteren Schranken, $\exists s \in B \quad \forall a \in B \forall a \leq s$), \emph{Minimum von $A$} ($min \, A = inf\, A = s$ falls $s \in A$) und minimales Element $m$ von $A$ ($\forall x \in A \quad (x\leq m \Rightarrow x = m)$) definiert.
 \subparagraph{Bsp. 11:} \parskp
 Eine bestimmte Arbeitsaufgabe besteht aus mehreren Arbeitsgängen. \\
 Es sei $A=\{1,2,3$,$4,5,6\}$ die Menge der Arbeitsgänge. Die Arbeitsgänge $\{2,3,5\}=:S$ werden von einer Subfirma durchgeführt. Für die Reihenfolge gilt: 1 muss vor 2, 2 vor 3 und 5, 3 vor 4 sowie 5 vor 6 durchgeführt werden.
@@ -1126,4 +929,94 @@ $f^{-1}\circ f = id_Y$, d.h. $ (f^{-1}\circ f)(y))= f(f^{-1}(y))=y (\forall y \i
 \paragraph{Satz 4:} \parskp
 Es seien $g=X\rightarrow U$ und $h: U\rightarrow Y$ zwei Bijektionen. Dann ist die Komposition $f:= g \circ h : X\rightarrow Y$ ebenfalls eine Bijektion und es gilt:\\
 $\boxed{f^{-1}=(g\circ h)^{-1}=h^{-1}\circ g^{-1}}$
+
+\subsection{Gleichmächtigkeit, Kardinalzahlen}
+
+Es sei eine hinreichend mufassend Grundmenge, die alle für eine mathematische Theorie relevante Objekte (Zahlen, Funktionen, usw.) enthält. $M$ sei die Potenzmenge von $E$(d.h. $M$ ist die Menge aller Teilmengen von $E$, $M=\mathcal{P}(E)$).
+
+\paragraph{Def. 20:} \parskp
+Zwei Mengen $A$ und $B$ ($A \subseteq E, B\subseteq E$ bzw. $A \in M, B \in M$) heißen \emph{gleichmächtig} (Bezeichnung $A\sim B$), wenn eine bijektive Abbildung von $A$ auf $B$ (damit auch $B$ auf $A$) existiert.
+
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Offensichtlich ist die Relation $T\subseteq M \times M$ mit $(A,B) \in T : \equiv A \sim B$ eine Äquivalenzrelation auf $M$.
+\item Äquivalenzklassen sind Mengen gleichmächtiger Teilmengen von $E$. Diese Äquivalenzklassen nennt man \emph{Kardinalzahlen}.
+\item Bei endlichen Mengen bedeutet Gleichmächtigkeit: \\
+Gleiche Anzahl von Elementen \\
+$A = \{a, b,c\}, B=\{X,Y,Z\}$ \\
+(Abbildung bspw. $a \rightarrow X \quad b\rightarrow Y \quad c\rightarrow Z$)\\
+Bezeichnung: $card A = |A| = 3 \quad (=|B|)$\\
+\emph{Natürliche Zahlen sind die Kardinalzahlen endlicher Mengen.}
+\item Die Anschauung versagt bei unendlichen Mengen.\\
+\begin{tikzpicture} [scale = 0.4]
+\draw (0,0) -- (10,0) node[below left]{B};
+\draw (0,0) -- (10,5) node[above left]{A};
+
+\draw[green, latex-] (2,0) -- (2,1);
+\draw[green, latex-] (4,0) -- (4,2);
+\draw[green, latex-] (6,0) -- (6,3);
+\draw[green, latex-] (8,0) -- (8,4);
+\end{tikzpicture}\\
+Die Strecken $A$ und $B$ sind gleichmächtig, obwohl $A$ länger als $B$ ist.
+\end{enumerate}
+
+\paragraph{Def. 21:} \parskp
+Eine Menge heißt \emph{abzählbar unendlich}, wenn sie mit der Menge $\mathbb{N}=\{1,2,3,4,...\}$ der natürlichen Zahlen gleichmächtig ist.
+
+\subparagraph{Diskussion:}
+
+\begin{enumerate}
+\item $M$ ist abzählbar unendlich heißt, es existiert eine \emph{Zählvorschrift}, bei der jedes Element von $M$ nach endlich vielen Schritten erreicht wird.
+\item Die Menge $\mathbb{Z}$ der ganzen Zahlen ist abzählbar unendlich. \\
+Andordnen nach steigendem Betrag:\\
+$\mathbb{Z}=\{0,-1,1,-2,2,-3,3, ...\}$
+\item $\mathbb{Q}^+$ … Menge der pos. rationalen Zahlen\\
+ABB 61\\
+Zählvorschrift:
+\begin{enumerate}
+\item (aufsteigend) Ordnen nach Summen von Zöhler und Nenner
+\item Zahlen mit gleicher Summe der Größe nach aufsteigend anordnen.
+\item Bereits enthaltene Zählen (=kürzbare Brücke) weglassen.
+\end{enumerate}
+$\mathbb{Q}^+=\left\lbrace\frac{1}{1},\frac{1}{2}, \frac{2}{1}, \frac{1}{3}\textcolor{red}{, \frac{3}{2}}, \frac{3}{1}, ... \right\rbrace$\\
+analog zu $\mathbb{Z}$: Die Menge $\mathbb{Q}$ aller rationalen Zahlen (also $\mathbb{Q}^-$ zusammen mit $\mathbb{Q}^+$) ist abzählbar unendlich.
+\item Es gibt Mengen, die mächtiger sind als die Menge der natürlichen Zahlen: \emph{überabzählbare Mengen} ($B$ heißt \emph{mächtiger} als $A$, wenn se eine injektive Abbildung $f: A \rightarrow B$ gibt, aber keine bijektive. Schreibweise: $|A|<|B|$).\\
+\end{enumerate}
+z. B. gilt:
+\subparagraph{Satz 5:} Die Menge $M=\{x \in \mathbb{R} | 0<x<1\}=(0,1)$ ist überabzählbar.\\
+Beweis: (\emph{CANTORsches Diagonalverfahren})\\
+Indirekt, angenommen $M=(0,1)$ sei abzhälbar unendlich, d.h. $M=\{x_1, x_2, x_3, ...\}$.\\
+Für die Zahlen $x_k$ wählen wir z.B. die eindeutige Darstellung als Dezimalbruch (9er Periode vermeiden). Also bspw. $0,39999...=0,3\overline{9}=0,4=0,40000...$)\\
+$x_{\textcolor{green}{1}}=0,a_1^{\textcolor{green}{(1)}}a_2^{\textcolor{green}{(1)}}a_3^{\textcolor{green}{(1)}}...\\
+x_2=0,a_1^{(2)}a_2^{(2)}a_3^{(2)}...\\
+x_3=0,a_1^{(3)}a_2^{(3)}a_3^{(3)}...\\
+...$\\
+Es sei $z=0,b_1 b_2 b_3 ...$ mit 
+$b_k=\begin{cases} 
+1 & \text{falls } a_k^{(k)}\not = 1\\
+2 & \text{falls } a_k^{(k)} = 1\\
+\end{cases}$
+für $k=1,2,3,...$\\
+Damit unterscheiden sich $x_k$ und $z$ an der $k$-ten Stelle, d.h. $z \not = x_k$ für alle $k\geq 1$. $z$ ist also nicht in der Folge $x_1, x_2, x_3, ...$ enthalten, also \emph{$z\not \in M$}.\\
+Andererseits ist $0<z<1$ also \emph{$z\in (0,1) = M$}. \lightning\, Widerspruch! \#
+
+\subparagraph{Satz 6:} \parskp
+Es sei $E$ eine Menge. Dann ist die Potenzmenge $M=\mathcal{P}(E)$ mächtiger als $E$.\\
+Beweis: 
+\begin{enumerate}
+\item Die Abbildung $f: E \rightarrow M$ mit $f(x)=\{x\}$, die jedem $x \in E$ die einelementige Menge $\{x\}\in M$ zuordnet, ist injektiv.
+\item Angenommen, es gäbe eine bijektive (damit auch surjektive) Abbildung $g: E \rightarrow M$. Es sei $A = \{x \in E| x \not \in g (x)\}\in M$ ($A$ Teilmenge von $E$). Da $g$ surjektiv ist, gibt ein $a \in E$ mit $g(a)=A$. Fallunterscheidung:
+\begin{enumerate} %[label=\arab*.]
+\item $a\in A= g(a) \Rightarrow a \not \in g(a)$ \lightning\, Widerspruch!
+\item $a \not \in A =g(a) \Rightarrow a \in g(a)$ \lightning\, Widerspruch!
+\end{enumerate}
+Beide Fälle führen auf einen Widerspruch, es gibt keine surjektive und damit auch keine bijektive Abbildung von $E$ auf $\mathcal{P}(E)$. \#
+\end{enumerate}
+
+\subparagraph{Diskussion:}\parskp
+Satz 6 zeigt, dass es unendlich viele unendliche Mächtigkeiten gibt. So gilt bspw. $|\mathbb{N}|<|\mathcal{P}(\mathbb{N})|<|\mathcal{P}(|\mathcal{P}(\mathbb{N})|)|$ usw. 
+
+\subparagraph{Satz 7:} \parskp
+Die Potenzmenge $\mathcal{P}(\mathbb{N})$ der Menge der natürlichen Zahlen ist gleichmächtig mit dem Intervall $(0,1)$, also überabzählbar (Beweis: siehe Übungsaufgabe 1.38).
+
 \end{document}
