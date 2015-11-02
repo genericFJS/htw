@@ -74,6 +74,30 @@
 %\LetLtxMacro{\oldemph}{\emph}
 %\renewcommand{\emph}[1]{\oldemph{#1}}
 
+% Einrichtung von lst
+\lstset{
+%basicstyle=\footnotesize\sffamily\color{black},
+commentstyle=\color{gray},
+%frame=single,
+%numbers=left,
+%numbersep=5pt,
+numberstyle=\tiny\color{gray},
+keywordstyle=\color{green},
+%showspaces=false,
+showstringspaces=false,
+stringstyle=\color{orange},
+tabsize=2,
+literate=%
+    {Ö}{{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}1
+    {ü}{{\"u}}1
+    {ä}{{\"a}}1
+    {ö}{{\"o}}1
+    {~}{{\textasciitilde}}1
+}
+
 % BibTeX
 \usepackage[backend=bibtex, bibencoding=ascii]{biblatex}	% BibTeX
 \usepackage{makeidx}

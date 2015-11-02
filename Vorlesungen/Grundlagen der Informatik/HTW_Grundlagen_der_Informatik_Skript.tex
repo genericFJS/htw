@@ -99,7 +99,7 @@ $regnet$ & $nass$ & $\neg (regnet \wedge \neg nass) = \neg regnet \vee nass$\\
 (Siehe Tabelle oberhalb)
 
 \subparagraph{Bsp.:} Berechnen des Betrags $y$ einer Zahl $x$:
-\begin{lstlisting}
+\begin{lstlisting}[language=C]
 if (x>= 0)
 	y=x;
 else 
@@ -207,7 +207,7 @@ Nach Def. ist $A^n=\{(a_1,...,a_n)|a_1,...,a_n \in A\}$. Um das n-Tupel $(a_1,..
 \subparagraph{Bsp.:} Eine PIN bestehe aus 6 Ziffern. Mit $A=\{0,...,9\}$ ist $A^6$ die Menge aller PINs. Mit obigen Satz folgt: Die Anzahl aller PINs ist $|A^6|=|A|^6 = 10^6$
 
 \subparagraph{Bsp.:} In dem Programm
-\begin{lstlisting}
+\begin{lstlisting}[language=C]
 for (i=1 to n)
 	for (j=1 to n)
 		a[i][j]=i+j;
@@ -219,7 +219,8 @@ werden alle Paare (i,j) erzeugt. Die Anzahl der Paare ist $|\{1,...,n\}^2|=|\{1,
 
 \paragraph{Definition:} Für eine n-elementige Menge ist $\begin{pmatrix}n\\k\end{pmatrix}$ die Anzahl ihrer k-elementigen Teilmengen $(n\geq k \geq 0)$.
 
-\subparagraph{Bsp.:} $\begin{pmatrix}n\\0\end{pmatrix}=1$, da $\emptyset$ die einzige 0-elementige Teilmenge ist.\\
+\subparagraph{Bsp.:} \parskp
+$\begin{pmatrix}n\\0\end{pmatrix}=1$, da $\emptyset$ die einzige 0-elementige Teilmenge ist.\\
 $\begin{pmatrix}n\\n\end{pmatrix}=1$, da es nur eine n-elementige Teilmenge gibt (die Menge selber).\\
 $\begin{pmatrix}n\\1\end{pmatrix}=n$, da es $n$ 1-elementige Teilmengen gibt.\\
 $\begin{pmatrix}n\\2\end{pmatrix}=\frac{n(n-1)}{2}$, denn für das 1. Element gibt es $n$ Möglichkeiten, für das 2. Element $n-1$ Möglichkeiten. Da das Element $\{a,b\}=\{b,a\}$ hierbei doppelt gezählt wird, müssen wir durch 2 teilen.
@@ -232,6 +233,58 @@ $\begin{pmatrix}n\\2\end{pmatrix}=\frac{n(n-1)}{2}$, denn für das 1. Element gi
 \paragraph{Satz:} Es gibt $n!$ Permutationen von $n$ Zahlen.
 
 \subparagraph{Beweis:} Für die 1. Stelle gibt es $n$ Möglichkeiten, für die 2. Stelle $n-1$ usw. Für die letzte Stelle nur noch eine Möglichkeit. Insgesamt also $n\cdot ... \cdot 1=n!$ Möglichkeiten.
+
+\paragraph{Satz:} $\begin{pmatrix}n\\k\end{pmatrix}= \frac{n!}{k! (n-k)!}$\\
+\subparagraph{Beweis:} Um aus einer $n$-elementigen Menge $k$ Elemente auszuwählen, gibt es $n$ Möglichkeiten, um das erste Element auszuwählen, für das zweite Element $n-1$ Möglichkeiten, …, für das $k$. Element $n-k+1$ Möglichkeiten, insgesamt daher $n \cdot ...\cdot (n-k+1)$ Möglichkeiten. Da die Reihenfolge, in der diese $k$ Elemente ausgewählt werden, keine Rolle spielt, muss dieses Produkt durch $k!$ geteilt werden. \\
+Daher erhalten wir $\begin{pmatrix}n\\k\end{pmatrix}= \frac{n\cdot ...\cdot (n-k+1)}{k!}= \frac{n!}{k! (n-k)!}$
+
+\section{O-Notation}
+Mit Hilfe der O-Notation lassen sich obere Schranken für die Laufzeit eines Algorithmus angeben (Abschätzung mit $\leq$, die die maximale Laufzeit eines Algorithmus angibt, bspw. $\leq c \cdot n^2$). Um die Laufzeit eines Algorithmus zu messen, bestimmen wir die Anzahl Schritte und geben mit Hilfe der O-Notation deren Größenordnung in Abhängigkeit der Länge der Eingabe an.
+
+\subparagraph{Beispiel:} lineare Suche
+\begin{lstlisting} [language=C]
+int lsearch (int a[], int n, int k) {
+	int i;
+	for (i=0; i<n; i++)
+		if ( a[i] == k) return 1;	//gefunden
+	return 0;	// nicht gefunden
+}
+\end{lstlisting}
+Laufzeit dieser Funktion:\\
+$\leq \textcolor{blue}{\underbrace{\textcolor{black}{c_1+ n\cdot c_2+c_3}}_{g(n)}} \overset{\text{Abschätzung}}{\leq}(c_1+c_2+c_3)\cdot n= c \cdot n$\\
+$c_1$ … Deklarierung von $i$\\
+$c_2$ … Vergleich der Werte in der Schleife (in $n$ Schleifedurchläufen)\\
+$c_3$ … Ausführung return\\
+(Durch den Worst-Case von annähernd unendlich vielen Durchläufen spielen die Konstanten, egal wie groß, keine besonder Rolle mehr und können, wie in der Abschätzung zu sehen, zusammengefasst werden).\\
+Die Laufzeit der linearen Suche liegt in $O(n)$
+
+\paragraph{Definition:} Für eine Funktion $f>0$ ist $O(f)$ die Menge aller Funktionen $g$, für die gilt:\\
+$g(n)\leq c\cdot f(n)$ für ein $c>0$ für alle großen $n$.\\
+ABB 31
+
+\subparagraph{Bsp.:} $2n^3-n+5\overset{1.)}{\leq} 2n^3+5 \leq 7n^3 \in O(n^3)$\\
+\begin{enumerate}
+\item $-n$ ist kleiner Null, deswegen ist die rechte Seite ohne $-n$ nachgewiesener Maßen größer (Vorgehensweise Ungleichung aufstellen (siehe auch folgende): weg lassen, was kleiner Null ist; mit $n^x$ o.ä. erweitern, um auszuklammern).
+\end{enumerate}
+
+\subparagraph{Bsp.:}\parskp
+\begin{lstlisting}[language=C]
+for (i=0; i<n-1; i++)
+	for (j=i+1 ; j<n ; j++)
+		if( a[i] == a[j] ) return 1;
+return 0;
+\end{lstlisting}
+Die if-Anweisung wird höchstens $\begin{pmatrix}n\\2\end{pmatrix}$ mal durchlaufen. Die Laufzeit ist daher $\leq c_1 \cdot \begin{pmatrix}n\\2\end{pmatrix} + c_2 \leq (c_1+c_2) \cdot \begin{pmatrix}n\\2\end{pmatrix} = \frac{c_1+c_2}{2}\cdot n \cdot (n-1)\leq \frac{c_1 + c_2}{2}\cdot n^2 \in O(n^2)$ (mit $c_i$ … Zeiteinheiten für Rechenaufwand).
+\subparagraph{Bsp.:} $2\cdot log(n^2+1)\\
+\leq 2 \cdot log (n^2(1+1))\\
+=2log(2n^2)=2(log(2)+log(n^2)) \\
+\leq 2(log(n)+2log(n))\\
+\leq 6 log(n) \in O(log(n))$\\
+Schneller mit:\\
+$n^2+1\leq n^3 \Leftrightarrow \\
+\frac{1}{n}+\frac{1}{n^3}\leq 1 \Rightarrow \\
+0\leq 1 \qquad \text{ für } n \rightarrow\infty$\\
+$2\cdot log(n^2+1)\leq 2 log (n^3)=6log(n)\in O(log(n))$
 
 \newpage
 \printbibliography
