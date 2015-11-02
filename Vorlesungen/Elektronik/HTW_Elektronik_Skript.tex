@@ -308,7 +308,91 @@ $P_V=U_q\cdot I + I^2 \cdot R_i$ \quad $I=\frac{U_{AB}}{R_V}$\\
 $P_V=f(R_V)$\\
 maximale Leistung am Verbraucher: $\frac{d P_V}{dR_V}=0 \Rightarrow P_{V,max}$ für $R_V=R_i$ (dann $P_{V,max}=\frac{I_k \cdot U_q}{4}$)
 
+\subsubsection{Betrachtung der Leistung im Grundstromkreis}
 
-\newpage
+ABB 41\\
+\begin{tabular}{l l}
+\emph{Generator} & \emph{Verbraucher}\\
+\mpb \begin{itemize}
+\item soll sich nicht erwärmen
+\item $P_i$ möglichst klein
+\end{itemize} \mpe &
+\mpb \begin{itemize}
+\item $P_L$ möglichst groß
+\item Wirkungsgrad groß
+\end{itemize} \mpe
+\end{tabular}\\
+Leistung am Lastwiderstand:\\
+$P_L=U_{AB}\cdot I = \frac{U_{AB}^2}{R_L}=I^2\cdot R_L$\\
+mögliche Lastfälle:\\
+ABB 42
+\begin{enumerate}
+\item Leerlauf: $R_L \rightarrow \infty$\\
+$AP_{Leerlauf}$: $U_{AP}=U_q$, $I_{AP}=0$, $P_{AP}=0$
+\item Kurzschluss: $R_L = 0$\\
+$AP_{Kurzschluss}$: $U_{AP}=0$, $I_{AP}=I_K$, $P_{AP}=0$
+\item großer Lastwiderstand: \\
+$AP_{gr}$: $U_{AP}=U_{AP, gr}$, $I_{AP}=I_{AP, gr}$, $P_{AP, gr}>0$
+\item kleiner Lastwiderstand: \\
+$AP_{kl}$: $U_{AP}=U_{AP, kl}$, $I_{AP}=I_{AP, kl}$, $P_{AP, gr}>0$
+\end{enumerate}
+Zwei realistische Betriebsfälle:
+\begin{itemize}
+\item Wirkungsgrad groß, dafür nicht maximale Leistung
+\item Wirkungsgrad bei 50\% und maximale Leistung
+\end{itemize}
+
+\subsection{Spannungszeitfunktion}
+Verlauf einer Spannung über der Zeit.
+\begin{itemize}
+\item Gleichspannung $U= const \not = f(t)$ (Batterien, Stromversorgung für elektrische Geräte
+\item Wechselspannung (Steckdose)\\
+ABB 43\\
+Kenngrößen: $\hat{U}=325V$ (Spitzenwert), $U=230V$ (Effektivwert), $f=50Hz$ ($T=\frac{1}{f}=20ms$, $\omega = 2 \pi f$[Kreisfrequenz]), $\varphi_0$ Phasenverschiebung/Nullphasenwinkel\\
+$u(t)=\hat{U}\cdot sin(\omega t+\varphi_o)$
+\begin{itemize}
+\item zur Informationsübertragung können $\hat{U}$, $\omega$ und $\varphi_0$ variiert werden.
+\item unterschiedliche Wechselspannungen können gemischt werden.
+\item harmonischee Spannungen (bestehen aus Sinussschwingungen).
+\end{itemize}
+\end{itemize}
+
+\paragraph{Grundtypen von Spannungszeitfunktionen}
+\begin{itemize}
+\item periodische Spannungen\\
+ABB 44
+\item impulsförmige Spannungen\\
+ABB 45
+\end{itemize}
+
+\subsection{Kondensator, Kapazität}
+
+Kapazität \\
+$\rightarrow$ Fähigkeit, Ladungen zu speichern\\
+$\rightarrow$ konkretes elektrisches Bauelement (kann Ladungen speichern) $\Rightarrow$ Kondensator \medskip\\
+Einsatz: Energiespeicherung, Ausnutzung des frequenzabhängigen Verhaltens
+
+\emph{Wirkungsweise:}\\
+ABB 46\\
+Beobachtung: $Q\sim U \Rightarrow Q=C\cdot U$ \\
+mit $C = $ Proportionalitätsfaktor $\Rightarrow$ Kapazität $C$ mit $[C]=\frac{[Q]}{[U]}=\frac{As}{V}=F$ (Farrad)\\
+relevante Werte: zwischen $\underset{\mu}{10^{-6}}... \underset{n}{10^{-9}}...\underset{p}{10^{-6}}F$
+\paragraph{Bemessungsgleichung} (für C)\\
+$C \sim A$, $C\sim \frac{1}{d}$, $C\sim  \frac{A}{d} \Rightarrow C=\varepsilon \cdot \frac{A}{d}$ \\
+($\varepsilon = \varepsilon_r \cdot \varepsilon_0$ … $\varepsilon_0$: Dielektrizitätskonstate des Vakuums$=8,856\cdot 10^{-12}\frac{As}{Vm}$)\\
+Symbol: ABB 47\\
+\subsubsection{Strom-Spannungs-Beziehung am Kondensator}
+$u_C(t)=\frac{1}{C}\int i_C(t) dt$\\
+$i_C(t)=C\cdot \frac{du_c(t)}{dt}$\\
+\emph{Konsequenzen:} $u(t)=\hat{U}\cdot sin (\omega t) \Rightarrow i_C(t)=\underbrace{\hat{U}\cdot \omega C}_{=\hat{I}}(sin (\omega t) + 90^{\circ})$\\
+Scheinwiderstand des Kondensators: $X_C=\frac{\hat{U}}{\hat{I}}=\frac{\hat{U}}{\hat{U}\omega C}=\frac{1}{\omega C}$\\
+ABB 48\\
+Anwendung des frequenzebhängigen Verhaltens:\\
+ABB 49
+
+
+
+
+%\newpage
 %\printbibliography
 \end{document}
