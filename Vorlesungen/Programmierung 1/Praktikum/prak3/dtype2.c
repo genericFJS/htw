@@ -12,30 +12,29 @@ int main(){
 	unsigned int	my_ui;
 	signed long	my_sl;
 	unsigned long	my_ul;
-	
+
 	float		my_fl;
 	double		my_db;
 	
-  	printf("enter signed char: ");
-	fgets(vBuf,128,stdin); my_sc=atoi(vBuf);
+	printf("enter signed char: ");
+	fgets(vBuf,128,stdin); sscanf(vBuf, "%d", &my_sc);
 	printf("enter unsigned char: ");
-	fgets(vBuf,128,stdin); my_uc=atoi(vBuf);
+	fgets(vBuf,128,stdin); sscanf(vBuf, "%u", &my_uc);
 	printf("enter signed short: ");
-	fgets(vBuf,128,stdin); my_ss=atoi(vBuf);
+	fgets(vBuf,128,stdin); sscanf(vBuf, "%hd", &my_ss);
 	printf("enter unsigned short: ");
-	fgets(vBuf,128,stdin); my_us=atoi(vBuf);
+	fgets(vBuf,128,stdin); sscanf(vBuf, "%hu", &my_us);
 	printf("enter signed int: ");
-	fgets(vBuf,128,stdin); my_si=atoi(vBuf);
+	fgets(vBuf,128,stdin); sscanf(vBuf, "%d", &my_si);
 	printf("enter unsinged int: ");
-	fgets(vBuf,128,stdin); my_ui=atoi(vBuf);
+	fgets(vBuf,128,stdin); sscanf(vBuf, "%u", &my_ui);
 	printf("enter signed long: ");
-	fgets(vBuf,128,stdin); my_sl=atoi(vBuf);
+	fgets(vBuf,128,stdin); sscanf(vBuf, "%ld", &my_sl);
 	printf("enter unsigned long: ");
-	fgets(vBuf,128,stdin); my_ul=atoi(vBuf);
-	printf("enter float: ");
-	fgets(vBuf,128,stdin); my_fl=atoi(vBuf);
-	printf("enter double: ");
-	fgets(vBuf,128,stdin); my_db=atoi(vBuf);
+	fgets(vBuf,128,stdin); sscanf(vBuf, "%lu", &my_ul);
+	
+	//fgets(vBuf,128,stdin); my_fl=atoi(vBuf);
+	//fgets(vBuf,128,stdin); my_db=atoi(vBuf);
 	
 	printf("type                     address  deci hex\n");
 	printf("signed		char	%p %d %X\n",&my_sc, my_sc, my_sc);
@@ -47,8 +46,8 @@ int main(){
 	printf("signed		long	%p %d %X\n",&my_sl, my_sl, my_sl);
 	printf("unsinged	long	%p %d %X\n",&my_ul, my_ul, my_ul);
 	
-	printf("float			%p %f %X\n",&my_fl, my_fl, my_fl);
-	printf("double			%p %f %X\n",&my_db, my_db, my_db);
+	//printf("float				%p %d %X\n",&my_fl, my_fl, my_fl);
+	//printf("double				%p %d %X\n",&my_db, my_db, my_db);
 	
 	return 0;
 }
