@@ -1,6 +1,13 @@
 % Header aus der Vorlage
 \input{../LaTeX_master/LaTeX_master_HTW}
 
+\lstset{
+basicstyle=\footnotesize\sffamily\color{black},
+%frame=single,
+numbers=left,
+numbersep=5pt,
+}
+
 % Definition von Titel, Autor usw.
 \DTitel{Programmierung I}
 \DUntertitel{Vorlesungsskript}
@@ -242,7 +249,6 @@ i*= 3+1		// i*(3+1)
 \item Iteration
 \item Sequenz
 \end{itemize}
-
 \subsubsection[Ausdrucksanweisung]{Ausdrucksanweisung (Expressionstatement)}
 Eine Ausdrucksanweisung besteht aus einem Ausdruck gefolgt von einem Semikolon:
 \begin{lstlisting}
@@ -434,9 +440,185 @@ int main() {
 }
 \end{lstlisting}
 
+\paragraph{Verlassen der Schleife} break
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
 
+char vbuf[128];
 
+int main() {
+	int i=1;
+	double x, y=1.0, summand = 1.0;
+	printf("Eingabe von x: ");
+	fgets(vbuf, 128, stdin);
+	x=atof(vbuf);
+	while (1){
+		summand = summand *x/i;
+		y += summand;
+		printf("Summand %d: %lf\n", i, summand);
+		if (summand<0,00005) break;
+		i++;
+	}
+	printf("e^%lf: %lf\n", x, y);
+	return 0;
+}
+\end{lstlisting}
+\emph{break} bezieht sich auf die (von innen nach außen) nächste zu findende Schleife. Also auf die Schleife, in deren \emph{statement} sie vorkommt.
 
+\paragraph{Neuberechnung der Bedingung} continue\\
+Verlässt den Schleifenkörper (der eingebettete Anweisung).
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+char vbuf[128];
+
+int main() {
+	int i=1;
+	double x, y=1.0, summand = 1.0;
+	printf("Eingabe von x: ");
+	fgets(vbuf, 128, stdin);
+	x=atof(vbuf);
+	while (summand>0,00005){
+		summand = summand *x/i;
+		y += summand;		
+		i++;
+		if (summand > 0.00005) continue;
+		printf("Summand %d: %lf\n", i-1, summand);
+	}
+	printf("e^%lf: %lf\n", x, y);
+	return 0;
+}
+\end{lstlisting}
+Wenn Summand größer als 0.00005 ist, startet er die Schleife neu. Die printf() wird erst ausgeführt, wenn er kleiner ist (also das letzte mal).
+
+\paragraph{Fallunterscheidung} switch-Anweisung
+\begin{lstlisting}[language=C]
+switch (i){ // i ist ganzzahliger Ausdruck
+	case 1:
+		... break;
+	case 2:
+		... break;
+	default:
+		...
+}
+\end{lstlisting}
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+char buf[128];
+
+int main(){
+	int wota;
+	printf("Wochentag (1...7): ");
+	fgets(buf, 128, stdin); wota=atoi(buf);
+	switch (wota){
+		case 1: puts("Montag");			break;
+		case 2: puts("Dienstag");		break;
+		case 3: puts("Mittwoch");		break;
+		case 4: puts("Donnerstag");	break;
+		case 5: puts("Freitag");		break;
+		case 6: puts("Samstag");		break;
+		case 7: puts("Sonntag");		break;
+		
+		default: puts("Die Woch hat nur 7 Tage!");
+	}
+	return 0;
+}
+\end{lstlisting}
+
+\subsection{Zusammenfassendes Beispiel}
+
+\begin{lstlisting} [language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+char buf [128];
+
+int main(){
+	int result=0;
+	char operator=0;
+	int value;
+	while (operator!=toupper('q')){
+		printf("Eingabe Operator: ");
+		fgets(buf, 128, stdin);
+		operator = buf[0];
+		printf("Eingabe Zahl: ");
+		fgets(buf, 128, stdin);
+		value = atoi(buf);
+		switch (operator) {
+			case '+':	// Erinnerung: kein "+" - nur '+' für einzelne Zeichenketten
+				result += value;
+				break;
+			case '-':
+				result -= value;
+				break;
+			case '*':
+				result *= value;
+				break;
+			case '/':
+				if (value) // bzw. value!=0 - aber !=0 kann in C weggelassen werden
+					result /= value;
+				else
+					puts("Division durch 0 ist nicht erlaubt.");
+				break;
+			case '%':
+				if (value) // bzw. value!=0 - aber !=0 kann in C weggelassen werden
+					result %= value;
+				else
+					puts("Division durch 0 ist nicht erlaubt.");
+				break;
+			case 'q':
+				break;		
+			default: 
+				printf("unerlaubte Operation %c\n", operator);
+		}
+		printf("result: %d\n", result);
+	}
+}
+\end{lstlisting}
+
+\subsection{Zeichenketten}
+\begin{lstlisting} [language=C]
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char buf [128];
+
+int main(){
+	printf("Eingabe Zeichenkette: ");
+	fgets(buf, 128,stdin);
+	printf("Len von Str: %d\n", strlen(buf));
+	buf[strlen(buf)-1]=0;
+	puts(buf);
+	while (buf[i]!=0)
+		printf("%c", buf[i++]);
+	printf("\n");
+	return 0;
+}
+\end{lstlisting}
+Bei der Eingabe „Max“ wird bei puts() sowohl die Eingabe der Zeichenkette, als auch die Eingabe der Eingabetaste (neue Zeile) ausgegeben.\\
+buf \begin{tabular}{|l | l |l |l |l |l |l |l }
+\hline
+M & a & x & $\backslash$ n & $\emptyset$ &\; &\;&\;\\
+\hline
+\end{tabular}\\
+mit $\emptyset$: binäre, terminierende Null ( 0000 0000 )\\
+Hinweis: der Buffer muss immer noch Platz für „$\backslash$ n“ und „$\emptyset$“ haben, d.h. man hat in einem Buffer der Größe von 128 nur Platz für 126 zeichen.\\
+mit \emph{buf[strlen(buf)-1]=0;} wird die Eingabetaste „$\backslash$ n“ raus gelöscht.\bigskip\\
+
+Daraus ergibt sich eine Verbesserung für den Taschenrechner:
+\begin{lstlisting} [language=C]
+...
+	printf("Eingabe Operator /Operand: ");
+	fgets(buf, 128, stdin);
+	operator = buf[0];
+	value = atoi(buf+1);	// Buffer ab der Stelle 0+1: 1
+...
+\end{lstlisting}
 
 
 

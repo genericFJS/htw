@@ -94,7 +94,102 @@ $\curvearrowright$ Menge von Resten $modulo \; m$: $\mathbb{Z}_m:= \{0,1,...,m-1
 $\curvearrowright$ „modulare Arithmetik“: Operation $\oplus$ und $\odot$ für Zahlen aus $\mathbb{Z}_m$ erklärbar, in dem für das Ergebnis jeweils der kleinste nichtnegative Rest $modulo \; m$ gewählt wird (vgl. Satz 1)\\
 z.B. $\mathbb{Z}_7 = \{ 0,1,..., 6\}$, \quad $5\oplus 4=2$, da $5+4\equiv 9\equiv 2 (mod \; 7)$ \quad $5\odot 6=2$, da $5\cdot 6\equiv 30 \equiv 2 (mod \;7)$\smallskip\\
 Falls keine Verwechselung zu befürchten ist, wird die übliche Schreibweise $+$ und $\cdot$ anstelle von $\oplus$ und $\odot$ verwendet.
-\paragraph{Def. 5:} 
+\end{itemize}
+
+\paragraph{Def. 5:} \parskp
+Wenn es zu $c \in \mathbb{Z}_m$ eine Zahl $d\in \mathbb{Z}_m$ gibt, mit $c\cdot d \equiv 1 (mod \; m)$ (bzw. $c\odot d \equiv 1$), so heißt $d$ die \emph{(multiplikative) modulare Inverse} zu $c$ in $\mathbb{Z}_m$.\\
+Bezeichnung: $d=c^{-1}$
+\subparagraph{Bsp. 2:} \parskp
+$c=3 \in \mathbb{Z}_7$, wegen $3 \cdot 5 \equiv 1 (mod \; 7)$ ist (in $\mathbb{Z}_7$) $3^{-1}=5$.
+\subparagraph{Satz 2:} Zu $a \in \mathbb{Z}_m, a \not = 0$, gibt es genau dann eine modulare Inverse in $\mathbb{Z}_m$, wenn $a$ und $m$ teilerfremd sind ($ggT(a,m)=1$).
+\subparagraph{Satz 3:} Es sei $p$ eine Primzahl. Dann ist $(\mathbb{Z}_m, \oplus, \odot)$ ein Körper.\\
+Bemerkung: Falls $m$ keine Primzahl ist, so ist $(\mathbb{Z}_m, \oplus, \odot)$ ein kommutativer Ring.
+\subparagraph*{EUKLIDischer Algorithmus}
+\begin{itemize}
+\item Verfahren zur Ermittlung des größten gemeinsamen Teilers $t$ zweier positiver natürlicher Zahlen, $t=ggT(a,b)$.
+\item In erweiterter Form bietet der Algorithmus eine Möglichkeit zur Bestimmung  der modularen Inversen von $a$ zum Modul $m$ (mit $a<m$ und $a,m$ teilerfremd).
+\end{itemize}
+
+\subparagraph{Satz 4:} (EUKLIDischer Algorithmus)\\
+Es seien $a,b \in \mathbb{N}^*, a>b$. Man bildet die endliche Folge \\
+$r_0:= b, \; r_1=mod \;(a,b), \;r_2 = mod \; (r_0,r_1),...,\;r_n = mod \; (r_{n-2}, r_{n-1})$, Abbruch falls $r_n=0$.\\
+In diesem Fall gist $\boxed{ggT(a,b)=r_{n-1}}$ (letzter nicht verschwindender Rest).\\
+Bezeichnung: $j$-te Division ... $\boxed{r_{j-2}:r_{j-1}= q_j\text{ Rest } r_j}$ ($j=1,...,n$) (dabei $r_1:=a$).
+
+\subparagraph{Satz 5:}  (erweiterter EUKLIDischer Algorithmus)\\
+Zusätzlich zur Folge $(r_n)$ aus Satz 4 bilde man die Folgen \\
+$x_0=0,\; x_1=1, \; x_2 = x_0 - q_2x_1, ...,\; x_j=x_{j-2}-q_jx_{j-1}\quad (j\leq n-1)$ und\\
+$y_0=1, \; y_1=-q_1, \; y_2=y_0- q_2 y_1, ... ,\; y_j=y_{j-2}-q_jy_{j-1}\quad (j \leq n-1)$\\
+Dann gilt für alle $j=0, ..., \; n-1$: $\boxed{r_j=x_j\cdot a + y_j \cdot b}$\\
+Insbesondere gilt $\boxed{ggT(a,b) = x_{n-1}\cdot a + y_{n-1}\cdot b}$
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Der Sinn der erweiterten EUKLIDischen Algorithmus besteht darin, in jedem Schrit den \emph{Divisionsrest $r$ als linearkombination von $a$ und $b$ mit ganzzahligen Koeffizienten $x$ und $y$} darzustellen: $r=x\cdot a + y\cdot b$\\
+Der Mechanismus wird am besten im Rechenschema des nachfolgenden Bsp. 4 deutlich.
+\item  Sind $c$ und $m$ teilerfremd, $1\leq c < m$, d.h. $ggT(m,c)=1$, so erhält man mit dem erweiterten EUKLIDischen Algorithmus ($a=m, b=c$) eine Darstellung in der Form $\boxed{1=x\cdot m+ y\cdot c}$.\\
+$\curvearrowright y\cdot c \equiv 1 (mod\; m)$ und damit $c^{-1}\equiv y (mod\; m)$ (für die modulare Inverse muss eventuell noch der in $\mathbb{Z}_m$ liegende, zu $y$ kongruente, Wert gebildet werden!).
+\end{enumerate}
+
+\subparagraph{Bsp. 3:} \parskp
+Man ermittle den größten gemeinsamen Teiler $t$ sowie das kleinste gemeinsame Vielfache $v$ der Zahlen $132$ und $84$.
+\begin{itemize}
+\item Es genügt der „einfache“ Algorithmus:
+\begin{align*}
+132:84 &= 1\text{ Rest } 48\\
+84:48 &= 1\text{ Rest } 36\\
+48:36 &= 1\text{ Rest } 12 \quad \curvearrowright t = ggT (132,84) = \resultul{12}\\
+36:12 &= 3\text{ Rest } \boxed{0} \curvearrowright \text{ Ende.}\\
+\end{align*}
+\item $v=\frac{a \cdot b}{t}=\frac{132\cdot 84}{12}=\resultul{924}=kgV (132,84)$
+\end{itemize}
+
+\subparagraph{Bsp. 4:} \parskp
+Man ermittle die modulare Inverse von $\overbrace{11}^b$ zum Modul $\overbrace{25}^a$. \medskip\\
+\begin{tabular}{r l | l | r l}
+				&				&						&	$11$&$=0 \cdot 25 + 1 \cdot 11$ (1)\\
+$25:11 $&$= 2 \text{ Rest }  3$	&	$3=25-2 \cdot 11$	&	$3 $&$= 1 \cdot 25 - 2 \cdot 11$ (2)\\
+$11: 3 $&$= 3 \text{ Rest } 2$		&	$2= 11-3 \cdot 3$	&	$2 $&$= -3 \cdot 25 + 7 \cdot 11$ (3)\\
+$3:2 $&$= 1 \text{ Rest } 1$		&	$1 = 3-2$			&	$\boxed{1} $&$= 4 \cdot 25 - 9 \cdot 11$\\
+$2 : 1 $&$= 2 \text{ Rest }  0$	&						& &\\
+\end{tabular} \medskip\\
+$\curvearrowright (-9) \cdot 11 \equiv 1 (mod \; 25)\\
+\curvearrowright 11^{-1} \equiv -9 \equiv 16 (mod \; 25)$, die Inverse von $11$ in $\mathbb{Z}_{25}$ ist $16$.\\
+Zu den Schritten:
+\begin{itemize}
+\item [(1)] $b=0 \cdot a + 1 \cdot b$
+\item [(2)] mittleres Feld als Linearkombination
+\item [(3)] ab hier Rechnung links spaltenweise durchführen, dabei Faktoren $a$ und $b$ beibehalten. 
+\end{itemize}
+\subsubsection*{EULERsche $\varphi$-Funktion, Satz von EULER}
+\paragraph{Def. 6:} \parskp
+Es sei $n \in \mathbb{N}^*$. Dann \emph{EULERsche $\varphi$-Funktion}:
+
+$\varphi(n):=$ Anzahl der zu $n$ teilerfremden Elemente aus $\{1,2,...,n\}$.
+Eigenschaften der $\varphi$-Funktion:
+\begin{itemize}
+\item Es sei $p$ eine Primzahl, dann ist $\boxed{\varphi(p)=p-1}$, $\boxed{\varphi(p^k)=p^{k-1}(p-1)} \; (k \in \mathbb{N}^*$
+\item Falls $ggT (m, n) =1$, so gilt $\varphi (m\cdot n) = \varphi (m) \cdot \varphi (n)$.
+\item Speziell: $n=p\cdot q $ ($p,q$ Primzahlen), dann $\boxed{\varphi(n)=(p-1)\cdot (q-1)}$ (1).
+\end{itemize}
+\subparagraph{Satz 6:} (Satz von EULER)\\
+Es sei $ggT(a,n)=1$, dann gilt:\\
+$\boxed{a^{\varphi(n)}\equiv 1 (mod \; n)}$ (2).
+
+\subsubsection*{RSA-Verschlüsselung}
+\begin{itemize}
+\item Die Formeln (1) und (2) [siehe oberhalb] bilden die Grundlage für die sogenannte RSA-Verschlüsselung (RIVES, SHAMIR, ADLEMAN - 1978)
+\item Schlüsselerzeugung:
+\begin{enumerate}
+\item Man wählt (in der Praxis sehr große) Primzahlen $d$ und $q$.
+\item $n:= p \cdot q$, $m:= \varphi (n) \overset{(1)}{=} (p-1)(q-1)$
+\item $e$ wird so gewählt, dass $ggT(e,m)=1$
+\item $d:= e^{-1} (mod \; m)$ (modulare Inverse)
+\item $(n,e)$ … öffentlicher Schlüssel\\
+$(n,d)$ … geheimer Schlüssel (geheim ist nur $d$)\\
+$p$, $q$ und $m$ werden nicht mehr benötigt, bleiben aber geheim!
+\end{enumerate}
+\item Verschlüsselung: \\
+Klartext $a$ teilerfremd zu $n$ verschlüsseln mit $e$, d.h. $b:\equiv a^e (mod \; n)$ bilden ($b$ … Geheimtext)
 \end{itemize}
 
 
