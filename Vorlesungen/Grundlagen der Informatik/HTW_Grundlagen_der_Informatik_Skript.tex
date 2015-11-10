@@ -46,9 +46,7 @@ Atomformeln bezeichnen wir mit Kleinbuchstaben oder durch Wörter in Kleinbuchst
 
 \subparagraph{Bsp.:} Formeln der Aussagenlogik sind $x$, $y$, $x\wedge y$, $( x\wedge (y \wedge z)) \vee (\neg x \wedge (y \wedge \neg z))$, $regnet$, $regnet \wedge nass$, da sie jeweils aus atomaren Aussagen die nach der Definition zusammensetzen lassen bestehen.\\
 Keine Formeln der Aussagenlogik sind $x\wedge$, $\vee x$, $x\wedge \vee y$.\\
-
-Um Klammern zu sparen, legen wir Prioritäten fest:
-
+Um Klammern zu sparen, legen wir Prioritäten fest:\\
 \begin{tabular}{c | c}
 Operator & Priorität \\
 \hline
@@ -64,7 +62,6 @@ Daraus ergibt sich der \emph{Wahrheitswert} einer Formel:
 \item Die Formel $F\wedge G $ ist genau dann wahr, wenn $F$ „wahr“ ist und $G$ „wahr“ ist. \\
 $F\vee G$ ist wahr, wenn $F$ wahr ist oder $G$ wahr.\\
 $\neg F$ ist wahr, wenn $F$ falsch ist.\\
-
 \begin{tabular}{c c | c c c c c}
 $F$&$G$&$F\wedge G$&$F\vee G$&$\neg F$&$F\rightarrow G$& $F\leftrightarrow G$\\
 \hline
@@ -78,7 +75,6 @@ $F$&$G$&$F\wedge G$&$F\vee G$&$\neg F$&$F\rightarrow G$& $F\leftrightarrow G$\\
 \subparagraph{Bsp.:} Wenn $regnet$ bedeutet: „Es regnet.“\\
 Wenn $nass$ bedeutet: „Die Straße ist nass.“\\
 Dann bedeutet $regnet \wedge nass$: „Es regnet und die Straße ist nass.“\\
-
 „Wenn es regnet, dann ist die Straße nass“ ($regnet \rightarrow nass$). Es muss nur der Fall ausgeschlossen werden, der nicht eintreffen kann: $\neg (regnet \wedge \neg nass)$ $\Rightarrow$ Folgendes darf nicht eintreffen: „Es regnet und die Straße ist nicht nass“. 
 
 Alles andere („Es regnet nicht und die Straße ist nicht nass“, „Es regnet nicht und die Straße ist nass“ und „Es regnet und die Straße ist nass“) darf eintreffen.\\
@@ -217,13 +213,13 @@ werden alle Paare (i,j) erzeugt. Die Anzahl der Paare ist $|\{1,...,n\}^2|=|\{1,
 \paragraph{Satz:} $|\mathcal{P}(M)|=2^{|M|}$
 \subparagraph{Beweis:} Für $M=\{m_1, ...,m_n\}$ identifizieren wir eine Teilmenge $A\subseteq M$ durch das n-Tupel $(a_1, ..., a_n)$ mit $a_k\begin{cases}0\text{ für }M_k \not \in A\\ 1\text{ für }m_k \in A\end{cases}$. Nach obigen Satz gibt es $|\{0,1\}^n|=2^n=2^{|M|}$ derartige Tupel.
 
-\paragraph{Definition:} Für eine n-elementige Menge ist $\begin{pmatrix}n\\k\end{pmatrix}$ die Anzahl ihrer k-elementigen Teilmengen $(n\geq k \geq 0)$.
+\paragraph{Definition:} Für eine n-elementige Menge ist $\nok{n}{k}$ die Anzahl ihrer k-elementigen Teilmengen $(n\geq k \geq 0)$.
 
 \subparagraph{Bsp.:} \parskp
-$\begin{pmatrix}n\\0\end{pmatrix}=1$, da $\emptyset$ die einzige 0-elementige Teilmenge ist.\\
-$\begin{pmatrix}n\\n\end{pmatrix}=1$, da es nur eine n-elementige Teilmenge gibt (die Menge selber).\\
-$\begin{pmatrix}n\\1\end{pmatrix}=n$, da es $n$ 1-elementige Teilmengen gibt.\\
-$\begin{pmatrix}n\\2\end{pmatrix}=\frac{n(n-1)}{2}$, denn für das 1. Element gibt es $n$ Möglichkeiten, für das 2. Element $n-1$ Möglichkeiten. Da das Element $\{a,b\}=\{b,a\}$ hierbei doppelt gezählt wird, müssen wir durch 2 teilen.
+$\nok{n}{0}=1$, da $\emptyset$ die einzige 0-elementige Teilmenge ist.\\
+$\nok{n}{n}=1$, da es nur eine n-elementige Teilmenge gibt (die Menge selber).\\
+$\nok{n}{1}=n$, da es $n$ 1-elementige Teilmengen gibt.\\
+$\nok{n}{2}=\frac{n(n-1)}{2}$, denn für das 1. Element gibt es $n$ Möglichkeiten, für das 2. Element $n-1$ Möglichkeiten. Da das Element $\{a,b\}=\{b,a\}$ hierbei doppelt gezählt wird, müssen wir durch 2 teilen.
 
 \paragraph{Definition:} Eine Permutation der Folge $1,...,n$ ist eine neue Anordnung dieser Folge.
 
@@ -234,9 +230,9 @@ $\begin{pmatrix}n\\2\end{pmatrix}=\frac{n(n-1)}{2}$, denn für das 1. Element gi
 
 \subparagraph{Beweis:} Für die 1. Stelle gibt es $n$ Möglichkeiten, für die 2. Stelle $n-1$ usw. Für die letzte Stelle nur noch eine Möglichkeit. Insgesamt also $n\cdot ... \cdot 1=n!$ Möglichkeiten.
 
-\paragraph{Satz:} $\begin{pmatrix}n\\k\end{pmatrix}= \frac{n!}{k! (n-k)!}$\\
+\paragraph{Satz:} $\nok{n}{k}= \frac{n!}{k! (n-k)!}$
 \subparagraph{Beweis:} Um aus einer $n$-elementigen Menge $k$ Elemente auszuwählen, gibt es $n$ Möglichkeiten, um das erste Element auszuwählen, für das zweite Element $n-1$ Möglichkeiten, …, für das $k$. Element $n-k+1$ Möglichkeiten, insgesamt daher $n \cdot ...\cdot (n-k+1)$ Möglichkeiten. Da die Reihenfolge, in der diese $k$ Elemente ausgewählt werden, keine Rolle spielt, muss dieses Produkt durch $k!$ geteilt werden. \\
-Daher erhalten wir $\begin{pmatrix}n\\k\end{pmatrix}= \frac{n\cdot ...\cdot (n-k+1)}{k!}= \frac{n!}{k! (n-k)!}$
+Daher erhalten wir $\nok{n}{k}= \frac{n\cdot ...\cdot (n-k+1)}{k!}= \frac{n!}{k! (n-k)!}$
 
 \section{O-Notation}
 Mit Hilfe der O-Notation lassen sich obere Schranken für die Laufzeit eines Algorithmus angeben (Abschätzung mit $\leq$, die die maximale Laufzeit eines Algorithmus angibt, bspw. $\leq c \cdot n^2$). Um die Laufzeit eines Algorithmus zu messen, bestimmen wir die Anzahl Schritte und geben mit Hilfe der O-Notation deren Größenordnung in Abhängigkeit der Länge der Eingabe an.
@@ -262,19 +258,19 @@ Die Laufzeit der linearen Suche liegt in $O(n)$
 $g(n)\leq c\cdot f(n)$ für ein $c>0$ für alle großen $n$.\\
 ABB 31
 
-\subparagraph{Bsp.:} $2n^3-n+5\overset{1.)}{\leq} 2n^3+5 \leq 7n^3 \in O(n^3)$\\
+\subparagraph{Bsp.:} $2n^3-n+5\overset{1.)}{\leq} 2n^3+5 \leq 7n^3 \in O(n^3)$
 \begin{enumerate}
 \item $-n$ ist kleiner Null, deswegen ist die rechte Seite ohne $-n$ nachgewiesener Maßen größer (Vorgehensweise Ungleichung aufstellen (siehe auch folgende): weg lassen, was kleiner Null ist; mit $n^x$ o.ä. erweitern, um auszuklammern).
 \end{enumerate}
 
-\subparagraph{Bsp.:}\parskp
+\subparagraph{Bsp.:}
 \begin{lstlisting}[language=C]
 for (i=0; i<n-1; i++)
 	for (j=i+1 ; j<n ; j++)
 		if( a[i] == a[j] ) return 1;
 return 0;
 \end{lstlisting}
-Die if-Anweisung wird höchstens $\begin{pmatrix}n\\2\end{pmatrix}$ mal durchlaufen. Die Laufzeit ist daher $\leq c_1 \cdot \begin{pmatrix}n\\2\end{pmatrix} + c_2 \leq (c_1+c_2) \cdot \begin{pmatrix}n\\2\end{pmatrix} = \frac{c_1+c_2}{2}\cdot n \cdot (n-1)\leq \frac{c_1 + c_2}{2}\cdot n^2 \in O(n^2)$ (mit $c_i$ … Zeiteinheiten für Rechenaufwand).
+Die if-Anweisung wird höchstens $\nok{n}{2}$ mal durchlaufen. Die Laufzeit ist daher $\leq c_1 \cdot \nok{n}{2} + c_2 \leq (c_1+c_2) \cdot \nok{n}{2} = \frac{c_1+c_2}{2}\cdot n \cdot (n-1)\leq \frac{c_1 + c_2}{2}\cdot n^2 \in O(n^2)$ (mit $c_i$ … Zeiteinheiten für Rechenaufwand).
 \subparagraph{Bsp.:} $2\cdot log(n^2+1)\\
 \leq 2 \cdot log (n^2(1+1))\\
 =2log(2n^2)=2(log(2)+log(n^2)) \\
@@ -285,6 +281,41 @@ $n^2+1\leq n^3 \Leftrightarrow \\
 \frac{1}{n}+\frac{1}{n^3}\leq 1 \Rightarrow \\
 0\leq 1 \qquad \text{ für } n \rightarrow\infty$\\
 $2\cdot log(n^2+1)\leq 2 log (n^3)=6log(n)\in O(log(n))$
+
+\section{Graphen}
+
+ABB 41
+\paragraph{Definition:} Ein (ungerichteter) Graph ist ein Paar $G=(V,E)$, wobei
+\begin{itemize}
+\item $V$ die Menge der Knoten und
+\item $E$ die Menge der Kanten ist, die aus ungeordneten Paaren $\{u,v\}$ von Knoten besteht (also ungerichtet).
+\end{itemize}
+
+\subparagraph{Bsp.:} \parskp
+ABB42\\
+$(\{1,2,3,4\},\{\{1,2\},\{1,3\}, \{2,3\}, \{1,4\}, \{3,4\}\})$\\
+(ABB43: Die Punkte und Kanten eines 3D-Objektes werden auf einen Graph abgebildet.)
+
+\paragraph{Definition:} Ein Graph heißt \emph{vollständig}, wenn alle Knoten paarweise verbunden sind. \bigskip\\
+Ein vollständiger Graph mit $n$ Knoten besitzt genau $\nok{n}{2}$ Kanten (jeder Knoten hat den Grad $n-1$).
+
+\paragraph{Definition:} Ein Knoten $v$ hat den Grad $k$, wenn $v$ mit genau $k$ anderen Knoten verbunden ist. \\
+Notation: $deg(v)=k$
+
+\subparagraph{Satz:} Für jeden Graphen gilt $\sum_{v\in V}deg(v)=2|E|$ (Sprich: Die Summe der Grade aller Knoten ist die zweifache Kanten-Anzahl).
+
+\subparagraph{Beweis:} Wenn wir jede Kante in der Mitte durchschneiden, ist jeder Knoten mit genau $deg(v)$ Hälften verbunden. Die Summe der Knotengrade ist dann die Anzahl der Kantenhälften, und diese ist $2|E|$.
+
+\paragraph{Definition:} Ein \emph{Weg} ist eine Folge von Knoten $v_1, ... , v_k$ mit $\{v_l,v_{l+1}\}\in E$ für $l=1, ..., k-1$. Die Länge dieses Weges ist $k-1$. Ein Weg heißt Kreis, wenn $v_1=v_k$.\\
+ABB 44\\
+ABB 45 ist ein Graph: $(\{1,2,3,4,5\},\{\{1,2\},\{1,3\},\{2,3\},\{4,5\}\}$\\
+ABB 46 ist ein Graph: $(\{1,2,3,4\},\emptyset\}$\\
+Ein Graph heißt \emph{zusammenhängend}, wenn es für alle Paare von Knoten $u,v$ einen Weg von $u$ nach $v$ gibt.\\
+Ein \emph{Pfad} ist ein Weg, der keinen Knoten mehrfach enthält.
+
+\subsection{Bäume}
+\paragraph{Definition:} Ein Baum ist ein zusammenhängender Graph der keine Kreise enthält. Ein Blatt ist ein Knoten $v$ mit $deg(v)\leq 1$ (dem Grad 1, also nur eine Kante hat).\\
+Anmerkung: Auch ein Graph mit nur einem Knoten ist ein Baum - ein Baum der keine Blätter hat.
 
 \newpage
 \printbibliography
