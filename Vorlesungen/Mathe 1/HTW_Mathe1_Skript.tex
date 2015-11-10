@@ -177,7 +177,7 @@ $\boxed{a^{\varphi(n)}\equiv 1 (mod \; n)}$ (2).
 
 \subsubsection*{RSA-Verschlüsselung}
 \begin{itemize}
-\item Die Formeln (1) und (2) [siehe oberhalb] bilden die Grundlage für die sogenannte RSA-Verschlüsselung (RIVES, SHAMIR, ADLEMAN - 1978)
+\item Die Formeln (1) und (2) [siehe oberhalb] bilden die Grundlage für die sogenannte RSA-Ver\-schlüsselung (RIVES, SHAMIR, ADLEMAN - 1978)
 \item Schlüsselerzeugung:
 \begin{enumerate}
 \item Man wählt (in der Praxis sehr große) Primzahlen $d$ und $q$.
@@ -190,12 +190,122 @@ $p$, $q$ und $m$ werden nicht mehr benötigt, bleiben aber geheim!
 \end{enumerate}
 \item Verschlüsselung: \\
 Klartext $a$ teilerfremd zu $n$ verschlüsseln mit $e$, d.h. $b:\equiv a^e (mod \; n)$ bilden ($b$ … Geheimtext)
+\item Entschlüsselung: \\
+Der Empfänger und Besitzer des geheimen Schlüssels bildet $b^d (mod \; m)$ und erhält $b^d\equiv a (mod \; n)$ denn $b^d\equiv (a^e)^d \equiv a^{ed}\equiv a ^{1+k\cdot m}\equiv a\cdot \underset{\equiv 1 \text{ wegen Satz 5}}{\left( a^{\varphi(n)}\right)}^k\equiv a (mod \; n)$.
+\item Praktische Durchführung vgl Übungsaufgabe 2.4
 \end{itemize}
 
+\subsection{Reelle Zahlen}
 
+$\mathbb{R}$ … Menge der reellen Zahlen.\\
+Auf $\mathbb{R}$ existiert eine algebraische Struktur und eine Ordnungsstruktur.
 
+\subsubsection{Algebraische Struktur}
+$(\mathbb{R}, + ,\cdot)$ mit den arithmetischen Operationen $+$ (Addition) und $\cdot$ (Multiplikation) ist ein Körper.
+\paragraph{Def. 7:}
+\begin{enumerate}[label=\alph*.)]
+\item $\boxed{0! := 1, \; n!=n\cdot (n-1)!}$ mit $n\in \mathbb{N}^*$ \emph{Fakultät} (rekursive Funktion)
+\item Sei $\alpha \in \mathbb{R}, k\in \mathbb{N}^*$, dann sei $\boxed{\nok{\alpha}{0}:=1, \nok{\alpha}{k}:= \frac{\alpha}{k}\nok{\alpha-1}{k-1}}$ Binominalkoeffizient $\alpha$ über $k$.\\
+d.h. $\boxed{\nok{\alpha}{k}= \frac{\alpha(\alpha-1)(\alpha-2)...(\alpha-k-1)}{k!}}$
+\end{enumerate}
 
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Für $k, n \in \mathbb{N}, \; 0 \leq k \leq n$ gilt $\boxed{\nok{n}{k}=\nok{n}{n-k}=\frac{n!}{k!(n-k)!}}$
+\item Für $k \in \mathbb{N}, \alpha \in \mathbb{R}$ gilt $\boxed{\nok{\alpha}{k}+\nok{\alpha}{k+1}=\nok{\alpha+1}{k+1}}$
+\item \emph{Binomischer Lehrsatz}: $(a+b)^k=\sum_{k=0}^n \nok{n}{k} a^{n-k} \cdot b^k=a^n+n\cdot a^{n-1} \cdot b + \nok{n}{2}a^{n-2}\cdot b^2+...+b^n$\\
+\emph{Pascalsches Dreieck}:
+\begin{tabular}{c c c c c c c c c c c r}
+   &   &   &   &   & 1 &   &   &   &   &   & \textcolor{red}{$n=0$} \\
+   &   &   &   & 1 &   & 1 &   &   &   &   & \textcolor{red}{$1$} \\
+   &   &   & 1 &   & 2 &   & 1 &   &   &   & \textcolor{red}{$2$} \\
+   &   & 1 &   & 3 &   & 3 &   & 1 &   &   & \textcolor{red}{$3$} \\
+   & 1 &   & 4 &   & 6 &   & 4 &   & 1 &   & \textcolor{red}{$4$} \\
+ 1 &   & 5 &   & 10&   & 10&   & 5 &   & 1 & \textcolor{red}{$5$} \\
 
+\end{tabular}
+(Spalte $\hat{=}k$ in $\nok{n}{k}$)
+\end{enumerate}
 
+\paragraph{Stellenwertsysteme:}
+\begin{itemize}
+\item Es sei $k>1$ eine natürliche Zahl (die sogenannte Basis)
+\item $x = (\underbrace{x_p x_{p-1}...x_1x_0}_{\text{Vorkomma}},\;\underbrace{x_{-1}x_{-2}...x_{-q}}_{\text{Nachkomma}})_b\\
+:= \underbrace{x_p\cdot b^p+x_{p-1}\cdot b^{p-1}+...+x_1\cdot b^1+x_0\cdot b^0}_{\text{Vorkomma}}+\underbrace{x_{-1}\cdot b^{-1}+x_{-2}\cdot b^{-2}+...+x_{-q}\cdot b^{-q}}_{\text{Nachkomma}}$\\
+heißt Darstellung zur Basis b (*).
+\end{itemize}
+
+\subparagraph{Bsp. 5:}
+\begin{itemize}
+\item $b=2$ … \emph{Dual- oder Binärsystem} (Ziffern $\{0,1\}$)
+\item $b=3$ … Trialsystem
+\item $b=10$ … \emph{Dezimalsystem}
+\item $b=16$ … \emph{Hexadezimalsystem} (Ziffern $\{0,1,2,...,9,\underset{10}{A},\underset{11}{B},\underset{12}{C},\underset{13}{D},\underset{14}{E},\underset{15}{F}\}$
+\end{itemize}
+z.B. $(47)_{10}=(101111)_2=(1202)_3=(57)_8=(2F)_{16}$
+\paragraph{Übergang von einem Ziffernsystem zu einem anderen}\parskp
+z.B. $p=3,\; q=2$
+\begin{align*}
+x&=x_3b^3+x_2b^2+x_1b^1+x_0+x_{-1}b^{-1}+x_{-2}b^{-2}\\
+&= (x_3b^2+x_2x^1+x_1)b+x_0+(x_{-1}+x_{-2}b^{-1})b^{-1}\\
+&=((x_3b^1+x_2)b+x_1)b+x_0+(x_{-1}+x_{-2}b^{-1})b^{-1}
+\end{align*}
+Grundlage: fortgesetztes Klammern:
+\begin{align*}
+x&=((....((x_p b+x_{p-1})b+x_{p-2})b+...+x_2)b+x_1)b+x_0+\\
+&\qquad((...(x_{-q}b^{-1}+x_{-(q-1)})b^{-1}+...+x_{-2})b^{-1}+x_{-1})b^{-1}
+\end{align*} (**)
+\subparagraph{Bsp. 6:} Übergang Dezimalsystem $\rightarrow$ anderes System
+\begin{itemize}
+\item ganzer Teil: fortgesetzte Division durch $b$ und Restabspaltung liefert $b$-Ziffern in der Reihenfolge $x_0,x_1,x_2,...$
+\item gebrochener Teil: fortgesetzte Multiplikation mit $b$ und Abspaltung des ganzzahligen Anteils liefert $b$-Ziffern in der Reihenfolge $x_{-1},x_{-2},...$
+\end{itemize}
+z.B. Dezimalsystem $\rightarrow$ Hexadezimalsystem ($b=16$)\\
+$x=435,9$\\
+ganzer Teil:\\
+\begin{tabular}{r c l l}
+$435:16=$ & $27$ & Rest $3$ &  $\rightarrow x_0$\\
+$27:16=$ & $1$ & Rest $11$ &  $\rightarrow x_1$\\
+$1:16=$ & $\boxed{0}$ & Rest $1$ &  $\rightarrow x_2$\\
+\end{tabular}\\
+gebrochener Teil: \\
+\begin{tabular}{r c l l}
+$0,9 \cdot 16=$ & $0.4$ & $+14$ & $\rightarrow x_{-1}$\\
+$0,4 \cdot 16=$ & $\boxed{0.4}$ & $+6$ & $\rightarrow x_{-2}$ (Periode, da gleicher „Nachkommarest“)\\
+\end{tabular}\\
+$\curvearrowright x=(1B3,E\overline{6})_{16}$
+
+\subparagraph{Bsp. 7:} Übergang anderer Systeme $\rightarrow$ Dezimalsystem\\
+Entweder direkte Auswertung von (*) (v.a. beim Dualsystem $\rightarrow$ Addition von 2er-Potenzen) \emph{oder} Klammern in (**) von innen nach außen berechnen (zweckmäßig HORNER-Schema).
+\begin{itemize}
+\item ganzer Teil: beginnend mit $x_p$\\
+ABB1 
+\item gebrochener Teil: beginnend mit $x_{-q}$\\
+ABB 2
+\end{itemize}
+$x=(1E2,B8)_{16}$\\
+ganzer Teil:\\
+\begin{tabular}{c | c c c}
+ & $1$  &  $14$  & $2$\\
+ $16$  &   & $16$  & $480$\\
+ \hline
+  & $1$ & $30$ & $\boxed{482}$\\
+
+\end{tabular}\\
+gebrochener Teil:\\
+\begin{tabular}{c | c c c}
+ & $8$  &  $11$  & *\\
+ $\frac{1}{16}=0,0625$  &   & $0,5$  & $\boxed{0,71875}$\\
+ \hline
+  & $8$ & $11,5$ & \\
+\end{tabular}\\
+$\curvearrowright x=\resultul{482,71875}$
+
+\subparagraph{Bsp. 8:} Hexadezimalsystem $\leftrightarrow$ Dualsystem\\
+4 Dualziffern entsprechen einer Hexadezimalziffer ($2^4=16$) $\curvearrowright$ 4er Gruppen von Dualziffern ab Komma bilden.
+\begin{enumerate}[label=\alph*.)]
+\item $(A8C,B2)_{16}=(1010 \; 1000 \; 1100, \; 1011 \; 1011 \; 001(0))_2$
+\item $((0)110\; 1110, \; 101(0))_2 = (6E,A)_{16}$
+\end{enumerate}
 
 \end{document}

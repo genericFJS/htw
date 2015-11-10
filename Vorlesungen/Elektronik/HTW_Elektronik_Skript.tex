@@ -63,18 +63,80 @@ Informatik: automatisierte Informationsverarbeitung
 \subsection{Grundgrößen und Grundbeziehungen}
 
 \paragraph{Bsp.:} Elektrophor mit Bernsteinplatte und Katzenfell\\
-\begin{tikzpicture}[scale=0.4, remember picture]%, overlay]
-\draw (3,0.5) ellipse (3 and 1);
+\begin{tikzpicture}[scale=0.8, remember picture]%, overlay]
 \draw (0,0) -- (0,0.5);
 \draw (6,0) -- (6,0.5);
+\draw (3,0.5) ellipse (3 and 1);
 \begin{scope}
 \begin{pgfinterruptboundingbox}
-%\draw [clip] (3,0) ellipse (3 and 1) [reverseclip];
 \path[clip] (0,0) -- (6,0) -- (6,1.5) -- (0,1.5)-- cycle [reverseclip];
 \end{pgfinterruptboundingbox}
 \draw(3,0) ellipse (3 and 1);
 \end{scope}
-%\draw (5,5) node{test};
+\begin{scope}
+\draw[-latex] (3,-1.7) node[below]{Bernstein} -- (3,-1.2);
+\draw[color=red] (3,-.8) node{$-$};
+\draw[color=red] (2,-.7) node{$-$};
+\draw[color=red] (1,-.5) node{$-$};
+\draw[color=red] (4,-.7) node{$-$};
+\draw[color=red] (5,-.5) node{$-$};
+
+
+\draw (1,0.5) -- (1,0.8);
+\draw (5,0.5) -- (5,0.8);
+\draw(3,.8) ellipse (2 and .6);
+\begin{pgfinterruptboundingbox}
+\path[clip] (0,.5) -- (6,.5) -- (6,3.5) -- (0,3.5)-- cycle [reverseclip];
+\end{pgfinterruptboundingbox}
+\draw(3,0.5) ellipse (2 and .6);
+\end{scope}
+\draw[-latex] (5,2) node[above right]{Metallplatte} -- (4,1);
+\draw[color=blue] (3,0) node{$+$};
+\draw[color=blue] (3.7,.1) node{$+$};
+\draw[color=blue] (4.4,.2) node{$+$};
+\draw[color=blue] (2.3,.1) node{$+$};
+\draw[color=blue] (1.6,.2) node{$+$};
+
+\draw[very thick] (3,0.8) -- (3,2.5) node{$\bullet$};
+\draw[-latex] (2.5,3) node[above left]{isoliert} -- (2.8,2.7);
+
+\draw (7,-1) node[right]{+ Katzenfell};
+\draw[color=red] (7.5,-.9) node[above right]{$- \; -$};
+\end{tikzpicture}\\
+Bernstein mit Katzenfell einreiben, dann Metallplatte anfassen: Elektronen fließen ab, Bernstein ist positiv geladen.\\
+\begin{tikzpicture}[scale=0.8, remember picture]%, overlay]
+\draw (0,0) -- (0,0.5);
+\draw (6,0) -- (6,0.5);
+\draw (3,0.5) ellipse (3 and 1);
+\begin{scope}
+\begin{pgfinterruptboundingbox}
+\path[clip] (0,0) -- (6,0) -- (6,1.5) -- (0,1.5)-- cycle [reverseclip];
+\end{pgfinterruptboundingbox}
+\draw(3,0) ellipse (3 and 1);
+\end{scope}
+\draw[color=blue] (3,-.8) node{$+$};
+\draw[color=blue] (2,-.7) node{$+$};
+\draw[color=blue] (1,-.5) node{$+$};
+\draw[color=blue] (4,-.7) node{$+$};
+\draw[color=blue] (5,-.5) node{$+$};
+\draw[very thick] (3,0.8) -- (3,2.5) node{$\bullet$};
+
+\draw[red, -latex] (7.25,.5) -- (6.25,.5);
+\begin{scope}
+\begin{pgfinterruptboundingbox}
+\draw[clip] (8,.25) ellipse (.5 and .5) [reverseclip];
+\end{pgfinterruptboundingbox}
+\draw (6,.25) -- (10,.25) -- (10,-2);
+\draw (9.5,-2) -- (10.5,-2);
+\end{scope}
+\draw (8,.25) ellipse (.5 and .5);
+\begin{scope}
+\draw[clip] (8,.25) ellipse (.5 and .5);
+\draw (7.5,-.25) -- (8.5,.75);
+\draw (7.5,.75) -- (8.5,-.25);
+\end{scope}
+
+\draw (8.5,.25) node[above right]{kurzes Aufleuchten};
 \end{tikzpicture}
 
 \paragraph{Modellbildung:} Erklärung für beobachteten Sachverhalt
@@ -84,7 +146,26 @@ Informatik: automatisierte Informationsverarbeitung
 \item Beschreibung über mathematische Gleichung
 \end{itemize}
 
-\paragraph{Bohr-Sommerfeldsches Atommodell:} ABB2
+\paragraph{Bohr-Sommerfeldsches Atommodell:} \parskp
+\begin{tikzpicture}[scale = 0.3, remember picture]
+\begin{scope}
+\begin{pgfinterruptboundingbox}
+\draw[clip] (9,0) ellipse (1 and 1)[reverseclip];
+\draw[clip] (-9,0) ellipse (1 and 1)[reverseclip];
+\end{pgfinterruptboundingbox}
+\draw[dashed] (0,0) ellipse (3 and 3);
+\draw[dashed] (0,0) ellipse (9 and 9);
+\end{scope}
+\draw (9,0) node{$-$};
+\draw (-9,0) node{$-$};
+
+\draw (1.1,1.1) node{$+$} ellipse (1 and 1);
+\draw (-1.1,-1.1) node{$+$} ellipse (1 and 1);
+
+\draw[-latex] (8,-8) node[below right]{Kern (Protonen, pos. Ladungen)} -- (2.5,-2.5);
+\draw[-latex] (13,1) node[right]{Elektron} -- (10.5,0);
+\draw[-latex] (8,8) node[right]{Elektronenschale} -- (6.5,6.5);
+\end{tikzpicture}
 
 Atommodell ist elektrisch neutral. Aber:
 \begin{itemize}
