@@ -264,7 +264,6 @@ Zu Ausdrucksanweisungen gehören:
 \item Berechnungen
 \item Aufrufe von Funktionen
 \end{itemize}
-
 \paragraph{Block}
 Konstruktion, die Anweisungen kapselt -- nach außen einzelne Anweilungen enthält
 \begin{itemize}
@@ -467,7 +466,7 @@ int main() {
 \emph{break} bezieht sich auf die (von innen nach außen) nächste zu findende Schleife. Also auf die Schleife, in deren \emph{statement} sie vorkommt.
 
 \paragraph{Neuberechnung der Bedingung} continue\\
-Verlässt den Schleifenkörper (der eingebettete Anweisung).
+Verlässt den Schleifenkörper (der eingebettete Anweisung) und prüft die Bedingung erneut.
 \begin{lstlisting}[language=C]
 #include <stdio.h>
 #include <stdlib.h>
@@ -601,7 +600,7 @@ int main(){
 }
 \end{lstlisting}
 Bei der Eingabe „Max“ wird bei puts() sowohl die Eingabe der Zeichenkette, als auch die Eingabe der Eingabetaste (neue Zeile) ausgegeben.\\
-buf \begin{tabular}{|l | l |l |l |l |l |l |l }
+\begin{tabular}{|l | l |l |l |l |l |l |l }
 \hline
 M & a & x & $\backslash$ n & $\emptyset$ &\; &\;&\;\\
 \hline
@@ -620,7 +619,73 @@ Daraus ergibt sich eine Verbesserung für den Taschenrechner:
 ...
 \end{lstlisting}
 
+\subsection{Funktionen}
 
+= Unterprogramme, zur Wiederholung von Codepassagen und zur besseren Strukturierung.
+\begin{lstlisting}
+<function> :: <func_head><funcbody>.
+<func_head> :: [<return_type>] name '('<param_lst> |void|')'.
+<param_list> :: [<type_name> name {','<type_name> name}]
+<func_body> :: <block>
+\end{lstlisting}
+Bsp.:\\
+\begin{tabular}{r l}
+(func\_head) & $\underset{\text{(return\_type)}}{\text{int}}$ main()\\
+ & \{ \\
+(func\_body) & return 0;\\
+& \} \\
+\end{tabular}\\
+Wenn kein return\_type gewählt wurde, dann default: \emph{int}.\\
+Wenn kein return\_type gebraucht wird, gibt man \emph{void} an.
+\begin{lstlisting}[language=C]
+long fakult (int x) {	// int x: Parameter
+	long f=1;
+	int i;
+	for (i=1; i<=x; i++){
+		f*=i;
+	}
+	return f;
+}
+
+char vBuf[128];
+
+int main(){
+	double x,y;
+	printf("Eingabe x: ");
+	fgets(buf,128,stdin); x= atof(vBuf);
+	y =fakult(x);
+	printf("y: %ld \n", y);
+	return 0;
+}
+\end{lstlisting}
+
+\subsection{Gültigkeit}
+\begin{itemize}
+\item Bereich im C-Quelltext, an dem ein Bezeichner sichtbar ist.
+\item Lebensdaur: Zeit von Erzeugung bis zur Vernichtung
+\end{itemize}
+\begin{lstlisting}[language = C]
+static int count; // default wert 0
+count++;	// behält jedes Mal ihren Wert, im Gegensatz zu int count!
+\end{lstlisting}
+\paragraph{Speicherklassen:}
+auto (automatische Variable): wird vom Stack erzeugt (Kellerspeicher)\\
+lokale Varibalen\\
+\emph{extern}: Variable, die in einem anderen Kontext vereinbart ist\\
+\emph{static}: leben bis zum Programmende, global-statische Variabln werden nicht exportiert, immer initialiesiert, default 0\\
+\emph{register}: Variablen werden nach Möglichkeit in ein Prozessorregister gelegt (schnell)\\
+\emph{volatile}: Variabeln werden immer im Speicher abgelegt
+\begin{lstlisting}[language=C]
+long fakult(int x);	//Funktionsdeklaration
+					// (prototyp)
+\end{lstlisting}
+
+\subsection{Header-File}
+enthält die Funktionsköpfe
+\begin{lstlisting}[language=C]
+#include "fe.h" // wie bspw. stdio.h kann die eigene Datei in anderen
+							//		 Quelltexten eingebunden werden
+\end{lstlisting}
 
 
 

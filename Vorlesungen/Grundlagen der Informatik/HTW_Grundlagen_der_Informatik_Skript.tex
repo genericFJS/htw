@@ -317,6 +317,64 @@ Ein \emph{Pfad} ist ein Weg, der keinen Knoten mehrfach enthält.
 \paragraph{Definition:} Ein Baum ist ein zusammenhängender Graph der keine Kreise enthält. Ein Blatt ist ein Knoten $v$ mit $deg(v)\leq 1$ (dem Grad 1, also nur eine Kante hat).\\
 Anmerkung: Auch ein Graph mit nur einem Knoten ist ein Baum - ein Baum der keine Blätter hat.
 
+\paragraph{Satz:} Sei $B=(V,E)$ ein Baum. Dann gilt $|E|=|V|-1$.
+
+\subparagraph{Beweis:} (Indkution)
+\begin{itemize}
+\item[IA:] $|V|=1$: Ein Baum mit nur einem Knoten enthält keine Kanten.
+\item[IV:] $|E|=|V|-1$.
+\item[IS:]$|V| \rightarrow |V| +1$: Sei $B$ ein Baum mit $|V|+1$ Knoten. $B$ besitzt ein Blatt (siehe Übung). Indem wir dieses Blatt zusammen mit der zugehörogien Kante entfernen, erhalten wir ein Baum $B'$ mit $|V|$ Kanten und nach Induktionsvoraussetzung $|V|-1$ Kanten. Damit besitzt $B$ $(|V|+1)-1$ Kanten.
+\end{itemize}
+
+\paragraph{Definiton:} Ein \emph{Wurzelbaum} ist ein Baum mit einem als Wurzel ausgezeichnetem Knoten.
+
+\paragraph{Definition:} Ein \emph{binärer Wurzelbaum} ist ein Wurzelbaum, in dem jeder Knoten, der kein Blatt ist, genau zwei Nachfolger besitzt.\\
+ABB 4
+\paragraph{Definition:}  (induktiv)
+ABB 5
+\begin{itemize}
+\item Ein einzelner Knoten ist ein binärer Wurzelbaum
+\item Wenn $W_1, W_2$ binäre Wurzelbäume sind, dann erhalten wir einen neuen Wurzelbaum, indem die Wurzeln von $W_1,W_2$ mit einer neuen Wurzel verbunden werden.
+\end{itemize}
+\paragraph{Satz:} Ein binärer Wurzelbaum mit Tiefe $d$ (d.h. alle Pfade von Wurzel zu einem Blatt haben die Länge $d$) besitzt genau $2^d$ Blätter.
+ABB 6
+\subparagraph{Beweis:} (Indkution)
+\begin{itemize}
+\item[IA:] $d=0$: Ein binärer Wurzelbaum, der nur aus der Wurzel besteht, enthält $2^0=1$ Blätter.
+\item[IV:] $|V| =2^d$
+\item[IS:] $d\rightarrow d+1$: Ein binärer Wurzelbaum der Tief $d+1$ enthält zwei binäre Wurzelbäume (laut vorhergehender Definition) der Tiefe $d$.\\
+ABB 7\\
+Diese enthalten nach Induktionsvoraussetzung jeweils $2^d$ Blätter. Folglich besitzt der binäre Wurzelbaum der Tiefe $d+1$ genau $2\cdot 2^d=2^{d+1}$ Blätter.
+\end{itemize}
+
+\subsection{Datenstrukturen zur Repräsentation}
+Es gibt zwei Möglichkeiten, um Graphen darzustellen:
+\paragraph{Adjazenzmatrix}
+Für einen Graphen $G=(V,E)$ ist die Adjazenzmatrix eine $|V|\times |V|$-Matrix ($a_{uv}$) mit
+$a_{uv}=\begin{cases}
+1 \qquad \text{für }\{u,v\}\in E\\
+0 \qquad \text{sonst}
+\end{cases}$
+\subparagraph{Bsp.:}
+ABB 8
+\paragraph{Adjazenzliste} Ein Array hat den Nachteil, dass es nicht in der Länge geändert werden kann. Der Vorteil ist allerdings, dass auf Elemente des Arrays in kurzer Zeit zugegriffen werden kann.\\
+Eine  Liste kann wachsen und schrumpfen. Jedes Glied einer Liste verweist auf das nächste. Der 
+Nachteil ist, dass der Zugriff auf Elemente aus der Liste nicht so schnell und einfach ist.\smallskip\\
+Die Adjazenzliste ist ein Array, das an jeder Position $v$ eine Liste der mit $v$ verbundenen Knoten enthält.
+\subparagraph{Bsp.:} \parskp
+ABB 9\medskip\\
+Bäume, insbesondere Binärbäume, lassen sich noch einfacher darstellen: Jeder Knoten wird dargestellt durch eine Datenstruktur, die einen Verweis auf die Nachfolger enthält.
+\subparagraph{Bsp.:}
+ABB 10
+
+\subsection{Grundlegende Graphalgorithmen}
+
+\paragraph{Breitensuche} \parskp
+ABB 11\\
+Mit der Breitensuche kann ein Graph systematisch durchsucht werden. Von einem Startknoten ausgehend, besucht die Breitensuche zuerst die diem Startknoten benachbarten Knoten. Anschließend werden die noch nicht besuchten Nachbarn dieser Knoten besucht, usw., bis das Ziel gefunden wurde oder alle Knoten besucht wurden.
+\paragraph{Tiefensuche}
+
+
 \newpage
 \printbibliography
 \end{document}
