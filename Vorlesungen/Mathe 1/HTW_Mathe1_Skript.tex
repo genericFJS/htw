@@ -308,4 +308,260 @@ $\curvearrowright x=\resultul{482,71875}$
 \item $((0)110\; 1110, \; 101(0))_2 = (6E,A)_{16}$
 \end{enumerate}
 
+\subsubsection{Zahlendarstellung im Computer}
+
+\begin{enumerate}
+\item Ganze Binärzahlen in Zweierkomplementdarstellung ($n$ Bit, meist $n=8,16,32,64$)
+\begin{itemize}
+\item Bsp.: $n=8 \qquad (100)_{^10}=(64)_{16}$\\
+\begin{tabular}{|c | c | c |c | c | c |c | c |}
+\hline
+\textcolor{red}{0} & 1 &1&0&0&1&0&0\\
+\hline
+$2^7$&$2^6$&$2^5$&$2^4$&$2^3$&$2^2$&$2^1$&$2^0$\\
+\hline
+\end{tabular}\\
+\textcolor{red}{MSB}: most siginficant bit\\
+(LSB: least significant bit)
+\item Um auch negative Zahlen darstellen zu können, wird das MSB als Vorzeichen reserviert. Negative Zahlen $-a$ ($1\leq a \leq 2^{n-1}$) werden im sogenannten Zweierkomplement $\overline{a}:=2^n-a$ dargestellt ($\curvearrowright \overline{a}\geq 2^{n-1} \curvearrowright MSB =1$)
+\item Nightnegtavie Zahlen $0\leq a \leq 2^{n-1}-1$ werden unverändert dargestellt ($MSB=0$)
+\item Damit Darstellung ganzer Zahlen von $-2^{n-1}$ bis $2^{n-1}-1$ (Anzahl $2^n$) möglich, $n=8: -128 bis 127$.
+\item Umwandlung negativer Zahlen $\rightarrow$ Zweierkomplement
+\subparagraph{Bsp. 9:} $n=8$, umzuwandeln sei $-100$ (dezimal)\\
+zwei Möglichkeiten:
+\begin{enumerate}[label=\arabic*.)]
+\item  (für die Handrechnung): $\overline{100}=\underbrace{2^8}_{=256}-100=\underbrace{156}_{(9C)_{16}}=$\begin{tabular}{|c|c c c|c c c c|}
+\hline
+\textcolor{red}{$1$}&$0$&$0$&$1$&$1$&$1$&$0$&$0$\\
+\hline
+\end{tabular}\\
+\emph{Bemerkung}: Das Zweierkomplement der positiven Zahl $100$ ist die positive Zahl $156=\overline{100}$, diese wird wegen $MSB=1$ als negative Zahl $-100$ interpretiert.
+\item (am schnellsten): Rechts (beim LSB) beginnend alle Ziffern bis einschließlich der ersten $1$ übernehmen (unverändert lassen), für alle höherwertigen Ziffern $Z$ das \emph{Einerkomplement} $1-z$ bilden:\\
+$(100)_{10}=$\begin{tabular}{|c|c c c|c c c c|}
+\hline
+$0$&$1$&$1$&$0$&$0$&$1$&$0$&$0$\\
+\hline
+\end{tabular}\\
+\begin{tabular}{|c|c c c|c c c c|}
+\hline
+\textcolor{red}{$1$}&\textcolor{red}{$0$}&\textcolor{red}{$0$}&\textcolor{red}{$1$}&\textcolor{red}{$1$}&\textcolor{green}{$1$}&\textcolor{green}{$0$}&\textcolor{green}{$0$}\\
+\hline
+\end{tabular} $=(\overline{100})_{10}=(156)_2$\\
+Rückumwandlung (Zahl mit $MSB=1 \rightarrow$ neg. Zahl) analog:\\
+$\overline{156}=256-156=100\rightarrow \resultul{-100}$\\
+Die Subtraktion wird damit auf die Addition des Zweierkomplements zurückgeführt.
+\end{enumerate}
+\subparagraph{Bsp. 10:} $a=64-100=64+(-100)$
+\begin{align*}
+64=2^6 &= 0100 \, 0000\\
+-100 &= 1001 \, 1100 \quad +\\
+Summe &= \textcolor{red}{1}101\, 1100 \quad \text{\textcolor{red}{Ergebins negativ}}\\
+36 &= 0010\, 0100 \quad \text{dargestellst ist aber }\overline{z}=2^n-z
+\end{align*}
+$\curvearrowright$ Ergebnis: $a=-36=-z$\\
+Ein \emph{Überlauf} (Ergebnis $\geq 2^{n-1}$ oder $<-2^{n-1}$) ensteht in folgenden Fällen ($\rightarrow$ ERROR!)
+\begin{tabular}{r | c |c |c l}
+ & $a$ & $b$ & $a+b$ & \\
+ \hline
+ MSB & 0 & 0& \textcolor{red}{1} & ($MSB = 0$ erwartet!)\\
+ \hline 
+ MSB & 1 & 1& \textcolor{red}{0} & ($MSB = 1$ erwartet!)\\
+\end{tabular}\\
+Bemerkung: Für die Handrechnung (z.B. $2-5=:a$) kleinere zahl von größerer Subtrahieren $a=-(5-2)$, dabei genügt es für $n$ die Binärstellenzahl des Minuenden $(5)_{10}=(101)_2$ also $n=3$  zu verwenden. Es wird dabei ausschließlich mit nicht-negativen Zahlen gerechnet ($0,1,...,2^n-1$):\\
+$(5-2)_{10}=((5+\textcolor{red}{2^n}-2)-\textcolor{red}{2^n})_{10}=(5+\overline{2}-\textcolor{red}{2^n})_{10}$\\
+$(2)_{10}=(010)_2 \curvearrowright \overline{2}=(110)_2$\\
+$(5)_{10}=(101)_2$\\
+\begin{tabular}{r l}
+$5$:& $101$\\
+$\overline{2}$:& $110 \quad +$\\
+$\textcolor{red}{1}$& $011$
+\end{tabular}\\
+\textcolor{red}{vordere Stelle $2^n$ ignorieren}\\
+$\curvearrowright 5-3=3=(011)_2 \curvearrowright \resultul{a=-3}$
+\end{itemize}
+\item Gleitkommasysteme\\
+$\boxed{x=v\cdot m \cdot b^e}$ dabei
+\begin{itemize}
+\item $v=(-1)^V$ … \emph{Vorzeichen} $\begin{cases}
+V= 0 \quad \text{positive Zahl}\\
+V=1 \quad \text{negative Zahl}
+\end{cases}$
+\item $m$ … \emph{Mantisse}, Stellenzahl $p$, die Mantisse heißt \emph{normalisiert} falls sie folgende Gestalt besitzt:\\
+ $m_1, m_2, ..., m_p$ oder $0, m_1, m_2, ..., m_p$ mit $m\not = 0$. Dabei sind  $m_1, m_2, ..., m_p$ die Ziffern zur Basis $b$.
+\item $e$ … \emph{Exponent}, ganzzahlig $e_{min}\leq e \leq e_{max}$.
+\end{itemize}
+In jedem Gleitkommasystem sind nur endlich viele Zahlen darstellbar, die Menge der reellen zahlen ist aber überabzählbar (unendlich).\\
+Gleitkommazahlen liegen auf der Zahlengeraden diskret verteilt (fester Exponent $\curvearrowright$ gleiche Abstände, wächst Exponent um $k$, so wachsen die Abstände auf $b^k$-fache!)\\
+Veranschaulichung für $b=10$, Mantissenlänge $p=1$:\\
+\begin{tikzpicture}[scale=0.9]
+\draw (0,0) -- (11,0);
+\draw (0,0) node[below]{0};
+\draw (0,0.15)--(0,-0.15);
+\draw (1,0.15)--(1,-0.15);
+\draw (2,0.15)--(2,-0.15);
+\draw (3,0.15)--(3,-0.15);
+\draw (4,0.15)--(4,-0.15);
+\draw (5,0.15)--(5,-0.15);
+\draw (6,0.15)--(6,-0.15);
+\draw (7,0.15)--(7,-0.15);
+\draw (8,0.15)--(8,-0.15);
+\draw (9,0.15)--(9,-0.15);
+\draw (10,0.15)--(10,-0.15);
+\draw (1,0) node[below]{\textcolor{red}{1}};
+\draw (2,0) node[below]{\textcolor{red}{2}};
+\draw (3,0) node[below]{\textcolor{red}{3}};
+\draw (4,0) node[below]{\textcolor{red}{4}};
+\draw (5,0) node[below]{\textcolor{red}{5}};
+\draw (6,0) node[below]{\textcolor{red}{6}};
+\draw (7,0) node[below]{\textcolor{red}{7}};
+\draw (8,0) node[below]{\textcolor{red}{8}};
+\draw (9,0) node[below]{\textcolor{red}{9}};
+
+\draw[green] (0.1,0.15)--(0.1,-0.15);
+\draw[green] (0.2,0.15)--(0.2,-0.15);
+\draw[green] (0.3,0.15)--(0.3,-0.15);
+\draw[green] (0.4,0.15)--(0.4,-0.15);
+\draw[green] (0.5,0.15)--(0.5,-0.15);
+\draw[green] (0.6,0.15)--(0.6,-0.15);
+\draw[green] (0.7,0.15)--(0.7,-0.15);
+\draw[green] (0.8,0.15)--(0.8,-0.15);
+\draw[green] (0.9,0.15)--(0.9,-0.15);
+
+
+\draw (10,0) node[below]{\textcolor{cyan}{$1\cdot 10^1$...}};
+\end{tikzpicture}\\
+\emph{Exponent} 0: $1\cdot 10^{\textcolor{red}{0}}, 2\cdot 10^{\textcolor{red}{0}}, ... , 9\cdot 10^{\textcolor{red}{0}}$\\
+\emph{Exponent} -1: $1\cdot 10^{\textcolor{green}{-1}}, 2\cdot 10^{\textcolor{green}{-1}}, ... , 9\cdot 10^{\textcolor{green}{-1}}$\\
+\emph{Exponent} 1: $1\cdot 10^{\textcolor{cyan}{1}}, 2\cdot 10^{\textcolor{cyan}{1}}, ... , 9\cdot 10^{\textcolor{cyan}{1}}$\\
+\emph{Rundung}: Zahlen, die nicht in diesem „Raster“ enthalten sind, werden auf dei nächstgelegene darstellbare Gleitkommazahl gerundet. Falls die Zahl genau in der Mitte zwischen zwei darstellbaren Zahlen liegt, wird auf die gerade Zahl gerundet (Bsp. $3,75 \rightarrow 3,8$ oder $4,65 \rightarrow 4,6$ bei Rundung auf eine Stelle nach dem Komma).
+\paragraph{Numerische Probleme beim Rechnen mit Gleitkommazahlen}
+\begin{itemize}
+\item Kommutativ-, Assoziativ- und Distributivgesetze gelten im allgemeinen nicht mehr. Ursachen sind bspw. Ziffernauslöschung bei der Subtraktion fast gleicher Zahlen, Addition oder Subtraktion von Zahlen unterschiedlicher Größenordnung.
+\subparagraph{Bsp. 11:}
+\begin{enumerate}[label=\arabic*.)]
+\item Man berechne $(a+b)+c$ und $a+(b+c)$ in einem System mit 3-Stelliger Mantisse:\\
+$a=3,73\cdot 10^6$, $b=-3,71\cdot 10^6$ und $c=6,42\cdot 10^3$
+\begin{itemize}
+\item $a+b= 0,02\cdot 10^6=2,00 \cdot 10^4$ (Normalisierung)\\
+$c=0,642\cdot 10^4=0,64\cdot 10^4$ (Exponentenangleichung und Rundung)\\
+$(a+b)+c=2,64\cdot 10^4=\resultul{26400}$
+\item $c=0,00642\cdot 10^6=0,01\cdot 10^6$ (Exponentenangleichung und Rundung)\\
+$b+c=-3,,70\cdot 10^6$\\
+$a+(b+c)=0,03\cdot 10^6=3,00\cdot 10^4 = \resultul{30000}$
+\item exakter Wert: $a+b+c = \resultul{26420}$
+\end{itemize}
+\item Aufgabe der numerischen Mathematik ist es, die unvermeidlichen Genauigkeitsverluste beim Rechnen mit Maschinenzahlen durch optimale Organisation (Reihenfolge) der Rechnung und Fehleranalyse in Grenzen zu halten.
+\end{enumerate}
+\end{itemize}
+\item Gleitkommaformat IEEE 754 (single precision, 32 Bit)\\
+$x=v\cdot m \cdot b^e=(-1)^{\torange{V}}\cdot 1, \tblue{m_2\,m_3...m_24}\cdot 2^{\tred{E}-B}$ ($b=2$, Binärsystenm)
+\begin{itemize}
+\item Vorzeichen $V=0\curvearrowright$ positiv, $V=1\curvearrowright$ negativ (1 Bit)
+\item Mantisse $m_1$ im Binärsystem stets gleich $1$.\\
+$\curvearrowright$ nur Abspeicherung von $\tblue{\boxed{M=m_2\,m_3...m_24}}$ (23 Bit)
+\item Exponent: Abgespeichert wird $\tred{\boxed{E:=e+B}} $ \\
+mit dem sogenannten \emph{Biaswert $B=127$} (Bias = Verzerrung) als nichtnegative 8-stellige Binärzahl, $e_{min}=-126 $ ($E=1$), $e_{max}=127$ ($E=254=(1111\;1110)_2)$, die Grenzfälle $E=(0000\;0000)_2$ und $E=(1111\;1111)_2$ sind für Sonderfälle ($0$, $\infty$, nichtdefinierte Werte) vorgesehen.
+\end{itemize}
+Abspeicherung in der Reihenfolge $\boxed{\torange{V}\tred{E}\tblue{M}}$ (32 Bit)
+\subparagraph{Bsp. 12:} Umwandlung einer Dezimalzahl in das IEEE 754-Format (32-Bit), $x=435,9$ (vgl. Bsp. 6)
+\begin{enumerate}[label=\arabic*.)]
+\item Konvertierung in Dualzahl (unter Verwendung von Bsp. 6/Hexadez.)\\
+$x=1B3,E\overline{6})_{16}=(1\; 1011\;0011,1100\;0110\;0110 ...)_2$
+\item Normalisierte Gleitkommadarstellung, Mantisse mit 23 Stellen nach dem Komma, Kommaverschiebung um 8 Stellen.\\
+$\curvearrowright x = 1, \underbrace{1011\;0011\;1110\;0110\;0110\;011}_{\tblue{M}}(0\; 0110...))_2\cdot 2^8$ \quad (Abrundung!)
+\item Exponent $e=8\curvearrowright E=e+B=8+127=135=\underbrace{(1000\;0111)_2}_{E}$
+\item Vorzeichenbit $V=0$ (da $x$ positiv)
+\end{enumerate}
+$\curvearrowright x: \quad \boxed{0 \; \tred{1000\;0111}\;\tblue{1011\;0011\;1110\;0110\;0110\;011}}$
+\paragraph{Bsp. 13:} IEEE 754$\rightarrow$ Dezimalzahl\\
+$\boxed{1\;\tred{1000\;0011}\;\tblue{0111\; 1100 \; 0000\;0000\;0000 \; 000}}$
+\begin{enumerate}[label=\arabic*.)]
+\item $E=(\tred{1000\;00111})_2=131\curvearrowright e=E-B=131-127=\resultul{4}$
+\item $V=1\curvearrowright$ negativ, normalisierte Mantisse $1,\tblue{M}$\\
+$\curvearrowright x=-(1,\tblue{011111})_2\cdot 2^4=-(10111,11)_2$\\
+$\curvearrowright x = -23,75$
+\end{enumerate}
+Bemerkung: 
+\begin{enumerate}[label=\arabic*.)]
+\item Neben dem single-Format gibt es in IEEE 754 das double-Format (54 Bit, V=1Bit, E=11Bit, M=52 Bit, B=1023) sowie das erweiterbare Format
+\item Zahlbereiche single: $1,401\cdot 10^{-45}...3,403\cdot 10^{38}$, double: $4,941\cdot 10^{-324}...1,798\cdot 10^{308}$
+\end{enumerate}
+\end{enumerate}
+\subsubsection{Ordnungsstruktur}
+\begin{itemize}
+\item Durch $\leqq$ (auch $\leq$) ist auf $\mathbb{R}$ eine vollständige Ordnungsrelation erklärt.
+\item Verträglichkeit mit der algebraischen Struktur (für alle $x,y,z\in \mathbb{R}$):
+\begin{enumerate}[label=(\arabic*)]
+\item $x\leq y \quad \Rightarrow \quad x+z \leqq y+z$
+\item $(x\leq y) \wedge (z \geq 0 )\quad \Rightarrow \quad x \cdot z \leq y \cdot z$\\
+$(x\leq y) \wedge (z \leq 0 )\quad \Rightarrow \quad x \cdot z \geq y \cdot z$
+\end{enumerate}
+Für die strikte Ordnung $<$ gilt:\\
+$\boxed{(x<y)\wedge (z<0) \quad \Rightarrow \quad x \cdot > y \cdot z}$
+\end{itemize}
+\paragraph{Def. 8:} \parskp
+Sei $x$ eine reele Zahl. Dann heißt $|x|:=\begin{cases}
+x \quad \text{ für } x\geq 0\\
+-x \quad x <0
+\end{cases}$ der (absolute) Betrag von $x$.\\
+ABB 5\\
+Vorzeichenfunktion $sgn(x):= \begin{cases}
+1 \quad x>0\\
+0 \quad x=0\\
+-1 \quad x<0
+\end{cases}$
+\subparagraph{Diskussion:} Es gilt:
+\begin{enumerate}
+\item $|a-b|$ = „Abstand der Zahlen $a$ und $b$ auf der Zahlengeraden“\\
+ABB 6\\
+(speziell: $|a|$ = „Abstand von $a$ zum Ursprung“)
+\item $a = |a| \cdot sgn (a)$
+\item $|a|=|-a|, |ab|=|a|\cdot |b|, \left|\frac{a}{b}\right|=\frac{|a|}{|b|}$ (falls $b\not = 0$)
+\item $|a \pm b| \leq |a| + |b|$ (\emph{Dreiecksungleichung}) für alle $a,b \in \mathbb{R}$
+\end{enumerate}
+\paragraph{Lösung von Ungleichung}
+\subparagraph{Bsp. 14:} (Ungleichung mit Beträgen)\\
+Gesucht sei die Lösungmenge $L$ der reellen Zahlen, die die Ungleichung $|x-1|<3+\frac{1}{2}x$ (*) erfüllen.
+\begin{itemize}
+\item kritische Stelle(n): Nullstellen des Terms innerhalb der Betragsstriche d.h. $x=1 \curvearrowright$ Fallunterscheidung\\
+ABB 7
+\item 1. Fall: $x-1<0$ d.h. $x<1$\\
+in (*): \\
+$\tred{-}(x-1)<3+\frac{1}{2}x \Leftrightarrow \\
+-\frac{3}{2}x<2 \Leftrightarrow \\
+\resultul{x>-\frac{4}{3}}$\\
+$\curvearrowright L_1=\left\lbrace x|(x<1) \wedge x>\frac{4}{3}\right\rbrace = \left(-\frac{4}{3},1\right)$
+\item 2. Fall $x-1 \geq 0$ d.h. $x\geq 1$\\
+in (*):\\
+$x-1< 3+ \frac{1}{2}x \Leftrightarrow\\
+\frac{1}{2}x<4 \Leftrightarrow\\
+\resultul{x<8}$\\
+$\curvearrowright L_2 = \{ x| (x\geq 1) \wedge (x <8)\}=[1,8)$
+\item $\Rightarrow L = L_1 \cup L_2 = \resultul{\left(-\frac{4}{3},8\right)}$
+\end{itemize}
+\subparagraph{Bsp. 15:} (Ungleichung mit gebrochen rationalen Termen)\\
+$\frac{x}{x+1}<1$ (*)
+\begin{itemize}
+\item kritische Stelle(n): Nenner-Nullstellen, hier: $x=-1$.\\
+ABB 7 (äquiv. mit -1)
+\item 1. Fall: $x<-1$\\
+in (*):\\
+$\Leftrightarrow x>x+1 \Leftrightarrow 0>1$ (Widerspruch)\\
+$L_1=\emptyset$.
+\item 2. Fall: $x > -1$\\
+in (*):\\
+$\Leftrightarrow x < x+1 \Leftrightarrow 0<1$ (wahre Aussage)\\
+$L_2=\{x|x>-1\}=(-1,\infty)$
+\item $\Rightarrow L = L_1 \cup L_2 = \resultul{(-1,\infty)}$
+\end{itemize}
+\subparagraph{Bsp. 16:} (quadratische Ungleichungen)\\
+$x^2+3x<10 \Leftrightarrow \\
+\left( x+\frac{3}{3}\right)^2-\frac{9}{4}<10 \Leftrightarrow$ (vereinfacht durch quadratische Ergännzung)\\
+$\left( x+\frac{3}{2}\right)^2<\frac{49}{4} \Leftrightarrow\\
+\left|x+\frac{3}{2}\right|<\frac{7}{2} \Leftrightarrow$ (Äquivalenz siehe Übung) \\
+$\frac{-7}{2}<x+\frac{3}{2}<\frac{7}{2} \Leftrightarrow\\
+-5<x<2$\\
+$L=\resultul{(-5,2)}$
+
+
 \end{document}
