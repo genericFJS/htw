@@ -91,6 +91,81 @@ $1$&$0$&$0$&$0$&$0$&$0$&$0$&$0$&$0$&\\
 
 \end{tabular}
 
+\section{Ausdrücke}
+
+Simple Sort
+
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int data[] = {7,3,9,2,5};
+
+int main(){
+	int ige, iro; // entsprechende Pfeile unter den Zahlen auf Papier
+	for (irt=0; irt<(5-1); irt++={
+		for (ige = irt+1, ige<5, ige++){
+			if (data[ige] < data[irt]){
+				int tmp = data [ige];
+				data[ige] = data[irt];
+				
+				data[irt] = tmp;
+				// tauschen alternativ (ohne Zwischenspeichern): (^= ist XOR)
+				// data[irt]^=data[ige];
+				// data[ige]^=data[irt];
+				// data[irt]^=data[ige];
+			}
+		}	
+	}
+	for (irt=0; irt<5; irt++={
+		printf("%d ", data[irt]);
+	}
+	printf("\n");
+	return 0;
+}
+\end{lstlisting}
+
+Alphabetische Sortierung
+
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+
+#define N 10
+
+//[10]: länge der Zeichenkette
+char data[][10] = {"Max", "Huckebein", "Bolte", "Lempel", "Maecke", 
+	"Helene", "Antonius", "Schlich", "Moritz", "Boeck"};
+
+int main(){
+	int ige, iro, ibl; // entsprechende Pfeile unter den Zahlen auf Papier
+	for (irt=0; irt<(N-1); irt++={
+		for (ige = irt+1, ige<N, ige++){
+			for (ibl = 0; data[irt][ibl] == data[ige][ibl] && 
+				data[irt][ibl]!=0; ibl++){
+				;
+			}
+			if(data[irt][ibl] > data[ige][ibl]){
+				char tmp;
+				// ibl muss nicht auf 0 gesetzt werden, vertauscht muss sowieso
+				// erst ab dem ungleichen Zeichen getauscht werden
+				for (/*ibl = 0*/; ibl<N ; ibl++){
+					tmp = data[irt][ibl];
+					data[irt][ibl] = data[ige][ibl];
+					data[ige][ibl] = tmp;
+					// alternativ wieder:
+					// data[irt][ibl] ^= data[ige][ibl];
+					// data[ige][ibl] ^= data[irt][ibl];
+					// data[irt][ibl] ^= data[ige][ibl];
+			}
+		}	
+	}
+	for (irt=0; irt<N; irt++={
+		printf("%d ", data[irt]);
+	}
+	printf("\n");
+	return 0;
+}
+\end{lstlisting}
+
 \newpage
 %\printbibliography
 \end{document}
