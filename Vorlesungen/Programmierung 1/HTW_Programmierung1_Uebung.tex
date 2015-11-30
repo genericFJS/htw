@@ -31,7 +31,7 @@ Zahl: $\underset{1}{001}|\underset{5}{101}|\underset{4}{100}=108$\\
 $\Rightarrow$ 8er-System (Octal)\\
 Zahl: $\underset{6}{0110}|\underset{C}{1100}=108$\\
 $\Rightarrow$ 16er-System (Hexa)\\
-Unterschied: $108_{/10}$, $01101100_{/2}$, $154_{/8}$ (in C gekennzeichnet durch $0154\rightarrow$ Octalzahl) und $6C_{/16}$ (in C gekennzeichnet durch $0x6C$)\\
+Unterschied: $108_{/10}$, $01101100_{/2}$, $154_{/8}$ (in C gekennzeichnet durch $0154\rightarrow$ Octalzahl) und $6C_{/16}$ (in C gekennzeichnet durch $0x6C$)
 
 \paragraph{Veranschaulichung}
 \begin{align*}
@@ -58,8 +58,7 @@ Unterschied: $108_{/10}$, $01101100_{/2}$, $154_{/8}$ (in C gekennzeichnet durch
 &\Rightarrow 6C&
 \end{align*}
 
-Beispielzahl 0x12AB\\
-
+Beispielzahl 0x12AB\medskip\\
 Speicherblock:\\
 \begin{tabular}{|l|l|l|l|}
 \hline
@@ -136,7 +135,7 @@ char data[][10] = {"Max", "Huckebein", "Bolte", "Lempel", "Maecke",
 	"Helene", "Antonius", "Schlich", "Moritz", "Boeck"};
 
 int main(){
-	int ige, iro, ibl; // entsprechende Pfeile unter den Zahlen auf Papier
+	int ige, iro, ibl; // entspr. Pfeile unter den Zahlen auf Papier
 	for (irt=0; irt<(N-1); irt++={
 		for (ige = irt+1, ige<N, ige++){
 			for (ibl = 0; data[irt][ibl] == data[ige][ibl] && 
@@ -164,6 +163,97 @@ int main(){
 	printf("\n");
 	return 0;
 }
+\end{lstlisting}
+
+\section{Speicherklassen}
+\begin{itemize}
+\item Register: Prozessor-Register relativ schnell
+\item Volatile: Variable wird immer im Hauptspeicher gespeichert (Gegenteil von Register)
+\item Static: Liegt die Variable in einer Funktion, dann existiert sie über die gesamte Laufzeit des Programms (kann aber trotzdem nur innerhalb der Funktion verwendet werden). Liegt die Variable außerhalb einer Funktion, dann wird Variablennahme nur im aktuellen C-Quelltext verwendet (wenn sich Programm aus mehreren Quelltexten zusammengesetzt wird).
+\item Extern: Gegenteil von Static außerhalb einer Funktion
+\item Auto: automatische Variable. Wird beim Aufruf der Funktion, die die Variablendefinition enthält, angelegt. Bei jedem Funktionsaufruf neu. Wird vernichtet, wenn Funktion beendet ist.
+\end{itemize}
+
+\section{Funktionen}
+\begin{lstlisting}[language=C]
+int test(){...}
+// gleich wie int main: Leerer Ausgabewert ist int (nicht void!)
+test(){...}
+// void: unbestimmter Ausgabewert bzw. kein Ausgabewert
+void test(){...}
+\end{lstlisting}
+
+\paragraph{Übung} Sinus-Funktion: $x-\frac{x^3}{3!}+\frac{x^5}{5!}-\frac{x^7}{7!}...$
+\begin{lstlisting}[language=C]
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+
+double sinus(double x);
+
+char vbuf[128];
+
+int main(){
+	double x,y;
+	fgets(vbuf,128,stdin); 
+	x = atof(vbuf);
+	y = sinus(x);
+	printf("sin(%lf): %lf\n",x,y);
+	return 0;
+}
+
+double sinus(double x){
+	int i=3, vz=-1;
+	double erg=x, summand=x;
+	while (summand> 0.00005){
+		summand = summand * x * x/(i*(i+1));
+		i += 2;
+		erg += summand * vz;
+		vz += -1;
+	}
+	return erg;
+}
+
+\end{lstlisting}
+
+\section{Pointer}
+
+\begin{lstlisting}[language=C]
+#include <stdlib.h>
+#include <stdio.h>
+#include <ctype.h>
+
+char* upperstr(char* data){
+	int i = 0;	
+	while(data[i]!='\n'){	// (*data!='\n')
+		// data[i]=toupper(data[i]);
+		// Alternative zu toupper: 
+		// A ist 0x41 = 0100 0001
+		// a ist 0x61 = 0110 0001
+		// also bloß ein Bit verschieben!
+		if (data[i]>='a' && data[i]<='z'){
+			data[i] &= ~(1<<5); 
+			// 1101 1111, damit verunden=> alle werden negiert 0010 0000
+			// &= Bitweise addition => invertierung von der 3. Stelle
+		}
+		// oder auch (entsprechend angepasst ohne i in while usw.)
+		// *data = toupper(*data);
+		// data++;
+		i++;
+	}
+	return data;
+}
+
+char vbuf[128]
+
+int main(){
+	printf("Eingabe: ");
+	fgets (vbuf,128,stdin);
+	upperstr(vbuf);
+	puts(vbuf);
+	return 0;
+}
+
 \end{lstlisting}
 
 \newpage

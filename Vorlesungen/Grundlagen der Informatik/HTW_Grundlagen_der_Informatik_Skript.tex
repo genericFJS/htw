@@ -1,3 +1,4 @@
+
 % Header aus der Vorlage
 \input{../LaTeX_master/LaTeX_master_HTW}
 
@@ -124,7 +125,28 @@ siehe Mathematik I
 
 \section{Beweistechniken}
 
-ABB21
+\begin{tikzpicture} [scale=.4]
+
+\draw  (-6,6) ellipse (6 and 3) node {Als wahr bekannte Aussage};
+\draw  (-16,1) ellipse (4 and 1) node{Folgerung};
+\draw  (4,1) ellipse (4 and 1) node{Folgerung};
+\draw [double, ->] (-12,4) -- (-14,3);
+\draw [double, ->] (0,4) -- (2,3);
+\draw  (-6,2) ellipse (16 and 9);
+\node[right] at (7,-4) {neue wahre Aussage};
+\end{tikzpicture}\bigskip\\
+\begin{tikzpicture} [scale=.4]
+
+\draw  (-11,2) ellipse (7 and 1) node{als wahr bekannte Aussage};
+
+\draw[double, ->] (-3,2) -- (-1,2);
+\draw[double, ->] (4,2) -- (6,2);
+\draw[double, ->] (11,2) -- (13,2);
+\node[right] at (-1,2) {Folgerung};
+\node[right] at (6,2) {Folgerung};
+\draw  (18,2) ellipse (4 and 1) node{Behauptung};
+\draw[green]  (-2,4) rectangle (12,0) node[below left]{Beweis};
+\end{tikzpicture}
 
 \paragraph{Direkter Beweis}
 \subparagraph{Bsp.:} Wenn $a \in \mathbb{Z}$ gerade ist, dann ist auch $a^2$ gerade.\\
@@ -169,7 +191,26 @@ In Formeln: Man zeigt
 \item IV: $A(n)$
 \item IS: für alle $n$: $A(n)\Rightarrow A(n+1)$
 \end{itemize}
-ABB22
+Beispiel Dominosteine: Wenn der erste Stein fällt, fällt auch der Zweite. Und wenn der $n$-te Stein fällt, fällt auch der $n+1$-te:
+\begin{itemize}
+\item IA: 1. Umstoßen
+\item IV: Wenn der vorherige Stein umfällt, fällt auch der nächste
+\item IS: Wenn $n$-ter umgestoßen wird, dann auch $n+1$-ter
+\end{itemize}
+\begin{tikzpicture} [scale=.4]
+\draw (-16,4) -- (-16,1);
+\draw (-15,4) -- (-15,1) ;
+\draw (-14,4) -- (-14,1)node[below]{n};
+\draw (-19,4) -- (-19,1)node[below]{1};
+\draw (-18,4) -- (-18,1)node[below]{2};
+\draw (-17,4) -- (-17,1);
+\draw (-10,4) -- (-10,1);
+\draw (-9,4) -- (-9,1);
+\draw (-8,4) -- (-8,1);
+\draw (-13,4) node[above]{n+1} -- (-13,1);
+\draw (-12,4) -- (-12,1);
+\draw (-11,4) -- (-11,1);
+\end{tikzpicture}
 \subparagraph{Bsp.:} Für alle $n\geq 1$ gilt $\sum_{k=1}^{n}k=\frac{n(n+1)}{2}$
 
 \emph{Beweis (Induktion):}
@@ -369,11 +410,144 @@ ABB 10
 
 \subsection{Grundlegende Graphalgorithmen}
 
-\paragraph{Breitensuche} \parskp
+\subsubsection{Breitensuche}\parskp
 ABB 11\\
-Mit der Breitensuche kann ein Graph systematisch durchsucht werden. Von einem Startknoten ausgehend, besucht die Breitensuche zuerst die diem Startknoten benachbarten Knoten. Anschließend werden die noch nicht besuchten Nachbarn dieser Knoten besucht, usw., bis das Ziel gefunden wurde oder alle Knoten besucht wurden.
-\paragraph{Tiefensuche}
+Mit der Breitensuche kann ein Graph systematisch durchsucht werden. Von einem Startknoten ausgehend, besucht die Breitensuche zuerst die dem Startknoten benachbarten Knoten. Anschließend werden die noch nicht besuchten Nachbarn dieser Knoten besucht, usw., bis das Ziel gefunden wurde oder alle Knoten besucht wurden.
 
+\begin{lstlisting}[language=C]
+boolean bfs (node start, node goal){
+	for (v $\in$ V){
+		discovered[v] = false
+	}
+	queue.enqueue(start)
+	discovered[start] = true
+	while ($\neg$ queue.isEmpty){
+		u = queue.dequeue()
+		if (u = goal){
+			return true
+		}
+		else{
+			for (v $\in$ adj[u]){
+				if ($\neg$discovered[v]){
+					queue.enqueue(v)
+					discovered[v] = true
+				}
+			}
+		}
+	}
+	return false
+}
+\end{lstlisting}
+\subparagraph{Bsp.:} \parskp
+ABB71
+
+\subsubsection{Tiefensuche}
+Die Tiefensuche lässt sich implementieren…
+\begin{enumerate}
+\item wie die Breitensuche, aber mit einem Stack anstelle einer Warteschlange
+\item rekursiv.
+\end{enumerate}
+Eine Warteschlange ist eine FIFO (first in, first out) Datenstruktur, die sich implementieren lässt mit einer verketteten Liste, die einen Zeiger auf das letzte Element besitzt.\\
+ABB 72\\
+Ein Stack (auch „Keller“) ist eine LIFO (last in, first out) Datenstruktur, die sich durch eine verkettete Liste implementieren lässt.\\
+ABB 73
+
+\begin{lstlisting}[language=C]
+boolean tfs (node start, node goal){
+	for (v $\in$ V){
+		discovered[v] = false
+	}
+	stack.push(start)
+	discovered[start] = true
+	while ($\neg$stack.isEmpty){
+		u = stack.pop()
+		if (u = goal){
+			return true
+		}
+		else{
+			for (v $\in$ adj[u]){
+				if ($\neg$discovered[v]){
+					stack.push(v)
+					discovered[v] = true
+				}
+			}
+		}
+	}
+	return false
+}
+\end{lstlisting}
+
+\subparagraph{Bsp.:} \parskp
+ABB 74 \bigskip
+
+Problem bei Breiten und Tiefensuche: Man braucht das Feld „discovered“. Das kann bei großer Anzahl von Knoten ein Problem sein $\rightarrow$ Speicheraufwändig
+
+\subsubsection{Topologisches Sortieren} \parskp
+ABB 75
+\paragraph{Def.:} Ein gerichteter Graph ist ein Paar $(V,E)$ mit $V\not = 0$ und $E \subseteq V \times V$. Die Begriffe Weg, Pfad, Kreis lassen sich entsprechend definieren.
+ABB 76
+
+\paragraph{Def.:} Sei $G=(V,E)$ ein gerichteter Graph. Eine \emph{topologische Sortierung} von G ist eine Abbildung $t: V\rightarrow \mathbb{N} $ mit $ (u,v) \in E \Rightarrow t(u) < t(v)$\\
+ABB 77\\
+Für einen Kreis oder einen Graph mit einer Schlinge existieren keine topologische Sortierungen.\medskip\\
+Eine topologische Sortierung kann durch eine Tiefensuche bestimmt werden.\\
+Alogrithmus TopSort:
+\begin{lstlisting}[language=C]
+for v $\in$ V
+	markiere v mit weiß
+for v $\in$ V
+	tiefensuche(v)
+	
+tiefensuche(v){
+	v grau: Fehler, Kreis vorhanden
+	v weiß: markieren v mit grau
+		for( u $|$ (v,u) $\in$ E )
+			tiefensuche (v)
+		markiere v mit schwarz und füge v an den Kopf einer Liste an
+}
+\end{lstlisting}
+ABB 91\\
+Laufzeit dieser topologischen Suche: $O(|V|+|E|)$\\
+Sowohl die Tiefensuche als auch die Breitesuche besitzen eine Laufzeit in $O(|V|+|E|)$.
+
+\subsubsection{Suche}
+\paragraph{Lineare Suche} Laufzeit: $O(n)$
+\paragraph{Binäre Suche} Voraussetzung: Sortiertes Array\\
+ABB 92
+\subparagraph{Vorgehen:} 
+Es wird die Mitte des Arrays bestimmt (Länge/2 [abgerundet]) und der gesuchten Wert mit dem Wert an dieser Stelle verglichen. Dabei gibt es drei Möglichkeiten:
+\begin{itemize}
+\item Gleichheit: Wert gefunden.
+\item Gesuchter Wert kleiner als Wert an der Stelle im Array: Auf gleiche Weise weitersuchen in der linken Hälfte (ausschließlich des bereits betrachteten Elements).
+\item Gesuchter Wert größer: Auf gleiche Weise weitersuchen in der rechten Hälfte
+\end{itemize}
+Algorithmus wird beendet, wenn der Wert gefunden wurde oder die zu durchsuchende Arrayhälfte keine Elemente mehr enthält.
+\subparagraph{Laufzeit:}\parskp
+ABB 93\\
+Zur Analyse der Laufzeit ändern wir den Algorithmus so, dass nur Vergleiche $\leq$ und $>$ vorgenommen werden. Ferner sei die Länge des Arrays eine Zweierpotenz und das gesuchte Element nicht vorhanden (worst-case).\\
+In diesem Fall lässt sich das Verhalten des Algorithmus als vollständiger binärer Wurzelbaum darstellen.\\
+ABB 94\\
+Wenn $n=2^k$ die Länge des Arrays ist, dann besitzt dieser Wurzelbaum genau $2^k$ Blätter (die Vergleichen in einen 1-elementigen Array entsprechen). Dieser Binärbaum besitzt daher die Tiefe $k=log_2(n)$. Die Laufzeit der binären Suche liegt daher in $O(log\;n)$ (gilt auch, wenn $n$ keine Zweierpotenz ist).\\
+Um auch dynamische Datenstrukturen effizient durchsuchen zu können, lassen sich binäre Suchbäume nutzen.
+\subparagraph{Suchbaum}
+Ein \emph{Suchbaum} ist ein binärer Wurzelbaum, in dem jeder linke Teilbaum eines Knotens kleinere Wert und jeder rechte Teilbaum größere Wert als der Vorgängerknoten besitzt.\\
+Beispiel:\\
+ABB 95\\
+Ein Suchbaum lässt sich ähnlich der binären Suche rekursiv durchsuchen.\\
+ABB 96\\
+Die Laufzeit der Suche ist $O(log(n))$, wenn der Baum vollständig balanciert ist und $O(n)$, wenn er linear entartet ist.
+
+\paragraph{Hashing}
+Prinzip: Mit Hilfe einer Hashfunktion $h$ werden Schlüssel auf eine Position in einem Array (Hashtabelle) abgebildet.\\
+Beispiel für eine Hashfunktion:
+\begin{lstlisting}[language=C]
+h(s) = s mod m
+\end{lstlisting}
+wobei $m$ die Größe der Hashtabelle ist.\\
+Problem: Es können Kollisionen auftreten, d.h. Schlüssel $s_1,s_2$ mit $h(s_1)=h(s_2)$. \\
+Lösung: Überlauflisten:\\
+An Position $h(s)$ wird eine Liste aller Elemente gespeichert, die diesen Hashwert besitzen.\\
+Unter geeigneten Voraussetzungen besitzt Hashing eine Laufzeit von $O(1)$.
 
 \newpage
 \printbibliography
