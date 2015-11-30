@@ -1,0 +1,13 @@
+"Vereinigte Staaten von Amerika","USA","USD",0.7093,0.0,
+"Schweiz","CH ","CHF",0.6053,0.0,
+"Grossbritanien","GB ","GBP",1.4355,0.0,
+"Japan","JP ","JPY",0.006165,0.0,
+"Kanada","CA ","CAD",0.7090,0.0,
+"Australien","AU ","AUD",0.6154,0.0,
+"Russland","RU ","RUR",0.02830,0.0,
+"China","CHI","CHY",0.09414,0.0,
+"Schweden","S  ","SWK",0.10858,0.0,
+"Indien","IN ","INR",0.01787,0.0
+/* 
+Der Ankaufswert kann berechnet werden, vielleicht 92% vom Verkaufswert;
+*/

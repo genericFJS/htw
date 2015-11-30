@@ -175,7 +175,25 @@ Atommodell ist elektrisch neutral. Aber:
 
 \paragraph{Beobachtung:} Ladungen ziehen sich an / Ladung stoßen sich ab.
 
-ABB 3
+\begin{tikzpicture} [scale=0.15]
+\draw  plot[smooth cycle, tension=.7] coordinates {(-4,-2) (-1,-6) (5,-2) (5,4) (2,4) (0,2) (-3,1)};
+
+\draw  plot[smooth cycle, tension=.7] coordinates {(12,-13) (12,-18) (16,-20) (22,-18) (23,-13) (18,-13)(15,-10)};
+
+\node at (1,-1) {$+Q_1$};
+\node at (16,-17) {$-Q_2$};
+\draw[-latex] (3,-5) -- (6,-8);
+\draw[latex-] (7,-9) -- (11,-13);
+
+\node at (9,-7) {$\overrightarrow{F}$};
+\draw[dashed] (7,0) -- (37,0);
+\draw[dashed] (37,-16) -- (25,-16);
+
+\draw [latex-latex] (35,-1)  -- (35,-15);
+\node[right] at (35,-8) {Potentialdifferenz};
+\node[right] at (37,0) {$\varphi_1$ (Potential)};
+\node[right] at (37,-16) {$\varphi_1=0V$ (per Def.; Masseverbindung)};
+\end{tikzpicture}
 
 Kraftwirkung\\
 $F \sim Q_1 \cdot Q_2$\\
@@ -203,7 +221,38 @@ $F \sim \frac{1}{r^2}$\\
 
 \subsection{Stromfluss, Ladungsausgleich}
 
-ABB 4
+\begin{tikzpicture} [scale=0.15]
+
+\draw  plot[smooth cycle, tension=.7] coordinates {(-5,5) (-9,2) (-6,-3) (3,-1) (3,3) (0,6)};
+
+\draw  plot[smooth cycle, tension=.7] coordinates {(-5,-21) (-11,-26) (-5,-31) (1,-27) (3,-22)};
+\node at (-3,3) {$Q_1$};
+\node at (-4,-28) {$Q_2$};
+\draw (0,0) node{$+$} ellipse (1 and 1);
+\draw (-3,0) node{$+$} ellipse (1 and 1);
+\draw (-6,0) node{$+$} ellipse (1 and 1);
+
+\draw (0,-24) node{$-$} ellipse (1 and 1);
+\draw (-3,-24) node{$-$} ellipse (1 and 1);
+\draw (-6,-24) node{$-$} ellipse (1 and 1);
+
+\draw[purple] (-6,-4) -- (-6,-19);
+
+\draw[purple]  (-4,-15) node{$-$} ellipse (1 and 1);
+\draw[purple]  (-3,-6) node{$+$} ellipse (1 and 1);
+
+\draw[purple] (-1,-4) -- (-1,-19);
+\draw[-latex, purple] (-3,-8) -- (-3,-11);
+
+\draw[-latex ,purple] (-4,-13) -- (-4,-10);
+\node[right, purple] at (-1,-11) {leitfähiger Kanal};
+
+\draw[dashed] (7,2) -- (21,2);
+\draw[dashed] (6,-27) -- (21,-27);
+
+\draw[-latex] (21,1) -- (21,-26);
+\node[right] at (21,-11) {Spannung $U$};
+\end{tikzpicture}
 
 \begin{itemize}
 \item Strom $I=\frac{\Delta Q}{\Delta t}$, $i(t)=\frac{dQ}{dt}$
@@ -230,16 +279,63 @@ mit $[I]=A$ (Ampere) \quad $[U]=V$ (Volt) \quad $[R]=\frac{V}{A}=\Omega$ (Ohm) \
 
 Wiederstand ist eine Materialeigenschaft.\\
 $R \sim l$ \quad $R\sim \frac{1}{A}$ \quad $R=k \cdot \frac{l}{A}$ mit  \quad $k=\varrho$ … spezifischer Widerstand $[\varrho]=\Omega \cdot m = \Omega \frac{mm^2}{m}$\\
-$G=\frac{1}{R}=\frac{A}{\varrho \cdot l}=\frac{\kappa A}{l}$ mit \quad $\kappa = \frac{1}{\varrho}$\medskip\\
-\begin{tabular}{l l}
-\multirow{2}{*}{Widerstand:} & $\nearrow$ Materialeigenschaft\\
-& $\searrow$ Bauelement ABB 5\\
-\end{tabular}
+$G=\frac{1}{R}=\frac{A}{\varrho \cdot l}=\frac{\kappa A}{l}$ mit \quad $\kappa = \frac{1}{\varrho}$\smallskip\\
+Widerstand ist …
+\begin{itemize}
+\item Materialeigenschaft
+\item Bauelement \\
+\begin{tikzpicture} [scale=0.1]
+
+\draw  (-4,3) rectangle (7,-1);
+\draw (-11,1) -- (-4,1);
+
+\draw (7,1) -- (12,1);
+\node at (1,5) {$R$};
+
+\draw (-7,0) -- (-6,1) -- (-7,2);
+\node at (-7,4) {$I$};
+\draw[-latex]  plot[smooth, tension=.7] coordinates {(-8,-3) (1,-5) (10,-3)};
+\node at (1,-7) {$U$};
+\end{tikzpicture}
+\end{itemize}
 
 \subsection{Zusammenschaltung von Widerständen}
 
 \begin{enumerate} [label=\alph*)]
-\item Reihenschaltung ABB21\\
+\item Reihenschaltung\\
+\begin{tikzpicture}[scale=0.2]
+
+\draw  (-9,5) rectangle (-3,3);
+\node[above] at (-6,5) {$R_1$};
+\draw[-latex]  plot[smooth, tension=1] coordinates {(-10,3) (-6,2) (-2,3)};
+\node[below] at (-6,2) {$U_1$};
+\draw  (2,5) rectangle (8,3);
+\node[above] at (5,5) {$R_2$};
+\draw[-latex]  plot[smooth, tension=1] coordinates {(1,3) (5,2) (9,3)};
+\node[below] at (5,2) {$U_2$};
+\draw  (26,5) rectangle (32,3);
+\node[above] at (29,5) {$R_n$};
+\draw[-latex]  plot[smooth, tension=1] coordinates {(25,3) (29,2) (33,3)};
+\node[below] at (29,2) {$U_n$};
+\draw (-16,4) -- (-9,4);
+\draw (-3,4) -- (2,4);
+\draw (8,4) -- (13,4);
+\draw (26,4) -- (21,4);
+\draw[dotted] (13,4) -- (21,4);
+\draw (32,4) -- (40,4);
+\node at (40,4) {$\bullet$};
+\node at (-16,4) {$\bullet$};
+
+
+\draw  (-12,10) rectangle (36,-3);
+\node[above] at (12,10) {$R_{ges}$};
+\draw[-latex] plot[smooth, tension=1] coordinates {(-14,-4) (9,-6) (37,-4)};
+\node[below] at (9,-6) {$U_{ges}$};
+
+\draw (-14,3) -- (-13,4) -- (-14,5);
+\node at (-14,6) {$I$};
+\end{tikzpicture}
+\\
 \emph{Maschensatz}: $\sum_{\circlearrowleft}U=0$
 \begin{align*}
 U_{ges}&= U_1 + U_2+...+U_n\\
@@ -247,7 +343,44 @@ U_{ges} &= I R_1+IR_2+...+IR_n\\
 \frac{U_{ges}}{I}&=R_{ges}=R_1+R_2+...+R_n
 \end{align*}
 $\boxed{R_{ges}=\sum_{i=1}^n R_i}$
-\item Parallelschaltung ABB 22\\
+\item Parallelschaltung\\
+\begin{tikzpicture}[scale=0.2]
+
+\draw  (2,8) rectangle (8,6);
+\node[above] at (5,8) {$R_1$};
+\draw (-1,6) -- (0,7) -- (-1,8);
+\node at (-1,9) {$I_1$};
+\draw (-3,7) -- (2,7);
+\draw (8,7) -- (13,7);
+\draw  (2,-1) rectangle (8,-3);
+\node[above] at (5,-1) {$R_2$};
+\draw (-1,-3) -- (0,-2) -- (-1,-1);
+\node at (-1,0) {$I_2$};
+\draw (-3,-2) -- (2,-2);
+\draw (8,-2) -- (13,-2);
+\draw  (2,-15) rectangle (8,-17);
+\node[above] at (5,-15) {$R_n$};
+\draw (-1,-17) -- (0,-16) -- (-1,-15);
+\node at (-1,-14) {$I_n$};
+\draw (-3,-16) -- (2,-16);
+\draw (8,-16) -- (13,-16);
+
+\draw[dotted] (5,-6) -- (5,-11);
+\draw (-3,7) -- (-3,-16);
+\draw (13,7) -- (13,-16);
+\draw (13,-4) -- (21,-4);
+\draw (-3,-4) -- (-11,-4);
+\draw (-8,-5) -- (-7,-4) -- (-8,-3);
+\node at (-8,-2) {$I_{ges}$};
+\draw[-latex]  plot[smooth, tension=1] coordinates {(-6,-17) (5,-19) (16,-17)};
+\node[below] at (5,-19) {$U$};
+\node at (13,-4) {$\bullet$};
+\node at (13,-2) {$\bullet$};
+\node at (-3,-2) {$\bullet$};
+\node at (-3,-4) {$\bullet$};
+\node at (21,-4) {$\circ$};
+\node at (-11,-4) {$\circ$};
+\end{tikzpicture}\\
 \emph{Knotensatz:} $\sum_{\cdot}I=0$
 \begin{align*}
 I_{ges}&= I_1 + I_2 + ... + I_n\\
@@ -257,22 +390,110 @@ I_{ges} &= \frac{U}{R_1}+\frac{U}{R_2}+...+\frac{U}{R_n}\\
 $\boxed{\frac{1}{R_{ges}}=\sum_{i=1}^n \frac{1}{R_i}}$
 \end{enumerate}
 
-\paragraph{Beispiel:}
-ABB23\\
+\paragraph{Beispiele:} \parskp
+\begin{tikzpicture}[scale=0.2]
+
+\draw  (-9,5) rectangle (-3,3);
+\node[above] at (-6,5) {$R_1$};
+
+\draw  (2,5) rectangle (8,3);
+\node[above] at (5,5) {$R_2$};
+
+\draw (-14,4) -- (-9,4);
+\draw (-3,4) -- (2,4);
+\draw (8,4) -- (13,4);
+
+
+\node at (13,4) {$\bullet$};
+\node at (-14,4) {$\bullet$};
+
+\end{tikzpicture}\\
 $R_{ges}= R_1 + R_2\\
 R_1=R_2 = R \quad \Rightarrow \quad R_{ges}=2R\\
-R_1\gg R_2 \quad \Rightarrow \quad R_{ges}\approx R_1$ \medskip\\
-ABB24\\
+R_1\gg R_2 \quad \Rightarrow \quad R_{ges}\approx R_1$\\
+\begin{tikzpicture}[scale=0.2]
+
+\draw  (-9,5) rectangle (-3,3);
+\node[above] at (-6,5) {$R_1$};
+
+\draw  (-9,-1) rectangle (-3,-3);
+\node[above] at (-6,-1) {$R_2$};
+
+\node at (0,1) {$\bullet$};
+\node at (-12,1) {$\bullet$};
+\node at (-16,1) {$\circ$};
+\node at (4,1) {$\circ$};
+
+\draw (-16,1) -- (-12,1);
+\draw (0,1) -- (4,1);
+\draw (-3,4) -- (0,4) -- (0,-2) -- (-3,-2);
+\draw (-9,-2) -- (-12,-2) -- (-12,4) -- (-9,4);
+\end{tikzpicture}\smallskip\\
 $R_{ges}=\frac{R_1 R_2}{R_1+R_2}\\
 R_1=R_2=R  \quad \Rightarrow \quad  R_{ges}=\frac{R}{2}\\
-R_1 \gg R_2  \quad \Rightarrow \quad  R_{ges} \approx R_2$ \medskip\\
-ABB25\\
+R_1 \gg R_2  \quad \Rightarrow \quad  R_{ges} \approx R_2$\\
+\begin{tikzpicture}[scale=0.2]
+
+\draw  (-9,-12) rectangle (-3,-14);
+\node[above] at (-6,-12) {$R$};
+\draw  (-9,5) rectangle (-3,3);
+\node[above] at (-6,5) {$R$};
+\draw  (5,-8) rectangle (3,-2);
+\node[right] at (5,-5) {$R$};
+\draw  (11,5) rectangle (17,3);
+\node[above] at (14,5) {$R$};
+\draw  (25,-8) rectangle (23,-2);
+\node[right] at (25,-5) {$R$};
+\draw  (31,5) rectangle (37,3);
+\node[above] at (34,5) {$R$};
+\draw  (45,-8) rectangle (43,-2);
+\node[right] at (45,-5) {$R$};
+\draw (-13,4) -- (-9,4);
+
+\draw (-3,4) -- (11,4);
+\draw (17,4) -- (31,4);
+\draw (37,4) -- (44,4) -- (44,-2);
+\draw (44,-8) -- (44,-13) -- (-3,-13);
+\draw (24,4) -- (24,-2);
+\draw (24,-8) -- (24,-13);
+\draw (4,-8) -- (4,-13);
+\draw (4,-2) -- (4,4);
+\draw (-9,-13) -- (-13,-13);
+
+\node  at (-13,4) {$\circ$};
+\node at (-13,-13) {$\circ$};
+\node at (4,4) {$\bullet$};
+\node at (4,-13) {$\bullet$};
+\node at (24,4) {$\bullet$};
+\node at (24,-13) {$\bullet$};
+
+\draw [dashed] (34,-5) ellipse (16 and 15);
+\draw [dashed]  (25,-5) ellipse (26 and 21);
+\node at (30,-17) {$R^*=R||2R$};
+\node at (18,-22) {$R'=R||(R+R^*) $};
+\end{tikzpicture}\\
 $R^*=R||2R=\frac{2R \cdot R}{3R}=\frac{2}{3}R\\
 R'=R|| (R+R^*)=\frac{R\cdot \frac{5}{3}R}{\frac{8}{3}R}=\frac{5}{8}R\\
 R_{ges}=R+ R' + R = 2R + \frac{5}{8}R = \frac{21}{8}R$
 
 \subsection{Leistung und Energie}
-ABB 26\\
+\begin{tikzpicture}[scale=0.2]
+
+\draw  (5,-8) rectangle (3,-2);
+\node[right] at (5,-5) {$R$};
+\draw (4,3) -- (4,-2);
+\draw (4,-8) -- (4,-12);
+
+\draw (3,1) -- (4,0) -- (5,1);
+\node at (7,1) {$I_{ges}$};
+\node at (4,3) {$\bullet$};
+\node at (4,-12) {$\bullet$};
+\draw[-latex]  plot[smooth, tension=1] coordinates {(1,1) (-1,-5) (1,-11)};
+\node at (-2,-5) {$U$};    
+
+\node at (10,-4) {$T$};
+\draw[-latex] (11,-4) -- (13,-2);
+\end{tikzpicture}\\
 $P=U\cdot I \overset{U=R\cdot I}{=}I^2 \cdot R = \frac{U^2}{R}\\
 W=P\cdot t=U \cdot I \cdot t = \frac{U^2}{R}\cdot t = I^2 \cdot R \cdot t$
 
@@ -461,7 +682,7 @@ relevante Werte: zwischen $\underset{\mu}{10^{-6}}... \underset{n}{10^{-9}}...\u
 \paragraph{Bemessungsgleichung} (für C)\\
 $C \sim A$, $C\sim \frac{1}{d}$, $C\sim  \frac{A}{d} \Rightarrow C=\varepsilon \cdot \frac{A}{d}$ \\
 ($\varepsilon = \varepsilon_r \cdot \varepsilon_0$ … $\varepsilon_0$: Dielektrizitätskonstate des Vakuums$=8,856\cdot 10^{-12}\frac{As}{Vm}$)\\
-Symbol: ABB 47\\
+Symbol: ABB 47
 \subsubsection{Strom-Spannungs-Beziehung am Kondensator}
 $u_C(t)=\frac{1}{C}\int i_C(t) dt$\\
 $i_C(t)=C\cdot \frac{du_c(t)}{dt}$\\

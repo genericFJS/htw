@@ -195,7 +195,7 @@ printf("Wert von i: %d - Adresse von i: %p\n", i, &i);
 // Hinweis: 
 // %d - Dezimalwert, 
 // %p - Adresswert, 
-// &i - Adresse vor Variable
+// &i - Adresse von Variable
 \end{lstlisting}
 Erstellung einer Variablen (int i;): \emph{uninitialisierte Variable / Variablen-Definition}\\
 Wertbelegung einer Variable während Definition einer Variablen (int i=0;): \emph{Initialisierung}\\
@@ -608,7 +608,6 @@ M & a & x & $\backslash$ n & $\emptyset$ &\; &\;&\;\\
 mit $\emptyset$: binäre, terminierende Null ( 0000 0000 )\\
 Hinweis: der Buffer muss immer noch Platz für „$\backslash$ n“ und „$\emptyset$“ haben, d.h. man hat in einem Buffer der Größe von 128 nur Platz für 126 zeichen.\\
 mit \emph{buf[strlen(buf)-1]=0;} wird die Eingabetaste „$\backslash$ n“ raus gelöscht.\bigskip\\
-
 Daraus ergibt sich eine Verbesserung für den Taschenrechner:
 \begin{lstlisting} [language=C]
 ...
@@ -668,8 +667,8 @@ int main(){
 static int count; // default wert 0
 count++;	// behält jedes Mal ihren Wert, im Gegensatz zu int count!
 \end{lstlisting}
-\paragraph{Speicherklassen:}
-auto (automatische Variable): wird vom Stack erzeugt (Kellerspeicher)\\
+\paragraph{Speicherklassen:}\parskp
+\emph{auto} (automatische Variable): wird vom Stack erzeugt (Kellerspeicher)\\
 lokale Varibalen\\
 \emph{extern}: Variable, die in einem anderen Kontext vereinbart ist\\
 \emph{static}: leben bis zum Programmende, global-statische Variabln werden nicht exportiert, immer initialiesiert, default 0\\
@@ -687,6 +686,130 @@ enthält die Funktionsköpfe
 							//		 Quelltexten eingebunden werden
 \end{lstlisting}
 
+\subsection{Pointer}
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
 
+int main(){
+	int i=99, *pi=&i;
+	// &: Adressoperator
+	printf("i: %d &i: %p \n", i, &i);
+	// folgendes gibt nicht 99, sondern die Adresse von i (und die eigene) aus.
+	// erst über *pi wird der Wert des Pointers ausgegeben (-> Dereferenzieren)
+	printf("pi: %lx &pi: %p \n *pi: %d", pi, &pi, *pi);
+	// Äquivalent dazu: (Arrays und Pointer sind in C sehr eng miteinander verwandt)
+	printf("pi: %lx &pi: %p \n pi[0]: %d", pi, &pi, pi[0]);
+	
+	return 0;
+}
+\end{lstlisting}
 
+\paragraph{Beispiel}
+
+Beispiel anhand Eingangsbeispiel der Vorlesung für das Berechnen eines Durchschnitts.
+
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+int Noten []={5,2,3,4,5,5,2,3,4,5,0}; //38/10
+
+// double CalcMean(int Noten[]){
+// folgendes präziser, da eigentlich kein Array, sondern bloß ein Pointer übergeben wird, 
+// der Pointer ist eine neue Variable, die auf die Adresse des ersten Elements
+// des Arrays zeigt (gilt für Parameter (wie hier) und return-Werte)
+// int n für die Weitergabe der Array-Länge
+double CalcMean(int* Noten, int n){	
+	double Akku=0.0;
+	int Count=0;
+	printf("Len von Noten in Funktion: %d\n", sizeof Noten);	// = 4
+	// = 4, weil nur die Adresse des ersten Elements! Kein Information über 
+	// die Länge des Arrays durch die Übergabe in die Funktion!!!
+	while (Count < n){
+		// Obwohl Noten nur Pointer ist, können wir trotzdem Noten[Count] verwenden
+		Akku = Akku+Noten[Count];
+		// Alternativ: (Pointer-Dereferenzierung und Pointer-Arithmetik)
+		// * hier keine Operation, sondern der Dereferenzierungs-Stern
+		// Akku = Akku + *(Noten+Count);
+		// auch Alternativ: Pointer-Variable wird weiter gestellt (diese ist nicht global)
+		// Akku = Akku + *Noten++;
+		// Folgende Zeile würde das globale Array ändern!!! (s.u.)		
+		// Noten[Count] = 0;
+		Count = Count+1;
+	}
+	if(Count>0)
+		// Ergebnis mit Runden
+		Akku = Akku/Count;
+	return Akku;
+}
+
+int main(){
+	double mean = 0.0;
+	
+	// Die tatsächliche Länge des Arrays
+	printf("Len von Noten in Main: %d\n", sizeof Noten);	// = 44
+	
+	// ACHTUNG: Wenn wir das Array an die Funktion übergeben, wird nicht das Array selbst
+	// übergeben, sondern die Adresse des Arrays (bzw. des ersten Elements)! Wird also 
+	// innerhalb der Funktion das Array geändert, wird auch das globale Array geändert
+	mean = CalcMean(Noten, sizeof(Noten)/sizeof(int));
+	printf("Durchschnitt: %lf\n", mean);
+	// sizeof(...): Operator, der die größe eines Elements bestimmt.
+	// Durch das teilen durch sizeof(int) erhält man die Anzahl der Elemente 
+	for (i=0; i<sizeof(Noten)/sizeof(int); i++)
+		printf("%d ", Noten[i]);
+	puts("");
+	return 0;
+}
+\end{lstlisting}
+
+\subsection{Rekursion}
+
+Beispiel der Fakultät mit Rekursion:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+long fakultr(int x){
+	long f;
+	if (x>1) 
+		f = x*fakultr(x-1);
+	else 
+		f=1;
+	return f;
+}
+
+// Bsp. Abarbeitung:
+// - u: 120
+//   u/10: 12 >0
+// - u: 12 
+//   u/10: 1 >0
+// - u: 1
+//   u/10: 0 = 0
+// Rekursiv werden dann die ASCII-Codes ausgegeben (ASCII-Wert von 0 + Zahl)
+void printu(unsigned int u){
+	if (u/10>0)
+		print(u/10);
+	putchar(u%10+'0');
+}
+	
+int main(){
+	long f;
+	int i = 5;
+	f = fakultr(i);
+	printu((unsigned int) f);
+	puts("");
+}
+\end{lstlisting}
+\begin{itemize}
+\item Rechtsrekursion (erst etwas rechnen, dann in die Rekursion gehen $\rightarrow$ fakultr)
+\item Linksrekursion (erst Rekursiv aufrufen, dann etwas ausführen $\rightarrow$ printu)
+\end{itemize}
+Eine Links- oder Rechtsrekursion lässt sich auch Iterativ darstellen.
+\begin{itemize}
+\item Zentralrekursion
+\end{itemize}
+Eine Zentralrekursion lässt sich nicht Iterativ darstellen.\medskip\\
+Problem Rekursion: Es lässt sich nicht vorhersehen, wie viel Speicher benötigt wird. Da ist die Schleife leichter überschaubar.
 \end{document}
