@@ -7,7 +7,7 @@
 % Definition von Titel, Autor usw.
 \DTitel{Grundlagen der Informatik}
 \DUntertitel{Vorlesungsskript}
-\DAutor{Falk Jonatan Strube}
+\DAutor{Falk-Jonatan Strube}
 \DNotiz{Vorlesung von Dr. Boris Hollas}
 
 \begin{document}
@@ -548,6 +548,171 @@ Problem: Es können Kollisionen auftreten, d.h. Schlüssel $s_1,s_2$ mit $h(s_1)
 Lösung: Überlauflisten:\\
 An Position $h(s)$ wird eine Liste aller Elemente gespeichert, die diesen Hashwert besitzen.\\
 Unter geeigneten Voraussetzungen besitzt Hashing eine Laufzeit von $O(1)$.
+
+\subsubsection{Sortierverfahren}
+
+\paragraph{Quicksort} 
+partitioniert das zu sortierende Feld anhand eines Pivot-Elements und sortiert rekursiv die dadurch entstandenen Teilfelder.\\
+ABB 101\\
+Struktur der rekursiven Aufrufe:\\
+ABB 102\\
+in Scala:
+\begin{lstlisting}[language=scala]
+package alg
+
+object Quicksort{
+	def qs(l: List[Int]): List[Int] = l match) {
+		case Nil => Nil
+		case h::t =>
+			val (li, re) = t.partition(x=> x <= h)
+			qs(li) ::: h :: qs(re)
+	}
+	
+	def main(args: Array[String]) {
+		// println(List(423,2,3,4,67,8,7,12,3,4)))
+		// wird folgende Zeile verwendet (zufällige Folge von 10000 Zahlen), 
+		// ist der Ablauf relativ schnell
+		// val l = (for(i <- 0 until 100000) yield scala.util.Random.nextInt).toList
+		// sortiert man mit folgender Zeile eine sortierte Liste, 
+		// dauert es sehr lange oder führt zu einem Fehler (aufgrund zu vieler Rekursionen)
+		val l = (for(i <- 0 until 100000) yield i).toList
+		val x = qs(l)
+	}
+}
+\end{lstlisting}
+Die Laufzeitanalyse ist schwierig, weil die Länge der Teillisten vom Pivotelement abhängt. Wir betrachten stattdessen ein ähnlichens Verfahren: Mergesort.\\
+Hierbei werden die Listen halbiert, rekursiv sortiert und dann zusammengefügt.
+
+\paragraph{Mergesort} \parskp
+ABB 103\\
+Struktur der rekursiven Aufrufe:\\
+ABB 104\\
+Laufzeitanalyse: Wir stellen das Verhalten von Mergesort für $n=2^k$ durch einen Binärbaum dar.\\
+ABB 105\\
+Zum erzeugen der Hälften und dem Zusammenfügen fällt der Aufwand O(|linke Liste| + |rechte Liste|). Dies ist $O(n)$ auf jeder Ebene des Baums. Der Baum hat $n=2^k$ Blätter und daher die Tiefe $k$. Die Laufzeit von Mergesort ist daher $O(n\;log(n))$ (Anzahl der Ebenen $n$ mit LZ auf jeder Ebene).\\
+Mergesort besitzt immer die LZ $O(n\; log(n))$. Dies ist nahe am Optimum. Quicksort besitzt eine durchschnittliche LZ in $O(n\; log(n))$ und eine Worst-Case-LZ in $O(n^2)$.\\
+Da Quicksort mit vorsortierten Listen nicht so gut umgehen kann (wird linear entartet), ist es kein sehr gutes Suchverfahren.
+
+\section{Codierungstheorie}
+
+\paragraph{Gruppen}
+Erläuternde Beispiele:\\
+$(\mathbb{Z}_2,+)$ (Elemente dieser Menge werden im folgenden \emph{Bits} genannt)\\
+$a+b:=a+b\; mod\; 2$\\
+$\Rightarrow 1+1\equiv 0 (mod\; 2)$\\
+inverses Element: $a+a^{-1}=0 \rightarrow$ hier also: zu $1$ ist $1$ das inverse Element.\medskip\\
+$(\mathbb{Z}_P,+)$ ($\mathbb{Z}_P$: alle Primzahlen)\\
+$7+4\equiv 0 (mod\; 11)$\\
+hier bspw. $4$ das inverse Element zu $7$.
+
+\paragraph{Ausgangslage Codierungstheorie}\parskp
+Problem: Daten können bei der Übertragung verändert werden. Wie können diese Fehler erkannt und ggf. korrigiert werden?\\
+ABB 201\\
+Häufige Lösung zur Fehlererkennung: Prüfsummen.
+\subsection{Paritätsprüfung}
+Für eine Folge von Bits $b_1,...,b_{n-1}\in \{0,1\}$ wird das \emph{Paritätsbit} $b_n= \left( \sum_{i=1}^{n-1}b_i\right) mod \; 2$ berechnet. Das enthaltene Codewort ist $b_1...b_n$
+\subparagraph{Bsp.:} Für die Folge von Bits $0,1,1,0,1,0$ ist $1$ (Anzahl aller $1$er-Bits $mod\;2$) das Paritätsbit. Das Codewort ist also $0,1,1,0,1,0,1$.\medskip\\
+Aus $\sum_{i=1}^{n-1}b_i\equiv b_n (mod\; 2)$ folgt daher (indem auf beiden Seiten $+b_n$ rechnet) $\sum_{i=1}^{n}b_i \equiv 0 (mod\;2)$.\\
+Die Menge der Wörter des \emph{Parity-Check-Code} lässt sich damit durch $\{(b_1,...,b_n)\in \{0,1\}^n\|\sum_{i=1}^{n}b_i\equiv 0 (mod\; 2)\}$ darstellen. $|P_n|=2^{n-1}$ bezeichnet die Mächtigkeit dieser Menge (alle Bits, bis auf das letzte, können frei gewählt werden).
+\subparagraph{Bsp.:} Für $n=8$ ist $00110011$ (4 Einsen $\Rightarrow 4mod \;2=0 \Rightarrow$OK) ein Element des Parity-Check-Code, $01110011$ kein Element des Parity-Check-Code.\\
+ABB 202
+\paragraph{Satz:} Der Parity-Check-Code ist 1-fehlererkennend.
+\subparagraph{Beweis:} Seien $b_1...b_n$ ein Codewort und $b_1'...b_n'$ ein Wort, das sich an Stelle $k$ von $b_1...b_n$ unterscheidet. Angenommen, $b_1'...b_n'$ ist ein Codewort. Dann gilt, $0\equiv \sum_{i=1}^{n}b_i'\equiv \underbrace{\sum_{i=1}^{n}b_i}_{=0}+\underbrace{(b_k'-b_k)}_{=1 \text{(da ungleich)}}\equiv 1$, Widerspruch. Also ist $b_1'...b_n'$ kein Codewort. Dies kann der Empfänger erkennen.\\
+Bemerkung: Der Parity-Check-Code ist nicht 2-fehlerkorrigierend.\\
+Anwendungen: 
+\begin{itemize}
+\item Speicherkontroller, Festplattenkontroller
+\item Netzwerkprotokolle
+\item 7-bit-ASCII (Bit 8 als Parität)
+\end{itemize}
+Ferner kann das Verfahren zur Rekonstruktion eines verloren gegangenen Bits verwendet werden, wenn die restlichen Bits fehlerfrei sind. Denn aus $0\equiv \sum_{i=1}^{n} b_i (mod\;2)$ folgt für $1\leq k \leq n$: \\
+$b_k\equiv \sum_{i=1,\, i\not =k}^{n} b_i (mod\;2)$. Damit kann Bit $b_k$ aus den anderen Bits rekonstruiert werden.\\
+Anwendung: RAID4, RAID5 -- Daten und Parität werden auf $n$ Festplatten verteilt. Beim Ausfall einer Platte können die Daten rechnerisch rekonstruiert werden.\\
+ABB 203
+\subparagraph{Bsp.:} $0100x110$ wird korrigiert zu $01001110$ (da Parity-Check-Code $mod\;2=0$ ergeben muss).
+
+\subsubsection{ISBN-Code}
+Der ISBN-Code enthält eine Prüfsumme.
+\subparagraph{Bsp.:} $\underbrace{382741826}_{\text{9-stellige Buchnummer}} \underbrace{7}_{\text{Prüfziffer}}$\\
+Für die Prüfziffer gilt:\\
+$z_{10}=\left(\sum_{i=1}^9 i\cdot z_i\right) mod\; 11$\\
+Dabei wird $X$ für den Wert 10 verwendet. Wegen $10+1\equiv0 (mod\; 11)$ ist $10$ das inverse Element zu $1$ bezüglich $+$ (d.h. $10$ entspricht $-1$). Aus obiger Gleichung folgt damit:\\
+$0\equiv \sum_{i=1}^{10} i\cdot z_i(mod\; 11)$\\
+Die Menge der Codewörter ist daher: \\
+$\left\lbrace z_1,...,z_{10})|z_1,...,z_9\in \{0,...,9\}, z_{10} \in \{0,...,X\},\sum_{i=1}^{10} i\cdot z_i\equiv 0 (mod\; 11)\right\rbrace$\\
+$(\mathbb{Z}_{11},+,\cdot)$ ist ein Köper.\\
+Beispiele:\\
+$1+10\equiv 0$\\
+$2\cdot 6 \equiv 1 \qquad (6\corr 2^{-1})$\\
+$6\cdot 2 \equiv 1 \qquad (2 \corr 6^{-1})$\\
+damit: $6 \equiv x \underset{\text{auf beiden Seiten mit 6 dividieren}}{\Leftrightarrow} 1 \equiv 2x$
+\paragraph{Satz:} Der ISBN-Code ist 1-fehler-erkennend.\\
+Beweis: Seien $z_1...z_{10}$ ein Codewort und $z_1'...z_{10}'$ ein Wort, das sich an Stelle $k$ von $z_1...z_{10}$ unterscheidet. Angenommen $z_1'...z_{10}'$ ist ein Codewort. Dann gilt $0 (mod\; 11)\equiv \sum_{i=1}^{10} i\cdot z_i'$. Da sich $z_1'...z_{10}'$ an Stelle $k$ von $z_1...z_{10}$ unterscheidet, folgt:\\
+$0 \equiv \sum_{i=1}^{10} i\cdot z_i+k(z_k'-z_k) \Leftrightarrow\\
+0\equiv k(z_k'-z_k)$\\
+Da $k\not = 0$, besitzt $k$ ein bezüglich $\cdot$ inverses Element $k^{-1}$, womit folgt:\\
+$0 \equiv z_k'-z_k$\\
+und damit\\
+$z_k \equiv z_k'$. Widerspruch!
+\paragraph{Satz:} Der ISBN-Code erkennt Vertauschungen von Ziffern (Zahlendreher).\\
+Beweis: Seien $z_1...z_{10}$ ein Codewort und $z_1'...z_{10}'$ ein daraus erhaltenes Wort, in dem die Stellen $k,l (k<l)$ vertauscht wurden. Angenommen  $z_1'...z_{10}'$ ist ein Codewort.  Dann gilt: \\
+$0 \equiv \sum_{i=1}^{10} i\cdot z_i'\\
+\equiv 1 \cdot z_1'+...+k\cdot z_k'+...+l\cdot z_l'+...+10\cdot z_{10}'\\
+\equiv 1 \cdot z_1'+...+k\cdot z_l+...+l\cdot z_k+...+10\cdot z_{10}'\\
+\equiv 1 \cdot z_1+...+k\cdot z_l+...+l\cdot z_k+...+10\cdot z_{10}\\
+\equiv \sum_{i=1}^{10} i\cdot z_i + k(z_l-z_k)+l(z_k-z_l)\\
+\equiv k(z_l-z_k)+l(z_k-z_l)\\
+\equiv k(z_l-z_k)-l(z_k-z_k) \Leftrightarrow\\
+k(z_l-z_k)\equiv l (z_k-z_k)$ \\
+Da für $z_l \not= z_k$ das Element $(z_l-z_k)\not = 0 $ und daher $(z_l-z_k)^{-1}$ existiert, folgt 
+$k\equiv l$. Widerpsruch zu der Annahme $k<l$!
+
+\subsection{Fehlerkorrigierende Codes}
+
+Idee: Für ein empfangenes Wort $w$ suchen wir ein Codewort $v$, so dass der Abstand $d(v,w)$ minimal ist (nearest neighbor decoding).\\
+ABB 51
+\paragraph{Def.:} Für Wörter $v,v'\in \{0,1\}^n$ ist der \emph{Hamming}-Abstand $d(v,v')$ die Anzahl Stellen, in denen sich $v,v'$ unterscheiden. Der \emph{Minimalabstand} eines Codes $C$ ist $min\{d(v,v')|v,v'\in C, \; v\not = v'\}$.
+\subparagraph{Bsp.:} Parity-Check-Code\\
+$d(0101,1010)=4$ (Codewörter unterscheiden sich in allen 4 Stellen)\\
+$d(0101,0110)=2$ (Codewörter unterscheiden sich an 2 Stellen)\\
+Der Minimalabstand beim Parity-Check-Code ist 2, da beides laut Def. ungleiche Codewörter sind. Der Abstand zweier gültiger Parity-Check-Codewörter ist mindestens 2, somit ist auch der Minimalabstand 2.
+
+\paragraph{Satz:}
+\begin{enumerate}
+\item Ein Code ist $k$-fehlererkennend gdw. sein Minimalabstand mindestens $k+1$ ist.
+\item Ein Code ist $k$-fehlerkorrigierend gdw. sein Minimalabstand mindestens $2k+1$ ist.
+\end{enumerate} 
+
+\subparagraph{Bsp.:} Der Parity-Check-Code besitzt den Minimalabstand 2 und ist daher 1-fehlererkennend und 0-fehlerkorrigierend (ein Fehler kann nur korrigiert werden, wenn die Position des fehlerhaften Bits bekannt ist. Deswegen im Allgemein nur 0-fehlerkorrigierend).\\
+ABB 52 (Kreise überlappen sich. Deswegen kann der Fehler nicht eindeutig einem Codewort zugewiesen werden)\\
+Beweis:
+\begin{enumerate}
+\item Fehlererkennung:\\
+$(\Rightarrow)$ Sei $C$ k-fehlererkennend. Seien ferner $c\in C$ und $w \in \{0,1\}^n$ mit $d(c,w)\leq k$. Da $C$ k-fehlererkennund ist, muss für jedes $c' \in C, c'\not = c$ gelten: $w \not = c'$. Daraus folgt $d(c,c') \geq k+1$, woraus folgt, dass der Minimalabstand von $C$ mindestens $k+1$($\geq k+1$) ist.\\
+ABB 1U\\
+$(\Leftarrow)$ Sei der Minimalabstand von $C$ mindestens $k+1$. Seien ferner $c\in C$ und $w \in \{0,1\}^n$ mit $d(c,w)\leq k$. Da $C$ den Minimalabstand $\geq k+1$ besitzt, kann $w$ kein Codewort $\not = c$ sein ($w$ liegt innerhalb des Radius $k$). Daher ist $C$ k-fehlererkennend. 
+
+\item Fehlerkorrektur:\\
+$(\Rightarrow)$ Wenn der Code $k$-fehlerkorrigierend ist, darf es nur ein Codewort $v$ mit $d(v,w)\leq k$ für ein empfangenes Wort $w$ geben.\\
+ABB 53 (Die Kugeln dürfen sich nicht überschneiden. Es muss eindeutig bleiben.)\\
+Folglich muss $d(v',w)\geq k+1$ für alle Codewörter $v'\not = v$ gelten, woraus $d(v,v')\geq 2k+1$ folgt.\\
+ABB 54\\
+$(\Leftarrow)$ Für ein Codewort $v$ sei $S(v)=\{w|d(v,w)\leq k\}$. Zu zeigen: aus $v,v'$ Codewörter mit $v\not = v'$ folgt $S(v) \cap S(v')=\emptyset$. Angenommen, es gibt ein $w \in S(v)\cap S(v')$. Dann gilt $d(v,w)\leq k$ und $d(w,v') \leq k$.\\
+ABB 55\\
+Daraus folgt mit der Dreiecksungleichung $d(v,v')\leq d(v,w)+d(w,v')=2k$. Dies ist ein Widerspruch, da der Minimalabstand des Codes mindestens $2k+1$ ist.\\
+ABB 56 (Wort $w$ kann eindeutig zum Codewort $v$ dekodiert werden.)
+\end{enumerate}
+Naiver Ansatz zur Fehlerkorrektur: Nachricht mehrfach senden.\\
+Bsp.: $0 \rightarrow 000$, $1\rightarrow 111$\\
+Der Code $\{000,111\}$ hat Minimalabstand 3 (Nachricht wurde 3 mal gesendet) und ist daher 1-fehlerkorrigierend.\\
+Nachteil: Platzverschwendung.\medskip\\
+Effizienter sind lineare Codes.
+\subsubsection{Lineare Codes}
+Die Decodierung durch eine Nearest-Neighbor-Suche im Coderaum ist ineffizient. Um ein effizienteres Verfahren zu erhalten, beschreiben wir Codes durch Matrix-Vektor-Operationen.
+\subparagraph{Bsp.:} Mit $A = (\underbrace{1 ... 1}_{n})$ lässt sich der Parity-Check-Code beschreiben durch $\{w\in \{0,1\}^n| A\cdot w^T=0\}$ ($w,A$: Zeilenvektoren) [Veranschaulichung: $(1111)\cdot(0101)^T=0$]
+
+\paragraph{Def.:} Ein Code $C$ heißt \emph{linear}, wenn es eine Matrix $A$ gibt, sodass $C=\{w|A\cdot w^T=0\}$.\\
+Die Matrix $A$ heißt \emph{Parity-Check-Matrix}.
 
 \newpage
 \printbibliography

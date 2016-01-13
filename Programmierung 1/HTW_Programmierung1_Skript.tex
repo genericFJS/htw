@@ -1,13 +1,6 @@
 % Header aus der Vorlage
 \input{../LaTeX_master/LaTeX_master_HTW}
 
-\lstset{
-basicstyle=\footnotesize\sffamily\color{black},
-%frame=single,
-numbers=left,
-numbersep=5pt,
-}
-
 % Definition von Titel, Autor usw.
 \DTitel{Programmierung I}
 \DUntertitel{Vorlesungsskript}
@@ -182,7 +175,7 @@ Bindet Objekt-Datei (xxx.o) mit Librarys zusammen.
 
 FOLIE „Grundlagen von C“
 
-\subsection{Datentypen}
+\subsection{Eingebaute Datentypen}
 was in Folien grau markiert ist, kann weggelassen auch werden $\Rightarrow$ „unsigned int i;“ = „unsigned i;“
 
 \paragraph{Bsp.:}
@@ -658,7 +651,7 @@ int main(){
 }
 \end{lstlisting}
 
-\subsection{Gültigkeit}
+\subsubsection{Gültigkeit}
 \begin{itemize}
 \item Bereich im C-Quelltext, an dem ein Bezeichner sichtbar ist.
 \item Lebensdaur: Zeit von Erzeugung bis zur Vernichtung
@@ -812,4 +805,676 @@ Eine Links- oder Rechtsrekursion lässt sich auch Iterativ darstellen.
 \end{itemize}
 Eine Zentralrekursion lässt sich nicht Iterativ darstellen.\medskip\\
 Problem Rekursion: Es lässt sich nicht vorhersehen, wie viel Speicher benötigt wird. Da ist die Schleife leichter überschaubar.
+
+\subsection{Benutzerdefinierte Datentypen}
+
+\subsubsection{Struct}
+Struktur: alle Elemente liegen hintereinander (nicht zwangsläufig unmittelbar hintereinander) im Speicher \medskip\\
+Alle komplieren:\\
+gcc *.c (dafür braucht es die Header Datei st1.h, die alle Funktionen enthält [außer main]) $\Rightarrow$ alle Dateien werden in eine kompiliert\\
+st1.h:
+\begin{lstlisting}[language=C]
+typedef unsigned int uint; // wie unten beispiel für synonym definition
+
+typedef	// Wenn typedef davor steht, muss unterhalb ein Typ angegeben werden
+struct{ //tStudent{ wenn typedef angegeben, kann der Typname davor weggelassen werden.
+	char name[28+1];
+	int matrNr:15;		// hier bspw. uint, anstatt unsigned int (wenn benötigt)
+	int belnote:3;		// :x gibt die Bitlänge des Integer-Wertes ein 
+						// (falls Ressourcen knapp) Bezeichnung: Bitfelder
+	float klNote;
+	// Struktur innerhalb der Struktur:
+	struct {
+		int jj,stGang, stgr;
+	} stGr;
+} tStud; // <- hier der Typ, synonym zu tStud. Jetzt kann überall anstatt 
+		// "struct tStudent" nur "tStud" geschrieben werden
+
+void putStud(tStud s);	// hier kann nun die Verkürzug angewandt werden 
+		//-> aber auch in Dokumenten, in denen dieses included wird.
+void putStudp(tStud s);
+void getStud1(tStud * pStud);
+tStud getStud2();
+\end{lstlisting}
+st1.c:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stlib.h>
+#include "st1.h"
+
+struct tStudent stud ={"Hans Huckebeil", 12121, 0, 0.0,{2015,41,1}};
+tStud ProjGr[5] ={{"Hans Huckebeil", 12121},
+					{"Peter Lehmann", 12122},
+					{"Anna Bauer", 12123}};
+
+int main(){
+	ProjGr[3]=getStud2();
+	ProjGr[4]=getStud2();
+	
+	int i;
+	for (i=0; i<5; i++){
+		putStud(ProjGr[i]);
+	}
+	for (i=0; i<5; i++){
+		puts(ProjGr[i].name);
+	}
+	// größe des Studenten zum Prüfen von Bitfeldern
+	printf("Size Student: %d \n",sizeof(tStud));
+	// ohne Bitfelder: 44
+	// mit Bitfelder: 36
+	// größe einer Struktur immer mit SIZEOF ermitteln! Nicht selbst ausrechnen
+	// Compiler füllt Lücken ein (siehe 2. Übung)
+	printf("%s %d/%d/%d \n",stud.name, stud.stGr.jj, stud.stGr.stGang, stud.stGr.stgr);
+
+	//putStud(stud);
+	//getStud1(&stud);
+	//putStudp(&stud);
+	return 1;
+}
+\end{lstlisting}
+st1f.c:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stlib.h>
+#include <string.h>
+#include "st1.h"
+
+static char buf[128]; 
+
+void putStd(struct tStudent s){
+	printf("%-28s %u \n", s.name,s.matrNr);
+}
+
+void putStudp(tStud *s){
+	//printf("%-28s %u \n", (*s).name,(*s).matrNr); alternativ dazu:
+	printf("%-28s %u \n", s->name,s->matrNr);
+}
+
+void getStud1(tStud * pStud){
+	printf("Eingabe Name: ");
+	fgets(vbuf,128,stdin); 
+	buf[strlen(buf)-1]=0;	// wegschmeißen des "\n" der Eingabe
+	// Arrays können nicht zugewiesen werden, deshalb muss 
+	// über Funktion strcpy() Byte für Byte eingetragen werden:
+	strcpy(pStud->name,buf);
+	printf("Eingabe Matrikelnr.: "); 
+	fgets(vbuf,128,stdin); 
+	pStud->matrNr=atoi(buf);
+}
+
+tStud getStud2(){
+	tStud s;
+	printf("Eingabe Name: ");
+	fgets(vbuf,128,stdin); 
+	buf[strlen(buf)-1]=0;
+	strcpy(s.name,buf);
+	printf("Eingabe Matrikelnr.: "); 
+	fgets(vbuf,128,stdin); 
+	s.matrNr=atoi(buf);
+	return s;
+}
+\end{lstlisting}
+\subsubsection{Union}
+Alle Elemente eines Union-Datentyps liegen übereinander und liegen auf einer Adresse. \medskip\\
+tu1.c
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stlib.h>
+
+typedef union{
+	unsigned int i;
+	unsigned char arr[5];
+} tbsp;
+
+tbsp x;
+
+// Argumente der main: Nutzen durch Programmzeilen Parameter
+// argc: Anzahl der Parameter
+// argv[i]: Der entsprechende Parameter
+// Aufruf: ./tu1.c Max
+// argc = 2, argv[0]=./tu1.c , argv[1]=Max
+int main(int argc, char* argv[]){
+	int i;
+	for (i=0; i<argc; i++){
+		puts (argv[i]);
+	}
+	
+	if (argc==2){
+		x.i = strtod(argv[1]);	// strtod alternativ zu atoi
+		for (i=0; i<4; i++){
+			printf("%02x ",x.arr[i]);	// so liegt die Zahl im Speicher
+		}
+		puts("");
+	}
+	return 0;
+}
+
+\end{lstlisting}
+
+Sinnvoll, wenn unterstrukturen gleiche und auch ungleiche Eigenschaften haben. Beispielsweise Diplom- und Bachelor-Studenten.
+
+\subsubsection{typedef}
+Für Details s.o. \\
+Zusätzlicher Trick für den Umgang mit Arrays, bzw. sizeof() und typedef.
+\begin{lstlisting}[language=C]
+typedef int tIntArr[6];
+
+void dispArr(tIntArr x){
+	int i;
+	printf("length (Bytte): %d length (Elements): %d\n",sizeof(IntArr),
+		sizeof(IntArr)/sizeof(int));
+	// da Referenz auf typedef und nicht auf x, funktioniert sizeof ohne Probleme
+	for (i=0; i<sizeof(IntArr)/sizeof(int); i++)	
+		printf("%d ",x[i]);
+	puts("");
+}
+
+int main (){
+	tIntArr arr={2,4,6,8,10,12}
+	dispArr(arr);
+	return 0;
+}
+\end{lstlisting}
+
+\subsubsection{enum}
+
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#inculde <stlib.h>
+
+enum tWoTa{
+	Montag=1, // bei Montag=1, fängt's bei 1 an zu zählen (anstatt 0)
+	Dienstag, 
+	Mittwoch, 
+	Donnerstag,
+	Freitag,
+	Samstag=Freitag+1+0x10,	// verändert das Wochenende
+	Sonntag};
+	
+enum tWoTa w=1;
+	
+int main(){
+	printf("%d %x \n",Montag, Montag);	// gibt standarmäßig 0 aus; Sonntag wäre 6 usw.
+	printf("%d %x \n",Dienstag, Dienstag);
+	printf("%d %x \n",Mittwoch, Mittwoch);
+	printf("%d %x \n",Donnerstag, Donnerstag);
+	printf("%d %x \n",Freitag, Freitag);
+	printf("%d %x \n",Samstag, Samstag);
+	printf("%d %x \n",Sonntag, Sonntag);
+	w=99;	
+	printf("%d %x \n",w, w);
+	return 0;
+}
+\end{lstlisting}
+\subsection{Memory-Allocation}
+Aus vorhergehendem Beispiel:\\
+st1.c:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stlib.h>
+#include "st1.h"
+
+int anz = 0;
+char vbuf[128];
+char weiter ='y';	// Ja
+
+tStud s;
+
+int main(){
+	int i;
+	tStud *ps = NULL, *psx;
+	while (weiter == 'y'){
+		s = getStud2();
+		if(ps==NULL){
+			ps=malloc(sizeof(tStud));	// Malloc Speicher aus dem heap
+			if (ps) {puts("malloc hat nicht geklappt."); exit(-1);}
+		} else {
+			psx=realloc(ps,(anz+1)*sizeof(tStud));
+			// realloc guckt nach, ob dahinter noch genug Speicher frei ist und
+			// fügt das neue alloc hinten dran. Wenn nicht, dann wird ein neuer Speicherbereich
+			// gefunden, der groß genug ist für beide ist.
+			if (psx){
+				ps=psx;
+			} else { puts("realloc hat nicht geklappt."); exit(-1);}
+		}
+		
+		*(ps+anz) = s;
+		anz++;
+		for (i=0; i<anz; i++) {
+			putStudp(ps+i);
+			printf("i: %d, ps+i: %p, sizeof: %d %02x\n",i, ps+i, sizeof(tStud),sizeof(tStud));
+		}
+		printf("next (y/n): ");
+		fgets(vbuf,128,stdin); 
+		weiter=vbuf[0];
+	}
+	// am Ende des Programms oder wenn die Daten nicht mehr gebraucht werden
+	// muss der Speicher wieder freigegeben werden
+	free (ps);
+	// free (psx); darf nicht freigegeben werden, da er nur ein Zeiger auf den ps ist.
+	return 0;
+}
+\end{lstlisting}
+Verwendung von malloc/realloc:\\
+Speicher nach Bedarf aus dem heap.\\
+malloc hat als Ausgabe void* (generischer Pointer) [siehe "man malloc"]. Dieser ist nicht derefernzierbar und zuweisungskompatibel zu jedem getypten Pointer. Man kann mit ihm ebenfalls nicht rechnen (keine Arithmetik).\\
+malloc: Speicher für Variable frei machen\\
+realloc: freigemachten Speicher erweitern\\
+free: Speicher wieder freigeben\bigskip\\
+Es kann bspw. auch Speicher in getStud2 (z.B. für den Namen, also *name anstatt name mit entsprechendem alloc in der Fkt.) allociert werden, um Platz zu sparen (oder dynamisch mehr freizugeben). Dann müsste der Speicher entsprechend in einer Schleife auch wieder freigegeben werden.
+
+\section{Dateiarbeit in C}
+FOLIE
+\paragraph{Als Binärdatei speichern}
+aus tStud Beispiel(st1.c) (jeweils an den entsprechenden Stellen eingefügt):
+\begin{lstlisting}[language=C]
+#include "st1io.h"
+...
+FILE *pf;
+
+int main(){
+	int i;
+	tStud* ps = NULL, *psx;
+	pf = fopen("Studs.bin","rb");
+	if(pf){
+		// Dateigröße ermitteln:
+		fseek(pf,0,SEEK_END);
+		anz=ftell(pf)/sizeof(tStud);
+		rewind(pf);
+		
+		// Daten lesen
+		for (i=0; i<anz; i++){
+			if(ps==NULL){
+				ps=malloc(sizeof(tStud));
+				if (ps==NULL){puts("malloc hat nicht geklappt"); exit(-1);}
+				*ps=readStud(pf);
+			} else {	
+				psx=realloc(ps,(anz+1)*sizeof(tStud));
+				if (psx){
+					ps=psx;
+					*(ps+i)=readStud(pf);
+				} else { puts("realloc hat nicht geklappt."); exit(-1);}
+			}
+		}
+		fclose(pf);
+	}
+...
+	// Daten speichern
+	pf=fopen("Studs.bin","wb");
+	if(pf==NULL){puts("fopen (write) hat nicht geklappt");exit(-1);
+	for (i=0; i<anz; i++){
+		writeStud(pf,ps+i);
+	}
+	fclose(pf);
+...
+\end{lstlisting}
+
+st1io.h
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include "st1f.h"
+#include "st1io.h"
+
+tStud readStud(FILE* f){
+	tStud s;
+	fread(&s, sizeof(tStud),1,f);
+	return s;
+}
+
+void write Stud(File* f, tStud* pStud){
+	fwrite(pStud, sizeof(tStud),1,f);
+}
+\end{lstlisting}
+ACHTUNG: Arbeiten mit derartigen Binärdateien ist sehr Platform-Abhängig (angucken der Binärdatei unter linux mit "hexdump -C ...")
+
+\paragraph{Als Textdatei speichern} (alternativ und ergänzend zum obigen Beispiel)\\
+st1io.h
+\begin{lstlisting}[language=C]
+int getAnz(FILE* pf);
+tStud readStud(FILE* pf);
+void writeStud(FILE* pf, tStud* ps);
+\end{lstlisting}
+
+st1io.c
+\begin{lstlisting}[language=C]
+#include "st1f.c"
+
+// Zeilen zählen und durch 4 teilen
+int getAnz(FILE *pf){
+	char buf[128];
+	int n=0;
+	while (fgets(buf, 128, pf)) n++;\\
+	fseek(pf, 0, SEEK_SET);
+	return n/4;
+}
+
+tStud readStud(FILE* pf){
+	tStud s={};
+	char buf[128];
+	if(fgets(buf, 128, pf)){
+		buf[strlen(buf)-1]=0;
+		s.name = malloc(strlen(buf+1));
+		if (s.name) strcpy(s.name,buf);
+		else fprintf(stderr, "malloc faild in readStud\n");
+		fscanf(pf,"%d\n%d\n%f\n",&s.matrNr,&s.belNote,&s.klNote);
+	}
+	return s;
+}
+
+void writeStud(FILE *pf, tStud* ps){
+	pfrintf(pf,"%s\n%d\n%d\n%f\n",ps->name, ...
+}
+
+
+\end{lstlisting}
+
+st1.c
+\begin{lstlisting}[language=C]
+...
+	// Einlesen aus Datei
+	pf=fopen("Studs.txt", "rt");
+	if (pf){
+		anz=getAnz(pf);		
+...
+	// Schreiben
+	pf=fopen("Studs.txt", "wt");
+		
+\end{lstlisting}
+
+\paragraph{Als CSV-Datei speichern}
+
+Ähnlich wie bei .txt, bloß trennt man die Datensätze durch Semicolon und nicht durch neue Zeile.\\
+Sinnvolle Funktion zur Zerlegung der Datensätze: 
+\begin{lstlisting}[language=C]
+strtok(buf,";\n");
+\end{lstlisting}
+
+\section{Funktionspointer}
+
+Bisher wurde typedef für Variablen verwendet:
+\begin{lstlisting}[language=C]
+typedef struct{
+	int sk1;
+	int sk2;
+} tStruct;
+tStruct s={1,9999};
+\end{lstlisting}
+Nun kommt der Funktionspointer dazu:
+\begin{lstlisting}[language=C]
+typedef void f(void);
+f* pf;	// Das ist der Funktionspointer
+\end{lstlisting}
+oder auch:
+\begin{lstlisting}[language=C]
+typedef void (*tpf)(void);
+tpf pf;	// Das ist auch ein Funktionspointer
+\end{lstlisting}
+Anwendungsbeispiel:
+\begin{lstlisting}[language=C]
+void fxyz(void){
+	puts("xyz");
+}
+pf = fxyz;
+
+fxyz();
+pf();	// diese beiden Funktiosaufrufe rufen die gleiche Funktion auf - ein mal dirket 
+			//und ein mal als Pointer
+\end{lstlisting}
+\paragraph{Beispiel:} $ $
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+
+typedef void (*tpf)(int i);
+tpf pFunc;
+
+void printDec(int i);
+void printHex(int i);
+
+typedef struct{
+	tpf func;
+	int x;
+}tstruct;
+
+tstruct tdec={printDec,55};
+tstruct thex={printHex,55};
+
+void printDec(int i){
+	printf("%d\n",i);
+}
+
+void printHex(int i){
+	printf("%x\n",i);
+}
+
+// alternativ: printx(void (*func)(int i), int z){...}
+void printx(tpf func, int z){
+	func(z);
+}
+// Bezeichnung der Technik: Übergabe einer Callback Funktion
+// Verwendung bei Programmierung mit graphischen Oberflöchen
+
+tpf choice(char c){
+	if (c=='h')	return printHex;
+	else 				return printDec;
+}
+
+int main(int argc, char*argv[]){
+	int x=9999;
+	tpf aFctns[]={printDec,printHex};
+	if (argc==2) x=atoi(argv[1]);
+	
+	pFunc=printDec;
+	puts("Dezimal:");
+	pFunc(x);
+	pFunc=printHex;
+	puts("Hexadezimal:");
+	pFunc(x);
+	
+	puts("Dezimal aus Array:");
+	aFctns[0](x);
+	puts("Hexadezimal aus Array:");
+	aFctns[1](x);
+	
+	puts("Dezimal aus Funktionsparameter:");
+	printx(printDec,x);
+	puts("Hexadezimal aus Funktionsparameter:");
+	printx(printHex,x);
+	
+	puts("aus Struct:");
+	tdec.func{tdec.x};
+	thex.func{thex.x};	
+	
+	puts("aus Returnwert:");
+	choice('h')(x);		// choice('h')()=printHex()
+	choice('d')(x);		
+		
+	return 0;
+}
+\end{lstlisting}
+
+Verwendungszweck beispielsweise im Compilerbau im Lexer oder ähnliches.
+
+\section{Graphische Oberflächen}
+\subsection{libforms}
+FOLIE
+\subsection{GTK}
+FOLIE
+\subsection{CGI}
+FOLIE\\
+Bsp. ascii.cgi
+
+\section{Preprozessor}
+
+\subsection{Umwandlung von 3-Zeichenfolgen}
+(siehe Grundelemente-FOLIE). Bspw. ??> o.ä.\\
+Braucht extra Befehl für gcc.
+
+\subsection{Zeilenverlängerung}
+Falls eine Zeichenkette im Editor mit Zeilenumbruch getrennt werden soll (bspw. ein langer String). Kann auch mitten im C-Code sein.\\
+Das Backslash muss dafür das letzte Zeichen auf der Quelltextzeile sein.
+\begin{lstlisting} [language=C]
+#include <stdio.h>
+
+int ma\
+in(){
+	puts{Spass\
+	beim Programmieren\
+	in c");
+	return 0;
+}
+\end{lstlisting}
+
+\subsection{include}
+
+Der Preprozessor ersetzt die Include-Zeile mit dem Quelltext des einzubindenden Elements.
+\begin{lstlisting}[language=C]
+#include <...>	// für Systemheaderfiles (zu finden unter usr/include)
+#include "..."	// für Applikationsheaderfiles (eigene)
+\end{lstlisting}
+Das Ergebnis des Procompilers kann mit \emph{gcc -E progr.c > progr.e} kompiliert werden.\\
+Mehrfaches Einbinden u.ä. kann unterbunden werden durch:
+\begin{lstlisting}[language=C]
+#ifdefn _H_DEBUG_
+#define _H_DEBUG_
+
+#include <stdio.h>
+
+#endif
+\end{lstlisting}
+
+\subsection{Symboldefinitionen}
+Vorteile:
+\begin{itemize}
+\item Quelltext wird lesbarer (durch gute zweckgebundene Bezeichnung)
+\item Symboldefinition kann im gesamten Quelltext mit einem Mal geändert werden.
+\end{itemize}
+\begin{lstlisting}[language = C]
+// Allgemein:
+#define SYMBOL Tokensequenz		// Symbol wird üblicher Weise groß geschrieben,
+															// muss aber nicht (nur zur besseren Wiedererkennung).
+
+// Beispiel:
+#define N 10
+...
+int inArray[N];	// Preprozessor ersetzt N mit 10
+
+#define LEN 30 + 1
+// KLAMMERN SETZTEN! ->
+// #define LEN (30 + 1)
+...
+char name[LEN*3];	// Achtung: LEN wird vorm Ausrechnen ersetzt. 
+									// Also: LEN*3 entspricht 30+1*3 und nicht (30+1)*3
+strcpy(name, "Max");
+puts(name);
+printf("Len name: %d, Len content: %d\n", sizeof name, strlen(name));
+
+#define NAME1 Klaus
+...
+puts(NAME1);
+\end{lstlisting}
+
+Darauf ist zu achten:
+\begin{itemize}
+\item Tokensequenz (bei Zahlen) am besten Klammern.
+\item kein Semikolon!
+\item define-Konstruktion muss auf einer Zeile stehen.
+\end{itemize}
+
+\subsection{Parameterbehaftete Macros}
+
+\begin{lstlisting} [language=C]
+#define SYMBOL(<parameterlist>)	Ersatztokenfolge
+// Wichtig: Runde Klammer muss unmittelbar hinter SYMBOL stehen
+#define SYMBOL(x) "str1" #x "str2"
+// Bewirkt Verkettung der Strings mit dem Parameter
+#define SYMBOL(x,y) x##y
+// Ein neues Token ensteht im C-Quelltext aus x und y
+\end{lstlisting}
+Beispiel:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#define LEN (30+1)
+#define PYTHAGORAS(a,b) sqrt(a*a + b*b)
+// Klammern wieder wichtig:
+// #define PYTHAGORAS(a,b) sqrt((a)*(a) + (b)*(b))
+#define STR1(x) "Max " #x " Moritz"
+// Raute vor dem Parameter bewirkt das Zusammenfassen der umschlossenen Strings.
+// (wird zu "Max " "und" " Moritz")
+#define STR2(x,y) x##y
+#define MYPUTS puts
+
+int main(){
+	double x=3;
+	double y=4;
+	printf("c:  %lf\n",PYTHAGORAS(x,y));	
+	printf("c:  %lf\n",PYTHAGORAS(x+1,y+1));	
+	// wenn nicht geklammert: PYTHAGORAS(x+1,y+1) = sqrt(x+1*x+1+y+1*y+1)
+	// also sqrt(2x+1+2y+1) -> Falsch!
+	printf("c:  %lf\n",PYTHAGORAS(x++,y++));
+	// auf keinen Fall machen, da es schlecht überschaubar wird, wann inkrementiert wird!
+	printf("c:  %lf\n",PYTHAGORAS(x,funktion(y)));
+	// auch gefährlich, weil der Macro mit funktion(y)*function(y) ersetzt wird
+	// und damit die funktion (unerwünscht) doppelt ausgeführt wird
+	
+	char name[LEN*3];
+	strcpy(name, STR1(und));
+	puts(name);
+
+	STR2(MY,PUTS)("Test");	// ergibt MYPUTS("Test"), was dann mit puts() ersetzt wird.
+	
+	return 0;
+}
+\end{lstlisting}
+Erinnerung:\\
+bei \emph{\#\. include math.h} muss mit \emph{gcc progr.c -lm} kompiliert werden!\\
+Darauf ist zu achten:
+\begin{itemize}
+\item Parameter im Macro klammern
+\item keine Seiteneffekte programmieren (Inkrementierung, Funktionsaufruf usw.)
+\end{itemize}
+Liste von vordefinierten Symbolen zu finden durch \emph{gcc -E -dM - </dev/null}.\\
+Bspw.:
+\begin{lstlisting} [language=C]
+__FILE__ // Quelltext-Dateiname
+__LINE__ // Zeilennummer, in der das Symbol verwendet wurde
+__DATE__ // Datum, zu dem das Programm kompiliert wurde
+__TIME__ // Zeit, zu der das Programm kompliert wurde
+__STDC__ // C-Version
+\end{lstlisting}
+
+\subsection{Bedingte Übersetzung}
+
+Soll ein platformübergreifendes Programm geschrieben werden (mit einem Quelltext), gibt es Tücken (bspw. 32 oder 64 bit), können bestimmte Fälle mit einer bedingten Übersetzung abgefangen werden.
+\begin{lstlisting}[language=C]
+#if <const-expr>
+#if defined <symbol>
+#ifdef <symbol>
+#if !defined <symbol>
+#ifndef <symbol>
+#else 
+#elif <const-expr>
+#endif
+\end{lstlisting}
+
+\begin{lstlisting}[language=C]
+#define MYPUTS puts
+...
+#ifdef MYPUTS
+	MYPUTS("Text");
+#else
+	printf("Text2");
+#endif
+\end{lstlisting}
+Symbole können mit der Commandlineoption \emph{-D} auch definiert werden.\\
+\emph{gcc progr.c -D MYPUTS=puts} (entspricht der Zeile \emph{\#\. define MYPUTS puts}). \medskip\\
+Gutes Anwendungsbeispiel für bedingte Übersetzung:
+\begin{lstlisting} [language=C]
+#ifdef DEBUG
+	printf("Debuginformation");
+#endif
+\end{lstlisting}
+Gibt Debug-Information nur bei \emph{gcc progr.c -DDEBUG} aus.
+
 \end{document}

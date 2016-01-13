@@ -255,6 +255,100 @@ int main(){
 }
 
 \end{lstlisting}
+Weiterführend:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+// Interpretation als Array
+int mystrlen1(char *p){
+	int i;
+	for (i=0; p[i]!=0; i++);
+	return i;
+}
+
+// Nutzen des Pointers
+int mystrlen2(char *p){
+	int count;
+	while (*p++)
+		count++;
+	return count;
+}
+
+// Noch mehr nutzen des Pointers
+int mystrlen3(char *p){
+	char *px=p; // Pointer auf das erste Zeichen merken
+	while (*p++); // Pointer hoch zählen (wenn letzte Stelle, ist *p++ 0, also false)
+	return p-px-1; // (letzte Stelle)-(erste Stelle)-1
+}
+
+int intarr[] = {5,7,2,8,9};
+
+// Interpretation als Array
+int containsint(int n, int* pdata, int test){
+	int i;
+	for (i=0; i<n && pdata[i]!=test; i++);
+	return pdata[i]==test;
+}
+
+// Nutzen der Pointer: *(pdata+i) ist das selbe wie pdata[i]
+int containsInt2(int n, int* pdata, int test){
+	while(*(pdata+--n)!= test && n!=0);
+	return *(pdata+n)== test;
+}
+
+int mystrcmp(char* p1, char* p2){
+	int i;
+	for (i=0; p1[i]==p2[i] && p1[i]; i++);
+	return p1[i]-p2[i];
+}
+
+int mystrcmp2(char* p1, char* p2){
+	while (*p1-*p2 && *p1) p1++,p2++;
+	return *p1-*p2;
+}
+
+int main (int argc, char* argv[]){
+	int i, len;
+	
+	i=atoi(argv[1]);
+	if(containsInt(sizeof intarr/sizeof(int), intarr, i))	puts("Enthalten");
+	else																									puts("nicht Enthalten");
+	
+	if(mystrcmp(argv[1],argv[2])==0)	printf("%s gleich %s\n",argv[1],argv[2]);
+	else															printf("%s ungleich %s\n",argv[1],argv[2]);
+	
+	for (i=0; i<argc; i++){
+		puts(argv[i]);	// Ausgabe der Eingabeparameter
+										// (wenn aufgerufen durch "./a.out e1 e2" werden
+										// "./a.out", "e1" und "e2" ausgegeben)
+		// Ausgabe des jeweils ersten Zeichens
+		printf("%c\n".argv[i][0]);	// alternativ auch *argv[i]
+		// argv[0] ist immer der Programmname
+		
+		for (i=0; i<argc; i++){
+			len=mystrlen1(argv[i]);
+			printf("len: %d\n", len);
+		}
+	}
+	return 0;
+}
+\end{lstlisting}
+
+\section{Benutzerdefinierte Datentypen}
+
+Enum:
+
+Aufzählungstyp (festgesetzte Bezeichnungen auf einen integer-Wert).\medskip\\
+Struct:
+
+Zusammenfassung von mehreren Komponenten (unterschiedliche eingebaute Dateitypen als un- intialisierte Variablen), die durch einen Namen beschrieben werden. Verwendung zur Modellierung eines Sachverhalts (wie im Beispiel Student mit seinen Eigenschaften).\medskip\\
+Typedef:
+
+Es wird ein synonymer Typname für einen existierenden Typnamen erstellt. So kann die Variable- ninitialisierung verkürzt werden (im Skript: struct tStudent$\rightarrow$tStud ).\medskip\\
+Union:
+
+Datensätze werden im Vergleich zum Struct übereinander geschrieben.
 
 \newpage
 %\printbibliography

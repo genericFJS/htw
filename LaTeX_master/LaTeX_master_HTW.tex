@@ -1,6 +1,6 @@
-\documentclass[a4paper,11pt]{scrartcl}
+\documentclass[a4paper,11pt, footheight=26pt]{scrartcl}
 \usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
-\geometry{a4paper, top=30mm, left=20mm, right=20mm, bottom=25mm,headsep=10mm, footskip=12mm}
+\geometry{a4paper, top=30mm, left=20mm, right=20mm, bottom=22mm,headsep=10mm, footskip=12mm}
 
 % Input inkl. Umlaute, Silbentrennung
 \usepackage[T1]{fontenc}
@@ -66,7 +66,6 @@
 \NumTabs{6}	% Anzahl von Tabs pro Zeile zum springen
 \usepackage{listings} % Source-Code mit Tabs
 \usepackage{lstautogobble} 
-\lstset{basicstyle=\ttfamily, mathescape=true, escapeinside=||, autogobble, tabsize=2}
 \usepackage{enumitem}	% Anpassung der enumerates
 \setlist[enumerate,1]{label=\arabic*.)}	% global andere Enum-Items
 \usepackage{letltxmacro} % neue Definiton von Grundbefehlen
@@ -76,6 +75,16 @@
 
 % Einrichtung von lst
 \lstset{
+basicstyle=\ttfamily, 
+mathescape=true, 
+escapeinside=||, 
+autogobble, 
+tabsize=2,
+basicstyle=\footnotesize\sffamily\color{black},
+frame=single,
+rulecolor=\color{lightgray},
+numbers=left,
+numbersep=5pt,
 %basicstyle=\footnotesize\sffamily\color{black},
 commentstyle=\color{gray},
 %frame=single,
@@ -134,11 +143,12 @@ urlcolor=green,%
 	\pagestyle{scrheadings}
 	\ihead{\includegraphics[height=1.7em]{../LaTeX_master/HTW-Logo.eps}}
 	\ohead{\Dokumententitel}
+	\ofoot{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \Dokumentenautor}}}
 	% Titelseite
 	\title{\includegraphics[width=0.35\textwidth]{../LaTeX_master/HTW-Logo.eps}\\\vspace{0.5em}
 	\Huge\textbf{\Dokumententitel} \\\vspace*{0,5cm}
 	\Large \Dokumentenuntertitel \\\vspace*{4cm}}
-	\author{\vspace*{1cm}\Dokumentenautor \\\Dokumentennotiz}
+	\author{\textcolor{darkgray}{Mitschrift von \Dokumentenautor} \vspace*{1cm}\\\Dokumentennotiz}
 }
 
 %% EIGENE BEFEHLE
@@ -170,5 +180,6 @@ urlcolor=green,%
 \newcommand{\resultul}[1]{\underline{\underline{#1}}}
 \newcommand{\parskp}{$ $\\}	% new line after paragraph
 \newcommand{\corr}{\widehat{=}}
+\newcommand{\mdeg}{^{\circ}}
 
 \newcommand{\nok}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}	% n über k
