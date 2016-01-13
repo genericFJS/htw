@@ -1,0 +1,1480 @@
+% Header aus der Vorlage
+\input{../LaTeX_master/LaTeX_master_HTW}
+
+% Definition von Titel, Autor usw.
+\DTitel{Programmierung I}
+\DUntertitel{Vorlesungsskript}
+\DAutor{Falk Jonatan Strube}
+\DNotiz{Vorlesung von Prof. Dr.-Ing. Beck}
+
+\begin{document}
+
+\pagenumbering{Roman}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+\section*{Hinweise}
+
+Zugelassene Hilfsmittel Klausur: Spickzettel A-4 Blatt, doppelseitig (, man-page c++.com)
+
+\section{Einführung}
+
+Bilde Durchschnitt aus folgender Notenübersicht:
+
+\begin{tabular}{c c}
+Index & Note\\
+\hline
+0&3\\
+1&4\\
+2&1\\
+3&3\\
+4&3\\
+5&5\\
+6&3\\
+7&4\\
+8&0\\
+9&-\\
+\end{tabular}
+
+\subsection{Algorithmus}
+\begin{enumerate}
+\item Lösche Akku $\rightarrow$  2.
+\item Lösche Counter $\rightarrow$  3.
+\item Gibt es eine Zahl an Stelle Count? 
+\begin{itemize}
+\item Ja: $\rightarrow$  4.
+\item Nein: $\rightarrow$  6.
+\end{itemize}
+\item Addiere markierte Zahl zu Akku $\rightarrow$  5.
+\item Addiere 1 zu Counter $\rightarrow$  3.
+\item Dividiere Wert in Akku durch Wert in Counter und speichere Akku $\rightarrow $ 7.
+\item Ergebnis: Ausgabe des Akku $\rightarrow$ ENDE
+\end{enumerate}
+
+\subsection{Programmablaufplan (PAP)}
+
+\begin{tikzpicture}[scale=0.3]
+\draw (-3,6) ellipse (3 and 1) node{Start};
+\draw[-latex] (-3,5) -> (-3,3);
+\draw  (-7,3) rectangle (1,1) node[pos =.5]{Akk:=0};
+\draw[-latex] (-3,1) -> (-3,-1);
+\draw  (-7,-1) rectangle (1,-3) node[pos =.5]{Count:=0};
+\draw[-latex] (-3,-3) -- (-3,-5);
+\draw (-3,-5) -- (-10,-11) -- (-3,-17) -- (4,-11) -- cycle;
+\draw  (-3,-11) node[align=center] {Gibt es eine\\ gültige Note an der\\ Stelle Count?};
+
+\draw[-latex] (-3,-17) -- (-3,-19);
+\draw (-2,-18) node{ja};
+\draw  (-13,-19) rectangle (8,-21) node[pos =.5]{Akku := Akku + Noten[Count]};
+\draw[-latex] (-3,-21) -- (-3,-23);
+\draw (-10,-23) rectangle (5,-25) node[pos =.5]{Count := Count +1};
+\draw[-latex] (-3,-25) -- (-3,-27) -- (10,-27) -- (10, -4) -- (-3,-4);
+
+\draw[-latex] (-10,-11) -- (-19,-11) -- (-19,-13);
+\draw (-19,-13) -- (-24,-17) -- (-19,-21) -- (-14,-17) -- cycle;
+\draw  (-19,-17) node[align=center] {Count > 0?};
+\draw[-latex] (-14,-17) -- (-12,-17);
+\draw (-13,-16) node{nein};
+\draw (-9,-17) ellipse (3 and 1) node {Fehler};
+\draw[-latex] (-19,-21) -- (-19,-23);
+\draw (-18,-22) node{ja};
+\draw  (-27,-23) rectangle (-11,-25) node[pos =.5]{Akku := Akku/Count};
+\draw[-latex] (-19,-25) -- (-19,-27);
+\draw (-26,-27) -- (-10,-27) -- (-11,-29) -- (-27,-29) -- cycle;
+\draw (-19,-28) node{Ausgabe Akku};
+\draw[-latex] (-19,-29) -- (-19,-31);
+\draw (-19,-32) ellipse (3 and 1) node{Erfolg};
+
+\end{tikzpicture} 
+
+\subsection[Struktogramm]{Struktogramm / Nassi-Shneiderman-Diagramm}
+
+\begin{tikzpicture} [scale = 0.3]
+\draw  (0,0) rectangle (28,2);
+\draw (0,1) node[anchor=west]{Akku = 0}; 
+\draw  (0,-6) rectangle (28,0);
+\draw (0,-1) node[anchor=west]{while (Noten[Count]!=0)};
+\draw  (4,-4) rectangle (28,-2);
+\draw (4,-3) node[anchor=west]{Akku = Akku + Noten[Count]}; 
+\draw  (4,-6) rectangle (28,-4);
+\draw (4,-5) node[anchor=west]{Count :=  Count + 1}; 
+\draw  (0,-8) rectangle (28,-6);
+\draw (0,-7) node[anchor=west]{if (Count>0)}; 
+\draw  (0,-12) rectangle (28,-8);
+\draw (0,-11) node[anchor=west]{ja}; 
+\draw (28,-11) node[anchor=east]{nein};
+\draw (0,-8) -- (14,-12) -- (28,-8);
+\draw (0,-12) rectangle (14,-16);
+\draw (0,-14) node[anchor=west, align=left]{Akku = Akku/Count\\ Ausgabe Akku}; 
+\draw (14,-12) rectangle (28,-16);
+\draw (14,-14) node[anchor=west, align=left]{Fehler}; 
+\end{tikzpicture}
+
+\subsection{Quelltext in C}
+
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+int Noten []={5,2,3,4,5,5,2,3,4,5,0}; //38/10
+
+int main(){
+	int Akku=0, Count=0;
+	while (Noten[Count]!=0){
+		Akku = Akku+Noten[Count];
+		Count = Count+1;
+	}
+	if(Count>0){
+		Akku = Akku/Count;
+		printf("Durchschnitt: %d\n",Akku);
+	} else
+		printf("Fehler - Division durch 0\n");
+	return 0;
+}
+\end{lstlisting}
+
+Compilieren durch: 
+\begin{lstlisting}
+gcc SOURCE.c -0 DESTINATION
+\end{lstlisting}
+
+Ergebnis:\\
+„10“ … aber: 38/10 = 3,8. Integer im Source-Code $\Rightarrow$ abgerundet
+
+Lösung:
+\begin{lstlisting}[language=C]
+// Ergebnis mit Runden (innerhalb der if(Count>0)-Klammer)
+Akku = Akku*10/Count;
+printf("Durchschnitt: %d.%d\n",Akku/10,Akku%10);
+\end{lstlisting}
+
+Alternativ:
+\begin{lstlisting}[language=C]
+// anstatt int Akku=0, Count=0;
+double Akku=0;
+int Count =0;
+\end{lstlisting}
+
+\section{gcc}
+
+gcc Ablauf für eine „hello.c“ Datei.
+
+\begin{enumerate}
+\item Pre-Prozessor (hello.c $\rightarrow$ hello.e $\Rightarrow$ gcc -E hello.c > hello.e) \\
+Jede Zeile im Quelltext mit \emph{\#} werden hier interpretiert.
+\item Compiler (hello.e $\rightarrow$ hello.o $\Rightarrow$ gcc -c hello.c)
+\item Linker (hello.o $\rightarrow$ a.out / hello.exe | gcc hello.c $\rightarrow$ a.out $\Rightarrow$ gcc -o hello hello.c [oder auch gcc hello.c -o hello])\\
+Bindet Objekt-Datei (xxx.o) mit Librarys zusammen.
+\end{enumerate}
+
+\section{Grundlagen von C}
+
+FOLIE „Grundlagen von C“
+
+\subsection{Eingebaute Datentypen}
+was in Folien grau markiert ist, kann weggelassen auch werden $\Rightarrow$ „unsigned int i;“ = „unsigned i;“
+
+\paragraph{Bsp.:}
+
+\begin{lstlisting}[language=C]
+unsigned int i;	// Variablen-Definition
+i = 12;		// Wertzuweisung
+
+printf("Wert von i: %d - Adresse von i: %p\n", i, &i);
+// Hinweis: 
+// %d - Dezimalwert, 
+// %p - Adresswert, 
+// &i - Adresse von Variable
+\end{lstlisting}
+Erstellung einer Variablen (int i;): \emph{uninitialisierte Variable / Variablen-Definition}\\
+Wertbelegung einer Variable während Definition einer Variablen (int i=0;): \emph{Initialisierung}\\
+Wertbelegung zu späterem Zeitpunkt (i=2;): \emph{Wertzuweisung}
+
+\subsection{Ausdrücke}
+Programmiersprachliche Konstruktion zur Berechnung von Werten.
+\subsubsection{Assoziativität}
+(Folie Operatoren: Gewichtung der Operatoren von oben nach unten)\medskip\\
+Unäre Operatoren (bspw. $-$ (negativ-Zeichen), $++$ (Inkrementierung) oder Klammern(cast))\\
+Binäre Operatoren (bspw. $+$, $-$ (Rechenzeichen), $<=$ usw.)
+\begin{lstlisting}[language=C]
+int i;
+long d;
+
+i=(int)d;	// cast: Typwandlung
+
+i++; // Postfixoperator (wird im Rahmen eines groesseren 
+			Ausdrucks als letztes ausgefuehrt:)
+i=1;
+j=6;
+k=j+i++; // k=7, i=2
+++i; // Praefixoperator (wird im Rahmen eines groesseren 
+			Ausdrucks als erstes ausgefuehrt:)
+i=1;
+j=6;
+k=j+ ++i; // k=8, i=2
+
+// Vorsicht! negativ-Bsp, wie ++ nicht zu verwenden ist:
+i=2;
+printf("%d\n", i++ + ++i);	\\ i= 6
+printf("%d\n", i);	\\ i=4
+\end{lstlisting}
+Bei Division mit ganzen Zahlen wird der Rest abgeschnitten (nicht gerundet)!\medskip\\
+Kurzschlussverfahren von Aneinanderkettung von Bedingungen ( i<0 || i<6) $\Rightarrow$ wenn die erste Prüfung wahr ist, wird der Test weiterer Bedingungen abgebrochen (bei \&\& wenn das erste falsch ist).\bigskip\\
+\&\& im Vergleich zu \& (\& ist eine Bit-weise Operation): \\
+01101100 \& 00001111 = 00001100 bzw. \\
+01101100 | 11110000 = 11111100 \smallskip\\
+Andere Zeichen: \\
+$\wedge$ = XOR\\
+$\sim$ = Bit-weise Negation\\
+<\! < = shift (nach links) (bsp. i=4; i= i <\! < 2; $\Rightarrow$ i wird 16:\\
+00000100 <\! < 2 $\Rightarrow$ 00010000\\
+Achtung: bei negativen Zahlen (also Typ signed) bleibt bei Shift an der ersten Stelle das entsprechende Vorzeichenbit.\\
+Bsp. für Abarbeitungsreihenfolge der Operatoren:\\
+i*= 3+1		// i*(3+1)
+\subsection{Anweisungen}
+\begin{itemize}
+\item Berechnungen
+\item Alternative
+\item Iteration
+\item Sequenz
+\end{itemize}
+\subsubsection[Ausdrucksanweisung]{Ausdrucksanweisung (Expressionstatement)}
+Eine Ausdrucksanweisung besteht aus einem Ausdruck gefolgt von einem Semikolon:
+\begin{lstlisting}
+<expr_stmnt>:: <expr> ';' .
+\end{lstlisting}
+
+Bsp.:
+\begin{lstlisting}
+printf("%d\n", i);
+\end{lstlisting}
+Zu Ausdrucksanweisungen gehören:
+\begin{itemize}
+\item Berechnungen
+\item Aufrufe von Funktionen
+\end{itemize}
+\paragraph{Block}
+Konstruktion, die Anweisungen kapselt -- nach außen einzelne Anweilungen enthält
+\begin{itemize}
+\item Vereinbarungen
+\item Anweisungen
+\end{itemize}
+\begin{lstlisting}
+<block>:: '{' { <statement> } '}' .
+\end{lstlisting}
+
+Bsp.:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+char vbuf[128];	// Vereinbarung
+
+int main() {
+	int i;	// Vereinbarung
+	double x;	// Vereinbarung
+	fgets(vbuf, 128, stdin);	// Anweisungen ...
+	x=atof(vbuf);
+	i = 1;
+	x=x*10+i;
+	printf("x: %lf\n",x);
+}
+\end{lstlisting}
+
+\subsubsection[Alternativanweisung]{Alternativanweisung (if-statement)}
+
+\begin{lstlisting}
+<if-stmnt>:: 'if' '(' <condition> ')' 
+				<statement>
+			['else' <statement>] .
+\end{lstlisting}
+
+Bsp.:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+char vbuf[128];
+
+int main() {
+	double x;
+	fgets(vbuf, 128, stdin);
+	x=atof(vbuf);
+	printf("x: %lf\n",x);
+	if (x>1) printf("Groesser als 1\n");
+	else printf("Kleiner als 1\n");	// optional
+	puts("Hier geht es weiter");	
+	// " " Strings (Zeichenketten), einzelnes Zeichen: '*'
+}
+\end{lstlisting}
+
+\subsubsection{Leeranweisung}
+\begin{lstlisting}
+<empty_stmnt>:: ';'
+\end{lstlisting}
+
+\subsubsection[Iteration]{Iteration (Schleife/Loop)}
+\paragraph{abweisende Schleife (kopfgesteuert)} while-Schleife
+\begin{lstlisting}
+<while_statement>:: 'while' '(' <condition> ')' <statement> .
+\end{lstlisting}
+
+Beispiel: $e^x$\\
+e hoch x = 1 + x/1! + x*x /2! + x*x*x /3! …
+\begin{enumerate} [label= \arabic* .]
+\item  Summand: $x^0=1$
+\item  Summand: $x^1/1! = x$
+\item  Summand: $(x^1/1!)*x/2 = x^2/2!$
+\item  Summand: $(x^2/2!) + x/3 = x^3/3!$
+\end{enumerate}
+Vereinfachung der Rechnung (für den Rechner) $\Rightarrow$ Nutzung des vorhergehenden Summanden.
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+char vbuf[128];
+
+int main() {
+	int i=1;
+	double x, y=1.0, summand = 1.0;
+	printf("Eingabe von x: ");
+	fgets(vbuf, 128, stdin);
+	x=atof(vbuf);
+	while (summand>0,00005){
+		summand = summand *x/i;
+		y += summand;
+		printf("Summand %d: %lf\n", i, summand);
+		i++;
+	}
+	printf("e^%lf: %lf\n", x, y);
+	return 0;
+}
+\end{lstlisting}
+
+\paragraph{Nicht abweisende Schleife (fußgesteuert)} do-while-Schleife
+\begin{lstlisting}
+<do_stmnt>:: 'do' <statement> 'while' '(' <condition> ')' ';' .
+\end{lstlisting}
+
+Bsp.:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+char vbuf[128];
+
+int main() {
+	int i=1;
+	double x, y=1.0, summand = 1.0;
+	printf("Eingabe von x: ");
+	fgets(vbuf, 128, stdin);
+	x=atof(vbuf);
+	do{
+		summand = summand *x/i;
+		y += summand;
+		printf("Summand %d: %lf\n", i, summand);
+		i++;
+	} while (summand>0,00005);
+	printf("e^%lf: %lf\n", x, y);
+	return 0;
+}
+\end{lstlisting}
+
+\paragraph{for-Schleife}
+\begin{lstlisting}
+<for-stmnt>:: 'for' '(' <expr>';' <expr>';' <expr> ')' <statement> .
+\end{lstlisting}
+
+Bsp.:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+char vbuf[128];
+
+int main() {
+	int i=1;
+	double x, y=1.0, summand = 1.0;
+	printf("Eingabe von x: ");
+	fgets(vbuf, 128, stdin);
+	x=atof(vbuf);
+	for (i=1; 	// Schleifeninitialisierung
+	summand > 0.0005; 	// Abbruchbedingung / Condition
+	i++){	// Iterationsausdruck
+		summand = summand *x/i;
+		y += summand;
+		printf("Summand %d: %lf\n", i, summand);
+	}
+	printf("e^%lf: %lf\n", x, y);
+	return 0;
+}
+\end{lstlisting}
+
+Alternativ-Bsp der for-Schleife mit Komma-Operator:
+\begin{lstlisting} [language=C]
+int main() {
+	int i=1;
+	double x, y, summand;
+	printf("Eingabe von x: ");
+	fgets(vbuf, 128, stdin);
+	x=atof(vbuf);
+	for (i=1, y=1.0, summand=1.0;
+	summand > 0.0005;
+	summand*=x/i, y+=summand,
+		 printf("Summand %d: %lf\n", i, summand), i++){
+	}
+	printf("e^%lf: %lf\n", x, y);
+	return 0;
+}
+\end{lstlisting}
+
+\paragraph{Verlassen der Schleife} break
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+char vbuf[128];
+
+int main() {
+	int i=1;
+	double x, y=1.0, summand = 1.0;
+	printf("Eingabe von x: ");
+	fgets(vbuf, 128, stdin);
+	x=atof(vbuf);
+	while (1){
+		summand = summand *x/i;
+		y += summand;
+		printf("Summand %d: %lf\n", i, summand);
+		if (summand<0,00005) break;
+		i++;
+	}
+	printf("e^%lf: %lf\n", x, y);
+	return 0;
+}
+\end{lstlisting}
+\emph{break} bezieht sich auf die (von innen nach außen) nächste zu findende Schleife. Also auf die Schleife, in deren \emph{statement} sie vorkommt.
+
+\paragraph{Neuberechnung der Bedingung} continue\\
+Verlässt den Schleifenkörper (der eingebettete Anweisung) und prüft die Bedingung erneut.
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+char vbuf[128];
+
+int main() {
+	int i=1;
+	double x, y=1.0, summand = 1.0;
+	printf("Eingabe von x: ");
+	fgets(vbuf, 128, stdin);
+	x=atof(vbuf);
+	while (summand>0,00005){
+		summand = summand *x/i;
+		y += summand;		
+		i++;
+		if (summand > 0.00005) continue;
+		printf("Summand %d: %lf\n", i-1, summand);
+	}
+	printf("e^%lf: %lf\n", x, y);
+	return 0;
+}
+\end{lstlisting}
+Wenn Summand größer als 0.00005 ist, startet er die Schleife neu. Die printf() wird erst ausgeführt, wenn er kleiner ist (also das letzte mal).
+
+\paragraph{Fallunterscheidung} switch-Anweisung
+\begin{lstlisting}[language=C]
+switch (i){ // i ist ganzzahliger Ausdruck
+	case 1:
+		... break;
+	case 2:
+		... break;
+	default:
+		...
+}
+\end{lstlisting}
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+char buf[128];
+
+int main(){
+	int wota;
+	printf("Wochentag (1...7): ");
+	fgets(buf, 128, stdin); wota=atoi(buf);
+	switch (wota){
+		case 1: puts("Montag");			break;
+		case 2: puts("Dienstag");		break;
+		case 3: puts("Mittwoch");		break;
+		case 4: puts("Donnerstag");	break;
+		case 5: puts("Freitag");		break;
+		case 6: puts("Samstag");		break;
+		case 7: puts("Sonntag");		break;
+		
+		default: puts("Die Woch hat nur 7 Tage!");
+	}
+	return 0;
+}
+\end{lstlisting}
+
+\subsection{Zusammenfassendes Beispiel}
+
+\begin{lstlisting} [language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+char buf [128];
+
+int main(){
+	int result=0;
+	char operator=0;
+	int value;
+	while (operator!=toupper('q')){
+		printf("Eingabe Operator: ");
+		fgets(buf, 128, stdin);
+		operator = buf[0];
+		printf("Eingabe Zahl: ");
+		fgets(buf, 128, stdin);
+		value = atoi(buf);
+		switch (operator) {
+			case '+':	// Erinnerung: kein "+" - nur '+' für einzelne Zeichenketten
+				result += value;
+				break;
+			case '-':
+				result -= value;
+				break;
+			case '*':
+				result *= value;
+				break;
+			case '/':
+				if (value) // bzw. value!=0 - aber !=0 kann in C weggelassen werden
+					result /= value;
+				else
+					puts("Division durch 0 ist nicht erlaubt.");
+				break;
+			case '%':
+				if (value) // bzw. value!=0 - aber !=0 kann in C weggelassen werden
+					result %= value;
+				else
+					puts("Division durch 0 ist nicht erlaubt.");
+				break;
+			case 'q':
+				break;		
+			default: 
+				printf("unerlaubte Operation %c\n", operator);
+		}
+		printf("result: %d\n", result);
+	}
+}
+\end{lstlisting}
+
+\subsection{Zeichenketten}
+\begin{lstlisting} [language=C]
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char buf [128];
+
+int main(){
+	printf("Eingabe Zeichenkette: ");
+	fgets(buf, 128,stdin);
+	printf("Len von Str: %d\n", strlen(buf));
+	buf[strlen(buf)-1]=0;
+	puts(buf);
+	while (buf[i]!=0)
+		printf("%c", buf[i++]);
+	printf("\n");
+	return 0;
+}
+\end{lstlisting}
+Bei der Eingabe „Max“ wird bei puts() sowohl die Eingabe der Zeichenkette, als auch die Eingabe der Eingabetaste (neue Zeile) ausgegeben.\\
+\begin{tabular}{|l | l |l |l |l |l |l |l }
+\hline
+M & a & x & $\backslash$ n & $\emptyset$ &\; &\;&\;\\
+\hline
+\end{tabular}\\
+mit $\emptyset$: binäre, terminierende Null ( 0000 0000 )\\
+Hinweis: der Buffer muss immer noch Platz für „$\backslash$ n“ und „$\emptyset$“ haben, d.h. man hat in einem Buffer der Größe von 128 nur Platz für 126 zeichen.\\
+mit \emph{buf[strlen(buf)-1]=0;} wird die Eingabetaste „$\backslash$ n“ raus gelöscht.\bigskip\\
+Daraus ergibt sich eine Verbesserung für den Taschenrechner:
+\begin{lstlisting} [language=C]
+...
+	printf("Eingabe Operator /Operand: ");
+	fgets(buf, 128, stdin);
+	operator = buf[0];
+	value = atoi(buf+1);	// Buffer ab der Stelle 0+1: 1
+...
+\end{lstlisting}
+
+\subsection{Funktionen}
+
+= Unterprogramme, zur Wiederholung von Codepassagen und zur besseren Strukturierung.
+\begin{lstlisting}
+<function> :: <func_head><funcbody>.
+<func_head> :: [<return_type>] name '('<param_lst> |void|')'.
+<param_list> :: [<type_name> name {','<type_name> name}]
+<func_body> :: <block>
+\end{lstlisting}
+Bsp.:\\
+\begin{tabular}{r l}
+(func\_head) & $\underset{\text{(return\_type)}}{\text{int}}$ main()\\
+ & \{ \\
+(func\_body) & return 0;\\
+& \} \\
+\end{tabular}\\
+Wenn kein return\_type gewählt wurde, dann default: \emph{int}.\\
+Wenn kein return\_type gebraucht wird, gibt man \emph{void} an.
+\begin{lstlisting}[language=C]
+long fakult (int x) {	// int x: Parameter
+	long f=1;
+	int i;
+	for (i=1; i<=x; i++){
+		f*=i;
+	}
+	return f;
+}
+
+char vBuf[128];
+
+int main(){
+	double x,y;
+	printf("Eingabe x: ");
+	fgets(buf,128,stdin); x= atof(vBuf);
+	y =fakult(x);
+	printf("y: %ld \n", y);
+	return 0;
+}
+\end{lstlisting}
+
+\subsubsection{Gültigkeit}
+\begin{itemize}
+\item Bereich im C-Quelltext, an dem ein Bezeichner sichtbar ist.
+\item Lebensdaur: Zeit von Erzeugung bis zur Vernichtung
+\end{itemize}
+\begin{lstlisting}[language = C]
+static int count; // default wert 0
+count++;	// behält jedes Mal ihren Wert, im Gegensatz zu int count!
+\end{lstlisting}
+\paragraph{Speicherklassen:}\parskp
+\emph{auto} (automatische Variable): wird vom Stack erzeugt (Kellerspeicher)\\
+lokale Varibalen\\
+\emph{extern}: Variable, die in einem anderen Kontext vereinbart ist\\
+\emph{static}: leben bis zum Programmende, global-statische Variabln werden nicht exportiert, immer initialiesiert, default 0\\
+\emph{register}: Variablen werden nach Möglichkeit in ein Prozessorregister gelegt (schnell)\\
+\emph{volatile}: Variabeln werden immer im Speicher abgelegt
+\begin{lstlisting}[language=C]
+long fakult(int x);	//Funktionsdeklaration
+					// (prototyp)
+\end{lstlisting}
+
+\subsection{Header-File}
+enthält die Funktionsköpfe
+\begin{lstlisting}[language=C]
+#include "fe.h" // wie bspw. stdio.h kann die eigene Datei in anderen
+							//		 Quelltexten eingebunden werden
+\end{lstlisting}
+
+\subsection{Pointer}
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(){
+	int i=99, *pi=&i;
+	// &: Adressoperator
+	printf("i: %d &i: %p \n", i, &i);
+	// folgendes gibt nicht 99, sondern die Adresse von i (und die eigene) aus.
+	// erst über *pi wird der Wert des Pointers ausgegeben (-> Dereferenzieren)
+	printf("pi: %lx &pi: %p \n *pi: %d", pi, &pi, *pi);
+	// Äquivalent dazu: (Arrays und Pointer sind in C sehr eng miteinander verwandt)
+	printf("pi: %lx &pi: %p \n pi[0]: %d", pi, &pi, pi[0]);
+	
+	return 0;
+}
+\end{lstlisting}
+
+\paragraph{Beispiel}
+
+Beispiel anhand Eingangsbeispiel der Vorlesung für das Berechnen eines Durchschnitts.
+
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+int Noten []={5,2,3,4,5,5,2,3,4,5,0}; //38/10
+
+// double CalcMean(int Noten[]){
+// folgendes präziser, da eigentlich kein Array, sondern bloß ein Pointer übergeben wird, 
+// der Pointer ist eine neue Variable, die auf die Adresse des ersten Elements
+// des Arrays zeigt (gilt für Parameter (wie hier) und return-Werte)
+// int n für die Weitergabe der Array-Länge
+double CalcMean(int* Noten, int n){	
+	double Akku=0.0;
+	int Count=0;
+	printf("Len von Noten in Funktion: %d\n", sizeof Noten);	// = 4
+	// = 4, weil nur die Adresse des ersten Elements! Kein Information über 
+	// die Länge des Arrays durch die Übergabe in die Funktion!!!
+	while (Count < n){
+		// Obwohl Noten nur Pointer ist, können wir trotzdem Noten[Count] verwenden
+		Akku = Akku+Noten[Count];
+		// Alternativ: (Pointer-Dereferenzierung und Pointer-Arithmetik)
+		// * hier keine Operation, sondern der Dereferenzierungs-Stern
+		// Akku = Akku + *(Noten+Count);
+		// auch Alternativ: Pointer-Variable wird weiter gestellt (diese ist nicht global)
+		// Akku = Akku + *Noten++;
+		// Folgende Zeile würde das globale Array ändern!!! (s.u.)		
+		// Noten[Count] = 0;
+		Count = Count+1;
+	}
+	if(Count>0)
+		// Ergebnis mit Runden
+		Akku = Akku/Count;
+	return Akku;
+}
+
+int main(){
+	double mean = 0.0;
+	
+	// Die tatsächliche Länge des Arrays
+	printf("Len von Noten in Main: %d\n", sizeof Noten);	// = 44
+	
+	// ACHTUNG: Wenn wir das Array an die Funktion übergeben, wird nicht das Array selbst
+	// übergeben, sondern die Adresse des Arrays (bzw. des ersten Elements)! Wird also 
+	// innerhalb der Funktion das Array geändert, wird auch das globale Array geändert
+	mean = CalcMean(Noten, sizeof(Noten)/sizeof(int));
+	printf("Durchschnitt: %lf\n", mean);
+	// sizeof(...): Operator, der die größe eines Elements bestimmt.
+	// Durch das teilen durch sizeof(int) erhält man die Anzahl der Elemente 
+	for (i=0; i<sizeof(Noten)/sizeof(int); i++)
+		printf("%d ", Noten[i]);
+	puts("");
+	return 0;
+}
+\end{lstlisting}
+
+\subsection{Rekursion}
+
+Beispiel der Fakultät mit Rekursion:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+long fakultr(int x){
+	long f;
+	if (x>1) 
+		f = x*fakultr(x-1);
+	else 
+		f=1;
+	return f;
+}
+
+// Bsp. Abarbeitung:
+// - u: 120
+//   u/10: 12 >0
+// - u: 12 
+//   u/10: 1 >0
+// - u: 1
+//   u/10: 0 = 0
+// Rekursiv werden dann die ASCII-Codes ausgegeben (ASCII-Wert von 0 + Zahl)
+void printu(unsigned int u){
+	if (u/10>0)
+		print(u/10);
+	putchar(u%10+'0');
+}
+	
+int main(){
+	long f;
+	int i = 5;
+	f = fakultr(i);
+	printu((unsigned int) f);
+	puts("");
+}
+\end{lstlisting}
+\begin{itemize}
+\item Rechtsrekursion (erst etwas rechnen, dann in die Rekursion gehen $\rightarrow$ fakultr)
+\item Linksrekursion (erst Rekursiv aufrufen, dann etwas ausführen $\rightarrow$ printu)
+\end{itemize}
+Eine Links- oder Rechtsrekursion lässt sich auch Iterativ darstellen.
+\begin{itemize}
+\item Zentralrekursion
+\end{itemize}
+Eine Zentralrekursion lässt sich nicht Iterativ darstellen.\medskip\\
+Problem Rekursion: Es lässt sich nicht vorhersehen, wie viel Speicher benötigt wird. Da ist die Schleife leichter überschaubar.
+
+\subsection{Benutzerdefinierte Datentypen}
+
+\subsubsection{Struct}
+Struktur: alle Elemente liegen hintereinander (nicht zwangsläufig unmittelbar hintereinander) im Speicher \medskip\\
+Alle komplieren:\\
+gcc *.c (dafür braucht es die Header Datei st1.h, die alle Funktionen enthält [außer main]) $\Rightarrow$ alle Dateien werden in eine kompiliert\\
+st1.h:
+\begin{lstlisting}[language=C]
+typedef unsigned int uint; // wie unten beispiel für synonym definition
+
+typedef	// Wenn typedef davor steht, muss unterhalb ein Typ angegeben werden
+struct{ //tStudent{ wenn typedef angegeben, kann der Typname davor weggelassen werden.
+	char name[28+1];
+	int matrNr:15;		// hier bspw. uint, anstatt unsigned int (wenn benötigt)
+	int belnote:3;		// :x gibt die Bitlänge des Integer-Wertes ein 
+						// (falls Ressourcen knapp) Bezeichnung: Bitfelder
+	float klNote;
+	// Struktur innerhalb der Struktur:
+	struct {
+		int jj,stGang, stgr;
+	} stGr;
+} tStud; // <- hier der Typ, synonym zu tStud. Jetzt kann überall anstatt 
+		// "struct tStudent" nur "tStud" geschrieben werden
+
+void putStud(tStud s);	// hier kann nun die Verkürzug angewandt werden 
+		//-> aber auch in Dokumenten, in denen dieses included wird.
+void putStudp(tStud s);
+void getStud1(tStud * pStud);
+tStud getStud2();
+\end{lstlisting}
+st1.c:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stlib.h>
+#include "st1.h"
+
+struct tStudent stud ={"Hans Huckebeil", 12121, 0, 0.0,{2015,41,1}};
+tStud ProjGr[5] ={{"Hans Huckebeil", 12121},
+					{"Peter Lehmann", 12122},
+					{"Anna Bauer", 12123}};
+
+int main(){
+	ProjGr[3]=getStud2();
+	ProjGr[4]=getStud2();
+	
+	int i;
+	for (i=0; i<5; i++){
+		putStud(ProjGr[i]);
+	}
+	for (i=0; i<5; i++){
+		puts(ProjGr[i].name);
+	}
+	// größe des Studenten zum Prüfen von Bitfeldern
+	printf("Size Student: %d \n",sizeof(tStud));
+	// ohne Bitfelder: 44
+	// mit Bitfelder: 36
+	// größe einer Struktur immer mit SIZEOF ermitteln! Nicht selbst ausrechnen
+	// Compiler füllt Lücken ein (siehe 2. Übung)
+	printf("%s %d/%d/%d \n",stud.name, stud.stGr.jj, stud.stGr.stGang, stud.stGr.stgr);
+
+	//putStud(stud);
+	//getStud1(&stud);
+	//putStudp(&stud);
+	return 1;
+}
+\end{lstlisting}
+st1f.c:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stlib.h>
+#include <string.h>
+#include "st1.h"
+
+static char buf[128]; 
+
+void putStd(struct tStudent s){
+	printf("%-28s %u \n", s.name,s.matrNr);
+}
+
+void putStudp(tStud *s){
+	//printf("%-28s %u \n", (*s).name,(*s).matrNr); alternativ dazu:
+	printf("%-28s %u \n", s->name,s->matrNr);
+}
+
+void getStud1(tStud * pStud){
+	printf("Eingabe Name: ");
+	fgets(vbuf,128,stdin); 
+	buf[strlen(buf)-1]=0;	// wegschmeißen des "\n" der Eingabe
+	// Arrays können nicht zugewiesen werden, deshalb muss 
+	// über Funktion strcpy() Byte für Byte eingetragen werden:
+	strcpy(pStud->name,buf);
+	printf("Eingabe Matrikelnr.: "); 
+	fgets(vbuf,128,stdin); 
+	pStud->matrNr=atoi(buf);
+}
+
+tStud getStud2(){
+	tStud s;
+	printf("Eingabe Name: ");
+	fgets(vbuf,128,stdin); 
+	buf[strlen(buf)-1]=0;
+	strcpy(s.name,buf);
+	printf("Eingabe Matrikelnr.: "); 
+	fgets(vbuf,128,stdin); 
+	s.matrNr=atoi(buf);
+	return s;
+}
+\end{lstlisting}
+\subsubsection{Union}
+Alle Elemente eines Union-Datentyps liegen übereinander und liegen auf einer Adresse. \medskip\\
+tu1.c
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stlib.h>
+
+typedef union{
+	unsigned int i;
+	unsigned char arr[5];
+} tbsp;
+
+tbsp x;
+
+// Argumente der main: Nutzen durch Programmzeilen Parameter
+// argc: Anzahl der Parameter
+// argv[i]: Der entsprechende Parameter
+// Aufruf: ./tu1.c Max
+// argc = 2, argv[0]=./tu1.c , argv[1]=Max
+int main(int argc, char* argv[]){
+	int i;
+	for (i=0; i<argc; i++){
+		puts (argv[i]);
+	}
+	
+	if (argc==2){
+		x.i = strtod(argv[1]);	// strtod alternativ zu atoi
+		for (i=0; i<4; i++){
+			printf("%02x ",x.arr[i]);	// so liegt die Zahl im Speicher
+		}
+		puts("");
+	}
+	return 0;
+}
+
+\end{lstlisting}
+
+Sinnvoll, wenn unterstrukturen gleiche und auch ungleiche Eigenschaften haben. Beispielsweise Diplom- und Bachelor-Studenten.
+
+\subsubsection{typedef}
+Für Details s.o. \\
+Zusätzlicher Trick für den Umgang mit Arrays, bzw. sizeof() und typedef.
+\begin{lstlisting}[language=C]
+typedef int tIntArr[6];
+
+void dispArr(tIntArr x){
+	int i;
+	printf("length (Bytte): %d length (Elements): %d\n",sizeof(IntArr),
+		sizeof(IntArr)/sizeof(int));
+	// da Referenz auf typedef und nicht auf x, funktioniert sizeof ohne Probleme
+	for (i=0; i<sizeof(IntArr)/sizeof(int); i++)	
+		printf("%d ",x[i]);
+	puts("");
+}
+
+int main (){
+	tIntArr arr={2,4,6,8,10,12}
+	dispArr(arr);
+	return 0;
+}
+\end{lstlisting}
+
+\subsubsection{enum}
+
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#inculde <stlib.h>
+
+enum tWoTa{
+	Montag=1, // bei Montag=1, fängt's bei 1 an zu zählen (anstatt 0)
+	Dienstag, 
+	Mittwoch, 
+	Donnerstag,
+	Freitag,
+	Samstag=Freitag+1+0x10,	// verändert das Wochenende
+	Sonntag};
+	
+enum tWoTa w=1;
+	
+int main(){
+	printf("%d %x \n",Montag, Montag);	// gibt standarmäßig 0 aus; Sonntag wäre 6 usw.
+	printf("%d %x \n",Dienstag, Dienstag);
+	printf("%d %x \n",Mittwoch, Mittwoch);
+	printf("%d %x \n",Donnerstag, Donnerstag);
+	printf("%d %x \n",Freitag, Freitag);
+	printf("%d %x \n",Samstag, Samstag);
+	printf("%d %x \n",Sonntag, Sonntag);
+	w=99;	
+	printf("%d %x \n",w, w);
+	return 0;
+}
+\end{lstlisting}
+\subsection{Memory-Allocation}
+Aus vorhergehendem Beispiel:\\
+st1.c:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stlib.h>
+#include "st1.h"
+
+int anz = 0;
+char vbuf[128];
+char weiter ='y';	// Ja
+
+tStud s;
+
+int main(){
+	int i;
+	tStud *ps = NULL, *psx;
+	while (weiter == 'y'){
+		s = getStud2();
+		if(ps==NULL){
+			ps=malloc(sizeof(tStud));	// Malloc Speicher aus dem heap
+			if (ps) {puts("malloc hat nicht geklappt."); exit(-1);}
+		} else {
+			psx=realloc(ps,(anz+1)*sizeof(tStud));
+			// realloc guckt nach, ob dahinter noch genug Speicher frei ist und
+			// fügt das neue alloc hinten dran. Wenn nicht, dann wird ein neuer Speicherbereich
+			// gefunden, der groß genug ist für beide ist.
+			if (psx){
+				ps=psx;
+			} else { puts("realloc hat nicht geklappt."); exit(-1);}
+		}
+		
+		*(ps+anz) = s;
+		anz++;
+		for (i=0; i<anz; i++) {
+			putStudp(ps+i);
+			printf("i: %d, ps+i: %p, sizeof: %d %02x\n",i, ps+i, sizeof(tStud),sizeof(tStud));
+		}
+		printf("next (y/n): ");
+		fgets(vbuf,128,stdin); 
+		weiter=vbuf[0];
+	}
+	// am Ende des Programms oder wenn die Daten nicht mehr gebraucht werden
+	// muss der Speicher wieder freigegeben werden
+	free (ps);
+	// free (psx); darf nicht freigegeben werden, da er nur ein Zeiger auf den ps ist.
+	return 0;
+}
+\end{lstlisting}
+Verwendung von malloc/realloc:\\
+Speicher nach Bedarf aus dem heap.\\
+malloc hat als Ausgabe void* (generischer Pointer) [siehe "man malloc"]. Dieser ist nicht derefernzierbar und zuweisungskompatibel zu jedem getypten Pointer. Man kann mit ihm ebenfalls nicht rechnen (keine Arithmetik).\\
+malloc: Speicher für Variable frei machen\\
+realloc: freigemachten Speicher erweitern\\
+free: Speicher wieder freigeben\bigskip\\
+Es kann bspw. auch Speicher in getStud2 (z.B. für den Namen, also *name anstatt name mit entsprechendem alloc in der Fkt.) allociert werden, um Platz zu sparen (oder dynamisch mehr freizugeben). Dann müsste der Speicher entsprechend in einer Schleife auch wieder freigegeben werden.
+
+\section{Dateiarbeit in C}
+FOLIE
+\paragraph{Als Binärdatei speichern}
+aus tStud Beispiel(st1.c) (jeweils an den entsprechenden Stellen eingefügt):
+\begin{lstlisting}[language=C]
+#include "st1io.h"
+...
+FILE *pf;
+
+int main(){
+	int i;
+	tStud* ps = NULL, *psx;
+	pf = fopen("Studs.bin","rb");
+	if(pf){
+		// Dateigröße ermitteln:
+		fseek(pf,0,SEEK_END);
+		anz=ftell(pf)/sizeof(tStud);
+		rewind(pf);
+		
+		// Daten lesen
+		for (i=0; i<anz; i++){
+			if(ps==NULL){
+				ps=malloc(sizeof(tStud));
+				if (ps==NULL){puts("malloc hat nicht geklappt"); exit(-1);}
+				*ps=readStud(pf);
+			} else {	
+				psx=realloc(ps,(anz+1)*sizeof(tStud));
+				if (psx){
+					ps=psx;
+					*(ps+i)=readStud(pf);
+				} else { puts("realloc hat nicht geklappt."); exit(-1);}
+			}
+		}
+		fclose(pf);
+	}
+...
+	// Daten speichern
+	pf=fopen("Studs.bin","wb");
+	if(pf==NULL){puts("fopen (write) hat nicht geklappt");exit(-1);
+	for (i=0; i<anz; i++){
+		writeStud(pf,ps+i);
+	}
+	fclose(pf);
+...
+\end{lstlisting}
+
+st1io.h
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include "st1f.h"
+#include "st1io.h"
+
+tStud readStud(FILE* f){
+	tStud s;
+	fread(&s, sizeof(tStud),1,f);
+	return s;
+}
+
+void write Stud(File* f, tStud* pStud){
+	fwrite(pStud, sizeof(tStud),1,f);
+}
+\end{lstlisting}
+ACHTUNG: Arbeiten mit derartigen Binärdateien ist sehr Platform-Abhängig (angucken der Binärdatei unter linux mit "hexdump -C ...")
+
+\paragraph{Als Textdatei speichern} (alternativ und ergänzend zum obigen Beispiel)\\
+st1io.h
+\begin{lstlisting}[language=C]
+int getAnz(FILE* pf);
+tStud readStud(FILE* pf);
+void writeStud(FILE* pf, tStud* ps);
+\end{lstlisting}
+
+st1io.c
+\begin{lstlisting}[language=C]
+#include "st1f.c"
+
+// Zeilen zählen und durch 4 teilen
+int getAnz(FILE *pf){
+	char buf[128];
+	int n=0;
+	while (fgets(buf, 128, pf)) n++;\\
+	fseek(pf, 0, SEEK_SET);
+	return n/4;
+}
+
+tStud readStud(FILE* pf){
+	tStud s={};
+	char buf[128];
+	if(fgets(buf, 128, pf)){
+		buf[strlen(buf)-1]=0;
+		s.name = malloc(strlen(buf+1));
+		if (s.name) strcpy(s.name,buf);
+		else fprintf(stderr, "malloc faild in readStud\n");
+		fscanf(pf,"%d\n%d\n%f\n",&s.matrNr,&s.belNote,&s.klNote);
+	}
+	return s;
+}
+
+void writeStud(FILE *pf, tStud* ps){
+	pfrintf(pf,"%s\n%d\n%d\n%f\n",ps->name, ...
+}
+
+
+\end{lstlisting}
+
+st1.c
+\begin{lstlisting}[language=C]
+...
+	// Einlesen aus Datei
+	pf=fopen("Studs.txt", "rt");
+	if (pf){
+		anz=getAnz(pf);		
+...
+	// Schreiben
+	pf=fopen("Studs.txt", "wt");
+		
+\end{lstlisting}
+
+\paragraph{Als CSV-Datei speichern}
+
+Ähnlich wie bei .txt, bloß trennt man die Datensätze durch Semicolon und nicht durch neue Zeile.\\
+Sinnvolle Funktion zur Zerlegung der Datensätze: 
+\begin{lstlisting}[language=C]
+strtok(buf,";\n");
+\end{lstlisting}
+
+\section{Funktionspointer}
+
+Bisher wurde typedef für Variablen verwendet:
+\begin{lstlisting}[language=C]
+typedef struct{
+	int sk1;
+	int sk2;
+} tStruct;
+tStruct s={1,9999};
+\end{lstlisting}
+Nun kommt der Funktionspointer dazu:
+\begin{lstlisting}[language=C]
+typedef void f(void);
+f* pf;	// Das ist der Funktionspointer
+\end{lstlisting}
+oder auch:
+\begin{lstlisting}[language=C]
+typedef void (*tpf)(void);
+tpf pf;	// Das ist auch ein Funktionspointer
+\end{lstlisting}
+Anwendungsbeispiel:
+\begin{lstlisting}[language=C]
+void fxyz(void){
+	puts("xyz");
+}
+pf = fxyz;
+
+fxyz();
+pf();	// diese beiden Funktiosaufrufe rufen die gleiche Funktion auf - ein mal dirket 
+			//und ein mal als Pointer
+\end{lstlisting}
+\paragraph{Beispiel:} $ $
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+
+typedef void (*tpf)(int i);
+tpf pFunc;
+
+void printDec(int i);
+void printHex(int i);
+
+typedef struct{
+	tpf func;
+	int x;
+}tstruct;
+
+tstruct tdec={printDec,55};
+tstruct thex={printHex,55};
+
+void printDec(int i){
+	printf("%d\n",i);
+}
+
+void printHex(int i){
+	printf("%x\n",i);
+}
+
+// alternativ: printx(void (*func)(int i), int z){...}
+void printx(tpf func, int z){
+	func(z);
+}
+// Bezeichnung der Technik: Übergabe einer Callback Funktion
+// Verwendung bei Programmierung mit graphischen Oberflöchen
+
+tpf choice(char c){
+	if (c=='h')	return printHex;
+	else 				return printDec;
+}
+
+int main(int argc, char*argv[]){
+	int x=9999;
+	tpf aFctns[]={printDec,printHex};
+	if (argc==2) x=atoi(argv[1]);
+	
+	pFunc=printDec;
+	puts("Dezimal:");
+	pFunc(x);
+	pFunc=printHex;
+	puts("Hexadezimal:");
+	pFunc(x);
+	
+	puts("Dezimal aus Array:");
+	aFctns[0](x);
+	puts("Hexadezimal aus Array:");
+	aFctns[1](x);
+	
+	puts("Dezimal aus Funktionsparameter:");
+	printx(printDec,x);
+	puts("Hexadezimal aus Funktionsparameter:");
+	printx(printHex,x);
+	
+	puts("aus Struct:");
+	tdec.func{tdec.x};
+	thex.func{thex.x};	
+	
+	puts("aus Returnwert:");
+	choice('h')(x);		// choice('h')()=printHex()
+	choice('d')(x);		
+		
+	return 0;
+}
+\end{lstlisting}
+
+Verwendungszweck beispielsweise im Compilerbau im Lexer oder ähnliches.
+
+\section{Graphische Oberflächen}
+\subsection{libforms}
+FOLIE
+\subsection{GTK}
+FOLIE
+\subsection{CGI}
+FOLIE\\
+Bsp. ascii.cgi
+
+\section{Preprozessor}
+
+\subsection{Umwandlung von 3-Zeichenfolgen}
+(siehe Grundelemente-FOLIE). Bspw. ??> o.ä.\\
+Braucht extra Befehl für gcc.
+
+\subsection{Zeilenverlängerung}
+Falls eine Zeichenkette im Editor mit Zeilenumbruch getrennt werden soll (bspw. ein langer String). Kann auch mitten im C-Code sein.\\
+Das Backslash muss dafür das letzte Zeichen auf der Quelltextzeile sein.
+\begin{lstlisting} [language=C]
+#include <stdio.h>
+
+int ma\
+in(){
+	puts{Spass\
+	beim Programmieren\
+	in c");
+	return 0;
+}
+\end{lstlisting}
+
+\subsection{include}
+
+Der Preprozessor ersetzt die Include-Zeile mit dem Quelltext des einzubindenden Elements.
+\begin{lstlisting}[language=C]
+#include <...>	// für Systemheaderfiles (zu finden unter usr/include)
+#include "..."	// für Applikationsheaderfiles (eigene)
+\end{lstlisting}
+Das Ergebnis des Procompilers kann mit \emph{gcc -E progr.c > progr.e} kompiliert werden.\\
+Mehrfaches Einbinden u.ä. kann unterbunden werden durch:
+\begin{lstlisting}[language=C]
+#ifdefn _H_DEBUG_
+#define _H_DEBUG_
+
+#include <stdio.h>
+
+#endif
+\end{lstlisting}
+
+\subsection{Symboldefinitionen}
+Vorteile:
+\begin{itemize}
+\item Quelltext wird lesbarer (durch gute zweckgebundene Bezeichnung)
+\item Symboldefinition kann im gesamten Quelltext mit einem Mal geändert werden.
+\end{itemize}
+\begin{lstlisting}[language = C]
+// Allgemein:
+#define SYMBOL Tokensequenz		// Symbol wird üblicher Weise groß geschrieben,
+															// muss aber nicht (nur zur besseren Wiedererkennung).
+
+// Beispiel:
+#define N 10
+...
+int inArray[N];	// Preprozessor ersetzt N mit 10
+
+#define LEN 30 + 1
+// KLAMMERN SETZTEN! ->
+// #define LEN (30 + 1)
+...
+char name[LEN*3];	// Achtung: LEN wird vorm Ausrechnen ersetzt. 
+									// Also: LEN*3 entspricht 30+1*3 und nicht (30+1)*3
+strcpy(name, "Max");
+puts(name);
+printf("Len name: %d, Len content: %d\n", sizeof name, strlen(name));
+
+#define NAME1 Klaus
+...
+puts(NAME1);
+\end{lstlisting}
+
+Darauf ist zu achten:
+\begin{itemize}
+\item Tokensequenz (bei Zahlen) am besten Klammern.
+\item kein Semikolon!
+\item define-Konstruktion muss auf einer Zeile stehen.
+\end{itemize}
+
+\subsection{Parameterbehaftete Macros}
+
+\begin{lstlisting} [language=C]
+#define SYMBOL(<parameterlist>)	Ersatztokenfolge
+// Wichtig: Runde Klammer muss unmittelbar hinter SYMBOL stehen
+#define SYMBOL(x) "str1" #x "str2"
+// Bewirkt Verkettung der Strings mit dem Parameter
+#define SYMBOL(x,y) x##y
+// Ein neues Token ensteht im C-Quelltext aus x und y
+\end{lstlisting}
+Beispiel:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#define LEN (30+1)
+#define PYTHAGORAS(a,b) sqrt(a*a + b*b)
+// Klammern wieder wichtig:
+// #define PYTHAGORAS(a,b) sqrt((a)*(a) + (b)*(b))
+#define STR1(x) "Max " #x " Moritz"
+// Raute vor dem Parameter bewirkt das Zusammenfassen der umschlossenen Strings.
+// (wird zu "Max " "und" " Moritz")
+#define STR2(x,y) x##y
+#define MYPUTS puts
+
+int main(){
+	double x=3;
+	double y=4;
+	printf("c:  %lf\n",PYTHAGORAS(x,y));	
+	printf("c:  %lf\n",PYTHAGORAS(x+1,y+1));	
+	// wenn nicht geklammert: PYTHAGORAS(x+1,y+1) = sqrt(x+1*x+1+y+1*y+1)
+	// also sqrt(2x+1+2y+1) -> Falsch!
+	printf("c:  %lf\n",PYTHAGORAS(x++,y++));
+	// auf keinen Fall machen, da es schlecht überschaubar wird, wann inkrementiert wird!
+	printf("c:  %lf\n",PYTHAGORAS(x,funktion(y)));
+	// auch gefährlich, weil der Macro mit funktion(y)*function(y) ersetzt wird
+	// und damit die funktion (unerwünscht) doppelt ausgeführt wird
+	
+	char name[LEN*3];
+	strcpy(name, STR1(und));
+	puts(name);
+
+	STR2(MY,PUTS)("Test");	// ergibt MYPUTS("Test"), was dann mit puts() ersetzt wird.
+	
+	return 0;
+}
+\end{lstlisting}
+Erinnerung:\\
+bei \emph{\#\. include math.h} muss mit \emph{gcc progr.c -lm} kompiliert werden!\\
+Darauf ist zu achten:
+\begin{itemize}
+\item Parameter im Macro klammern
+\item keine Seiteneffekte programmieren (Inkrementierung, Funktionsaufruf usw.)
+\end{itemize}
+Liste von vordefinierten Symbolen zu finden durch \emph{gcc -E -dM - </dev/null}.\\
+Bspw.:
+\begin{lstlisting} [language=C]
+__FILE__ // Quelltext-Dateiname
+__LINE__ // Zeilennummer, in der das Symbol verwendet wurde
+__DATE__ // Datum, zu dem das Programm kompiliert wurde
+__TIME__ // Zeit, zu der das Programm kompliert wurde
+__STDC__ // C-Version
+\end{lstlisting}
+
+\subsection{Bedingte Übersetzung}
+
+Soll ein platformübergreifendes Programm geschrieben werden (mit einem Quelltext), gibt es Tücken (bspw. 32 oder 64 bit), können bestimmte Fälle mit einer bedingten Übersetzung abgefangen werden.
+\begin{lstlisting}[language=C]
+#if <const-expr>
+#if defined <symbol>
+#ifdef <symbol>
+#if !defined <symbol>
+#ifndef <symbol>
+#else 
+#elif <const-expr>
+#endif
+\end{lstlisting}
+
+\begin{lstlisting}[language=C]
+#define MYPUTS puts
+...
+#ifdef MYPUTS
+	MYPUTS("Text");
+#else
+	printf("Text2");
+#endif
+\end{lstlisting}
+Symbole können mit der Commandlineoption \emph{-D} auch definiert werden.\\
+\emph{gcc progr.c -D MYPUTS=puts} (entspricht der Zeile \emph{\#\. define MYPUTS puts}). \medskip\\
+Gutes Anwendungsbeispiel für bedingte Übersetzung:
+\begin{lstlisting} [language=C]
+#ifdef DEBUG
+	printf("Debuginformation");
+#endif
+\end{lstlisting}
+Gibt Debug-Information nur bei \emph{gcc progr.c -DDEBUG} aus.
+
+\end{document}
