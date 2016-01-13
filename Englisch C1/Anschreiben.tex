@@ -1,0 +1,142 @@
+%% start of file `template.tex'.
+%% Copyright 2006-2015 Xavier Danaux (xdanaux@gmail.com).
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License version 1.3c,
+% available at http://www.latex-project.org/lppl/.
+
+\newcommand{\kome}[1]{\textcolor{blue}{#1}}
+
+\documentclass[11pt,a4paper,sans]{moderncv}        % possible options include font size ('10pt', '11pt' and '12pt'), paper size ('a4paper', 'letterpaper', 'a5paper', 'legalpaper', 'executivepaper' and 'landscape') and font family ('sans' and 'roman')
+
+% moderncv themes
+\moderncvstyle{classic}                             % style options are 'casual' (default), 'classic', 'banking', 'oldstyle' and 'fancy'
+\moderncvcolor{blue}                               % color options 'black', 'blue' (default), 'burgundy', 'green', 'grey', 'orange', 'purple' and 'red'
+%\renewcommand{\familydefault}{\sfdefault}         % to set the default font; use '\sfdefault' for the default sans serif font, '\rmdefault' for the default roman one, or any tex font name
+%\nopagenumbers{}                                  % uncomment to suppress automatic page numbering for CVs longer than one page
+
+% character encoding
+%\usepackage[utf8]{inputenc}                       % if you are not using xelatex ou lualatex, replace by the encoding you are using
+%\usepackage{CJKutf8}                              % if you need to use CJK to typeset your resume in Chinese, Japanese or Korean
+
+% adjust the page margins
+\usepackage[scale=0.75]{geometry}
+%\setlength{\hintscolumnwidth}{3cm}                % if you want to change the width of the column with the dates
+%\setlength{\makecvtitlenamewidth}{10cm}           % for the 'classic' style, if you want to force the width allocated to your name and avoid line breaks. be careful though, the length is normally calculated to avoid any overlap with your personal info; use this at your own typographical risks...
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage[ngerman]{babel}
+\usepackage{csquotes}	% Anführungszeichen
+
+% personal data
+\name{Falk-Jonatan}{Strube}
+%\title{Title}                               % optional, remove / comment the line if not wanted
+\address{Generic Ave. 42}{01234 Random City}{Germany}% optional, remove / comment the line if not wanted; the "postcode city" and "country" arguments can be omitted or provided empty
+%\phone[mobile]{+49~(171)~123~456}                   % optional, remove / comment the line if not wanted; the optional "type" of the phone can be "mobile" (default), "fixed" or "fax"
+\phone[fixed]{+49~(358)~654~321}
+%\phone[fax]{+49~(358)~654~322}
+\email{fj-strube@web.de}                               % optional, remove / comment the line if not wanted
+%\homepage{www.fj-strube.de}                         % optional, remove / comment the line if not wanted
+%\social[linkedin]{john.doe}                        % optional, remove / comment the line if not wanted
+%\social[twitter]{jdoe}                             % optional, remove / comment the line if not wanted
+%\social[github]{genericFJS}                              % optional, remove / comment the line if not wanted
+%\extrainfo{additional information}                 % optional, remove / comment the line if not wanted
+%\photo[64pt][0.4pt]{picture}                       % optional, remove / comment the line if not wanted; '64pt' is the height the picture must be resized to, 0.4pt is the thickness of the frame around it (put it to 0pt for no frame) and 'picture' is the name of the picture file
+%\quote{Some quote}                                 % optional, remove / comment the line if not wanted
+
+% bibliography adjustements (only useful if you make citations in your resume, or print a list of publications using BibTeX)
+%   to show numerical labels in the bibliography (default is to show no labels)
+\makeatletter\renewcommand*{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}\makeatother
+%   to redefine the bibliography heading string ("Publications")
+%\renewcommand{\refname}{Articles}
+
+% bibliography with mutiple entries
+%\usepackage{multibib}
+%\newcites{book,misc}{{Books},{Others}}
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+%\begin{CJK*}{UTF8}{gbsn}                          % to typeset your resume in Chinese using CJK
+%-----       letter       ---------------------------------------------------------
+% recipient data
+\recipient{Human Resources Department}{Gergay Szep\\Wind Turbine Performance Inc.\\Hilltop Street 572\\77000 Houston, TX\\ USA}
+\date{January 5, 2016}
+\opening{Dear Mister Szep:}
+\closing{Yours faithfully,\vspace{.1cm} \\ \includegraphics[height=5em]{bilder/signature} \vspace*{-1cm}}
+\enclosure[Attached]{résumé, UniCert Microsoft Office, UniCert AutoCAD, grade summary, reference letter SMA, reference letter DAV, reference letter Nightline e. V. }          % use an optional argument to use a string other than "Enclosure", or redefine \enclname
+\makelettertitle
+
+As soon as I started reading your online job ad for a \textit{'Wind Turbine Performance Engineer'}, I felt compelled to answer. The job description perfectly describes what I want to be doing in the near future. 
+
+Looking at my résumé you can see that I will graduate as an electrical engineer this year. I studied in a dual education course and have already been working half-time at the solar technology company SMA. This gave me an excellent theoretical and practical background in working with the electrical characteristics of regenerative energy. 
+
+Over the semesters I did not only gather experience with solar technology but got invested into wind energy as well. This lead to my bachelor thesis about a hybrid power inverter with solar and wind energy.
+
+With my theoretical knowledge in maintaining, inspecting and monitoring equipment from my course of study and my advanced experience with developing new processes, I am well prepared for the technical aspect of the job. The work at SMA was partly independent and partly group work, which made me an efficient solo and team player as well.
+
+I would love to contribute my knowledge and experience to your company. Being very flexible concerning travel and working hours, I am eager to work for you in the United States.
+
+I am interested in learning more about your company in an interview. You can find my contact details at top of the letter. I am looking forward to your response.
+
+\makeletterclosing
+
+%\clearpage\end{CJK*}                              % if you are typesetting your resume in Chinese using CJK; the \clearpage is required for fancyhdr to work correctly with CJK, though it kills the page numbering by making \lastpage undefined
+\clearpage
+%-----       resume       ---------------------------------------------------------
+\makecvtitle
+
+\section{Education}
+\cventry{2013--2016}{Bachelor of Electrical Engineering}{Universität Kassel}{}{est. GPA: 3,7}{dual education course in cooperation with SMA Solar Technology AG}  % arguments 3 to 6 can be left empty
+\cventry{2005--2013}{Abitur}{Gustav Stresemann Gymnasium Bad Wildungen}{}{GPA: 3,33}{}
+
+\section{Experience}
+\subsection{Develpoment and Implementation}
+\cventry{2014-2016}{Development assistant}{SMA Solar Technology AG}{Kassel}{}{Developed and improved solar power inverters. \newline{}%
+Selection of achievements:%
+\begin{itemize}%
+\item Significantly increased efficiency of the SMA home system solar inverter (2014).% (Hardware Version 2.6b, 2014). 
+\item Developed an unique end-user-interface for industrial systems (2015).% (Software Version 1.8r3, 2015).
+\item Designed a new solar-wind hybrid power inverter (bachelor thesis, 2016).
+\end{itemize}}
+\subsection{Inspection, Monitoring and Repair}
+\cventry{2013-2014}{Maintenance assistant}{SMA Solar Technology AG}{Kassel}{}{Inspected, monitored and repaired solar inverters at the factory and for customers.}
+\subsection{Interpersonal}
+\cventry{2014-2016}{Executive committee}{Nightline Kassel e. V.}{Kassel}{}{Honarary managed and led the charitable crisis hotline association.}
+\subsection{Physical Capabilities}
+\cventry{2010-2016}{Alpine Hiker and Climber}{Deutscher Alpenverein}{Sektion Kassel}{}{Made regular alpine tours including via ferrata with advanced climbing.}
+
+\section{Languages}
+\cvitemwithcomment{German}{Native speaker}{}
+\cvitemwithcomment{English}{C1}{English course at the university}
+%\cvitemwithcomment{French}{School level}{4 school years}
+
+\section{Computer skills}
+\cvitemwithcomment{Microsoft Office}{Word, Excel, Power Point, Access}{UniCert}
+\cvitemwithcomment{Autdesk}{AutoCAD}{UniCert}
+%\cvitemwithcomment{Programming Languages}{C\raisebox{.25ex}{\#}, Java, i.a.}{}
+
+\section{Additional Skills}
+\cvitem{since 2011}{Driving license category B.}
+\cvitem{2013-2016}{Universitätsorchester Kassel, Clarinet.}
+
+% Publications from a BibTeX file without multibib
+%  for numerical labels: \renewcommand{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}% CONSIDER MERGING WITH PREAMBLE PART
+%  to redefine the heading string ("Publications"): \renewcommand{\refname}{Articles}
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{publications}                        % 'publications' is the name of a BibTeX file
+
+% Publications from a BibTeX file using the multibib package
+%\section{Publications}
+%\nocitebook{book1,book2}
+%\bibliographystylebook{plain}
+%\bibliographybook{publications}                   % 'publications' is the name of a BibTeX file
+%\nocitemisc{misc1,misc2,misc3}
+%\bibliographystylemisc{plain}
+%\bibliographymisc{publications}                   % 'publications' is the name of a BibTeX file
+
+\end{document}
+
+
+%% end of file `template.tex'.
