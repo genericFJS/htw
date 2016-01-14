@@ -21,183 +21,16 @@
 \part{Elementare Grundlagen}
 
 \section{Aussagen und Grundzüge der Logik}
-\input{HTW_Mathe1_Skript_sec1}
+%\input{HTW_Mathe1_Skript_sec1}
 
 \section{Mengen}\label{sec:Mengen}
-\input{HTW_Mathe1_Skript_sec2}
+%\input{HTW_Mathe1_Skript_sec2}
 
 \section{Zahlen}
-\input{HTW_Mathe1_Skript_sec3}
+%\input{HTW_Mathe1_Skript_sec3}
 
 \section{Reellwertige Funktionen einer reellen Veränderlichen}
-\subsection{Elementare Funktionen (Teil 1)}
-\subsubsection{Polynome}
-\paragraph{Def. 1:} \parskp
-$y=f(x)=a_n\; x^n+a_{n-1}\;x^{n-1}+...+a_2\; x^2+a_1\; x+a_0$ mit $(a_0, ..., a_n \in \mathbb{R}, x\in \mathbb{R})$ heißt ganze rationale Funktion oder \emph{Polynom} vom Grad $n$ (falls $a_n \not = 0$).\\
-Zur Beschreibung der Funktionswerte zweckmäßig: HORNER-Schema (vgl. Stellenwertsysteme \ref{sec:Stellenwertsysteme})\\
-\begin{tabular}{r | c c c c c c}
- & $a_n$ & $a_{n-1}$ & $ a_{n-2}$ & ... & $a_1$ & $a_0$\\
-$x_0$ &  & $b_{n-1}\cdot x_0$ & $b_{n-2}\cdot x_0$ & ... & $b_1 \cdot x_0$ & $b_0\cdot x_0$ \\
-\hline
- & $\underbrace{\boxed{b_{n-1}}}_{=a_n}$ & $\boxed{b_{n-2}}$ & $\boxed{b_{n-3}}$ & ... & $\boxed{b_0}$ & $f(x_0)=r_0$\\
-\end{tabular}\\
-Polynomdivision: $\frac{f(x)}{x-x_0}=b_{n-1}\;x^{n-1}+b_{n-2}\;x^{n-2}+...+b_1\; x + b_0 + \frac{r_0}{x-x_0}$
-
-\subparagraph{Bsp. 1:} \parskp
-$f(x)=x^5-2x^3+x^2-6$, \quad $x_0=3$, \quad ges: $f(x_0)$, \quad$\frac{f(x)}{x-x_0}$\\
-\begin{tabular}{r| c c c c c c}
- & $1$ & $0$ & $-2$ & $1$ & $0$ & $-6$\\
-$x_0=3$ &  & $3$ & $9$ & $21$ & $66$ & $198$ \\
-\hline
- & $1$ & $3$ & $7$ & $22$ & $66$ & $192$\\
-\end{tabular}\\
-$f(x):(x-3)=x^4+3 x^3 + 7x^2+22x + 66 + \frac{192}{x-3}$
-
-\paragraph{Satz 1:} \parskp
-Es sei $f(x)=p_n(x) = a_n \; x^n + ... + a_0$ ein Polynom vom Grad $n$ (d.h. $a_n\not = 0$). Dann besitzt $f$ (in $\mathbb{C}$) genau $n$ Nullstellen $x_1,...,x_n$ und es gilt: $f(x) = a_n (x-x_1)\cdot (x-x_2)\cdot ... \cdot (x-x_n)$. (Zerlegung in Linearfaktoren)
-
-\subparagraph{Diskussion:}
-\begin{enumerate}
-\item Falls in der Linearfaktorzerlegung der Faktor $(x-x_0)$ genau $k$-mal ($1\geq k \geq n$) vorkommt, so heißt $x_0$ \emph{$k$-fache Nullstelle} (Nullstelle der Vielfachheit $k$).
-\item Nichtreelle Nullstellen sind möglich, sie treten stets paarweise als konjugiert komplexe Zahlen auf ($x_0, \overline{x_0})$). In diesem Falle Zusammenfassung der Linearfaktoren zu reellen quadratischen Faktoren möglich: $(x-x_0)\cdot (x-\overline{x_0})=x^2-(x_0 + \overline{x_0})x + x_0 \cdot \overline{x_0}=x^2-2\cdot Re(x_0) \cdot x + |x_0|^2$
-\item Falls $a_0, a_1, ... , a_n$ ganze Zahlen sind, dann sind ganzzahlige Nullstellen Teiler von $a_0$ (falls vorhanden).
-\item Allgemeine Methoden zur Nullstellenbestimmung später (Kap. 3 \ref{Kap.3})
-\end{enumerate}
-
-\subparagraph{Bsp. 2:} \parskp
-$p(x) = x^4 + x^3 -5x^2 + x-6$, \quad ges: Nullstellen\\
-Durch Probieren $\boxed{x_1=2}$\\
-mit HORNER-Schema:\\
-\begin{tabular}{r | c c c c c l}
- & 1 & 1 & -5 & 1  & -6 & \\
-$x_1=2$ & & 2 & 6 & 2 & 6 &\\
-\hline
- & 1 & 3& 1 & 3 &$\boxed{0}$ & $\curvearrowright p(x) = (x-2)\cdot \underbrace{(x^3+3x^2+x+3)}_{\text{durch Probieren }x_2=-3}$\\
-$x_2=-3$ & & -3 & 0 & -3 & & \\
-\hline 
- & 1 & 0 & 1 &\boxed{0}& & $\curvearrowright p(x) = (x-2)(x+3)\underbrace{(x^2+1)}_{x_{3,4}=\pm i}$\\ 
-\end{tabular}\\
-$\curvearrowright$ Zerlegung: $p(x)= (x-2)(x+3)(x-i)(x+i)$
-
-\subsubsection{Gebrochen rationale Funktionen}
-
-\paragraph{Def. 2:} \parskp
-$y=f(x) = \frac{p(x)}{q(x)}=\frac{a_m\; x^m + a_{m-1}\; x^{m-1}+...+a_1 \; x+a_0}{b_n \; x^n+b_{n-1}\; x^{n-1} + ... + b_1 \; x + b_0}$ mit $a_m \not = 0$, $b_n \not = 0$ und $ Db(f)=\{x\in \mathbb{R}| q(x)\not = 0\}$ heißt gebrochenrationale Funktion. f heißt \emph{echt gebrochen}, falls $m<n$ und \emph{unechtgebrochen}, falls $m\geq n$.
-
-\subparagraph{Diskussion:}
-\begin{itemize}
-\item Wir nehmen ohne Beschränkung der Allgemeinheit an, dass Zähler- und Nennerpolynom keine gemeinsamen Nullstellen besitzen (ansonsten: Kürzen gemeinsamer Linearfaktoren von Zähler und Nenner [unter Beachtung des Definitionsbereichs])
-\item Die Nullstellen des Nennerpolynoms heißen \emph{Polstellen} der gebrochen rationalen Funktion (bei Polstelle $x_P$: $|f(x)|\rightarrow \infty$ für $x\rightarrow x_P$).
-\item Die Nullstellen des Zählerpolynoms sind die Nullstellen von $f$.
-\item Verhalten von $f(x)$ bei $k$-facher reeller Nullstelle oder Polstelle:\\
-\fbox{Vorzeichenwechsel $\Leftrightarrow$ $k$ ungerade}
-\end{itemize}
-...
-\subsection{Fehlende VL vom 02.12.2015}
-...
-\begin{itemize}
-\item Bilden der Umkehrfunktion zu $y=f(x)$, $x \in Db(f)$:
-\begin{enumerate}
-\item Auflösen der Funktionsgleichung nach $x$: $x=:f^{-1}(y)$ (falls dies eindeutig möglich ist, andernfalls existiert $f^{-1}$ nicht!)
-\item Oft erfolgt anschließend eine Vertauschung von $x$ und $y$:\\
-$y=f^{-1}(x)$, $x \in Db(f^{-1})=Wb(f)$.\\
-Vertauschung entspricht geometrisch Spiegelung an der Geraden $x=y$, vgl. Bsp. 4.
-\end{enumerate}
-\end{itemize}
-\subparagraph{Bsp. 4:} \parskp
-$y=f(x)=\sqrt{x}+2 \qquad , x \in [0,\infty)$
-\begin{enumerate}
-\item Auflösen nach $x$: $y-2=\sqrt{x}\Rightarrow x=(y-2)^2=f^{-1}(y)$
-\item Vertauschen von $x$ und $y$: $y=f^{-1}(x)=(x-2)^2, Db(f^{-1})=Wb(f)=[2,\infty)$\\
-Abb 101\\
-! $Db(f^{-1})$ nur $[2,\infty)$, obwohl $(x-2)^2$ für alle $x \in \mathbb{R}$ erklärt ist.
-\end{enumerate}
-
-\paragraph{Def. 6:} \parskp
-Die reellwertige Fkt. $y=f(x)$ heißt
-\begin{enumerate}[label=\alph*.)]
-\item \emph{streng monoton wachsend}, falls $x_1<x_2 \Rightarrow f(x_1)<f(x_2)$ gilt.
-\item \emph{monoton wachsend} (=nicht fallend), falls $x_1<x_2 \Rightarrow f(x_1) \leq f(x_2)$ gilt für alle $x_1, x_2 \in Db(f)$.
-\item Analog: \emph{Streng monoton fallend} bzw \emph{monoton fallend} (=nicht wachsend).
-\end{enumerate}
-
-\paragraph{Satz 2:} \parskp
-$f$ streng monoton $\Rightarrow$ $f$ ist injektiv (d.h. $f^{-1}$ existiert)
-
-\subsection{Elementare Funktionen (Teil 2)}
-
-\subsubsection{Wurzel- und Logarithmusfunktionen}
-\paragraph{Def. 7:} \parskp
-$y=x^{\frac{1}{n}}=\sqrt[n]{x} \qquad (x\in [0,\infty), n \in \mathbb{N}^*)$ ist die Umkehrfunktion zu $y=x^n \quad (x \in [0, \infty))$
-
-\subparagraph{Diskussion: }
-\begin{enumerate}
-\item Im Bereich der reellen Zahlen ist $\sqrt[n]{x}$ nur für $x\geq 0 $ erklärt, der Funktionswert ist selber nicht negativ.
-\item Lässt man in $x^{\frac{1}{3}}$ negative $x$ zu (etwa $\sqrt[3]{-8}=-2$), so ergeben sich Widersprüche:\\
-z.B.: $\sqrt[3]{-8}=-2 \Rightarrow -2=-8^{\frac{1}{3}}=(-8)^{\frac{2}{6}}=\left((-8)^2\right)^{\frac{1}{6}}=64^{\frac{1}{6}}=2$
-\item Es gilt $\sqrt{x^2}=|x|$ für alle $x \in \mathbb{R}$
-\end{enumerate}
-
-\paragraph{Def. 8:}\parskp
-$y=log_a (x) \quad (a>0\wedge a \not = 1, x\in (0,\infty))$ ist Umkehrfunktion zu $y=a^x \quad (x \in \mathbb{R})$.\\
-Speziell: \begin{itemize}
-\item $lg(x):= log_{10}(x)$
-\item $ln(x):= log_e (x)$
-\end{itemize}
-ABB 102
-\subparagraph{Diskussion:}
-\begin{enumerate}
-\item Log-Gesetze:
-\begin{align*}
-log_a(x \cdot y) &= log_a x + log_a y\\
-log_a\left(\frac{x}{y}\right) &= log_a x - log_a y\\
-log_a(x^{\alpha})&=\alpha \; log_a x\\
-log_c b&=\frac{log_a b}{log_a c}
-\end{align*}
-\item Es gilt $x=a^{log_a x}$ \qquad ($f(f^{-1}(x))=x \forall y \in Db(f^{-1})$)
-\item Ferner gilt $a^x=e^{ln(a^x)}=e^{x\cdot ln\;a}$
-\end{enumerate}
-\subsubsection{Arcusfunktionen}
-Vorbetrachtung: $y=f(x)=sin\; x (x \in \mathbb{R})$ ist nicht injektiv, also existiert keine Umkehrfunktion.\\
-Aber: $y=sin(x)$, eingeschränkt auf z.B. $\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$ ist injektiv und damit umkehrbar.\\
-ABB 103
-
-\paragraph{Def. 9:} \parskp
-Umkehrfunktionen\\
-\renewcommand{\arraystretch}{1.6}
-\begin{tabular}{c | c | c | c l}
- & Db & Wb & Umkehrfunktion von ...\\
-\hline
-$y=arcsin\; x$ & $[-1,1]$ & $\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$ & $y=sin\;x$ & $ -\frac{\pi}{2}\leq x \leq \frac{\pi}{2}$\\
-$y=arccos\; x $ & $[-1,1]$ & $[0,\pi]$ & $y=cos\; x$ & $0\leq x \leq \pi$\\
-$y=arctan\; x$ & $\mathbb{R}$ & $\left(-\frac{\pi}{2}, \frac{\pi}{2}\right)$ & $y=tan \; x $ & $-\frac{\pi}{2}<x<\frac{\pi}{2}$\\
-$y=arccot\; x $ & $\mathbb{R}$ & $(0,\pi)$ & $y=cot\; x$ & $0< x <\pi$\\
-\end{tabular}
-\renewcommand{\arraystretch}{1.3}
-
-\subparagraph{Bsp. 5:}\parskp
-Gesucht sind alle Lösungen der folgenden Gleichung: $tan(2x)=y$\\
-Es sei $2x \in \left( -\frac{\pi}{2}+k \cdot \pi, \frac{\pi}{2} + k \cdot \pi\right)$, mit $k \in \mathbb{Z}$.\\
-$y=tan(2x)=tan(2x-k\cdot \pi)$ mit $2x-k\pi \in \left(-\frac{\pi}{2}, \frac{\pi}{2}\right)$\\
-$\Rightarrow 2x - k \pi = arctan(y) \Rightarrow \resultul{x = \frac{arctan(y)+k\pi}{2}}$
-
-\subsubsection{Areafunktionen}
-
-\paragraph{Def. 10:} \parskp
-Die Umkehrfunktionen der Hyperbelfunktionen\\
-\begin{tabular}{c | c | c | c l}
- & Db & Wb & Umkehrfunktion von ...\\
-\hline
-$y=arsinh\; x$ & $\mathbb{R}$ & $\mathbb{R}$ & $y=sinh\;x$ & $ x \in \mathbb{R}$\\
-$y=arcosh\; x $ & $[1,\infty)$ & $[0,\infty)$ & $y=cosh\; x$ & $x\geq 0$\\
-$y=artanh\; x$ & $(-1,1)$ & $\mathbb{R}$ & $y=tanh \; x $ & $x \in \mathbb{R}$\\
-$y=arcoth\; x $ & $\mathbb{R}\setminus[-1,1]$ & $\mathbb{R}\setminus\{0\}$ & $y=coth\; x$ & $x \not = 0$\\
-\end{tabular}\\
-Aus der Def. der Hyberbelfunktionen (Def. 5) folgt:\\
-$arsinh\; x = ln (x+\sqrt{x^2+1})$\\
-$artanh\; x=\frac{1}{2}ln\left(\frac{1+x}{1-x}\right)$\\
-$arcosh\; x = ln (x+\sqrt{x^2+1}$\\
-$arcoth\; x = \frac{1}{2}ln\left(\frac{x+1}{x-1}\right)$
+%\input{HTW_Mathe1_Skript_sec4}
 
 \section{Lineare Algebra}
 
@@ -1198,8 +1031,208 @@ Anwendungen:
 ABB 55\\
 $sin(\alpha)=\frac{h}{|\underline{b}|}$\\
 $F=|\underline{a}|\cdot h = |\underline{a}| \cdot |\underline{b}| \cdot sin(\alpha)=|\underline{a} \times \underline{b}|$
-\item Flächeninhalt eines Dreiecks $\Delta P_1P_2P_3$: $\boxed{F= \frac{1}{2}\left|\overrightarrow{P_1P_2}\times \overrightarrow{P_1P_2}\right|}$
+\item Flächeninhalt eines Dreiecks $\Delta P_1P_2P_3$: $\boxed{F= \frac{1}{2}\left|\overrightarrow{P_1P_2}\times \overrightarrow{P_1P_2}\right|}$ (halbes Parallelogramm)
+\item \emph{Parallelitätskriterium}: $\underline{a}\times \underline{b}=\underline{0} \; \Leftrightarrow \; |\underline{a} \times \underline{b}|=0 \; \Leftrightarrow \; (|\underline{a}| =0 \vee |\underline{b}|=0 \vee sin(\varphi)=0)$\\
+Vereinbarung: $\underline{0}\; ||$ zu jedem Vektor\\
+$\curvearrowright \boxed{\underline{a}\times \underline{b}=\underline{0} \; \Leftrightarrow \; \underline{a} || \underline{b}}$
 \end{enumerate}
 
+\subsubsection{Das Spatprodukt}
+\paragraph{Def. 12:} \parskp
+Die Zahl $(\underline{a} \times \underline{b}, \underline{c})$ heißt Spatprodukt der Vektoren $\underline{a}, \underline{b}$ und $\underline{c}$.\\
+Eigenschaften: 
+$(\underline{a} \times \underline{b},\underline{c})=(\underline{b} \times \underline{c}, \underline{a})=(\underline{c}\times \underline{a}, \underline{b})$ (durch zyklisches Vertauschen)\\
+Berechnung: $\boxed{(\underline{a} \times \underline{b}, \underline{c})= det(\underline{a} |\underline{b}|\underline{c})= \begin{vmatrix}
+a_1 & b_1 & c_1\\
+a_2 & b_2 & c_2\\
+a_3 & b_3 & c_3
+\end{vmatrix}}$\\
+Anwendung: 
+\begin{enumerate}
+\item Volumen des von $\underline{a}, \underline{b}$ und $\underline{c}$ aufgespannten Spates (Parallelotop): $\boxed{V=|(\underline{a}\times \underline{b}, \underline{c})|}$\\
+ABB 57\\
+$V=F_{\text{Grundfläche}} \cdot h=|\underline{a}\times \underline{b}| \cdot |\underline{c}| \cdot |cos(\alpha)|=|(\underline{a}\times \underline{b}, \underline{c})|$\\
+Bemerkung:\\
+Spatprodukt $\begin{cases}
+>0 & \text{... Rechtssystem}\\
+<0 & \text{... Linkssystem}
+\end{cases}$
+\item \emph{Komplanaritätskriterium}:\\
+Die Vektoren $\underline{a}, \underline{b}, \underline{c}$ sind komplanar, d.h. sie liegen in einer (in $O$ angehefteten) Ebene \\
+$\Leftrightarrow \; (\underline{a} \times \underline{b}, \underline{c})=0 \\
+\Leftrightarrow\;  \underline{a}, \underline{b}, \underline{c}$ sind linear abhängig.
+\end{enumerate}
+
+\subsubsection{Geraden- und Ebenengleichungen}
+\begin{enumerate}
+\item Parameterdarstellung einer Geraden $g$ durch $P_1$ und $P_2$:\\
+$P$ … beliebiger Punkt von $g$\\
+ABB 58\\
+$\overrightarrow{OP}=\overrightarrow{OP_1}+t\cdot \overrightarrow{P_1P_2} \quad ( t \in \mathbb{R})$\\
+$\boxed{\underline{r}=\underline{r}_1+t \cdot \underline{a}}$ (Punkt-Richtungs-Form)\\
+$\boxed{\underline{r}=\underline{r}_1 + t \cdot (\underline{r}_2-\underline{r}_1)} \quad( t \in \mathbb{R})$ (Zwei-Punkte-Form)
+\subparagraph{Bsp.:} \parskp
+Gerade durch die Punkte $P_1=(1,2,-1), P_2=(0,1,4)$\\
+$g: \; \begin{pmatrix}
+x\\
+y\\
+z
+\end{pmatrix}=\begin{pmatrix}
+1\\
+2\\
+-1
+\end{pmatrix}+t\begin{pmatrix}
+-1\\
+-1\\
+5
+\end{pmatrix}\quad (t \in \mathbb{R})$
+\item Parameterdarstellung einer Ebene $\varepsilon$ durch 3 Punkte $P_1, P_2 ,P_3$, die nicht auf einer Geraden liegen.\\
+ABB 59 \\
+$P$ … beliebiger Punkt von $\varepsilon$\\
+$\overrightarrow{OP}=\overrightarrow{OP_1}+ u \cdot \overrightarrow{P_1P_2}+v\cdot \overrightarrow{P_1P_3} \quad (u,v \in \mathbb{R})$\\
+$\boxed{\underline{r}=\underline{r}_1+u\cdot \underline{a}+v\cdot \underline{b}} \quad (u,v \in \mathbb{R})$\\
+$\boxed{\underline{r}=\underline{r}_1+u\cdot (\underline{r}_2-\underline{r}_1)+v(\underline{r}_3-\underline{r}_1)}$
+\item Parameterfreie Ebenengleichung\\
+ABB 60\\
+Normalenvektor $\underline{n}$ ($\underline{n}\not = 0,\;\underline{n}\bot \varepsilon$):\\
+$\underline{n}=\begin{pmatrix}
+a\\
+b\\
+c
+\end{pmatrix},\; \underline{n} \bot \overrightarrow{P_0P}$\\
+Dabei sei $P(x,y,z)$ ein beliebiger Punkt in $\varepsilon$ und $P_0(x_0,y_0,z_0)$ ein fester Punkt in $\varepsilon$ mit Orthogonalitätskriterium $(\underline{n}, \overrightarrow{P_0P})=0$ bzw. $\boxed{(\underline{n}, \underline{r}-\underline{r}_0)=0}$.\\
+Ausführlich: $\left(\begin{pmatrix}
+a\\
+b\\
+c
+\end{pmatrix}, \begin{pmatrix}
+x-x_0\\
+y-y_0\\
+z-z_0
+\end{pmatrix}\right)=0$, d.h. $a \cdot (x-x_0)+b(y-y_0)+c(z-z_0)=0$\\
+Allgemeine Form: $\boxed{ax+by+cz+d=0}$ mit $d=-ax_0-by_0-cz_0$.
+\subparagraph{Bsp. 15:} \parskp
+Ebene durch $P_1(1,0,0), P_2(3,1,5), P_3(-2,0,2)$
+\begin{itemize}
+\item P.d. (Parameterdarstellung) $\begin{pmatrix}
+x\\
+y\\
+z
+\end{pmatrix} = \begin{pmatrix}
+1\\
+0\\
+0
+\end{pmatrix} + u \underbrace{\begin{pmatrix}
+2\\
+1\\
+5
+\end{pmatrix}}_{\underline{a}}+v \underbrace{\begin{pmatrix}
+-3\\
+0\\
+2
+\end{pmatrix}}_{\underline{b}} \quad (u,v \in \mathbb{R})$
+\item Ein Normalenvektor ist bpsw. $\underline{u}=\underline{a} \times \underline{b}=\begin{pmatrix}
+2\\
+-19\\
+3
+\end{pmatrix}$\\
+$\curvearrowright$ Parameterfreie Darstellung: $2x-19y+3z+d=0$\\
+$d$ berechnen: Einsetzen von $x=1, y=z=0 \; (P_1)$ liefert $2\cdot 1 +d =0 \; \Rightarrow\; d=-2$\\
+$\curvearrowright \boxed{2x+19y+3z-2=0}$
+\end{itemize}
+\end{enumerate}
+
+\subsubsection{Einige geometrische Grundaufgaben}
+\begin{enumerate}
+\item Schnitt von Gerade und Ebene
+\subparagraph{Bsp. 16:} \parskp
+Gegeben:\\
+Ebene $\varepsilon$: $2x-4y+z+3=0$\\
+Gerade $g$: $\begin{pmatrix}
+x\\
+y\\
+z
+\end{pmatrix} = \begin{pmatrix}
+3\\
+0\\
+1
+\end{pmatrix}+t\begin{pmatrix}
+-1\\
+1\\
+-2
+\end{pmatrix}$\\
+Gesucht:
+\begin{enumerate}[label=\alph*.)]
+\item Schnittpunkt (Spurpunkt) $S(x_S,y_S,z_S)$
+\item Schnittwinkel
+\end{enumerate}
+\begin{enumerate}[label=zu \alph*.)]
+\item $g: x=3-t, \; y=t, \; z=1-2t$ einsetzen in Ebenengleichung: $2(3-t)-4\cdot t+1-2t+3=0 \Rightarrow -8t+10=0 \Rightarrow t=\frac{5}{4}$\\
+$t=\frac{5}{4}$ in Geradengleichung einsetzen: $x_S=3-\frac{5}{4}=\frac{7}{4}, y_S=\frac{5}{4}, z_S=1-2\frac{5}{4}=-\frac{3}{2} \\
+\curvearrowright \resultul{S\left(\frac{7}{4},\frac{5}{4},-\frac{3}{2}\right)}$
+\item Schnittwinkel:\\
+ABB 61\\
+$\beta= \measuredangle (\underline{n}, \underline{a})$ (Richtungsvektor von $g$)\\
+$\alpha = | 90^\circ - \beta|$\\
+$\underline{n}=\begin{pmatrix}
+2\\
+-4\\
+1
+\end{pmatrix}, \underline{a}=\begin{pmatrix}
+-1\\
+1\\
+-2
+\end{pmatrix}, \beta = arrcos\left(\frac{(\underline{n}, \underline{a})}{|\underline{n}| \cdot |\underline{a}|}\right)\approx 135,45^\circ$\\
+$\curvearrowright \alpha = | 90^\circ - \beta | \approx 45,45^\circ$
+\end{enumerate}
+\item Schnitt zweier Ebenen: 2 Gleichungen, 3 Unbekannte
+\subparagraph{Bsp. 17:} \parskp
+Schnitt der Ebenen $\varepsilon_1:\; x+y+z-1=0$ und $\varepsilon_2:\; x-2y+3z+4=0$.\\
+Austauschverfahren:\\
+\begin{tabular}{r | c c c c}
+$T_1$ & x & y & z & 1\\
+\hline
+0 & \fbox{1} & 1 & 1 &-1\\
+0 & 1 & -2 &3 & 4\\
+\hline
+$K$ & * & -1 & -1 & 1
+\end{tabular}\quad 
+\begin{tabular}{r | c c c c}
+$T_2$ & x  & z & 1\\
+\hline
+x & -1 & -1 &1\\
+0 & -3 &\fbox{2} & 5\\
+\hline
+$K$ & $\tfrac{3}{2}$ & * & $-\tfrac{5}{2}$
+\end{tabular}\quad
+\begin{tabular}{r | c c c c}
+$T_3$ & y & 1\\
+\hline
+x & $-\tfrac{5}{2}$ & $\tfrac{7}{2}$\\
+z & $\tfrac{3}{2}$ & $-\tfrac{5}{2}$
+\end{tabular}\\
+$y$ … NBV, $y=t$ (beliebig), $x=-\frac{5}{2}t+\frac{7}{2}$, $z=\frac{3}{2}t-\frac{5}{2}$\\
+also $\begin{pmatrix}
+x\\
+y\\
+z
+\end{pmatrix} = \begin{pmatrix}
+-\frac{5}{2}t+\frac{7}{2}\\
+t\\
+\frac{3}{2}t - \frac{5}{2}
+\end{pmatrix}$, oder $\begin{pmatrix}
+x\\
+y\\
+z
+\end{pmatrix} = t \begin{pmatrix}
+-\frac{5}{2}\\
+1\\
+\frac{3}{2}
+\end{pmatrix}+\begin{pmatrix}
+\frac{7}{2}\\
+0\\
+-\frac{5}{2}
+\end{pmatrix} \quad (t \in \mathbb{R})$
+\end{enumerate}
 
 \end{document}
