@@ -22,6 +22,23 @@
 
 \section{Eingebaute Datentypen}
 
+\begin{itemize}
+\item int
+\item string
+\item short (oft 16 Bit / 2 Byte)
+\item long (so groß wie eine Adresse, abhängig vom System [32/64 bit])
+\item char (kann Symbol sein, aber auch eine Zahl [die Symbol represäntiert], 8 Bit)
+\item float
+\begin{itemize}
+\item kann einige Zahlen (ganzzahlig) nicht darstellen (bspw. 2)
+\item hat Probleme sehr große und sehr kleine Zahlen miteinander zu addieren (durch Normierung der Exponenten kann die kleine zu 0 werden, oder Nachkommastellen verloren gehen)
+\end{itemize}
+\item Achtung: boolean kein Datentyp in C!\\
+$\curvearrowright$ Abfrage von true/false durch int: \\
+$int=0\corr false$\\
+$int \not =0 \corr true$
+\end{itemize}
+
 \subsection{Zahlentypen}
 Zahl: $\underset{8\cdot 10^0}{1} \; \underset{0 \cdot 10^1}{0} \;\underset{1\cdot 10^2}{8}$\\
 $\Rightarrow$ 10er-System (Decimal)\\
@@ -89,6 +106,76 @@ $_1$&$1_1$&$0_1$&$0_1$&$1_1$&$0_1$&$1$&$0$&$0$ & -108\\
 $1$&$0$&$0$&$0$&$0$&$0$&$0$&$0$&$0$&\\
 
 \end{tabular}
+
+\subsection{Variable}
+4 Kennzeichen einer Variable:
+\begin{itemize}
+\item Adresse im Speicher (Ort)
+\item Datentyp (Verarbeitungsbreite)
+\item Bitkombination (Wert)
+\item Symbolischer Name
+\end{itemize}
+Ein Vektor fasst mehrere Variablen gleichen Datentyps unter einer zusammen.
+
+\subsubsection{Initialisierung}
+Bei der Initialisierung hat die Variable einen Ausgangswert:
+\begin{itemize}
+\item Initialisierung innerhalb einer Funktion: zufälliger Wert (alte Speicherbelegung)
+\item Init. außerhalb einer Funktion: 0
+\end{itemize}
+
+\begin{lstlisting}[language=C]
+char c='c';	// 'c'=99 (ASCII)
+char c=99;
+\end{lstlisting}
+Die Anführungszeichen bei der Wertzuweisung einer char ist nur bei einem Zeichen wichtig, nicht bei Zahlen.
+\begin{itemize}
+\item $'x'$ einzelne Anführungszeichen für ein einzelnes Zeichen
+\item $"xy"$ doppelte Anführungszeichen bei mehrere Zeichen
+\end{itemize}
+
+\begin{lstlisting}[language=C]
+int i=8, j=5, k;
+char c=99, d='d';
+float x=0.005, y=-0.01, z;
+x=(i+j);	// k bleibt int (Wert: 13)
+z=y+x;	// x+y werden als double zusammengerechnet (Rechnung immer in double).
+				// z ist dann wieder float (Wert: -0.005)
+k=x+y;	// k ist int, beim Rechnen wird gebrochenzahliger Teil abgschnitten (Wert: 0)
+z=i/j;	// i/j wird in int gerechnet, also 8/5=1 und nicht 1.6! 
+				// z ist dann trotzdem float (Wert: 0.000...)
+char a,b;
+a=b=c;	// erst wird b=c='c'=99, dann wird a=(b=c)=99 zugewiesen. 
+				// a und b haben nachfolgend den Wert 'c'
+i=j=1.1;	// j=1.1(bzw. 1), also i auch Wert 1
+z=k=x;	// k=x=0 (wird abgeschnitten), also z=0.00000...
+i+=2;	// i=i+2;
+y-=x;	// y=y-x=-0.015
+k=j=5?i:j;	// das selbe wie k=((j==5)?i:j);
+						// ist j=5? Wenn ja, dann k=i. Wenn nein, dann k=j.
+z=y>=0?1.0:2.0;	// das selbe wie z=((y>=0)?1.0:2.0);
+printf("%d\n", (3*i-2*j)%(2*d-c) );	// Punkt vor Strich! 14%101=14
+printf("%d\n", (2*((i/5)*(4(j-3))%(i+j-2) );
+// Achtung: i/5=8/5=1 (s.o.)!
+// 2*9=18
+printf("%d\n", (i-3*j)%(c+2*d)/(x-y) );
+// -7%29 = -7
+// dann: -7/0.015)=-466.6667
+printf("%d\n", i<=j );	// 0
+printf("%d\n", i>=j );	// 1
+printf("%d\n", i==6 );	// 0
+printf("%d\n", i=!6 );	// !6 entspricht !(ungleich Null)=0
+printf("%d\n", i!=6 );	// 1
+printf("%d\n", i>0 && j<5 );
+printf("%d\n", i&j );	// i bitweise mit j Verknüpft (ge-UND-et):
+//  00001000
+// &00000101
+// =00000000
+i=8, j=5;
+printf("%s\n",i && j? "true":"false");
+printf("%d\n",i && j);
+printf("%d\n",i & j);
+\end{lstlisting}
 
 \section{Ausdrücke}
 
