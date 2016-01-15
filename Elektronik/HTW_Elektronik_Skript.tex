@@ -502,7 +502,7 @@ W=P\cdot t=U \cdot I \cdot t = \frac{U^2}{R}\cdot t = I^2 \cdot R \cdot t$
 \item Modellierung elektronischer Erscheinungen
 \item Berechnung von Stromkreisen
 \end{itemize}
-ABB 27
+\includegraphics[scale=.5]{Abbildungen/ABB207}
 
 \paragraph{Bsp.:} Ein Kondensator wird zum Aufladen an eine Spannungsquelle mit dem Innenwiderstand $R_i$ angeschlossen und zum Entladen an einen Widerstand $R_E$. Das Laden erfolgt über den Strombegrenzungswiderstand $R_L$.
 \begin{itemize}
@@ -510,42 +510,42 @@ ABB 27
 \item Kondensater $C$, Widerstand $R_i$, $R_E$, $R_L$
 \item Spannungsquelle
 \end{itemize}
-ABB28
+\includegraphics[scale=.75]{Abbildungen/ABB208}
 
 \section{Berechnung von Stromkreisen}
 
 \subsection{Spannungsteiler}
 
-ABB29\\
+\includegraphics[scale=.75]{Abbildungen/ABB209}\\
 $U_{R_1}=IR_1 \quad U_{R_2}=IR_2 \quad U_q= I(R_1+R_2)$\\
 $\frac{U_{R_2}}{U_q}=\frac{R_2}{R_1+R_2} \quad \frac{U_{R_1}}{U_{R_2}}=\frac{R_1}{R_2}$\\
 Anwendungsbeispiel: Potenziometer\\
-ABB210\\
+\includegraphics[scale=.75]{Abbildungen/ABB210}\\
 $\frac{U_{out}}{U_{in}}=\frac{x\cdot R_{Pot}}{R_{Pot}}\Rightarrow U_{out} = x \cdot U_{in}$
-\paragraph{belasteter Spannungsteiler:}
-ABB211\\
+\paragraph{belasteter Spannungsteiler:}\parskp
+\includegraphics[scale=.75]{Abbildungen/ABB211}\\
 $\frac{U_{out}}{U_{in}}=\frac{R_2||R_L}{R_1+R_2||R_L}$\\
 Bspw.: $R_1=5 \Omega$, $R_2=R_L=5 \Omega$\\
 unbelasteter Fall: $\frac{U_{out}}{U_{in}}=\frac{5 \Omega}{10 \Omega} \Rightarrow U_{out}=5V$\\
 belasteter Fall: $\frac{U_{out}}{U_{in}}=\frac{2,5 \Omega}{7,5 \Omega}\Rightarrow U_{out}=3,33V$
 
-\paragraph{doppelter Spannungsteiler}
-ABB212\\
+\paragraph{doppelter Spannungsteiler} \parskp
+\includegraphics[scale=.75]{Abbildungen/ABB212}\\
 $\frac{U_{out}}{U_{in}}=\underbrace{\frac{R_2|| (R_3+R_4)}{R_1+R_2||(R_3+R_4}}_{\frac{U_{R_2}}{U_{in}}} \underbrace{\frac{R_4}{R_3+R_4}}_{=\frac{U_{out}}{U_{R_2}}}$
 
-\paragraph{gesteuerter Spannungsteiler}
-ABB31
+\paragraph{gesteuerter Spannungsteiler}\parskp
+\includegraphics[scale=.75]{Abbildungen/ABB301}
 
 \subsection{Stromteiler}
 
-ABB 32\\
+\includegraphics[scale=.75]{Abbildungen/ABB302}\\
 $U_{out}=I_3 \cdot R_3 = I_2 \cdot R_2 = I_1 \cdot (R_2||R_3)$\\
 $\frac{I_3}{I_2}=\frac{R_2}{R_3}$\\
 $\frac{I_3}{I_1}=\frac{R_2||R_3}{R_3}=\frac{R_2 \cdot R_3}{(R_2+R_3)\cdot R_3}=\frac{R_2}{R_2+R_3}$\\
 $\frac{I_2}{I_1}=\frac{R_2||R_3}{R_2}=\frac{R_3}{R_2+R_3}$
 
 \subparagraph{Beispiel:}
-geg.: ABB 33\\
+geg.: \includegraphics[scale=.75]{Abbildungen/ABB303}\\
 ges.: $R_{AB}, R_{CD}, u_{out}$, alle Ströme\medskip\\
 $R_{AB}=R_1+R_2||(R_3+R_4)$\\
 $R_{CD}=R_4||(R_3+R_2)$\\
@@ -558,14 +558,14 @@ $\frac{I_3}{I_1}=\frac{R_2}{R_2+R_3+R_4}\Rightarrow I_3 = \frac{U_{in}}{R_{AB}}\
 
 \subsection{Strom-Spannungskennlinie}
 Ziel: anschauliche Beschreibung des Klemmverhaltens von Bauelementen\\
-ABB 34
+\includegraphics[scale=.75]{Abbildungen/ABB304}
 \begin{itemize}
 \item Verbraucher: ohmscher Widerstand\\
-ABB 35\\
+\includegraphics[scale=.75]{Abbildungen/ABB305}\\
 $R=\frac{U}{I}$
 $I=f(U)=\frac{1}{R}\cdot U = G \cdot U$
 \item Verbraucher: Diode\\
-ABB 36\\
+\includegraphics[scale=.75]{Abbildungen/ABB306}\\
 ? $\Rightarrow$ nichtlinear\\
 $I=f(U)=I_s\left(e^{\frac{U}{U_T}}-1\right)$\\
 $I_S$ … Sperrstrom\\
@@ -584,27 +584,27 @@ Unterteilung in:
 \end{itemize}
 \emph{Modell:}
 \begin{enumerate}
-\item ABB 37 Quelle im Leerlauf
-\item ABB 38 Quelle kurzgeschlossen
+\item \includegraphics[scale=.75]{Abbildungen/ABB307} Quelle im Leerlauf
+\item \includegraphics[scale=.75]{Abbildungen/ABB308} Quelle kurzgeschlossen
 \end{enumerate}
 Ersatzschaltbild einer realen Quelle:\\
-ABB 39 (mit $I_k=\frac{U_q}{R_i}$)\\
+\includegraphics[scale=.75]{Abbildungen/ABB309} (mit $I_k=\frac{U_q}{R_i}$)\\
 $U_q$ … Leerlaufspannung\\
 $R_i$ … Innenwiderstand\\
 $I_k$ … Kurzschlussstrom
 
 \subsection{Grundstromkreis}
 reale Quelle + Verbraucher\\
-ABB 310\\
+\includegraphics[scale=.75]{Abbildungen/ABB310}\\
 Strom-Spannungs-Kennlinienfeld des Grundstromkreises\\
 Last: $I=f(U)=\frac{U_{AB}}{R_V}$\\
 Quelle: $I=f(U)$ \\
 (mit Maschensatz: $I\cdot R_i + U_{AB}-U_q=0$ \qquad $I=\frac{1}{R_i}(U_q-U_{AB})=-\frac{1}{R_i}U_{AB}+I_k$)\\
-ABB 311\\
-Grundstomkreis mit nichtlinearm Verbraucher\\
-ABB 312\\
+\includegraphics[scale=.75]{Abbildungen/ABB311}\\
+Grundstomkreis mit nichtlinearem Verbraucher\\
+\includegraphics[scale=.75]{Abbildungen/ABB312}\\
 Leistung am Lastwiderstand\\
-ABB 313\\
+\includegraphics[scale=.75]{Abbildungen/ABB313}\\
 $\rightarrow P_V = I\cdot U_{AB}$ \quad mit $U_{AB}=U_q-I\cdot R_i$\quad $I\cdot R_i + U_{AB}-U_q=0$\\
 $P_V=U_q\cdot I + I^2 \cdot R_i$ \quad $I=\frac{U_{AB}}{R_V}$\\
 $P_V=f(R_V)$\\
@@ -612,7 +612,7 @@ maximale Leistung am Verbraucher: $\frac{d P_V}{dR_V}=0 \Rightarrow P_{V,max}$ f
 
 \subsubsection{Betrachtung der Leistung im Grundstromkreis}
 
-ABB 41\\
+\includegraphics[scale=.75]{Abbildungen/ABB401}\\
 \begin{tabular}{l l}
 \emph{Generator} & \emph{Verbraucher}\\
 \mpb \begin{itemize}
@@ -627,7 +627,7 @@ ABB 41\\
 Leistung am Lastwiderstand:\\
 $P_L=U_{AB}\cdot I = \frac{U_{AB}^2}{R_L}=I^2\cdot R_L$\\
 mögliche Lastfälle:\\
-ABB 42
+\includegraphics[scale=.75]{Abbildungen/ABB402}
 \begin{enumerate}
 \item Leerlauf: $R_L \rightarrow \infty$\\
 $AP_{Leerlauf}$: $U_{AP}=U_q$, $I_{AP}=0$, $P_{AP}=0$
@@ -649,7 +649,7 @@ Verlauf einer Spannung über der Zeit.
 \begin{itemize}
 \item Gleichspannung $U= const \not = f(t)$ (Batterien, Stromversorgung für elektrische Geräte
 \item Wechselspannung (Steckdose)\\
-ABB 43\\
+\includegraphics[scale=.75]{Abbildungen/ABB403}\\
 Kenngrößen: $\hat{U}=325V$ (Spitzenwert), $U=230V$ (Effektivwert), $f=50Hz$ ($T=\frac{1}{f}=20ms$, $\omega = 2 \pi f$[Kreisfrequenz]), $\varphi_0$ Phasenverschiebung/Nullphasenwinkel\\
 $u(t)=\hat{U}\cdot sin(\omega t+\varphi_o)$
 \begin{itemize}
@@ -662,9 +662,9 @@ $u(t)=\hat{U}\cdot sin(\omega t+\varphi_o)$
 \paragraph{Grundtypen von Spannungszeitfunktionen}
 \begin{itemize}
 \item periodische Spannungen\\
-ABB 44
+\includegraphics[scale=.75]{Abbildungen/ABB404}
 \item impulsförmige Spannungen\\
-ABB 45
+\includegraphics[scale=.75]{Abbildungen/ABB405}
 \end{itemize}
 
 \subsection{Kondensator, Kapazität}
@@ -675,22 +675,22 @@ $\rightarrow$ konkretes elektrisches Bauelement (kann Ladungen speichern) $\Righ
 Einsatz: Energiespeicherung, Ausnutzung des frequenzabhängigen Verhaltens
 
 \emph{Wirkungsweise:}\\
-ABB 46\\
+\includegraphics[scale=.75]{Abbildungen/ABB406}\\
 Beobachtung: $Q\sim U \Rightarrow Q=C\cdot U$ \\
 mit $C = $ Proportionalitätsfaktor $\Rightarrow$ Kapazität $C$ mit $[C]=\frac{[Q]}{[U]}=\frac{As}{V}=F$ (Farrad)\\
 relevante Werte: zwischen $\underset{\mu}{10^{-6}}... \underset{n}{10^{-9}}...\underset{p}{10^{-6}}F$
 \paragraph{Bemessungsgleichung} (für C)\\
 $C \sim A$, $C\sim \frac{1}{d}$, $C\sim  \frac{A}{d} \Rightarrow C=\varepsilon \cdot \frac{A}{d}$ \\
 ($\varepsilon = \varepsilon_r \cdot \varepsilon_0$ … $\varepsilon_0$: Dielektrizitätskonstate des Vakuums$=8,856\cdot 10^{-12}\frac{As}{Vm}$)\\
-Symbol: ABB 47
+Symbol: \includegraphics[scale=.75]{Abbildungen/ABB407}
 \subsubsection{Strom-Spannungs-Beziehung am Kondensator}
 $u_C(t)=\frac{1}{C}\int i_C(t) dt$\\
 $i_C(t)=C\cdot \frac{du_c(t)}{dt}$\\
 \emph{Konsequenzen:} $u(t)=\hat{U}\cdot sin (\omega t) \Rightarrow i_C(t)=\underbrace{\hat{U}\cdot \omega C}_{=\hat{I}}(sin (\omega t) + 90^{\circ})$\\
 Scheinwiderstand des Kondensators: $X_C=\frac{\hat{U}}{\hat{I}}=\frac{\hat{U}}{\hat{U}\omega C}=\frac{1}{\omega C}$\\
-ABB 48\\
+\includegraphics[scale=.75]{Abbildungen/ABB408}\\
 Anwendung des frequenzebhängigen Verhaltens:\\
-ABB 49
+\includegraphics[scale=.75]{Abbildungen/ABB409}
 
 
 
