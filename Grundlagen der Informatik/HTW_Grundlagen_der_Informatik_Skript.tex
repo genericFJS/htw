@@ -683,7 +683,8 @@ Der Minimalabstand beim Parity-Check-Code ist 2, da beides laut Def. ungleiche C
 \item Ein Code ist $k$-fehlerkorrigierend gdw. sein Minimalabstand mindestens $2k+1$ ist.
 \end{enumerate} 
 
-\subparagraph{Bsp.:} Der Parity-Check-Code besitzt den Minimalabstand 2 und ist daher 1-fehlererkennend und 0-fehlerkorrigierend (ein Fehler kann nur korrigiert werden, wenn die Position des fehlerhaften Bits bekannt ist. Deswegen im Allgemein nur 0-fehlerkorrigierend).\\
+\subparagraph{Bsp.:} Der Parity-Check-Code besitzt den Minimalabstand 2 und ist daher 1-fehlererkennend und 0-fehlerkorrigierend\footnote{ein Fehler kann nur korrigiert werden, wenn die Position des fehlerhaften Bits bekannt ist. \\
+Deswegen im Allgemein nur 0-fehlerkorrigierend}.\\
 ABB 52 (Kreise überlappen sich. Deswegen kann der Fehler nicht eindeutig einem Codewort zugewiesen werden)\\
 Beweis:
 \begin{enumerate}
@@ -702,8 +703,8 @@ ABB 55\\
 Daraus folgt mit der Dreiecksungleichung $d(v,v')\leq d(v,w)+d(w,v')=2k$. Dies ist ein Widerspruch, da der Minimalabstand des Codes mindestens $2k+1$ ist.\\
 ABB 56 (Wort $w$ kann eindeutig zum Codewort $v$ dekodiert werden.)
 \end{enumerate}
-Naiver Ansatz zur Fehlerkorrektur: Nachricht mehrfach senden.\\
-Bsp.: $0 \rightarrow 000$, $1\rightarrow 111$\\
+Naiver Ansatz zur Fehlerkorrektur: Nachricht mehrfach senden.
+\paragraph{Bsp.:} $0 \rightarrow 000$, $1\rightarrow 111$\\
 Der Code $\{000,111\}$ hat Minimalabstand 3 (Nachricht wurde 3 mal gesendet) und ist daher 1-fehlerkorrigierend.\\
 Nachteil: Platzverschwendung.\medskip\\
 Effizienter sind lineare Codes.
@@ -713,6 +714,85 @@ Die Decodierung durch eine Nearest-Neighbor-Suche im Coderaum ist ineffizient. U
 
 \paragraph{Def.:} Ein Code $C$ heißt \emph{linear}, wenn es eine Matrix $A$ gibt, sodass $C=\{w|A\cdot w^T=0\}$.\\
 Die Matrix $A$ heißt \emph{Parity-Check-Matrix}.
+
+\paragraph{Satz:} Ein binärer linearer Code $C$ ist ein Vektorraum über $\mathbb{Z}_2(+,\cdot)$.\\
+Beweis(Skizze):
+\begin{enumerate}
+\item Abgeschlossenheit der Vektoraddition:\\
+Zu zeigen: $w_1,w_2\in C \Rightarrow w_1+w_2 \in C$ ($+$: Kompomentenweise Addition im Vektorraum)\\
+Aus $w_1,w_2\in C$ folgt $Aw_1^T=0, Aw_2^T=0$ ($0$ ist der Nullvektor) und daraus $0=Aw_1^T+Aw_2^T=A(w_1^T+w_2^T)=A(w_1+w_2)^T$ und daraus $w_1,w_2 \in C$.
+\item Abgeschlossenheit der Mulitiplikation (mit Skalaren):\\
+Zu zeigen: $\alpha \in \mathbb{Z}_2, w \in C \Rightarrow \alpha \cdot w \in C$\\
+Dies gilt, da $\alpha\cdot w =\begin{cases}
+0 & \text{für }\alpha =0\\
+w & \text{für } \alpha =1
+\end{cases}$ und $0,w \in C$.
+\item[$\bullet$] Andere Vektoraxiome folgen entsprechend.
+\end{enumerate}
+Da ein linearer Code ein Vektorraum ist, besitzt er eine Basis\footnote{Eine Menge von linear unabhängigen Vektoren, mit der sich alle anderen Punkte erzeugen lassen}.
+
+\paragraph{Def.:} Sei $C$ ein linearer Code. Eine Matrix $G$, deren Zeilen eine Basis von $C$ bilden heißt \emph{Generatormatrix}.
+
+\subparagraph{Bsp.:} Sei $G=\begin{pmatrix}
+1 & 0 & 0 & 1\\
+0 & 1 & 0 & 1 \\
+0 & 0 & 1 & 1
+\end{pmatrix}$. Da die Zeilen von $G$ linear unabhängig sind \footnote{Nachweis lineare Unabhängigkeit (allgemein): \\
+$\sum a_i v_i=0$. Vektoren sind dann unabhängig, wenn Gleichung nur lösbar, wenn alle $a_i=0$.}, bilden  sie eine Basis eines Vektorraumes. Folglich ist $G$ eine Generatormatrix.\\
+Es gilt $\begin{pmatrix}
+b_1 & b_2 & b_3
+\end{pmatrix}\cdot \begin{pmatrix}
+1 & 0 & 0 & 1\\
+0 & 1 & 0 & 1 \\
+0 & 0 & 1 & 1
+\end{pmatrix}= \begin{pmatrix}
+b_1 & b_2 & b_3 & \sum_{i=1}^3 b_i
+\end{pmatrix}$ (alle Linearkombinationen der Matrix $G$). \\
+Der durch $G$ induzierte Code ist daher $C=\left\lbrace\begin{pmatrix}
+b_1 & b_2 & b_3 & \sum_{i=1}^3 b_i
+\end{pmatrix}|b_1,b_2,b_3 \in \{0,1\}\right\rbrace$. \\
+Dies ist der Parity-Check-Code der Länge 4.\bigskip\\
+Wenn $C$ ein linearer Code mit Parity-Check-Matrix $A$ (Achtung $C\not = A$) und Generatormatrix $G$ ist, dann können wir $G$ zum Codieren und $A$ zum Decodieren verwenden.
+
+\subparagraph{Bsp.:} Wir betrachten den Parity-Check-Code der Länge 4. \\
+Wir wollen die Nachricht $(1\;0\;1)$ codieren:\\
+Das entsprechende Codewort ist $\begin{pmatrix}
+1 & 0 & 1
+\end{pmatrix}\cdot \begin{pmatrix}
+1 & 0 & 0 & 1\\
+0 & 1 & 0 & 1 \\
+0 & 0 & 1 & 1
+\end{pmatrix}= \begin{pmatrix}
+1 & 0 & 1 & 0
+\end{pmatrix}$. \\
+Zum Dekodieren berechnen wir $\begin{pmatrix}
+1 & 1 & 1 & 1
+\end{pmatrix}\cdot \begin{pmatrix}
+1\\
+0\\
+1\\
+0
+\end{pmatrix}= 0$.\\
+In diesem Fall wurde die Nachricht fehlerfrei übertragen.\bigskip\\
+Vorteil dieses Ansatzes: Mit Hilfe einer Generatormatrix lassen sich beliebige weitere Codes definieren. Dies wird insbesondere zur Konstruktion von fehlerkorrigierenden Codes genutzt.\medskip\\
+Eine auf diese Weise systematisch konstruierbare Klasse von Codes sind die Hemming-Codes.\\
+Die Generatormatrix eines Hemming-Codes besteht aus allen Vektoren in $\{0,1\}^n$ außer dem Nullvektor. Auf diese Weise lassen sich fehlerkorrigierende Codes erzeugen.\\
+Die Codierung und Decodierung (einschließlich der Fehlerkorrektur) lässt sich für Hamming-Codes sehr effizient durch Matrix-Vektor-Operationen realisieren. Es gibt dazu eine umfangreiche Theorie.\\
+Die Hamming-Codes sind eine weit verbreitete und genutzte Klasse von fehlerkorrigierenden Codes. Hamming-Codes sind perfekte Codes.
+\bigskip\\
+Anhand der Parity-Check Generatormatrix lässt sich die Struktur einer Generatormatrix erkennen: In den ersten Spalten steht die Einheitsmatrix, um im Codewort wiederden Input wieder zu bekommen. Alle weiteren Spalten sind zum verifizieren da. \\
+$\begin{pmatrix}
+1 & 0 & 0 &| 1\\
+0 & 1 & 0 &| 1\\
+0 & 0 & 1 &| 1
+\end{pmatrix}$. Dem enstprechend auch dieser (Hemming-)Code $\begin{pmatrix}
+1 & 0 & 0 &| 0 & 1 & 1 & 1\\
+0 & 1 & 0 &| 1 & 0 & 1 & 1\\
+0 & 0 & 1 &| 1 & 1 & 0 & 1
+\end{pmatrix}$\\
+ABB 61
+\bigskip \\
+FINE.
 
 \newpage
 \printbibliography
