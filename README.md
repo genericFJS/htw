@@ -10,7 +10,7 @@ Zum kompilieren der *.tex*-Dateien innerhalb der */Modulname*-Ordner ist in (fas
 
 ### Dateien von mir
 
-In der Regel sind im Ordner */Modulname* erst die *.tex*- und dazugehörigen *.pdf*-Dateien zu finden. Diese sind von mir erstellt. Der Inhalt ist auf die im Dokument verwiesenen Professoren zurückzuführen. Die Zusammenstellung, gestalterische Umsetzung usw. sind von mir.
+In der Regel sind im Ordner */Modulname* erst die *.tex*- und dazugehörigen *.pdf*-Dateien zu finden. Diese sind von mir erstellt. Der Inhalt ist auf die im Dokument verwiesenen Professoren zurückzuführen. Die Zusammenstellung, gestalterische Umsetzung, Kommentare usw. sind von mir.
 
 Des weiteren sind im Ordner */Modulname/Praktikum/prak##* Umsetzungen von Praktika zu finden, die von mir erarbeitet sind.
 
@@ -21,6 +21,8 @@ Diese von mir erstellten Dateien dürfen beliebig weiter verwendet werden. Beim 
 
 ### Dateien von dritten
 
-Bei den Dokumenten, die nicht von mir sind, ist dieses in der Regel ersichtlich. So beispielsweise die Dokumente mit Übungs- und Praktikumsaufgaben.
+Bei den Dokumenten (oder Abschnitten innerhalb von Dokumenten), die nicht von mir sind, ist dieses in der Regel ersichtlich. So beispielsweise die Dokumente mit Übungs- und Praktikumsaufgaben.
 
 In der Regel wurden diese Dokumente von der öffentlich zugänglichen Seite des jeweiligen Lehrstuhls runter geladen.
+
+Rechte zur Nutzung und Weiterverteilung müssen dort entsprechend erfragt werden.
