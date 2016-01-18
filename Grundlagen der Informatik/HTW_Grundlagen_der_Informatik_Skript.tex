@@ -297,14 +297,30 @@ Die Laufzeit der linearen Suche liegt in $O(n)$
 
 \paragraph{Definition:} Für eine Funktion $f>0$ ist $O(f)$ die Menge aller Funktionen $g$, für die gilt:\\
 $g(n)\leq c\cdot f(n)$ für ein $c>0$ für alle großen $n$.\\
-ABB 31
+\begin{tikzpicture}[scale=3]
+\draw[-latex] (0,-0.1) -- (0,1.1);
+\draw[-latex] (-0.1,0) -- (1.1,0) node[right]{$n$};
+
+\pattern [pattern=north west lines,pattern color=lightgray] (0,0) -- plot[domain=0:1] (\x, {(\x*\x)}) -- (1,1) -- (1,0);
+
+\draw plot[domain=0:1] (\x, {(\x*\x)}) node[below right] {$c\cdot f(n)$};
+\draw (0.75,0.25) node{$O(f)$};
+\end{tikzpicture}\\
+$
+2 log (n^2+1)\\
+\leq 2 log ((1+1)n^2)\\
+=2 log (2n^2)\\
+= 2 log (2) + 2 log( n^2)\\
+\leq (2log2+2)log(n^2)\\
+= 2 (2log2+2)log(n)
+$
 
 \subparagraph{Bsp.:} $2n^3-n+5\overset{1.)}{\leq} 2n^3+5 \leq 7n^3 \in O(n^3)$
 \begin{enumerate}
 \item $-n$ ist kleiner Null, deswegen ist die rechte Seite ohne $-n$ nachgewiesener Maßen größer (Vorgehensweise Ungleichung aufstellen (siehe auch folgende): weg lassen, was kleiner Null ist; mit $n^x$ o.ä. erweitern, um auszuklammern).
 \end{enumerate}
 
-\subparagraph{Bsp.:}
+\subparagraph{Bsp.:}$ $
 \begin{lstlisting}[language=C]
 for (i=0; i<n-1; i++)
 	for (j=i+1 ; j<n ; j++)
@@ -325,7 +341,55 @@ $2\cdot log(n^2+1)\leq 2 log (n^3)=6log(n)\in O(log(n))$
 
 \section{Graphen}
 
-ABB 41
+\begin{tikzpicture}[scale=0.5,remember picture]
+\begin{scope}
+\begin{pgfinterruptboundingbox}
+%\draw [clip] plot[smooth, tension=0.4, smooth cycle, rotate=-15] coordinates {(-0.6,0.8) (0.4,1.8) (1.7,1.1) (2.4,-0.2) (1.4,-1.2) (0.6,0.1)}[reverseclip];
+%\draw [clip] plot[smooth, tension=0.4, smooth cycle, rotate=-50] coordinates {(1,4.4) (2,5.4) (3.3,4.7) (4,3.4) (3,2.4) (2.2,3.7)}[reverseclip];
+%\draw [clip] plot[smooth, tension=0.4, smooth cycle, rotate=-45] coordinates {(5.2,1) (6.2,2) (7.5,1.3) (8.2,0) (7.2,-1) (6.4,0.3)}[reverseclip];
+%\draw [clip] plot[smooth, tension=0.4, smooth cycle, rotate=-65] coordinates {(3,-0.2) (4,0.8) (5.3,0.1) (6,-1.2) (5,-2.2) (4.2,-0.9)}[reverseclip];
+%\draw [clip] plot[smooth, tension=0.4, smooth cycle, rotate=35] coordinates {(4,-6) (5,-5) (6.3,-5.7) (7,-7) (6,-8) (5.2,-6.7)}[reverseclip];
+%\draw [clip] plot[smooth, tension=0.4, smooth cycle, rotate=-55] coordinates {(4.6,10.2) (5.6,11.2) (6.9,10.5) (7.6,9.2) (6.6,8.2) (5.8,9.5)}[reverseclip];
+%\draw [clip] plot[smooth, tension=0.4, smooth cycle, rotate=-35] coordinates {(10.8,3.4) (11.8,4.4) (13.1,3.7) (13.8,2.4) (12.8,1.4) (12,2.7)}[reverseclip];
+\draw [rotate=-10, clip]  (4.1,2.8) rectangle (5.6,-0.2)[reverseclip];
+\draw [rotate=30, clip] (0.5,1.4) rectangle (2,-1.6)[reverseclip];
+\draw [rotate=10, clip] (3.5,-3.8) rectangle (5,-6.8)[reverseclip];
+\draw [rotate=-10, clip] (10.5,4.2) rectangle (12,1.2)[reverseclip];
+\draw [rotate=15, clip] (9.3,-6.2) rectangle (10.8,-9.2)[reverseclip];
+\draw [rotate=91, clip] (-3,-6.6) rectangle (-1.5,-9.6)[reverseclip];
+\draw [rotate=-20, clip] (2.1,-2.2) rectangle (3.6,-5.2)[reverseclip];
+\end{pgfinterruptboundingbox}
+\draw [blue] plot[smooth, tension=.7] coordinates {(-8,-2) (-4,-1) (-1,0) (3,1) (8,1) (13,1) (15,1)};
+\draw [blue] plot[smooth, tension=.7] coordinates {(-8,-3) (-3,-3) (0.8,-4.6) (7,-5) (14,-5) (15,-5)};
+\draw [blue] plot[smooth, tension=.7] coordinates {(-2,-2) (0,-1) (3,0) (7,-1) (7,-3) (4,-4) (-1,-3) (-2,-2)};
+\draw [blue] plot[smooth, tension=.7] coordinates {(15,0) (10,0) (9,-2) (10,-4) (14,-4) (15,-4)};
+\end{scope}
+
+\draw [thick, green]  plot[smooth, tension=.7] coordinates {(5.2,4.2) (0.8,3.4) (0.4,1.2) (1.8,-0.6) (3.2,-2) (4.8,-2.6) (5.4,-4.6) (5,-8.4)};
+\draw [thick, green]  plot[smooth, tension=.7] coordinates {(5.2,4.2) (4.8,2.6) (5,1) (4.4,-1.2) (3.2,-2) (1.8,-2.6) (1.2,-4.2) (0.8,-6.4) (3,-7.6) (5,-8.4)};
+\draw [thick, green]  plot[smooth, tension=.7] coordinates {(5.2,4.2) (10.6,3.2) (11.8,2) (11.4,-0.4) (11.2,-2.4) (11.6,-3.8) (12,-7.2) (7.4,-7.8) (5,-8.4)};
+\draw [thick, green]  plot[smooth, tension=.7] coordinates {(3.2,-2) (5,-2) (8,-1.8) (10.2,-2.4) (11.2,-2.4)};
+
+\node [green] at (3.2,-2) {$\bullet$};
+\node [green]at (11.2,-2.4) {$\bullet$};
+\node [green]at (5,-8.4) {$\bullet$};
+\node [green]at (5.2,4.2) {$\bullet$};
+\end{tikzpicture}\\
+Gibt es einen Rundweg über alle Brücken?\\
+$\curvearrowright$ Abstraktion als Graph:\\
+\begin{tikzpicture}[scale=0.5]
+\node at (0,4) {$\bullet$};
+\node at (2,2) {$\bullet$};
+\node at (0,0) {$\bullet$};
+\node at (0,2) {$\bullet$};
+\draw  plot[smooth, tension=1] coordinates {(2,2) (1,2.3) (0,2)};
+\draw  plot[smooth, tension=1] coordinates {(2,2) (1,1.7) (0,2)};
+\draw  plot[smooth, tension=1] coordinates {(0,2) (0.3,1) (0,0)};
+\draw  plot[smooth, tension=1] coordinates {(0,4) (0.3,3) (0,2)};
+\draw  plot[smooth, tension=1] coordinates {(0,4) (-0.3,3) (0,2)};
+\draw  plot[smooth, tension=1] coordinates {(0,2) (-0.3,1) (0,0)};
+\end{tikzpicture}\\
+$\curvearrowright$ Es gibt keinen Rundweg ($\Rightarrow$ Euler)!
 \paragraph{Definition:} Ein (ungerichteter) Graph ist ein Paar $G=(V,E)$, wobei
 \begin{itemize}
 \item $V$ die Menge der Knoten und
@@ -333,9 +397,40 @@ ABB 41
 \end{itemize}
 
 \subparagraph{Bsp.:} \parskp
-ABB42\\
+\begin{tikzpicture}[scale=0.3]
+\draw  (-3.5,3.5) ellipse (1 and 1) node{1};
+\draw  (4.5,1.5) ellipse (1 and 1) node{4};
+\draw  (-0.5,-3) ellipse (1 and 1) node{3};
+\draw  (-7,-1.5) ellipse (1 and 1) node{2};
+
+\draw (-4.4,2.4) -- (-6.2,-0.4);
+\draw (-5.8,-2) -- (-1.8,-2.8);
+\draw (-3,2.4) -- (-1,-1.8);
+\draw (-2.2,3.4) -- (3.4,2);
+\draw (3.6,0.6) -- (0.4,-2.2);
+\end{tikzpicture}\\
 $(\{1,2,3,4\},\{\{1,2\},\{1,3\}, \{2,3\}, \{1,4\}, \{3,4\}\})$\\
-(ABB43: Die Punkte und Kanten eines 3D-Objektes werden auf einen Graph abgebildet.)
+Beispiel:\\
+\begin{tikzpicture}[scale=0.3]
+\draw  (0,0)node{$\bullet$}  rectangle (5,5);
+\draw (5,0) node{$\bullet$} -- (6.5,1.5)node{$\bullet$} ;
+\draw (5,5) node{$\bullet$} -- (6.5,6.5);
+\draw (0,5) node{$\bullet$} -- (1.5,6.5);
+\draw (1.5,6.5)node{$\bullet$}  -- (6.5,6.5);
+\draw (6.5,6.5) node{$\bullet$} -- (6.5,1.5);
+\draw [dashed] (0,0) -- (1.5,1.5)node{$\bullet$} ;
+\draw [dashed] (1.5,1.5) -- (1.5,6.5);
+\draw [dashed] (1.5,1.5) -- (6.5,1.5);
+\end{tikzpicture}\\
+Die Punkte und Kanten eines 3D-Objektes werden auf einen Graph abgebildet $\Rightarrow$\\
+\begin{tikzpicture}[scale=0.2]
+\draw  (0,0) rectangle (5,5);
+\draw  (-2,-2) rectangle (7,7);
+\draw (-2,7)node{$\bullet$} -- (0,5)node{$\bullet$};
+\draw (7,-2)node{$\bullet$} -- (5,0)node{$\bullet$};
+\draw (-2,-2)node{$\bullet$} -- (0,0)node{$\bullet$};
+\draw (5,5)node{$\bullet$} -- (7,7)node{$\bullet$};
+\end{tikzpicture}
 
 \paragraph{Definition:} Ein Graph heißt \emph{vollständig}, wenn alle Knoten paarweise verbunden sind. \bigskip\\
 Ein vollständiger Graph mit $n$ Knoten besitzt genau $\nok{n}{2}$ Kanten (jeder Knoten hat den Grad $n-1$).
@@ -348,13 +443,112 @@ Notation: $deg(v)=k$
 \subparagraph{Beweis:} Wenn wir jede Kante in der Mitte durchschneiden, ist jeder Knoten mit genau $deg(v)$ Hälften verbunden. Die Summe der Knotengrade ist dann die Anzahl der Kantenhälften, und diese ist $2|E|$.
 
 \paragraph{Definition:} Ein \emph{Weg} ist eine Folge von Knoten $v_1, ... , v_k$ mit $\{v_l,v_{l+1}\}\in E$ für $l=1, ..., k-1$. Die Länge dieses Weges ist $k-1$. Ein Weg heißt Kreis, wenn $v_1=v_k$.\\
-ABB 44\\
-ABB 45 ist ein Graph: $(\{1,2,3,4,5\},\{\{1,2\},\{1,3\},\{2,3\},\{4,5\}\}$\\
-ABB 46 ist ein Graph: $(\{1,2,3,4\},\emptyset\}$\\
+\begin{tikzpicture}[scale=0.3]
+\draw  (0,0) ellipse (1 and 1) node{$v_1$};
+\draw  (5,0) ellipse (1 and 1) node{$v_2$};
+\draw  (13,0) ellipse (1 and 1) node{$v_k$};
+
+\draw (1.2,0) -- (3.8,0);
+\draw (6.2,0) -- (8.2,0);
+\draw (9.8,0) -- (11.8,0);
+
+\node at (9,0) {...};
+\end{tikzpicture}\\
+Beispiele:\\
+\begin{tabular}{r l}
+\begin{tikzpicture}[scale=0.3]
+\draw  (0,0) ellipse (1 and 1) node{1};
+\draw  (5,0) ellipse (1 and 1) node{2};
+\draw  (2.5,-3.5) ellipse (1 and 1) node{3};
+\draw  (0,-7.5) ellipse (1 and 1) node{4};
+\draw  (5,-7.5) ellipse (1 and 1) node{5};
+
+\draw (1.2,0) -- (3.8,0);
+\draw (0.6,-1.2) -- (1.6,-2.6);
+\draw (3.4,-2.6) -- (4.4,-1);
+\draw (1.2,-7.6) -- (3.8,-7.6);
+\draw [dashed, thick, green] (0.6,-6.4) -- (1.7,-4.5);
+\draw [dashed]  (2.5,-3.5) ellipse (6 and 6.5);
+\end{tikzpicture} & \mpb[0.6] ist ein Graph: $(\{1,2,3,4,5\},\{\{1,2\},\{1,3\},\{2,3\},\{4,5\}\}$\\
+(der grüne Pfad würde ihn zusammenhängend machen). \mpe\\
+\begin{tikzpicture}[scale=0.3]
+\draw  (-0.5,0.5) ellipse (1 and 1) node{1};
+\draw  (4.5,-0.5) ellipse (1 and 1) node{2};
+\draw  (-1,-4.5) ellipse (1 and 1) node{3};
+\draw  (4.5,-4) ellipse (1 and 1) node{4};
+
+\draw [dashed]  (2,-2.5) ellipse (5 and 6);
+\end{tikzpicture} &ist ein Graph: $(\{1,2,3,4\},\emptyset\}$\\
+\end{tabular}\\
 Ein Graph heißt \emph{zusammenhängend}, wenn es für alle Paare von Knoten $u,v$ einen Weg von $u$ nach $v$ gibt.\\
 Ein \emph{Pfad} ist ein Weg, der keinen Knoten mehrfach enthält.
 
 \subsection{Bäume}
+\begin{tikzpicture}[scale=0.3]
+\draw [green] (-2,6) node (v2) {} ellipse (0.5 and 0.5);
+\draw  (0,6) node (v4) {} ellipse (0.5 and 0.5);
+\draw [green] (2,6) node (v3) {} ellipse (0.5 and 0.5);
+\draw  (0,9) node (v1) {} ellipse (0.5 and 0.5);
+\draw [green] (-2,0) node (v6) {} ellipse (0.5 and 0.5);
+\draw [green] (0,0) node (v7) {} ellipse (0.5 and 0.5);
+\draw [green] (2,0) node (v8) {} ellipse (0.5 and 0.5);
+\draw  (0,3) node (v5) {} ellipse (0.5 and 0.5);
+\draw  (-3,12) node (v9) {} ellipse (0.5 and 0.5);
+\draw [green] (-7.5,12.5) node (v11) {} ellipse (0.5 and 0.5);
+\draw [green] (-4.5,15) node (v10) {} ellipse (0.5 and 0.5);
+\draw [green] (3,13) node (v12) {} ellipse (0.5 and 0.5);
+\draw (v1) -- (v2);
+\draw (v1) -- (v3);
+\draw (v1) -- (v4) -- (v5) -- (v6);
+\draw (v5) -- (v7);
+\draw (v5) -- (v8);
+\draw (v1) -- (v9) -- (v10);
+\draw (v9) -- (v11);
+\draw (v1) -- (v12);
+\node at (0,-1.5) {(ein Baum)};
+\node [green] at (-6,8) {Blätter};
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.3]
+\draw (-2,6) node (v2) {} ellipse (0.5 and 0.5);
+\draw (2,6) node (v3) {} ellipse (0.5 and 0.5);
+\draw  (0,9) node (v1) {} ellipse (0.5 and 0.5);
+\draw (1,3) node (v6) {} ellipse (0.5 and 0.5);
+\draw (3,3) node (v7) {} ellipse (0.5 and 0.5);
+\draw  (2,6) node (v5) {} ellipse (0.5 and 0.5);
+\draw  (0,0) node (v9) {} ellipse (0.5 and 0.5);
+\draw  (2,0) node (v10) {} ellipse (0.5 and 0.5);
+\draw  (-1,3) node (v8) {} ellipse (0.5 and 0.5);
+\draw  (-3,3) node (v4) {} ellipse (0.5 and 0.5);
+\draw (v1) -- (v2);
+\draw (v1) -- (v3);
+\draw (v5) -- (v6);
+\draw (v5) -- (v7);
+\node at (0,-1.5) {(kein Baum)};
+\draw (v4) -- (v2) -- (v8);
+\draw (v9) -- (v6) -- (v10);
+\draw (v8);
+\draw (v4) -- (v8);
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.3]
+\draw (-2,6) node (v2) {} ellipse (0.5 and 0.5);
+\draw (2,6) node (v3) {} ellipse (0.5 and 0.5);
+\draw   node (v1) {} ellipse (0.5 and 0.5);
+\draw (1,3) node (v6) {} ellipse (0.5 and 0.5);
+\draw (3,3) node (v7) {} ellipse (0.5 and 0.5);
+\draw  (2,6) node (v5) {} ellipse (0.5 and 0.5);
+\draw  (0,0) node (v9) {} ellipse (0.5 and 0.5);
+\draw  (2,0) node (v10) {} ellipse (0.5 and 0.5);
+\draw  (-1,3) node (v8) {} ellipse (0.5 and 0.5);
+\draw  (-3,3) node (v4) {} ellipse (0.5 and 0.5);
+
+\draw (v5) -- (v6);
+\draw (v5) -- (v7);
+\node at (0,-1.5) {(kein Baum)};
+\node at (0,-2.75) {$\rightarrow$ 2 Bäume};
+\draw (v4) -- (v2) -- (v8);
+\draw (v9) -- (v6) -- (v10);
+\draw (v8);
+\end{tikzpicture}
 \paragraph{Definition:} Ein Baum ist ein zusammenhängender Graph der keine Kreise enthält. Ein Blatt ist ein Knoten $v$ mit $deg(v)\leq 1$ (dem Grad 1, also nur eine Kante hat).\\
 Anmerkung: Auch ein Graph mit nur einem Knoten ist ein Baum - ein Baum der keine Blätter hat.
 
