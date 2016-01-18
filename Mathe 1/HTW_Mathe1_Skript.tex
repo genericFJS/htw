@@ -283,7 +283,7 @@ a_1\\
 a_2\\
 ...\\
 a_n
-\end{pmatrix} \in \mathbb{R}^n$ (vgl. \ref{ 1.5.1})\\
+\end{pmatrix} \in \mathbb{R}^n$ (vgl. \ref{ 5.1})\\
 Es ist $\underline{a}^T=(a_1| a _2 | ... | a_n)=\begin{pmatrix}
 a_1 & a_2 & ... & a_n\\
 \end{pmatrix}$ vom Typ $(1,n)$ (Zeilenvektor).
@@ -438,7 +438,7 @@ b_1\\
 ...\\
 b_n
 \end{pmatrix}$. Diese Matrixform besitzt genau dann eine eindeutige Lösung $\underline{x}$, wenn $det(\underline{A})\not = 0$. \\
-In diesem Falle gilt $\boxed{x_j=\frac{det(\underline{B}_j)}{det(\underline{A})}}\; (j=1,...,n)$. Wobei $\underline{B}_j$ aus $\underline{A}$ hervorgeht, indem man die $j$-te Spalte durch $\underline{b}$ ersetzt (\emph{CRAMERsche Regel}, theoretische Bedeutung, praktisches Vorgehen zur Lösung der Matrixform vgl. folgenden Abschnitt 1.5.4 \ref{1.5.4}).
+In diesem Falle gilt $\boxed{x_j=\frac{det(\underline{B}_j)}{det(\underline{A})}}\; (j=1,...,n)$. Wobei $\underline{B}_j$ aus $\underline{A}$ hervorgeht, indem man die $j$-te Spalte durch $\underline{b}$ ersetzt (\emph{CRAMERsche Regel}, theoretische Bedeutung, praktisches Vorgehen zur Lösung der Matrixform vgl. folgenden Abschnitt).
 \end{enumerate}
 
 \subsection{Lineare Gleichungssysteme, Rang einer Matrix, Inverse}
@@ -1233,6 +1233,149 @@ z
 0\\
 -\frac{5}{2}
 \end{pmatrix} \quad (t \in \mathbb{R})$
+\item Abstand $d(P_1,\varepsilon)$ eines Punktens $P_1$ in einer Ebene $\varepsilon$.\\
+$\varepsilon$: $ax+by+cz+d=0$, Punkt $P_1(x_1,y_1,z_1)$\\
+$\boxed{d(P_1,\varepsilon)=\frac{|ax_1+by_1+cz_1+d|}{\sqrt{a^2+b^2+c^2}}}$\\
+ABB 91\\
+$\underline{n}=\begin{pmatrix}
+a\\
+b\\
+c
+\end{pmatrix}, P_0\in \varepsilon$, d.h. $ax_0+by_0+cz_0+d=0$\\
+$d(P_1,\varepsilon)=\left|\overrightarrow{P_0P_1}_{\overrightarrow{n}}\right|=\frac{\left|\left(\overrightarrow{P_0P_1,\underline{n}}\right)\right|}{|\underline{n}|}$\\
+$\overrightarrow{P_0P_1}=\begin{pmatrix}
+x_1-y_0\\
+y_1-y_0\\
+z_1-z_0
+\end{pmatrix}$\\
+$\Rightarrow d(P_1,\varepsilon)=\frac{|a(x_1-x_0+b(y_1-y_0)+c(z_1-z_0)|}{\sqrt{a^2+b^2+c^2}}=\frac{|ax_1+by_1+cz_1|}{\sqrt{a^2+b^2+c^2}}$
+\subparagraph{Bsp. 18:} \parskp
+Abstand von $P_1(2,-9,-16)$ von der Ebene $\varepsilon: \; 3x-7y+8z+26=0$.\\
+$d(P_1, \varepsilon)=\frac{|3\cdot 2 - 7 \cdot (-9)+8 \cdot (-16) +26 |}{\sqrt{3^2+(-7)^2+8}}=\frac{|-33|}{\sqrt{122}}=\resultul{\frac{33}{\sqrt{122}}}$\\
+Bemerkung: Gerade $g$ in der x-y-Ebene, Gleichung $ax+by+c=0$, NV: $\underline{n}=\begin{pmatrix}
+a\\
+b
+\end{pmatrix}$, Abstand eines Punktes $P_1(x_1,y_1)$ von $g$:\\
+$\boxed{d(P_1,g)}=\frac{|ax_1+by_1+c|}{\sqrt{a^2+b^2}}$
+\item Abstand $d(Q,g)$ eines Punktes $Q$ von einer Geraden $g$ (in $\mathbb{R}^3$).\\
+$g: \underline{r}=\underbrace{\overrightarrow{OP_1}}_{\underline{r}_1}+t\underline{a} \quad t \in \mathbb{R}$ (Parameterdarstellung)\\
+ABB 92\\
+($d$ ist Höhe $\overline{LQ}$ des von $\underline{a}$ und $\overrightarrow{P_1Q}$ aufgespannten Parallelogramms)\\
+Lotfußpunkt: $\boxed{\overrightarrow{OL}=\overrightarrow{OP_1}+\overrightarrow{P_1Q}_{\underline{a}}}$
+\subparagraph{Bsp. 19:} \parskp
+$g: \begin{pmatrix}
+x\\
+y\\
+z
+\end{pmatrix}=\begin{pmatrix}
+2\\
+3\\
+1
+\end{pmatrix}+t \begin{pmatrix}
+1\\
+0\\
+-1
+\end{pmatrix} \quad t \in \mathbb{R}, Q(1,1,1)$
+\begin{enumerate}
+\item Abstand $d(Q,g)$:\\
+$\underline{a}=\begin{pmatrix}
+1\\
+0\\
+-1
+\end{pmatrix} , \underline{r}_1=\begin{pmatrix}
+2\\
+3\\
+1
+\end{pmatrix}, \overrightarrow{OQ}=\begin{pmatrix}
+1\\
+1\\
+1
+\end{pmatrix}, \overrightarrow{P_1Q}=\begin{pmatrix}
+-1\\
+-2\\
+0
+\end{pmatrix}$\\
+$\overrightarrow{P_1Q} \times \underline{a} = 2 \underline{i} - \underline{j} + 2 \underline{k}= \begin{pmatrix}
+2\\
+-1\\
+2
+\end{pmatrix}$\\
+$\left| \overrightarrow{P_1Q} \times \underline{a}\right| = \sqrt{2^2+(-1)^2+2^2}= \sqrt{9} = 3$\\
+$d(Q,g)= \frac{3}{\sqrt{2}}= \resultul{\frac{3}{2} \sqrt{2}}$
+\item Lotfußpunkt: $\overrightarrow{P_1Q}_{\underline{a}}=\frac{\left(\overrightarrow{P_1Q}, \underline{a}\right)}{|\underline{a}|^2}\cdot \underline{a}=-\frac{1}{2}\begin{pmatrix}
+1\\
+0\\
+-1
+\end{pmatrix}$\\
+$\Rightarrow \overrightarrow{OL}=\begin{pmatrix}
+2\\
+3\\
+1
+\end{pmatrix}-\frac{1}{2}\begin{pmatrix}
+1\\
+0\\
+-1
+\end{pmatrix}=\begin{pmatrix}
+\tfrac{3}{2}\\
+3\\
+\tfrac{3}{2}
+\end{pmatrix} \;\Rightarrow\;L\left(\frac{3}{2},3,\frac{3}{2}\right)$
+\end{enumerate}
+\item Abstand $d(g_1,g_2)$ zweier nicht paralleler Geraden $g_1$ und $g_2$.\\
+$g_1: \; \underline{r}=\underline{r}_1 + s \cdot \underline{a}_1$\\
+$g_2: \; \underline{r}=\underline{r}_2 + t \cdot \underline{a}_2 \quad (s,t \in \mathbb{R})$\\
+ABB 93\\
+$d=\left| \overrightarrow{P_1P_2}_{\underline{a}_1 \times \underline{a}_2}\right|=d(g_1,g_2)=\frac{|(\underline{r}_2-\underline{r}_1, \underline{a}_1 \times \underline{a}_2)|}{|\underline{a}_1 \times \underline{a}_2|}$\\
+Bemerkung: Lotfußpunkte $L_1$ und $L_2$ aus Bedingungen $\overrightarrow{L_1L_2} \bot \underline{a}_1$ und $\overrightarrow{L_1L_2}\bot \underline{a}_2$ ermittelbar.
 \end{enumerate}
 
-\end{document}
+\subsection{Eigenwerte und Eigenvektoren}
+%Motivation:\\
+%Zum Beispiel $A$ vom Typ $(2,2)$ durch Abbildung $f: \mathbb{R}^2\rightarrow \mathbb{R}^2$:\\ $f(\underline{x})=f\left( \begin{pmatrix}
+%x\\
+%y\\
+%z
+%\end{pmatrix}\right)=\underline{A}_{\underline{x}}$\\
+%Falls $f(\underline{x})=\lambda\cdot \underline{x}$, dann $\lambda =$Eigenwert und $\underline{x} =$Eigenvektor. Dann also $\boxed{\lambda\cdot \underline{x}=\underline{A} \underline{x}}$, woraus sich das Gleichungssystem $\underline{A} \underline{x}-\lambda \cdot \underline{x}=\underline{0}$ bzw. $(\underline{A}-\lambda E) \underline{x}=\underline{0}$ ergibt.
+Es sei $\underline{A}$ eine $(n,n)$-Matrix.
+\paragraph{Def. 13:} \parskp
+Die Zahl $\lambda \in \mathbb{C}$ heißt \emph{Eigenwert} (EW) der quadratischen Matrix $\underline{A}$, falls die Gleichung $\boxed{\underline{A}\,\underline{x}=\lambda \underline{x}}$ nichttriviale Lösungsvektoren $\underline{x}$ besitzt. Diese heißen dann \emph{Eigenvektoren} (EV) von $\underline{A}$ zum Eigenwert $\lambda$.
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item $\underline{A}\,\underline{x} = \lambda \underline{x} \Leftrightarrow (\underline{A}-\lambda\underline{E})\underline{x}=\underline{0}$\\
+D.h. nichttriviale Lösungen existieren genau dann, wenn $\boxed{det(\underline{A}-\lambda\underline{E})=0}$ (\emph{charakteristische Gleichung}) gilt.
+\item Vorgehensweise zur Ermittlung von EW und EV:\\
+\begin{itemize}
+\item charakt. Gleichung lösen ($n$ i.a. komlpexe Lösungen $\lambda_1, ..., \lambda_n$)
+\item Gleichungssystem $(\underline{A}-\lambda_i\underline{E})\underline{x}=\underline{0}$ für $i=1,...,n$ lösen.
+\end{itemize}
+\end{enumerate}
+Im folgenden werden nur symmetrische $(n,n)$-Matrizen $\underline{S}$ betrachtet, d.h. $\underline{S}^T=\underline{S}$.
+\paragraph{Satz 6:} \parskp
+Es sei $\underline{S}$ eine symmetrische $(n,n)$-Matrix. Dann gilt:
+\begin{enumerate}[label=(\arabic*)]
+\item Alle Eigenwerte von $\underline{S}$ sind reell.
+\item Zu verschidenen EW $\lambda_1$ bzw. $\lambda_2$ ($\lambda_1 \not = \lambda_2$) gehörende EV $\underline{v}_1$ bzw. $\underline{v}_2$ sind orthogonal (vgl. Disskussion).
+\item Es gibt eine Basis des Raumes $\mathbb{R}^n$, die aus $n$ paarweise orthonormierten EV $\underline{v}_1, ... , \underline{v}_n$ von $\underline{S}$ besteht.
+\item Es sei $\underline{V}=(\underline{v}_1|...|\underline{v}_n)$ eine Matrix, deren Spaltenvektoren $n$ paarweise orthonomierte EV von $\underline{S}$ sind. Dann gilt:
+\begin{itemize}
+\item $\underline{V} \cdot \underline{V}^T=\underline{V}^T\cdot \underline{V} = \underline{E}$ (d.h. $\underline{V}^{-1}=\underline{V}^T$, $\underline{V}$ ist sogenannte orthogonale Matrix)
+\item $\underline{V}^T\cdot \underline{S}\cdot \underline{V}=\begin{pmatrix}
+\lambda_1 & 0 & 0\\
+0 & ... & 0\\
+0 & 0 & \lambda_n
+\end{pmatrix}=\Lambda \; \curvearrowright \boxed{\underline{S}=\underline{V} \cdot\Lambda\cdot \underline{V}^T}$
+\item Es gilt $\underline{S}^{-1}=\underline{V}\cdot\Lambda^{-1}\cdot\underline{V}^T$ mit $\begin{pmatrix}
+\tfrac{1}{\lambda_1} & 0 & 0\\
+0 & ... & 0\\
+0 & 0 & \tfrac{1}{\lambda_n}
+\end{pmatrix}=\Lambda^{-1}$\\
+$\underline{S}^n=\underline{V}\cdot\Lambda^n\cdot\underline{V}^T$
+\end{itemize}
+\end{enumerate}
+\emph{Betrag (Norm)} eines Vektors $|\underline{a}|=\sqrt{\sum_{i=1}^n a_i^2}$ paarweise orthonormiert bedeutet $(\underline{v}_i, \underline{v}_j=\begin{cases}
+1 & \text{für }i=j\\
+0 & \text{für }i \not = j
+\end{cases}$.
+
+\end{document} 
