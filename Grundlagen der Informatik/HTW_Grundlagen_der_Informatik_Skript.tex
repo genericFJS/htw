@@ -271,7 +271,7 @@ $\nok{n}{2}=\frac{n(n-1)}{2}$, denn für das 1. Element gibt es $n$ Möglichkeit
 
 \subparagraph{Beweis:} Für die 1. Stelle gibt es $n$ Möglichkeiten, für die 2. Stelle $n-1$ usw. Für die letzte Stelle nur noch eine Möglichkeit. Insgesamt also $n\cdot ... \cdot 1=n!$ Möglichkeiten.
 
-\paragraph{Satz:} $\nok{n}{k}= \frac{n!}{k! (n-k)!}$
+\paragraph{Satz:} $\nok{n}{k}= \frac{n!}{k! (n-k)!}$ \footnote{$\sum_{k=0}^{n}\nok{n}{k}=2^n$}
 \subparagraph{Beweis:} Um aus einer $n$-elementigen Menge $k$ Elemente auszuwählen, gibt es $n$ Möglichkeiten, um das erste Element auszuwählen, für das zweite Element $n-1$ Möglichkeiten, …, für das $k$. Element $n-k+1$ Möglichkeiten, insgesamt daher $n \cdot ...\cdot (n-k+1)$ Möglichkeiten. Da die Reihenfolge, in der diese $k$ Elemente ausgewählt werden, keine Rolle spielt, muss dieses Produkt durch $k!$ geteilt werden. \\
 Daher erhalten wir $\nok{n}{k}= \frac{n\cdot ...\cdot (n-k+1)}{k!}= \frac{n!}{k! (n-k)!}$
 
@@ -564,21 +564,85 @@ Anmerkung: Auch ein Graph mit nur einem Knoten ist ein Baum - ein Baum der keine
 \paragraph{Definiton:} Ein \emph{Wurzelbaum} ist ein Baum mit einem als Wurzel ausgezeichnetem Knoten.
 
 \paragraph{Definition:} Ein \emph{binärer Wurzelbaum} ist ein Wurzelbaum, in dem jeder Knoten, der kein Blatt ist, genau zwei Nachfolger besitzt.\\
-ABB 4
-\paragraph{Definition:}  (induktiv)
-ABB 5
+\begin{tikzpicture}[scale=0.3]
+\draw (2,0) node (v2) {} ellipse (0.5 and 0.5);
+\draw (4,9) node (v3) {} ellipse (0.5 and 0.5);
+\draw (1,3) node (v6) {} ellipse (0.5 and 0.5);
+\draw (3,3) node (v7) {} ellipse (0.5 and 0.5);
+\draw  (2,6) node (v5) {} ellipse (0.5 and 0.5);
+\draw  (0,0) node (v9) {} ellipse (0.5 and 0.5);
+\draw  (2,0) node (v10) {} ellipse (0.5 and 0.5);
+\draw  (3,-3) node (v8) {} ellipse (0.5 and 0.5);
+\draw  (1,-3) node (v4) {} ellipse (0.5 and 0.5);
+\draw (6,6) node (v11) {} ellipse (0.5 and 0.5);
+\draw (5,3) node (v12) {} ellipse (0.5 and 0.5);
+\draw (7,3) node (v13) {} ellipse (0.5 and 0.5);
+
+\draw (v5) -- (v6);
+\draw (v5) -- (v7);
+\draw (v4) -- (v2) -- (v8);
+\draw (v9) -- (v6) -- (v10);
+\draw (v8);
+\draw (v3) -- (v5);
+\draw (v3) -- (v11) -- (v12);
+\draw (v11) -- (v13);
+\draw [red, dashed]  (1.5,-1.5) ellipse (3 and 3);
+\draw [green]  (8,2) rectangle (0,10);
+\draw [red]  (-2,10.5) rectangle (8.5,-5);
+\node [right, green] at (8.5,7.5) {perfekt balanciert};
+\node [right, red, align=left] at (8.5,0) {nicht balanciert,\\da eine Wurzel länger};
+\end{tikzpicture}
+\paragraph{Definition:}  (induktiv)\\
+\begin{tikzpicture}[scale=0.3]
+\draw  (1,6) node (v5) {} ellipse (0.5 and 0.5);
+\draw (7,6) node (v11) {} ellipse (0.5 and 0.5);
+\draw (4,8.5) node (v13) {} ellipse (0.5 and 0.5);
+
+\draw (v5) -- (v13) -- (v11) ;
+\draw [scale=2] (0.5,3) -- (-1,-1) -- (2,-1) -- cycle;
+\draw [scale=2](3.5,3) -- (2.5,0) -- (4.5,0) --cycle;
+\node at (1,0.5) {$W_1$};
+\node at (7,1.5) {$W_2$};
+\end{tikzpicture}
 \begin{itemize}
 \item Ein einzelner Knoten ist ein binärer Wurzelbaum
 \item Wenn $W_1, W_2$ binäre Wurzelbäume sind, dann erhalten wir einen neuen Wurzelbaum, indem die Wurzeln von $W_1,W_2$ mit einer neuen Wurzel verbunden werden.
 \end{itemize}
-\paragraph{Satz:} Ein binärer Wurzelbaum mit Tiefe $d$ (d.h. alle Pfade von Wurzel zu einem Blatt haben die Länge $d$) besitzt genau $2^d$ Blätter.
-ABB 6
+\paragraph{Satz:} Ein binärer Wurzelbaum mit Tiefe $d$ (d.h. alle Pfade von Wurzel zu einem Blatt haben die Länge $d$) besitzt genau $2^d$ Blätter.\\
+\begin{tikzpicture}[scale=0.3]
+\draw (1,3) node (v6) {} ellipse (0.5 and 0.5);
+\draw (3,3) node (v7) {} ellipse (0.5 and 0.5);
+\draw  (2,6) node (v5) {} ellipse (0.5 and 0.5);
+\draw (6,6) node (v11) {} ellipse (0.5 and 0.5);
+\draw (5,3) node (v12) {} ellipse (0.5 and 0.5);
+\draw (7,3) node (v14) {} ellipse (0.5 and 0.5);
+\draw (4,8.5) node (v13) {} ellipse (0.5 and 0.5);
+
+\draw (v6) -- (v5) -- (v13) -- (v11) -- (v14);
+\draw (v5) -- (v7);
+\draw (v12) -- (v11);
+\draw (8.5,8.5) -- (9,8.5) -- (9,3) -- (8.5,3);
+\node at (9,6) [right] {Tiefe $d$};
+\end{tikzpicture}
 \subparagraph{Beweis:} (Indkution)
 \begin{itemize}
 \item[IA:] $d=0$: Ein binärer Wurzelbaum, der nur aus der Wurzel besteht, enthält $2^0=1$ Blätter.
 \item[IV:] $|V| =2^d$
 \item[IS:] $d\rightarrow d+1$: Ein binärer Wurzelbaum der Tief $d+1$ enthält zwei binäre Wurzelbäume (laut vorhergehender Definition) der Tiefe $d$.\\
-ABB 7\\
+\begin{tikzpicture}[scale=0.3]
+\draw  (1,6) node (v5) {} ellipse (0.5 and 0.5);
+\draw (7,6) node (v11) {} ellipse (0.5 and 0.5);
+\draw (4,8.5) node (v13) {} ellipse (0.5 and 0.5);
+
+\draw (v5) -- (v13) -- (v11) ;
+\draw [scale=2](0.5,3) -- (-0.5,0) -- (1.5,0) --cycle;
+\draw [scale=2](3.5,3) -- (2.5,0) -- (4.5,0) --cycle;
+
+\draw (10,6) -- (10.5,6) -- (10.5,0) -- (10,0);
+\draw (13,8.5) -- (13.5,8.5) -- (13.5,0) -- (13,0);
+\node at (10.5,3) [right] {$d$};
+\node at (13.5,4) [right] {$d+1$};
+\end{tikzpicture}\\
 Diese enthalten nach Induktionsvoraussetzung jeweils $2^d$ Blätter. Folglich besitzt der binäre Wurzelbaum der Tiefe $d+1$ genau $2\cdot 2^d=2^{d+1}$ Blätter.
 \end{itemize}
 
@@ -590,22 +654,160 @@ $a_{uv}=\begin{cases}
 1 \qquad \text{für }\{u,v\}\in E\\
 0 \qquad \text{sonst}
 \end{cases}$
-\subparagraph{Bsp.:}
-ABB 8
+\subparagraph{Bsp.:} \parskp
+\begin{tikzpicture}[scale=0.5]
+\draw  (1,6) node {3} ellipse (0.5 and 0.5);
+\draw  (7,8.5) node {2} ellipse (0.5 and 0.5);
+\draw (7,6) node {4} ellipse (0.5 and 0.5);
+\draw (1,8.5) node {1} ellipse (0.5 and 0.5);
+
+\draw (1.8,8.4) -- (6.4,8.4);
+\draw (7,7.8) -- (7,6.6);
+\draw (1,7.8) -- (1,6.6);
+\draw (1.6,8) -- (6.4,6.2);
+\end{tikzpicture} \qquad 
+$\begin{pmatrix}
+0 & 1 & 1 & 1\\
+1 & 0 & 0 & 1\\
+1 & 0 & 0 & 0\\
+1 & 1 & 0 & 0
+\end{pmatrix}$
 \paragraph{Adjazenzliste} Ein Array hat den Nachteil, dass es nicht in der Länge geändert werden kann. Der Vorteil ist allerdings, dass auf Elemente des Arrays in kurzer Zeit zugegriffen werden kann.\\
 Eine  Liste kann wachsen und schrumpfen. Jedes Glied einer Liste verweist auf das nächste. Der 
 Nachteil ist, dass der Zugriff auf Elemente aus der Liste nicht so schnell und einfach ist.\smallskip\\
 Die Adjazenzliste ist ein Array, das an jeder Position $v$ eine Liste der mit $v$ verbundenen Knoten enthält.
 \subparagraph{Bsp.:} \parskp
-ABB 9\medskip\\
+\begin{tikzpicture}[scale=0.3]
+
+\draw  (-2.5,1) rectangle (2,-2.5);
+\draw  (-2.5,-2.5) rectangle (2,-6);
+\draw  (-2.5,-6) rectangle (2,-9.5);
+\draw  (-2.5,-9.5) rectangle (2,-13);
+
+\draw  (4.5,0.5) rectangle (7.5,-2);
+\draw  (9,0.5) rectangle (12,-2);
+\draw  (13.5,0.5) rectangle (16.5,-2);
+
+\draw  (4.5,-3) rectangle (7.5,-5.5);
+\draw  (9,-3) rectangle (12,-5.5);
+
+\draw  (4.5,-6.5) rectangle (7.5,-9);
+
+\draw  (4.5,-10) rectangle (7.5,-12.5);
+\draw  (9,-10) rectangle (12,-12.5);
+\node at (6,-0.75) {2};
+\node at (10.4,-0.75) {3};
+\node at (15,-0.75) {4};
+\node at (6,-4.25) {1};
+\node at (10.4,-4.25) {4};
+\node at (6,-7.75) {1};
+\node at (6,-11.25) {1};
+\node at (10.4,-11.25) {3};
+
+\node at (-3.5,-0.75) {1};
+\node at (-3.5,-4.25) {2};
+\node at (-3.5,-7.75) {3};
+\node at (-3.5,-11.25) {4};
+\draw [-latex] (2,-0.75) -- (4.5,-.75);
+\draw [-latex] (7.5,-0.75) -- (9,-0.75);
+\draw [-latex] (12,-0.75) -- (13.5,-0.75);
+
+\draw [-latex] (2,-4.25) -- (4.5,-4.25);
+\draw [-latex] (7.5,-4.25) -- (9,-4.25);
+
+\draw [-latex] (2,-7.75) -- (4.5,-7.75);
+
+\draw [-latex] (2,-11.25) -- (4.5,-11.25);
+\draw [-latex] (7.5,-11.25) -- (9,-11.25);
+\end{tikzpicture}\\
 Bäume, insbesondere Binärbäume, lassen sich noch einfacher darstellen: Jeder Knoten wird dargestellt durch eine Datenstruktur, die einen Verweis auf die Nachfolger enthält.
-\subparagraph{Bsp.:}
-ABB 10
+\subparagraph{Bsp.:}\parskp
+\begin{tikzpicture}[scale=0.5]
+\draw (-0.5,3) node (v6) {4} ellipse (0.5 and 0.5);
+\draw (1.5,3) node (v7) {5} ellipse (0.5 and 0.5);
+\draw  (0.5,6) node (v5) {3} ellipse (0.5 and 0.5);
+\draw (4.5,6) node (v11) {2} ellipse (0.5 and 0.5);
+\draw (2.5,8.5) node (v13) {1} ellipse (0.5 and 0.5);
+
+\draw (v6) -- (v5) -- (v13) -- (v11);
+\draw (v5) -- (v7);
+
+\draw  (11,9) rectangle (12,8);
+\draw  (12,9) rectangle (13,8);
+\draw  (13,9) rectangle (14,8);
+\draw  (9.5,6.5) rectangle (10.5,5.5);
+\draw  (10.5,6.5) rectangle (11.5,5.5);
+\draw  (11.5,6.5) rectangle (12.5,5.5);
+\draw  (13.5,6.5) rectangle (14.5,5.5);
+\draw  (14.5,6.5) rectangle (15.5,5.5);
+\draw  (15.5,6.5) rectangle (16.5,5.5);
+\draw  (8,3.5) rectangle (9,2.5);
+\draw  (9,3.5) rectangle (10,2.5);
+\draw  (10,3.5) rectangle (11,2.5);
+\draw  (12,3.5) rectangle (13,2.5);
+\draw  (13,3.5) rectangle (14,2.5);
+\draw  (14,3.5) rectangle (15,2.5);
+
+\draw[-latex] (12.5,8.5) -- (11,6.5);
+\draw[-latex] (13.5,8.5) -- (15,6.5);
+\draw[-latex] (11,6) -- (9.5,3.5);
+\draw[-latex] (12,6) -- (13.5,3.5);
+\draw[-latex] (9,8.5) -- (11,8.5);
+\end{tikzpicture}\\
+Dieser Graph:\\
+\begin{tikzpicture}[scale=0.5]
+\draw  (1,6) node {3} ellipse (0.5 and 0.5);
+\draw  (7,8.5) node {2} ellipse (0.5 and 0.5);
+\draw (7,6) node {4} ellipse (0.5 and 0.5);
+\draw (1,8.5) node {1} ellipse (0.5 and 0.5);
+
+\draw (1.8,8.4) -- (6.4,8.4);
+\draw (7,7.8) -- (7,6.6);
+\draw (1,7.8) -- (1,6.6);
+\draw (1.6,8) -- (6.4,6.2);
+\end{tikzpicture}\\
+würde dann als $Array(List(2,3,4), List(1,4), List(1), List(1,2))$ dargestellt werden.
+
 
 \subsection{Grundlegende Graphalgorithmen}
 
-\subsubsection{Breitensuche}\parskp
-ABB 11\\
+\subsubsection{Breitensuche}
+\begin{tikzpicture}[scale=0.5]
+\draw (4,9) node (v3) {1} ellipse (0.5 and 0.5);
+\draw  (2,6) node (v5) {2} ellipse (0.5 and 0.5);
+\draw (1,3) node (v6) {4} ellipse (0.5 and 0.5);
+\draw (3,3) node (v7) {5} ellipse (0.5 and 0.5);
+\draw (6,6) node (v11) {3} ellipse (0.5 and 0.5);
+\draw (5,3) node (v12) {6} ellipse (0.5 and 0.5);
+\draw (7,3) node (v13) {7} ellipse (0.5 and 0.5);
+\draw  (0,0) node (v9) {8} ellipse (0.5 and 0.5);
+
+\draw (v5) -- (v6);
+\draw (v5) -- (v7);
+\draw (v9) -- (v6);
+\draw (v3) -- (v5);
+\draw (v3) -- (v11) -- (v12);
+\draw (v11) -- (v13);
+\draw (v5) -- (v12);
+\draw (v5) -- (v11);
+
+\node [right, purple] at (8.75,8.5) {1. Schritt};
+\node [right, green] at (8.75,7.5) {2. Schritt};
+\node [right, orange] at (8.75,6.5) {3. Schritt};
+\node [right, align=left, blue] at (8.75,4.5) {4. Schritt\\ $\curvearrowright$ 8 gefunden};
+\draw [dashed, purple]  (4,9) ellipse (0.8 and 0.8);
+\draw [dashed, green]  (2,6) node (v1) {} ellipse (0.8 and 0.8);
+\draw [dashed, orange]  (6,6) node (v2) {} ellipse (0.8 and 0.8);
+\draw [dashed, blue]  (1,3) ellipse (0.8 and 0.8);
+\draw [-latex, purple] (3.25,8.25) -- (2.75,7.5);
+\draw [-latex, purple] (4.75,8.25) -- (5.25,7.5);
+\draw [-latex, green] (2.5,5.25) -- (2.75,4.5);
+\draw [-latex, green] (1.5,5.25) -- (1.25,4.5);
+\draw [-latex, green] (2.75,5.5) -- (3.25,5);
+\draw [-latex, green] (3,6.25) -- (3.75,6.25);
+\draw [-latex, orange] (6.5,5.25) -- (6.75,4.5);
+\draw [-latex, blue] (0.5,2.25) -- (0.25,1.5);
+\end{tikzpicture}\\
 Mit der Breitensuche kann ein Graph systematisch durchsucht werden. Von einem Startknoten ausgehend, besucht die Breitensuche zuerst die dem Startknoten benachbarten Knoten. Anschließend werden die noch nicht besuchten Nachbarn dieser Knoten besucht, usw., bis das Ziel gefunden wurde oder alle Knoten besucht wurden.
 
 \begin{lstlisting}[language=C]
@@ -633,7 +835,78 @@ boolean bfs (node start, node goal){
 }
 \end{lstlisting}
 \subparagraph{Bsp.:} \parskp
-ABB71
+\begin{tikzpicture}[scale=0.5]
+\draw (5,11) node (v0) {0} ellipse (0.5 and 0.5);
+\draw (4,8.5) node (v1) {1} ellipse (0.5 and 0.5);
+\draw  (6,8.5) node (v2) {2} ellipse (0.5 and 0.5);
+\draw (5,6) node (v4) {4} ellipse (0.5 and 0.5);
+\draw (5,3.5) node (v5) {5} ellipse (0.5 and 0.5);
+\draw (3,6) node (v3) {3} ellipse (0.5 and 0.5);
+\draw (v0) -- (v1);
+\draw (v0) -- (v2);
+\draw (v2) -- (v4);
+\draw (v1) -- (v4);
+\draw (v1) -- (v3);
+\draw (v4) -- (v5);
+\draw (v1) -- (v2);
+
+\begin{scope}[scale=0.75, shift={(0.2,2)}]
+\draw  (11,10.5) rectangle (13,8.5);
+\node at (12,9.5) {t};
+\node[above] at (12,10.5) {0};
+\draw  (13,10.5) rectangle (15,8.5);
+\node at (14,9.5) {f};
+\node[above] at (14,10.5) {1};
+\draw  (15,10.5) rectangle (17,8.5);
+\node at (16,9.5) {f};
+\node[above] at (16,10.5) {2};
+\draw  (17,10.5) rectangle (19,8.5);
+\node at (18,9.5) {f};
+\node[above] at (18,10.5) {3};
+\draw  (19,10.5) rectangle (21,8.5);
+\node at (20,9.5) {f};
+\node[above] at (20,10.5) {4};
+\draw  (21,10.5) rectangle (23,8.5);
+\node at (22,9.5) {f};
+\node[above] at (22,10.5) {5};
+\node [right] at (11,12.5) {discovered:};
+
+\draw [purple] (11,3.5) rectangle (13,1.5);
+\node at (12,2.5) {1};
+\draw  [purple] (13,3.5) rectangle (15,1.5);
+\node at (14,2.5) {2};
+\draw [green] (15,3.5) rectangle (17,1.5);
+\node at (16,2.5) {3};
+\draw [green] (17,3.5) rectangle (19,1.5);
+\node at (18,2.5) {4};
+\draw [orange] (19,3.5) rectangle (21,1.5);
+\node at (20,2.5) {5};
+\node [right] at (11,4.5) {queue:};
+\node [right, purple] at (25.5,12) {1.};
+\node [right, green] at (25.5,10) {2.};
+\node [right, orange] at (25.5,8) {3.};
+\node [right, cyan] at (25.5,6) {4.};
+\node [right, red] at (25.5,4) {5.};
+\node [right, blue] at (25.5,2) {6. $\checkmark$};
+
+\node [purple] at (14.6,9) {t};
+\node [purple] at (16.6,9) {t};
+\node [purple, opacity=0.6] at (14,9.5) {X};
+\node [purple, opacity=0.6] at (16,9.5) {X};
+\node [green] at (18.6,9) {t};
+\node [green] at (20.6,9) {t};
+\node [green, opacity=0.6] at (18,9.5) {X};
+\node [green, opacity=0.6] at (20,9.5) {X};
+\node [orange] at (22.4,9) {t};
+\node [orange, opacity=0.6] at (22,9.5) {X};
+
+\node [green, opacity=0.8] at (12,2.5) {X};
+\node [orange, opacity=0.8] at (14,2.5) {X};
+\node [cyan, opacity=0.8] at (16,2.5) {X};
+\node [red, opacity=0.8] at (18,2.5) {X};
+\node [blue, opacity=0.8] at (20,2.5) {X};
+\end{scope}
+\end{tikzpicture}
 
 \subsubsection{Tiefensuche}
 Die Tiefensuche lässt sich implementieren…
@@ -642,10 +915,34 @@ Die Tiefensuche lässt sich implementieren…
 \item rekursiv.
 \end{enumerate}
 Eine Warteschlange ist eine FIFO (first in, first out) Datenstruktur, die sich implementieren lässt mit einer verketteten Liste, die einen Zeiger auf das letzte Element besitzt.\\
-ABB 72\\
+\begin{tikzpicture}[scale=0.2]
+\draw  (0.5,0) rectangle (4.5,3);
+\draw [-latex] (-3.5,1.5) -- (0.5,1.5);
+\draw  (8.5,0) rectangle (12.5,3);
+\draw [-latex] (4.5,1.5) -- (8.5,1.5);
+\draw  (16.5,0) rectangle (20.5,3);
+\draw [-latex] (12.5,1.5) -- (16.5,1.5);
+\draw  (24.5,0) rectangle (28.5,3);
+\draw [-latex] (20.5,1.5) -- (24.5,1.5);
+\draw [thick, -latex] (26.5,-2.5) -- (26.5,0);
+\node [above] at (1,3) {vorne};
+\node [above] at (28,3) {hinten};
+\end{tikzpicture}\\
 Ein Stack (auch „Keller“) ist eine LIFO (last in, first out) Datenstruktur, die sich durch eine verkettete Liste implementieren lässt.\\
-ABB 73
+\begin{tikzpicture}[scale=0.2]
+\draw  (0.5,-0.5) rectangle (4.5,2.5) node[above right] {oben};
+\draw [-latex] (2.5,6) -- (2.5,2.5);
+\draw  (0.5,-7) rectangle (4.5,-4);
+\draw [-latex] (2.5,-0.5) -- (2.5,-4);
+\draw  (0.5,-13.5) rectangle (4.5,-10.5);
+\draw [-latex] (2.5,-7) -- (2.5,-10.5);
+\draw  (0.5,-20) rectangle (4.5,-17);
+\draw [-latex] (2.5,-13.5) -- (2.5,-17);
 
+
+\draw [thick, -latex] (7,1) -- (4.5,1);
+
+\end{tikzpicture}
 \begin{lstlisting}[language=C]
 boolean tfs (node start, node goal){
 	for (v $\in$ V){
@@ -672,17 +969,122 @@ boolean tfs (node start, node goal){
 \end{lstlisting}
 
 \subparagraph{Bsp.:} \parskp
-ABB 74 \bigskip
+\begin{tikzpicture}[scale=0.5]
+\draw (5,11) node (v0) {0} ellipse (0.5 and 0.5);
+\draw (4,8.5) node (v1) {1} ellipse (0.5 and 0.5);
+\draw  (6,8.5) node (v2) {2} ellipse (0.5 and 0.5);
+\draw (5,6) node (v4) {4} ellipse (0.5 and 0.5);
+\draw (5,3.5) node (v5) {5} ellipse (0.5 and 0.5);
+\draw (3,6) node (v3) {3} ellipse (0.5 and 0.5);
+\draw (v0) -- (v1);
+\draw (v0) -- (v2);
+\draw (v2) -- (v4);
+\draw (v1) -- (v4);
+\draw (v1) -- (v3);
+\draw (v4) -- (v5);
+\draw (v1) -- (v2);
 
+\node at (9.5,11) {Stack:};
+
+\draw  (8.5,5) rectangle (10.5,6.5);
+\draw  (10.5,6.5) rectangle (8.5,8);
+\draw (8.5,9.5) -- (8.5,8);
+\draw (10.5,9.5) -- (10.5,8);
+\draw  (12,5) rectangle (14,6.5);
+\draw  (14,6.5) rectangle (12,8);
+\draw (12,9.5) -- (12,8);
+\draw (14,9.5) -- (14,8);
+\draw  (15.5,5) rectangle (17.5,6.5);
+\draw  (17.5,6.5) rectangle (15.5,8);
+\draw (15.5,9.5) -- (15.5,8);
+\draw (17.5,9.5) -- (17.5,8);
+\draw  (19,5) rectangle (21,6.5);
+\draw  (21,6.5) rectangle (19,8);
+\draw (19,9.5) -- (19,8);
+\draw (21,9.5) -- (21,8);
+\draw  (22.5,5) rectangle (24.5,6.5);
+\draw  (24.5,6.5) rectangle (22.5,8);
+\draw (22.5,9.5) -- (22.5,8);
+\draw (24.5,9.5) -- (24.5,8);
+\node at (9.5,5.75) {2};
+\node at (9.5,7.25) {1};
+\node at (13,5.75) {2};
+\node at (13,7.25) {4};
+\node at (13,8.75) {3};
+\node at (16.5,5.75) {2};
+\node at (16.5,7.25) {4};
+\node at (20,7.25) {5};
+\node at (20,5.75) {2};
+\node at (23.5,5.75) {2};
+\draw [dashed, green] (20,7.25) ellipse (0.5 and 0.5);
+\end{tikzpicture}\\
 Problem bei Breiten und Tiefensuche: Man braucht das Feld „discovered“. Das kann bei großer Anzahl von Knoten ein Problem sein $\rightarrow$ Speicheraufwändig
 
-\subsubsection{Topologisches Sortieren} \parskp
-ABB 75
-\paragraph{Def.:} Ein gerichteter Graph ist ein Paar $(V,E)$ mit $V\not = 0$ und $E \subseteq V \times V$. Die Begriffe Weg, Pfad, Kreis lassen sich entsprechend definieren.
-ABB 76
+\subsubsection{Topologisches Sortieren}
+\begin{tikzpicture}[scale=0.5]
+\draw  (-6,4) ellipse (0.5 and 0.5);
+\draw  (-2,6.5) ellipse (0.5 and 0.5);
+\draw  (-2,2) ellipse (0.5 and 0.5);
+\draw  (2,6.5) ellipse (0.5 and 0.5);
+\draw  (6,6.5) ellipse (0.5 and 0.5);
 
+\draw [-latex] (-5.4,4.4) -- (-2.6,6.2);
+\draw [-latex] (-5.4,3.4) -- (-2.6,2.2);
+\draw [-latex] (-1.4,6.4) -- (1.4,6.4);
+\draw [-latex] (2.6,6.4) -- (5.4,6.4);
+\draw [-latex] (-1.4,2.4) -- (1.8,5.8);
+\draw [-latex] (-1.2,2.2) -- (5.4,6);
+\node [above, purple] at (-6,4.6) {1};
+\node [above, purple] at (-2,7) {2};
+\node [above, purple] at (2,7) {4};
+\node [above, purple] at (6,7) {5};
+\node [above, purple] at (-2,2.6) {3};
+\node [purple] at (5.4,2) {topologische Sortierung};
+\end{tikzpicture}
+\paragraph{Def.:} Ein gerichteter Graph ist ein Paar $(V,E)$ mit $V\not = 0$ und $E \subseteq V \times V$. Die Begriffe Weg, Pfad, Kreis lassen sich entsprechend definieren.\\
+\begin{tikzpicture}[scale=0.5]
+\draw  (-9,4) node{u} ellipse (0.5 and 0.5);
+\draw  (-5,4) node{v} ellipse (0.5 and 0.5);
+\draw  (1,-1.5) node{u} ellipse (0.5 and 0.5);
+\draw  (2.5,4) node{v} ellipse (0.5 and 0.5);
+\draw  (-1.5,4) node{u} ellipse (0.5 and 0.5);
+
+\node at (-7,5.5) {ungerichtet:};
+\node at (0.5,5.5) {gerichtet:};
+\draw (-8.4,4) -- (-5.6,4);
+\draw [-latex] (-0.8,4) -- (1.8,4);
+
+\draw [-latex]  plot[smooth, tension=.7] coordinates {(1.1,-0.8) (1.1,-0.2) (1.7,-0.2) (1.9,-0.6) (1.5,-1)};
+\node at (1,0.5) {auch möglich:};
+\node at (-7,2.5) {$\{u,v\}$};
+\node at (0.5,2.5) {$(u,v)\in E$};
+\node at (2.5,-2.5) {$(u,u)$};
+\end{tikzpicture}
 \paragraph{Def.:} Sei $G=(V,E)$ ein gerichteter Graph. Eine \emph{topologische Sortierung} von G ist eine Abbildung $t: V\rightarrow \mathbb{N} $ mit $ (u,v) \in E \Rightarrow t(u) < t(v)$\\
-ABB 77\\
+\begin{tikzpicture}[scale=0.5]
+\draw  (-6,4) node{1} ellipse (0.5 and 0.5);
+\draw  (-2,6.5) node{2} ellipse (0.5 and 0.5);
+\draw  (-2,2) node {3} ellipse (0.5 and 0.5);
+\draw  (2,6.5) node{4} ellipse (0.5 and 0.5);
+
+\draw [-latex] (-5.4,4.4) -- (-2.6,6.2);
+\draw [latex-] (-5.4,3.4) -- (-2.6,2.2);
+\draw [-latex] (-1.4,6.4) -- (1.4,6.4);
+\draw [-latex] (-2,2.6) -- (-2,5.8);
+\node [above, purple] at (-6,4.6) {2};
+\node [above, purple] at (-2,7) {3};
+\node [above, purple] at (2,7) {4};
+\node [right, purple] at (-1.4,2) {1};
+\node [purple] at (4,4.2) {topologische Sortierung};
+\end{tikzpicture}\\
+$V= \{1,2,3,4\}\\
+E=\{(1,2), (2,4), (3,1), (3,2)\}
+$\\
+\begin{tabular}{c | c c c c}
+v & 1 & 2 & 3 & 4 \\
+\hline
+t & 2 & 3 & 1 & 4
+\end{tabular}\medskip\\
 Für einen Kreis oder einen Graph mit einer Schlinge existieren keine topologische Sortierungen.\medskip\\
 Eine topologische Sortierung kann durch eine Tiefensuche bestimmt werden.\\
 Alogrithmus TopSort:
@@ -700,7 +1102,101 @@ tiefensuche(v){
 		markiere v mit schwarz und füge v an den Kopf einer Liste an
 }
 \end{lstlisting}
-ABB 91\\
+\begin{tikzpicture}[scale=0.3]
+\pattern [pattern=north west lines,pattern color=ittenb] (0,0)ellipse (1 and 1);
+\draw [thick,ittenr] (0,0)ellipse (1 and 1);
+\draw (0,0) node {0};
+\pattern [pattern=north west lines,pattern color=ittenp] (8,0)ellipse (1 and 1);
+\draw [thick,ittenr] (8,0) ellipse (1 and 1);
+\draw (8,0) node {1};
+\pattern [pattern=north west lines,pattern color=itteng] (16,0)ellipse (1 and 1);
+\draw [thick,ittenr] (16,0) ellipse (1 and 1);
+\draw (16,0) node {2};
+\draw (8,-8) node{3} ellipse (1 and 1);
+\draw (4,-16) node{4} ellipse (1 and 1);
+\draw (12,-16) node{5} ellipse (1 and 1);
+\draw [-latex] (1.2,0) -- (6.8,0);
+\draw [-latex] (9.2,0) -- (14.8,0);
+\draw [-latex] (8,-6.8) -- (8,-1.2);
+\draw [-latex] (11.4,-15) -- (8.6,-9);
+\draw [-latex] (7.4,-9) -- (4.8,-15);
+\draw [-latex] (12.2,-14.8) -- (8.8,-1);
+
+\node at (14,-20) {2};
+\node at (12,-20) {1};
+\node at (10,-20) {0};
+\draw [-latex, itteng] (14,-18) -- (14,-19);
+\draw [-latex, ittenp] (12,-18) -- (12,-19);
+\draw [-latex, ittenb] (10,-18) -- (10,-19);
+
+\node [right, ittenr] at (22,-12) {1. grau};
+\node [right, itteng] at (22,-13.5) {2. schwarz};
+\node [right, ittenp] at (22,-15) {3. schwarz (durch rekursion)};
+\node [right, ittenb] at (22,-16.5) {4. schwarz (durch rekursion)};
+\end{tikzpicture}\\
+\begin{tikzpicture}[scale=0.3]
+\pattern [pattern=north west lines,pattern color=lightgray] (20,0)ellipse (1 and 1);
+\draw  (20,0) node{0} ellipse (1 and 1);
+\pattern [pattern=north west lines,pattern color=lightgray] (28,0)ellipse (1 and 1);
+\draw  (28,0) node{1} ellipse (1 and 1);
+\pattern [pattern=north west lines,pattern color=lightgray] (36,0)ellipse (1 and 1);
+\draw  (36,0) node{2} ellipse (1 and 1);
+\pattern [pattern=north west lines,pattern color=ittenp] (28,-8)ellipse (1 and 1);
+\draw [thick,ittenr] (28,-8)ellipse (1 and 1);
+\draw (28,-8) node {0};
+\pattern [pattern=north west lines,pattern color=ittenb] (24,-16)ellipse (1 and 1);
+\draw [thick,ittenr] (24,-16)ellipse (1 and 1);
+\draw (24,-16) node {0};
+\draw  (32,-16) node{5} ellipse (1 and 1);
+\draw [-latex] (21.2,0) -- (26.8,0);
+\draw [-latex] (29.2,0) -- (34.8,0);
+\draw [-latex] (28,-6.8) -- (28,-1.2);
+\draw [-latex] (31.4,-15) -- (28.6,-9);
+\draw [-latex] (27.4,-9) -- (24.8,-15);
+\draw [-latex] (32.2,-14.8) -- (28.8,-1);
+
+\node at (34,-20) {2};
+\node at (32,-20) {1};
+\node at (30,-20) {0};
+\node at (28,-20) {4};
+\node at (26,-20) {3};
+\draw [-latex, itteng] (28,-18) -- (28,-19);
+\draw [-latex, ittenp] (26,-18) -- (26,-19);
+\end{tikzpicture}\\
+\begin{tikzpicture}[scale=0.3]
+\pattern [pattern=north west lines,pattern color=lightgray] (40,0)ellipse (1 and 1);
+\draw  (40,0) node{0} ellipse (1 and 1);
+\pattern [pattern=north west lines,pattern color=lightgray] (48,0)ellipse (1 and 1);
+\draw  (48,0) node{1} ellipse (1 and 1);
+\pattern [pattern=north west lines,pattern color=lightgray] (56,0)ellipse (1 and 1);
+\draw  (56,0) node{2} ellipse (1 and 1);
+\pattern [pattern=north west lines,pattern color=lightgray] (48,-8)ellipse (1 and 1);
+\draw  (48,-8) node{3} ellipse (1 and 1);
+\pattern [pattern=north west lines,pattern color=lightgray] (44,-16)ellipse (1 and 1);
+\draw  (44,-16) node{4} ellipse (1 and 1);
+\pattern [pattern=north west lines,pattern color=ittenb] (52,-16)ellipse (1 and 1);
+\draw [thick,ittenr] (52,-16)ellipse (1 and 1);
+\draw (52,-16) node {0};
+\draw [-latex] (41.2,0) -- (46.8,0);
+\draw [-latex] (49.2,0) -- (54.8,0);
+\draw [-latex] (48,-6.8) -- (48,-1.2);
+\draw [-latex] (51.4,-15) -- (48.6,-9);
+\draw [-latex] (47.4,-9) -- (44.8,-15);
+\draw [-latex] (52.2,-14.8) -- (48.8,-1);
+
+\node at (54,-20) {2};
+\node at (52,-20) {1};
+\node at (50,-20) {0};
+\node at (48,-20) {4};
+\node at (46,-20) {3};
+\node at (44,-20) {5};
+\draw [-latex, itteng] (44,-18) -- (44,-19);
+\end{tikzpicture}\\
+Endgültige topologische Sortierung: \begin{tabular}{c c c c c c}
+5 & 3 & 4 & 0 & 1 & 2 \\
+$\downarrow$ &$\downarrow$ &$\downarrow$ &$\downarrow$ &$\downarrow$ &$\downarrow$\\
+\color{ittenb}0 & \color{ittenb}1 & \color{ittenb}2 & \color{ittenb}3 & \color{ittenb}4 & \color{ittenb}5
+\end{tabular}\\
 Laufzeit dieser topologischen Suche: $O(|V|+|E|)$\\
 Sowohl die Tiefensuche als auch die Breitesuche besitzen eine Laufzeit in $O(|V|+|E|)$.
 
