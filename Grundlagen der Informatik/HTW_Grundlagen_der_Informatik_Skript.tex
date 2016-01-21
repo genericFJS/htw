@@ -370,18 +370,18 @@ $2\cdot log(n^2+1)\leq 2 log (n^3)=6log(n)\in O(log(n))$
 \draw [thick, green]  plot[smooth, tension=.7] coordinates {(5.2,4.2) (10.6,3.2) (11.8,2) (11.4,-0.4) (11.2,-2.4) (11.6,-3.8) (12,-7.2) (7.4,-7.8) (5,-8.4)};
 \draw [thick, green]  plot[smooth, tension=.7] coordinates {(3.2,-2) (5,-2) (8,-1.8) (10.2,-2.4) (11.2,-2.4)};
 
-\node [green] at (3.2,-2) {$\bullet$};
-\node [green]at (11.2,-2.4) {$\bullet$};
-\node [green]at (5,-8.4) {$\bullet$};
-\node [green]at (5.2,4.2) {$\bullet$};
+\node [green] at (3.2,-2) [circle] {$\bullet$};
+\node [green]at (11.2,-2.4) [circle] {$\bullet$};
+\node [green]at (5,-8.4) [circle] {$\bullet$};
+\node [green]at (5.2,4.2) [circle] {$\bullet$};
 \end{tikzpicture}\\
 Gibt es einen Rundweg über alle Brücken?\\
 $\curvearrowright$ Abstraktion als Graph:\\
 \begin{tikzpicture}[scale=0.5]
-\node at (0,4) {$\bullet$};
-\node at (2,2) {$\bullet$};
-\node at (0,0) {$\bullet$};
-\node at (0,2) {$\bullet$};
+\node at (0,4) [circle] {$\bullet$};
+\node at (2,2) [circle] {$\bullet$};
+\node at (0,0) [circle] {$\bullet$};
+\node at (0,2) [circle] {$\bullet$};
 \draw  plot[smooth, tension=1] coordinates {(2,2) (1,2.3) (0,2)};
 \draw  plot[smooth, tension=1] coordinates {(2,2) (1,1.7) (0,2)};
 \draw  plot[smooth, tension=1] coordinates {(0,2) (0.3,1) (0,0)};
@@ -412,13 +412,13 @@ $\curvearrowright$ Es gibt keinen Rundweg ($\Rightarrow$ Euler)!
 $(\{1,2,3,4\},\{\{1,2\},\{1,3\}, \{2,3\}, \{1,4\}, \{3,4\}\})$\\
 Beispiel:\\
 \begin{tikzpicture}[scale=0.3]
-\draw  (0,0)node{$\bullet$}  rectangle (5,5);
-\draw (5,0) node{$\bullet$} -- (6.5,1.5)node{$\bullet$} ;
-\draw (5,5) node{$\bullet$} -- (6.5,6.5);
-\draw (0,5) node{$\bullet$} -- (1.5,6.5);
-\draw (1.5,6.5)node{$\bullet$}  -- (6.5,6.5);
-\draw (6.5,6.5) node{$\bullet$} -- (6.5,1.5);
-\draw [dashed] (0,0) -- (1.5,1.5)node{$\bullet$} ;
+\draw  (0,0)node[circle] {$\bullet$}  rectangle (5,5);
+\draw (5,0) node[circle] {$\bullet$} -- (6.5,1.5)node[circle] {$\bullet$} ;
+\draw (5,5) node[circle] {$\bullet$} -- (6.5,6.5);
+\draw (0,5) node[circle] {$\bullet$} -- (1.5,6.5);
+\draw (1.5,6.5)node[circle] {$\bullet$}  -- (6.5,6.5);
+\draw (6.5,6.5) node[circle] {$\bullet$} -- (6.5,1.5);
+\draw [dashed] (0,0) -- (1.5,1.5)node[circle] {$\bullet$} ;
 \draw [dashed] (1.5,1.5) -- (1.5,6.5);
 \draw [dashed] (1.5,1.5) -- (6.5,1.5);
 \end{tikzpicture}\\
@@ -426,10 +426,10 @@ Die Punkte und Kanten eines 3D-Objektes werden auf einen Graph abgebildet $\Righ
 \begin{tikzpicture}[scale=0.2]
 \draw  (0,0) rectangle (5,5);
 \draw  (-2,-2) rectangle (7,7);
-\draw (-2,7)node{$\bullet$} -- (0,5)node{$\bullet$};
-\draw (7,-2)node{$\bullet$} -- (5,0)node{$\bullet$};
-\draw (-2,-2)node{$\bullet$} -- (0,0)node{$\bullet$};
-\draw (5,5)node{$\bullet$} -- (7,7)node{$\bullet$};
+\draw (-2,7)node[circle] {$\bullet$} -- (0,5)node[circle] {$\bullet$};
+\draw (7,-2)node[circle] {$\bullet$} -- (5,0)node[circle] {$\bullet$};
+\draw (-2,-2)node[circle] {$\bullet$} -- (0,0)node[circle] {$\bullet$};
+\draw (5,5)node[circle] {$\bullet$} -- (7,7)node[circle] {$\bullet$};
 \end{tikzpicture}
 
 \paragraph{Definition:} Ein Graph heißt \emph{vollständig}, wenn alle Knoten paarweise verbunden sind. \bigskip\\
@@ -1203,7 +1203,51 @@ Sowohl die Tiefensuche als auch die Breitesuche besitzen eine Laufzeit in $O(|V|
 \subsubsection{Suche}
 \paragraph{Lineare Suche} Laufzeit: $O(n)$
 \paragraph{Binäre Suche} Voraussetzung: Sortiertes Array\\
-ABB 92
+\begin{tikzpicture}[scale=0.3]
+\draw  (0,0) rectangle (4,4);
+\draw  (4,0) rectangle (8,4);
+\draw  (8,0) rectangle (12,4);
+\draw  (12,0) rectangle (16,4);
+\draw  (16,0) rectangle (20,4);
+\draw  (20,0) rectangle (24,4);
+
+\node at (2,2) {1};
+\node at (6,2) {3};
+\node at (10,2) {5};
+\node at (14,2) {6};
+\node at (18,2) {10};
+\node at (22,2) {17};
+\node [above] at (2,4) {0};
+\node [above] at (6,4) {1};
+\node [above] at (10,4) {2};
+\node [above] at (14,4) {3};
+\node [above] at (18,4) {4};
+\node [above] at (22,4) {5};
+\node[right] [orange, align=left] at (26,4) {Suche nach 4:\\in der Mitte starten (abrunden)};
+\draw [orange, thick] (8.4,-0.4) rectangle (11.6,4.2);
+\node [below, align=center] at (10,-0.4) {$=4?$\\$<4?$\\\color{orange}$>4?$\\ $>4$, also weiter links gucken};
+\end{tikzpicture}\\
+\begin{tikzpicture}[scale=0.3]
+\draw  (1,-14) rectangle (5,-10);
+\draw  (5,-14) rectangle (9,-10);
+
+\node at (3,-12) {1};
+\node at (7,-12) {3};
+\node [above] at (3,-10) {0};
+\node [above] at (7,-10) {1};
+
+\draw [orange, thick] (1.4,-14.4) rectangle (4.6,-9.8);
+\node [below, align=center] at (3,-14.4) {$=4?$\\\color{orange}$<4?$\\$>4?$\\ $>4$, also weiter rechts gucken};
+\end{tikzpicture}\\
+\begin{tikzpicture}[scale=0.3]
+\draw  (5,-28) rectangle (9,-24);
+
+\node at (7,-26) {3};
+\node [above] at (7,-24) {1};
+
+\draw [orange, thick] (5.4,-28.4) rectangle (8.6,-23.8);
+\node [below, align=center] at (7,-28.4) {$=4?$\\$<4?$\\$>4?$\\ nicht gefunden!};
+\end{tikzpicture}
 \subparagraph{Vorgehen:} 
 Es wird die Mitte des Arrays bestimmt (Länge/2 [abgerundet]) und der gesuchten Wert mit dem Wert an dieser Stelle verglichen. Dabei gibt es drei Möglichkeiten:
 \begin{itemize}
@@ -1213,18 +1257,173 @@ Es wird die Mitte des Arrays bestimmt (Länge/2 [abgerundet]) und der gesuchten 
 \end{itemize}
 Algorithmus wird beendet, wenn der Wert gefunden wurde oder die zu durchsuchende Arrayhälfte keine Elemente mehr enthält.
 \subparagraph{Laufzeit:}\parskp
-ABB 93\\
+\begin{tikzpicture}[scale=0.4]
+
+\draw  (-14.5,13) ellipse (0.5 and 0.5);
+\draw  (-12.5,13) ellipse (0.5 and 0.5);
+\draw  (-10.5,13) ellipse (0.5 and 0.5);
+\draw  (-8.5,13) ellipse (0.5 and 0.5);
+\draw  (-6.5,13) ellipse (0.5 and 0.5);
+\draw  (-4.5,13) ellipse (0.5 and 0.5);
+\draw  (-2.5,13) ellipse (0.5 and 0.5);
+\draw  (-0.5,13) ellipse (0.5 and 0.5);
+\draw  (1.5,13) ellipse (0.5 and 0.5);
+\draw  (3.5,13) ellipse (0.5 and 0.5);
+\draw  (5.5,13) ellipse (0.5 and 0.5);
+\draw  (7.5,13) ellipse (0.5 and 0.5);
+\draw  (-12.5,16) ellipse (0.5 and 0.5);
+\draw  (-6.5,16) ellipse (0.5 and 0.5);
+\draw  (-9.5,16) ellipse (0.5 and 0.5);
+\draw  (-0.5,16) ellipse (0.5 and 0.5);
+\draw  (5.5,16) ellipse (0.5 and 0.5);
+\draw  (2.5,16) ellipse (0.5 and 0.5);
+\draw  (-9.5,19) ellipse (0.5 and 0.5);
+\draw  (2.5,19) ellipse (0.5 and 0.5);
+\draw  (-3.5,19) ellipse (0.5 and 0.5);
+\draw  (-3.5,22) ellipse (0.5 and 0.5);
+\draw (-4,21.5) -- (-8.75,19.25);
+\draw (-3.5,21.25) -- (-3.5,19.75);
+\draw (-3,21.5) -- (1.75,19.25);
+\draw (2.5,18.25) -- (2.5,16.75);
+\draw (2,18.5) -- (0,16.5);
+\draw (3,18.5) -- (5,16.5);
+\draw (-9.5,18.25) -- (-9.5,16.75);
+\draw (-9,18.25) -- (-7,16.5);
+\draw (-10,18.25) -- (-12,16.5);
+\draw (-13,15.5) -- (-14,13.75);
+\draw (-12.5,15.25) -- (-12.5,13.75);
+\draw (-12,15.5) -- (-11,13.75);
+\draw (-7,15.5) -- (-8,13.75);
+\draw (-6.5,15.25) -- (-6.5,13.75);
+\draw (-6,15.5) -- (-5,13.75);
+\draw (-1,15.5) -- (-2,13.75);
+\draw (-0.5,15.25) -- (-0.5,13.75);
+\draw (0,15.5) -- (1,13.75);
+\draw (5,15.5) -- (4,13.75);
+\draw (5.5,15.25) -- (5.5,13.75);
+\draw (6,15.5) -- (7,13.75);
+
+\node [above left] at (-6.25,20.5) {$<$};
+\node [left] at (-3.5,20.5) {$=$};
+\node [above right] at (-0.75,20.5) {$>$};
+
+\node [above left] at (-11.25,17.25) {$<$};
+\node [left] at (-9.5,17.25) {$=$};
+\node [above right] at (-7.75,17.25) {$>$};
+\node [above left] at (0.75,17.25) {$<$};
+\node [left] at (2.5,17.25) {$=$};
+\node [above right] at (4.25,17.25) {$>$};
+
+\node [above left] at (-13.5,14.5) {$<$};
+\node [left] at (-12.25,14.25) {$=$};
+\node [above right] at (-11.5,14.5) {$>$};
+\node [above left] at (-7.5,14.5) {$<$};
+\node [left] at (-6.25,14.25) {$=$};
+\node [above right] at (-5.5,14.5) {$>$};
+\node [above left] at (-1.5,14.5) {$<$};
+\node [left] at (-0.25,14.25) {$=$};
+\node [above right] at (0.5,14.5) {$>$};
+\node [above left] at (4.5,14.5) {$<$};
+\node [left] at (5.75,14.25) {$=$};
+\node [above right] at (6.5,14.5) {$>$};
+
+\end{tikzpicture}\\
 Zur Analyse der Laufzeit ändern wir den Algorithmus so, dass nur Vergleiche $\leq$ und $>$ vorgenommen werden. Ferner sei die Länge des Arrays eine Zweierpotenz und das gesuchte Element nicht vorhanden (worst-case).\\
+\begin{tikzpicture}[scale=0.4]
+\draw  (-12.5,16) ellipse (0.5 and 0.5);
+\draw  (-6.5,16) ellipse (0.5 and 0.5);
+\draw  (-0.5,16) ellipse (0.5 and 0.5);
+\draw  (5.5,16) ellipse (0.5 and 0.5);
+\draw  (-9.5,19) ellipse (0.5 and 0.5);
+\draw  (2.5,19) ellipse (0.5 and 0.5);
+\draw  (-3.5,22) ellipse (0.5 and 0.5);
+\draw (-4,21.5) -- (-8.75,19.25);
+\draw (-3,21.5) -- (1.75,19.25);
+\draw (2,18.5) -- (0,16.5);
+\draw (3,18.5) -- (5,16.5);
+\draw (-9,18.25) -- (-7,16.5);
+\draw (-10,18.25) -- (-12,16.5);
+
+\node [above left] at (-6.25,20.5) {$\leq$};
+\node [above right] at (-0.75,20.5) {$>$};
+\node [above left] at (-11.25,17.25) {$\leq$};
+\node [above right] at (-7.75,17.25) {$>$};
+\node [above left] at (0.75,17.25) {$\leq$};
+\node [above right] at (4.25,17.25) {$>$};
+\end{tikzpicture}\\
 In diesem Fall lässt sich das Verhalten des Algorithmus als vollständiger binärer Wurzelbaum darstellen.\\
-ABB 94\\
+\begin{tikzpicture}[scale=0.4]
+\draw  (-14.5,13) ellipse (0.5 and 0.5);
+\draw  (-10.5,13) ellipse (0.5 and 0.5);
+\draw  (-8.5,13) ellipse (0.5 and 0.5);
+\draw  (-4.5,13) ellipse (0.5 and 0.5);
+\draw  (-2.5,13) ellipse (0.5 and 0.5);
+\draw  (1.5,13) ellipse (0.5 and 0.5);
+\draw  (3.5,13) ellipse (0.5 and 0.5);
+\draw  (7.5,13) ellipse (0.5 and 0.5);
+\draw  (-12.5,16) ellipse (0.5 and 0.5);
+\draw  (-6.5,16) ellipse (0.5 and 0.5);
+\draw  (-0.5,16) ellipse (0.5 and 0.5);
+\draw  (5.5,16) ellipse (0.5 and 0.5);
+\draw  (-9.5,19) ellipse (0.5 and 0.5);
+\draw  (2.5,19) ellipse (0.5 and 0.5);
+\draw  (-3.5,22) ellipse (0.5 and 0.5);
+\draw (-4,21.5) -- (-8.75,19.25);
+\draw (-3,21.5) -- (1.75,19.25);
+\draw (2,18.5) -- (0,16.5);
+\draw (3,18.5) -- (5,16.5);
+\draw (-9,18.25) -- (-7,16.5);
+\draw (-10,18.25) -- (-12,16.5);
+\draw (-13,15.5) -- (-14,13.75);
+\draw (-12,15.5) -- (-11,13.75);
+\draw (-7,15.5) -- (-8,13.75);
+\draw (-6,15.5) -- (-5,13.75);
+\draw (-1,15.5) -- (-2,13.75);
+\draw (0,15.5) -- (1,13.75);
+\draw (5,15.5) -- (4,13.75);
+\draw (6,15.5) -- (7,13.75);
+
+\node [above left] at (-6.25,20.5) {$\leq$};
+\node [above right] at (-0.75,20.5) {$>$};
+\node [above left] at (-11.25,17.25) {$\leq$};
+\node [above right] at (-7.75,17.25) {$>$};
+\node [above left] at (0.75,17.25) {$\leq$};
+\node [above right] at (4.25,17.25) {$>$};
+\end{tikzpicture}\\
 Wenn $n=2^k$ die Länge des Arrays ist, dann besitzt dieser Wurzelbaum genau $2^k$ Blätter (die Vergleichen in einen 1-elementigen Array entsprechen). Dieser Binärbaum besitzt daher die Tiefe $k=log_2(n)$. Die Laufzeit der binären Suche liegt daher in $O(log\;n)$ (gilt auch, wenn $n$ keine Zweierpotenz ist).\\
 Um auch dynamische Datenstrukturen effizient durchsuchen zu können, lassen sich binäre Suchbäume nutzen.
 \subparagraph{Suchbaum}
 Ein \emph{Suchbaum} ist ein binärer Wurzelbaum, in dem jeder linke Teilbaum eines Knotens kleinere Wert und jeder rechte Teilbaum größere Wert als der Vorgängerknoten besitzt.\\
 Beispiel:\\
-ABB 95\\
+\begin{tikzpicture}[scale=0.5]
+\draw  (-8.5,16) node{1}ellipse (0.5 and 0.5);
+\draw  (-4.5,16) node{4} ellipse (0.5 and 0.5);
+\draw  (-2.5,16) node{6} ellipse (0.5 and 0.5);
+\draw  (1.5,16) node{9} ellipse (0.5 and 0.5);
+\draw  (-6.5,19) node{2} ellipse (0.5 and 0.5);
+\draw  (-0.5,19) node{8} ellipse (0.5 and 0.5);
+\draw  (-3.5,22) node{5} ellipse (0.5 and 0.5);
+\draw (-4,21.5) -- (-6,19.5);
+\draw (-3,21.5) -- (-1,19.5);
+\draw (-1,18.5) -- (-2,16.5);
+\draw (2,15.5) -- (3,13.5);
+\draw (-6,18.25) -- (-5,16.5);
+\draw (-7,18.25) -- (-8,16.5);
+\draw (0,18.5) -- (1,16.5);
+\draw  (3.5,13) node{10} ellipse (0.5 and 0.5);
+\end{tikzpicture}\\
+(muss nicht zwangsläufig balanciert sein oder 2 Nachfolger haben)\\
 Ein Suchbaum lässt sich ähnlich der binären Suche rekursiv durchsuchen.\\
-ABB 96\\
+Der worst-case ist ein linear entarter Suchbaum:\\
+\begin{tikzpicture}[scale=0.5]
+\draw  (1.5,18) node{3} ellipse (0.5 and 0.5);
+\draw  (-1,20) node{2} ellipse (0.5 and 0.5);
+\draw  (-3.5,22) node{1} ellipse (0.5 and 0.5);
+\draw (-3,21.5) -- (-1.5,20.5);
+\draw (2,17.5) -- (3.5,16.5);
+\draw (-0.5,19.5) -- (1,18.5);
+\draw  (4,16) node{4} ellipse (0.5 and 0.5);
+\end{tikzpicture}\\
 Die Laufzeit der Suche ist $O(log(n))$, wenn der Baum vollständig balanciert ist und $O(n)$, wenn er linear entartet ist.
 
 \paragraph{Hashing}
@@ -1242,10 +1441,143 @@ Unter geeigneten Voraussetzungen besitzt Hashing eine Laufzeit von $O(1)$.
 \subsubsection{Sortierverfahren}
 
 \paragraph{Quicksort} 
-partitioniert das zu sortierende Feld anhand eines Pivot-Elements und sortiert rekursiv die dadurch entstandenen Teilfelder.\\
-ABB 101\\
-Struktur der rekursiven Aufrufe:\\
-ABB 102\\
+partitioniert das zu sortierende Feld anhand eines Pivot-Elements und sortiert rekursiv die dadurch entstandenen Teilfelder.\medskip\\
+\begin{tikzpicture}[scale=0.37]
+\draw  (-7,7.5) rectangle (-5,5.5);
+\draw  (-5,7.5) rectangle (7.5,5.5);
+\draw [-latex] (-6,9) node[above]{Pivotelement} -- (-6,7.5);
+\draw  (-1,1.5) rectangle (1,-0.5);
+\draw  (1,1.5) rectangle (7.5,-0.5);
+\draw [-latex] (0,3) node[above]{Pivotelement} -- (0,1.5);
+\draw  (-1,-0.5) rectangle (-7,1.5);
+\node at (-4,0.5) {$\leq$ Pivotel.};
+\node at (4,0.5) {$>$ Pivotel.};
+\draw (-7,-1) -- (-7,-1.5) -- (-1,-1.5) -- (-1,-1);
+\draw (1,-1) -- (1,-1.5) -- (7.5,-1.5) -- (7.5,-1);
+\draw (4,-1.5) -- (1,-3.5);
+\draw (-4,-1.5) -- (-1,-3.5);
+\node at (0,-4) {rekursiver Aufruf von Quicksort};
+\end{tikzpicture}
+\subparagraph{Bsp.:} \parskp
+\begin{tikzpicture}[scale=0.4]
+\draw  (-9,7) rectangle (-7,5);
+\draw  (-7,7) rectangle (-5,5);
+\draw  (-5,7) rectangle (-3,5);
+\draw  (-3,7) rectangle (-1,5);
+\draw  (-1,7) rectangle (1,5);
+\draw  (1,7) rectangle (3,5);
+\node at (-8,6) {5};
+\node at (-6,6) {9};
+\node at (-4,6) {1};
+\node at (-2,6) {3};
+\node at (0,6) {2};
+\node at (2,6) {4};
+\draw [-latex] (-8,8) -- (-8,7);
+%\end{tikzpicture}\\
+%\begin{tikzpicture}[scale=0.5]
+\draw  (-9,3) rectangle (-7,1);
+\draw  (-7,3) rectangle (-5,1);
+\draw  (-5,3) rectangle (-3,1);
+\draw  (-3,3) rectangle (-1,1);
+\draw  (-1,3) rectangle (1,1);
+\draw  (1,3) rectangle (3,1);
+\node at (-8,2) {1};
+\node at (-6,2) {3};
+\node at (-4,2) {2};
+\node at (-2,2) {4};
+\node at (0,2) {5};
+\node at (2,2) {9};
+\draw [-latex] (0,4) -- (0,3);
+\node at (0,0.5) {$\checkmark$};
+\node at (2,0.5) {$\checkmark$};
+%\end{tikzpicture}\\
+%\begin{tikzpicture}[scale=0.5]
+\draw  (-9,-1) rectangle (-7,-3);
+\draw  (-7,-1) rectangle (-5,-3);
+\draw  (-5,-1) rectangle (-3,-3);
+\draw  (-3,-1) rectangle (-1,-3);
+\node at (-8,-2) {1};
+\node at (-6,-2) {3};
+\node at (-4,-2) {2};
+\node at (-2,-2) {4};
+\draw [-latex] (-8,0) -- (-8,-1);
+\node at (-8,-3.5) {$\checkmark$};
+%\end{tikzpicture}\\
+%\begin{tikzpicture}[scale=0.5]
+\draw  (-7,-5) rectangle (-5,-7);
+\draw  (-5,-5) rectangle (-3,-7);
+\draw  (-3,-5) rectangle (-1,-7);
+\node at (-6,-6) {3};
+\node at (-4,-6) {2};
+\node at (-2,-6) {4};
+\draw [-latex] (-6,-4) -- (-6,-5);
+%\end{tikzpicture}\\
+%\begin{tikzpicture}[scale=0.5]
+\draw  (-7,-9) rectangle (-5,-11);
+\draw  (-5,-9) rectangle (-3,-11);
+\draw  (-3,-9) rectangle (-1,-11);
+\node at (-6,-10) {2};
+\node at (-4,-10) {3};
+\node at (-2,-10) {4};
+\draw [-latex] (-4,-8) -- (-4,-9);
+\node at (-6,-11.5) {$\checkmark$};
+\node at (-2,-11.5) {$\checkmark$};
+%\end{tikzpicture}\\
+%\begin{tikzpicture}[scale=0.5]
+\draw  (-9,-12.5) rectangle (-7,-14.5);
+\draw  (-7,-12.5) rectangle (-5,-14.5);
+\draw  (-5,-12.5) rectangle (-3,-14.5);
+\draw  (-3,-12.5) rectangle (-1,-14.5);
+\draw  (-1,-12.5) rectangle (1,-14.5);
+\draw  (1,-12.5) rectangle (3,-14.5);
+\node at (-8,-13.5) {1};
+\node at (-6,-13.5) {2};
+\node at (-4,-13.5) {3};
+\node at (-2,-13.5) {4};
+\node at (0,-13.5) {5};
+\node at (2,-13.5) {9};
+\end{tikzpicture}\\
+Struktur der rekursiven Aufrufe:\smallskip\\
+\begin{tikzpicture}[scale=0.35]
+\draw  (-9,7) rectangle (-7,5);
+\draw  (-7,7) rectangle (-5,5);
+\draw  (-5,7) rectangle (-3,5);
+\draw  (-3,7) rectangle (-1,5);
+\draw  (-1,7) rectangle (1,5);
+\draw  (1,7) rectangle (3,5);
+\node at (-8,6) {5};
+\node at (-6,6) {9};
+\node at (-4,6) {1};
+\node at (-2,6) {3};
+\node at (0,6) {2};
+\node at (2,6) {4};
+\draw  (-10,3) rectangle (-8,1);
+\draw  (-8,3) rectangle (-6,1);
+\draw  (-6,3) rectangle (-4,1);
+\draw  (-4,3) rectangle (-2,1);
+\node at (-9,2) {1};
+\node at (-7,2) {3};
+\node at (-5,2) {2};
+\node at (-3,2) {4};
+\draw  (0,3) rectangle (2,1);
+\node at (1,2) {9};
+\draw  (-7,-1) rectangle (-5,-3);
+\draw  (-5,-1) rectangle (-3,-3);
+\draw  (-3,-1) rectangle (-1,-3);
+\draw  (-8,-5) rectangle (-6,-7);
+\draw  (-2,-5) rectangle (0,-7);
+\node at (-6,-2) {3};
+\node at (-4,-2) {2};
+\node at (-2,-2) {4};
+\node at (-7,-6) {2};
+\node at (-1,-6) {4};
+\draw (-6,3.25) -- (-3.25,4.75);
+\draw (-2.75,4.75) -- (1,3.25);
+\draw (-6.25,0.75) -- (-9.25,-0.75);
+\draw (-5.75,0.75) -- (-4,-0.75);
+\draw (-4.25,-3.25) -- (-7,-4.75);
+\draw (-3.75,-3.25) -- (-1,-4.75);
+\end{tikzpicture}\\
 in Scala:
 \begin{lstlisting}[language=scala]
 package alg
@@ -1274,11 +1606,189 @@ Die Laufzeitanalyse ist schwierig, weil die Länge der Teillisten vom Pivoteleme
 Hierbei werden die Listen halbiert, rekursiv sortiert und dann zusammengefügt.
 
 \paragraph{Mergesort} \parskp
-ABB 103\\
+\begin{tikzpicture}[scale=0.35]
+\draw  (-0.5,0) rectangle (1.5,-2) node[pos=.5] {5};
+\draw  (1.5,0) rectangle (3.5,-2) node[pos=.5] {6};
+\draw  (3.5,0) rectangle (5.5,-2) node[pos=.5] {3};
+\draw  (5.5,0) rectangle (7.5,-2) node[pos=.5] {2};
+\draw  (7.5,0) rectangle (9.5,-2) node[pos=.5] {1};
+\draw  (9.5,0) rectangle (11.5,-2) node[pos=.5] {4};
+\draw  (11.5,0) rectangle (13.5,-2) node[pos=.5] {7};
+\draw  (-2.5,-3.5) rectangle (-0.5,-5.5) node[pos=.5] {5};
+\draw  (-0.5,-3.5) rectangle (1.5,-5.5) node[pos=.5] {6};
+\draw  (1.5,-3.5) rectangle (3.5,-5.5) node[pos=.5] {3};
+\draw  (7.5,-3.5) rectangle (9.5,-5.5) node[pos=.5] {2};
+\draw  (9.5,-3.5) rectangle (11.5,-5.5) node[pos=.5] {1};
+\draw  (11.5,-3.5) rectangle (13.5,-5.5) node[pos=.5] {4};
+\draw  (13.5,-3.5) rectangle (15.5,-5.5) node[pos=.5] {7};
+\draw  (-3,-7) rectangle (-1,-9) node[pos=.5] {5};
+\draw  (0.5,-7) rectangle (2.5,-9) node[pos=.5] {6};
+\draw  (2.5,-7) rectangle (4.5,-9) node[pos=.5] {3};
+\draw  (6.5,-7) rectangle (8.5,-9) node[pos=.5] {2};
+\draw  (8.5,-7) rectangle (10.5,-9) node[pos=.5] {1};
+\draw  (12.5,-7) rectangle (14.5,-9) node[pos=.5] {4};
+\draw  (14.5,-7) rectangle (16.5,-9) node[pos=.5] {7};
+\draw  (-3,-10.5) rectangle (-1,-12.5) node[pos=.5] {5};
+\draw  (0,-10.5) rectangle (2,-12.5) node[pos=.5] {6};
+\draw  (3,-10.5) rectangle (5,-12.5) node[pos=.5] {3};
+\draw  (6,-10.5) rectangle (8,-12.5) node[pos=.5] {2};
+\draw  (9,-10.5) rectangle (11,-12.5) node[pos=.5] {1};
+\draw  (12,-10.5) rectangle (14,-12.5) node[pos=.5] {4};
+\draw  (15,-10.5) rectangle (17,-12.5) node[pos=.5] {7};
+
+\draw [dotted, thick,red] (5.5,0.5) -- (5.5,-2.5);
+\draw [dotted, thick,red] (-0.5,-3) -- (-0.5,-6);
+\draw [dotted, thick,red] (2.5,-6.5) -- (2.5,-9.5);
+\draw [dotted, thick,red] (11.5,-3) -- (11.5,-6);
+\draw [dotted, thick,red] (8.5,-6.5) -- (8.5,-9.5);
+\draw [dotted, thick,red] (14.5,-6.5) -- (14.5,-9.5);
+\draw [latex-] (-4,-12) -- (-4,-0.5);
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}[scale=0.35]
+\draw  (-0.5,0) rectangle (1.5,-2) node[pos=.5] {1};
+\draw  (1.5,0) rectangle (3.5,-2) node[pos=.5] {2};
+\draw  (3.5,0) rectangle (5.5,-2) node[pos=.5] {3};
+\draw  (5.5,0) rectangle (7.5,-2) node[pos=.5] {4};
+\draw  (7.5,0) rectangle (9.5,-2) node[pos=.5] {5};
+\draw  (9.5,0) rectangle (11.5,-2) node[pos=.5] {6};
+\draw  (11.5,0) rectangle (13.5,-2) node[pos=.5] {7};
+\draw  (-2.5,-3.5) rectangle (-0.5,-5.5) node[pos=.5] {3};
+\draw  (-0.5,-3.5) rectangle (1.5,-5.5) node[pos=.5] {5};
+\draw  (1.5,-3.5) rectangle (3.5,-5.5) node[pos=.5] {6};
+\draw  (7.5,-3.5) rectangle (9.5,-5.5) node[pos=.5] {1};
+\draw  (9.5,-3.5) rectangle (11.5,-5.5) node[pos=.5] {2};
+\draw  (11.5,-3.5) rectangle (13.5,-5.5) node[pos=.5] {4};
+\draw  (13.5,-3.5) rectangle (15.5,-5.5) node[pos=.5] {7};
+\draw  (-3,-7) rectangle (-1,-9) node[pos=.5] {5};
+\draw  (0.5,-7) rectangle (2.5,-9) node[pos=.5] {3};
+\draw  (2.5,-7) rectangle (4.5,-9) node[pos=.5] {6};
+\draw  (6.5,-7) rectangle (8.5,-9) node[pos=.5] {1};
+\draw  (8.5,-7) rectangle (10.5,-9) node[pos=.5] {2};
+\draw  (12.5,-7) rectangle (14.5,-9) node[pos=.5] {4};
+\draw  (14.5,-7) rectangle (16.5,-9) node[pos=.5] {7};
+\draw  (-3,-10.5) rectangle (-1,-12.5) node[pos=.5] {5};
+\draw  (0,-10.5) rectangle (2,-12.5) node[pos=.5] {3};
+\draw  (3,-10.5) rectangle (5,-12.5) node[pos=.5] {6};
+\draw  (6,-10.5) rectangle (8,-12.5) node[pos=.5] {2};
+\draw  (9,-10.5) rectangle (11,-12.5) node[pos=.5] {1};
+\draw  (12,-10.5) rectangle (14,-12.5) node[pos=.5] {4};
+\draw  (15,-10.5) rectangle (17,-12.5) node[pos=.5] {7};
+\draw [-latex] (-4,-12) -- (-4,-0.5);
+\end{tikzpicture}
+\\
 Struktur der rekursiven Aufrufe:\\
-ABB 104\\
+\begin{tikzpicture}[scale=0.35]
+\draw  (-0.5,0) rectangle (1.5,-2) node[pos=.5] {5};
+\draw  (1.5,0) rectangle (3.5,-2) node[pos=.5] {6};
+\draw  (3.5,0) rectangle (5.5,-2) node[pos=.5] {3};
+\draw  (5.5,0) rectangle (7.5,-2) node[pos=.5] {2};
+\draw  (7.5,0) rectangle (9.5,-2) node[pos=.5] {1};
+\draw  (9.5,0) rectangle (11.5,-2) node[pos=.5] {4};
+\draw  (11.5,0) rectangle (13.5,-2) node[pos=.5] {7};
+\draw  (-2.5,-3.5) rectangle (-0.5,-5.5) node[pos=.5] {5};
+\draw  (-0.5,-3.5) rectangle (1.5,-5.5) node[pos=.5] {6};
+\draw  (1.5,-3.5) rectangle (3.5,-5.5) node[pos=.5] {3};
+\draw  (7.5,-3.5) rectangle (9.5,-5.5) node[pos=.5] {2};
+\draw  (9.5,-3.5) rectangle (11.5,-5.5) node[pos=.5] {1};
+\draw  (11.5,-3.5) rectangle (13.5,-5.5) node[pos=.5] {4};
+\draw  (13.5,-3.5) rectangle (15.5,-5.5) node[pos=.5] {7};
+\draw  (-3,-7) rectangle (-1,-9) node[pos=.5] {5};
+\draw  (0.5,-7) rectangle (2.5,-9) node[pos=.5] {6};
+\draw  (2.5,-7) rectangle (4.5,-9) node[pos=.5] {3};
+\draw  (6.5,-7) rectangle (8.5,-9) node[pos=.5] {2};
+\draw  (8.5,-7) rectangle (10.5,-9) node[pos=.5] {1};
+\draw  (12.5,-7) rectangle (14.5,-9) node[pos=.5] {4};
+\draw  (14.5,-7) rectangle (16.5,-9) node[pos=.5] {7};
+\draw  (0,-10.5) rectangle (2,-12.5) node[pos=.5] {6};
+\draw  (3,-10.5) rectangle (5,-12.5) node[pos=.5] {3};
+\draw  (6,-10.5) rectangle (8,-12.5) node[pos=.5] {2};
+\draw  (9,-10.5) rectangle (11,-12.5) node[pos=.5] {1};
+\draw  (12,-10.5) rectangle (14,-12.5) node[pos=.5] {4};
+\draw  (15,-10.5) rectangle (17,-12.5) node[pos=.5] {7};
+
+\draw  (21.5,0) rectangle (23.5,-2) node[pos=.5] {1};
+\draw  (23.5,0) rectangle (25.5,-2) node[pos=.5] {2};
+\draw  (25.5,0) rectangle (27.5,-2) node[pos=.5] {3};
+\draw  (27.5,0) rectangle (29.5,-2) node[pos=.5] {4};
+\draw  (29.5,0) rectangle (31.5,-2) node[pos=.5] {5};
+\draw  (31.5,0) rectangle (33.5,-2) node[pos=.5] {6};
+\draw  (33.5,0) rectangle (35.5,-2) node[pos=.5] {7};
+\draw  (19.5,-3.5) rectangle (21.5,-5.5) node[pos=.5] {3};
+\draw  (21.5,-3.5) rectangle (23.5,-5.5) node[pos=.5] {5};
+\draw  (23.5,-3.5) rectangle (25.5,-5.5) node[pos=.5] {6};
+\draw  (29.5,-3.5) rectangle (31.5,-5.5) node[pos=.5] {1};
+\draw  (31.5,-3.5) rectangle (33.5,-5.5) node[pos=.5] {2};
+\draw  (33.5,-3.5) rectangle (35.5,-5.5) node[pos=.5] {4};
+\draw  (35.5,-3.5) rectangle (37.5,-5.5) node[pos=.5] {7};
+\draw  (19,-7) rectangle (21,-9) node[pos=.5] {5};
+\draw  (22.5,-7) rectangle (24.5,-9) node[pos=.5] {3};
+\draw  (24.5,-7) rectangle (26.5,-9) node[pos=.5] {6};
+\draw  (28.5,-7) rectangle (30.5,-9) node[pos=.5] {1};
+\draw  (30.5,-7) rectangle (32.5,-9) node[pos=.5] {2};
+\draw  (34.5,-7) rectangle (36.5,-9) node[pos=.5] {4};
+\draw  (36.5,-7) rectangle (38.5,-9) node[pos=.5] {7};
+
+\draw (0.5,-3) -- (6,-2.5);
+\draw (7,-2.5) -- (11.5,-3);
+\draw (0,-6) -- (-2,-6.5);
+\draw (1,-6) -- (2.5,-6.5);
+\draw (2,-9.5) -- (1,-10);
+\draw (3,-9.5) -- (4,-10);
+\draw (11,-6) -- (8.5,-6.5);
+\draw (12,-6) -- (14.5,-6.5);
+\draw (8,-9.5) -- (7,-10);
+\draw (9,-9.5) -- (10,-10);
+\draw (14,-9.5) -- (13,-10);
+\draw (15,-9.5) -- (16,-10);
+\draw (20,-6.5) -- (22,-6);
+\draw (23,-6) -- (24.5,-6.5);
+\draw (30.5,-6.5) -- (33,-6);
+\draw (34,-6) -- (36.5,-6.5);
+\draw (22.5,-3) -- (28,-2.5);
+\draw (29,-2.5) -- (33.5,-3);
+
+\draw [color=red] (18.5,0.5) rectangle (39,-15.5) node[below left]{passiert eigentlich in linkem};
+\draw (-2,-9.5) -- (-2,-14);
+\draw (1,-13) -- (1,-14);
+\draw (4,-13) -- (4,-14);
+\draw (7,-13) -- (7,-14);
+\draw (10,-13) -- (10,-14);
+\draw (13,-13) -- (13,-14);
+\draw (16,-13) -- (16,-14);
+\draw (20,-10.5) -- (20,-9.5);
+\draw (24,-9.5) -- (23,-10.5);
+\draw (25,-9.5) -- (26,-10.5);
+\draw (30,-9.5) -- (29,-10.5);
+\draw (31,-9.5) -- (32,-10.5);
+\draw (36,-9.5) -- (35,-10.5);
+\draw (37,-9.5) -- (38,-10.5);
+\end{tikzpicture}\\
 Laufzeitanalyse: Wir stellen das Verhalten von Mergesort für $n=2^k$ durch einen Binärbaum dar.\\
-ABB 105\\
+\begin{tikzpicture}[scale=0.8]
+\node at (0,0) [circle] {$\bullet$};
+\node at (1,0) [circle] {$\bullet$};
+\node at (2,0) [circle] {$\bullet$};
+\node at (3,0) [circle] {$\bullet$};
+\node at (0.5,1) [circle] {$\bullet$};
+\node at (2.5,1) [circle] {$\bullet$};
+\node at (1.5,2) [circle] {$\bullet$};
+\node at (0,0) [left] {$\tfrac{n}{4}$};
+\node at (1,0) [left] {$\tfrac{n}{4}$};
+\node at (2,0) [left] {$\tfrac{n}{4}$};
+\node at (3,0) [left] {$\tfrac{n}{4}$};
+\node at (0.5,1) [left] {$\tfrac{n}{2}$};
+\node at (2.5,1) [left] {$\tfrac{n}{2}$};
+\node at (1.5,2) [left] {$n$};
+\draw (1.5,2) -- (0.5,1) -- (0,0);
+\draw (1,0) -- (0.5,1);
+\draw (1.5,2) -- (2.5,1) -- (2,0);
+\draw (3,0) -- (2.5,1);
+\node [rotate=90] at (0,-0.5) {...};
+\node [rotate=90] at (1,-0.5) {...};
+\node [rotate=90] at (2,-0.5) {...};
+\node [rotate=90] at (3,-0.5) {...};
+\end{tikzpicture}\\
 Zum erzeugen der Hälften und dem Zusammenfügen fällt der Aufwand O(|linke Liste| + |rechte Liste|). Dies ist $O(n)$ auf jeder Ebene des Baums. Der Baum hat $n=2^k$ Blätter und daher die Tiefe $k$. Die Laufzeit von Mergesort ist daher $O(n\;log(n))$ (Anzahl der Ebenen $n$ mit LZ auf jeder Ebene).\\
 Mergesort besitzt immer die LZ $O(n\; log(n))$. Dies ist nahe am Optimum. Quicksort besitzt eine durchschnittliche LZ in $O(n\; log(n))$ und eine Worst-Case-LZ in $O(n^2)$.\\
 Da Quicksort mit vorsortierten Listen nicht so gut umgehen kann (wird linear entartet), ist es kein sehr gutes Suchverfahren.
@@ -1297,7 +1807,13 @@ hier bspw. $4$ das inverse Element zu $7$.
 
 \paragraph{Ausgangslage Codierungstheorie}\parskp
 Problem: Daten können bei der Übertragung verändert werden. Wie können diese Fehler erkannt und ggf. korrigiert werden?\\
-ABB 201\\
+\begin{tikzpicture}[scale=0.8]
+\draw  (0,0) rectangle (3,1) node [pos=0.5]{Sender};
+\draw  (9.5,0) rectangle (12.5,1) node [pos=0.5]{Empfänger};
+
+\draw [-latex] (3,0.5) -- (9.5,0.5) node [pos=0.5, above]{\lightning\;Störung};
+\draw [-latex] (3,0.5) -- (9.5,0.5) node [pos=0.25, below]{Kanal};
+\end{tikzpicture}\\
 Häufige Lösung zur Fehlererkennung: Prüfsummen.
 \subsection{Paritätsprüfung}
 Für eine Folge von Bits $b_1,...,b_{n-1}\in \{0,1\}$ wird das \emph{Paritätsbit} $b_n= \left( \sum_{i=1}^{n-1}b_i\right) mod \; 2$ berechnet. Das enthaltene Codewort ist $b_1...b_n$
@@ -1305,7 +1821,19 @@ Für eine Folge von Bits $b_1,...,b_{n-1}\in \{0,1\}$ wird das \emph{Paritätsbi
 Aus $\sum_{i=1}^{n-1}b_i\equiv b_n (mod\; 2)$ folgt daher (indem auf beiden Seiten $+b_n$ rechnet) $\sum_{i=1}^{n}b_i \equiv 0 (mod\;2)$.\\
 Die Menge der Wörter des \emph{Parity-Check-Code} lässt sich damit durch $\{(b_1,...,b_n)\in \{0,1\}^n\|\sum_{i=1}^{n}b_i\equiv 0 (mod\; 2)\}$ darstellen. $|P_n|=2^{n-1}$ bezeichnet die Mächtigkeit dieser Menge (alle Bits, bis auf das letzte, können frei gewählt werden).
 \subparagraph{Bsp.:} Für $n=8$ ist $00110011$ (4 Einsen $\Rightarrow 4mod \;2=0 \Rightarrow$OK) ein Element des Parity-Check-Code, $01110011$ kein Element des Parity-Check-Code.\\
-ABB 202
+\begin{tikzpicture}[scale=0.8]
+\def \nx {8}
+\def \ny {5}
+
+\draw  (0,0)node [below right]  {alle Wörter in $\{0,1\}^n$} rectangle (\nx+1,\ny+1);
+\draw (\nx,\ny) node [above right]  {\color{purple}$\curvearrowright$ Codewörter};
+\foreach \x in {1,...,\nx}
+{
+	\foreach \y in {1,...,\ny}{
+		\node[circle, purple] at (\x, \y) {$\bullet$};
+  	}
+}
+\end{tikzpicture}
 \paragraph{Satz:} Der Parity-Check-Code ist 1-fehlererkennend.
 \subparagraph{Beweis:} Seien $b_1...b_n$ ein Codewort und $b_1'...b_n'$ ein Wort, das sich an Stelle $k$ von $b_1...b_n$ unterscheidet. Angenommen, $b_1'...b_n'$ ist ein Codewort. Dann gilt, $0\equiv \sum_{i=1}^{n}b_i'\equiv \underbrace{\sum_{i=1}^{n}b_i}_{=0}+\underbrace{(b_k'-b_k)}_{=1 \text{(da ungleich)}}\equiv 1$, Widerspruch. Also ist $b_1'...b_n'$ kein Codewort. Dies kann der Empfänger erkennen.\\
 Bemerkung: Der Parity-Check-Code ist nicht 2-fehlerkorrigierend.\\
@@ -1318,7 +1846,24 @@ Anwendungen:
 Ferner kann das Verfahren zur Rekonstruktion eines verloren gegangenen Bits verwendet werden, wenn die restlichen Bits fehlerfrei sind. Denn aus $0\equiv \sum_{i=1}^{n} b_i (mod\;2)$ folgt für $1\leq k \leq n$: \\
 $b_k\equiv \sum_{i=1,\, i\not =k}^{n} b_i (mod\;2)$. Damit kann Bit $b_k$ aus den anderen Bits rekonstruiert werden.\\
 Anwendung: RAID4, RAID5 -- Daten und Parität werden auf $n$ Festplatten verteilt. Beim Ausfall einer Platte können die Daten rechnerisch rekonstruiert werden.\\
-ABB 203
+\begin{tikzpicture}[scale=0.3]
+\draw  (0,0) node{$D_1$} ellipse (3 and 1);
+\draw (-3,0) -- (-3,-1.5);
+\draw (3,0) -- (3,-1.5);
+\draw  plot[smooth, tension=1.35] coordinates {(-3,-1.5) (0,-2.5) (3,-1.5)};
+\draw  (14.5,0) node{$D_{n-1}$} ellipse (3 and 1);
+\draw (11.5,0) -- (11.5,-1.5);
+\draw (17.5,0) -- (17.5,-1.5);
+\draw  plot[smooth, tension=1.35] coordinates {(11.5,-1.5) (14.5,-2.5) (17.5,-1.5)};
+\draw  (21.5,0) node{$D_n$} ellipse (3 and 1);
+\draw (18.5,0) -- (18.5,-1.5);
+\draw (24.5,0) -- (24.5,-1.5);
+\draw  plot[smooth, tension=1.35] coordinates {(18.5,-1.5) (21.5,-2.5) (24.5,-1.5)};
+\draw (0,-2.5) -- (0,-4.5) -- (22.5,-4.5) -- (22.5,-2.5);
+\draw (14.5,-2.5) -- (14.5,-4.5);
+
+\node at (7,-1) {…};
+\end{tikzpicture}
 \subparagraph{Bsp.:} $0100x110$ wird korrigiert zu $01001110$ (da Parity-Check-Code $mod\;2=0$ ergeben muss).
 
 \subsubsection{ISBN-Code}
@@ -1360,7 +1905,23 @@ $k\equiv l$. Widerpsruch zu der Annahme $k<l$!
 \subsection{Fehlerkorrigierende Codes}
 
 Idee: Für ein empfangenes Wort $w$ suchen wir ein Codewort $v$, so dass der Abstand $d(v,w)$ minimal ist (nearest neighbor decoding).\\
-ABB 51
+\begin{tikzpicture}[scale=0.5]
+\def \nx {4}
+\def \ny {3}
+
+\draw  (1,1)node [below right]  {alle Wörter in $\{0,1\}^n$} rectangle (\nx*2+1,\ny*2+1);
+\draw (\nx*2,\ny*2) node [above right]  {\color{purple}$\curvearrowright$ Codewörter $v_i$};
+\draw (\nx*2+.7,\ny*2-2) node [right, align=right, green]  {$\curvearrowright$ Bereich, in dem Wort einem Code-\\wort zugeordnet werden kann};
+\foreach \x in {1,...,\nx}
+{
+	\foreach \y in {1,...,\ny}{
+		\node[circle, purple] at (\x*2, \y*2) {$\bullet$};
+		\draw [green] (\x*2,\y*2) ellipse (0.75 and 0.75);
+  	}
+}
+\node [circle] at (7.8,3.6) {$\bullet$};
+\node [below left]at (7.8,3.6) {$w$};
+\end{tikzpicture}
 \paragraph{Def.:} Für Wörter $v,v'\in \{0,1\}^n$ ist der \emph{Hamming}-Abstand $d(v,v')$ die Anzahl Stellen, in denen sich $v,v'$ unterscheiden. Der \emph{Minimalabstand} eines Codes $C$ ist $min\{d(v,v')|v,v'\in C, \; v\not = v'\}$.
 \subparagraph{Bsp.:} Parity-Check-Code\\
 $d(0101,1010)=4$ (Codewörter unterscheiden sich in allen 4 Stellen)\\
@@ -1375,23 +1936,97 @@ Der Minimalabstand beim Parity-Check-Code ist 2, da beides laut Def. ungleiche C
 
 \subparagraph{Bsp.:} Der Parity-Check-Code besitzt den Minimalabstand 2 und ist daher 1-fehlererkennend und 0-fehlerkorrigierend\footnote{ein Fehler kann nur korrigiert werden, wenn die Position des fehlerhaften Bits bekannt ist. \\
 Deswegen im Allgemein nur 0-fehlerkorrigierend}.\\
-ABB 52 (Kreise überlappen sich. Deswegen kann der Fehler nicht eindeutig einem Codewort zugewiesen werden)\\
+\begin{tikzpicture}[scale=0.8]
+\node[circle] at (0,0.4) {$\bullet$};
+\node[circle] at (1,-0.6) {$\bullet$};
+\node[circle] at (-1,-0.6) {$\bullet$};
+\node[circle] at (0,-1.6) {$\bullet$};
+\node[circle] at (0,-0.6) {$\bullet$};
+\draw [green] (0,-0.6) ellipse (1 and 1);
+\node[circle] at (2,-0.6) {$\bullet$};
+\draw [green] (2,-0.6) ellipse (1 and 1);
+\end{tikzpicture}\\
+(Kreise überlappen sich. Deswegen können Fehler nicht eindeutig einem Codewort zugewiesen werden)\\
 Beweis:
 \begin{enumerate}
 \item Fehlererkennung:\\
 $(\Rightarrow)$ Sei $C$ k-fehlererkennend. Seien ferner $c\in C$ und $w \in \{0,1\}^n$ mit $d(c,w)\leq k$. Da $C$ k-fehlererkennund ist, muss für jedes $c' \in C, c'\not = c$ gelten: $w \not = c'$. Daraus folgt $d(c,c') \geq k+1$, woraus folgt, dass der Minimalabstand von $C$ mindestens $k+1$($\geq k+1$) ist.\\
-ABB 1U\\
+\begin{tikzpicture}[scale=.5]
+\node[circle, purple] at (0,0) {$\bullet$};
+\draw [green] (0,0) ellipse (2 and 2);
+\node [circle] at (0.6,0) {$\bullet$};
+\node [circle] at (1.2,0) {$\bullet$};
+\node [circle] at (1.8,0) {$\bullet$};
+\node [above] at (1.8,0) {$w$};
+\node [circle] at (3,0) {$\bullet$};
+\node [circle, blue] at (2.4,0) {$\bullet$};
+\draw [decorate, decoration={brace, amplitude=5pt}] (1.8,-0.2) --(0,-0.2);
+\node [below] at (0.8,-0.4) {$\leq k$};
+\node [above, purple] at (0,0) {$c$};
+\node [above, blue] at (2.4,0) {$c'$};
+\end{tikzpicture}\\
 $(\Leftarrow)$ Sei der Minimalabstand von $C$ mindestens $k+1$. Seien ferner $c\in C$ und $w \in \{0,1\}^n$ mit $d(c,w)\leq k$. Da $C$ den Minimalabstand $\geq k+1$ besitzt, kann $w$ kein Codewort $\not = c$ sein ($w$ liegt innerhalb des Radius $k$). Daher ist $C$ k-fehlererkennend. 
 
 \item Fehlerkorrektur:\\
 $(\Rightarrow)$ Wenn der Code $k$-fehlerkorrigierend ist, darf es nur ein Codewort $v$ mit $d(v,w)\leq k$ für ein empfangenes Wort $w$ geben.\\
-ABB 53 (Die Kugeln dürfen sich nicht überschneiden. Es muss eindeutig bleiben.)\\
+\begin{tikzpicture}[scale=.5]
+\node[circle] at (0,0) {$\bullet$};
+\draw [green] (0,0) ellipse (2 and 2);
+\node[circle] at (3.2,0) {$\bullet$};
+\draw [green] (3.2,0) ellipse (2 and 2);
+\node [circle] at (1.6,0) {$\bullet$};
+\node at (1.6,0) [above] {$w$};
+
+\draw [decorate, decoration={brace, amplitude=5pt}] (1.55,-0.2) --(0,-0.2);
+\draw [decorate, decoration={brace, amplitude=5pt}] (3.2,-0.2) --(1.65,-0.2);
+\node [below] at (0.8,-0.4) {$\leq k$};
+\node [below] at (2.4,-0.4) {$\leq k$};
+\end{tikzpicture}\\
+(Die Kugeln dürfen sich nicht überschneiden. Es muss eindeutig bleiben.)\\
 Folglich muss $d(v',w)\geq k+1$ für alle Codewörter $v'\not = v$ gelten, woraus $d(v,v')\geq 2k+1$ folgt.\\
-ABB 54\\
+\begin{tikzpicture}[scale=.5]
+\node[circle] at (0,0) {$\bullet$};
+\draw [green] (0,0) ellipse (2 and 2);
+\node[circle] at (4.6,0) {$\bullet$};
+\draw [green] (4.6,0) ellipse (2 and 2);
+\node [circle] at (0.6,0) {$\bullet$};
+\node [circle] at (1.2,0) {$\bullet$};
+\node [circle] at (1.8,0) {$\bullet$};
+\node [above] at (1.8,0) {$w$};
+
+\node [circle] at (4,0) {$\bullet$};
+\node [circle] at (3.4,0) {$\bullet$};
+\node [circle] at (2.8,0) {$\bullet$};
+
+\draw [decorate, decoration={brace, amplitude=5pt}] (1.8,-0.2) --(0,-0.2);
+\draw [decorate, decoration={brace, amplitude=5pt}] (4.6,-0.2) --(2.8,-0.2);
+\node [below] at (0.8,-0.4) {$k$};
+\node [below] at (3.8,-0.4) {$k$};
+\node [purple, above left] at (0,0) {$v$};
+
+\node [purple, above right] at (4.6,0) {$v'$};
+\end{tikzpicture}\\
 $(\Leftarrow)$ Für ein Codewort $v$ sei $S(v)=\{w|d(v,w)\leq k\}$. Zu zeigen: aus $v,v'$ Codewörter mit $v\not = v'$ folgt $S(v) \cap S(v')=\emptyset$. Angenommen, es gibt ein $w \in S(v)\cap S(v')$. Dann gilt $d(v,w)\leq k$ und $d(w,v') \leq k$.\\
-ABB 55\\
+\begin{tikzpicture}[scale=.5]
+\node[circle] (v1) at (0,0) {$\bullet$};
+\node[circle] (v3) at (3,0) {$\bullet$};
+\node[circle] (v2) at (1.5,1.5) {$\bullet$};
+\node[circle, left] at (0,0) {$a$};
+\node[circle,right] at (3,0) {$b$};
+\node[circle, above] at (1.5,1.5) {$c$};
+\draw (v1) -- (v2) -- (v3) -- (v1);
+\end{tikzpicture}\\
+$d(a,b)\leq d(a,c) + d(c,b)$\\
 Daraus folgt mit der Dreiecksungleichung $d(v,v')\leq d(v,w)+d(w,v')=2k$. Dies ist ein Widerspruch, da der Minimalabstand des Codes mindestens $2k+1$ ist.\\
-ABB 56 (Wort $w$ kann eindeutig zum Codewort $v$ dekodiert werden.)
+\begin{tikzpicture}[scale=.5]
+\node[circle] at (0,0) {$\bullet$};
+\draw [green] (0,0) ellipse (2 and 2);
+\node [circle] at (1.8,0) {$\bullet$};
+\node [above] at (1.8,0) {$w$};
+\draw [decorate, decoration={brace, amplitude=5pt}] (1.8,-0.2) --(0,-0.2);
+\node [below] at (0.8,-0.4) {$k$};
+\node [above] at (0,0) {$v$};
+\end{tikzpicture}(Wort $w$ kann eindeutig zum Codewort $v$ dekodiert werden.)
 \end{enumerate}
 Naiver Ansatz zur Fehlerkorrektur: Nachricht mehrfach senden.
 \paragraph{Bsp.:} $0 \rightarrow 000$, $1\rightarrow 111$\\
@@ -1480,9 +2115,31 @@ $\begin{pmatrix}
 0 & 1 & 0 &| 1 & 0 & 1 & 1\\
 0 & 0 & 1 &| 1 & 1 & 0 & 1
 \end{pmatrix}$\\
-ABB 61
-\bigskip \\
-FINE.
+\begin{tikzpicture}[scale=.3]
+\draw  (-6.5,12) rectangle (-3.5,9);
+\draw  (-3.5,12) rectangle (-0.5,9);
+\draw  (-6.5,9) rectangle (-3.5,6);
+\draw  (-3.5,9) rectangle (-0.5,6);
+\node at (-5,10.5) {$\bullet$};
+\node at (-2,10.5) {$\bullet$};
+\node at (-2,7.5) {$\bullet$};
+\node at (-5,7.5) {$\bullet$};
+\node [right] at (1,9) {perfekter Code};
+
+\draw (-5,3) ellipse (1.4 and 1.4);
+\draw (-2,3) ellipse (1.4 and 1.4);
+\draw (-2,0) ellipse (1.4 and 1.4);
+\draw (-5,0) ellipse (1.4 and 1.4);
+\node at (-5,3) {$\bullet$};
+\node at (-2,3) {$\bullet$};
+\node at (-2,0) {$\bullet$};
+\node at (-5,0) {$\bullet$};
+\node [right] at (1,1.5) {nicht perfekter Code};
+\draw  (-6.5,4.5) rectangle (-0.5,-1.5);
+\node [red] at (-3.5,1.5) {$\bullet$};
+\draw [-latex, red] (-3.5,-2.5) node[below]{nicht erfasst} -- (-3.5,1);
+\end{tikzpicture}
+
 
 \newpage
 \printbibliography
