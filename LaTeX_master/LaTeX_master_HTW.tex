@@ -35,6 +35,7 @@
 \usetikzlibrary{arrows}
 \usetikzlibrary{arrows.meta}	% Pfeile verändern / vergrößern: \draw[-{>[scale=1.5]}] (-3,5) -> (-3,3);
 \usetikzlibrary{automata,positioning} % Zeilenumbruch im Node node[align=center] {Text\\nächste Zeile}
+\usetikzlibrary{matrix}
 \usetikzlibrary{patterns}	% Schraffierte Füllung
 \tikzstyle{reverseclip}=[insert path={	% Inverser Clip \clip
 	(current page.north east) --
@@ -107,6 +108,9 @@ literate=%
     {ö}{{\"o}}1
     {~}{{\textasciitilde}}1
 }
+\def\ContinueLineNumber{\lstset{firstnumber=last}} % vor lstlisting. Zum wechsel zum nicht-kontinuierlichen muss wieder \StartLineAt1 eingegeben werden
+\def\StartLineAt#1{\lstset{firstnumber=#1}} % vor lstlisting \StartLineAt30 eingeben, um bei Zeile 30 zu starten
+\let\numberLineAt\StartLineAt
 
 % BibTeX
 \usepackage[backend=bibtex, bibencoding=ascii]{biblatex}	% BibTeX
@@ -197,3 +201,6 @@ urlcolor=green,%
 \newcommand{\mdeg}{^{\circ}}
 
 \newcommand{\nok}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}	% n über k
+\newcommand{\mtr}[1]{\begin{pmatrix}#1\end{pmatrix}}	% Matrix
+\newcommand{\dtr}[1]{\begin{vmatrix}#1\end{vmatrix}}	% Determinante (Betragsmatrix)
+\renewcommand{\vec}[1]{\underline{#1}}	% Vektorschreibweise
