@@ -1446,7 +1446,7 @@ __STDC__ // C-Version
 
 \subsection{Bedingte Übersetzung}
 
-Soll ein platformübergreifendes Programm geschrieben werden (mit einem Quelltext), gibt es Tücken (bspw. 32 oder 64 bit), können bestimmte Fälle mit einer bedingten Übersetzung abgefangen werden.
+Soll ein platformübergreifendes Programm geschrieben werden (mit einem Quelltext), gibt es Tücken (bspw. 32 oder 64 bit). Dann können bestimmte Fälle mit einer bedingten Übersetzung abgefangen werden.
 \begin{lstlisting}[language=C]
 #if <const-expr>
 #if defined <symbol>
@@ -1476,5 +1476,128 @@ Gutes Anwendungsbeispiel für bedingte Übersetzung:
 #endif
 \end{lstlisting}
 Gibt Debug-Information nur bei \emph{gcc progr.c -DDEBUG} aus.
+
+\section{Funktionen mit variabler Argumentliste}
+
+vgl.: printf() mit beliebig vielen Argumenten abhängig von \% d usw. im ersten String.
+\begin{enumerate}
+\item wenigstens ein fester Parameter
+\item dann folgt, … \\
+(Es können also weitere Parameter folgen. Typ und Anzahl der Parameter ist unbekannt.)
+\end{enumerate}
+
+Macros zum Umgang mit variabler Argumentliste:
+\begin{lstlisting}[language=C]
+#include <stdarg.h>	// Voraussetzung für variable Argumentlisten
+
+va_start(ap, la);	
+// ap: Argument Pointer ( va_list ap; )
+// la: Last Argument (letzter Parameter mit Typ und Namen vor ...)
+printf("Name: %s, MatrNr: %d \n", Stud.name, Stud.MatrNr); 
+\end{lstlisting}
+// ABB 10
+\ContinueLineNumber
+\begin{lstlisting}[language=C]
+x=va_arg(ap, type);
+// x: Zielvariable für den Wert des Arguments 
+//		(muss vom Typ des tatsächlichen Parameters sein)
+// ap wird um sizeof(type) erhöht
+// dieser Wert wird x zugewiesen
+\end{lstlisting}
+
+\ContinueLineNumber
+\begin{lstlisting}[language=C]
+va_end(ap);
+\end{lstlisting}
+\StartLineAt1
+
+\paragraph{Beispiel:}
+myprintf.c
+\begin{lstlisting}[language=C]
+//#include <stdio.h>	// Kann auskommentiert werden, da entsprechende Funktionen
+										// in recout.h nachprogrammiert wurden.
+#include <stdarg.h>
+#include <recout.h>	// Andere my...-Funktionen in Arg.tgz
+										// als Systemheader-file, mit Befehlen aus librecout.c rein kopiert
+#define xprintf(x) myprintf x
+
+void myprintf(const char* fmt, ...){ // fmt bspw. ("Programm: %s\n", argv[0])
+	va_list ap;
+	char		*p;
+	char		*pstr;
+	char		cval;
+	int			ival;
+	double	dval;
+	
+	va_start(ap,fmt);
+	
+	for (	p=fmt; // p auf Anfang des Formatsteuerstrings
+				*p;
+				p++){
+		if (*p!='%'){
+			myputc(*p);
+		} else {
+			switch(*++p){
+				case 's':
+					pstr=va_arg(ap,char*);
+					myputs(pstr);
+					break;
+				case 'd':
+					ival=va_arg(ap,int);
+					myputd(ival);
+					break;
+				case 'x':
+					ival=va_arg(ap, int);
+					myputx(ival);
+					break;
+				case 'd':
+					dval=va_arg(ap, double);
+					myputdouble(dval);
+					break;
+				case 'c':
+					cval=va_arg(ap, int);	// char wird zu int geändert
+					myputc(cval);
+					break;
+				case 'p':
+					pstr=va_arg(ap, char*);
+					myputx((long)pstr);	// muss gecastet werden
+					break;
+				default:
+					myputc(*p);
+					break;
+			}
+		}
+	}
+}
+
+int main(int argc, char* argv[]){
+	int i;
+	if (argc>1)
+		i = myatoi(argv[1]);
+	else
+		i = -1;
+		
+	double d=13.37;
+	
+	myprintf("Programm: %s\n int Value: %d\n", argv[0], argc);
+	myprintf("i: %d, %x, DoubleVal: %f, Char: %c, 
+						Adresse argv[0]: %p",i,i,d, argv[0][0], argv[0]);
+						
+	xprintf( ("Test xprintf: %s\n", argv[0]) );
+	return 0;
+}
+\end{lstlisting}
+
+Zum Kompilieren: Anlinken der Bibliothek: \emph{gcc myprintf.c -lrecout} (librecout.a wird zu lrecout). Include übernimmt nur Prototypen -- die komplierte Library muss so manuell übergeben werden (stdio-Library wird beim include automatisch angehängt).
+
+In librecout.c:
+\begin{lstlisting}[language=C]
+// gcc -c librecout.c
+// ar rvs librecout.a librecout.c
+// sudo cp librecout.a /usr/local/lib/librecout.a
+// sudo cp recout.h /usr/local/include
+\end{lstlisting}
+
+
 
 \end{document}
