@@ -59,11 +59,68 @@ $y=f(x) = \frac{p(x)}{q(x)}=\frac{a_m\; x^m + a_{m-1}\; x^{m-1}+...+a_1 \; x+a_0
 \item Die Nullstellen des Zählerpolynoms sind die Nullstellen von $f$.
 \item Verhalten von $f(x)$ bei $k$-facher reeller Nullstelle oder Polstelle:\\
 \fbox{Vorzeichenwechsel $\Leftrightarrow$ $k$ ungerade}
+\item Polynomdivision $p(x): q(x) = \underbrace{s(x)}_{Polynom}+\underbrace{\frac{r(x)}{q(x)}}_{echt gebrochen}$\\
+$y=a(x)$ ist die sogenannte Asymptote
 \end{itemize}
-...
-\subsection{Fehlende VL vom 02.12.2015}
-...
+\subparagraph{Bsp. 3:}\parskp
+$y=\frac{x^3+2x^2}{x^2-x-2}=\frac{x^2(x+2)}{(x+1)(x-2)}=x+3+\frac{5x+6}{x^2-x-2}$\\
+Daraus lassen sich leicht erste Werte der Kurvendiskussion ableiten:
 \begin{itemize}
+\item Nullstellen: $x_{1,2}=0\; \text{(doppelt)}, x_3=-2$
+\item Polstellen: $x=-1,\, x=2$ (einfach $\Rightarrow$ Vorzeichenwechsel)
+\item Asymptote: $y=x+3$\\
+Schnittstellen und Asymptoten: $5x+6=0 \curvearrowright x=-1,2$
+\end{itemize}
+\subsubsection{Trigonometrische Funktion}
+Übliche Definition der trigonometrische Funktionen (Kreisfunktionen wie $\sin() \cos()$ usw.):
+\paragraph{Def. 3:} \parskp
+Eine Funktion $y=f(x)$ heißt periodisch, wenn es eine Zahl $p>0$ gibt mit $f(x)=f(+p)$ (für alle $x \in Db(f)$). Die kleinste positive Zahl $p$ mit dieser Eigenschaft heißt Periode $f$.
+\paragraph{Def. 4:} (Symmetrieeigenschaft)\\
+Eine Funktion $y=f(x)$ heißt:
+\begin{enumerate}
+\item gerade (symmetrische zur y-Achse), wenn $f(-x)=f(x)$ für alle $x\in Db(f)$ gilt.
+\item ungerade (punktsymmetrisch zum Ursprung), wenn $f(-x)=-f(x)$ für alle $x\in Db(f)$ gilt.
+\end{enumerate}
+\subparagraph{Diskussion:} \parskp
+Einige Funktionen
+\begin{tabular}{c c c c}
+Funktion & $Db$ & Periode & Symmetrie\\
+\hline
+$\sin x$ & $\mathbb{R}$ & $2\pi$ & ungerade\\
+$\cos x$ & $\mathbb{R}$ & $2\pi$ & gerade\\
+$\tan x$ & $\mathbb{R}\setminus \left\lbrace\frac{\pi}{2}+k\pi | k\in \mathbb{Z}\right\rbrace$ & $\pi$ & ungerade\\
+$\cot x$ & $\mathbb{R}\setminus \left\lbrace k\pi | k\in \mathbb{Z}\right\rbrace$ & $\pi$ & ungerade\\
+\end{tabular}\\
+Einige wichtige Formeln:
+\begin{itemize}
+\item $\sin^2 x+\cos^2 x = 1$
+\item $\tan x = \frac{\sin x}{\cos x}$
+\item $\cot x=\frac{1}{\tan x}$
+\item $\sin 2x=2\sin x \cos x$
+\item $\cos 2x=2 \cos^2x-1=1-2\sin^2x$
+\end{itemize}
+\subsubsection{Exponentialfunktion}
+$y=f(x)=a\; (a>0, x\in \mathbb{R})$
+\begin{itemize}
+\item Wichtig: Potenzgesetze, z.B. $a^{x_1}\cdot a^{x_2}=a^{x_1+x_2}$ usw.
+\item Besondere Bedeutung besitzt die Funktion $y=e^x$ ($x\in \mathbb{R}$ mit $e=\lim_{x\to \infty} \left( 1+\frac{1}{n}\right)^n=2,7182...$
+\end{itemize}
+\subsubsection{Hyperbelfunktion}
+\paragraph{Def. 5:}Hyperbolicus
+\begin{itemize}
+\item $y=\cosh x := \frac{1}{2}(e^x+e^{-x}) \quad  (x \in \mathbb{R})$
+\item $y=\sinh x := \frac{1}{2}(e^x-e^{-x}) \quad  (x \in \mathbb{R})$
+\item $y=\tanh x := \frac{\sinh x}{\cosh x} \quad  (x \in \mathbb{R})$
+\item $y=\coth x := \frac{1}{\tanh x} \quad  (x \not = 0)$
+\end{itemize}
+Wichtig: $\cosh^2 x-\sinh^2 x = 1$\\
+Fourier: $y=\cosh x$ ist gerade, alle anderen Hyperbelfunktionen ungerade.
+\subsection{Umkehrfunktionen}
+\begin{itemize}
+\item Zur Erinnerung: $y=f(x), x\in Db(f)$ heißt injektiv (umkehrbar eindeutig), wenn es zu jedem Bild $y \in Wb(f)$ genau ein Urbild $x\in Db(f)$ mit $y=f(x)$ gibt. D.h.:\\
+$\underbrace{y}_{\in Wb(f)} \to \underbrace{x}_{\in Db(f)} =: f^{-1}(y)$\\
+Die dadurch erklärte Funktion $f^{-1}$ („f oben -1“) ist die Umkehrfunktion von $f$.\\
+Es gilt: $\boxed{Db\left(f^{-1}\right) = Wb(f)}, \; Wb\left( f^{-1}\right)= Db(f)$
 \item Bilden der Umkehrfunktion zu $y=f(x)$, $x \in Db(f)$:
 \begin{enumerate}
 \item Auflösen der Funktionsgleichung nach $x$: $x=:f^{-1}(y)$ (falls dies eindeutig möglich ist, andernfalls existiert $f^{-1}$ nicht!)
@@ -165,4 +222,4 @@ Aus der Def. der Hyberbelfunktionen (Def. 5) folgt:\\
 $arsinh\; x = ln (x+\sqrt{x^2+1})$\\
 $artanh\; x=\frac{1}{2}ln\left(\frac{1+x}{1-x}\right)$\\
 $arcosh\; x = ln (x+\sqrt{x^2+1}$\\
-$arcoth\; x = \frac{1}{2}ln\left(\frac{x+1}{x-1}\right)$\textsl{•}
+$arcoth\; x = \frac{1}{2}ln\left(\frac{x+1}{x-1}\right)$

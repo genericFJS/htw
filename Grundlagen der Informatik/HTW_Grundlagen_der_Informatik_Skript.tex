@@ -1922,7 +1922,7 @@ Idee: Für ein empfangenes Wort $w$ suchen wir ein Codewort $v$, so dass der Abs
 \node [circle] at (7.8,3.6) {$\bullet$};
 \node [below left]at (7.8,3.6) {$w$};
 \end{tikzpicture}
-\paragraph{Def.:} Für Wörter $v,v'\in \{0,1\}^n$ ist der \emph{Hamming}-Abstand $d(v,v')$ die Anzahl Stellen, in denen sich $v,v'$ unterscheiden. Der \emph{Minimalabstand} eines Codes $C$ ist $min\{d(v,v')|v,v'\in C, \; v\not = v'\}$.
+\paragraph{Def.:} Für Wörter $v,v'\in \{0,1\}^n$ ist der \emph{Hamming}-Abstand $d(v,v')$ die Anzahl Stellen, in denen sich $v,v'$ unterscheiden. Der \emph{Minimalabstand} eines Codes $C$ ist $d(C)=min\{d(v,v')|v,v'\in C, \; v\not = v'\}$\footnote{$d(u,v)=\sum d(u_i, v_i)=d(u-v,0)$}.
 \subparagraph{Bsp.:} Parity-Check-Code\\
 $d(0101,1010)=4$ (Codewörter unterscheiden sich in allen 4 Stellen)\\
 $d(0101,0110)=2$ (Codewörter unterscheiden sich an 2 Stellen)\\
@@ -2140,7 +2140,60 @@ $\begin{pmatrix}
 \draw [-latex, red] (-3.5,-2.5) node[below]{nicht erfasst} -- (-3.5,1);
 \end{tikzpicture}
 
-
-\newpage
+\section{Ausblick: Klassische Kryptoverfahren}
+\subsection{Caesar-Chiffre}
+Verschiebechiffre:\\
+Verschiebetabelle, z.B.\\
+\begin{tabular}{c c c c c c c c c c c c c c c c c c c c c c c c c c c}
+A&B&C&D&E&F&...&U&V&W&X&Y&Z\\
+X&Y&Z&A&B&C&...&R&S&T&U&V&W\\
+\end{tabular}\\
+Chiffrierung: Aus DRESDEN wird AOBPABK\\
+Die Chiffrierung und Dechiffrierung lasst sich in der Gruppe $\mathbb{Z}_{26}(+)$ wie folgt darstellen. Dazu werden die Buchstaben von $0$ bis $25$ nummeriert. Der Schlüssel $k$ ist ein Element aus $\mathbb{Z}_{26}$.\\
+Chiffrierung: $E_k(x)=(x+k)mod\;26$ \footnote{E wie encrypt, D wie decrypt}\\
+Dechiffrierung: $D_k(x)=(x-k)mod\;26$\\
+Wesentliche Schwäche des Verfahrens: Es gibt nur 26 Schlüssel. Sicherheit des Verfahrens beruht darauf, dass der Angreifer das Verfahren nicht kennt (Prinzip „Security by Obscurity“).
+\subsection{Vigenère-Verfahren}
+Idee: Mehrere Verschiebechiffren mit unterschiedlichen Schlüsseln kombinieren. Der Schlüssel für das Vigenère-Verfahren ist ein Schlüsselwort (z.B. DRESDEN), wobei jeder Buchstabe des Schlüsselwortes der Verschiebeschlüssel des Caesar-Verfahrens ist.\\
+Verschiebetabelle dazu:\\
+\begin{tabular}{ c| c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c}
+A&A&B&C&D&E&F&...&U&V&W&X&Y&Z\\
+\hline
+B & B & C & D & E &F& G& ...   & W & X & Y & Z &A\\
+C & C &D&E&F&G&H&...&V&W&X&Y&Z&A&B\\
+D & ...\\
+...
+\end{tabular}
+\subparagraph{Bsp.:} \parskp
+\begin{tabular}{l c c c c c c c c c c c c c c }
+Klartext & A&T&T&A&C&K&A&T&D&A&W&N\\
+Schlüssel & L&E&M&O&N&L&E&M&O&N&L&E\\
+Geheimtext & L&X&F&O&P&V&E&F&R&N&H&R
+\end{tabular}\\
+Mathematische Beschreibung durch Operation in $\mathbb{Z}_{26}(+)$:\\
+Sei $K_1, ... ,K_n$ der mehrfach aneinander gelegte Schlüssel, wobei $n$ die Länge der Nachricht ist.\\
+Chiffrierung: $E_k(M_i)=(M_i+K_i)mod\;26$\\
+Dechiffrierung: $D_k(C_i)=(C_i-K_i)mod \; 26$\\
+wobei $M_1, ..., M_n$ die Nachricht und $C_1, ..., C_n$ der Geheimtext sind.\\
+Bestimmung der Schlüssellänge: Dazu gibt es verschiedene Verfahren:
+\begin{itemize}
+\item Folgende Beobachtung: Die gleichen Buchstaben werden mit dem gleichen Verschiebeschlüssel auf den gleichen Geheimbuchstaben abgebildet. In einem genügend langen Text gibt es gleiche Folgen von Klartextbuchstaben, die mit den gleichen Verschiebeschlüsseln auf die gleichen Folgen von Geheimbuchstaben abgebildet werden.
+\subparagraph{Bsp.:} \parskp
+\begin{tabular}{l c c c c c c c c c c c c c c c c c c c c c c  c c c c c c c c c }
+Klartext 		& \tred{CRYPTO}&ISSHORTFOR&\tred{CRYPTO}&GRAPHY\\
+Schlüssel 	& \torange{ABCDAB}&CDABCDABCD&\torange{ABCDAB}&CDABCD\\
+Geheimtext 	& \tred{CSASTP}&KVSIQUTGQU&\tred{CSASTP}&IUAQJB\\
+\end{tabular}\\
+Idee: Im Geheimtext nach lägeren Vorkommen gleicher Folgen suchen, Abstände bestimmen, kgV davon bilden.\\
+Damit lässt sich die Chiffre wie folgt brechen: Schreiben Geheimtext in eine Tabelle der Breite Schlüsselwortlänge\\
+\begin{tabular}{c c c c}
+A &B &C&D\\
+\hline
+C & S & A & S\\
+T & P & K & V\\
+S & I & Q & U
+\end{tabular}\\
+Jede Spalte der Tabelle ist dann eine Verschiebechiffre. In deutschen Texten ist das E der häufigtste Buchstabe. Durch eine Analyse der Häufigkeiten der Buchstaben in jeder Spalte lässt sich der Schlüssel bestimmen.
+\end{itemize}
 \printbibliography
 \end{document}

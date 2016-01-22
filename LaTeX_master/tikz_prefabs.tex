@@ -631,13 +631,17 @@ Struktogramm
 
 Koordinatensystem
 \begin{tikzpicture}[scale=0.5]
+\def \xa {-1};
+\def \xb {1};
+\def \ya {0};
+\def \yb {1};
 % Achsen zeichnen
-\draw[-latex,thick] (-0.2,0) -- (10,0) node[right] {$x$};
-\draw[-latex,thick] (0,-.2) -- (0,5) node[above right] {$y$};
+\draw[-latex,thick] (\xa-0.5,0) -- (\xb+0.5,0) node[right] {$x$};
+\draw[-latex,thick] (0,\ya-.2) -- (0,\yb+0.5) node[above right] {$y$};
 % Achsen beschriften
-\foreach \x in {0,1,2,3,4,5,6,7,8,9}
+\foreach \x in {\xa,...,\xb}
 \draw (\x,-.1) -- (\x,.1) node[below=5pt] {$\scriptstyle\x$};
-\foreach \y in {1,2,3,4}
+\foreach \y in {1,...,\yb}
 \draw (-.1,\y) -- (.1,\y) node[left=5pt] {$\scriptstyle\y$};
 \end{tikzpicture} 
 
