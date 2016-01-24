@@ -16,6 +16,8 @@
 \usepackage{soul, color}	% Kapitälchen, Unterstrichen, Durchgestrichen usw. im Text
 \usepackage{scrlayer-scrpage}	% Kopf-/Fußzeile
 %\usepackage{titleref}
+\usepackage[perpage]{footmisc}	% Fußnotenzählung Seitenweit, nicht Dokumentenweit
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}	% Fußnoten-Symbole anstatt Zahlen
 
 % Mathe usw.
 \usepackage{amssymb}
@@ -34,6 +36,7 @@
 \usetikzlibrary{arrows}
 \usetikzlibrary{arrows.meta}	% Pfeile verändern / vergrößern: \draw[-{>[scale=1.5]}] (-3,5) -> (-3,3);
 \usetikzlibrary{automata,positioning} % Zeilenumbruch im Node node[align=center] {Text\\nächste Zeile}
+\usetikzlibrary{matrix}
 \usetikzlibrary{patterns}	% Schraffierte Füllung
 \tikzstyle{reverseclip}=[insert path={	% Inverser Clip \clip
 	(current page.north east) --
@@ -50,7 +53,7 @@
 %\draw DAS OBJEKT;
 %\end{scope}
 %\end{tikzpicture}
-]
+]	% Achtung: dafür muss doppelt kompliert werden!
 \usepackage{graphpap}	% Grid für Graphen
 
 % Tabular
@@ -106,6 +109,9 @@ literate=%
     {ö}{{\"o}}1
     {~}{{\textasciitilde}}1
 }
+\def\ContinueLineNumber{\lstset{firstnumber=last}} % vor lstlisting. Zum wechsel zum nicht-kontinuierlichen muss wieder \StartLineAt1 eingegeben werden
+\def\StartLineAt#1{\lstset{firstnumber=#1}} % vor lstlisting \StartLineAt30 eingeben, um bei Zeile 30 zu starten
+\let\numberLineAt\StartLineAt
 
 % BibTeX
 \usepackage[backend=bibtex, bibencoding=ascii]{biblatex}	% BibTeX
@@ -163,6 +169,19 @@ urlcolor=green,%
 \definecolor{cyan}{RGB}{0,160,160}
 \definecolor{brown}{RGB}{120,60,10}
 
+\definecolor{itteny}{RGB}{244,229,0}
+\definecolor{ittenyo}{RGB}{253,198,11}
+\definecolor{itteno}{RGB}{241,142,28}
+\definecolor{ittenor}{RGB}{234,98,31}
+\definecolor{ittenr}{RGB}{227,35,34}
+\definecolor{ittenrp}{RGB}{196,3,125}
+\definecolor{ittenp}{RGB}{109,57,139}
+\definecolor{ittenpb}{RGB}{68,78,153}
+\definecolor{ittenb}{RGB}{42,113,176}
+\definecolor{ittenbg}{RGB}{6,150,187}
+\definecolor{itteng}{RGB}{0,142,91}
+\definecolor{ittengy}{RGB}{140,187,38}
+
 % Textfarbe ändern
 \newcommand{\tred}[1]{\textcolor{red}{#1}}
 \newcommand{\tgreen}[1]{\textcolor{green}{#1}}
@@ -183,3 +202,6 @@ urlcolor=green,%
 \newcommand{\mdeg}{^{\circ}}
 
 \newcommand{\nok}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}	% n über k
+\newcommand{\mtr}[1]{\begin{pmatrix}#1\end{pmatrix}}	% Matrix
+\newcommand{\dtr}[1]{\begin{vmatrix}#1\end{vmatrix}}	% Determinante (Betragsmatrix)
+\renewcommand{\vec}[1]{\underline{#1}}	% Vektorschreibweise
