@@ -134,7 +134,15 @@ $y=f(x)=\sqrt{x}+2 \qquad , x \in [0,\infty)$
 \begin{enumerate}
 \item Auflösen nach $x$: $y-2=\sqrt{x}\Rightarrow x=(y-2)^2=f^{-1}(y)$
 \item Vertauschen von $x$ und $y$: $y=f^{-1}(x)=(x-2)^2, Db(f^{-1})=Wb(f)=[2,\infty)$\\
-Abb 101\\
+\begin{tikzpicture}[scale=.7]
+\draw  [-latex](-0.5,0) -- (5.5,0) node[right]{$x$};
+\draw [-latex] (0,-0.5) -- (0,5.5) node[above]{$y$};
+\draw [domain=0:5, samples=150, green] plot (\x, {sqrt(\x)+2}) node[below]{$y=f^{-1}(x)$};
+\draw [domain=2:4.24, purple] plot (\x, {(\x+-2)^2}) node[left]{$y=f(x)$};
+\draw [blue] (-.25,-.25) node[below left]{$y=x$} -- (5,5);
+\draw (2,-.1) node [below] {2}--(2,.1);
+\draw (-.1,2) node [left] {2}--(.1,2);
+\end{tikzpicture}\\
 ! $Db(f^{-1})$ nur $[2,\infty)$, obwohl $(x-2)^2$ für alle $x \in \mathbb{R}$ erklärt ist.
 \end{enumerate}
 
@@ -169,7 +177,18 @@ Speziell: \begin{itemize}
 \item $lg(x):= log_{10}(x)$
 \item $ln(x):= log_e (x)$
 \end{itemize}
-ABB 102
+\begin{tikzpicture}[scale=.7]
+\draw (1,-.1) node [below] {1}--(1,.1);
+\draw (-.1,1) node [left] {1}--(.1,1);
+\draw [dashed] (0,1) -- (1,1) -- (1,0);
+
+\draw  [-latex](-3.5,0) -- (5.5,0) node[right]{$x$};
+\draw [-latex] (0,-3.5) -- (0,5.5) node[above]{$y$};
+\draw [domain=-3:1.6, samples=150] plot (\x, {2.7^\x}) node[right]{$y=a^x$};
+\draw [domain=0.05:4, samples=150, green] plot (\x, {ln(\x)}) node[right]{$y=log_a(x)$};
+
+\draw [blue] (-.25,-.25) -- (5,5);
+\end{tikzpicture}
 \subparagraph{Diskussion:}
 \begin{enumerate}
 \item Log-Gesetze:
@@ -185,8 +204,25 @@ log_c b&=\frac{log_a b}{log_a c}
 \subsubsection{Arcusfunktionen}
 Vorbetrachtung: $y=f(x)=sin\; x (x \in \mathbb{R})$ ist nicht injektiv, also existiert keine Umkehrfunktion.\\
 Aber: $y=sin(x)$, eingeschränkt auf z.B. $\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$ ist injektiv und damit umkehrbar.\\
-ABB 103
-
+\begin{tikzpicture}[scale=.7]
+\draw  [-latex](-6.5,0) -- (6.5,0) node[right]{$x$};
+\draw [-latex] (0,-1.5) -- (0,1.5) node[above]{$y$};
+\draw [domain= -6:6]plot [smooth] (\x, {sin(\x*66)}) node[right]{$y=sin(x)$};
+\draw [dashed, green] (-1.4,-1.2) node [below] {$-\frac{\pi}{2}$}-- (-1.4,1.2);
+\draw [dashed, green] (1.4,-1.2) node [below] {$\frac{\pi}{2}$}-- (1.4,1.2);
+\draw [green] (-1.4,0.05) -- (1.4,0.05);
+\end{tikzpicture}
+\begin{tikzpicture}[scale=1]
+\draw  [-latex](-2,0) -- (2,0) node[right]{$x$};
+\draw [-latex] (0,-2) -- (0,2) node[above]{$y$};
+\begin{scope}[yscale=-1,xscale=1]
+\draw [domain= -1.37:1.37, rotate=90]plot [smooth] (\x, {sin(\x*66)}) node [below left]{$y=arcsin(x)$};
+\end{scope}
+\draw (-1,-0.1) node [below]{-1} -- (-1,0.1);
+\draw (1,-0.1) node [below]{1} -- (1,0.1);
+\draw (-0.1,1.37) -- (0.1,1.37) node[right]{$\tfrac{\pi}{2}$};
+\draw (-0.1,-1.37) -- (0.1,-1.37) node[right]{$-\tfrac{\pi}{2}$};
+\end{tikzpicture}
 \paragraph{Def. 9:} \parskp
 Umkehrfunktionen\\
 \renewcommand{\arraystretch}{1.6}
