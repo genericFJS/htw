@@ -251,9 +251,49 @@ $\curvearrowright x=(1B3,E\overline{6})_{16}$
 Entweder direkte Auswertung von (*) (v.a. beim Dualsystem $\rightarrow$ Addition von 2er-Potenzen) \emph{oder} Klammern in (**) von innen nach außen berechnen (zweckmäßig HORNER-Schema).
 \begin{itemize}
 \item ganzer Teil: beginnend mit $x_p$\\
-ABB1 
+\begin{tikzpicture}[scale=.7]
+\node at (0,2) {$x_p$};
+\node at (0,0) {$x_p$};
+\node at (3,2) {$x_{p-1}$};
+\node at (3,1) {$b\cdot x_p$};
+\node at (3,0) {$b\cdot x_p+x_{p-1}$};
+\node at (6,2) {…};
+\node at (9,0) {…};
+\node at (12,2) {$x_0$};
+\node at (12,0) {Ergebnis};
+
+\draw (-0.5,2.5) -- (-0.5,-0.5);
+\draw (-1.5,0.5) -- (13.5,0.5);
+\node [green] at (-1,1) {$b$};
+\draw [-latex, green] (0.5,0) -- (2,1) node[pos=.5, above]{$\cdot b$};
+\draw [-latex, green] (9.5,0) -- (11,1) node[pos=.5, above]{$\cdot b$};
+
+\draw [-latex, orange] (4.5,2) -- (4.5,0)node[pos=.5, right]{$+$};
+\draw [-latex, orange] (7,2) -- (7,0)node[pos=.5, right]{$+$};
+\draw [-latex, orange] (13,2) -- (13,0)node[pos=.5, right]{$+$};
+\node at (12,1) {…$\cdot b$};
+\end{tikzpicture}
 \item gebrochener Teil: beginnend mit $x_{-q}$\\
-ABB 2
+\begin{tikzpicture}[scale=.7]
+\node at (0,2) {$x_{-q}$};
+\node at (0,0) {$x_{-q}$};
+\node at (3,2) {$x_{-(q-1)}$};
+\node at (3,1) {$b\cdot x_{-q}$};
+\node at (3,0) {$b\cdot x_{-q}+x_{-(q-1)}$};
+\node at (6,2) {…};
+\node at (7,0) {…};
+\node at (7,2) {$x_0$};
+\node at (10,1) {Ergebnis};
+
+\draw (-0.5,2.5) -- (-0.5,-0.5);
+\draw (-1.5,0.5) -- (11.5,0.5);
+\node [green] at (-1,1) {$b^{-1}$};
+\draw [-latex, green] (0.5,0) -- (2,1) node[pos=.5, above]{$\cdot b^{-1}$};
+\draw [-latex, green] (7.5,0) -- (9,1) node[pos=.5, above]{$\cdot b^{-1}$};
+
+\draw [-latex, orange] (4.5,2) -- (4.5,0)node[pos=.5, right]{$+$};
+\draw [-latex, orange] (7.5,2) -- (7.5,0.2)node[pos=.5, right]{$+$};
+\end{tikzpicture}
 \end{itemize}
 $x=(1E2,B8)_{16}$\\
 ganzer Teil:\\
@@ -476,7 +516,24 @@ Sei $x$ eine reele Zahl. Dann heißt $|x|:=\begin{cases}
 x \quad \text{ für } x\geq 0\\
 -x \quad x <0
 \end{cases}$ der (absolute) Betrag von $x$.\\
-ABB 5\\
+\begin{tikzpicture}[scale=.7]
+\def \xa {-1};
+\def \xb {1};
+\def \ya {0};
+\def \yb {1};
+% Achsen zeichnen
+\draw[-latex,thick] (\xa-1.5,0) -- (\xb+1.5,0) node[right] {$x$};
+\draw[-latex,thick] (0,\ya-.2) -- (0,\yb+1.5) node[above right] {$y$};
+% Achsen beschriften
+\foreach \x in {\xa,...,\xb}
+\draw (\x,-.1) -- (\x,.1) node[below=5pt] {$\scriptstyle\x$};
+\foreach \y in {1,...,\yb}
+\draw (-.1,\y) -- (.1,\y) node[left=5pt] {$\scriptstyle\y$};
+
+\draw [dotted](0,1) -- (1,1) -- (1,0);
+
+\draw [red] (2.5,2.5) node[right]{$y=|x|$} -- (0,0) -- (-2.5,2.5);
+\end{tikzpicture}\\
 Vorzeichenfunktion $sgn(x):= \begin{cases}
 1 \quad x>0\\
 0 \quad x=0\\
@@ -485,7 +542,12 @@ Vorzeichenfunktion $sgn(x):= \begin{cases}
 \subparagraph{Diskussion:} Es gilt:
 \begin{enumerate}
 \item $|a-b|$ = „Abstand der Zahlen $a$ und $b$ auf der Zahlengeraden“\\
-ABB 6\\
+\begin{tikzpicture}[scale=.7]
+\draw [-latex] (-7,1.5) -- (0.5,1.5);
+\draw (-5.5,1.25) node[below]{$a$} -- (-5.5,1.75);
+\draw (-0.5,1.25) node[below]{$b$}-- (-0.5,1.75);
+\draw [latex-latex, red](-5.5,2.5) -- (-0.5,2.5) node[pos=.5, above] {$|a-b|$};
+\end{tikzpicture}\\
 (speziell: $|a|$ = „Abstand von $a$ zum Ursprung“)
 \item $a = |a| \cdot sgn (a)$
 \item $|a|=|-a|, |ab|=|a|\cdot |b|, \left|\frac{a}{b}\right|=\frac{|a|}{|b|}$ (falls $b\not = 0$)
@@ -496,7 +558,12 @@ ABB 6\\
 Gesucht sei die Lösungmenge $L$ der reellen Zahlen, die die Ungleichung $|x-1|<3+\frac{1}{2}x$ (*) erfüllen.
 \begin{itemize}
 \item kritische Stelle(n): Nullstellen des Terms innerhalb der Betragsstriche d.h. $x=1 \curvearrowright$ Fallunterscheidung\\
-ABB 7
+\begin{tikzpicture}[scale=.7]
+\draw [-latex] (-7,1.5) -- (0.5,1.5) node[below right]{x};
+\draw (-3.5,1.25) node[below]{$\color{red}1$} -- (-3.5,1.75);
+\node at (-3.5,1.5) [above left] {$\leftarrow$ 1. Fall};
+\node at (-3.5,1.5) [above right] {2. Fall $\rightarrow$};
+\end{tikzpicture}
 \item 1. Fall: $x-1<0$ d.h. $x<1$\\
 in (*): \\
 $\tred{-}(x-1)<3+\frac{1}{2}x \Leftrightarrow \\
@@ -515,7 +582,12 @@ $\curvearrowright L_2 = \{ x| (x\geq 1) \wedge (x <8)\}=[1,8)$
 $\frac{x}{x+1}<1$ (*)
 \begin{itemize}
 \item kritische Stelle(n): Nenner-Nullstellen, hier: $x=-1$.\\
-ABB 7 (äquiv. mit -1)
+\begin{tikzpicture}[scale=.7]
+\draw [-latex] (-7,1.5) -- (0.5,1.5) node[below right]{x};
+\draw (-3.5,1.25) node[below]{$\color{red}-1$} -- (-3.5,1.75);
+\node at (-3.5,1.5) [above left] {$\leftarrow$ 1. Fall};
+\node at (-3.5,1.5) [above right] {2. Fall $\rightarrow$};
+\end{tikzpicture}
 \item 1. Fall: $x<-1$\\
 in (*):\\
 $\Leftrightarrow x>x+1 \Leftrightarrow 0>1$ (Widerspruch)\\
@@ -547,7 +619,17 @@ $x_{1,2}=-\frac{3}{2}\pm \sqrt{\frac{9}{4}+10}=\begin{cases}
 2
 \end{cases}$\\
 $\curvearrowright$ Grobskizze von $y=f(x)$ (Parabel, nach oben geöffnet)\\
-ABB 81\\
+\begin{tikzpicture}[scale=.75]
+\draw [-latex] (-6,0) -- (3,0) node [right]{$x$};
+\draw [-latex] (0,-.25) -- (0,5) node [right] {$y$};
+\begin{scope}[shift={(-1.5,-1.5)}]
+\node at (0,0) {};
+\draw[domain=-6:6,smooth] plot (\x,{1/8*\x*\x});
+\end{scope}
+\draw (-5,0.25) -- (-5,-0.25) node[below]{$-5$};
+\draw (2,0.25) -- (2,-0.25) node[below]{$2$};
+\draw [red] (-5,0.1) -- (2,0.1);
+\end{tikzpicture}\\
 $\tred{\curvearrowright} L=(-5,2)$
 
 \paragraph{Schranken und Grenzen}
@@ -568,7 +650,20 @@ kleinste obere Schranke: $sup \; M = 2= max \; M$
 \item \emph{untere Schranken}: $-31$, $0$, $0,99$ usw.\\
 größte untere Schranke: $inf\; M =1$ ($1 \not \in M \curvearrowright min \; M$ existiert nicht)
 \end{itemize}
-ABB 82
+\begin{tikzpicture}[scale=.7]
+\draw (-1,0) -- (9,0){};
+\draw (2,0.25) node[above, align=center]{$inf\;M$\\$\downarrow$} -- (2,-0.25) node[below]{$1$};
+\draw (6,0.25) node[above, align=center]{$sup\;M$\\$=max\; M$\\$\downarrow$} -- (6,-0.25) node[below]{$2$};
+\foreach \x in {2.5,3,...,5.5}{
+\fill [red] (\x,0) circle[radius=2pt];
+}
+\foreach \x in {-.5,0,...,1.5}{
+\draw [orange](\x,0.25) -- (\x,-0.25);
+\draw [purple] (\x+7,0.25) -- (\x+7,-0.25);
+}
+\node [below left, orange, align=right] at (-0.5,0) {untere \\Schranken};
+\node [below right, purple, align=left] at (8.5,0) {obere \\Schranken};
+\end{tikzpicture}
 
 \subsection{Komplexe Zahlen}
 
@@ -590,7 +685,21 @@ Die Menge $\mathbb{C}$ wird mit diesen Operationen zum \emph{Körper der komplex
 \item Auf $\mathbb{C}$ gibt es keine natürliche Ordnungsrelation.\\
 Veranschaulichung: \emph{GAUSSsche Zahlenebene}\\
 Zahl $z \leftrightarrow$ Punkt $(x,y) \leftrightarrow$ Vektor $\overrightarrow{OP}$\\
-ABB 83
+\begin{tikzpicture}[scale=.7]
+\draw [-latex] (-1,0) -- (5,0) node[right]{$Re$};
+\draw [-latex] (0,-4) -- (0,4) node[above]{$Im$};
+
+\draw [dashed] (0,3) node[left]{$y$} -- (3,3) -- (3,0) node [below right]{$x$};
+\fill (3,3) circle[radius=3pt] node [right]{$z=x+i\, y$};
+\draw [-latex] (0,0) -- (3,3) node[pos=0.5, above left]{$|z|$};
+
+\draw [-latex] (0,0) ++(0:1) arc (0:45:1) node [pos=.5, right]{$\varphi$};
+
+\draw [dashed, orange] (0,-3) node[left]{$-y$} --(3,-3) -- (3,0);
+\fill [orange] (3,-3) circle[radius=3pt] node [right]{$\overline{z}$};
+
+\draw [-latex, orange] (0,0) -- (3,-3) ;
+\end{tikzpicture}
 \begin{itemize}
 \item \emph{Betrag} von $z$: \\
 $|z|=\sqrt{x^2+y^2}$
@@ -613,7 +722,21 @@ $\boxed{ Arg (z)= \begin{cases}
 \end{itemize}
 \subparagraph{Bsp. 18:} \parskp
 $z_1 = 3 + 4i$, $z_2=-12-5i$\\
-ABB 84
+\begin{tikzpicture}[scale=.5]
+\draw [-latex] (-13,0) -- (4,0) node[right]{$Re$};
+\draw [-latex] (0,-6) -- (0,5) node[above]{$Im$};
+
+\draw [dashed] (0,4) node[left]{$4$} -- (3,4) -- (3,0) node [below]{$3$};
+\fill (3,4) circle[radius=3pt] node [right]{$z_1$};
+\draw [-latex] (0,0) -- (3,4) ;
+
+\draw [dashed] (0,-5) node[right]{$-5$} -- (-12,-5) -- (-12,0) node [above]{$-12$};
+\fill (-12,-5) circle[radius=3pt] node [left]{$z_2$};
+\draw [-latex] (0,0) -- (-12,-5) ;
+
+\draw [-latex, orange] (0,0) ++(0:1) arc (0:53:1) node [pos=.5, right]{$\varphi_1$};
+\draw [-latex, purple] (0,0) ++(0:1) arc (0:-146:2) node [pos=.5, below]{$\varphi_2$};
+\end{tikzpicture}
 \begin{enumerate}[label=\alph*.)]
 \item Betrag und Hauptargument\\
 $|z_1|=\sqrt{3^2+4^2}=5$\\
@@ -633,7 +756,17 @@ $\frac{z_1}{z_2}=\frac{z_1 \cdot \overline{z_2}}{z_2 \cdot \overline{z_2}}=\frac
 \item EULERsche Form
 \item exponentielle Darstellung
 \end{itemize}
-ABB 91\\
+\begin{tikzpicture}[scale=.7]
+\draw [-latex] (-1,0) -- (4,0) node[right]{$Re$};
+\draw [-latex] (0,-1) -- (0,3) node[above]{$Im$};
+
+\draw [dashed] (0,2) node[left]{$y$} -- (3,2) -- (3,0) node [below right]{$x$};
+\fill (3,2) circle[radius=3pt] node [right]{$z$};
+\draw [-latex] (0,0) -- (3,2) node[pos=0.5, above left]{$|z|$};
+
+\draw [-latex] (0,0) ++(0:1) arc (0:33:1) node [pos=.5, right]{$\varphi$};
+
+\end{tikzpicture}\\
 $\boxed{z=x+iy}$ \qquad (\emph{arithmetische Darstellung})\\
 $x=|z|\cdot cos \varphi$\\
 $y=|z|\cdot sin \varphi$\\
@@ -715,14 +848,38 @@ $z_0=e^{i\cdot 0}=\resultul{1}\\
 z_1= e^{\frac{2}{3}\pi}=cos(\frac{2}{3}\pi)+i\; sin (\frac{2}{3}\pi)=\resultul{-\frac{1}{2}+\frac{1}{2}\sqrt{3}i}\\
 z_2=e^{i\frac{4}{3}\pi}=cos(\frac{4}{3}\pi)+i\; sin(\frac{4}{3}\pi)=\resultul{-\frac{1}{2}-\frac{1}{2}\sqrt{3}i}$\\
 Allgemein: Lösungen der Gleichung $z^n=b$ teilen Kreis mit Radius $\sqrt[n]{|b|}$ um $0$ in $n$ gleiche Teile.\\
-ABB 92
+\begin{tikzpicture}[scale=.7]
+\draw [-latex] (-2.5,0) -- (4,0) node[right]{$Re$};
+\draw [-latex] (0,-2.5) -- (0,3) node[above]{$Im$};
+
+\draw [gray] (0,0) circle[radius=2];
+\fill [purple](2,0) circle[radius=3pt] node[below right]{$z_0$};
+\fill [purple](-1,1.73) circle[radius=3pt] node[above left]{$z_1$};
+\fill [purple](-1,-1.73) circle[radius=3pt] node[below left]{$z_2$};
+\draw [purple, dashed] (0,0.05) -- (2,0.05);
+\draw [purple, dashed] (0,0) -- (-1,-1.73);
+\draw [purple, dashed] (0,0) -- (-1,1.73);
+\end{tikzpicture}
 \item $z^4=-16=16\cdot e^{i\cdot \pi}$\\
 $z_k=2\cdot e^{i\frac{\pi + k \cdot 2\pi}{4}} \qquad (k=0,1,2,3,4)$\\
 $z_0=2\cdot e^{i\frac{\pi}{4}}=\resultul{\sqrt{2}+\sqrt{2}i}\\
 z_1=2\cdot e^{i\frac{3\pi}{4}}=\resultul{-\sqrt{2}+\sqrt{2}i}\\
 z_2=2\cdot e^{-i\frac{3\pi}{4}}=\resultul{-\sqrt{2}-\sqrt{2}i}\\
 z_3=2\cdot e^{-i\frac{\pi}{4}}=\resultul{\sqrt{2}-\sqrt{2}i}$\\
-ABB 93
+\begin{tikzpicture}[scale=.7]
+\draw [-latex] (-2.5,0) -- (4,0) node[right]{$Re$};
+\draw [-latex] (0,-2.5) -- (0,3) node[above]{$Im$};
+
+\def \xa{1.41};
+
+\draw [gray] (0,0) circle[radius=2];
+\fill [purple](\xa,\xa) circle[radius=3pt] node[above right]{$z_0$};
+\fill [purple](-\xa,\xa) circle[radius=3pt] node[above left]{$z_1$};
+\fill [purple](-\xa,-\xa) circle[radius=3pt] node[below left]{$z_2$};
+\fill [purple](\xa,-\xa) circle[radius=3pt] node[below right]{$z_3$};
+\draw [purple, dashed] (-\xa,-\xa) -- (\xa, \xa);
+\draw [purple, dashed] (\xa,-\xa) -- (-\xa, \xa);
+\end{tikzpicture}
 \end{enumerate}
 Anwendung: \\
 Faktorisierung des Polynoms $p(x)=x^4+16$
@@ -748,13 +905,33 @@ $Z:= R_ges = R+i\cdot X$\\
 Wirkwiderstand $R$, Blindwiderstand $X$, Scheinwiderstand $|Z|$, Leitwert $Y=\frac{1}{Z}$
 
 \subparagraph{Bsp. 22:} \parskp
-ABB 94\\
+\begin{tikzpicture}[scale=.4]
+\draw  (-6,1.5) rectangle (-5,-1.5);
+\draw (-1.5,-1.5) -- (-1.5,-3.5);
+\draw (-1,-1.5) -- (-1,-3.5);
+
+\draw  plot[smooth, tension=1] coordinates {(1.5,-2.5) (2,-2) (2.5,-2.5)};
+\draw  plot[smooth, tension=1] coordinates {(2.5,-2.5) (3,-2) (3.5,-2.5)};
+\draw  plot[smooth, tension=1] coordinates {(3.5,-2.5) (4,-2) (4.5,-2.5)};
+\draw  plot[smooth, tension=1] coordinates {(4.5,-2.5) (5,-2) (5.5,-2.5)};
+\draw (-5.5,-1.5) -- (-5.5,-2.5) -- (-1.5,-2.5);
+\draw (-1,-2.5) -- (1.5,-2.5);
+\draw (5.5,-2.5) -- (7,-2.5) -- (7,3.5) -- (1.7,3.5);
+\draw (0.3,3.5) -- (-5.5,3.5) -- (-5.5,1.5);
+
+\draw (1.5,3.5) circle[radius=.2];
+\draw (0.5,3.5) circle[radius=.2];
+\node at (1,4.5) {$\sim 220V, 50Hz$};
+\node at (-6,0) [left]{$R$};
+\node at (-1.25,-4.5) {$C$};
+\node at (3.5,-3.5) {$L$};
+\end{tikzpicture}\\
 $R=100 \Omega, C = 20 \mu F=20\cdot 10^{-6}\frac{As}{V}, L=1H=1 \frac{Vs}{A}, \omega = 2\pi \cdot \underbrace{50 \frac{1}{s}}_{f}$\\
 Gesucht ist der Gesamtwiderstand $Z$.\\
 $Z=R + R_C + R_L = R+i \omega L + \frac{1}{i \omega C}=R+i(\omega L - \frac{1}{\omega C})$\\
-$Z=(\tblue{100}+\torange{155,04}i)\Omega = \tgreen{184,44} \cdot e^{i\cdot 57,17^{\circ}}\Omega$\\
+$Z=(\tblue{100}+\torange{155,04}i)\Omega = \tgreen{184,44} \cdot e^{i\cdot \tpurple{57,17^{\circ}}}\Omega$\\
 $\curvearrowright$ \\
 Wirkwiderstand: $\tblue{Re(Z)}=100 \Omega$\\
 Blindwiderstand: $\torange{Im(Z)}=155,04 \Omega$\\
-Scheinwiederstand: $\tgreen{|Z|}=184,44 \Omega$\\
+Scheinwiderstand: $\tgreen{|Z|}=184,44 \Omega$\\
 Phasenverschiebung: $\tpurple{Arg(Z)}=57,17^{\circ}$
