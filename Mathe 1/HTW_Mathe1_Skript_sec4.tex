@@ -2,7 +2,8 @@
 \subsubsection{Polynome}
 \paragraph{Def. 1:} \parskp
 $y=f(x)=a_n\; x^n+a_{n-1}\;x^{n-1}+...+a_2\; x^2+a_1\; x+a_0$ mit $(a_0, ..., a_n \in \mathbb{R}, x\in \mathbb{R})$ heißt ganze rationale Funktion oder \emph{Polynom} vom Grad $n$ (falls $a_n \not = 0$).\\
-Zur Beschreibung der Funktionswerte zweckmäßig: HORNER-Schema (vgl. Stellenwertsysteme \ref{sec:Stellenwertsysteme})\\
+Zur Beschreibung der Funktionswerte zweckmäßig: HORNER-Schema\\
+(vgl. Stellenwertsysteme  \ref{Stellenwertsysteme})\\
 \begin{tabular}{r | c c c c c c}
  & $a_n$ & $a_{n-1}$ & $ a_{n-2}$ & ... & $a_1$ & $a_0$\\
 $x_0$ &  & $b_{n-1}\cdot x_0$ & $b_{n-2}\cdot x_0$ & ... & $b_1 \cdot x_0$ & $b_0\cdot x_0$ \\
@@ -29,7 +30,7 @@ Es sei $f(x)=p_n(x) = a_n \; x^n + ... + a_0$ ein Polynom vom Grad $n$ (d.h. $a_
 \item Falls in der Linearfaktorzerlegung der Faktor $(x-x_0)$ genau $k$-mal ($1\geq k \geq n$) vorkommt, so heißt $x_0$ \emph{$k$-fache Nullstelle} (Nullstelle der Vielfachheit $k$).
 \item Nichtreelle Nullstellen sind möglich, sie treten stets paarweise als konjugiert komplexe Zahlen auf ($x_0, \overline{x_0})$). In diesem Falle Zusammenfassung der Linearfaktoren zu reellen quadratischen Faktoren möglich: $(x-x_0)\cdot (x-\overline{x_0})=x^2-(x_0 + \overline{x_0})x + x_0 \cdot \overline{x_0}=x^2-2\cdot Re(x_0) \cdot x + |x_0|^2$
 \item Falls $a_0, a_1, ... , a_n$ ganze Zahlen sind, dann sind ganzzahlige Nullstellen Teiler von $a_0$ (falls vorhanden).
-\item Allgemeine Methoden zur Nullstellenbestimmung später (Kap. 3 \ref{Kap.3})
+\item Allgemeine Methoden zur Nullstellenbestimmung später (Kap. 3 \ref{sec:3})
 \end{enumerate}
 
 \subparagraph{Bsp. 2:} \parskp
