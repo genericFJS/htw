@@ -1495,7 +1495,18 @@ va_start(ap, la);
 // la: Last Argument (letzter Parameter mit Typ und Namen vor ...)
 printf("Name: %s, MatrNr: %d \n", Stud.name, Stud.MatrNr); 
 \end{lstlisting}
-// ABB 10
+\begin{tikzpicture}[scale=.4]
+\draw  (0,4) rectangle (6,2)node[pos=.5]{MatrNr.};
+\draw  (0,0) rectangle (6,2)node[pos=.5]{Name};
+\draw  (6,-2) rectangle (0,0);
+\draw  (12,1) rectangle (18,-1)node[pos=.5]{Max Otto $\emptyset$};
+\draw [-latex] plot[smooth, tension=.7] coordinates {(5,1) (7.5,1) (10,0) (12.5,0)};
+\draw [-latex] (7,-1) node[right]{ap} -- (5,-1);
+\draw [-latex] plot[smooth, tension=.7] coordinates {(7,-0.5) (7.25,0) (7,0.5)};
+\draw [-latex, dashed] plot[smooth, tension=.7] coordinates {(7.5,0) (10,-1.5) (13.5,-4.5)} node[right, align=left]{ap wandert weiter\\ bei $va\_arg()$};
+\draw [-latex] (2,-1) -- (-6,-1) -- (-6,0.5) node[above]{printf("Name...};
+\fill (2.5,-1) circle[radius=.2];
+\end{tikzpicture}
 \ContinueLineNumber
 \begin{lstlisting}[language=C]
 x=va_arg(ap, type);
