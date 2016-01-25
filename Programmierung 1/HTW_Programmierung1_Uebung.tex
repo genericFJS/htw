@@ -438,6 +438,29 @@ Union:
 Datensätze werden im Vergleich zum Struct übereinander geschrieben.
 
 \section{Listen}
+\begin{tikzpicture}[scale=.4]
+\draw  (0,4) rectangle (6,6);
+\node [right] at (0,5) {first};
+\draw  (0,2)rectangle (6,4);
+\node [right] at (0,3) {last};
+\draw  (0,0) rectangle (6,2);
+\node at (0,1) [right] {current};
+\draw  (11,6) rectangle (17,4);
+\draw  (11,4) rectangle (17,2) node[pos=.5]{Max};
+\draw  (22,6) rectangle (28,4);
+\draw  (22,4) rectangle (28,2) node[pos=.5]{Moritz};
+
+\draw [decorate, decoration={brace, amplitude=5pt}] (6,-1) -- (0,-1) node[pos=.5,below=.1]{$tList$};
+\draw [decorate, decoration={brace, amplitude=5pt}] (17,-1) -- (11,-1) node[pos=.5,below=.1]{$TCNCT$};
+\fill (4,5) circle[radius=.2];
+\fill (25,5) circle[radius=.2];
+\fill (14,5) circle[radius=.2];
+\fill (4,1) circle[radius=.2];
+\fill (4,3) circle[radius=.2];
+\draw [-latex] (5,5) -- (13,5);
+\draw [-latex] plot[smooth, tension=.7] coordinates {(5,3) (8,4) (11,7) (19.5,7)  (24,5.5)};
+\draw [-latex] (15,5) -- (24,5);
+\end{tikzpicture}
 \paragraph{Implementation 1}\parskp
 list.h:
 \begin{lstlisting}[language=C]
@@ -530,6 +553,31 @@ Vorgehen bei malloc/fopen usw. immer:
 Unterschied: Offene Liste und Ringliste. Offene Liste startet mit NULL-Zeigern.
 
 \paragraph{Implementation 2} (Doppelt-verkettte Ringlist)\\
+\begin{tikzpicture}[scale=.4]
+\draw  (0,4) rectangle (6,6);
+\node [right] at (0,5) {next};
+\draw  (0,2)rectangle (6,4);
+\node [right] at (0,3) {previous};
+\draw  (0,0) rectangle (6,2) node[pos=.5]{};
+\fill (4.5,5) circle[radius=.2];
+\fill (25,5) circle[radius=.2];
+\fill (14,5) circle[radius=.2];
+\fill (4.5,3) circle[radius=.2];
+\fill (14,3) circle[radius=.2];
+\fill (25,3) circle[radius=.2];
+\draw [-latex] (5.5,5) -- (13,5);
+\draw [-latex] (15,5) -- (24,5);
+\draw  (11,6) rectangle (17,4);
+\draw  (11,4) rectangle (17,2);
+\draw  (11,2) rectangle (17,0) node[pos=.5]{Hans};
+\draw  (22,6) rectangle (28,4);
+\draw  (22,4) rectangle (28,2);
+\draw  (22,2) rectangle (28,0) node[pos=.5]{Anna};
+\draw [-latex] (26,5) -- (29,5) -- (29,7) -- (-2,7) -- (-2,5) -- (-1,5);
+\draw [-latex] (13,3) -- (5.5,3);
+\draw [-latex] (24,3) -- (15,3);
+\draw [-latex] (-1,3) -- (-2,3) -- (-2,-1) -- (29,-1) -- (29,3) -- (26,3);
+\end{tikzpicture}\\
 Vorteil: Jedes Element hat einen Vorgänger und einen Nachfolger. Dadurch reicht eine Funktion, die nach einem Element ein neues einfügen kann. Das kann an beliebiger Stelle passieren.\\
 list.h\\
 
