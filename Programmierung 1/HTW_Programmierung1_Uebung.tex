@@ -438,6 +438,7 @@ Union:
 Datensätze werden im Vergleich zum Struct übereinander geschrieben.
 
 \section{Listen}
+\paragraph{Implementation 1}(Ringliste)
 \begin{tikzpicture}[scale=.4]
 \draw  (0,4) rectangle (6,6);
 \node [right] at (0,5) {first};
@@ -460,8 +461,7 @@ Datensätze werden im Vergleich zum Struct übereinander geschrieben.
 \draw [-latex] (5,5) -- (13,5);
 \draw [-latex] plot[smooth, tension=.7] coordinates {(5,3) (8,4) (11,7) (19.5,7)  (24,5.5)};
 \draw [-latex] (15,5) -- (24,5);
-\end{tikzpicture}
-\paragraph{Implementation 1}\parskp
+\end{tikzpicture}\\
 list.h:
 \begin{lstlisting}[language=C]
 // Strukturtyp für Konnektor (Element mit Inhalt):
@@ -552,7 +552,7 @@ Vorgehen bei malloc/fopen usw. immer:
 
 Unterschied: Offene Liste und Ringliste. Offene Liste startet mit NULL-Zeigern.
 
-\paragraph{Implementation 2} (Doppelt-verkettte Ringlist)\\
+\paragraph{Implementation 2} (Doppelt-verkettete Ringlist)\\
 \begin{tikzpicture}[scale=.4]
 \draw  (0,4) rectangle (6,6);
 \node [right] at (0,5) {next};
@@ -581,6 +581,171 @@ Unterschied: Offene Liste und Ringliste. Offene Liste startet mit NULL-Zeigern.
 Vorteil: Jedes Element hat einen Vorgänger und einen Nachfolger. Dadurch reicht eine Funktion, die nach einem Element ein neues einfügen kann. Das kann an beliebiger Stelle passieren.\\
 list.h\\
 
+\section{Binäre Bäume}
+
+\begin{tikzpicture}[scale=.2]
+\draw  (0,0) rectangle (3,-3);
+\draw  (3,0) rectangle (6,-3);
+\draw  (0,3) rectangle (6,0) node[pos=.5]{Franz};
+\draw  (5,-8) rectangle (8,-11);
+\draw  (8,-8) rectangle (11,-11);
+\draw  (5,-5) rectangle (11,-8) node[pos=.5]{Paul};
+\draw  (11,-16) rectangle (14,-19);
+\draw  (14,-16) rectangle (17,-19);
+\draw  (11,-13) rectangle (17,-16) node[pos=.5]{Max};
+\draw  (1,-16) rectangle (4,-19);
+\draw  (4,-16) rectangle (7,-19);
+\draw  (1,-13) rectangle (7,-16) node[pos=.5]{Peter};
+\draw  (-8,-8) rectangle (-5,-11);
+\draw  (-5,-8) rectangle (-2,-11);
+\draw  (-8,-5) rectangle (-2,-8) node[pos=.5]{Felix};
+\draw  (-12,-16) rectangle (-9,-19);
+\draw  (-9,-16) rectangle (-6,-19);
+\draw  (-12,-13) rectangle (-6,-16) node[pos=.5]{Erik};
+\draw [-latex] (1.5,-1.5) -- (-5,-4.5);
+\draw [-latex] (4.5,-1.5) -- (8,-4.5);
+\draw [-latex] (6.5,-9.5) -- (4,-12.5);
+\draw [-latex] (9.5,-9.5) -- (14,-12.5);
+\draw [-latex] (-6.5,-9.5) -- (-9,-12.5);
+\end{tikzpicture}
+
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct{
+	char *pdata;
+	// pointer weil: 
+	// char geht nicht: nur ein character
+	// string gibt's noch nicht
+	// char[] ungünstig, weil die Inhalte auch unterschiedlich lang seien könnten.
+	// also char*
+	struct TNODE *pl;
+	struct TNODE *pr;
+} tNode
+
+tNode treeInit={};
+
+char* data[]={"moritz", "max", "melli", "albert", "hans", "peter", "malte",
+							"maximilian", "james", "johannes" , "paul",  NULL);
+tNode *pTree;
+char buf[128];
+
+void addToTree(tNode *pt, char* pdata){
+	if(pt->pdata == NULL){ // im Falle, dass noch kein Node existiert
+		pt->pdata=pdata;
+	} else {
+		if (strcmp(pt->pdata, pdata)>0){
+			//links
+			if(pt->pl == NULL){
+				pt->pl = malloc(sizeof(tNode));
+				*(pt->pl) = treeInit;
+				attToTree(pt->pl,pdata);
+			}
+		} else {
+			//recht
+			if(pt->pr == NULL){
+				pt->pr = malloc(sizeof(tNode));
+				*(pt->pr) = treeInit;
+				attToTree(pt->pl,pdata);
+			}
+		}
+	}
+}
+
+void dispTree(tNode *pt){
+	if (pt->pl != NULL) dispTree(pt->pl);
+	puts(pt-pdata);
+	if (pt->pr != NULL) dispTree(pt->pr);
+}
+
+int main(){
+	char *ptmp;
+	char **p=data;
+	// erstes Node erstellen (leer):
+	pTree = malloc(sizeof(tNode));
+	*pTree = treeInit;
+	
+	while  (*p){
+		addToTree(pTree, *p); 
+		p++;
+	}
+	
+	dispTree(pTree);
+}
+\end{lstlisting}
+
+Alternativ mit array, void pdata (Funktionspointer) usw.:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct{
+	void *pdata;
+	struct TNODE* px[2];
+} tNode
+
+tNode treeInit={};
+
+char* data[]={"moritz", "max", "melli", "albert", "hans", "peter", "malte",
+							"maximilian", "james", "johannes" , "paul",  NULL);
+tNode *pTree;
+char buf[128];
+
+int mycmp(void*p1, void*p2){
+	return (strcmp((char*)p1, (char*)p2>0)?0:1;
+}
+
+void addToTree(tNode *pt, void* pdata,  int (*fcmp)(void*, void*)){
+	int i;
+	if(pt->pdata == NULL){
+		pt->pdata=pdata;
+	} else {
+		i=fcmp(pt->pdata, pdata);
+			if(pt->px[i] == NULL){
+				pt->px[i] = malloc(sizeof(tNode));
+				*(pt->px[i]) = treeInit;
+			}
+			attToTree(pt->px[i],pdata, mycmp);
+	}
+}
+
+void mydisp(void *pdata){
+	puts((char*)pdata);
+}
+
+void dispTree(tNode *pt, void (*putx)(void*)){
+	if (pt->px[0] != NULL) dispTree(pt->px[0], putx);
+	putx(pt-pdata);
+	if (pt->px[1] != NULL) dispTree(pt->px[1], putx);
+}
+
+int main(){
+	char *ptmp;
+	char **p=data;
+	// erstes Node erstellen (leer):
+	pTree = malloc(sizeof(tNode));
+	*pTree = treeInit;
+	
+	while  (*p){
+		addToTree(pTree, *p, mycmp); 
+		p++;
+	}
+	
+	dispTree(pTree, mydisp);
+
+	while (1){
+		fgets(buf,128,stdin);
+		buf[strlen(buf)-1]=0;
+		ptmp=malloc(strlen(buf)+1);
+		strcpy(ptmp,buf);
+		puts("==========");
+		addToTree(pTree, ptmp, mycmp);
+		dispTree(pTree, mydisp);
+}
+\end{lstlisting}
 
 \newpage
 %\printbibliography

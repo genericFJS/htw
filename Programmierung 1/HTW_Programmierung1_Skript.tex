@@ -19,7 +19,9 @@
 \pagenumbering{arabic}
 \section*{Hinweise}
 
-Zugelassene Hilfsmittel Klausur: Spickzettel A-4 Blatt, doppelseitig (, man-page c++.com)
+Zugelassene Hilfsmittel Klausur: Spickzettel A-4 Blatt, doppelseitig (, man-page c++.com)\\
+VarArg nicht Prüfungsinhalt, da kein Praktikum dazu\\
+Beleg abzugeben bis spätestens: 28.02. per Mail an beck@informatik.htw-dresden.de (Mail-Text: Studiengruppe + s-Nummer, Anhang: Quelldateien, Readme oder link zu Datei(en) in publichtml)
 
 \section{Einführung}
 
@@ -1609,6 +1611,105 @@ In librecout.c:
 // sudo cp recout.h /usr/local/include
 \end{lstlisting}
 
+\section{CGI}
+http://141.56.64.101/cgi-bin/cam.cgi\\
+CGI Programm mit dem ein Text (über Telefon-Baustein) an ein entferntes anderes Telefon-Baustein gesendet wird (von dem das dan interpretiert wird)\bigskip\\
+\emph{smslv.html} in \emph{cgi-bin}
+\begin{lstlisting}[language=html]
+<html>
+<head>
+	<title> sms cgi 27.01.2016 </title>
+</head>
+<body>
+	<h3>snd sms from rasperry</h3>
+	<form name "smsForm" action="smslv.cgi" METHODE="POST" id="smsform">
+	<table cellpadding="4" cellspacing="0">
+		<tr>
+			<td style="width:100px"><label>to PhoneNr</label></td>			
+			<td style="width:600px"><input type="text" name="smsToPhone"></input></td>
+		</tr>
+		<tr>
+			<td style="width:100px"><label>Text</label></td>
+			<td style="width:600px"><textarea rows="2" cols="80" 
+						name="smsText" id="smsForm"></textarea></td>		
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="submit" value="Senden"></input></td>
+		</tr>
+	</table>
+	</form>
+</body>
+</html>
+\end{lstlisting}
+\emph{smslv.c} in \emph{cgi-bin}
+\begin{lstlisting}[language=C]
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
+FILE *f, *fsms;
+char param[256];
+char phone[20];
+char text[256];
+char buf[256];
+char *p, *q;
+
+#ifdef DEBUG
+#define xprintf(x) printf x
+#else 
+#define xprintf(x)
+#endif
+
+int readText(char *p, char *q){
+	int j;
+	for (j=0; *p!=0; p++, j++)
+	switch (*p){
+		case '+': q[j]=' '; break;
+		case '%': p++; q[j]=(char)strtol(p,&p,16); break;
+		default: q[j]=*p; break;
+	}
+	q[j]=0;
+	return j-1;
+}
+
+int main(){
+	
+	puts("Content-Type: text/html\n\n");
+	fgets(param,256,stdin);	// html-Formulardaten landen in stdin
+	if (strlen(param,)>2){
+		xprintf(("Query: %s<br>", param))
+		q=phone;
+		// Telefonnummer holen:
+		p=strstr(param,"smsToPhone=")+strlen("smsToPhone="); // strstr: suche im String
+		// +strlen(): nicht auf den Anfang des Textes zeigend,
+		// sondern auf die erste Zahl der Nummer (also nach dem Text)
+		while(*p && *p!='&'){
+			*q++ = *p++
+		}
+		xprintf(("Phone: %s<br>", phone));
+		// Text holen:
+		p=strstr(param,"smsText=")+strlen("smsText=");
+		readText(p,text);
+		xprintf(("Text: %s<br>", text);
+		
+		fsms=fopen("/var/spool/gnokii/sms.txt","wt");
+		if (fsms){
+			fprintf("%s\n%s", phone, text);
+			fclose(fsms);
+		} else{
+			printf("Could not open sms.txt");
+		}
+	}
+	f=fopen("smslv.html","rt");
+	if (f) {
+		while(fgets(buf,256,f))
+			puts(buf);
+	} else{
+		puts("Could not open smslv.html");
+	}
+	return 0;
+}
+\end{lstlisting}
 
 \end{document}
