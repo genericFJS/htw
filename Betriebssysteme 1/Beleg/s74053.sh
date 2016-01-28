@@ -12,7 +12,7 @@ myerrorP="Der Rechner "$1" ist entweder nicht erreichbar oder die Parameter wurd
 myerrorU="Der Nutzer "$2" existiert nicht an "$1" oder die Parameter wurden falsch eingegeben.\n"
 myerrorM="Es wurde ein falsches Monatskürzel eingeben oder die Parameter wurden falsch eingegben.\n"
 mymonths=(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)
-mycolor="\e[32m"
+mycolor="\e[32m" # \e[39m default, \e[32m grün
 myfin="==================\e[39m"
 myclear="                                                             "
 
@@ -133,6 +133,8 @@ calculateOnlineTime (){
   # erneutes Prüfen für isys-Rechner
   if !(isCorrectPC $2)
   then
+    echo -en "$myclear\r"
+    echo "$2 nicht erreichbar. Loginzeit wird nicht berechnet."
     return 1
   fi
   echo -en "$myclear\r"
@@ -202,7 +204,7 @@ displayOnlineTime(){
   fi
   
   echo -en "$myclear\r"
-  echo -e "Gesamte Loginzeit im $3 auf $2:\t$timeSum min ($uDays Tage, $hour0$uHours Stunden, $minute0$uMinutes Minuten)"
+  echo -e "Gesamte Loginzeit im $3 auf $2: $timeSum min ($uDays Tage, $hour0$uHours Stunden, $minute0$uMinutes Minuten)"
 }
 
 # Zeigt die berechnete aktive Zeit des übergebenen Nutzers innerhalb des gegebenen Monats an (für Einzelrechner im Fall 146a)
@@ -225,7 +227,7 @@ displayOnlineTimeUniq(){
   fi
   
   echo -en "$myclear\r"
-  echo -e "Loginzeit im $3 auf $2: $timeSumUniq min ($uDays Tage, $hour0$uHours Stunden, $minute0$uMinutes Minuten)"
+  echo -e "Loginzeit im $3 auf $2:\t$timeSumUniq min ($uDays Tage, $hour0$uHours Stunden, $minute0$uMinutes Minuten)"
 }
 
 # Gebe Nutzerinformationen aus (Aufgabenpunkt 3)
@@ -238,8 +240,10 @@ displayInfo (){
   then
     for i in {1..22}
     do
-      calculateOnlineTime $1 "isys$i" $3
+      if calculateOnlineTime $1 "isys$i" $3
+      then
       displayOnlineTimeUniq $1 "isys$i" $3
+      fi
     done    
     echo $myinter
     displayOnlineTime $1 $2 $3
