@@ -183,7 +183,10 @@ sympy-plots-for-*.tex/
 *.sav
 
 # nicht benötigte Ordner
-Studienbescheinigungen/
 Ordnungen/
-Anerkennung Prüfungsleistung/
 Weiteres/
+
+# ignoriere persönliches
+Studienbescheinigungen/
+Anerkennung Prüfungsleistung/
+Grundlagen der Informatik/PVL.xlsx
