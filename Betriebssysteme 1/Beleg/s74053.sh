@@ -225,7 +225,7 @@ displayOnlineTimeUniq(){
   fi
   
   echo -en "$myclear\r"
-  echo "Aktive Zeit im $3 auf $2: $timeSum min ($uDays Tage, $hour0$uHours Stunden, $minute0$uMinutes Minuten)"
+  echo "Aktive Zeit im $3 auf $2: $timeSumUniq min ($uDays Tage, $hour0$uHours Stunden, $minute0$uMinutes Minuten)"
 }
 
 # Gebe Nutzerinformationen aus (Aufgabenpunkt 3)
@@ -239,14 +239,13 @@ displayInfo (){
     for i in {1..22}
     do
       calculateOnlineTime $1 "isys$i" $3
-	  displayOnlineTimeUniq $1 "isys$i" $3
-	  echo $myinter
+      displayOnlineTimeUniq $1 "isys$i" $3
+      echo $myinter
     done
   else
-    echo "pc"
     calculateOnlineTime $1 $2 $3
+    displayOnlineTime $1 $2 $3
   fi
-  displayOnlineTime $1 $2 $3
   return 1
 }
 
