@@ -7,7 +7,7 @@
 # Einige Ausgaben gesammelt
 mystart="==================\n Beleg von s74053 \n=================="
 myinter="------------------"
-myerror="Eingabeparameter: \$Rechnername \$Nutzerkennzeichen \$Monatskürzel\nMonatskürzel: Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec\n"$myinter
+myerror="Eingabeparameter: \$Rechnername \$Nutzerkennzeichen \$Monatskürzel\nMonatskürzel: Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec\n"
 myerrorP="Der Rechner "$1" ist entweder nicht erreichbar oder die Parameter wurden falsch eingegeben.\n"
 myerrorU="Der Nutzer "$2" existiert nicht an "$1" oder die Parameter wurden falsch eingegeben.\n"
 myerrorM="Es wurde ein falsches Monatskürzel eingeben oder die Parameter wurden falsch eingegben.\n"
