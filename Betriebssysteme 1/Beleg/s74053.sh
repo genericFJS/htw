@@ -45,14 +45,14 @@ isCorrectUser (){
   then
     for i in {1..22}
     do
-      local fingerResult=$(ssh -oStrictHostKeyChecking=no "isys$i" finger -m $1)
-      if [[ $fingerResult == *$1* ]]
+      fingerResult=$(ssh -oStrictHostKeyChecking=no "isys$i" finger -m $1 2>/dev/null)
+      if [[ "$fingerResult" == *$1* ]]
       then
 	return 0
       fi
     done
   else
-    fingerResult=$(ssh -oStrictHostKeyChecking=no $2 finger -m $1)
+    fingerResult=$(ssh -oStrictHostKeyChecking=no $2 finger -m $1 2>/dev/null)
     if [[ $fingerResult == *$1* ]]
     then
       return 0
@@ -165,17 +165,17 @@ calculateOnlineTime (){
     for day in $days
     do
       timeSum=$(echo $timeSum + $day*24*60 | bc)
-      timeSumUniq=$(echo $timeSum + $day*24*60 | bc)
+      timeSumUniq=$(echo $timeSumUniq + $day*24*60 | bc)
     done   
     for hour in $hours
     do
       timeSum=$(echo $timeSum + $hour*60 | bc)
-      timeSumUniq=$(echo $timeSum + $hour*60 | bc)
+      timeSumUniq=$(echo $timeSumUniq + $hour*60 | bc)
     done
     for minute in $minutes
     do
       timeSum=$(echo $timeSum + $minute | bc)
-      timeSumUniq=$(echo $timeSum + $minute | bc)
+      timeSumUniq=$(echo $timeSumUniq + $minute | bc)
     done
   done 
   rm -r $tmpDir 2> /dev/null
@@ -202,7 +202,7 @@ displayOnlineTime(){
   fi
   
   echo -en "$myclear\r"
-  echo "Gesamte aktive Zeit im $3 auf $2: $timeSum min ($uDays Tage, $hour0$uHours Stunden, $minute0$uMinutes Minuten)"
+  echo -e "Gesamte Loginzeit im $3 auf $2:\t$timeSum min ($uDays Tage, $hour0$uHours Stunden, $minute0$uMinutes Minuten)"
 }
 
 # Zeigt die berechnete aktive Zeit des übergebenen Nutzers innerhalb des gegebenen Monats an (für Einzelrechner im Fall 146a)
@@ -225,7 +225,7 @@ displayOnlineTimeUniq(){
   fi
   
   echo -en "$myclear\r"
-  echo "Aktive Zeit im $3 auf $2: $timeSumUniq min ($uDays Tage, $hour0$uHours Stunden, $minute0$uMinutes Minuten)"
+  echo -e "Loginzeit im $3 auf $2: $timeSumUniq min ($uDays Tage, $hour0$uHours Stunden, $minute0$uMinutes Minuten)"
 }
 
 # Gebe Nutzerinformationen aus (Aufgabenpunkt 3)
@@ -240,8 +240,9 @@ displayInfo (){
     do
       calculateOnlineTime $1 "isys$i" $3
       displayOnlineTimeUniq $1 "isys$i" $3
-      echo $myinter
-    done
+    done    
+    echo $myinter
+    displayOnlineTime $1 $2 $3
   else
     calculateOnlineTime $1 $2 $3
     displayOnlineTime $1 $2 $3
