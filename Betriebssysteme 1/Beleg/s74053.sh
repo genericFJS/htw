@@ -17,6 +17,7 @@ myfin="==================\e[39m"
 myclear="                                                             "
 
 timeSum=0
+timeSumUniq=0
 
 # Gibt aus, ob Rechner ein korrekter Rechnername ist (oder Raum 146a)
 # $1: Rechner
@@ -122,6 +123,7 @@ displayName (){
 # $2: Rechner
 # $3: Monatskürzel
 calculateOnlineTime (){    
+  timeSumUniq=0
   local roomPC=""
   if [[ $2 == "isys"* ]]
   then
@@ -163,22 +165,24 @@ calculateOnlineTime (){
     for day in $days
     do
       timeSum=$(echo $timeSum + $day*24*60 | bc)
+      timeSumUniq=$(echo $timeSum + $day*24*60 | bc)
     done   
     for hour in $hours
     do
       timeSum=$(echo $timeSum + $hour*60 | bc)
+      timeSumUniq=$(echo $timeSum + $hour*60 | bc)
     done
     for minute in $minutes
     do
       timeSum=$(echo $timeSum + $minute | bc)
+      timeSumUniq=$(echo $timeSum + $minute | bc)
     done
-    
   done 
   rm -r $tmpDir 2> /dev/null
   return 0
 }
 
-# Zeigt die berechnete aktive Zeit des übergebenen Nutzers innerhalb des gegebenen Monats an
+# Zeigt die berechnete aktive Zeit des übergebenen Nutzers innerhalb des gegebenen Monats an (insgesamt im Fall 146a)
 # $1: NKZ
 # $2: Rechner
 # $3: Monatskürzel
@@ -186,6 +190,29 @@ displayOnlineTime(){
   uDays=$(echo $timeSum/60/24 | bc)
   uHours=$(echo $timeSum/60%24 | bc)
   uMinutes=$(echo $timeSum%60 | bc)
+  local hour0
+  local minute0
+  if [ $uHours -lt 10 ]
+  then 
+    hour0="0"
+  fi
+  if [ $uMinutes -lt 10 ]
+  then 
+    minute0="0"
+  fi
+  
+  echo -en "$myclear\r"
+  echo "Gesamte aktive Zeit im $3 auf $2: $timeSum min ($uDays Tage, $hour0$uHours Stunden, $minute0$uMinutes Minuten)"
+}
+
+# Zeigt die berechnete aktive Zeit des übergebenen Nutzers innerhalb des gegebenen Monats an (für Einzelrechner im Fall 146a)
+# $1: NKZ
+# $2: Rechner
+# $3: Monatskürzel
+displayOnlineTimeUniq(){
+  uDays=$(echo $timeSumUniq/60/24 | bc)
+  uHours=$(echo $timeSumUniq/60%24 | bc)
+  uMinutes=$(echo $timeSumUniq%60 | bc)
   local hour0
   local minute0
   if [ $uHours -lt 10 ]
@@ -212,6 +239,8 @@ displayInfo (){
     for i in {1..22}
     do
       calculateOnlineTime $1 "isys$i" $3
+	  displayOnlineTimeUniq $1 "isys$i" $3
+	  echo $myinter
     done
   else
     echo "pc"
