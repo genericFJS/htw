@@ -2195,5 +2195,44 @@ S & I & Q & U
 \end{tabular}\\
 Jede Spalte der Tabelle ist dann eine Verschiebechiffre. In deutschen Texten ist das E der häufigtste Buchstabe. Durch eine Analyse der Häufigkeiten der Buchstaben in jeder Spalte lässt sich der Schlüssel bestimmen.
 \end{itemize}
+
+\section{Wiederholung}
+\subsection{Beweistechniken}
+\subsubsection{Induktion}
+Anwendbar für Aussagen wie $\forall_n A(n)$
+\begin{itemize}
+\item Induktions-Anfang: $A(1)$ muss wahr sein!
+\item Induktions-Voraussetzung: Es gelte $A(n)$.
+\item Induktions-Schritt: $A(n)\to A(n+1)$
+\end{itemize}
+Also muss gelten $A(1)\vee (A(n)\to A(n+1)) = \top$
+\subsubsection{Beweis durch Widerspruch}
+$A \Leftrightarrow \neg A \to \bot$\\
+Anfang: Angenommen $A$ gilt nicht. Dann Widerspruch suchen.\\
+Negation von $A$? $\rightarrow$ aus $\exists$ wird $\forall$ und anders herum. \\
+Die Beweisführung muss nachvollziehbar sein, sie müssen also auf bekannten Aussagen (aus Vorlesung oder Übung) fundieren.
+\begin{quote}
+„Es ist nicht wie in Gemeinschaftskunde, wo gilt, dass man bei 3 Seiten Text auf jeden Fall Punkte bekommt. Man bekommt nur Punkte für richtige Folgerungen, egal wie lang der Beweis ist.“ (Hollas, 2016)
+\end{quote}
+
+\subsection{Kombinatorik}
+$|A^n|=|A|^n$ (Bspw.: Möglichkeiten ein Zahlenschloss zu öffnen. Herangehensweise: Anzahl Kombinationen=Kreuzprodukt einer Menge)\\
+Bspw.: $|\{0,..,9\}^4|=10^4$\\
+Visualisierung: als Baum. Jeder Knoten hat 10 Knoten/Blätter. Die Gesamtmenge ist dann die Summe aller Blätter\\
+Anderes Beispiel: Zahlenschloss mit 1*alphabetisch und 1*Zahlen:\\
+$|\{a,...,z\}\times \{0,...,9\}= |\{a,...,z\}| \cdot |\{0,...,9\}| =26\cdot 10$ \bigskip\\
+Anders: Auswahl aus einer Menge:\\
+Lotto: $\nok{49}{6}$\\
+Vollständiger Graph: $V=\{1,...,n\}$\\
+Mögliche Anzahl von Knoten: $\nok{|v|}{2}$\\
+Möglichkeiten Anziehsachen: $n+m+1$ (n: Wintermäntel, m: Sommermäntel, 1: gar nichts) (was lässt sich frei/nicht frei kombinieren) vgl. Übungsaufgabe für Kombination von Modulen\\
+$\sum_{k=0}^{n}\nok{n}{k}=2^n$ (Anzahl aller Teilmengen einer n-elementigen Mengen)\medskip\\
+Möglichkeiten Jacken an Kleiderhaken zu hängen (nicht alle Jacken müssen aufgehangen werden): $n$ Kleiderjacken, $k$ Jacken $\Rightarrow$ $(k+1)^n$. Veranschaulichungen: Belegung der Gaderobe als Menge: $\{(h_1,...,h_n)|h_i \in J \cup \{leer\}\}$. Die Mächtigkeit daven ist $(J\cup \{leer\})^n=(|J|+1)^n=(k+1)^n$.\\
+Möglichkeiten 3 Studenten auf 6 Plätze zu verteilen (jeder Student ist einzigartig und muss einen Sitzplatz haben). Möglichkeiten für den ersten Studenten sich einen Sitz auszusuchen: 6. Möglichkeiten für den 2.: 5, für den 3.: 4. Also $6\cdot 5 \cdot 4$
+
+
+
+
+
 \printbibliography
 \end{document}
