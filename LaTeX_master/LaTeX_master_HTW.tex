@@ -1,6 +1,13 @@
-\documentclass[a4paper,11pt, footheight=26pt]{scrartcl}
+\documentclass[a4paper,11pt, footheight=26pt
+%,twoside
+]{scrartcl}
 \usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
-\geometry{a4paper, top=30mm, left=20mm, right=20mm, bottom=22mm,headsep=10mm, footskip=12mm}
+\geometry{a4paper, top=30mm, bottom=22mm,headsep=10mm, footskip=12mm
+, left=20mm, right=20mm
+%, inner=27mm, outer=13mm
+}
+
+% Zeile 2 (,twoside) und 7 (inner=...) für eine Druckversion (doppelseitig) ent-kommentieren (Rand für Hefter)
 
 % Input inkl. Umlaute, Silbentrennung
 \usepackage[T1]{fontenc}
@@ -149,6 +156,7 @@ urlcolor=green,%
 	\pagestyle{scrheadings}
 	\ihead{\includegraphics[height=1.7em]{../LaTeX_master/HTW-Logo.eps}}
 	\ohead{\Dokumententitel}
+	\cfoot{\pagemark}
 	\ofoot{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \Dokumentenautor}}}
 	% Titelseite
 	\title{\includegraphics[width=0.35\textwidth]{../LaTeX_master/HTW-Logo.eps}\\\vspace{0.5em}
