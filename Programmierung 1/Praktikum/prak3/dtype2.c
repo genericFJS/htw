@@ -13,13 +13,13 @@ int main(){
 	signed long	my_sl;
 	unsigned long	my_ul;
 
-	float		my_fl;
-	double		my_db;
+	//float		my_fl;
+	//double		my_db;
 	
 	printf("enter signed char: ");
-	fgets(vBuf,128,stdin); sscanf(vBuf, "%d", &my_sc);
+	fgets(vBuf,128,stdin); sscanf(vBuf, "%c", &my_sc);
 	printf("enter unsigned char: ");
-	fgets(vBuf,128,stdin); sscanf(vBuf, "%u", &my_uc);
+	fgets(vBuf,128,stdin); sscanf(vBuf, "%c", &my_uc);
 	printf("enter signed short: ");
 	fgets(vBuf,128,stdin); sscanf(vBuf, "%hd", &my_ss);
 	printf("enter unsigned short: ");
@@ -43,8 +43,8 @@ int main(){
 	printf("unsinged	short	%p %d %X\n",&my_us, my_us, my_us);
 	printf("signed		int	%p %d %X\n",&my_si, my_si, my_si);
 	printf("unsinged	int	%p %d %X\n",&my_ui, my_ui, my_ui);
-	printf("signed		long	%p %d %X\n",&my_sl, my_sl, my_sl);
-	printf("unsinged	long	%p %d %X\n",&my_ul, my_ul, my_ul);
+	printf("signed		long	%p %ld %lX\n",&my_sl, my_sl, my_sl);
+	printf("unsinged	long	%p %ld %lX\n",&my_ul, my_ul, my_ul);
 	
 	//printf("float				%p %d %X\n",&my_fl, my_fl, my_fl);
 	//printf("double				%p %d %X\n",&my_db, my_db, my_db);
