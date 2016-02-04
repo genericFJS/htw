@@ -182,9 +182,11 @@ sympy-plots-for-*.tex/
 *.bak
 *.sav
 
-# nicht benötigte Ordner
+# nicht benötigtes
 Ordnungen/
 Weiteres/
+*-druckgesamt.pdf
+*-print.pdf
 
 # ignoriere persönliches
 Studienbescheinigungen/
