@@ -4,19 +4,16 @@
 % Definition von Titel, Autor usw.
 \DTitel{Programmierung I}
 \DUntertitel{Vorlesungsskript}
-\DAutor{Falk Jonatan Strube}
+\DAutor{Falk-Jonatan Strube}
 \DNotiz{Vorlesung von Prof. Dr.-Ing. Beck}
 
 \begin{document}
-
-\pagenumbering{Roman}
 
 \maketitle
 \newpage
 \tableofcontents
 \newpage
 
-\pagenumbering{arabic}
 \section*{Hinweise}
 
 Zugelassene Hilfsmittel Klausur: Spickzettel A-4 Blatt, doppelseitig (, man-page c++.com)\\
@@ -25,8 +22,7 @@ Beleg abzugeben bis spätestens: 28.02. per Mail an beck@informatik.htw-dresden.
 
 \section{Einführung}
 
-Bilde Durchschnitt aus folgender Notenübersicht:
-
+Bilde Durchschnitt aus folgender Notenübersicht:\\
 \begin{tabular}{c c}
 Index & Note\\
 \hline
@@ -175,13 +171,53 @@ Bindet Objekt-Datei (xxx.o) mit Librarys zusammen.
 
 \section{Grundlagen von C}
 
-FOLIE „Grundlagen von C“
+\begin{itemize}
+\item Großbuchstaben, Kleinbuchstaben, Ziffern, Sonderzeichen
+\item Ersatzsymbolfolgen (brauchen besondere Compileranweisung
+\item white spaces: 
+\begin{itemize}
+\item Leerzeichen
+\item Zeilenende(\textbackslash n)
+\item Tabulator(\textbackslash t)
+\item vertikaler Tab(\textbackslash v)
+\item Seitenvorschub(\textbackslash f)
+\item Bell(\textbackslash a)
+\item Backspace(\textbackslash b)
+\item Carriage return(\textbackslash r)
+\end{itemize}
+\item Schlüsselwörter:\\
+auto, default, float, long, sizeof, union, break, do, for, register, static, …
+\end{itemize}
 
 \subsection{Eingebaute Datentypen}
-was in Folien grau markiert ist, kann weggelassen auch werden $\Rightarrow$ „unsigned int i;“ = „unsigned i;“
+\begin{tabular}{l | l l l}
+\emph{Natürliche Zahlen} & Bytes & Min & Max\\
+\hline
+unsigned char&1&0&255\\
+unsigned short \textcolor{gray}{int}&2&0&65535\\
+unsigned \textcolor{gray}{int}&4&0&4294967295\\
+unsigned long \textcolor{gray}{int}&4 / 8&0&4294967295\\
+unsigned long long \textcolor{gray}{int}&8&0&1.8...*1019
+\end{tabular}\medskip\\
+\begin{tabular}{l | l l l}
+\emph{Ganze Zahlen}&Bytes&Min&Max\\
+\hline
+signed char&1&-128&127\\
+\textcolor{gray}{signed} short \textcolor{gray}{int}&2&-32768&32767\\
+\textcolor{gray}{signed} int&4&-2147483648&2147483647\\
+\textcolor{gray}{signed} long \textcolor{gray}{int}&4 / 8&-21474836480&2147483647\\
+\textcolor{gray}{signed} long long \textcolor{gray}{int}&8&-9.2*E18&9.2*E18\\
+\end{tabular}\medskip\\
+\begin{tabular}{l | l l l l l}
+\emph{Gebrochene Zahlen}&Bytes&VZ&Exp.&Mant&Wertebereich\\
+\hline
+float&4&1&8&23&1.2E-38 \quad 3.4E+38\\
+double&8&1&11&52&2.3E-308 \quad 1.7E+308\\
+Long double&10&1&&&3.4E-4932 \quad 1.1E+4932\\
+\end{tabular}\medskip\\
+Was grau markiert ist, kann weggelassen auch werden $\Rightarrow$ „unsigned int i;“ = „unsigned i;“
 
-\paragraph{Bsp.:}
-
+\paragraph{Bsp.:} $ $
 \begin{lstlisting}[language=C]
 unsigned int i;	// Variablen-Definition
 i = 12;		// Wertzuweisung
@@ -196,10 +232,35 @@ Erstellung einer Variablen (int i;): \emph{uninitialisierte Variable / Variablen
 Wertbelegung einer Variable während Definition einer Variablen (int i=0;): \emph{Initialisierung}\\
 Wertbelegung zu späterem Zeitpunkt (i=2;): \emph{Wertzuweisung}
 
+\subsection{Operationen}
+Geordnet nach Priorität:\\
+\begin{tabular}{l l l l l l | l}
+&&&&&&Abarbeitung\\
+\hline
+( )&[ ]&->&.&&&li nach re\\
+!&~&-&(…)& cast&&\\
+++&--&*&sizeof&&&re nach li\\
+*&/&\%&&&&li nach re\\
++&-&&&&&li nach re\\
+<<&>>&&&&&li nach re\\
+<&<=&>&>=&&&li nach re\\
+==&!=&&&&&li nach re\\
+\& &&&&&&li nach re\\
+$\hat{}$&&&&&&li nach re\\
+|&&&&&&li nach re\\
+\&\& &&&&&&li nach re\\
+||&&&&&&li nach re\\
+?: &&&&&&li nach re\\
+=&*=&/=&\%=&-=&=&re nach li\\
+$\hat{}$=&|=& < < = & > > = &&& re nach li\\
+,&&&&&&\\
+\end{tabular}
+
+
 \subsection{Ausdrücke}
 Programmiersprachliche Konstruktion zur Berechnung von Werten.
 \subsubsection{Assoziativität}
-(Folie Operatoren: Gewichtung der Operatoren von oben nach unten)\medskip\\
+(siehe Operatoren: Gewichtung der Operatoren von oben nach unten)\medskip\\
 Unäre Operatoren (bspw. $-$ (negativ-Zeichen), $++$ (Inkrementierung) oder Klammern(cast))\\
 Binäre Operatoren (bspw. $+$, $-$ (Rechenzeichen), $<=$ usw.)
 \begin{lstlisting}[language=C]
@@ -386,7 +447,7 @@ int main() {
 }
 \end{lstlisting}
 
-\paragraph{for-Schleife}
+\paragraph{for-Schleife} $ $
 \begin{lstlisting}
 <for-stmnt>:: 'for' '(' <expr>';' <expr>';' <expr> ')' <statement> .
 \end{lstlisting}
@@ -1066,7 +1127,20 @@ free: Speicher wieder freigeben\bigskip\\
 Es kann bspw. auch Speicher in getStud2 (z.B. für den Namen, also *name anstatt name mit entsprechendem alloc in der Fkt.) allociert werden, um Platz zu sparen (oder dynamisch mehr freizugeben). Dann müsste der Speicher entsprechend in einer Schleife auch wieder freigegeben werden.
 
 \section{Dateiarbeit in C}
-FOLIE
+\begin{lstlisting}[language=C]
+FILE * pf;
+pf=fopen("myFile.txt","rt"); // ("Dateiname inkl. Pfad", "Modus")
+\end{lstlisting}
+\begin{tabular}{l | l}
+b/t& Texdatei ([t]) / Binärdatei(b)\\
+\hline 
+r&Zum Lesen öffen\\
+w&Zum Scheiben (überschreiben) öffnen, ggf. erzeugen\\
+a&Zum Schreiben am Dateiende öffnen, ggf. erzeugen\\
+r+&Zum Lesen und Schreiben öffnen (ändern)\\
+w+&Zum Lesen und Schreiben öffen (überschreiben), ggf. erzeugen\\
+a+&Zum Anfügen, Lesen, Erzeugen öffnen, ggf. erzeugen\\
+\end{tabular}
 \paragraph{Als Binärdatei speichern}
 aus tStud Beispiel(st1.c) (jeweils an den entsprechenden Stellen eingefügt):
 \begin{lstlisting}[language=C]
@@ -1308,7 +1382,7 @@ Bsp. ascii.cgi
 \section{Preprozessor}
 
 \subsection{Umwandlung von 3-Zeichenfolgen}
-(siehe Grundelemente-FOLIE). Bspw. ??> o.ä.\\
+(siehe Grundelemente): Bspw. ??> o.ä.\\
 Braucht extra Befehl für gcc.
 
 \subsection{Zeilenverlängerung}

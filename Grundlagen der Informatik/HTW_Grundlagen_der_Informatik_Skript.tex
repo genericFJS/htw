@@ -11,14 +11,10 @@
 
 \begin{document}
 
-\pagenumbering{Roman}
-
 \maketitle
 \newpage
 \tableofcontents
 \newpage
-
-\pagenumbering{arabic}
 
 \section*{Allgemeine Informationen}
 
@@ -165,7 +161,7 @@ $(a^2 \text{ gerade } \Rightarrow a \text{ gerade})$
 
 \emph{Beweis:} Wir zeigen: Wenn $a$ ungerade ist, dann auch $a^2$.
 \begin{itemize}
-\item Aus $a$ ungerade folgt $a=2n-1$ für ein $n$. 
+\item Aus $a$ ungerade folgt $a=2n-1$ für ein $n \in \mathbb{N}$. 
 \item Dann ist $a^2=4 n^2 - 4 n + 1 = \underbrace{4( n^2-n)}_{gerade} + \underbrace{1}_{ungerade}$, 
 \item Aus gerade + ungerade folgt ungerade, woraus $a^2$ ungerade folgt.
 \end{itemize}
@@ -218,7 +214,7 @@ Beispiel Dominosteine: Wenn der erste Stein fällt, fällt auch der Zweite. Und 
 \item[IV] Es gelte $\sum_{k=1}^{n}k=\frac{n(n+1)}{2}$ ist wahr.
 \item[IS] $n \rightarrow n+1$: Zu zeigen: $\sum_{k=1}^{n+1}k=\frac{(n+1)(n+2)}{2}$ Es gilt:
 \begin{align*}
-\sum_{k=1}^{n+1}k&=(\sum_{k=1}^{n}k)+n+1\\
+\sum_{k=1}^{n+1}k&=\left(\sum_{k=1}^{n}k\right)+n+1\\
 &\overset{IV}{=}\frac{n(n+1)}{2}+n+1\\
 &=...=\frac{(n+1)(n+2)}{2}
 \#
@@ -311,7 +307,7 @@ $
 =2 log (2n^2)\\
 = 2 log (2) + 2 log( n^2)\\
 \leq (2log2+2)log(n^2)\\
-= 2 (2log2+2)log(n)
+= 2 (log2+1)log(n)
 $
 
 \subparagraph{Bsp.:} $2n^3-n+5\overset{1.)}{\leq} 2n^3+5 \leq 7n^3 \in O(n^3)$
@@ -607,7 +603,7 @@ Anmerkung: Auch ein Graph mit nur einem Knoten ist ein Baum - ein Baum der keine
 \item Ein einzelner Knoten ist ein binärer Wurzelbaum
 \item Wenn $W_1, W_2$ binäre Wurzelbäume sind, dann erhalten wir einen neuen Wurzelbaum, indem die Wurzeln von $W_1,W_2$ mit einer neuen Wurzel verbunden werden.
 \end{itemize}
-\paragraph{Satz:} Ein binärer Wurzelbaum mit Tiefe $d$ (d.h. alle Pfade von Wurzel zu einem Blatt haben die Länge $d$) besitzt genau $2^d$ Blätter.\\
+\paragraph{Satz:} Ein balancierter binärer Wurzelbaum mit Tiefe $d$ (d.h. alle Pfade von Wurzel zu einem Blatt haben die Länge $d$) besitzt genau $2^d$ Blätter.\\
 \begin{tikzpicture}[scale=0.3]
 \draw (1,3) node (v6) {} ellipse (0.5 and 0.5);
 \draw (3,3) node (v7) {} ellipse (0.5 and 0.5);
@@ -626,7 +622,7 @@ Anmerkung: Auch ein Graph mit nur einem Knoten ist ein Baum - ein Baum der keine
 \subparagraph{Beweis:} (Indkution)
 \begin{itemize}
 \item[IA:] $d=0$: Ein binärer Wurzelbaum, der nur aus der Wurzel besteht, enthält $2^0=1$ Blätter.
-\item[IV:] $|V| =2^d$
+\item[IV:] $|Blätter| =2^d$
 \item[IS:] $d\rightarrow d+1$: Ein binärer Wurzelbaum der Tief $d+1$ enthält zwei binäre Wurzelbäume (laut vorhergehender Definition) der Tiefe $d$.\\
 \begin{tikzpicture}[scale=0.3]
 \draw  (1,6) node (v5) {} ellipse (0.5 and 0.5);
@@ -701,7 +697,7 @@ Die Adjazenzliste ist ein Array, das an jeder Position $v$ eine Liste der mit $v
 \node at (10.4,-4.25) {4};
 \node at (6,-7.75) {1};
 \node at (6,-11.25) {1};
-\node at (10.4,-11.25) {3};
+\node at (10.4,-11.25) {2};
 
 \node at (-3.5,-0.75) {1};
 \node at (-3.5,-4.25) {2};
@@ -1142,10 +1138,10 @@ tiefensuche(v){
 \draw  (36,0) node{2} ellipse (1 and 1);
 \pattern [pattern=north west lines,pattern color=ittenp] (28,-8)ellipse (1 and 1);
 \draw [thick,ittenr] (28,-8)ellipse (1 and 1);
-\draw (28,-8) node {0};
+\draw (28,-8) node {3};
 \pattern [pattern=north west lines,pattern color=ittenb] (24,-16)ellipse (1 and 1);
 \draw [thick,ittenr] (24,-16)ellipse (1 and 1);
-\draw (24,-16) node {0};
+\draw (24,-16) node {4};
 \draw  (32,-16) node{5} ellipse (1 and 1);
 \draw [-latex] (21.2,0) -- (26.8,0);
 \draw [-latex] (29.2,0) -- (34.8,0);
@@ -1175,7 +1171,7 @@ tiefensuche(v){
 \draw  (44,-16) node{4} ellipse (1 and 1);
 \pattern [pattern=north west lines,pattern color=ittenb] (52,-16)ellipse (1 and 1);
 \draw [thick,ittenr] (52,-16)ellipse (1 and 1);
-\draw (52,-16) node {0};
+\draw (52,-16) node {5};
 \draw [-latex] (41.2,0) -- (46.8,0);
 \draw [-latex] (49.2,0) -- (54.8,0);
 \draw [-latex] (48,-6.8) -- (48,-1.2);
