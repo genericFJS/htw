@@ -1,13 +1,18 @@
-\documentclass[a4paper,11pt, footheight=26pt
-%,twoside
-]{scrartcl}
-\usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
-\geometry{a4paper, top=30mm, bottom=22mm,headsep=10mm, footskip=12mm
-, left=20mm, right=20mm
-%, inner=27mm, outer=13mm
-}
+\documentclass[a4paper,10pt,landscape]{scrartcl}
+\usepackage{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
+\geometry{a4paper, top=2mm, bottom=2mm,headsep=0mm, footskip=0mm, left=2mm, right=2mm}
 
-% Zeile 2 (,twoside) und 7 (inner=...) für eine Druckversion (doppelseitig) ent-kommentieren (Rand für Hefter)
+% Spicker-Spezifisch:
+\usepackage{multicol}
+\newcommand{\spsection}[1]{\textbf{#1}}
+\usepackage{enumitem}
+\setlist{nolistsep}
+\usepackage{parskip}
+\setlength{\parskip}{0em}
+\newcommand{\HRule}[1][\medskipamount]{\par
+  \vspace*{\dimexpr-\parskip-\baselineskip+#1}
+  \noindent\rule{\linewidth}{0.2mm}\par
+  \vspace*{\dimexpr-\parskip-.5\baselineskip+#1}}
 
 % Input inkl. Umlaute, Silbentrennung
 \usepackage[T1]{fontenc}
@@ -21,9 +26,9 @@
 
 % Style-Aufhübschung
 \usepackage{soul, color}	% Kapitälchen, Unterstrichen, Durchgestrichen usw. im Text
-\usepackage{scrlayer-scrpage}	% Kopf-/Fußzeile
+%\usepackage{scrlayer-scrpage}	% Kopf-/Fußzeile
 %\usepackage{titleref}
-\usepackage[perpage]{footmisc}	% Fußnotenzählung Seitenweit, nicht Dokumentenweit
+%\usepackage[perpage]{footmisc}	% Fußnotenzählung Seitenweit, nicht Dokumentenweit
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}	% Fußnoten-Symbole anstatt Zahlen
 \renewcommand*{\titlepagestyle}{empty} % Keine Seitennummer auf Titelseite
 
@@ -92,10 +97,7 @@ escapeinside=||,
 autogobble, 
 tabsize=2,
 basicstyle=\footnotesize\sffamily\color{black},
-frame=single,
 rulecolor=\color{lightgray},
-numbers=left,
-numbersep=5pt,
 %basicstyle=\footnotesize\sffamily\color{black},
 commentstyle=\color{gray},
 %frame=single,
@@ -107,7 +109,8 @@ keywordstyle=\color{green},
 showstringspaces=false,
 stringstyle=\color{orange},
 tabsize=2,
-breaklines=true,
+aboveskip=1pt,belowskip=1pt,
+    breaklines=true,
 literate=%
     {Ö}{{\"O}}1
     {Ä}{{\"A}}1
@@ -153,13 +156,6 @@ urlcolor=green,%
 		pdfauthor={\Dokumentenautor},
 		pdftitle={HTW Dresden | \Dokumententitel - \Dokumentenuntertitel},
 	}
-	\automark[section]{section}
-	\automark*[subsection]{subsection}
-	\pagestyle{scrheadings}
-	\ihead{\includegraphics[height=1.7em]{../LaTeX_master/HTW-Logo.eps}}
-	\ohead{\Dokumententitel}
-	\cfoot{\pagemark}
-	\ofoot{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \Dokumentenautor}}}
 	% Titelseite
 	\title{\includegraphics[width=0.35\textwidth]{../LaTeX_master/HTW-Logo.eps}\\\vspace{0.5em}
 	\Huge\textbf{\Dokumententitel} \\\vspace*{0,5cm}
