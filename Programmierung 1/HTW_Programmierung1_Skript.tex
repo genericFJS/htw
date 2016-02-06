@@ -137,11 +137,11 @@ int main(){
 
 Compilieren durch: 
 \begin{lstlisting}
-gcc SOURCE.c -0 DESTINATION
+gcc SOURCE.c -o DESTINATION
 \end{lstlisting}
 
 Ergebnis:\\
-„10“ … aber: 38/10 = 3,8. Integer im Source-Code $\Rightarrow$ abgerundet
+„3“ … aber: 38/10 = 3,8. Integer im Source-Code $\Rightarrow$ abgerundet
 
 Lösung:
 \begin{lstlisting}[language=C]
@@ -163,7 +163,7 @@ gcc Ablauf für eine „hello.c“ Datei.
 
 \begin{enumerate}
 \item Pre-Prozessor (hello.c $\rightarrow$ hello.e $\Rightarrow$ gcc -E hello.c > hello.e) \\
-Jede Zeile im Quelltext mit \emph{\#} werden hier interpretiert.
+Alle Zeile im Quelltext mit \emph{\#} werden hier interpretiert.
 \item Compiler (hello.e $\rightarrow$ hello.o $\Rightarrow$ gcc -c hello.c)
 \item Linker (hello.o $\rightarrow$ a.out / hello.exe | gcc hello.c $\rightarrow$ a.out $\Rightarrow$ gcc -o hello hello.c [oder auch gcc hello.c -o hello])\\
 Bindet Objekt-Datei (xxx.o) mit Librarys zusammen.
@@ -173,7 +173,7 @@ Bindet Objekt-Datei (xxx.o) mit Librarys zusammen.
 
 \begin{itemize}
 \item Großbuchstaben, Kleinbuchstaben, Ziffern, Sonderzeichen
-\item Ersatzsymbolfolgen (brauchen besondere Compileranweisung
+\item Ersatzsymbolfolgen (brauchen besondere Compileranweisung)
 \item white spaces: 
 \begin{itemize}
 \item Leerzeichen
@@ -1014,7 +1014,7 @@ int main(int argc, char* argv[]){
 
 \end{lstlisting}
 
-Sinnvoll, wenn unterstrukturen gleiche und auch ungleiche Eigenschaften haben. Beispielsweise Diplom- und Bachelor-Studenten.
+Sinnvoll, wenn Unterstrukturen gleiche und auch ungleiche Eigenschaften haben. Beispielsweise Diplom- und Bachelor-Studenten.
 
 \subsubsection{typedef}
 Für Details s.o. \\
