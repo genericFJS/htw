@@ -9,8 +9,11 @@
 \DAutor{Falk-Jonatan Strube}
 \DNotiz{Prüfung von Prof. Dr.-Ing. Beck}
 \pagestyle{empty}
+
 \begin{document}
-\begin{multicols}{3}
+\begin{multicols*}{3}
+
+
 \spsection{gcc}
 Ablauf für eine „hello.c“ Datei.
 \begin{enumerate}
@@ -32,6 +35,7 @@ Math:\\
 int main(int argc, char* argv[]){ ... } 
 // argc: #Parameter		argv[i]: Parameter (argv[0]: Programmname)
 \end{lstlisting}
+\HDRule[4pt]
 %\spsection{Einlesen von Eingabe}
 \begin{lstlisting}[language=C]
 char vBuf[128];
@@ -39,18 +43,23 @@ fgets(vBuf,128,stdin);
 myInt=atoi(vBuf);	// ganze Zahlen
 myFloat=atof(vBuf); // Gleitkomma
 \end{lstlisting}
+\HDRule[4pt]
 %\spsection{Ausgabe}
 \begin{lstlisting}[language=C]
 printf("%04d",i);	// integer mit führenden Nullen
 %d Dezimalwert
 %p Adresswert (braucht &i)
+%.5f Float mit 5 Nachkommastellen
+%-30s String bzw. char-Array der linksbündig max bis zur 30. Stelle im Terminal ausgegeben wird
 \end{lstlisting}
+\HDRule[4pt]
 %\spsection{Gebrochen rechnen ohne Gleitkomma} $ $
 \begin{lstlisting}[language=C]
 int a=31,b=3;
 a = a*10/b;	// a = 310/3 = 103.33333
 printf("%d.%d\n",a/10,a%10); // Ausgabe 3.3 (anstatt nur 3)
 \end{lstlisting}
+\HDRule[4pt]
 %\spsection{Summenberechnung} Nutzung des vorhergehenden Summanden.
 \begin{lstlisting}[language=C]
 	int i=1;
@@ -62,21 +71,28 @@ printf("%d.%d\n",a/10,a%10); // Ausgabe 3.3 (anstatt nur 3)
 	}
 }
 \end{lstlisting}
+\HDRule[4pt]
 %\spsection{Eingabe als Abbruchbedingung} $ $
 \begin{lstlisting}[language=C]
-	while (operator != toupper('q')){
+	while (operator != toupper('q')){	
+	// prüft 1. Zeichen der Eingabe
 		fgets(buf, 128, stdin);
-		operator = buf[0];
+		operator = buf[0]; }
+		
+	while (1){
+		fgets(buf, 128, stdin);
+		if (!strncmp(buf, "qq", 2)) break; }	
+		// prüft 1. zwei Zeichen
+\end{lstlisting}
+\HDRule[4pt]
+\begin{lstlisting}[language=C]
+type myArr[] = {...};
+for (i=0; i<sizeof(myArr)/sizeof(type); i++){
+	myArr[i]=...
+}	// durch Array iterieren
 \end{lstlisting}
 \HRule[4pt]
 \spsection{Eingebaute Datentypen}\\
-\begin{tabular}{l | l l l}
-\emph{Natürliche Zahlen} & Bytes & Min & Max\\
-\hline
-unsigned \textcolor{gray}{int}&4&0&4294967295\\
-\textcolor{gray}{signed} int&4&-2147483648&2147483647\\
-\end{tabular}
-
 Float: kann einige Zahlen (ganzzahlig) nicht darstellen (bspw. 2), hat Probleme sehr große und sehr kleine Zahlen miteinander zu addieren (durch Normierung der Exponenten kann die kleine zu 0 werden, oder Nachkommastellen verloren gehen)\\
 Achtung: boolean kein Datentyp in C: $\curvearrowright$ Abfrage von true/false durch int: 
 $int=0\corr false$ \;
@@ -109,11 +125,9 @@ char c=99;
 int i=8, j=5, k;
 char c=99, d='d';
 float x=0.005, y=-0.01, z;
-z=i/j;	// i/j wird in int gerechnet, also 8/5=1 und nicht 1.6! 
-				// z ist dann trotzdem float (Wert: 0.000...)
+z=i/j;	// i/j wird in int gerechnet, also 8/5=1 und nicht 1.6! -  z ist dann trotzdem float (Wert: 0.000...)
 z=k=x;	// k=x=0 (wird abgeschnitten), also z=0.00000...
-k=j=5?i:j;	// das selbe wie k=((j==5)?i:j);
-						// ist j=5? Wenn ja, dann k=i. Wenn nein, dann k=j.
+k=j=5?i:j;	// das selbe wie k=((j==5)?i:j); ist j=5? Wenn ja, dann k=i. Wenn nein, dann k=j.
 printf("%d\n", i=!6 );	// !6 entspricht !(ungleich Null)=0
 printf("%d\n", i&j );	// i bitweise mit j Verknüpft (ge-UND-et):
 //  00001000
@@ -134,23 +148,35 @@ int main(){
 				data[irt] = tmp;
 			}		}		}		}
 \end{lstlisting}
-Alphabetische Sortierung
+Alphabetische Sortierung:\\
+Jede Zeile bzw. jeden Array-Eintrag mit den folgenden vergleichen und vertauschen, wenn kleiner (jedes char durchgehen, 
 \begin{lstlisting}[language=C]
-#define N 10
-int main(){
-	int ige, iro, ibl;
-	for (irt=0; irt<(N-1); irt++={
-		for (ige = irt+1, ige<N, ige++){
-			for (ibl = 0; data[irt][ibl] == data[ige][ibl] && 
-				data[irt][ibl]!=0; ibl++){	;		}
-			if(data[irt][ibl] > data[ige][ibl]){
+#define N 10 // Länge der Zeichenkette
+char data[][N] = {"Max", "Moritz", ...};
+
+void printArr(char arr[][N]){
+	int i,j;
+	for(i = 0; i <  sizeof(data)/N; i++) {
+    for(j = 0; j < N; j++) { printf("%c", arr[i][j]);  }
+    printf("\n");
+	}	}
+
+main(){	
+	int rowA, rowB, x;
+	for (rowA = 0; rowA<(N-1); rowA++){
+		for (rowB = rowA+1; rowB<N; rowB++){
+			x = 0;
+			for (x=0; data[rowA][x] == data[rowB][x] && data[rowA][x]!=0; x++){
+				;			
+			}
+			if (data[rowA][x] > data[rowB][x]){
 				char tmp;
-				// ibl muss nicht auf 0 gesetzt werden, vertauscht muss sowieso
-				// erst ab dem ungleichen Zeichen getauscht werden
-				for (/*ibl = 0*/; ibl<N ; ibl++){
-					tmp = data[irt][ibl];
-					data[irt][ibl] = data[ige][ibl];
-					data[ige][ibl] = tmp;		}		}		}
+				for ( ; x<N; x++){
+					tmp = data[rowA][x];
+					data[rowA][x] = data[rowB][x];
+					data[rowB][x] = tmp;
+				}		}		}		}
+	printArr(data);
 }
 \end{lstlisting}
 \HRule[4pt]
@@ -161,13 +187,11 @@ Binäre Operatoren (bspw. $+$, $-$ (Rechenzeichen), $<=$ usw.)
 int i;
 long d;
 i=(int)d;	// cast: Typwandlung
-i++; // Postfixoperator (wird im Rahmen eines groesseren 
-			Ausdrucks als letztes ausgefuehrt:)
+i++; // Postfixoperator (wird im Rahmen eines groesseren Ausdrucks als letztes ausgefuehrt)
 i=1;
 j=6;
 k=j+i++; // k=7, i=2
-++i; // Praefixoperator (wird im Rahmen eines groesseren 
-			Ausdrucks als erstes ausgefuehrt:)
+++i; // Praefixoperator (wird im Rahmen eines groesseren 	Ausdrucks als erstes ausgefuehrt)
 i=1;
 j=6;
 k=j+ ++i; // k=8, i=2
@@ -177,6 +201,7 @@ Andere Zeichen: $\wedge$ = XOR, $\sim$ = Bit-weise Negation, <\! < = shift (nach
 \begin{lstlisting}[language=C]
 	while (x<5){ ... }
 \end{lstlisting}
+\HDRule[4pt]
 \begin{lstlisting}[language=C]
 	do{	...	} while (x<5);
 \end{lstlisting}
@@ -187,18 +212,20 @@ Abbrechen der Schleife: break
 \end{lstlisting}
 Abbrechen der aktuelle Iteration (reset der Schleife): continue
 \begin{lstlisting}[language=C]
-	while (x<5){	...
+	while (x<5){	...	
 		if (x<4) continue;
 		printf(...); }	// printf wird nur bei x>=4 ausgeführt
 \end{lstlisting}
+\HDRule[4pt]
 \begin{lstlisting}[language=C]
 	for (i=1 ; x < 5 ; i++){ ... }
 \end{lstlisting}
+\HDRule[4pt]
 \begin{lstlisting}[language=C]
 switch (i){ // i ist ganzzahliger Ausdruck
-	case 1:
+	case 1:	// wenn 1
 		... break;
-	case 2:
+	case 2 ... 5: // zwischen 2 und 5
 		... break;
 	default:
 		...
@@ -208,12 +235,12 @@ switch (i){ // i ist ganzzahliger Ausdruck
 \spsection{Zeichenketten}
 \begin{lstlisting} [language=C]
 	fgets(buf, 128,stdin);
-	buf[strlen(buf)-1]=0;	// an Stelle strlen(buf) ist die terminierende Null
-												// an Stelle strlen(buf)-1 die return-Taste der Eingabe
+	buf[strlen(buf)-1]=0;	// an der Stelle strlen(buf) liegt die terminierende Null,  an strlen(buf)-1 die return-Taste der Eingabe
 	puts(buf);	// puts gibt gesamten String aus, printf muss drüber iterieren
 	while (buf[i]!=0)
 		printf("%c", buf[i++]);
 \end{lstlisting}
+\HRule[4pt]
 \spsection{Funktionen}
 Wenn kein return\_type gewählt wurde, dann default: \emph{int}.\\
 Wenn kein return\_type gebraucht wird, gibt man \emph{void} an.
@@ -234,8 +261,7 @@ long fakult(int x);	//Funktionsdeklaration (Prototyp)
 \HRule[4pt]
 \spsection{Pointer}
 \begin{lstlisting}[language=C]
-	*x = &i // x verweist auf die Adresse von i. 
-	// Ausgabe von x gibt nur Adresse. *x (oder x[0]) (Dereferenzierung) ergibt Wert von i
+	*x = &i // x verweist auf die Adresse von i. Ausgabe von x gibt nur Adresse. *x (oder x[0]) (Dereferenzierung) ergibt Wert von i
 \end{lstlisting}
 Achtung: Bei Übergaben von Arrays (bspw. in Funktionen) wird nur Pointer auf das erste Element übergeben. Somit ist daraus auch nicht die Länge berechenbar. Des weiteren wird beim modifizieren der Daten im Array das original-Array überschrieben (da es nicht als Kopie, sondern als Verweis übergeben wurde)!
 
@@ -246,7 +272,6 @@ int mystrlen1(char *p){
 	for (i=0; p[i]!=0; i++);
 	return i;
 }
-
 // oder genau so gültig (mit Pointer gerechnet):
 int mystrlen2(char *p){
 	int count;
@@ -273,13 +298,13 @@ Problem Rekursion: Es lässt sich nicht vorhersehen, wie viel Speicher benötigt
 
 Enum:
 
-Aufzählungstyp (festgesetzte Bezeichnungen auf einen integer-Wert).\smallskip\\
+Aufzählungstyp (festgesetzte Bezeichnungen auf einen integer-Wert).\medskip\\
 Struct:
 
-Zusammenfassung von mehreren Komponenten (unterschiedliche eingebaute Dateitypen als un- intialisierte Variablen), die durch einen Namen beschrieben werden. Verwendung zur Modellierung eines Sachverhalts (wie im Beispiel Student mit seinen Eigenschaften).\smallskip\\
+Zusammenfassung von mehreren Komponenten (unterschiedliche eingebaute Dateitypen als un- intialisierte Variablen), die durch einen Namen beschrieben werden. Verwendung zur Modellierung eines Sachverhalts (wie im Beispiel Student mit seinen Eigenschaften).\medskip\\
 Typedef:
 
-Es wird ein synonymer Typname für einen existierenden Typnamen erstellt. So kann die Variableininitialisierung verkürzt werden (im Skript: struct tStudent$\rightarrow$tStud ).\smallskip\\
+Es wird ein synonymer Typname für einen existierenden Typnamen erstellt. So kann die Variableininitialisierung verkürzt werden (im Skript: struct tStudent$\rightarrow$tStud ).\medskip\\
 Union:
 
 Datensätze werden im Vergleich zum Struct übereinander geschrieben (Sinnvoll, wenn Unterstrukturen gleiche und auch ungleiche Eigenschaften haben. Beispielsweise Diplom- und Bachelor-Studenten).
@@ -383,8 +408,7 @@ int InsertTail (tList* pList, void *pItemIns){
 		if (pList->pFirst!=NULL){	// Liste Leer
 			pList->pFirst=pList->pLast = ptmp;
 		} else {	// Liste enthält schon Konnektoren
-			pList->pLast->next=ptmp;	// Das vorher letzte Element zeigt nun auf das eingefügte
-																// und damit neue letzte Element
+			pList->pLast->next=ptmp;	// Das vorher letzte Element zeigt nun auf das eingefügte und damit neue letzte Element
 			pList->pLast = ptmp;			// das neue letzte Element
 		}
 		pList->pCurr=ptmp;	// Das Element, mit dem zuletzt hantiert wurde ist pCurr
@@ -602,7 +626,7 @@ include
 \end{lstlisting}
 Mehrfaches Einbinden u.ä. kann unterbunden werden durch:
 \begin{lstlisting}[language=C]
-#ifdefn _H_DEBUG_
+#ifdef _H_DEBUG_
 #define _H_DEBUG_
 #include <stdio.h>
 #endif
@@ -658,10 +682,7 @@ Darauf ist zu achten:
 Vordefinierten Symbole bspw.:
 \begin{lstlisting} [language=C]
 __FILE__ // Quelltext-Dateiname
-__LINE__ // Zeilennummer, in der das Symbol verwendet wurde
 __DATE__ // Datum, zu dem das Programm kompiliert wurde
-__TIME__ // Zeit, zu der das Programm kompliert wurde
-__STDC__ // C-Version
 \end{lstlisting}
 
 \spsection{Bedingte Übersetzung}
@@ -704,8 +725,7 @@ va_start(ap, la);
 printf("Name: %s, MatrNr: %d \n", Stud.name, Stud.MatrNr); 
 
 x=va_arg(ap, type);
-// x: Zielvariable für den Wert des Arguments 
-//		(muss vom Typ des tatsächlichen Parameters sein)
+// x: Zielvariable für den Wert des Arguments (muss vom Typ des tatsächlichen Parameters sein)
 // ap wird um sizeof(type) erhöht
 // dieser Wert wird x zugewiesen
 
@@ -762,6 +782,6 @@ int main(int argc, char* argv[]){
 						
 	xprintf( ("Test xprintf: %s\n", argv[0]) );
 \end{lstlisting}
-\end{multicols}
+\end{multicols*}
 
 \end{document}

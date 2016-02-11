@@ -3,24 +3,830 @@
 
 % Definition von Titel, Autor usw.
 \DTitel{Betriebssysteme I}
-\DUntertitel{Vorlesungsskript}
-\DAutor{Falk Jonatan Strube}
-\DNotiz{Vorlesung von Prof. Dr.-Ing. Baumgartl}
+\DUntertitel{Vorlesungs- und Praktikumsnotizen}
+\DAutor{Falk-Jonatan Strube}
+\DNotiz{Vorlesung und Praktikum von \\Prof. Dr.-Ing. Baumgartl}
 
 \begin{document}
-
-\pagenumbering{Roman}
 
 \maketitle
 \newpage
 \tableofcontents
 \newpage
 
-\pagenumbering{arabic}
-
 \section*{Hinweise}
 Bei der Klausur sind keine Hilfsmittel zugelassen.
 
 Die Praktikumsaufgaben, die mit * gekennzeichnet sind, sind nicht Voraussetzung für die Prüfung.
 
+\section{Einführung}
+
+\paragraph{Unix} ist eine Betriebssystem-Familie.
+
+\paragraph{Lizensierung:} open source VS closed source
+
+GNU: „vererbendes“ open source
+\subsection{Klassifikation BS}
+\begin{itemize}
+\item Nutzer: single/multi
+\item Tasking: single/multi
+\item Kommunikation: autonom (batch)/interaktiv
+\item Verteilung: lokal/verteilt
+\item Architektur und Zweck: Server/eingebettet/Echtzeit/PC/…
+\end{itemize}
+
+\subsection{Modellierung BS}
+\begin{itemize}
+\item \imptnt{monolithisch:} jede Routine/Funktion/… darf auf alles zugreifen (kein Information Hiding)
+\item \imptnt{geschichtet:} Kommunikation nur zwischen benachbarten Schichten.
+
+Bsp.: \begin{tabular}{|c|}
+\hline
+App\\
+\hline
+…\\
+\hline
+Treiber\\
+\hline
+…\\
+\hline
+Hardware\\
+\hline
+\end{tabular}
+\item \imptnt{client-server:} Server arbeitet Wünsche von Clienten ab ($\Rightarrow$ Speicherverwaltung innerhalb BS)
+\end{itemize}
+
+
+\paragraph{Zweck eines BS:}
+\begin{itemize}
+\item Bereitstellen von Diensten + Abstraktionen (Prozess, Datei, Treiber, …)
+\item Ressourcenverwaltung
+\item Ablaufkoordination
+\item Schutz + Sicherheit
+\end{itemize}
+
+\section{Shell}
+
+\subsection{Wichtige Shell-Befehle}
+\begin{longtable}[l]{ l | l } 
+Befehl & Wirkung\\
+\hline
+\imptnt{ls} & Dateien in Ordner auflisten (-l: detailliert)\\
+\imptnt{cd} & in Ordner wechseln\\
+\imptnt{cp} & Datei kopieren\\
+scp & Datei im Netzwerk kopieren\\
+\imptnt{mv} & Datei bewegen\\
+\imptnt{rm} dir & Datei löschen (-r: rekursiv durch Ordner)\\
+\imptnt{mkdir} & Ordner anlegen\\
+rmdir & leeren Ordner löschen\\
+\imptnt{chmod} & Nutzerrechte ändern (u/g/o +/- r/w/x)\\
+chown & Eigentümer ändern\\
+\imptnt{less} & Dateiausgabe (seitenweise)\\
+\imptnt{cat} file & Dateiausgabe im Terminal\\
+w & Anzeige eingeloggter Nutzer und deren Prozesse\\
+\imptnt{grep} & Durchsuche Datei nach Zeichenkette, gebe passende Zeilen aus \\
+&(-o: gebe passende Worte aus (auch bei doppeltem Vorkommen in Zeile) \\
+\imptnt{wc} -l-w-c & Word Count (-l Zeilen, -w Worte, -c Bytes)\\
+\imptnt{cut} file & Zeilen beschneiden\\
+& -d ' ': Worttrenner (hier: Leerzeichen)\\
+& -f 1: Welche Worte anzeigen: -f 1 $\to$ 1. Wort; -f -3 $\to$ ab 3. Wort\\
+\imptnt{uniq} & nur einzigartige Zeilen ausgeben\\
+\imptnt{sort} & Zeilen alph. Sortieren (-n: numerisch; -r: in umgekehrter Reihenfolge\\
+\imptnt{find} -name *test* & Suche Datei (-name: nach Name)\\
+\imptnt{man} & Handbuch über alle Befehle\\
+ps & aktuelle Information über Prozess \\
+&(-A: alle Prozesse; r: Prozesse die bereit sind; X: Inhalt stackpointer, …;\\
+& f: Verwandschaftsverhältnisse [besser: pstree]; -l: langes Format)\\
+kill & Signal senden\\
+bg & Schickt Programm in den Hintergrund\\
+top & Anzeige der rechenintensivsten Programme\\
+mount & Datenträger einbinden\\
+du & Anzeige Platzbedarf von Datei(en) (-s: Summe aller)\\
+df & Anzeige Belegung Dateisystem\\
+ln & Verweis erstellen\\
+shred & sicheres Löschen\\
+stat & Anzeige von Dateiattributen\\
+fdisk & Partitionierung\\
+mkfs & Dateisystem anlegen\\
+fsck & Prüfung+Reperatur Dateisystem\\
+hdparm & Detailinformationen Massenspeicher\\
+pgrep & Suche nach Prozess anhand von regexp.\\
+nice & Setze Prozess-Priorität
+\end{longtable}
+
+\subsection[Weiterleitung]{\imptnt{Weiterleitung}}
+\begin{tabular}{l l}
+ls > ls.txt & Ausgabe von ls in Datei ls.txt (neu erstellt)\\
+ls >> ls.txt & Ausgabe von ls in Datei ls.txt (ergänzend, hängt an)\\
+foo < ls.txt & Datei ls in Eingabe von Prozess foo\\
+& (wenn ls.txt mehrere Zeilen enthält, sind das mehrere Eingaben für bspw. read())\\
+foo | bar & Ausgabe von foo in Eingabe von bar (siehe Pipe)
+\end{tabular}\\
+Ausgabemöglichkeiten:\\
+\begin{tabular}{l l l}
+stdin & 1 &\\
+stdout & 1 &\\
+stderr & 2 & find xyz 2>/dev/null (Fehler ins nichts umleiten) 
+\end{tabular}
+
+\subsection{Schleifen/Anweisungen}
+\begin{lstlisting}[language=bash]
+if [ ... ] 
+then 
+	... 
+fi
+
+while [ ... ] 
+do 
+	... 
+done
+
+for x in ...	(bspw. |\$|1/*)
+do 
+ ...
+done
+
+for (( x=0; |\$|x < |\$|y; x++ ))
+do
+ ...
+done
+\end{lstlisting}
+\paragraph{Bedingungen:} $ $
+\begin{lstlisting}[language=bash]
+-lt, -le, -eq, -ne, -ge, -gt  (für numerische Vergleiche)
+|\$\#|					Anzahl Parameter
+-f ...			Prüft, ob ... Datei ist
+"|\$|1" != ""	Prüft, ob Variable/Parameter leer ist
+|\$|?					Rückgabewert letzter Funktion/Anweisung
+|\$|*					gibt alle Parameter aus
+|\$|RANDOM		Zufallszahl
+
+return			max zwischen 0...255
+
+x = '...' $\Leftrightarrow$ x = |\$|(...)			|\$|(...) weißt stdout einer Fkt einer Variablen zu
+let x = |\$|a + |\$|b $\Leftrightarrow$ (( x = |\$|a + |\$|b ))
+\end{lstlisting}
+
+\subsection[Regex]{\imptnt{Regex}}
+\begin{tabular}{c l}
+. & beliebiges Zeichen\\
+* & beliebig viele des vorhergehenden Zeichens\\
+\textbackslash ? & 0 oder 1 des vorhergehenden Zeichens\\
+\textbackslash + & 1 oder mehr des vorhergehenden Zeichens\\
+$[$xyz$]$ & eines der in eckigen Klammern stehendes Zeichen\\
+$[$\^{}xyz$]$ & alle außer eines der Klammer-zeichen\\
+\^{} & Zeilenanfang\\
+\$ & Zeilenende\\
+$[$0-9$]$ & Bereich\\
+$[[$:alpha:$]]$ & $\Leftrightarrow$ $[$a-z A-Z$]$\\
+$[[$:digit:$]]$ & $[[$0-9$]]$\\
+$[[$:alnum:$]]$ & $\Leftrightarrow$ alpha+digit\\
+$[[$:upper:$]]$ & Großbuchstaben\\
+$[[$:lower:$]]$ & Kleinbuchstaben\\
+$[[$:space:$]]$ & Leerzeichen\\
+\textbackslash . & Escape-Char \textbackslash $\Rightarrow$ . wird normal ausgegeben\\
+\textbackslash < \textbackslash > & Wortanfang / -ende\\
+\textbackslash \{ m,n \textbackslash \} & mind m, höchstens des vorhergehenden Zeichen\\
+\textbackslash \{ m \textbackslash \} & m mal\\
+\textbackslash ( xyz \textbackslash ) & xyz wird als Zeichen behandelt (zusammenfassen von Ausdrücken)\\
+x \textbackslash | y & x oder y\\
+\end{tabular}
+
+\subsection{Brace Expansion}
+\{a,b,c\}xyz $\to$ Permutation von a,b,c mit xyz: axyz, bxyz, cxyz\\
+\{a..c\}\{x..z\} = \{a,b,c\}\{x,y,z\} $\to$ alle a,b,c mit x,y,z: ax, ay, az, bx, by, bz, cx, cy, cz\\
+Auch geschachtelt: \{ \{a..z\}$\underset{oder}{,}$\{A..Z\} \} $\to$ alle Buchstaben: Kleinbuchstaben oder Großbuchstaben
+
+
+\paragraph{Sorten von Dateien}
+\begin{enumerate}
+\item gewöhnliche Datei
+\item Verzeichnis
+\item Spezialdateien
+\begin{enumerate} [label=$\to$]
+\item Links
+\item Geräte
+\item …
+\end{enumerate}
+\end{enumerate}
+
+\section{Dateisystem}
+Abstraktion zur Strukturierung von Informationen\\
+$\rightarrow$ Abhängig von: Geschwindigkeit des Mediums, Informationsmenge, Fehlertoleranz\\
+Aufbau einer Festplatte:
+\begin{itemize}
+\item hat mehrere Platten in einem Zylinder
+\item Platte hat Spuren (verschiedene Plattenradien) und Sektoren („Kuchenstücke“ der Platte)
+\end{itemize}
+\paragraph{Datei} (Grundeigenschaften)
+\begin{itemize}
+\item Eigentümer
+\item Zugriffsrechte
+\item Sichtbarkeit
+\item Dateiname
+\item Zeitstempel
+\item Größe
+\item Dateipositions-Zeiger
+\item Typ ($\Rightarrow$ \imptnt{Magic Word} an Beginn der Datei)
+\end{itemize}
+\begin{tabular}{l | c | l | l}
+\label{tab:syscalls}
+Dateifktn C & & Systemruf Unix & … über Verzeichnis\\
+\hline 
+fopen() & & open() & opendir()\\
+fclose() & & close() & closedir()\\
+fread() & beim Verzeichnis: sequentiell über alle & read() & readdir()\\
+fwrite() & schreiben & write()\\
+fprintf() & schreiben (formatiert) & \\
+feof() & Test auf Dateiende &\\
+ferror() & Test auf Fehler &\\
+fseek() & Versetzen Pos.-Zeiger & lseek()\\
+ftell() & Abfragen Pos.-Zeiger &\\
+flock() & Sperren der Datei &\\
+& Verweis anlegen & link() & symlink() (Softlink)\\
+& umbenennen & rename()\\
+& Datei in Hauptspeicher einbleden & mmap()\\
+& Verz. anlegen && mkdir()\\
+& Löschen&& rmdir()\\
+& Suche nach Einträgen&& scandir()\\
+& Zurücksetzen Eintragszeiger & & rewinddir()
+\end{tabular}
+\paragraph{Rechteverwaltung} verschieden Möglichkeiten:\\
+\imptnt{Zugriffsmatrix}\\
+\begin{tabular}{l | l l }
+& DateiA & DateiB\\
+\hline
+NutzerA & Rechte & Rechte\\
+NutzerB & Rechte & 
+\end{tabular}\\
+Daraus die Projektionen:
+\begin{itemize}
+\item \imptnt{Access Control List (ACL)}:
+\begin{itemize}
+\item DateiA: NutzerA(Rechte), NutzerB(Rechte)
+\item DateiB: NutzerA(Rechte)
+\end{itemize}
+\item \imptnt{Capability List}:
+\begin{itemize}
+\item NutzerA: DateiA(Rechte), DateiB(Rechte)
+\item NutzerB: DateiA(Rechte)
+\end{itemize}
+\end{itemize}
+\subparagraph{Darstellung in Unix} \parskp
+\begin{tabular}{c | c | c l}
+Owner & Group & Others & \quad All Users\\
+u & g & o & \quad u+g+o$\Rightarrow$a\\
+rwx & rwx & rwx
+\end{tabular}\\
+Beispiel in Bash:
+\begin{lstlisting}[language=bash]
+chmod u+rwx g+r-wx o-rwx FILE
+\end{lstlisting}
+Darstellung ls -l:\\
+$\underset{\text{Typ}}{-}\;\underset{\text{Rechte (u g o)}}{rwxrwxrwx}\;\underset{\text{Anz. Verz.}}{1}\;\underset{\text{owner}}{nutzerA}\;\underset{\text{group}}{gruppeC}\;\underset{\text{size}}{1234}\;\underset{\text{last changed}}{2016-...07:42}\; \underset{\text{file name}}{FILE}$
+
+\section{Ressource}
+\begin{tabular}{l | l}
+Schnittstelle & Protokoll\\
+\hline
+statischer Aspekt d. Kommunikation & dynamischer Aspekt d. Kommunikation\\
+synchron/asynchron\\
+Hardware/Software
+\end{tabular}
+\paragraph{Def. Ressource}
+Wird von Aktivitäten genutzt.
+\begin{itemize}
+\item existiert in allen Schichten des Systems (Datei, Code, Festplatte (Hardware), …)
+\item hat Zustand (Dateiinhalt, Registerinhalt, …)
+\end{itemize}
+\subsection{Ressource entziehen}
+Voraussetzung Entziehbarkeit:
+\begin{itemize}
+\item Ressourcen-Zustand ist \imptnt{vollständig auslesbar}
+\item Ressourcen-Zustand \imptnt{kann beliebig manipuliert werden}
+\end{itemize}
+Bsp.:\\
+\begin{tabular}{l | l}
+entziehbar & nicht entziehbar\\
+\hline
+CPU & CPU-Cache\\
+Hauptspeicherblock & Drucker\\
+& Netzwerkkarte
+\end{tabular}
+\paragraph{Vorgang} ist für Aktivität transparent
+\begin{enumerate}
+\item Aktivität anhalten
+\item Ressourcenzustand sichern
+\item (entzogene Ressource anderweitig verwenden)
+\item Zustand restaurieren
+\item Aktivität fortsetzen
+\end{enumerate}
+\paragraph{Exlusivität} 
+\begin{itemize}
+\item maximal von einer Aktivität geilchzeitig verwendbar (wird von BS durchgesetzt durch Zuteilung)
+\end{itemize}
+\subsection{Klassifikation}
+\begin{tabular}{l | l}
+\imptnt{entziehbar} & \imptnt{nicht entziehbar}\\
+(Prozessor, Speicher) & (verbrauchbare Betriebsmittel, ext. Hardware)\\
+\hline
+\imptnt{gleichzeitig nutzbar} & \imptnt{exlusiv nutzbar}\\
+(Code, Datei, Speicher) & (Prozessor, Drucker, Signal)\\
+\hline
+\imptnt{wiederverwendbar} & \imptnt{verbrauchbar}\\
+(CPU, Datei, Speicher) & (Signal, Nachricht, Interrupt)\\
+\hline
+\imptnt{physisch} & \imptnt{logisch/virtuell}\\
+(Hardware: CPU, RAM, …) & (Datei, Signal, CPU)
+\end{tabular}
+\subsection{Ressourcen-Transformation}
+(in Ebenen)\\
+\begin{tabular}{l | l}
+Applikation & $\uparrow$ Byte der Datei\\
+Dateisystem & $\uparrow$ Logischer Block\\
+Treiber & $\uparrow$ physischer Sektor\\
+Hardware & 
+\end{tabular}
+
+\subsection{Kernel}
+\imptnt{Kernel-Modus} (Gegensatz: User-Modus)\\
+Beschreibt einen previligierten Zugriff auf Hardware (bei entsprechender Unterstützung der CPU)\\
+Nutzer hat nur eingeschränkte Rechte, Kernel exklusive:
+\begin{itemize}
+\item \imptnt{erstellen eines neuen Prozesses}
+\item \imptnt{Treiber laden/entfernen}
+\item $\Rightarrow$ \imptnt{Diensterbringung des BS}
+\end{itemize}
+Damit der Nutzer trotzdem auf diese Systemfunktionen zugreifen kann gibt es die:
+\subsubsection{Systemrufe}
+Anweisungen, mit denen ein User Kernel-Dienste nutze kann (siehe Tabelle im Kapitel \ref{tab:syscalls} (Dateisysteme))
+
+\section{Aktivität}
+\subsection{Prozesseigenschaften}
+\begin{itemize}
+\item hat Lebenszyklus: Erzeugung $\to$ Abarbeitung $\to $ Beendigung
+\item benötigt Ressourcen beim Start (Speicher, PID, Code)
+\item benötigt dynamisch Ressourcen beim Abarbeiten
+\item hat eigenen virtuellen Prozessor und Speicher (Adressraum)
+\item besitzt immer einen Vaterprozess (und ggf. einen Kindprozess)
+\begin{itemize}
+\item \imptnt{nur Prozess kann Prozess erzeugen} (bspw. durch Doppelklick auf Icon im GUI, über die Shell usw.)
+\end{itemize}
+\end{itemize}
+\paragraph{Mögliche Prozesszustände}
+\begin{itemize}
+\item \imptnt{aktiv} (arbeitet)
+\item \imptnt{bereit} (kann arbeiten)
+\item \imptnt{wartend} (wartet auf Ressource zum Arbeiten)
+\end{itemize}
+Übergänge:
+\begin{itemize}
+\item \imptnt{aktiv $\to$ bereit} (Prozess wird verdrängt (bspw. durch Scheduling))
+\item \imptnt{aktiv $\to$ wartend} (Prozess benötigt Ressource)
+\item \imptnt{wartend $\to$ bereit} (Prozess hat alle benötigten Ressourcen)
+\item \imptnt{bereit $\to $ aktiv} (Prozess beginnt (wieder) zu arbeiten)
+\end{itemize}
+Jeder Prozess starte zuerst im bereit-Zustand.
+\paragraph{Adressraum Prozess} \parskp
+\begin{tabular}{| c |}
+\hline 
+Umgebung, Argumente\\
+\hline 
+Stack\\
+$\downarrow$\\
+…\\
+$\uparrow$\\
+Heap\\
+\hline
+uninitialisierte Daten\\
+\hline
+initialisierte Daten\\
+\hline
+Text (Code)\\
+\hline
+\end{tabular}
+\subsection{Prozess beenden}
+\begin{itemize}
+\item \imptnt{durch sich selbst}:
+\begin{itemize}
+\item Verlassen der main (durch letzte main-Zeile oder return)
+\item exit() an beliebiger Stelle
+\end{itemize}
+\item Fremdbeedigung:
+\begin{itemize}
+\item Signal ($\Rightarrow$ kill)
+\item fataler Fehler (bspw. 0-Division)
+\end{itemize}
+\end{itemize}
+
+\subsection[Fork]{\imptnt{Fork}}
+\begin{lstlisting}[language=C]
+pid_t fork(void);
+\end{lstlisting}
+\begin{itemize}
+\item klont aufrufenden Prozess
+\begin{itemize}[label=$\to$]
+\item nur unterschiedliche PID, PPID
+\item geforkter Prozess \imptnt{setzt an gleicher Stelle fort}, wie aufrufender Prozess (also nach dem fork()-Aufruf)
+\item Prozess-Abarbeitungsreihenfolge \imptnt{nicht determiniert} (Vater kann vor Sohn weiter abgearbeitet werden oder anders herum)
+\item return-value von fork():\\
+Vater:
+\begin{itemize}
+\item -1 (Fehler)
+\item PID vom Sohn (Erfolg)
+\end{itemize}
+Sohn:
+\begin{itemize}
+\item 0
+\end{itemize}
+\item Variablen sind jeweils Privat (übernehmen jeweils die Werte wie vor dem fork, Änderungen im Vater/Sohn finden aber nur dort statt)
+\end{itemize}
+\end{itemize}
+\begin{lstlisting}[language=C]
+ret = fork();
+if ( ret == -1 ) {
+	perror("fork"); exit(EXIT_FAILURE);
+}
+if ( ret == 0 ) {
+	// Sohn
+} else {
+	// Vater
+	puts(ret);
+}
+\end{lstlisting}
+\subsection[Exec]{\imptnt{Exec}}
+\begin{lstlisting}[language=C]
+int execl("Programmpfad", "Argumente...");
+\end{lstlisting}
+\begin{itemize}
+\item ersetzt aktuellen Programmcode durch entsprechende Binärdatei aus Pfad
+\begin{itemize} [label=$\to$]
+\item springt diesen Code sofort an (kehrt nur im Fehlerfall zurück, bspw. bei falscher Pfadangabe oder mangelden Zugriffsrechten)
+\item \imptnt{Rückkehr in Ausgangsprozess danach unmöglich!}
+\end{itemize}
+\item erzeugt keinen neuen Prozess (muss bspw. im Sohn nach fork() ausgeführt werden, wenn der Prozess (Vater) erhalten werden soll)!
+\end{itemize}
+\subsection{System}
+\begin{lstlisting}[language=C]
+int system("Kommando");
+\end{lstlisting}
+\begin{itemize}
+\item kombiniert fork+exec und führt Kommando aus
+\begin{itemize}[label=$\to$]
+\item kehrt erst zurück, wenn Kommando abgearbeitet ist
+\end{itemize}
+\end{itemize}
+\subsection[Wait]{\imptnt{Wait}}
+\begin{lstlisting}[language=C]
+pid_t wait (int *status);
+\end{lstlisting}
+\begin{itemize}
+\item bringt aufrufenden Prozess \imptnt{in Wartezustand}, falls ein Kind vorhanden ist. Wartezustand wird \imptnt{beendet, sobald \underline{ein} (irgendein) Kind-Prozess beendet} wird.
+\item Status kann u.a. erwarteter Rückkehrcode des Sohns sein.
+\item return: -1 bei Fehler, Sohn-PID sonst
+\end{itemize}
+\section{Kommunikation}
+IPC (inter process communication)\\
+bspw. über: Datei, Pipe, Signal, shared memory, …\\
+Unterscheidung bzgl. Anforderung:
+\begin{itemize}
+\item Teilnehmerzahl: 1:1, 1:m, n:1, n:m
+\item Richtung: uni-/bidirektional
+\item lokale/entfernte Kommunikation
+\item direkte/indirekte Kommunikation
+\end{itemize}
+\subsection{Übertragungsarten}
+\paragraph{\imptnt{Synchron}}
+\begin{itemize}
+\item wartet, bis Sende-/Empfangvorgang abgeschlossen ist
+\end{itemize}
+\paragraph{\imptnt{Asynchron}}
+\begin{itemize}
+\item Senden/Empfangen ohne „Bestätigung“
+\begin{itemize}[label=$\to$]
+\item unabhängig davon, ob etwas (oder wie viel bereits) gesendet oder empfangen wurde wird weiter gearbeitet
+\item braucht Zwischenspeicher
+\item gut, da kein Deadlock wegen Warten entstehen kann
+\end{itemize}
+\end{itemize}
+\paragraph{\imptnt{Verbindungsorientiert}}
+\begin{itemize}
+\item Verbindungsabbau
+\item Übertragung
+\item Verbindungsabbau
+\end{itemize}
+bspw. Telefon, Pipe
+\paragraph{\imptnt{Verbindungslos}}
+\begin{itemize}
+\item nur Übertragung
+\end{itemize}
+bpsw. Telegramm, Signal
+\paragraph{Verbindungsarten}
+\begin{tabular}{l l}
+$1-1$ & unicast\\
+$1-x_i$ & multicast\\
+$1-all$ & broadcast (bpsw. in Subnetz)
+\end{tabular}
+\subsection[Übertragung über Datei]{Übertragung \imptnt{über Datei}}
+Schlecht, da:
+\begin{itemize}
+\item doppelter Zugriff auf langsame HDD (nur gut, wenn Dateisystem im RAM)
+\item überlappender Zugriff muss mit lockf() geregelt wender $\Rightarrow$ fehleranfällig
+\end{itemize}
+
+\subsection[Übertragung über Pipe]{Übertragung über \imptnt{Pipe}}
+\begin{lstlisting}[language=C]
+int pipe ( int filedes[2] );
+\end{lstlisting}
+\begin{itemize}
+\item [2]: 2 Diskriptoren: 0 $\corr$ read, 1 $\corr$ write
+\end{itemize}
+\paragraph{Vorgehen}
+\begin{enumerate}
+\item pipe(x[2])
+\item fork()
+\item Prozesse schließen jeweils einen Diskriptor:
+\begin{itemize}
+\item Sohn: close(x[1]); (write geschlossen, also lesend)
+\item Vater: close(x[0]); (read geschlossen, also schreibend)
+\end{itemize}
+\item Datenübertragung:
+\begin{itemize}
+\item Sohn: read(x[0], intoVar, length); (Sohn wartet hier, bis Vater etwas schickt)
+\item Vater: write(x[1], text, lenght);
+\end{itemize}
+\item beide Prozesse rufen close() (des noch nicht geschlossenen Diskriptors) auf $\Rightarrow$ Pipe geschlossen
+\end{enumerate}
+\begin{lstlisting}[language=C]
+int pipe[2]
+ret = fork();
+if ( ret == 0 ) {
+	close(pipe[1]);
+	x = read(pipe[0], var, 80);
+	close(pipe[0]);
+} else {
+	close(pipe[0]);
+	write(pipe[1], text, 80);
+	close(pipe[1]);
+}
+\end{lstlisting}
+Eine Pipe ist:
+\begin{itemize}
+\item unidirektional (sonst 2 Pipes nötig)
+\item keine persistente Ressource (verschwindet nach close() aller Teilnehmer)
+\item nur zwischen verwandten Prozessen möglich!
+\end{itemize}
+Pipe in Shell:
+\begin{lstlisting}[language=bash]
+du | sort -n -r | less
+\end{lstlisting}
+$\Rightarrow$stdout von du in stdin von sort
+
+\subsubsection{popen}
+\begin{lstlisting}[language=C]
+FILE *popen (Kommando, Pipe-Typ [w/r]);
+\end{lstlisting}
+\begin{itemize}
+\item legt Pipe an, forkt Prozess, der dann Kommando ausführt
+\begin{itemize}
+\item je nach Typ:
+w: stdin vom Kommando zeigt auf Pipe $\Rightarrow$ Kommando liest
+r: stdout vom Kommando zeigt auf Pipe $\Rightarrow$ Kommando schreibt
+\end{itemize}
+\item pclose() $\Rightarrow$ wieder schließen
+\end{itemize}
+
+\subsection[Signale]{\imptnt{Signale}}
+\begin{itemize}
+\item Informationsübertragung (in der Form von Anweisungen) ohne nötige Vererbung
+\end{itemize}
+\paragraph{Ablauf}
+\begin{enumerate}
+\item Sendeprozess generiert Signal
+\item Signal zustellen (durch System)
+\item Aufruf Signalhandler (falls vorhanden)
+\item Aufruf default-Aktion (falls kein handler implementiert)
+\end{enumerate}
+Signal bpsw. SIGINT mit default-Aktion: Abbruch (auch durch Strg+C zu erreichen)
+\subsubsection{Signalhandler}
+\paragraph{Bash} $ $
+\begin{lstlisting}[language=bash]
+trap handleIt SIGINT
+\end{lstlisting}
+\paragraph{C} $ $
+\begin{lstlisting}[language=C]
+sig_t ret;
+
+void handler (int c){
+	// bspw.: default signal reaktivieren:
+	ret = signal(SIGINT, SIG_DFL);
+}
+
+main (){
+	ret = signal (SIGINT, (sig_t) &handler);
+	if (ret == SIG_ERR){
+		perror("signal"); exit(EXIT_FAILURE);
+	}
+}
+\end{lstlisting}
+
+\subsubsection[kill]{\imptnt{kill}}
+Signal senden
+\begin{lstlisting}[language=C]
+int kill (pid_t pid, int sig);
+\end{lstlisting}
+\begin{itemize}
+\item sendet Signal (falls Nutzer Berechtigung dazu hat)
+\item falls pid=-1 $\Rightarrow$ senden an alle
+\end{itemize}
+\paragraph{Zustellung}
+\begin{enumerate}
+\item nicht abfangbare Signale ausführen
+\item abfangbare Signale an handler geben, sonst default-Aktion ausführen
+\end{enumerate}
+Anweisung bzgl. Signalen:
+\begin{itemize}
+\item pause() - wartet auf Signal
+\item alarm(x) - wartet x, dann wird Signal SIGALRM zugestellt
+\end{itemize}
+\paragraph{Einordnung}
+\begin{itemize}
+\item unzuverlässig
+\item keine Nutzdaten-Übertragung
+\item keine Priorisierung
+\item keine Speicherung (Warteschlange)
+\end{itemize}
+
+\subsection{Shared Memory}
+\begin{itemize}
+\item gemeinsam genutzer Speicher
+\item Segmente bleiben \imptnt{persistent}
+\end{itemize}
+
+\subsection{Message Passing}
+\paragraph{Prinzip}
+\begin{enumerate}
+\item Sender trägt Nachricht in Puffer ein
+\item Sender sendet: send()
+\item System transportiert Nachricht
+\item Empfänger empfängt: recieve()\\
+und schreibt Daten in Puffer
+\end{enumerate}
+\begin{itemize}
+\item bei nicht gemeinsamen Speicher nützlich
+\item synchron und asynchron möglich
+\end{itemize}
+
+\section{Prozessorzuteilung}
+Zielgrößen Prozess(or)-Verteilung:
+\begin{itemize}
+\item Durschnittliche Reaktionszeit Prozesse
+\item Durschnittliche Verweilzeit Prozesse
+\item maximale CPU-Auslastung
+\item maximale Anzahl an Datenströmen
+\item garantierte maximale Reaktionszeit vorhanden?
+\item Fairness? n Prozesse $\to$ $\tfrac{1}{n}$ Prozessorzeit
+\item Ausschluss des Verhungerns
+\end{itemize}
+
+\subsection[Off-Line Scheduling]{\imptnt{Off-Line Scheduling}}
+\begin{itemize}
+\item Ermittlung Abarbeitungsreihenfolge und Prozessorzuteilung vor Laufzeit
+\begin{itemize}[label=$\to$]
+\item -- inflexibel\\
++ hohe Auslastung möglich
+\item alle Randbedingungen müssen bekannt sein
+\end{itemize}
+\end{itemize}
+\imptnt{Präzendenzgraph} zum ermitteln (topologisch sortierter gerichteter Graph)\\
+\begin{tikzpicture}[scale=1]
+\draw  (0,0) node{3} ellipse (.3 and .3);
+\node at (-.3,0.3) [left] {$p_{11}$};
+\draw  (0,-2) node{5} ellipse (.3 and .3);
+\node [left] at (-0.3,-1.7) {$p_{21}$};
+\draw  (2,-1) node{2} ellipse (.3 and .3);
+\node [right] at (2.3,-0.7) {$p_{12}$};
+\draw [-latex] (0.4,-0.2) -- (1.6,-0.8);
+\draw [-latex] (0.4,-1.8) -- (1.6,-1.2);
+\end{tikzpicture}\\
+$\Rightarrow$ \imptnt{Gantt-Diagramm}:\\
+\begin{tikzpicture}[scale=.4]
+\draw [-latex] (0,0) -- (8,0);
+\draw  (0,1) rectangle (5,0) node [pos=.5]{$p_{21}$};
+\draw  (0,2) rectangle (3,1) node [pos=.5]{$p_{11}$};
+\draw  (5,2) rectangle (7,1) node [pos=.5]{$p_{12}$};
+\draw (7,-.3) node[below]{$t$} -- (7,0.3);
+\node at (0,1) [above left] {$P_1$};
+\node at (0,1) [below left] {$P_2$};
+\end{tikzpicture}
+\subsection{On-Line Scheduling}
+\begin{itemize}
+\item Auswahl der Abarbeitungs-Reihenfolge zu Laufzeit
+\begin{itemize}[label=$\to$]
+\item + flexibel\\
+-- keine Zeit für lange Auswahlverfahren $\Rightarrow$ Kompromiss bei Optimierung
+\end{itemize}
+\end{itemize}
+
+\subsubsection[Zeitgesteuertes Scheduling]{\imptnt{Zeitgesteuertes Scheduling}}
+\begin{itemize}
+\item Abläufe periodisch
+\item keine Interrupts
+\end{itemize}
+\paragraph{\imptnt{Time Division Multiple Access (TDMA)}}
+\begin{itemize}
+\item innerhalb jeder Periode wird Periodenlänge zwischen $n$ Teilnehmern aufgeteilt. Jeder hat $\tfrac{1}{n}$ Zeit (auch wenn nicht direkt genutzt wird). \\
+$\Rightarrow$ keine Kollision möglich
+\end{itemize}
+
+\subsubsection[Ereignisgesteuertes Scheduling]{\imptnt{Ereignisgesteuertes Scheduling}}
+\begin{itemize}
+\item reagiert auf Einflüsse von außen
+\item keine Garantie von Ausführungszeiten möglich, da Interrupts unvorhersehbar
+\begin{itemize}[label = $\to$]
+\item interaktive System (GUI, …)
+\end{itemize}
+\end{itemize}
+
+\paragraph{\imptnt{Interrupt}} passiert asynchron zum Programmablauf. Bspw. durch IO-Geräte, BS, Programm, …
+
+\subsubsection{Schedulingzeitpunkt}
+\begin{itemize}
+\item \imptnt{präemtptives Multiptasking}:\\
+Unterbrechung jederzeit durch BS möglich (Prozess blockiert, bereit, fertig) [idR. an bestimmten „Preemption Points“)
+\item \imptnt{kooperatives Multitasking}:\\
+Freiwilliges Unterbrechen durch Prozess, bpsw. durch Systemaufrufe
+\item oder wenn Aktivität komplett (run-to-completion)
+\end{itemize}
+
+\subsubsection[Priorisierung]{\imptnt{Priorisierung}}
+Prozesse besitzen unterschiedliche Wichtigkeiten (unfair)
+\begin{itemize}
+\item \imptnt{statische Priorität}
+\begin{itemize}
+\item Priorität konstant
+\item[+] einfacher Scheduler
+\item[+] einfache Analyse
+\item[--] nicht flexibel
+\end{itemize}
+Bsp.: \imptnt{Fixed External Priorities (FEP)}\\
+jeder Prozess erhält vor LZ einen Prioritäts-Paramter zugeordnet\\
+$\to$ zur LZ wird immer der höchste gewählt
+\item \imptnt{dynamische Priorität}
+\begin{itemize}
+\item[--] periodische Neuberechnung der Abarbeitungsreinfolge $\Rightarrow$ Aufwand
+\item[+] flexibel
+\item[--] schwer zu analysieren
+\end{itemize}
+Bsp.: \imptnt{Implizite Prioritäten}\\
+Priorität basiert auf bspw.:
+\begin{itemize}
+\item Joblänge
+\item verbleibende Abarbeitungszeit
+\item Zeit der letzten Aktualisierung
+\item Deadline
+\end{itemize}
+\end{itemize}
+
+\paragraph{Uni-/Multiprozessor} zusätzliche Probleme
+\begin{itemize}
+\item wo wird Prozess abgearbeitet (am besten unbeschäftigter Prozessor oder Prozessor auf dem Prozess zuvor lief)
+\end{itemize}
+
+\subsubsection[Round-Robin]{\imptnt{Round-Robin}}
+Kenngrößen:\\
+\imptnt{$t_q$} \quad Prozesszeit (Quantum)\\
+\imptnt{$t_{cs}$} \quad Umschaltzeit
+
+Je größer die Prozesszeit ist, desto träger kann das System werden (lange Reaktionszeit). Bei kurzer Prozesszeit ist die Umschaltzeit im vergleich relativ groß $\Rightarrow$ ineffizient (aber schnelle Reaktionszeit)
+
+\subsubsection[FIFO/FCFS]{\imptnt{FIFO/FCFS}}
+fair, leicht zu analysieren ($\to$ Warteschlange)
+\begin{itemize}
+\item Prozesse werden in Reihenfolge des Eintreffens vollständig abgearbeitet
+\end{itemize}
+\subsubsection[Shortest Job Next (SJN)]{\imptnt{Shortest Job Next (SJN)}}
+\begin{itemize}
+\item kleine Prozesse werden immer vor großen abgearbeitet\\
+$\Rightarrow$ kann zum \imptnt{verhungern} führen, unfair!
+\item Ausführzeit muss bekannt sein!
+\end{itemize}
+
+\subsection{Unix}
+\begin{itemize}
+\item Unterscheidet fürs Scheduling \imptnt{2 Arten von Prozessen}:
+\begin{enumerate}
+\item interaktive ($\to$ nutzen Zeit nicht aus (wartend))
+\item rechnende
+\end{enumerate}
+\item \imptnt{bevorzugt interaktive}
+\end{itemize}
+
+\paragraph{Linux}
+\begin{itemize}
+\item Prioritäten + Zeitscheiben (Prioritäten von 19 (niedrigste) über 0 (normal) bis -20 (höchste))
+\end{itemize}
+
+\subsection[Priority Boost]{\imptnt{Priority Boost}}
+Priorität wird durch langes Warten erhöht und durch Abarbeiten schrittweise verringert.
 \end{document}
