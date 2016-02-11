@@ -11,8 +11,15 @@
 \setlength{\parskip}{0em}
 \newcommand{\HRule}[1][\medskipamount]{\par
   \vspace*{\dimexpr-\parskip-\baselineskip+#1}
-  \noindent\rule{\linewidth}{0.2mm}\par
-  \vspace*{\dimexpr-\parskip-.5\baselineskip+#1}}
+  \noindent\rule[0.2ex]{\linewidth}{0.2mm}\par
+  \vspace*{\dimexpr-\parskip-.5\baselineskip+#1}
+}
+\usepackage{dashrule}
+\newcommand{\HDRule}[1][\medskipamount]{\par
+  \vspace*{\dimexpr-\parskip-\baselineskip+#1}
+  \noindent\hdashrule[0.2ex]{\linewidth}{0.2mm}{1mm} \par
+  \vspace*{\dimexpr-\parskip-.5\baselineskip+#1}
+}
 
 % Input inkl. Umlaute, Silbentrennung
 \usepackage[T1]{fontenc}
