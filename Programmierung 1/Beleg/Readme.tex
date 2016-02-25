@@ -1,0 +1,140 @@
+% Header aus der Vorlage
+\input{../../LaTeX_master/LaTeX_master_HTW}
+
+% Definition von Titel, Autor usw.
+\DTitel{Programmierung I}
+\DUntertitel{Beleg}
+\DAutor{Falk-Jonatan Strube}
+\DNotiz{}
+\renewcommand{\workingdir}{../../}
+\renewcommand{\Dokumentensignatur}{}
+\renewcommand{\Autorformat}[1]{\textcolor{darkgray}{#1}}
+
+\begin{document}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\section{Persönliche Angaben}
+\begin{tabular}{l l l}
+Name: 					&Falk-Jonatan Strube\\
+Matrikelnr.:		&39467\\
+&&\\
+Aufgabenstellung:	&4 (Verleih-Bibliothek)	&$( 39467 \% 4 ) + 1 = 4$\\
+Bedienoberfläche:	&3 (Web-CGI)						&$( 39467 \% 3 ) + 1 = 3$\\
+\end{tabular}
+
+\section{Aufgabenstellung}
+Programmieren Sie ein Programm zur Verwaltung verborgter Bücher, CDs, DVDs (Medien). Dabei sollen Name, Autor/Interpret (kann auch leer bleiben) und leihende Person (Name) verwaltet werden. Wird ein Medium zurückgegeben, ist der Datensatz zu entfernen.\\
+Es soll sowohl nach dem Medium, als auch nach der leihenden Person gesucht werden können.
+
+\section{Anforderungsanalyse}
+
+\begin{enumerate}
+\item C-Programm bestehend aus mindestens 3 Modulen
+\begin{itemize}
+\item Modul bestehend aus .c und .h Datei
+\item Module müssen getrennt compilierbar sein
+\end{itemize}
+\item Daten in geeigneter Datenstruktur speichern
+\begin{itemize}
+\item im Quelltext geeignete Strukutur
+\item extern in geeigneter Struktur nach Beendigung des Programms abspeichern
+\end{itemize}
+\item Daten bearbeiten
+\begin{itemize}
+\item Daten erfassen
+\item Daten löschen
+\item Daten suchen
+\item Tabellarische Anzeige aller Daten
+\item Einzelansicht gesuchter Daten
+\end{itemize}
+\item Quelltext-Dokumentation
+\begin{itemize}
+\item Funktionen
+\item Urheberschaft im Quelltextkopf
+\end{itemize}
+\item Speicherbereiche in erforderlicher Größe bereitstellen und wieder freigeben
+\item Programm muss auf Rechnern im Rechnerlabor der HTW übersetzt und vorgeführt werden.
+\end{enumerate}
+
+\section{Implementation}
+\begin{enumerate}
+\item Module:\\
+\begin{tabular}{l l l}
+Modul & Nutzen & Beschreibung\\
+\hline
+lendlib & Hauptmodul & \\
+lendliblogic & Datenverarbeitung & Logische Operationen wie sortieren, suchen, …\\ 
+lendlibin & Input & Eingabeverarbeitung aus Webform/Terminal und Datei\\
+lendlibout & Output & Ausgabe über Webform/Terminal und Datei\\
+lendlibitem & Medium & Interaktionen mit Ausleihmedium\\
+\end{tabular}
+\item Datenstruktur
+\begin{itemize}
+\item Struct für Medien
+\begin{itemize}
+\item Medienart (enum: Buch, CD, DVD, andere) [optional]
+\item Titel des Mediums (Name)
+\item Autor/Interpret des Mediums [optional]
+\item Name der Person, dem das Medium verliehen wurde
+\end{itemize}
+\item Abspeichern in .csv
+\end{itemize}
+\item Bearbeitung:
+\begin{itemize}
+\item Daten erfassen: einfügen in doppelt verkettete Ringliste
+\item Daten löschen: löschen aus doppelt verketteter Ringliste
+\item Daten sortieren (nach Mediumart, Mediumtitel, Interpret und Verleihname): Mergesort
+\item Daten suchen (nach Mediumtitel und Verleihname): Binäre Suche
+\item Anzeige der Daten: siehe Quelltext
+\end{itemize}
+\item Quelltext-Dokumentation:\\
+siehe Quelltext
+\item Speicherverwaltung:\\
+siehe Implementation der Datenverarbeitung
+\item Lauffähigkeit Rechnerlabor:\\
+siehe Vorführung
+\end{enumerate}
+
+\section{Kompilieren}
+
+\begin{tabular}{l l}
+Kommando & Ergebnis\\
+\hline
+gcc *.c -D CGI & für Web-CGI kompilieren\\
+gcc *.c -D DEBUG & Anzeigen von Debug-Meldungen\\
+gcc *.c -D DCOLOR & Farbige Anzeige im Terminal\\
+\end{tabular}
+
+\section{Quellen}
+\paragraph{Wartezeiten für Anschauliche Abarbeitung}
+http://stackoverflow.com/a/28827188
+\begin{lstlisting}[language=C]
+#ifdef WIN32
+#include <windows.h>
+#elif _POSIX_C_SOURCE >= 199309L
+#include <time.h>   // for nanosleep
+#else
+#include <unistd.h> // for usleep
+#endif
+
+void sleep_ms(int milliseconds) // cross-platform sleep function
+{
+#ifdef WIN32
+    Sleep(milliseconds);
+#elif _POSIX_C_SOURCE >= 199309L
+    struct timespec ts;
+    ts.tv_sec = milliseconds / 1000;
+    ts.tv_nsec = (milliseconds % 1000) * 1000000;
+    nanosleep(&ts, NULL);
+#else
+    usleep(milliseconds * 1000);
+#endif
+}
+\end{lstlisting}
+\paragraph{Mergsesort}
+http://www.sorting-algorithms.com/merge-sort
+\end{document}

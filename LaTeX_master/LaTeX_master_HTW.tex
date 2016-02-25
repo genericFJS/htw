@@ -147,6 +147,9 @@ urlcolor=green,%
 \newcommand{\DUntertitel}[1]{\newcommand{\Dokumentenuntertitel}{#1}}
 \newcommand{\DAutor}[1]{\newcommand{\Dokumentenautor}{#1}}
 \newcommand{\DNotiz}[1]{\newcommand{\Dokumentennotiz}{#1}}
+\newcommand{\DSign}[1]{\newcommand{\Dokumentensignatur}{#1}}
+\DSign{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \Dokumentenautor}}}
+\newcommand{\Autorformat}[1]{\textcolor{darkgray}{Mitschrift von #1}}
 % … Deswegen folgendes erst Nach Dokumentenbeginn ausführen:
 \AtBeginDocument{
 	\hypersetup{
@@ -156,20 +159,23 @@ urlcolor=green,%
 	\automark[section]{section}
 	\automark*[subsection]{subsection}
 	\pagestyle{scrheadings}
-	\ihead{\includegraphics[height=1.7em]{../LaTeX_master/HTW-Logo.eps}}
+	\ihead{\includegraphics[height=1.7em]{\workingdir LaTeX_master/HTW-Logo.eps}}
 	\ohead{\Dokumententitel}
 	\cfoot{\pagemark}
-	\ofoot{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \Dokumentenautor}}}
+	\ofoot{\Dokumentensignatur}
 	% Titelseite
-	\title{\includegraphics[width=0.35\textwidth]{../LaTeX_master/HTW-Logo.eps}\\\vspace{0.5em}
+	\title{\includegraphics[width=0.35\textwidth]{\workingdir LaTeX_master/HTW-Logo.eps}\\\vspace{0.5em}
 	\Huge\textbf{\Dokumententitel} \\\vspace*{0,5cm}
 	\Large \Dokumentenuntertitel \\\vspace*{4cm}}
-	\author{\textcolor{darkgray}{Mitschrift von \Dokumentenautor} \vspace*{1cm}\\\Dokumentennotiz}
+	\author{\Autorformat{\Dokumentenautor} \vspace*{1cm}\\\Dokumentennotiz}
 }
 
 %% EIGENE BEFEHLE
 
-%Farbdefinitionen
+% Arbeitsordner (in Abhängigkeit vom Master)
+\newcommand{\workingdir}{../}
+
+% Farbdefinitionen
 \definecolor{red}{RGB}{180,0,0}
 \definecolor{green}{RGB}{75,160,0}
 \definecolor{blue}{RGB}{0,75,200}
