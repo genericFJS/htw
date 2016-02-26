@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['main',['main',['../group___lend_lib.html#ga0ddf1224851353fc92bfbff6f499fa97',1,'lendlib.c']]]
+  ['libprint',['libprint',['../group___lend_lib_out.html#ga152ba05f7c1a27f69bd9c243359609c6',1,'lendlibout.c']]]
 ];

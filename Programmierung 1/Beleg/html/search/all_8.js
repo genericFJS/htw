@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['prepareout',['prepareOut',['../group___lend_lib_out.html#gae6bfc3bcebb80e387b4ad8a773496437',1,'lendlibout.c']]],
-  ['printhead',['printHead',['../group___lend_lib_out.html#ga903241157072885e802dea85fc6a976c',1,'printHead():&#160;lendlibout.c'],['../group___lend_lib_out.html#ga903241157072885e802dea85fc6a976c',1,'printHead():&#160;lendlibout.c']]],
-  ['printtline',['printTLine',['../group___lend_lib_out.html#ga5a511942adfe4ce80256d665208eb204',1,'printTLine(char type, int length):&#160;lendlibout.c'],['../group___lend_lib_out.html#ga5a511942adfe4ce80256d665208eb204',1,'printTLine(char type, int length):&#160;lendlibout.c']]],
-  ['ptype',['ptype',['../group___lend_lib_out.html#ga0916607956575302a93dbd21440edc1a',1,'lendlibout.h']]]
+  ['other',['other',['../group___lend_lib_item.html#gga636cfca014f3212ea82d45e28f9cb51ba7e338ad381a84ef6df07e7d425707025',1,'lendlibitem.h']]],
+  ['out',['out',['../group___lend_lib_out.html#gga0916607956575302a93dbd21440edc1aaaca14bf8f96bb2b357f12496b7f11579',1,'lendlibout.h']]]
 ];

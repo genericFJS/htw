@@ -77,14 +77,80 @@ var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#define-members">Makrodefinitionen</a> &#124;
+<a href="#func-members">Funktionen</a> &#124;
+<a href="#var-members">Variablen</a>  </div>
   <div class="headertitle">
 <div class="title">LendLibIn</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Funktionen für jegliche Art von Ausgabe.  
+<a href="#details">Mehr ...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Makrodefinitionen</h2></td></tr>
+<tr class="memitem:ga09878b617b8ddec7d75c7a4e71718894"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga09878b617b8ddec7d75c7a4e71718894"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CSVFILE</b>&#160;&#160;&#160;lendlib.csv</td></tr>
+<tr class="separator:ga09878b617b8ddec7d75c7a4e71718894"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Funktionen</h2></td></tr>
+<tr class="memitem:gabd7e68463503c5745a70e1d19c66f812"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabd7e68463503c5745a70e1d19c66f812"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___lend_lib_in.html#gabd7e68463503c5745a70e1d19c66f812">readfile</a> ()</td></tr>
+<tr class="memdesc:gabd7e68463503c5745a70e1d19c66f812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Liest Verleihmediendaten aus Datei aus. <br /></td></tr>
+<tr class="separator:gabd7e68463503c5745a70e1d19c66f812"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6630e38513358b73fa2ce1c1f6cb71cb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___lend_lib_in.html#ga6630e38513358b73fa2ce1c1f6cb71cb">getSize</a> (FILE *libdb)</td></tr>
+<tr class="memdesc:ga6630e38513358b73fa2ce1c1f6cb71cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gibt Größe der gespeicherten CSV-Datenbank aus.  <a href="#ga6630e38513358b73fa2ce1c1f6cb71cb">Mehr ...</a><br /></td></tr>
+<tr class="separator:ga6630e38513358b73fa2ce1c1f6cb71cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variablen</h2></td></tr>
+<tr class="memitem:ga7eaa119ac9f04253a1f58bb6b09f9df2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7eaa119ac9f04253a1f58bb6b09f9df2"></a>
+FILE *&#160;</td><td class="memItemRight" valign="bottom"><b>libdb</b></td></tr>
+<tr class="separator:ga7eaa119ac9f04253a1f58bb6b09f9df2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga91f8b044f23c2395ba7c1ee942b2456c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga91f8b044f23c2395ba7c1ee942b2456c"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>listSize</b> = 0</td></tr>
+<tr class="separator:ga91f8b044f23c2395ba7c1ee942b2456c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Ausführliche Beschreibung</h2>
+<p>Funktionen für jegliche Art von Ausgabe. </p>
+<h2 class="groupheader">Dokumentation der Funktionen</h2>
+<a class="anchor" id="ga6630e38513358b73fa2ce1c1f6cb71cb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getSize </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>libdb</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gibt Größe der gespeicherten CSV-Datenbank aus. </p>
+<dl class="params"><dt>Parameter</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">libdb</td><td>Eine Datei </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Rückgabe</dt><dd>Anzahl von Linien (also Einträgen)</dd></dl>
+<p>Quelle: <a href="http://stackoverflow.com/a/1910795">http://stackoverflow.com/a/1910795</a> </p>
+<ul>
+<li>Anzahl der Zeilenumbrüche zählen</li>
+<li>Im Fall, dass die letzte Zeile keinen Umbruch enthält oder leer ist (bis auf den Umbruch), wird diese dazu gezählt oder eben nicht </li>
+</ul>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Erzeugt am Fre Feb 26 2016 15:21:48 für Beleg 39467 von &#160;<a href="http://www.doxygen.org/index.html">
+Erzeugt am Sam Feb 27 2016 00:14:31 für Beleg 39467 von &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>
