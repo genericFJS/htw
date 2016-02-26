@@ -1,0 +1,124 @@
+\hypertarget{group___lend_lib_out}{}\section{Lend\+Lib\+Out}
+\label{group___lend_lib_out}\index{Lend\+Lib\+Out@{Lend\+Lib\+Out}}
+
+
+Funktionen für jegliche Art von Ausgabe.  
+
+
+\subsection*{Aufzählungen}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{group___lend_lib_out_ga0916607956575302a93dbd21440edc1a}{ptype} \{ \hyperlink{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aa9a6940c3bba41cdd6dacae1a00176a30}{status}, 
+\hyperlink{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aaaca14bf8f96bb2b357f12496b7f11579}{out}, 
+\hyperlink{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aad606e435413ea0944dd00d49e901e4ed}{error}
+ \}\begin{DoxyCompactList}\small\item\em Verschieden Ausgabemöglichkeiten. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+\subsection*{Funktionen}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group___lend_lib_out_gae6bfc3bcebb80e387b4ad8a773496437}{prepare\+Out} ()
+\begin{DoxyCompactList}\small\item\em Bereitet Variablen für den Output vor. \end{DoxyCompactList}\item 
+void \hyperlink{group___lend_lib_out_ga152ba05f7c1a27f69bd9c243359609c6}{libprint} (\hyperlink{group___lend_lib_out_ga0916607956575302a93dbd21440edc1a}{ptype} type, const char $\ast$printable,...)
+\begin{DoxyCompactList}\small\item\em Terminalausgabe abhängig von (beim kompilieren) definierten Paramtern. \end{DoxyCompactList}\item 
+void \hyperlink{group___lend_lib_out_ga903241157072885e802dea85fc6a976c}{print\+Head} ()
+\begin{DoxyCompactList}\small\item\em Gibt einen Header aus. \end{DoxyCompactList}\item 
+void \hyperlink{group___lend_lib_out_ga5a511942adfe4ce80256d665208eb204}{print\+T\+Line} (char type, int length)
+\begin{DoxyCompactList}\small\item\em Gibt eine Linie im Terminal aus. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Ausführliche Beschreibung}
+Funktionen für jegliche Art von Ausgabe. 
+
+Ausgabe abhängig von den übers kompilieren definierten Parameter\+: 
+\begin{DoxyParams}{Parameter}
+{\em C\+GI} & für eine .cgi-\/\+Datei \\
+\hline
+{\em D\+C\+O\+L\+OR} & für eingefärbte Terminalausgaben \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Dokumentation der Aufzählungstypen}
+\index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!ptype@{ptype}}
+\index{ptype@{ptype}!Lend\+Lib\+Out@{Lend\+Lib\+Out}}
+\subsubsection[{\texorpdfstring{ptype}{ptype}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf ptype}}\hypertarget{group___lend_lib_out_ga0916607956575302a93dbd21440edc1a}{}\label{group___lend_lib_out_ga0916607956575302a93dbd21440edc1a}
+
+
+Verschieden Ausgabemöglichkeiten. 
+
+\begin{Desc}
+\item[Aufzählungswerte]\par
+\begin{description}
+\index{status@{status}!Lend\+Lib\+Out@{Lend\+Lib\+Out}}\index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!status@{status}}\item[{\em 
+status\hypertarget{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aa9a6940c3bba41cdd6dacae1a00176a30}{}\label{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aa9a6940c3bba41cdd6dacae1a00176a30}
+}]Statusmeldungen. \index{out@{out}!Lend\+Lib\+Out@{Lend\+Lib\+Out}}\index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!out@{out}}\item[{\em 
+out\hypertarget{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aaaca14bf8f96bb2b357f12496b7f11579}{}\label{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aaaca14bf8f96bb2b357f12496b7f11579}
+}]normale Ausgabe \index{error@{error}!Lend\+Lib\+Out@{Lend\+Lib\+Out}}\index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!error@{error}}\item[{\em 
+error\hypertarget{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aad606e435413ea0944dd00d49e901e4ed}{}\label{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aad606e435413ea0944dd00d49e901e4ed}
+}]Fehlermeldungen. \end{description}
+\end{Desc}
+
+
+\subsection{Dokumentation der Funktionen}
+\index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!libprint@{libprint}}
+\index{libprint@{libprint}!Lend\+Lib\+Out@{Lend\+Lib\+Out}}
+\subsubsection[{\texorpdfstring{libprint(ptype type, const char $\ast$printable,...)}{libprint(ptype type, const char *printable,...)}}]{\setlength{\rightskip}{0pt plus 5cm}void libprint (
+\begin{DoxyParamCaption}
+\item[{{\bf ptype}}]{type, }
+\item[{const char $\ast$}]{printable, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_out_ga152ba05f7c1a27f69bd9c243359609c6}{}\label{group___lend_lib_out_ga152ba05f7c1a27f69bd9c243359609c6}
+
+
+Terminalausgabe abhängig von (beim kompilieren) definierten Paramtern. 
+
+
+\begin{DoxyParams}{Parameter}
+{\em type} & Ausgabetyp (\hyperlink{group___lend_lib_out_ga0916607956575302a93dbd21440edc1a}{ptype})\\
+\hline
+\end{DoxyParams}
+Quelle\+: \href{http://www.ozzu.com/cpp-tutorials/tutorial-writing-custom-printf-wrapper-function-t89166.html}{\tt http\+://www.\+ozzu.\+com/cpp-\/tutorials/tutorial-\/writing-\/custom-\/printf-\/wrapper-\/function-\/t89166.\+html} \index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!prepare\+Out@{prepare\+Out}}
+\index{prepare\+Out@{prepare\+Out}!Lend\+Lib\+Out@{Lend\+Lib\+Out}}
+\subsubsection[{\texorpdfstring{prepare\+Out()}{prepareOut()}}]{\setlength{\rightskip}{0pt plus 5cm}void prepare\+Out (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_out_gae6bfc3bcebb80e387b4ad8a773496437}{}\label{group___lend_lib_out_gae6bfc3bcebb80e387b4ad8a773496437}
+
+
+Bereitet Variablen für den Output vor. 
+
+
+\begin{DoxyItemize}
+\item Berechnung der Terminalbreite (Quelle\+: \href{http://stackoverflow.com/a/1022961}{\tt http\+://stackoverflow.\+com/a/1022961}) 
+\end{DoxyItemize}\index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!print\+Head@{print\+Head}}
+\index{print\+Head@{print\+Head}!Lend\+Lib\+Out@{Lend\+Lib\+Out}}
+\subsubsection[{\texorpdfstring{print\+Head()}{printHead()}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+Head (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_out_ga903241157072885e802dea85fc6a976c}{}\label{group___lend_lib_out_ga903241157072885e802dea85fc6a976c}
+
+
+Gibt einen Header aus. 
+
+Im Terminal ein paar erste Zeilen, im C\+GI den H\+T\+M\+L-\/\+Header \index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!print\+T\+Line@{print\+T\+Line}}
+\index{print\+T\+Line@{print\+T\+Line}!Lend\+Lib\+Out@{Lend\+Lib\+Out}}
+\subsubsection[{\texorpdfstring{print\+T\+Line(char type, int length)}{printTLine(char type, int length)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+T\+Line (
+\begin{DoxyParamCaption}
+\item[{char}]{type, }
+\item[{int}]{length}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_out_ga5a511942adfe4ce80256d665208eb204}{}\label{group___lend_lib_out_ga5a511942adfe4ce80256d665208eb204}
+
+
+Gibt eine Linie im Terminal aus. 
+
+
+\begin{DoxyParams}{Parameter}
+{\em type} & Ein char, der die Linie visuell bestimmt \\
+\hline
+{\em length} & Die Länge der Linie, bei der Länge 0 wird die Breite des Terminals \\
+\hline
+\end{DoxyParams}
