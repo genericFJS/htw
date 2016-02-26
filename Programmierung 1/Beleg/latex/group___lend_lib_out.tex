@@ -20,10 +20,21 @@ void \hyperlink{group___lend_lib_out_gae6bfc3bcebb80e387b4ad8a773496437}{prepare
 \begin{DoxyCompactList}\small\item\em Bereitet Variablen für den Output vor. \end{DoxyCompactList}\item 
 void \hyperlink{group___lend_lib_out_ga152ba05f7c1a27f69bd9c243359609c6}{libprint} (\hyperlink{group___lend_lib_out_ga0916607956575302a93dbd21440edc1a}{ptype} type, const char $\ast$printable,...)
 \begin{DoxyCompactList}\small\item\em Terminalausgabe abhängig von (beim kompilieren) definierten Paramtern. \end{DoxyCompactList}\item 
+void \hyperlink{group___lend_lib_out_ga1b5f37b5e6ac0f38b6933a16e0460579}{set\+Color} (int p\+Type)
+\begin{DoxyCompactList}\small\item\em Setzt die Terminal-\/\+Schriftfarbe abhängig vom Typ. \end{DoxyCompactList}\item 
+void \hyperlink{group___lend_lib_out_gafe00396766eb6b8ca4674de4c5d3d949}{reset\+Color} ()
+\begin{DoxyCompactList}\small\item\em Setzt die Terminal-\/\+Schriftfarbe zurück auf den Standard. \end{DoxyCompactList}\item 
 void \hyperlink{group___lend_lib_out_ga903241157072885e802dea85fc6a976c}{print\+Head} ()
 \begin{DoxyCompactList}\small\item\em Gibt einen Header aus. \end{DoxyCompactList}\item 
+void \hyperlink{group___lend_lib_out_gaa5964f653524972b1bca64e6e8a7622d}{print\+Foot} ()
+\begin{DoxyCompactList}\small\item\em Gibt einen Footer aus. \end{DoxyCompactList}\item 
 void \hyperlink{group___lend_lib_out_ga5a511942adfe4ce80256d665208eb204}{print\+T\+Line} (char type, int length)
-\begin{DoxyCompactList}\small\item\em Gibt eine Linie im Terminal aus. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Gibt eine Linie im Terminal aus. \end{DoxyCompactList}\item 
+void \hyperlink{group___lend_lib_out_ga73a8d7e98be85f67961ca682c291033a}{sleep\+\_\+ms} (int milliseconds)
+\begin{DoxyCompactList}\small\item\em Cross-\/\+Platform Sleep Funktion in Millisekunden. \end{DoxyCompactList}\item 
+void {\bfseries print\+Items} ()\hypertarget{group___lend_lib_out_ga83cb01db1bc577a2e4a54cbe62773c17}{}\label{group___lend_lib_out_ga83cb01db1bc577a2e4a54cbe62773c17}
+
+\end{DoxyCompactItemize}
 
 
 \subsection{Ausführliche Beschreibung}
@@ -92,7 +103,18 @@ Bereitet Variablen für den Output vor.
 
 \begin{DoxyItemize}
 \item Berechnung der Terminalbreite (Quelle\+: \href{http://stackoverflow.com/a/1022961}{\tt http\+://stackoverflow.\+com/a/1022961}) 
-\end{DoxyItemize}\index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!print\+Head@{print\+Head}}
+\end{DoxyItemize}\index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!print\+Foot@{print\+Foot}}
+\index{print\+Foot@{print\+Foot}!Lend\+Lib\+Out@{Lend\+Lib\+Out}}
+\subsubsection[{\texorpdfstring{print\+Foot()}{printFoot()}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+Foot (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_out_gaa5964f653524972b1bca64e6e8a7622d}{}\label{group___lend_lib_out_gaa5964f653524972b1bca64e6e8a7622d}
+
+
+Gibt einen Footer aus. 
+
+Im Terminal ein Abschlussstrich, im C\+GI den H\+T\+M\+L-\/\+Footer \index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!print\+Head@{print\+Head}}
 \index{print\+Head@{print\+Head}!Lend\+Lib\+Out@{Lend\+Lib\+Out}}
 \subsubsection[{\texorpdfstring{print\+Head()}{printHead()}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+Head (
 \begin{DoxyParamCaption}
@@ -122,3 +144,42 @@ Gibt eine Linie im Terminal aus.
 {\em length} & Die Länge der Linie, bei der Länge 0 wird die Breite des Terminals \\
 \hline
 \end{DoxyParams}
+\index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!reset\+Color@{reset\+Color}}
+\index{reset\+Color@{reset\+Color}!Lend\+Lib\+Out@{Lend\+Lib\+Out}}
+\subsubsection[{\texorpdfstring{reset\+Color()}{resetColor()}}]{\setlength{\rightskip}{0pt plus 5cm}void reset\+Color (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_out_gafe00396766eb6b8ca4674de4c5d3d949}{}\label{group___lend_lib_out_gafe00396766eb6b8ca4674de4c5d3d949}
+
+
+Setzt die Terminal-\/\+Schriftfarbe zurück auf den Standard. 
+
+Nur, falls beim Compilieren D\+C\+O\+L\+OR definiert wurde. \index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!set\+Color@{set\+Color}}
+\index{set\+Color@{set\+Color}!Lend\+Lib\+Out@{Lend\+Lib\+Out}}
+\subsubsection[{\texorpdfstring{set\+Color(int p\+Type)}{setColor(int pType)}}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Color (
+\begin{DoxyParamCaption}
+\item[{int}]{p\+Type}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_out_ga1b5f37b5e6ac0f38b6933a16e0460579}{}\label{group___lend_lib_out_ga1b5f37b5e6ac0f38b6933a16e0460579}
+
+
+Setzt die Terminal-\/\+Schriftfarbe abhängig vom Typ. 
+
+
+\begin{DoxyParams}{Parameter}
+{\em p\+Type} & Ausgabetyp (\hyperlink{group___lend_lib_out_ga0916607956575302a93dbd21440edc1a}{ptype})\\
+\hline
+\end{DoxyParams}
+Nur, falls beim Compilieren D\+C\+O\+L\+OR definiert wurde. \index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!sleep\+\_\+ms@{sleep\+\_\+ms}}
+\index{sleep\+\_\+ms@{sleep\+\_\+ms}!Lend\+Lib\+Out@{Lend\+Lib\+Out}}
+\subsubsection[{\texorpdfstring{sleep\+\_\+ms(int milliseconds)}{sleep_ms(int milliseconds)}}]{\setlength{\rightskip}{0pt plus 5cm}void sleep\+\_\+ms (
+\begin{DoxyParamCaption}
+\item[{int}]{milliseconds}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_out_ga73a8d7e98be85f67961ca682c291033a}{}\label{group___lend_lib_out_ga73a8d7e98be85f67961ca682c291033a}
+
+
+Cross-\/\+Platform Sleep Funktion in Millisekunden. 
+
+Quelle\+: \href{http://stackoverflow.com/a/28827188}{\tt http\+://stackoverflow.\+com/a/28827188} 

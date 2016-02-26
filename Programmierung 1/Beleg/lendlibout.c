@@ -5,6 +5,8 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 
+#define SLEEPDURATION 350
+
 int termw = 55; ///< Breite des Terminals (falls Terminalausgabe)
 
 /**
@@ -31,20 +33,59 @@ void libprint(ptype type, const char* printable, ...){
 	va_start(args, printable);
 	int pType = type;
 #ifdef DCOLOR
+	setColor(type);
+#endif
+#ifndef DEBUG
+	if (pType == 2)
+		// Falls Fehlerausgabe deaktiviert ist, keine Fehler ausgeben!
+		return;
+#endif
+	printf("%c[2K", 27);
+	vprintf(printable, args);
+	va_end(args);
+	
+#ifdef DPRES
 	if (pType == 0){
+		// Statusmeldungen bei Bedarf mit Verzögerung
+		fflush(0);
+		sleep_ms(SLEEPDURATION);
+	}
+#endif
+	
+	if (pType == 0){
+		printf("\r");
+	} else {
+		printf("\n");
+	}
+	resetColor();
+}
+
+/**
+ * @ingroup LendLibOut
+ * @brief Setzt die Terminal-Schriftfarbe abhängig vom Typ.
+ * @param pType Ausgabetyp (::ptype)
+ * 
+ * Nur, falls beim Compilieren DCOLOR definiert wurde.
+ */
+void setColor(int pType){	
+#ifdef DCOLOR
+	if (pType == 0){// Statusmeldungen bei Bedarf mit Verzögerung
 		printf("\e[33m");
 	}else if (pType == 1){
 		printf("\e[32m");
 	}else{
-		// Falls Fehlerausgabe deaktiviert ist, keine Fehler ausgeben!
-#ifndef DEBUG
-		return;
-#endif
 		printf("\e[31m");
 	}
 #endif
-	vprintf(printable, args);
-	va_end(args);
+}
+
+/**
+ * @ingroup LendLibOut
+ * @brief Setzt die Terminal-Schriftfarbe zurück auf den Standard.
+ * 
+ * Nur, falls beim Compilieren DCOLOR definiert wurde.
+ */
+void resetColor(){	
 #ifdef DCOLOR
 	printf("\e[39m");
 #endif
@@ -60,6 +101,7 @@ void printHead(){
 #ifdef CGI
 	
 #else
+	setColor(1);
 	printTLine('=', 0);
 	printf("\n");
 	char intro[]=" Beleg von Falk-Jonatan Strube, Matrikelnr.: 39467 ";
@@ -71,17 +113,35 @@ void printHead(){
 	leftI = (termw-sizeof(intro)+1)/2;
 	rightI = leftI + ((termw-sizeof(intro)+1) % 2);
 	printTLine('-', leftI);
-	libprint(out,"%s",intro);
+	setColor(1);
+	printf("%s",intro);
 	printTLine('-', rightI);
 	printf("\n");
 	
 	leftI = (termw-sizeof(detail)+1)/2+1;
 	rightI = leftI + ((termw-sizeof(detail)+1) % 2);
 	printTLine('-', leftI);
-	libprint(out,detail, task,vis);
+	setColor(1);
+	printf(detail, task,vis);
 	printTLine('-', rightI);
 	printf("\n");
 	
+	printTLine('=', 0);
+	printf("\n");
+	resetColor();
+#endif
+}
+
+/**
+ * @ingroup LendLibOut
+ * @brief Gibt einen Footer aus
+ * 
+ * Im Terminal ein Abschlussstrich, im CGI den HTML-Footer
+ */
+void printFoot(){
+#ifdef CGI
+	
+#else
 	printTLine('=', 0);
 	printf("\n");
 #endif
@@ -98,7 +158,36 @@ void printTLine(char type, int length){
 	if (length <= 0){
 		length = termw;
 	}
+	setColor(1);
 	for (i=0; i<length; i++){
-		libprint(out, "%c", type);
+		printf("%c", type);
 	}
+	resetColor();
+}
+
+/**
+ * @ingroup LendLibOut
+ * @brief Cross-Platform Sleep Funktion in Millisekunden
+ * 
+ * Quelle: http://stackoverflow.com/a/28827188
+ */
+#ifdef WIN32
+#include <windows.h>
+#elif _POSIX_C_SOURCE >= 199309L
+#include <time.h>   // for nanosleep
+#else
+#include <unistd.h> // for usleep
+#endif
+
+void sleep_ms(int milliseconds){
+#ifdef WIN32
+    Sleep(milliseconds);
+#elif _POSIX_C_SOURCE >= 199309L
+    struct timespec ts;
+    ts.tv_sec = milliseconds / 1000;
+    ts.tv_nsec = (milliseconds % 1000) * 1000000;
+    nanosleep(&ts, NULL);
+#else
+    usleep(milliseconds * 1000);
+#endif
 }

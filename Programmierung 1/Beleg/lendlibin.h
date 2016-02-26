@@ -4,4 +4,13 @@
  * @{
  */
 
+#define CSVFILE lendlib.csv
+
+FILE *libdb;
+int listSize = 0;
+
+
+void readfile();
+int getSize(FILE *libdb);
+
 /// @}

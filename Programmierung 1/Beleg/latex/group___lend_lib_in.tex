@@ -1,2 +1,62 @@
 \hypertarget{group___lend_lib_in}{}\section{Lend\+Lib\+In}
 \label{group___lend_lib_in}\index{Lend\+Lib\+In@{Lend\+Lib\+In}}
+
+
+Funktionen für jegliche Art von Ausgabe.  
+
+
+\subsection*{Makrodefinitionen}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries C\+S\+V\+F\+I\+LE}~lendlib.\+csv\hypertarget{group___lend_lib_in_ga09878b617b8ddec7d75c7a4e71718894}{}\label{group___lend_lib_in_ga09878b617b8ddec7d75c7a4e71718894}
+
+\end{DoxyCompactItemize}
+\subsection*{Funktionen}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group___lend_lib_in_gabd7e68463503c5745a70e1d19c66f812}{readfile} ()\hypertarget{group___lend_lib_in_gabd7e68463503c5745a70e1d19c66f812}{}\label{group___lend_lib_in_gabd7e68463503c5745a70e1d19c66f812}
+
+\begin{DoxyCompactList}\small\item\em Liest Verleihmediendaten aus Datei aus. \end{DoxyCompactList}\item 
+int \hyperlink{group___lend_lib_in_ga6630e38513358b73fa2ce1c1f6cb71cb}{get\+Size} (F\+I\+LE $\ast$libdb)
+\begin{DoxyCompactList}\small\item\em Gibt Größe der gespeicherten C\+S\+V-\/\+Datenbank aus. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variablen}
+\begin{DoxyCompactItemize}
+\item 
+F\+I\+LE $\ast$ {\bfseries libdb}\hypertarget{group___lend_lib_in_ga7eaa119ac9f04253a1f58bb6b09f9df2}{}\label{group___lend_lib_in_ga7eaa119ac9f04253a1f58bb6b09f9df2}
+
+\item 
+int {\bfseries list\+Size} = 0\hypertarget{group___lend_lib_in_ga91f8b044f23c2395ba7c1ee942b2456c}{}\label{group___lend_lib_in_ga91f8b044f23c2395ba7c1ee942b2456c}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Ausführliche Beschreibung}
+Funktionen für jegliche Art von Ausgabe. 
+
+
+
+\subsection{Dokumentation der Funktionen}
+\index{Lend\+Lib\+In@{Lend\+Lib\+In}!get\+Size@{get\+Size}}
+\index{get\+Size@{get\+Size}!Lend\+Lib\+In@{Lend\+Lib\+In}}
+\subsubsection[{\texorpdfstring{get\+Size(\+F\+I\+L\+E $\ast$libdb)}{getSize(FILE *libdb)}}]{\setlength{\rightskip}{0pt plus 5cm}int get\+Size (
+\begin{DoxyParamCaption}
+\item[{F\+I\+LE $\ast$}]{libdb}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_in_ga6630e38513358b73fa2ce1c1f6cb71cb}{}\label{group___lend_lib_in_ga6630e38513358b73fa2ce1c1f6cb71cb}
+
+
+Gibt Größe der gespeicherten C\+S\+V-\/\+Datenbank aus. 
+
+
+\begin{DoxyParams}{Parameter}
+{\em libdb} & Eine Datei \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Rückgabe}
+Anzahl von Linien (also Einträgen)
+\end{DoxyReturn}
+Quelle\+: \href{http://stackoverflow.com/a/1910795}{\tt http\+://stackoverflow.\+com/a/1910795} 
+\begin{DoxyItemize}
+\item Anzahl der Zeilenumbrüche zählen
+\item Im Fall, dass die letzte Zeile keinen Umbruch enthält oder leer ist (bis auf den Umbruch), wird diese dazu gezählt oder eben nicht 
+\end{DoxyItemize}

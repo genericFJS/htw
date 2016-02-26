@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['libprint',['libprint',['../group___lend_lib_out.html#ga152ba05f7c1a27f69bd9c243359609c6',1,'libprint(ptype type, const char *printable,...):&#160;lendlibout.c'],['../group___lend_lib_out.html#ga152ba05f7c1a27f69bd9c243359609c6',1,'libprint(ptype type, const char *printable,...):&#160;lendlibout.c']]]
+  ['getsize',['getSize',['../group___lend_lib_in.html#ga6630e38513358b73fa2ce1c1f6cb71cb',1,'lendlibin.c']]]
 ];
