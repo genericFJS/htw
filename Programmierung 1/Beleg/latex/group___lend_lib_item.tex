@@ -1,0 +1,82 @@
+\hypertarget{group___lend_lib_item}{}\section{Lend\+Lib\+Item}
+\label{group___lend_lib_item}\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}}
+
+
+Funktionen und Deklarationen rund um ausgeliehene Medien.  
+
+
+\subsection*{Klassen}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structmedium}{medium}
+\begin{DoxyCompactList}\small\item\em Das ausgeliehene Medium. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Aufzählungen}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{group___lend_lib_item_ga636cfca014f3212ea82d45e28f9cb51b}{m\+Type} \{ \hyperlink{group___lend_lib_item_gga636cfca014f3212ea82d45e28f9cb51ba7e338ad381a84ef6df07e7d425707025}{other}, 
+\hyperlink{group___lend_lib_item_gga636cfca014f3212ea82d45e28f9cb51ba6053cbf2a0d801307c80aec065560db6}{book}, 
+\hyperlink{group___lend_lib_item_gga636cfca014f3212ea82d45e28f9cb51bae7dab93ee81e7f74327bed188e6f3748}{cd}, 
+\hyperlink{group___lend_lib_item_gga636cfca014f3212ea82d45e28f9cb51ba9250e48899d18438f51e7df957e35ea5}{dvd}
+ \}\begin{DoxyCompactList}\small\item\em Typ des ausgeliehenen Mediums. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+\subsection*{Funktionen}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group___lend_lib_item_gad6a03ef3e2d355fb8bb01792a69331c1}{add\+Item} (int ntype, char $\ast$ntitle, char $\ast$nauthor, char $\ast$nlendee)
+\begin{DoxyCompactList}\small\item\em Fügt ein neues Medium zur Liste der ausgeliehen Medien hinzu. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Ausführliche Beschreibung}
+Funktionen und Deklarationen rund um ausgeliehene Medien. 
+
+
+
+\subsection{Dokumentation der Aufzählungstypen}
+\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!m\+Type@{m\+Type}}
+\index{m\+Type@{m\+Type}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}
+\subsubsection[{\texorpdfstring{m\+Type}{mType}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf m\+Type}}\hypertarget{group___lend_lib_item_ga636cfca014f3212ea82d45e28f9cb51b}{}\label{group___lend_lib_item_ga636cfca014f3212ea82d45e28f9cb51b}
+
+
+Typ des ausgeliehenen Mediums. 
+
+\begin{Desc}
+\item[Aufzählungswerte]\par
+\begin{description}
+\index{other@{other}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!other@{other}}\item[{\em 
+other\hypertarget{group___lend_lib_item_gga636cfca014f3212ea82d45e28f9cb51ba7e338ad381a84ef6df07e7d425707025}{}\label{group___lend_lib_item_gga636cfca014f3212ea82d45e28f9cb51ba7e338ad381a84ef6df07e7d425707025}
+}]Medium ohne Kategorie. \index{book@{book}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!book@{book}}\item[{\em 
+book\hypertarget{group___lend_lib_item_gga636cfca014f3212ea82d45e28f9cb51ba6053cbf2a0d801307c80aec065560db6}{}\label{group___lend_lib_item_gga636cfca014f3212ea82d45e28f9cb51ba6053cbf2a0d801307c80aec065560db6}
+}]Bücher. \index{cd@{cd}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!cd@{cd}}\item[{\em 
+cd\hypertarget{group___lend_lib_item_gga636cfca014f3212ea82d45e28f9cb51bae7dab93ee81e7f74327bed188e6f3748}{}\label{group___lend_lib_item_gga636cfca014f3212ea82d45e28f9cb51bae7dab93ee81e7f74327bed188e6f3748}
+}]C\+Ds. \index{dvd@{dvd}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!dvd@{dvd}}\item[{\em 
+dvd\hypertarget{group___lend_lib_item_gga636cfca014f3212ea82d45e28f9cb51ba9250e48899d18438f51e7df957e35ea5}{}\label{group___lend_lib_item_gga636cfca014f3212ea82d45e28f9cb51ba9250e48899d18438f51e7df957e35ea5}
+}]D\+V\+Ds. \end{description}
+\end{Desc}
+
+
+\subsection{Dokumentation der Funktionen}
+\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!add\+Item@{add\+Item}}
+\index{add\+Item@{add\+Item}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}
+\subsubsection[{\texorpdfstring{add\+Item(int ntype, char $\ast$ntitle, char $\ast$nauthor, char $\ast$nlendee)}{addItem(int ntype, char *ntitle, char *nauthor, char *nlendee)}}]{\setlength{\rightskip}{0pt plus 5cm}void add\+Item (
+\begin{DoxyParamCaption}
+\item[{int}]{ntype, }
+\item[{char $\ast$}]{ntitle, }
+\item[{char $\ast$}]{nauthor, }
+\item[{char $\ast$}]{nlendee}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_item_gad6a03ef3e2d355fb8bb01792a69331c1}{}\label{group___lend_lib_item_gad6a03ef3e2d355fb8bb01792a69331c1}
+
+
+Fügt ein neues Medium zur Liste der ausgeliehen Medien hinzu. 
+
+
+\begin{DoxyParams}{Parameter}
+{\em ntype} & Typ des Mediums \\
+\hline
+{\em ntitle} & Titel des Mediums \\
+\hline
+{\em nauthor} & Autor/\+Interpret des Mediums \\
+\hline
+{\em nlendee} & Person, dem das Medium ausgeliehen wurde \\
+\hline
+\end{DoxyParams}
