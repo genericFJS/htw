@@ -12,6 +12,7 @@
  */
 int main(int argc, char* argv[]){
 	prepareOut();	///- Ausgabevariablen vorbereiten
+	initLib();
 	printHead();	///- Kopfzeilen ausgeben
 	readfile();	///- Einträge aus Datei einlesen (falls sie existiert)
 #ifdef CGI	/// CGI-Ausgabe:
