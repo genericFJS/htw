@@ -57,6 +57,7 @@ medium *myMedia;
 int myItemsCount;
 int myMediaCount;
 
+void initLib();
 medium* createItem(int ntype, char* ntitle, char* nauthor, char* nlendee);
 medium* createItemF(FILE *libitem);
 void insertItem(medium *nMedium);

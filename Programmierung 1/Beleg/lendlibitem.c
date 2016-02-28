@@ -11,6 +11,11 @@ int myItemsCount = 0;
 medium *myMedia = NULL, *myMediat;
 int myMediaCount = 0;
 
+void initLib(){	
+	myLib.first = malloc (sizeof(lItem));
+	myLib.curr = malloc (sizeof(lItem));
+}
+
 /**
  * @ingroup LendLibItem
  * @brief Erstellt einen neuen Medieneintrag
@@ -37,7 +42,22 @@ medium* createItem(int ntype, char* ntitle, char* nauthor, char* nlendee){
  * @param libitem Die Datei
  * @return Gibt das erstellte ::medium zurück
  */
-medium* createItemF(FILE *libitem){				
+medium* createItemF(FILE *libitem){	
+	if ( myMedia == NULL ){
+		myMedia = malloc (sizeof(medium));
+		if ( myMedia == 0 ){
+			libprint(error, MALLOCERR);
+			exit(-1);
+		}
+	} else{
+		myMediat = realloc (myMedia, (myMediaCount+1)*sizeof(medium));
+		if (myMediat){
+			myMedia = myMediat;
+		} else{
+			libprint(error, MALLOCERR);
+			exit(-1);
+		}
+	}
 	medium nMedia = {};
 	char *entry;
 	if ( fgets(vbuf, 128, libitem)){
@@ -57,18 +77,16 @@ medium* createItemF(FILE *libitem){
 			exit(-1);
 		}
 		nMedia.title = malloc (strlen(entry)+1);
-		if ( nMedia.title == NULL){
+		if ( nMedia.title == 0){
 			libprint(error, MALLOCERR);
 			exit(-1);
 		}
-// 		libprint(status, "Kurz vorm Kopieren des Titels: %d", strlen(entry));
 		strcpy(nMedia.title, entry);
-// 		libprint(out, "Titel eingetragen: %s ", nMedia.title);
 		///- Interpret/Autor festlegen
 		entry = strtok2(NULL, ";\n");
 		libprint(status, "Lese Interpret/Autor aus: %s", entry);
 		nMedia.author = malloc (strlen(entry)+1);
-		if ( nMedia.author == NULL){
+		if ( nMedia.author == 0){
 			libprint(error, MALLOCERR);
 			exit(-1);
 		}
@@ -81,32 +99,18 @@ medium* createItemF(FILE *libitem){
 			exit(-1);
 		}
 		nMedia.lendee = malloc (strlen(entry)+1);
-		if ( nMedia.lendee == NULL){
+		if ( nMedia.lendee == 0){
 			libprint(error, MALLOCERR);
 			exit(-1);
 		}
 		strcpy(nMedia.lendee, entry);
 // 		libprint(out, "Leihender eingetragen: %s ", nMedia.lendee);
 	}
-	if ( myMedia == NULL ){
-		myMedia = malloc (sizeof(medium));
-		if ( myMedia == 0 ){
-			libprint(error, MALLOCERR);
-			exit(-1);
-		}
-	} else{
-		myMediat = realloc (myMedia, (myMediaCount+1)*sizeof(medium));
-		if (myMediat){
-			myMedia = myMediat;
-		} else{
-			libprint(error, MALLOCERR);
-			exit(-1);
-		}
-	}
 	*(myMedia+myMediaCount) = nMedia;
-	myMediaCount++;
-	int i;
-	return myMedia+myMediaCount;
+	medium *retMedia = myMedia+myMediaCount;
+	
+	myMediaCount++;	
+	return retMedia;
 }
 
 /**
@@ -115,6 +119,7 @@ medium* createItemF(FILE *libitem){
  * @param iMedium Das einzufügende Medium
  */
 void insertItem(medium *nMedium){
+// 	libprint(error, "Aufruf insert");
 // 	///- Listenobjekt erstellen und Inhalt zuweisen
 // 	if ( myItems == NULL ){
 // 		myItems = malloc (sizeof(lItem));
@@ -131,22 +136,34 @@ void insertItem(medium *nMedium){
 // 			exit(-1);
 // 		}
 // 	}
-// 	lItem nItem = {};
+// 	libprint(error, "malloc fertig");
+// 	lItem nItem = {};	
 // 	nItem.item = nMedium;
 // 	*(myItems+myItemsCount) = nItem;
-// 	myItemsCount++;
+// 	lItem *pItem = myItems+myItemsCount;	
+// 	libprint(error, "%s", (myItems)->item->lendee);
+// 	libprint(error, "%s", (myItems+myItemsCount)->item->lendee);
+// 	libprint(error, "Zuweisung fertig");
+// 	
+// 	int i;
+// 	for (i = 0; i < myItemsCount; i++)
+// 	libprint(out, "%1.1d  %40.40s  %20.20s  %20.20s" /*\n prev:%10s next:%10s"*/, (myItems+i)->item->type, (myItems+i)->item->title, (myItems+i)->item->author, (myItems+i)->item->lendee);//, (myItems+i)->prev->item->lendee, (myItems+i)->next->item->lendee);
 // 	
 // 	///- Falls Liste noch leer, Bibliothek initialisieren
 // 	if (myLib.size == 0){
-// 		nItem.prev = nItem.next = &nItem;
+// 		nItem.prev = nItem.next = pItem;
 // 		myLib.size = 1;
-// 		myLib.first = &nItem;
-// 		myLib.curr = &nItem;
-// 		nItem.next = &nItem;
-// 		nItem.prev = &nItem;
+// 		myLib.first = pItem;
+// 		myLib.curr = pItem;
+// 		libprint(error, "1st lendee: %s", myLib.curr->item->lendee);
+// 		libprint(error, "1st size: %d", myLib.size);
 // 	} else {///- Ansonsten neues Objekt in Liste einfügen
+// 		exit(-1);
 // 		int i;
 // // 		libprint(error, "%s < %s", myLib.first->item->title, nMedium.title);
+// 		libprint(error, "hier size %d", myLib.size);
+// 		libprint(error, "hier first %s", myLib.first->item->lendee);
+// 		libprint(error, "hier curr  %s", myLib.curr->item->lendee);
 // 		myLib.curr = myLib.first;
 // 		for (i = 0; i < myLib.size; i++){
 // 			if ( myLib.sort == 0){
@@ -156,14 +173,14 @@ void insertItem(medium *nMedium){
 // 					libprint(error, "ja");
 // 					if (myLib.size == 1){
 // 						libprint(error, "einfügen");
-// 						myLib.curr->next = &nItem;
-// 						myLib.curr->prev = &nItem;
+// 						myLib.curr->next = pItem;
+// 						myLib.curr->prev = pItem;
 // 						nItem.next = nItem.prev = myLib.curr;
 // 					}else {
 // 						nItem.prev = myLib.curr;
 // 						nItem.next = myLib.curr->next;
-// 						myLib.curr->next->prev = &nItem;
-// 						myLib.curr->next = &nItem;
+// 						myLib.curr->next->prev = pItem;
+// 						myLib.curr->next = pItem;
 // 					}
 // 					break;
 // 				}
@@ -173,7 +190,12 @@ void insertItem(medium *nMedium){
 // 		}
 // 		myLib.size++;
 // 	}
-// // 	libprint(error, "next: %s | prev: %s", myLib.curr->next->item->lendee, myLib.curr->prev->item->lendee);
+// // 	libprint(error, "next: %s | prev: %s", myLib.curr->next->item->lendee, myLib.curr->prev->item->lendee);	
+// 		
+// 	*(myItems+myItemsCount) = nItem;
+// 	pItem = myItems+myItemsCount;
+// 	myItemsCount++;
+// 	
 // 	printItems();
 }
 
