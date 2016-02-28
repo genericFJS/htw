@@ -19,7 +19,7 @@ void readfile(){
 		int i;
 		for (i=0 ; i < listSize; i++){
 // 			libprint(out, "Lese Zeile: %d ", i);
-			medium newMedium = createItemF(libdb);
+			medium *newMedium = createItemF(libdb);
 			insertItem( newMedium );
 		}
 		printItems();
@@ -147,7 +147,9 @@ void getInput(){
 			strcpy(nlendee, vbuf);
 			libprint(out, "Ausgeliehen an '%s'.", nlendee);
 			
-			insertItem ( createItem(ntype, ntitle, nauthor, nlendee) );
+			
+			medium *newMedium = createItem(ntype, ntitle, nauthor, nlendee);
+			insertItem( newMedium );
 			
 			getInput();
 			break;

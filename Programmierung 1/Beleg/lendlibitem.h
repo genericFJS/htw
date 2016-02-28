@@ -51,10 +51,17 @@ typedef struct{
 	unsigned int sort;	///< Liste ist sortiert nach 0: Titel, 1:Ausleihenden
 }theLib;
 
-medium createItem(int ntype, char* ntitle, char* nauthor, char* nlendee);
-medium createItemF(FILE *libitem);
-void insertItem(medium nMedium);
-void deleteItem(medium nMedium);
+theLib myLib;
+lItem *myItems;
+medium *myMedia;
+int myItemsCount;
+int myMediaCount;
+
+medium* createItem(int ntype, char* ntitle, char* nauthor, char* nlendee);
+medium* createItemF(FILE *libitem);
+void insertItem(medium *nMedium);
+void deleteItem(medium *nMedium);
 void sortItems(sBy sortBy);
 medium findItem(char *sItem, sBy findBy);
+void freeAll();
 /// @}

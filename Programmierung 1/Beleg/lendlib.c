@@ -3,6 +3,7 @@
 #include "lendlib.h"
 #include "lendlibout.h"
 #include "lendlibin.h"
+#include "lendlibitem.h"
 
 
 /**
@@ -16,9 +17,10 @@ int main(int argc, char* argv[]){
 #ifdef CGI	/// CGI-Ausgabe:
 	
 #else	/// Terminalausgabe:
-	printItems();	///- aus Datei erhaltene Medien anzeigen
+// 	printItems();	///- aus Datei erhaltene Medien anzeigen
 	getInput();		///- Nutzerinput verarbeiten
 #endif	/// beide:
 	printFoot();	///- Fußzeilen ausgeben
+	freeAll();
 	return 1;
 }
