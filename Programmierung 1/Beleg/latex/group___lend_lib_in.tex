@@ -8,7 +8,7 @@ Funktionen für jegliche Art von Ausgabe.
 \subsection*{Makrodefinitionen}
 \begin{DoxyCompactItemize}
 \item 
-\#define {\bfseries C\+S\+V\+F\+I\+LE}~lendlib.\+csv\hypertarget{group___lend_lib_in_ga09878b617b8ddec7d75c7a4e71718894}{}\label{group___lend_lib_in_ga09878b617b8ddec7d75c7a4e71718894}
+\#define {\bfseries M\+A\+L\+L\+O\+C\+E\+RR}~\char`\"{}Fehler bei der Speicherzuweisung\char`\"{}\hypertarget{group___lend_lib_in_gafea163490cd0596e2677096aaf92a74f}{}\label{group___lend_lib_in_gafea163490cd0596e2677096aaf92a74f}
 
 \end{DoxyCompactItemize}
 \subsection*{Funktionen}
@@ -18,14 +18,18 @@ void \hyperlink{group___lend_lib_in_gabd7e68463503c5745a70e1d19c66f812}{readfile
 
 \begin{DoxyCompactList}\small\item\em Liest Verleihmediendaten aus Datei aus. \end{DoxyCompactList}\item 
 int \hyperlink{group___lend_lib_in_ga6630e38513358b73fa2ce1c1f6cb71cb}{get\+Size} (F\+I\+LE $\ast$libdb)
-\begin{DoxyCompactList}\small\item\em Gibt Größe der gespeicherten C\+S\+V-\/\+Datenbank aus. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Gibt Größe der gespeicherten C\+S\+V-\/\+Datenbank aus. \end{DoxyCompactList}\item 
+void \hyperlink{group___lend_lib_in_ga46d47190cb20b54826fb665f1859968f}{get\+Input} ()
+\begin{DoxyCompactList}\small\item\em Verarbeitet Nutzerinput im Terminal. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{group___lend_lib_in_gaccb55b34bbc589d5c47830fdcd889e17}{strtok2} (char $\ast$str, char const $\ast$delims)
+\begin{DoxyCompactList}\small\item\em Eigenes strtok, welches auch leere Einträge ausgibt. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variablen}
 \begin{DoxyCompactItemize}
 \item 
 F\+I\+LE $\ast$ {\bfseries libdb}\hypertarget{group___lend_lib_in_ga7eaa119ac9f04253a1f58bb6b09f9df2}{}\label{group___lend_lib_in_ga7eaa119ac9f04253a1f58bb6b09f9df2}
 
 \item 
-int {\bfseries list\+Size} = 0\hypertarget{group___lend_lib_in_ga91f8b044f23c2395ba7c1ee942b2456c}{}\label{group___lend_lib_in_ga91f8b044f23c2395ba7c1ee942b2456c}
+char {\bfseries vbuf} \mbox{[}128\mbox{]}\hypertarget{group___lend_lib_in_gaa4601e4145c1ddaec0cd8737710b6b42}{}\label{group___lend_lib_in_gaa4601e4145c1ddaec0cd8737710b6b42}
 
 \end{DoxyCompactItemize}
 
@@ -36,7 +40,25 @@ Funktionen für jegliche Art von Ausgabe.
 
 
 \subsection{Dokumentation der Funktionen}
-\index{Lend\+Lib\+In@{Lend\+Lib\+In}!get\+Size@{get\+Size}}
+\index{Lend\+Lib\+In@{Lend\+Lib\+In}!get\+Input@{get\+Input}}
+\index{get\+Input@{get\+Input}!Lend\+Lib\+In@{Lend\+Lib\+In}}
+\subsubsection[{\texorpdfstring{get\+Input()}{getInput()}}]{\setlength{\rightskip}{0pt plus 5cm}void get\+Input (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_in_ga46d47190cb20b54826fb665f1859968f}{}\label{group___lend_lib_in_ga46d47190cb20b54826fb665f1859968f}
+
+
+Verarbeitet Nutzerinput im Terminal. 
+
+Ausleihmedium hinzufügen
+
+
+\begin{DoxyItemize}
+\item Eingabe Medienart
+\end{DoxyItemize}
+
+(Festlegung der Medienart durch entsprechende Zahl aus m\+Type oder Anfangsbuchstabe\+: Buch, Cd, Dvd) \index{Lend\+Lib\+In@{Lend\+Lib\+In}!get\+Size@{get\+Size}}
 \index{get\+Size@{get\+Size}!Lend\+Lib\+In@{Lend\+Lib\+In}}
 \subsubsection[{\texorpdfstring{get\+Size(\+F\+I\+L\+E $\ast$libdb)}{getSize(FILE *libdb)}}]{\setlength{\rightskip}{0pt plus 5cm}int get\+Size (
 \begin{DoxyParamCaption}
@@ -59,4 +81,22 @@ Quelle\+: \href{http://stackoverflow.com/a/1910795}{\tt http\+://stackoverflow.\
 \begin{DoxyItemize}
 \item Anzahl der Zeilenumbrüche zählen
 \item Im Fall, dass die letzte Zeile keinen Umbruch enthält oder leer ist (bis auf den Umbruch), wird diese dazu gezählt oder eben nicht 
-\end{DoxyItemize}
+\end{DoxyItemize}\index{Lend\+Lib\+In@{Lend\+Lib\+In}!strtok2@{strtok2}}
+\index{strtok2@{strtok2}!Lend\+Lib\+In@{Lend\+Lib\+In}}
+\subsubsection[{\texorpdfstring{strtok2(char $\ast$str, char const $\ast$delims)}{strtok2(char *str, char const *delims)}}]{\setlength{\rightskip}{0pt plus 5cm}char $\ast$ strtok2 (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{str, }
+\item[{char const $\ast$}]{delims}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_in_gaccb55b34bbc589d5c47830fdcd889e17}{}\label{group___lend_lib_in_gaccb55b34bbc589d5c47830fdcd889e17}
+
+
+Eigenes strtok, welches auch leere Einträge ausgibt. 
+
+
+\begin{DoxyParams}{Parameter}
+{\em str} & Der String \\
+\hline
+{\em delims} & Die Trennzeichen Quelle\+: \href{http://stackoverflow.com/a/8706031}{\tt http\+://stackoverflow.\+com/a/8706031} \\
+\hline
+\end{DoxyParams}

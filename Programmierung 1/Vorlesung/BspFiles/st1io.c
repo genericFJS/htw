@@ -19,12 +19,20 @@ tStud readStud(FILE* pf)
   if(fgets(buf,128,pf))
   {
     p=strtok(buf,";\n");
+	printf("Buffer: %s\n", p);
     s.name=malloc(strlen(buf)); // Mit \n, ohne terminierende 0
     if(s.name){
-      strcpy(s.name,buf); // Text ohne term. 0 kopieren
+      strcpy(s.name,p); // Text ohne term. 0 kopieren
       //s.name[strlen(buf)-1]=0; // termineirende 0 einsetzen
       sscanf(buf,"%d;%d;%f\n",&s.matrNr,&s.belNote,&s.klNote);
     }else fprintf(stderr,"malloc failed in readStud\n");
+	
+    p=strtok(NULL,";\n");
+	printf("Buffer: %s\n", p);
+	p=strtok(NULL,";\n");
+	printf("Buffer: %s\n", p);
+	p=strtok(NULL,";\n");
+	printf("Buffer: %s\n", p);
   }
   return s;
 

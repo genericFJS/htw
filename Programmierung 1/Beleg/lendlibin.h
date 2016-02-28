@@ -4,13 +4,14 @@
  * @{
  */
 
-#define CSVFILE lendlib.csv
+#define MALLOCERR "Fehler bei der Speicherzuweisung"
 
 FILE *libdb;
-int listSize = 0;
-
+char vbuf[128];
 
 void readfile();
 int getSize(FILE *libdb);
+void getInput();
+char * strtok2 (char * str, char const * delims);
 
 /// @}

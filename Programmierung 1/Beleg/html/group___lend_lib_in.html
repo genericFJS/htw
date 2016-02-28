@@ -91,9 +91,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Suchen');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Makrodefinitionen</h2></td></tr>
-<tr class="memitem:ga09878b617b8ddec7d75c7a4e71718894"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga09878b617b8ddec7d75c7a4e71718894"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CSVFILE</b>&#160;&#160;&#160;lendlib.csv</td></tr>
-<tr class="separator:ga09878b617b8ddec7d75c7a4e71718894"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafea163490cd0596e2677096aaf92a74f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafea163490cd0596e2677096aaf92a74f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MALLOCERR</b>&#160;&#160;&#160;&quot;Fehler bei der Speicherzuweisung&quot;</td></tr>
+<tr class="separator:gafea163490cd0596e2677096aaf92a74f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Funktionen</h2></td></tr>
@@ -104,19 +104,47 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <tr class="memitem:ga6630e38513358b73fa2ce1c1f6cb71cb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___lend_lib_in.html#ga6630e38513358b73fa2ce1c1f6cb71cb">getSize</a> (FILE *libdb)</td></tr>
 <tr class="memdesc:ga6630e38513358b73fa2ce1c1f6cb71cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gibt Größe der gespeicherten CSV-Datenbank aus.  <a href="#ga6630e38513358b73fa2ce1c1f6cb71cb">Mehr ...</a><br /></td></tr>
 <tr class="separator:ga6630e38513358b73fa2ce1c1f6cb71cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga46d47190cb20b54826fb665f1859968f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___lend_lib_in.html#ga46d47190cb20b54826fb665f1859968f">getInput</a> ()</td></tr>
+<tr class="memdesc:ga46d47190cb20b54826fb665f1859968f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verarbeitet Nutzerinput im Terminal.  <a href="#ga46d47190cb20b54826fb665f1859968f">Mehr ...</a><br /></td></tr>
+<tr class="separator:ga46d47190cb20b54826fb665f1859968f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaccb55b34bbc589d5c47830fdcd889e17"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___lend_lib_in.html#gaccb55b34bbc589d5c47830fdcd889e17">strtok2</a> (char *str, char const *delims)</td></tr>
+<tr class="memdesc:gaccb55b34bbc589d5c47830fdcd889e17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Eigenes strtok, welches auch leere Einträge ausgibt.  <a href="#gaccb55b34bbc589d5c47830fdcd889e17">Mehr ...</a><br /></td></tr>
+<tr class="separator:gaccb55b34bbc589d5c47830fdcd889e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variablen</h2></td></tr>
 <tr class="memitem:ga7eaa119ac9f04253a1f58bb6b09f9df2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7eaa119ac9f04253a1f58bb6b09f9df2"></a>
 FILE *&#160;</td><td class="memItemRight" valign="bottom"><b>libdb</b></td></tr>
 <tr class="separator:ga7eaa119ac9f04253a1f58bb6b09f9df2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga91f8b044f23c2395ba7c1ee942b2456c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga91f8b044f23c2395ba7c1ee942b2456c"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>listSize</b> = 0</td></tr>
-<tr class="separator:ga91f8b044f23c2395ba7c1ee942b2456c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4601e4145c1ddaec0cd8737710b6b42"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa4601e4145c1ddaec0cd8737710b6b42"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>vbuf</b> [128]</td></tr>
+<tr class="separator:gaa4601e4145c1ddaec0cd8737710b6b42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Ausführliche Beschreibung</h2>
 <p>Funktionen für jegliche Art von Ausgabe. </p>
 <h2 class="groupheader">Dokumentation der Funktionen</h2>
+<a class="anchor" id="ga46d47190cb20b54826fb665f1859968f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void getInput </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Verarbeitet Nutzerinput im Terminal. </p>
+<p>Ausleihmedium hinzufügen</p>
+<ul>
+<li>Eingabe Medienart</li>
+</ul>
+<p>(Festlegung der Medienart durch entsprechende Zahl aus mType oder Anfangsbuchstabe: Buch, Cd, Dvd) </p>
+
+</div>
+</div>
 <a class="anchor" id="ga6630e38513358b73fa2ce1c1f6cb71cb"></a>
 <div class="memitem">
 <div class="memproto">
@@ -147,10 +175,45 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>listSize</b> = 0</td><
 
 </div>
 </div>
+<a class="anchor" id="gaccb55b34bbc589d5c47830fdcd889e17"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char * strtok2 </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char const *&#160;</td>
+          <td class="paramname"><em>delims</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Eigenes strtok, welches auch leere Einträge ausgibt. </p>
+<dl class="params"><dt>Parameter</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>Der String </td></tr>
+    <tr><td class="paramname">delims</td><td>Die Trennzeichen Quelle: <a href="http://stackoverflow.com/a/8706031">http://stackoverflow.com/a/8706031</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Erzeugt am Sam Feb 27 2016 00:14:31 für Beleg 39467 von &#160;<a href="http://www.doxygen.org/index.html">
+Erzeugt am Son Feb 28 2016 15:57:04 für Beleg 39467 von &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

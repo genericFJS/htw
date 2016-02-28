@@ -1,5 +1,9 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include "lendlib.h"
 #include "lendlibout.h"
+#include "lendlibin.h"
+
 
 /**
  * @ingroup LendLib
@@ -9,17 +13,12 @@ int main(int argc, char* argv[]){
 	prepareOut();	///- Ausgabevariablen vorbereiten
 	printHead();	///- Kopfzeilen ausgeben
 	readfile();	///- Einträge aus Datei einlesen (falls sie existiert)
-#ifdef CGI
+#ifdef CGI	/// CGI-Ausgabe:
 	
-#else
-	
-
-#endif
-// 	int i;
-// 	for (i=0; i<10; i++){	
-// 		libprint(status, "test%d", i);
-// 	}
-// 	libprint(out, "xxx\n");
-	printFoot();
+#else	/// Terminalausgabe:
+	printItems();	///- aus Datei erhaltene Medien anzeigen
+	getInput();		///- Nutzerinput verarbeiten
+#endif	/// beide:
+	printFoot();	///- Fußzeilen ausgeben
 	return 1;
 }

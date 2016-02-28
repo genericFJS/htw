@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['createitem',['createItem',['../group___lend_lib_item.html#gae4830b667e3f2426781bd4a10b2bc3fa',1,'createItem(int ntype, char *ntitle, char *nauthor, char *nlendee):&#160;lendlibitem.c'],['../group___lend_lib_item.html#gae4830b667e3f2426781bd4a10b2bc3fa',1,'createItem(int ntype, char *ntitle, char *nauthor, char *nlendee):&#160;lendlibitem.c']]]
+  ['createitem',['createItem',['../group___lend_lib_item.html#gac92571a026ecb0e77298aa25854e4e7c',1,'lendlibitem.c']]],
+  ['createitemf',['createItemF',['../group___lend_lib_item.html#ga131c46edd7b0462d2b46770aeef80e11',1,'lendlibitem.c']]]
 ];

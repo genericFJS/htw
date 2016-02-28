@@ -53,7 +53,7 @@ int main()
      for (i=0; i<anz;i++)
      {
        putStudp(ps+i);
-       printf("i: %d, ps+i; %p sizeof: %lu %02lx\n",i,ps +i,sizeof(tStud),sizeof(tStud));
+//        printf("i: %d, ps+i; %p sizeof: %lu %02lx\n",i,ps +i,sizeof(tStud),sizeof(tStud));
      }
      printf("next (y/n): ");
      fgets(vbuf,128,stdin);weiter=vbuf[0];

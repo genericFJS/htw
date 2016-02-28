@@ -1,0 +1,4 @@
+{
+  "name": "Prog1 Beleg"
+, "files": [ { "directory": ".", "filters": ["*.c", "*.h"] } ]
+}
