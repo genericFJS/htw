@@ -1,10 +1,5 @@
 var searchData=
 [
-  ['lendee',['lendee',['../structmedium.html#a4b535b8356bd22f22ffca4f6424bb9cb',1,'medium']]],
-  ['lendlib',['LendLib',['../group___lend_lib.html',1,'']]],
-  ['lendlibin',['LendLibIn',['../group___lend_lib_in.html',1,'']]],
-  ['lendlibitem',['LendLibItem',['../group___lend_lib_item.html',1,'']]],
-  ['lendliblogic',['LendLibLogic',['../group___lend_lib_logic.html',1,'']]],
-  ['lendlibout',['LendLibOut',['../group___lend_lib_out.html',1,'']]],
-  ['libprint',['libprint',['../group___lend_lib_out.html#ga152ba05f7c1a27f69bd9c243359609c6',1,'lendlibout.c']]]
+  ['getinput',['getInput',['../group___lend_lib_in.html#ga46d47190cb20b54826fb665f1859968f',1,'lendlibin.c']]],
+  ['getsize',['getSize',['../group___lend_lib_in.html#ga6630e38513358b73fa2ce1c1f6cb71cb',1,'lendlibin.c']]]
 ];

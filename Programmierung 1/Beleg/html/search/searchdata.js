@@ -1,12 +1,13 @@
 var indexSectionsWithContent =
 {
-  0: "abcdeglmoprst",
-  1: "m",
-  2: "cglmprs",
-  3: "alt",
-  4: "mp",
-  5: "bcdeos",
-  6: "l"
+  0: "abcdefgilmnoprst",
+  1: "lmt",
+  2: "cdfgilmprs",
+  3: "acfilnpst",
+  4: "l",
+  5: "mps",
+  6: "bcdeilost",
+  7: "l"
 };
 
 var indexSectionNames =
@@ -15,9 +16,10 @@ var indexSectionNames =
   1: "classes",
   2: "functions",
   3: "variables",
-  4: "enums",
-  5: "enumvalues",
-  6: "groups"
+  4: "typedefs",
+  5: "enums",
+  6: "enumvalues",
+  7: "groups"
 };
 
 var indexSectionLabels =
@@ -26,8 +28,9 @@ var indexSectionLabels =
   1: "Klassen",
   2: "Funktionen",
   3: "Variablen",
-  4: "Aufzählungen",
-  5: "Aufzählungswerte",
-  6: "Gruppen"
+  4: "Typdefinitionen",
+  5: "Aufzählungen",
+  6: "Aufzählungswerte",
+  7: "Gruppen"
 };
 

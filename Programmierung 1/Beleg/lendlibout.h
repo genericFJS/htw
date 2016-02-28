@@ -12,9 +12,10 @@
  * @brief Verschieden Ausgabemöglichkeiten.
  */
 typedef enum{
-	status,	///< Statusmeldungen
+	in,		///< folgende Eingabe
 	out,	///< normale Ausgabe
-	error	///< Fehlermeldungen
+	error,	///< Fehlermeldungen
+	status	///< Statusmeldungen
 } ptype;
 
 void libprint(ptype type, const char* printable, ...);

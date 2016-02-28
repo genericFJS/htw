@@ -9,7 +9,17 @@ Funktionen und Deklarationen rund um ausgeliehene Medien.
 \begin{DoxyCompactItemize}
 \item 
 struct \hyperlink{structmedium}{medium}
-\begin{DoxyCompactList}\small\item\em Das ausgeliehene Medium. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Das ausgeliehene Medium. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_l_i_t_e_m}{L\+I\+T\+EM}
+\begin{DoxyCompactList}\small\item\em Eintrag in der Liste der verliehenen Medien. \end{DoxyCompactList}\item 
+struct \hyperlink{structthe_lib}{the\+Lib}
+\begin{DoxyCompactList}\small\item\em Verwaltet die Liste der verliehenen Medien. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typdefinitionen}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_l_i_t_e_m}{L\+I\+T\+EM} \hyperlink{group___lend_lib_item_ga307bf11439a9dddcff69d464ae8df92b}{l\+Item}\hypertarget{group___lend_lib_item_ga307bf11439a9dddcff69d464ae8df92b}{}\label{group___lend_lib_item_ga307bf11439a9dddcff69d464ae8df92b}
+
+\begin{DoxyCompactList}\small\item\em Eintrag in der Liste der verliehenen Medien. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Aufzählungen}
 \begin{DoxyCompactItemize}
 \item 
@@ -18,12 +28,26 @@ enum \hyperlink{group___lend_lib_item_ga636cfca014f3212ea82d45e28f9cb51b}{m\+Typ
 \hyperlink{group___lend_lib_item_gga636cfca014f3212ea82d45e28f9cb51bae7dab93ee81e7f74327bed188e6f3748}{cd}, 
 \hyperlink{group___lend_lib_item_gga636cfca014f3212ea82d45e28f9cb51ba9250e48899d18438f51e7df957e35ea5}{dvd}
  \}\begin{DoxyCompactList}\small\item\em Typ des ausgeliehenen Mediums. \end{DoxyCompactList}
+\item 
+enum \hyperlink{group___lend_lib_item_ga557119015745f6890b5eb4367beba8f3}{s\+By} \{ \hyperlink{group___lend_lib_item_gga557119015745f6890b5eb4367beba8f3ae9eadc6828eb5edd3ed076e4f07a551b}{title}, 
+\hyperlink{group___lend_lib_item_gga557119015745f6890b5eb4367beba8f3af2cee0a493fa3e44b3dca715f7202db9}{lendee}
+ \}\begin{DoxyCompactList}\small\item\em Möglichkeiten, nach denen Sortiert/gesucht werden kann. \end{DoxyCompactList}
 \end{DoxyCompactItemize}
 \subsection*{Funktionen}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{group___lend_lib_item_gae4830b667e3f2426781bd4a10b2bc3fa}{create\+Item} (int ntype, char $\ast$ntitle, char $\ast$nauthor, char $\ast$nlendee)
-\begin{DoxyCompactList}\small\item\em Erstellt einen neuen Medieneintrag. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\hyperlink{structmedium}{medium} \hyperlink{group___lend_lib_item_gac92571a026ecb0e77298aa25854e4e7c}{create\+Item} (int ntype, char $\ast$ntitle, char $\ast$nauthor, char $\ast$nlendee)
+\begin{DoxyCompactList}\small\item\em Erstellt einen neuen Medieneintrag. \end{DoxyCompactList}\item 
+\hyperlink{structmedium}{medium} \hyperlink{group___lend_lib_item_ga131c46edd7b0462d2b46770aeef80e11}{create\+ItemF} (F\+I\+LE $\ast$libitem)
+\begin{DoxyCompactList}\small\item\em Erstellt neuen Medieneintrag aus Dateizeile. \end{DoxyCompactList}\item 
+void \hyperlink{group___lend_lib_item_gae3168ab8b75f473c77279fa0cde755b1}{insert\+Item} (\hyperlink{structmedium}{medium} n\+Medium)
+\begin{DoxyCompactList}\small\item\em Fügt Medium in Liste ein. \end{DoxyCompactList}\item 
+void \hyperlink{group___lend_lib_item_ga8579ec2de1ab79c93563ba4d70e9282f}{delete\+Item} (\hyperlink{structmedium}{medium} n\+Medium)
+\begin{DoxyCompactList}\small\item\em Löscht Medium aus der Liste. \end{DoxyCompactList}\item 
+void \hyperlink{group___lend_lib_item_ga92f15454add90044e9d6a365fae541dc}{sort\+Items} (\hyperlink{group___lend_lib_item_ga557119015745f6890b5eb4367beba8f3}{s\+By} sort\+By)
+\begin{DoxyCompactList}\small\item\em Sortiert die Liste nach Mediumtitel/\+Leihendem. \end{DoxyCompactList}\item 
+\hyperlink{structmedium}{medium} \hyperlink{group___lend_lib_item_gab0692f28041d0563892f69cd547f387e}{find\+Item} (char $\ast$s\+Item, \hyperlink{group___lend_lib_item_ga557119015745f6890b5eb4367beba8f3}{s\+By} find\+By)
+\begin{DoxyCompactList}\small\item\em Suche, bzw. finde ein ausgeliehenes Medium. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Ausführliche Beschreibung}
@@ -52,19 +76,35 @@ cd\hypertarget{group___lend_lib_item_gga636cfca014f3212ea82d45e28f9cb51bae7dab93
 dvd\hypertarget{group___lend_lib_item_gga636cfca014f3212ea82d45e28f9cb51ba9250e48899d18438f51e7df957e35ea5}{}\label{group___lend_lib_item_gga636cfca014f3212ea82d45e28f9cb51ba9250e48899d18438f51e7df957e35ea5}
 }]D\+V\+Ds. \end{description}
 \end{Desc}
+\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!s\+By@{s\+By}}
+\index{s\+By@{s\+By}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}
+\subsubsection[{\texorpdfstring{s\+By}{sBy}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf s\+By}}\hypertarget{group___lend_lib_item_ga557119015745f6890b5eb4367beba8f3}{}\label{group___lend_lib_item_ga557119015745f6890b5eb4367beba8f3}
+
+
+Möglichkeiten, nach denen Sortiert/gesucht werden kann. 
+
+\begin{Desc}
+\item[Aufzählungswerte]\par
+\begin{description}
+\index{title@{title}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!title@{title}}\item[{\em 
+title\hypertarget{group___lend_lib_item_gga557119015745f6890b5eb4367beba8f3ae9eadc6828eb5edd3ed076e4f07a551b}{}\label{group___lend_lib_item_gga557119015745f6890b5eb4367beba8f3ae9eadc6828eb5edd3ed076e4f07a551b}
+}]Nach Medientitel. \index{lendee@{lendee}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!lendee@{lendee}}\item[{\em 
+lendee\hypertarget{group___lend_lib_item_gga557119015745f6890b5eb4367beba8f3af2cee0a493fa3e44b3dca715f7202db9}{}\label{group___lend_lib_item_gga557119015745f6890b5eb4367beba8f3af2cee0a493fa3e44b3dca715f7202db9}
+}]Nach Leihendem. \end{description}
+\end{Desc}
 
 
 \subsection{Dokumentation der Funktionen}
 \index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!create\+Item@{create\+Item}}
 \index{create\+Item@{create\+Item}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}
-\subsubsection[{\texorpdfstring{create\+Item(int ntype, char $\ast$ntitle, char $\ast$nauthor, char $\ast$nlendee)}{createItem(int ntype, char *ntitle, char *nauthor, char *nlendee)}}]{\setlength{\rightskip}{0pt plus 5cm}void create\+Item (
+\subsubsection[{\texorpdfstring{create\+Item(int ntype, char $\ast$ntitle, char $\ast$nauthor, char $\ast$nlendee)}{createItem(int ntype, char *ntitle, char *nauthor, char *nlendee)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf medium} create\+Item (
 \begin{DoxyParamCaption}
 \item[{int}]{ntype, }
 \item[{char $\ast$}]{ntitle, }
 \item[{char $\ast$}]{nauthor, }
 \item[{char $\ast$}]{nlendee}
 \end{DoxyParamCaption}
-)}\hypertarget{group___lend_lib_item_gae4830b667e3f2426781bd4a10b2bc3fa}{}\label{group___lend_lib_item_gae4830b667e3f2426781bd4a10b2bc3fa}
+)}\hypertarget{group___lend_lib_item_gac92571a026ecb0e77298aa25854e4e7c}{}\label{group___lend_lib_item_gac92571a026ecb0e77298aa25854e4e7c}
 
 
 Erstellt einen neuen Medieneintrag. 
@@ -78,5 +118,97 @@ Erstellt einen neuen Medieneintrag.
 {\em nauthor} & Autor/\+Interpret des Mediums \\
 \hline
 {\em nlendee} & Person, dem das Medium ausgeliehen wurde \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Rückgabe}
+Gibt das erstellte \hyperlink{structmedium}{medium} zurück 
+\end{DoxyReturn}
+\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!create\+ItemF@{create\+ItemF}}
+\index{create\+ItemF@{create\+ItemF}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}
+\subsubsection[{\texorpdfstring{create\+Item\+F(\+F\+I\+L\+E $\ast$libitem)}{createItemF(FILE *libitem)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf medium} create\+ItemF (
+\begin{DoxyParamCaption}
+\item[{F\+I\+LE $\ast$}]{libitem}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_item_ga131c46edd7b0462d2b46770aeef80e11}{}\label{group___lend_lib_item_ga131c46edd7b0462d2b46770aeef80e11}
+
+
+Erstellt neuen Medieneintrag aus Dateizeile. 
+
+
+\begin{DoxyParams}{Parameter}
+{\em libitem} & Die Datei \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Rückgabe}
+Gibt das erstellte \hyperlink{structmedium}{medium} zurück 
+\end{DoxyReturn}
+\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!delete\+Item@{delete\+Item}}
+\index{delete\+Item@{delete\+Item}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}
+\subsubsection[{\texorpdfstring{delete\+Item(medium n\+Medium)}{deleteItem(medium nMedium)}}]{\setlength{\rightskip}{0pt plus 5cm}void delete\+Item (
+\begin{DoxyParamCaption}
+\item[{{\bf medium}}]{n\+Medium}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_item_ga8579ec2de1ab79c93563ba4d70e9282f}{}\label{group___lend_lib_item_ga8579ec2de1ab79c93563ba4d70e9282f}
+
+
+Löscht Medium aus der Liste. 
+
+
+\begin{DoxyParams}{Parameter}
+{\em i\+Medium} & Das zu löschende Medium \\
+\hline
+\end{DoxyParams}
+\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!find\+Item@{find\+Item}}
+\index{find\+Item@{find\+Item}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}
+\subsubsection[{\texorpdfstring{find\+Item(char $\ast$s\+Item, s\+By find\+By)}{findItem(char *sItem, sBy findBy)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf medium} find\+Item (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{s\+Item, }
+\item[{{\bf s\+By}}]{find\+By}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_item_gab0692f28041d0563892f69cd547f387e}{}\label{group___lend_lib_item_gab0692f28041d0563892f69cd547f387e}
+
+
+Suche, bzw. finde ein ausgeliehenes Medium. 
+
+
+\begin{DoxyParams}{Parameter}
+{\em s\+Item} & Nach dieser Zeichenkette soll gesucht werden \\
+\hline
+{\em find\+By} & Die Zeichenkette soll in diesem Eintrag des ausgeliehen Mediums gesucht werden (\hyperlink{group___lend_lib_item_ga557119015745f6890b5eb4367beba8f3}{s\+By}) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Rückgabe}
+Gibt das gefundene Medium zurück 
+\end{DoxyReturn}
+\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!insert\+Item@{insert\+Item}}
+\index{insert\+Item@{insert\+Item}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}
+\subsubsection[{\texorpdfstring{insert\+Item(medium n\+Medium)}{insertItem(medium nMedium)}}]{\setlength{\rightskip}{0pt plus 5cm}void insert\+Item (
+\begin{DoxyParamCaption}
+\item[{{\bf medium}}]{n\+Medium}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_item_gae3168ab8b75f473c77279fa0cde755b1}{}\label{group___lend_lib_item_gae3168ab8b75f473c77279fa0cde755b1}
+
+
+Fügt Medium in Liste ein. 
+
+
+\begin{DoxyParams}{Parameter}
+{\em i\+Medium} & Das einzufügende Medium \\
+\hline
+\end{DoxyParams}
+\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!sort\+Items@{sort\+Items}}
+\index{sort\+Items@{sort\+Items}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}
+\subsubsection[{\texorpdfstring{sort\+Items(s\+By sort\+By)}{sortItems(sBy sortBy)}}]{\setlength{\rightskip}{0pt plus 5cm}void sort\+Items (
+\begin{DoxyParamCaption}
+\item[{{\bf s\+By}}]{sort\+By}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_item_ga92f15454add90044e9d6a365fae541dc}{}\label{group___lend_lib_item_ga92f15454add90044e9d6a365fae541dc}
+
+
+Sortiert die Liste nach Mediumtitel/\+Leihendem. 
+
+
+\begin{DoxyParams}{Parameter}
+{\em sort\+By} & Nach was sortiert werden soll (\hyperlink{group___lend_lib_item_ga557119015745f6890b5eb4367beba8f3}{s\+By}) \\
 \hline
 \end{DoxyParams}

@@ -5,7 +5,7 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 
-#define SLEEPDURATION 350
+#define SLEEPDURATION 10
 
 int termw = 55; ///< Breite des Terminals (falls Terminalausgabe)
 
@@ -19,6 +19,13 @@ void prepareOut(){
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 	if (w.ws_col > 55)
 		termw = w.ws_col-1;	// -1, damit es nicht so gequetscht aussieht
+}
+
+/**
+ * @ingroup LendLibOut
+ * @brief Gibt die Liste der ausgeliehenen Medien aus
+ */
+void printItems(){
 }
 
 /**
@@ -45,19 +52,19 @@ void libprint(ptype type, const char* printable, ...){
 	va_end(args);
 	
 #ifdef DPRES
-	if (pType == 0){
+	if (pType == 3){
 		// Statusmeldungen bei Bedarf mit Verzögerung
 		fflush(0);
 		sleep_ms(SLEEPDURATION);
 	}
 #endif
 	
-	if (pType == 0){
+	resetColor();
+	if (pType == 3){
 		printf("\r");
-	} else {
+	} else if (pType != 0) {
 		printf("\n");
 	}
-	resetColor();
 }
 
 /**
@@ -69,12 +76,12 @@ void libprint(ptype type, const char* printable, ...){
  */
 void setColor(int pType){	
 #ifdef DCOLOR
-	if (pType == 0){// Statusmeldungen bei Bedarf mit Verzögerung
+	if (pType == 3){// Statusmeldungen bei Bedarf mit Verzögerung
 		printf("\e[33m");
-	}else if (pType == 1){
-		printf("\e[32m");
-	}else{
+	}else if (pType == 2){
 		printf("\e[31m");
+	}else{
+		printf("\e[32m");
 	}
 #endif
 }
