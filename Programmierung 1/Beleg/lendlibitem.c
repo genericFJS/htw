@@ -20,15 +20,15 @@ int myMediaCount = 0;
  * @param nlendee Person, dem das Medium ausgeliehen wurde
  * @return Gibt das erstellte ::medium zurück
  */
-medium createItem(int ntype, char* ntitle, char* nauthor, char* nlendee){
+medium* createItem(int ntype, char* ntitle, char* nauthor, char* nlendee){
 	libprint(status, "Eintrag für ausgeliehenes Medium wird angelegt");
 	medium nItem = {};
 	nItem.type = ntype;
 	nItem.title = ntitle;
 	nItem.author = nauthor;
 	nItem.lendee = nlendee;
-// 	medium *rItem = &nItem;
-	return nItem;
+	medium *rItem = &nItem;
+	return rItem;
 }
 
 /**
@@ -37,17 +37,17 @@ medium createItem(int ntype, char* ntitle, char* nauthor, char* nlendee){
  * @param libitem Die Datei
  * @return Gibt das erstellte ::medium zurück
  */
-medium createItemF(FILE *libitem){				
-	medium nItem = {};
+medium* createItemF(FILE *libitem){				
+	medium nMedia = {};
 	char *entry;
 	if ( fgets(vbuf, 128, libitem)){
 		///- Type festlegen
 		entry = strtok2(vbuf, ";\n");
 		libprint(status, "Lese Typ aus: %d", atoi(entry));
 		if (vbuf == NULL){
-			nItem.type = other;
+			nMedia.type = other;
 		}else {
-			nItem.type = atoi(vbuf);
+			nMedia.type = atoi(vbuf);
 		}
 		///- Titel festlegen
 		entry = strtok2(NULL, ";\n");
@@ -56,22 +56,23 @@ medium createItemF(FILE *libitem){
 			libprint(error, "Datei ungültig formatiert");
 			exit(-1);
 		}
-		nItem.title = malloc (sizeof(entry)+1);
-		if ( nItem.title == NULL){
+		nMedia.title = malloc (strlen(entry)+1);
+		if ( nMedia.title == NULL){
 			libprint(error, MALLOCERR);
 			exit(-1);
 		}
-		strcpy(nItem.title, entry);
-// 		libprint(out, "Titel eingetragen: %s ", nItem.title);
+// 		libprint(status, "Kurz vorm Kopieren des Titels: %d", strlen(entry));
+		strcpy(nMedia.title, entry);
+// 		libprint(out, "Titel eingetragen: %s ", nMedia.title);
 		///- Interpret/Autor festlegen
 		entry = strtok2(NULL, ";\n");
 		libprint(status, "Lese Interpret/Autor aus: %s", entry);
-		nItem.author = malloc (sizeof(entry)+1);
-		if ( nItem.author == NULL){
+		nMedia.author = malloc (strlen(entry)+1);
+		if ( nMedia.author == NULL){
 			libprint(error, MALLOCERR);
 			exit(-1);
 		}
-		strcpy(nItem.author, entry);
+		strcpy(nMedia.author, entry);
 		///- Leihendem festlegen
 		entry = strtok2(NULL, ";\n");
 		libprint(status, "Lese Leihendem aus: %s", entry);
@@ -79,13 +80,13 @@ medium createItemF(FILE *libitem){
 			libprint(error, "Datei ungültig formatiert");
 			exit(-1);
 		}
-		nItem.lendee = malloc (sizeof(entry)+1);
-		if ( nItem.lendee == NULL){
+		nMedia.lendee = malloc (strlen(entry)+1);
+		if ( nMedia.lendee == NULL){
 			libprint(error, MALLOCERR);
 			exit(-1);
 		}
-		strcpy(nItem.lendee, entry);
-// 		libprint(out, "Leihender eingetragen: %s ", nItem.lendee);
+		strcpy(nMedia.lendee, entry);
+// 		libprint(out, "Leihender eingetragen: %s ", nMedia.lendee);
 	}
 	if ( myMedia == NULL ){
 		myMedia = malloc (sizeof(medium));
@@ -94,18 +95,18 @@ medium createItemF(FILE *libitem){
 			exit(-1);
 		}
 	} else{
-		libprint(out, "%s %d", nItem.lendee, myMediaCount);
-// 		myMediat = realloc (myMedia, (myMediaCount+1)*sizeof(medium));
-		if (myMediat = realloc (myMedia, (myMediaCount+1)*sizeof(medium))){
+		myMediat = realloc (myMedia, (myMediaCount+1)*sizeof(medium));
+		if (myMediat){
 			myMedia = myMediat;
 		} else{
 			libprint(error, MALLOCERR);
 			exit(-1);
 		}
 	}
-	*(myMedia+myMediaCount) = nItem;
+	*(myMedia+myMediaCount) = nMedia;
 	myMediaCount++;
-	return *(myMedia+myMediaCount-1);
+	int i;
+	return myMedia+myMediaCount;
 }
 
 /**
@@ -113,31 +114,67 @@ medium createItemF(FILE *libitem){
  * @brief Fügt Medium in Liste ein
  * @param iMedium Das einzufügende Medium
  */
-void insertItem(medium nMedium){
-	/*
-	///- Listenobjekt erstellen und Inhalt zuweisen
-	libprint(out, "inserting Item");
-	lItem *nItem = malloc(sizeof(lItem));
-	if ( nItem == NULL){
-		libprint(error, MALLOCERR);
-		exit(-1);
-	}
-	nItem->item = &nMedium;
-	///- Falls Liste noch leer, Bibliothek initialisieren
-	if (myLib.size == 0){
-		nItem->prev = nItem->next = nItem;
-		myLib.size = 1;
-		myLib.first = nItem;
-		myLib.curr = nItem;
-		libprint(out, "%s", nMedium.title);
-	} else {///- Ansonsten neues Objekt in Liste einfügen
-		int i;
-		myLib.curr = myLib.first;
-		for (i = 0; i < myLib.size; i++){
-			libprint(out, "%s", nMedium.title);
-// 			if (stcrcmp((myLib.curr)., 
-		}
-	}*/
+void insertItem(medium *nMedium){
+// 	///- Listenobjekt erstellen und Inhalt zuweisen
+// 	if ( myItems == NULL ){
+// 		myItems = malloc (sizeof(lItem));
+// 		if ( myItems == 0 ){
+// 			libprint(error, MALLOCERR);
+// 			exit(-1);
+// 		}
+// 	} else{
+// 		myItemst = realloc (myItems, (myItemsCount+1)*sizeof(lItem));
+// 		if (myItemst){
+// 			myItems = myItemst;
+// 		} else{
+// 			libprint(error, MALLOCERR);
+// 			exit(-1);
+// 		}
+// 	}
+// 	lItem nItem = {};
+// 	nItem.item = nMedium;
+// 	*(myItems+myItemsCount) = nItem;
+// 	myItemsCount++;
+// 	
+// 	///- Falls Liste noch leer, Bibliothek initialisieren
+// 	if (myLib.size == 0){
+// 		nItem.prev = nItem.next = &nItem;
+// 		myLib.size = 1;
+// 		myLib.first = &nItem;
+// 		myLib.curr = &nItem;
+// 		nItem.next = &nItem;
+// 		nItem.prev = &nItem;
+// 	} else {///- Ansonsten neues Objekt in Liste einfügen
+// 		int i;
+// // 		libprint(error, "%s < %s", myLib.first->item->title, nMedium.title);
+// 		myLib.curr = myLib.first;
+// 		for (i = 0; i < myLib.size; i++){
+// 			if ( myLib.sort == 0){
+// 				if ( strcmp(myLib.curr->item->title, nMedium->title) <= 0){
+// 					libprint(error, "nein");
+// 				} else {
+// 					libprint(error, "ja");
+// 					if (myLib.size == 1){
+// 						libprint(error, "einfügen");
+// 						myLib.curr->next = &nItem;
+// 						myLib.curr->prev = &nItem;
+// 						nItem.next = nItem.prev = myLib.curr;
+// 					}else {
+// 						nItem.prev = myLib.curr;
+// 						nItem.next = myLib.curr->next;
+// 						myLib.curr->next->prev = &nItem;
+// 						myLib.curr->next = &nItem;
+// 					}
+// 					break;
+// 				}
+// 			}
+// 			libprint(error, "weiter");
+// 			myLib.curr = myLib.curr->next->next;
+// 		}
+// 		myLib.size++;
+// 	}
+// // 	libprint(error, "next: %s | prev: %s", myLib.curr->next->item->lendee, myLib.curr->prev->item->lendee);
+// 	printItems();
 }
 
 /**
@@ -145,7 +182,7 @@ void insertItem(medium nMedium){
  * @brief Löscht Medium aus der Liste
  * @param iMedium Das zu löschende Medium
  */
-void deleteItem(medium nMedium){}
+void deleteItem(medium *nMedium){}
 
 /**
  * @ingroup LendLibItem
@@ -162,3 +199,9 @@ void sortItems(sBy sortBy){}
  * @return Gibt das gefundene Medium zurück
  */
 medium findItem(char *sItem, sBy findBy){}
+
+/**
+ * @ingroup LendLibItem
+ * @brief Den gesamten Speicher freigeben
+ */
+void freeAll(){}

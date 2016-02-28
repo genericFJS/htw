@@ -4,6 +4,7 @@
 #include <stdarg.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
+#include "lendlibitem.h"
 
 #define SLEEPDURATION 10
 
@@ -26,6 +27,21 @@ void prepareOut(){
  * @brief Gibt die Liste der ausgeliehenen Medien aus
  */
 void printItems(){
+	int i, size = 0;
+	
+	for (i = 0; i < myMediaCount; i++)
+		libprint(out, "%1.1d  %20.20s  %20.20s  %20.20s", (myMedia+i)->type, (myMedia+i)->title, (myMedia+i)->author, (myMedia+i)->lendee);
+	
+	myLib.curr = myLib.first;
+	size = myLib.size;
+	libprint(out, "%3s  %18s  %20s  %20s", "Typ", "Titel", "Autor/Interpret", "Ausgeliehen an");
+// 	printTLine('-', 67);
+// 	printf("\n");
+	libprint(error, "%s", myLib.curr->item->title);
+	for (i = 0; i < size; i++){
+		libprint(out, "%1.1d  %20.20s  %20.20s  %20.20s", myLib.curr->item->type, myLib.curr->item->title, myLib.curr->item->author, myLib.curr->item->lendee);
+		myLib.curr = myLib.curr->next;
+	}
 }
 
 /**
@@ -50,6 +66,7 @@ void libprint(ptype type, const char* printable, ...){
 	printf("%c[2K", 27);
 	vprintf(printable, args);
 	va_end(args);
+	resetColor();
 	
 #ifdef DPRES
 	if (pType == 3){
@@ -59,7 +76,6 @@ void libprint(ptype type, const char* printable, ...){
 	}
 #endif
 	
-	resetColor();
 	if (pType == 3){
 		printf("\r");
 	} else if (pType != 0) {
