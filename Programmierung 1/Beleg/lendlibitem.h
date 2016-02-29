@@ -26,7 +26,7 @@ typedef enum{
  * @brief Das ausgeliehene Medium.
  */
 typedef struct{
-	mType	type;	///< Typ des ausgeliehen Mediums
+	mType	type;		///< Typ des ausgeliehen Mediums
 	char*	title;		///< Titel des Mediums
 	char*	author;		///< Autor bzw. Interpret des Mediums
 	char*	lendee;		///< Name der Person, dem das Medium verliehen wurde

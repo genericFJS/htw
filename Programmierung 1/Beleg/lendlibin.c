@@ -150,6 +150,7 @@ void getInput(){
 			
 			medium *newMedium = createItem(ntype, ntitle, nauthor, nlendee);
 			insertItem( newMedium );
+			printItems();
 			
 			getInput();
 			break;

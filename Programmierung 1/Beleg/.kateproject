@@ -1,4 +1,4 @@
 {
   "name": "Prog1 Beleg"
-, "files": [ { "directory": ".", "filters": ["*.c", "*.h"] } ]
+, "files": [ { "directory": ".", "directory": "debug", "filters": ["*.c", "*.h"] } ]
 }

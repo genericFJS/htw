@@ -29,19 +29,22 @@ void prepareOut(){
 void printItems(){
 	int i, size = 0;
 	
-	for (i = 0; i < myMediaCount; i++)
-	libprint(out, "%1.1d  %20.20s  %20.20s  %20.20s", (myMedia+i)->type, (myMedia+i)->title, (myMedia+i)->author, (myMedia+i)->lendee);
+// 	for (i = 0; i < myMediaCount; i++)
+// 	libprint(out, "%1.1d  %33.33s  %20.20s  %20.20s", (myMedia+i)->type, (myMedia+i)->title, (myMedia+i)->author, (myMedia+i)->lendee);
 // 	for (i = 0; i < myItemsCount; i++)
-// 	libprint(out, "%1.1d  %20.20s  %20.20s  %20.20s", (myItems+i)->item->type, (myItems+i)->item->title, (myItems+i)->item->author, (myItems+i)->item->lendee);
+// 	libprint(out, "%1.1d  %33.33s  %20.20s  %20.20s", (myItems+i)->item->type, (myItems+i)->item->title, (myItems+i)->item->author, (myItems+i)->item->lendee);
 	
 	myLib.curr = myLib.first;
 	size = myLib.size;
-	libprint(out, "%3s  %18s  %20s  %20s", "Typ", "Titel", "Autor/Interpret", "Ausgeliehen an");
-	printTLine('-', 67);
+	libprint(out, "%3s  %33s  %20s  %20s", "Typ", "Titel", "Autor/Interpret", "Ausgeliehen an");
+	printTLine('-', 82);
 	printf("\n");
-// 	libprint(error, "%s", myLib.curr->item->title);
 	for (i = 0; i < size; i++){
-		libprint(out, "%1.1d  %20.20s  %20.20s  %20.20s", myLib.curr->item->type, myLib.curr->item->title, myLib.curr->item->author, myLib.curr->item->lendee);
+		libprint(out, "%1.1d  %33.33s  %20.20s  %20.20s", 
+			myLib.curr->item->type,
+			myLib.curr->item->title,
+			myLib.curr->item->author,
+			myLib.curr->item->lendee);
 		myLib.curr = myLib.curr->next;
 	}
 }
@@ -94,8 +97,10 @@ void libprint(ptype type, const char* printable, ...){
  */
 void setColor(int pType){	
 #ifdef DCOLOR
-	if (pType == 3){// Statusmeldungen bei Bedarf mit Verzögerung
+	if (pType == 3){
 		printf("\e[33m");
+	}else if (pType == 4){
+		printf("\e[34m");
 	}else if (pType == 2){
 		printf("\e[31m");
 	}else{
