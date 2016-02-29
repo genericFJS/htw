@@ -15,7 +15,8 @@ typedef enum{
 	in,		///< folgende Eingabe
 	out,	///< normale Ausgabe
 	error,	///< Fehlermeldungen
-	status	///< Statusmeldungen
+	status,	///< Statusmeldungen
+	extra	///< Fehlerbehebung
 } ptype;
 
 void libprint(ptype type, const char* printable, ...);
