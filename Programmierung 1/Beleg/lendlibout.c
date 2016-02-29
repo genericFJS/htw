@@ -7,8 +7,9 @@
 #include "lendlibitem.h"
 #include "lendlibin.h"
 
-#define SLEEPDURATION 1
+#define SLEEPDURATION 250
 
+FILE *htmlF;
 int termw = 55; ///< Breite des Terminals (falls Terminalausgabe)
 
 /**
@@ -31,6 +32,24 @@ void printItems(){
 	int i, size = 0;
 	currLib->curr = currLib->first;
 	size = currLib->size;
+#ifdef CGI
+	if (size == 0){
+		printf("<h4> Keine Medien gefunden!</h4>");
+		return;
+	}
+	printf("<table id='media'>\n");
+	printf("<tr>\n<th>\nID</th> \n<th>Typ</th>\n <th>Titel</th>\n <th>Interpret/Autor</th>\n <th>Ausgeliehen an</th>\n</tr>\n");
+	for (i = 0; i < size; i++){
+		printf("<tr>\n<td>\n%d</td> \n<td>%s</td>\n <td>%s</td>\n <td>%s</td>\n <td>%s</td>\n</tr>\n", 
+			/*currLib->curr->item->id*/((currLib > &myLib || currLib < &myLib)?0:i+1), 
+			getmType(currLib->curr->item->type),
+			currLib->curr->item->title,
+			(strcmp(currLib->curr->item->author, "")==40 ? " " : currLib->curr->item->author),
+			currLib->curr->item->lendee);
+		currLib->curr = currLib->curr->next;
+	}
+	printf("</table>\n");
+#else
 	char sortedT = ' ', sortedL = ' ';
 	if (currLib->sort == 0){
 		sortedT = 'v';
@@ -52,6 +71,7 @@ void printItems(){
 	}
 	printTLine('~', 0);
 	printf("\n");
+#endif
 }
 
 /**
@@ -65,6 +85,19 @@ void libprint(ptype type, const char* printable, ...){
 	va_list args;
 	va_start(args, printable);
 	int pType = type;
+#ifdef CGI
+	if(pType != 3) {
+		if (pType==2)
+			printf("<div class='div error'>");
+			vprintf(printable, args);
+			va_end(args);		
+		if (pType==2){
+			printf("</div>");
+		} else {
+			printf("<br>\n");
+		}
+	}
+#else
 #ifdef DCOLOR
 	setColor(type);
 #endif
@@ -91,6 +124,7 @@ void libprint(ptype type, const char* printable, ...){
 	} else if (pType != 0) {
 		printf("\n");
 	}
+#endif
 }
 
 /**
@@ -134,7 +168,14 @@ void resetColor(){
  */
 void printHead(){
 #ifdef CGI
-	
+	puts("Content Type: text/html\n\n");
+	htmlF = fopen("../cgi/index_head.html", "rt");
+	if (htmlF) {
+		while (fgets(vbuf,256,htmlF))
+			printf("%s",vbuf);	
+	} else {
+		puts("<h1>Vorlagendatei konnte nicht geoeffnet werden<h1>");
+	}
 #else
 	setColor(1);
 	printTLine('=', 0);
@@ -169,13 +210,35 @@ void printHead(){
 
 /**
  * @ingroup LendLibOut
+ * @brief Gibt die HTML-Bedienelemente aus
+ * 
+ */
+void printHTMLInter(){
+	printf("<h3>Aktion wählen:</h3>\n");
+	htmlF = fopen("../cgi/index_interf.html", "rt");
+	if (htmlF) {
+		while (fgets(vbuf,256,htmlF))
+			printf("%s",vbuf);		
+	} else {
+		puts("<h1>Vorlagendatei konnte nicht geoeffnet werden<h1>");
+	}
+}
+
+/**
+ * @ingroup LendLibOut
  * @brief Gibt einen Footer aus
  * 
  * Im Terminal ein Abschlussstrich, im CGI den HTML-Footer
  */
 void printFoot(){
 #ifdef CGI
-	
+	htmlF = fopen("../cgi/index_foot.html", "rt");
+	if (htmlF) {
+		while (fgets(vbuf,256,htmlF))
+			printf("%s",vbuf);		
+	} else {
+		puts("<h1>Vorlagendatei konnte nicht geoeffnet werden<h1>");
+	}
 #else
 	printTLine('=', 0);
 	printf("\n");
@@ -225,8 +288,11 @@ void saveDBtoFile(){
 		}
 	} else {
 		libprint(error, "Datei konnte nicht zum schreiben geöffnet werden");
+		exit(-1);
 	}
+#ifndef CGI
 	libprint(out, "Daten wurden in Datei gespeichert");
+#endif
 }
 
 /**

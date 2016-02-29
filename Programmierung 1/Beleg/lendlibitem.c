@@ -8,7 +8,7 @@
 
 theLib *currLib = &myLib;
 theLib myLib = {NULL, NULL, 0, 0};	///< Die Bibiliothek der ausgeliehenen Medien
-unsigned int idc = 0;
+unsigned int idc = 1;
 
 /**
  * @ingroup LendLibItem
@@ -244,7 +244,12 @@ void insertItem(medium *nMedium, theLib *inLib){
 // 	printItems();
 }
 
-
+/**
+ * @ingroup LendLibItem
+ * @brief Gibt String für enum ::mType aus
+ * @param type Zahl von ::mType
+ * @return ::mType als String
+ */
 char* getmType(int type){
 	switch (type){
 		case 1:
@@ -265,30 +270,35 @@ char* getmType(int type){
  * @param inLib in dieser Liste
  */
 void deleteItem(int theID, theLib *inLib){
-	int i;
+	int i, succ = 0;
 	inLib->curr = inLib->first;
 	for (i = 0; i < inLib->size; i++){
 		if ( inLib->curr->item->id == theID){
 			libprint(status, "Eintrag gefunden.");
+			succ = 1;
 			break;
 		} else{
 			inLib->curr = inLib->curr->next;
 		}
 	}
-	lItem *dItem = inLib->curr;
-	if (inLib->first == dItem){
-		inLib->first = dItem->next;
+	if (succ){
+		lItem *dItem = inLib->curr;
+		if (inLib->first == dItem){
+			inLib->first = dItem->next;
+		}
+		inLib->curr = inLib->first;
+		inLib->size--;
+		dItem->prev->next = dItem->next;
+		dItem->next->prev = dItem->prev;
+		free(dItem->item->title);
+		free(dItem->item->author);
+		free(dItem->item->lendee);
+		free(dItem->item);
+// 		inLib.curr = inLib.first
+		libprint(out, "Eintrag gelöscht.");
+	} else {
+		libprint(extra, "ID nicht gefunden.");
 	}
-	inLib->curr = inLib->first;
-	inLib->size--;
-	dItem->prev->next = dItem->next;
-	dItem->next->prev = dItem->prev;
-	free(dItem->item->title);
-	free(dItem->item->author);
-	free(dItem->item->lendee);
-	free(dItem->item);
-// 	inLib.curr = inLib.first
-	libprint(out, "Eintrag gelöscht.");
 }
 
 /**
@@ -371,7 +381,9 @@ void freeAll(theLib *inLib){
 			free(inLib->curr);
 		}
 	}
+#ifndef CGI
 	libprint(out, "Speicher freigegeben");
+#endif
 }
 
 /**

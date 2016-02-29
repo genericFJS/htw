@@ -107,6 +107,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <tr class="memitem:ga46d47190cb20b54826fb665f1859968f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___lend_lib_in.html#ga46d47190cb20b54826fb665f1859968f">getInput</a> ()</td></tr>
 <tr class="memdesc:ga46d47190cb20b54826fb665f1859968f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verarbeitet Nutzerinput im Terminal.  <a href="#ga46d47190cb20b54826fb665f1859968f">Mehr ...</a><br /></td></tr>
 <tr class="separator:ga46d47190cb20b54826fb665f1859968f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1817e73244fbbe5d1ae571f6010404ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1817e73244fbbe5d1ae571f6010404ee"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___lend_lib_in.html#ga1817e73244fbbe5d1ae571f6010404ee">getPost</a> ()</td></tr>
+<tr class="memdesc:ga1817e73244fbbe5d1ae571f6010404ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verarbeitet POSTs des CGI. <br /></td></tr>
+<tr class="separator:ga1817e73244fbbe5d1ae571f6010404ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaccb55b34bbc589d5c47830fdcd889e17"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___lend_lib_in.html#gaccb55b34bbc589d5c47830fdcd889e17">strtok2</a> (char *str, char const *delims)</td></tr>
 <tr class="memdesc:gaccb55b34bbc589d5c47830fdcd889e17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Eigenes strtok, welches auch leere Einträge ausgibt.  <a href="#gaccb55b34bbc589d5c47830fdcd889e17">Mehr ...</a><br /></td></tr>
 <tr class="separator:gaccb55b34bbc589d5c47830fdcd889e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -119,6 +123,21 @@ FILE *&#160;</td><td class="memItemRight" valign="bottom"><b>libdb</b></td></tr>
 <tr class="memitem:gaa4601e4145c1ddaec0cd8737710b6b42"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa4601e4145c1ddaec0cd8737710b6b42"></a>
 char&#160;</td><td class="memItemRight" valign="bottom"><b>vbuf</b> [128]</td></tr>
 <tr class="separator:gaa4601e4145c1ddaec0cd8737710b6b42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7efa5e9c7494c7d4586359300221aa5d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7efa5e9c7494c7d4586359300221aa5d"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>filename</b></td></tr>
+<tr class="separator:ga7efa5e9c7494c7d4586359300221aa5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae232d1b0328c97f6e77fb1a94660cb44"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae232d1b0328c97f6e77fb1a94660cb44"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>posted</b> [256]</td></tr>
+<tr class="separator:gae232d1b0328c97f6e77fb1a94660cb44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae025d31afa273093de589a20f4f2df35"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae025d31afa273093de589a20f4f2df35"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>pTemp1</b> [256]</td></tr>
+<tr class="separator:gae025d31afa273093de589a20f4f2df35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8144306ebceace04737ff8da7aca7f26"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8144306ebceace04737ff8da7aca7f26"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>pTemp2</b> [256]</td></tr>
+<tr class="separator:ga8144306ebceace04737ff8da7aca7f26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga82b1ac173d307099c82705e2ac9b968c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga82b1ac173d307099c82705e2ac9b968c"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>pTemp3</b> [256]</td></tr>
+<tr class="separator:ga82b1ac173d307099c82705e2ac9b968c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Ausführliche Beschreibung</h2>
 <p>Funktionen für jegliche Art von Ausgabe. </p>
@@ -141,7 +160,8 @@ char&#160;</td><td class="memItemRight" valign="bottom"><b>vbuf</b> [128]</td></
 <ul>
 <li>Eingabe Medienart</li>
 </ul>
-<p>(Festlegung der Medienart durch entsprechende Zahl aus mType oder Anfangsbuchstabe: Buch, Cd, Dvd) </p>
+<p>(Festlegung der Medienart durch entsprechende Zahl aus mType oder Anfangsbuchstabe: Buch, Cd, Dvd)</p>
+<p>Medien sortieren </p>
 
 </div>
 </div>
@@ -213,7 +233,7 @@ char&#160;</td><td class="memItemRight" valign="bottom"><b>vbuf</b> [128]</td></
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Erzeugt am Son Feb 28 2016 15:57:04 für Beleg 39467 von &#160;<a href="http://www.doxygen.org/index.html">
+Erzeugt am Mon Feb 29 2016 22:40:13 für Beleg 39467 von &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>
