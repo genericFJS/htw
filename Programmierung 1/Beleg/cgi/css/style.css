@@ -1,0 +1,287 @@
+@CHARSET "UTF-8";
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	line-height: 20px;
+	color: hsl(50, 50%, 5%);
+	/*	background: hsl(75, 25%, 95%);*/
+	background: hsl(50, 50%, 95%);
+}
+a:link {
+	color: inherit;
+}
+a:visited {
+	color: inherit;
+}
+a:hover {
+	color: inherit;
+}
+a:active {
+	color: inherit;
+}
+.wwrap {
+	position: relative;
+}
+main,
+header,
+nav,
+footer {
+	/*	background: #FFF;*/
+	clear: both;
+	position: relative;
+	margin: 0 auto;
+	min-width: 600px;
+	max-width: 980px;
+	/*	padding: 15px;    */
+}
+main {
+	background: hsl(75, 25%, 99%);
+	border-left: solid 3px hsl(75, 25%, 85%);
+	border-right: solid 3px hsl(75, 25%, 85%);
+}
+nav,
+footer,
+.wline,
+.wlinecontent {
+	height: 66px;
+}
+nav,
+footer {
+	background: hsl(75, 25%, 85%);
+	color: hsl(50, 50%, 5%);
+}
+.wline {
+	background: hsl(75, 25%, 85%);
+	color: hsl(50, 50%, 5%);
+	position: absolute;
+	width: 100%;
+	z-index: -5;
+	bottom: 0px;
+}
+.wlinecontent {
+	padding: 0 10px;
+	display: table-cell;
+	vertical-align: middle;
+}
+main {
+	padding: 30px;
+}
+.inner-shadow {
+	-webkit-box-shadow: inset 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: inset 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+	box-shadow: inset 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+#upload #user {
+	width: 3.3em;
+}
+#upload #password {
+	width: 8.8em;
+}
+input[type="text"],
+input[type="password"] {
+	border: none;
+	margin-right: 2px;
+	padding: 5px;
+	background: hsl(75, 25%, 75%);
+	color: hsl(50, 50%, 95%);
+	/* white font */
+}
+input:focus {
+	outline: 2px solid hsl(75, 25%, 55%);
+}
+
+/* header */
+
+header {
+	/*	height: 96px;*/
+	margin-bottom: 5px;
+	margin-top: 2px;
+}
+header img {
+	margin-left: 11px;
+	height: 75px;
+}
+
+/* title in header */
+
+header #site-title {
+	display: inline-block;
+	margin-left: 15px;
+	padding: 0;
+	font-size: 125%;
+	position: absolute;
+	bottom: 0px;
+}
+
+/* nav */
+
+nav a,
+nav a:link,
+nav a:visited,
+nav a:active,
+nav a:hover,
+#footer-text {
+	display: inline-block;
+	text-decoration: none;
+	padding: 5px 15px;
+	margin: 0 10px;
+	top: 50%;
+	positon: absolute;
+}
+nav a,
+nav a:link,
+nav a:visited,
+nav a:active,
+nav a:hover {
+	padding: 4px 14px;
+	border: solid 1px hsl(50, 50%, 95%);
+	background: hsl(50, 50%, 95%);
+	color: hsl(75, 25%, 5%);
+}
+nav a:hover {
+	background: hsl(75, 25%, 90%);
+	color: hsl(50, 50%, 5%);
+}
+nav a:active {
+	background: hsl(75, 25%, 80%);
+	color: hsl(50, 50%, 5%);
+}
+main {
+	min-height: 500px;
+}
+.lastdiv {
+	margin-bottom: 50px;
+}
+th {
+	text-align: left;
+	border-bottom: solid 2px hsl(75, 25%, 25%);
+}
+td,
+th {
+	padding: 5px;
+	vertical-align: top;
+}
+.colorshowcase {
+	width: 50px;
+	height: 50px;
+	/*	float: left;*/
+	background-color: black;
+	font-size: 200%;
+	text-align: center;
+	margin: 5px;
+	padding: 25px;
+	vertical-align: center;
+}
+.black5 {
+	background-color: hsl(50, 50%, 5%);
+	/*
+    background-color: #080907;
+    background-color: hsl(90, 13%, 3%);
+*/
+}
+.white95 {
+	background-color: hsl(75, 25%, 95%);
+	/*
+    background-color: ;
+    background-color: ;
+*/
+	color: hsl(50, 50%, 5%);
+	/* black font */
+}
+.green15 {
+	background-color: hsl(75, 20%, 15%);
+	/*
+    background-color: #2a2d1e;
+    background-color: hsl(72, 20%, 15%);
+*/
+	color: hsl(50, 50%, 95%);
+	/* white font */
+}
+.green20 {
+	background-color: hsl(75, 25%, 20%);
+	/*
+    background-color: #353d24;
+    background-color: hsl(79, 26%, 19%);
+*/
+	color: hsl(50, 50%, 95%);
+	/* white font */
+}
+.green25 {
+	background-color: hsl(75, 25%, 25%);
+	/*
+    background-color: #535b31;
+    background-color: hsl(71, 30%, 27%);
+*/
+	color: hsl(50, 50%, 95%);
+	/* white font */
+}
+.yellow25 {
+	background-color: hsl(55, 55%, 25%);
+	/*
+    background-color: #6b6323;
+    background-color: hsl(53, 51%, 28%);
+*/
+	color: hsl(50, 50%, 95%);
+	/* white font */
+}
+.yellow30 {
+	background-color: hsl(55, 45%, 30%);
+	/*
+    background-color: #716f2a;
+    background-color: hsl(58, 46%, 30%);
+*/
+	color: hsl(50, 50%, 95%);
+	/* white font */
+}
+.orange20 {
+	background-color: hsl(50, 50%, 20%);
+	/*
+    background-color: #4e451a;
+    background-color: hsl(50, 50%, 20%);
+*/
+	color: hsl(50, 50%, 95%);
+	/* white font */
+}
+.orange25 {
+	background-color: hsl(50, 50%, 25%);
+	/*
+    background-color: #605522;
+    background-color: hsl(49, 48%, 25%);
+*/
+	color: hsl(50, 50%, 95%);
+	/* white font */
+}
+#debug {
+	background: rgba(100, 0, 0, 50)
+}
+
+/* CMS: */
+
+.centerAlign {
+	text-align: center;
+}
+.clearBlocks {
+	padding: 0;
+	margin: 0;
+	height: 0px;
+	font-size: 0%;
+	clear: both;
+}
+.entryList {
+	padding: 0;
+	margin: 0;
+	list-style-position: inside;
+}
+.textInformation {
+	/* padding: 0; */
+	/* margin: -5px 0 -5px; */
+	font-size: 80%;
+	text-align: right;
+}
+
+/* google Doc*/
+
+#gdoc {
+	width: 750px;
+	height: 600px;
+}
