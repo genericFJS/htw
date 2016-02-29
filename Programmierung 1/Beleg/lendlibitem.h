@@ -58,11 +58,12 @@ int myItemsCount;
 int myMediaCount;
 
 void initLib();
+char* getmType(int type);
 medium* createItem(int ntype, char* ntitle, char* nauthor, char* nlendee);
 medium* createItemF(FILE *libitem);
 void insertItem(medium *nMedium);
 void deleteItem(medium *nMedium);
 void sortItems(sBy sortBy);
-medium findItem(char *sItem, sBy findBy);
+theLib findItem(char *sItem, sBy findBy);
 void freeAll();
 /// @}
