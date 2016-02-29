@@ -5,6 +5,9 @@
 #include "lendlibout.h"
 #include "lendlibitem.h"
 
+#define min(X,Y) ((X) < (Y) ? (X) : (Y))
+#define max(X,Y) ((X) > (Y) ? (X) : (Y))
+
 const char *filename = "lendlib.csv";
 
 /**
@@ -22,9 +25,8 @@ void readfile(){
 			medium *newMedium = createItemF(libdb);
 			insertItem( newMedium, &myLib );
 		}
-		printItems();
 	} else{
-		libprint(status, "Datei konnte nicht geöffnet werden.");
+		libprint(error, "Datei konnte nicht geöffnet werden.");
 	}
 }
 
@@ -211,6 +213,138 @@ void getInput(){
 			getInput();
 			break;
 		default:
+			break;
+	}
+}
+
+/**
+ * @ingroup LendLibIn
+ * @brief Verarbeitet POSTs des CGI
+ */
+void getPost(){
+	fgets(posted,256,stdin);
+	switch (posted[0]){
+		case 's':
+// 			printf("<p>sortieren</p>");
+			printf("<h2>Ausgeliehene Medien: </h2>\n");
+			if(posted[1] == 'l'){
+				printf("<p>Sortiert nach Ausleihenden</p>");
+				sortItems(1, &myLib);
+			} else {
+				printf("<p>Sortiert nach Titel</p>");
+				sortItems(0, &myLib);
+			}
+			break;
+		case 'f':
+// 			printf("<p>finden</p>");
+			;
+			strtok2(posted, "=");
+			int fType = (strcmp(strtok2(NULL, "&"),"ti") == 0? 0 : 1 );
+// 			printf("Typ: %d<br>", fType);
+			char* tmpf = strtok2(NULL, "=");
+			if ((tmpf+4)[0] != 0){
+				char* fStr = strtok2(NULL, "=");
+				printf("<h2>Ausgeliehene Medien: </h2>\n");
+				printf("<p>Medien, die Begriff '%s' enthalten:</p>", fStr);
+				findItem(fStr, fType, &myLib);
+			} else {
+				printf("<h2>Ausgeliehene Medien: </h2>\n");
+				libprint(error, "Keinen Suchbegriff eingegeben.");
+				printItems();
+			}
+			break;
+		case 'c':
+// 			printf("<p>hinzufügen</p>");
+			;
+			strtok2(posted, "=&");
+			int cType;
+			char* tmpc = strtok2(NULL, "&");
+			if ( strcmp(tmpc,"bu") == 0 ){
+				cType = 1;
+			}else if ( strcmp(tmpc,"cd") == 0 ){
+				cType = 2;
+			}else if ( strcmp(tmpc,"dv") == 0 ){
+				cType = 3;
+			}else {
+				cType = 0;
+			}		
+// 			printf("Typ: %d<br>", cType);
+			strtok2(NULL, "=");
+			tmpc = strtok2(NULL, "&");
+// 			printf("%s: %c, %d",tmpc,(tmpc+4)[0], (tmpc+4)[0]);				
+			char* cTitle = NULL;
+			char* cLendee = NULL;
+			char* cAuthor = NULL;
+			if ((tmpc+4)[0] != 61){
+				cTitle = malloc (sizeof(tmpc));
+				if ( cTitle == NULL){
+					libprint(error, MALLOCERR);
+					exit(-1);
+				}
+				strcpy(cTitle, tmpc);
+// 				printf("%s", fStr);
+				strtok2(NULL, "=");
+				tmpc = strtok2(NULL, "&");
+				if ((tmpc+4)[0] != 61){	
+					tmpc = "";
+				}
+				cAuthor = malloc (sizeof(tmpc));
+				if ( cAuthor == NULL){
+					libprint(error, "Autor: %s",MALLOCERR);
+					exit(-1);
+				}
+				strcpy(cAuthor, tmpc);
+				tmpc = strtok2(NULL, "=");
+// 				printf("%s: %c, %d <br>",tmpc,(tmpc+4)[0], (tmpc+4)[0]);
+				if ((tmpc+4)[0] != 0){
+					cLendee = malloc (sizeof(tmpc+4));
+					if ( cLendee == NULL){
+						libprint(error, "Lendee: %s",MALLOCERR);
+						exit(-1);
+					}
+					strcpy(cLendee, tmpc+4);
+// 					printf("%s: %c, %d",tmpc,(tmpc+4)[0], (tmpc+4)[0]);
+					printf("<h2>Ausgeliehene Medien: </h2>\n");
+// 					printf("%d, %s, %s, %s", cType, cTitle, cAuthor, cLendee);
+					medium *newMedium = createItem(cType, cTitle, cAuthor, cLendee);
+					insertItem( newMedium, &myLib );
+					printItems();
+				} else {
+					printf("<h2>Ausgeliehene Medien: </h2>\n");
+					libprint(error, "Keinen Ausleihenden eingegeben.");
+					printItems();					
+				}
+			} else {
+				printf("<h2>Ausgeliehene Medien: </h2>\n");
+				libprint(error, "Keinen Titel eingegeben.");
+				printItems();
+			}
+			if (cTitle != NULL){
+				free(cTitle);
+			}
+			if (cAuthor != NULL){
+				free(cAuthor);
+			}
+			if (cLendee != NULL){
+				free(cLendee);
+			}
+			break;
+		case 'd':
+// 			printf("<p>löschen</p>");
+			;
+			int dID = atoi(posted+4);
+			if (dID != 0){
+// 				printf("<p>ID: %d</p>", dID);
+				deleteItem(atoi(posted+4), &myLib);
+			} else {
+				libprint(error, "Es wurde keine gültige ID eingegeben");
+			}
+			printf("<h2>Ausgeliehene Medien: </h2>\n");
+			printItems();
+			break;
+		default:
+			printf("<h2>Ausgeliehene Medien: </h2>\n");
+			printItems();
 			break;
 	}
 }

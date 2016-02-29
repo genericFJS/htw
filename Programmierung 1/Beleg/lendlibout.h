@@ -23,6 +23,7 @@ void libprint(ptype type, const char* printable, ...);
 void setColor(int ptype);
 void resetColor();
 void printHead();
+void printHTMLInter();
 void printTLine(char type, int length);
 void printItems();
 void printFoot();

@@ -21,6 +21,9 @@ int \hyperlink{group___lend_lib_in_ga6630e38513358b73fa2ce1c1f6cb71cb}{get\+Size
 \begin{DoxyCompactList}\small\item\em Gibt Größe der gespeicherten C\+S\+V-\/\+Datenbank aus. \end{DoxyCompactList}\item 
 void \hyperlink{group___lend_lib_in_ga46d47190cb20b54826fb665f1859968f}{get\+Input} ()
 \begin{DoxyCompactList}\small\item\em Verarbeitet Nutzerinput im Terminal. \end{DoxyCompactList}\item 
+void \hyperlink{group___lend_lib_in_ga1817e73244fbbe5d1ae571f6010404ee}{get\+Post} ()\hypertarget{group___lend_lib_in_ga1817e73244fbbe5d1ae571f6010404ee}{}\label{group___lend_lib_in_ga1817e73244fbbe5d1ae571f6010404ee}
+
+\begin{DoxyCompactList}\small\item\em Verarbeitet P\+O\+S\+Ts des C\+GI. \end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{group___lend_lib_in_gaccb55b34bbc589d5c47830fdcd889e17}{strtok2} (char $\ast$str, char const $\ast$delims)
 \begin{DoxyCompactList}\small\item\em Eigenes strtok, welches auch leere Einträge ausgibt. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variablen}
@@ -30,6 +33,21 @@ F\+I\+LE $\ast$ {\bfseries libdb}\hypertarget{group___lend_lib_in_ga7eaa119ac9f0
 
 \item 
 char {\bfseries vbuf} \mbox{[}128\mbox{]}\hypertarget{group___lend_lib_in_gaa4601e4145c1ddaec0cd8737710b6b42}{}\label{group___lend_lib_in_gaa4601e4145c1ddaec0cd8737710b6b42}
+
+\item 
+const char $\ast$ {\bfseries filename}\hypertarget{group___lend_lib_in_ga7efa5e9c7494c7d4586359300221aa5d}{}\label{group___lend_lib_in_ga7efa5e9c7494c7d4586359300221aa5d}
+
+\item 
+char {\bfseries posted} \mbox{[}256\mbox{]}\hypertarget{group___lend_lib_in_gae232d1b0328c97f6e77fb1a94660cb44}{}\label{group___lend_lib_in_gae232d1b0328c97f6e77fb1a94660cb44}
+
+\item 
+char {\bfseries p\+Temp1} \mbox{[}256\mbox{]}\hypertarget{group___lend_lib_in_gae025d31afa273093de589a20f4f2df35}{}\label{group___lend_lib_in_gae025d31afa273093de589a20f4f2df35}
+
+\item 
+char {\bfseries p\+Temp2} \mbox{[}256\mbox{]}\hypertarget{group___lend_lib_in_ga8144306ebceace04737ff8da7aca7f26}{}\label{group___lend_lib_in_ga8144306ebceace04737ff8da7aca7f26}
+
+\item 
+char {\bfseries p\+Temp3} \mbox{[}256\mbox{]}\hypertarget{group___lend_lib_in_ga82b1ac173d307099c82705e2ac9b968c}{}\label{group___lend_lib_in_ga82b1ac173d307099c82705e2ac9b968c}
 
 \end{DoxyCompactItemize}
 
@@ -58,7 +76,9 @@ Ausleihmedium hinzufügen
 \item Eingabe Medienart
 \end{DoxyItemize}
 
-(Festlegung der Medienart durch entsprechende Zahl aus m\+Type oder Anfangsbuchstabe\+: Buch, Cd, Dvd) \index{Lend\+Lib\+In@{Lend\+Lib\+In}!get\+Size@{get\+Size}}
+(Festlegung der Medienart durch entsprechende Zahl aus m\+Type oder Anfangsbuchstabe\+: Buch, Cd, Dvd)
+
+Medien sortieren \index{Lend\+Lib\+In@{Lend\+Lib\+In}!get\+Size@{get\+Size}}
 \index{get\+Size@{get\+Size}!Lend\+Lib\+In@{Lend\+Lib\+In}}
 \subsubsection[{\texorpdfstring{get\+Size(\+F\+I\+L\+E $\ast$libdb)}{getSize(FILE *libdb)}}]{\setlength{\rightskip}{0pt plus 5cm}int get\+Size (
 \begin{DoxyParamCaption}

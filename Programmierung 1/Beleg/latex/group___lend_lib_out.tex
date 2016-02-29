@@ -8,10 +8,13 @@ Funktionen für jegliche Art von Ausgabe.
 \subsection*{Aufzählungen}
 \begin{DoxyCompactItemize}
 \item 
-enum \hyperlink{group___lend_lib_out_ga0916607956575302a93dbd21440edc1a}{ptype} \{ \hyperlink{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aa9e70047869d00c5afd8c68af325e48d7}{in}, 
+enum \hyperlink{group___lend_lib_out_ga0916607956575302a93dbd21440edc1a}{ptype} \{ \\*
+\hyperlink{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aa9e70047869d00c5afd8c68af325e48d7}{in}, 
 \hyperlink{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aaaca14bf8f96bb2b357f12496b7f11579}{out}, 
 \hyperlink{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aad606e435413ea0944dd00d49e901e4ed}{error}, 
-\hyperlink{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aa9a6940c3bba41cdd6dacae1a00176a30}{status}
+\hyperlink{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aa9a6940c3bba41cdd6dacae1a00176a30}{status}, 
+\\*
+\hyperlink{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aa6884b538ac6996bddc51afddcb815e31}{extra}
  \}\begin{DoxyCompactList}\small\item\em Verschieden Ausgabemöglichkeiten. \end{DoxyCompactList}
 \end{DoxyCompactItemize}
 \subsection*{Funktionen}
@@ -30,10 +33,16 @@ void \hyperlink{group___lend_lib_out_gafe00396766eb6b8ca4674de4c5d3d949}{reset\+
 \begin{DoxyCompactList}\small\item\em Setzt die Terminal-\/\+Schriftfarbe zurück auf den Standard. \end{DoxyCompactList}\item 
 void \hyperlink{group___lend_lib_out_ga903241157072885e802dea85fc6a976c}{print\+Head} ()
 \begin{DoxyCompactList}\small\item\em Gibt einen Header aus. \end{DoxyCompactList}\item 
+void \hyperlink{group___lend_lib_out_ga6f008e199b4cc5c47c6d85367cc5bda2}{print\+H\+T\+M\+L\+Inter} ()\hypertarget{group___lend_lib_out_ga6f008e199b4cc5c47c6d85367cc5bda2}{}\label{group___lend_lib_out_ga6f008e199b4cc5c47c6d85367cc5bda2}
+
+\begin{DoxyCompactList}\small\item\em Gibt die H\+T\+M\+L-\/\+Bedienelemente aus. \end{DoxyCompactList}\item 
 void \hyperlink{group___lend_lib_out_gaa5964f653524972b1bca64e6e8a7622d}{print\+Foot} ()
 \begin{DoxyCompactList}\small\item\em Gibt einen Footer aus. \end{DoxyCompactList}\item 
 void \hyperlink{group___lend_lib_out_ga5a511942adfe4ce80256d665208eb204}{print\+T\+Line} (char type, int length)
 \begin{DoxyCompactList}\small\item\em Gibt eine Linie im Terminal aus. \end{DoxyCompactList}\item 
+void \hyperlink{group___lend_lib_out_gaf8d2a2570c703c30713860b4b060cae0}{save\+D\+Bto\+File} ()\hypertarget{group___lend_lib_out_gaf8d2a2570c703c30713860b4b060cae0}{}\label{group___lend_lib_out_gaf8d2a2570c703c30713860b4b060cae0}
+
+\begin{DoxyCompactList}\small\item\em Speichert Liste in Datei. \end{DoxyCompactList}\item 
 void \hyperlink{group___lend_lib_out_ga73a8d7e98be85f67961ca682c291033a}{sleep\+\_\+ms} (int milliseconds)
 \begin{DoxyCompactList}\small\item\em Cross-\/\+Platform Sleep Funktion in Millisekunden. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -69,7 +78,9 @@ out\hypertarget{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aaaca14bf
 error\hypertarget{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aad606e435413ea0944dd00d49e901e4ed}{}\label{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aad606e435413ea0944dd00d49e901e4ed}
 }]Fehlermeldungen. \index{status@{status}!Lend\+Lib\+Out@{Lend\+Lib\+Out}}\index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!status@{status}}\item[{\em 
 status\hypertarget{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aa9a6940c3bba41cdd6dacae1a00176a30}{}\label{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aa9a6940c3bba41cdd6dacae1a00176a30}
-}]Statusmeldungen. \end{description}
+}]Statusmeldungen. \index{extra@{extra}!Lend\+Lib\+Out@{Lend\+Lib\+Out}}\index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!extra@{extra}}\item[{\em 
+extra\hypertarget{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aa6884b538ac6996bddc51afddcb815e31}{}\label{group___lend_lib_out_gga0916607956575302a93dbd21440edc1aa6884b538ac6996bddc51afddcb815e31}
+}]Fehlerbehebung. \end{description}
 \end{Desc}
 
 

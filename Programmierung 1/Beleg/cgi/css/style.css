@@ -30,8 +30,8 @@ footer {
 	clear: both;
 	position: relative;
 	margin: 0 auto;
-	min-width: 600px;
-	max-width: 980px;
+	min-width: 400px;
+	max-width: 800px;
 	/*	padding: 15px;    */
 }
 main {
@@ -78,14 +78,20 @@ main {
 	width: 8.8em;
 }
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="number"] {
 	border: none;
 	margin-right: 2px;
 	padding: 5px;
 	background: hsl(75, 25%, 75%);
-	color: hsl(50, 50%, 95%);
+	color: hsl(50, 50%, 10%);
 	/* white font */
 }
+
+input[type="submit"]{
+	margin: 10px;
+}
+
 input:focus {
 	outline: 2px solid hsl(75, 25%, 55%);
 }
@@ -160,6 +166,10 @@ td,
 th {
 	padding: 5px;
 	vertical-align: top;
+}
+
+#media tr:nth-child(2n) {
+    background: hsl(75, 25%, 95%);
 }
 .colorshowcase {
 	width: 50px;
@@ -253,6 +263,14 @@ th {
 }
 #debug {
 	background: rgba(100, 0, 0, 50)
+}
+
+.div{
+	padding: 10px;
+}
+
+.error {
+	color: hsl(0,60%, 50%);
 }
 
 /* CMS: */
