@@ -20,7 +20,7 @@ void readfile(){
 		for (i=0 ; i < listSize; i++){
 // 			libprint(out, "Lese Zeile: %d ", i);
 			medium *newMedium = createItemF(libdb);
-			insertItem( newMedium );
+			insertItem( newMedium, &myLib );
 		}
 		printItems();
 	} else{
@@ -62,12 +62,17 @@ void getInput(){
 	switch (vbuf[0]){
 		case 'h':
 			libprint(out, "  Mögliche Funktionen:");
+			libprint(out, "l - Ausleihmedien erneut auflisten");
 			libprint(out, "c - Ausleihmedium hinzufügen");
 			libprint(out, "d - Ausleihmedium löschen");
 			libprint(out, "s - Ausleihmedien sortieren");
-			libprint(out, "f - Ausleihmedium finden");
+			libprint(out, "f - Ausleihmedien finden");
 			libprint(out, "alle anderen Eingaben beenden das Programm");
 			printTLine('~',0); printf("\n");
+			getInput();
+			break;
+		case 'l':
+			printItems();
 			getInput();
 			break;
 		case 'c':	/// Ausleihmedium hinzufügen
@@ -123,14 +128,10 @@ void getInput(){
 			if ( nauthor == NULL){
 				libprint(error, MALLOCERR);
 				exit(-1);
-			}		
-			if (strlen(vbuf) == 0){
-				nauthor = NULL;
-				libprint(out, "Kein Interpret/Autor angegeben");
-			}else {
-				strcpy(nauthor, vbuf);	
-				libprint(out, "Interpret/Autor ist '%s'.", nauthor);
 			}
+			strcpy(nauthor, vbuf);
+			if (strlen(vbuf) != 0)
+				libprint(out, "Interpret/Autor ist '%s'.", nauthor);
 			libprint(in, "%16s: ", "Ausgeliehen an");
 			fgets(vbuf, 128, stdin);
 			while (strlen(vbuf) < 2){
@@ -149,13 +150,14 @@ void getInput(){
 			
 			
 			medium *newMedium = createItem(ntype, ntitle, nauthor, nlendee);
-			insertItem( newMedium );
+			insertItem( newMedium, &myLib );
+			printTLine('~',0); printf("\n");			
 			printItems();
 			
 			getInput();
 			break;
 		case 's':	/// Medien sortieren
-			libprint(in, "Sortieren nach (\e[1mT\e[0m\e[32mitel=0, \e[1mA\e[0m\e[32mus\e[1mL\e[0m\e[32meihender=1):");
+			libprint(in, "Sortieren nach (\e[1mT\e[0m\e[32mitel=0, \e[1mA\e[0m\e[32mus\e[1mL\e[0m\e[32meihender=1): ");
 			fgets(vbuf, 128, stdin);
 			int sortingBy = vbuf[0];
 			printTLine('~',0); printf("\n");
@@ -165,20 +167,49 @@ void getInput(){
 				case 'l':
 				case 'L':
 				case '1':
-					sortItems(1);
+					sortItems(1, &myLib);
 					break;
 				case 't':
 				case 'T':
 				case '0':
-					sortItems(0);
+					sortItems(0, &myLib);
 				default:
 					break;				
 			}
 			getInput();
 			break;
 		case 'd':
-				
+			libprint(in, "Medium löschen (ID): ");
+			fgets(vbuf, 128, stdin);
+			deleteItem(atoi(vbuf), &myLib);
+			printTLine('~',0); printf("\n");
+			printItems();
+			getInput();
+			break;
 		case 'f':
+			libprint(in, "Medium suchen nach (\e[1mT\e[0m\e[32mitel=0, \e[1mA\e[0m\e[32mus\e[1mL\e[0m\e[32meihender=1): ");
+			fgets(vbuf, 128, stdin);
+			int fBy = vbuf[0];
+			libprint(in, "Nach dieser Zeichenkette durchsuchen: ");
+			char* fItem = fgets(vbuf, 128, stdin);
+			printTLine('~',0); printf("\n");
+			switch (fBy){
+				case 'a':
+				case 'A':
+				case 'l':
+				case 'L':
+				case '1':
+					findItem(fItem, 1, &myLib);
+					break;
+				case 't':
+				case 'T':
+				case '0':
+					findItem(fItem, 0, &myLib);
+				default:
+					break;				
+			}
+			getInput();
+			break;
 		default:
 			break;
 	}

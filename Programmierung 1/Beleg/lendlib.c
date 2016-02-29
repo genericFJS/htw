@@ -21,7 +21,7 @@ int main(int argc, char* argv[]){
 	getInput();		///- Nutzerinput verarbeiten
 #endif	/// beide:	
 	saveDBtoFile();
-	freeAll();
+	freeAll(&myLib);
 	printFoot();	///- Fußzeilen ausgeben
 	return 1;
 }
