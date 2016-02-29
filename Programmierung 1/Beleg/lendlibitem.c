@@ -4,8 +4,11 @@
 #include "lendlibitem.h"
 #include "lendlibin.h"
 #include "lendlibout.h"
+#define _GNU_SOURCE
 
+theLib *currLib = &myLib;
 theLib myLib = {NULL, NULL, 0, 0};	///< Die Bibiliothek der ausgeliehenen Medien
+unsigned int idc = 0;
 
 /**
  * @ingroup LendLibItem
@@ -68,7 +71,11 @@ medium* createItemF(FILE *libitem){
 	}
 	char *entry;
 	if ( fgets(vbuf, 128, libitem)){
-		///- Type festlegen
+		///- ID festlegen
+		libprint(status, "Setze ID:");
+		nMedia->id = idc;
+		idc++;
+		///- Typ festlegen
 		entry = strtok2(vbuf, ";\n");
 		libprint(status, "Lese Typ aus: %d", atoi(entry));
 		if (vbuf == NULL){
@@ -130,101 +137,101 @@ void insertItem(medium *nMedium, theLib *inLib){
 		exit(-1);
 	}
 	nItem->item = nMedium;		
-	if ( myLib.sort == (sBy) title){
-		if (myLib.size == 0){	///- Falls Liste noch leer, diese initialisieren
+	if ( inLib->sort == (sBy) title){
+		if (inLib->size == 0){	///- Falls Liste noch leer, diese initialisieren
 			libprint(status, "1. Element einfügen.");
 			nItem->prev = nItem->next = nItem;
-			myLib.first = nItem;
-			myLib.curr = nItem;
-		} else if (myLib.size == 1){	///- Falls Liste einelementig ist, das nächste Element einfach einfügen
+			inLib->first = nItem;
+			inLib->curr = nItem;
+		} else if (inLib->size == 1){	///- Falls Liste einelementig ist, das nächste Element einfach einfügen
 			libprint(status,"2. Element einfügen.");
-			myLib.curr->next = nItem;
-			myLib.curr->prev = nItem;
-			nItem->next = nItem->prev = myLib.curr;
-			if ( strcmp(myLib.curr->item->title, nMedium->title) > 0 )
-				myLib.first = nItem;
+			inLib->curr->next = nItem;
+			inLib->curr->prev = nItem;
+			nItem->next = nItem->prev = inLib->curr;
+			if ( strcicmp(inLib->curr->item->title, nMedium->title) > 0 )
+				inLib->first = nItem;
 		} else{///- Alle anderen Elemente sortiert in Liste einfügen
 			int i;
-			myLib.curr = myLib.first;
-			for (i = 0; i < myLib.size; i++){
-				if ( strcmp(myLib.curr->item->title, nMedium->title) <= 0 && i < myLib.size-1){	///- - Nach einem Element suchen, welches größer ist, damit man das einzufügende Element vor diesem einfügen kann.
-					libprint(status,"%10.10s kleiner %10.10s -> weiter nach größerem Suchen.",myLib.curr->item->title, nMedium->title);
-					myLib.curr = myLib.curr->next;
-				} else if(i < myLib.size-1) {	///- - Wenn größeres vorm Listenende gefunden wurde, Element davor einfügen
-					libprint(status,"%10.10s größer %10.10s, also vorher einfügen.",myLib.curr->item->title, nMedium->title);
-					nItem->prev = myLib.curr->prev;
-					nItem->next = myLib.curr;
-					myLib.curr->prev->next = nItem;
-					myLib.curr->prev = nItem;
-					if (myLib.curr == myLib.first){
+			inLib->curr = inLib->first;
+			for (i = 0; i < inLib->size; i++){
+				if ( strcicmp(inLib->curr->item->title, nMedium->title) <= 0 && i < inLib->size-1){	///- - Nach einem Element suchen, welches größer ist, damit man das einzufügende Element vor diesem einfügen kann.
+					libprint(status,"%10.10s kleiner %10.10s -> weiter nach größerem Suchen.",inLib->curr->item->title, nMedium->title);
+					inLib->curr = inLib->curr->next;
+				} else if(i < inLib->size-1) {	///- - Wenn größeres vorm Listenende gefunden wurde, Element davor einfügen
+					libprint(status,"%10.10s größer %10.10s, also vorher einfügen.",inLib->curr->item->title, nMedium->title);
+					nItem->prev = inLib->curr->prev;
+					nItem->next = inLib->curr;
+					inLib->curr->prev->next = nItem;
+					inLib->curr->prev = nItem;
+					if (inLib->curr == inLib->first){
 						libprint(status,"Eingefügtes Element ist kleinste, wird vorne angefügt. Also erstes Listenelement neu definieren!");
-						myLib.first = nItem;
+						inLib->first = nItem;
 					}
 					break;
 				} else { ///- - Ansonsten Element am Listenende je nach größe davor oder danach einfügen.
-					if (strcmp(myLib.curr->item->title, nMedium->title) > 0){
-						libprint(status,"%10.10s kleiner %10.10s, also davor einfügen.", nMedium->title,myLib.curr->item->title);
-						nItem->prev = myLib.curr->prev;
-						nItem->next = myLib.curr;
-						myLib.curr->prev->next = nItem;
-						myLib.curr->prev = nItem;
+					if (strcicmp(inLib->curr->item->title, nMedium->title) > 0){
+						libprint(status,"%10.10s kleiner %10.10s, also davor einfügen.", nMedium->title,inLib->curr->item->title);
+						nItem->prev = inLib->curr->prev;
+						nItem->next = inLib->curr;
+						inLib->curr->prev->next = nItem;
+						inLib->curr->prev = nItem;
 						
 					} else {
-						libprint(status,"%10.10s größer %10.10s, also danach einfügen.", nMedium->title,myLib.curr->item->title);
-						nItem->prev = myLib.curr;
-						nItem->next = myLib.curr->next;
-						myLib.curr->next->prev = nItem;
-						myLib.curr->next = nItem;
+						libprint(status,"%10.10s größer %10.10s, also danach einfügen.", nMedium->title,inLib->curr->item->title);
+						nItem->prev = inLib->curr;
+						nItem->next = inLib->curr->next;
+						inLib->curr->next->prev = nItem;
+						inLib->curr->next = nItem;
 					}
 					break;
 				}
 			}
 		}
 	} else {
-		if (myLib.size == 0){	///- Falls Liste noch leer, diese initialisieren
+		if (inLib->size == 0){	///- Falls Liste noch leer, diese initialisieren
 			libprint(status, "1. Element einfügen.");
 			nItem->prev = nItem->next = nItem;
-			myLib.first = nItem;
-			myLib.curr = nItem;
-		} else if (myLib.size == 1){	///- Falls Liste einelementig ist, das nächste Element einfach einfügen
+			inLib->first = nItem;
+			inLib->curr = nItem;
+		} else if (inLib->size == 1){	///- Falls Liste einelementig ist, das nächste Element einfach einfügen
 			libprint(status,"2. Element einfügen.");
-			myLib.curr->next = nItem;
-			myLib.curr->prev = nItem;
-			nItem->next = nItem->prev = myLib.curr;
-			if ( strcmp(myLib.curr->item->lendee, nMedium->lendee) > 0 )
-				myLib.first = nItem;
+			inLib->curr->next = nItem;
+			inLib->curr->prev = nItem;
+			nItem->next = nItem->prev = inLib->curr;
+			if ( strcicmp(inLib->curr->item->lendee, nMedium->lendee) > 0 )
+				inLib->first = nItem;
 		} else{///- Alle anderen Elemente sortiert in Liste einfügen
 			int i;
-			myLib.curr = myLib.first;
-			for (i = 0; i < myLib.size; i++){
-				if ( strcmp(myLib.curr->item->lendee, nMedium->lendee) <= 0 && i < myLib.size-1){	///- - Nach einem Element suchen, welches größer ist, damit man das einzufügende Element vor diesem einfügen kann.
-					libprint(status,"%10.10s kleiner %10.10s -> weiter nach größerem Suchen.",myLib.curr->item->lendee, nMedium->lendee);
-					myLib.curr = myLib.curr->next;
-				} else if(i < myLib.size-1) {	///- - Wenn größeres vorm Listenende gefunden wurde, Element davor einfügen
-					libprint(status,"%10.10s größer %10.10s, also vorher einfügen.",myLib.curr->item->lendee, nMedium->lendee);
-					nItem->prev = myLib.curr->prev;
-					nItem->next = myLib.curr;
-					myLib.curr->prev->next = nItem;
-					myLib.curr->prev = nItem;
-					if (myLib.curr == myLib.first){
+			inLib->curr = inLib->first;
+			for (i = 0; i < inLib->size; i++){
+				if ( strcicmp(inLib->curr->item->lendee, nMedium->lendee) <= 0 && i < inLib->size-1){	///- - Nach einem Element suchen, welches größer ist, damit man das einzufügende Element vor diesem einfügen kann.
+					libprint(status,"%10.10s kleiner %10.10s -> weiter nach größerem Suchen.",inLib->curr->item->lendee, nMedium->lendee);
+					inLib->curr = inLib->curr->next;
+				} else if(i < inLib->size-1) {	///- - Wenn größeres vorm Listenende gefunden wurde, Element davor einfügen
+					libprint(status,"%10.10s größer %10.10s, also vorher einfügen.",inLib->curr->item->lendee, nMedium->lendee);
+					nItem->prev = inLib->curr->prev;
+					nItem->next = inLib->curr;
+					inLib->curr->prev->next = nItem;
+					inLib->curr->prev = nItem;
+					if (inLib->curr == inLib->first){
 						libprint(status,"Eingefügtes Element ist kleinste, wird vorne angefügt. Also erstes Listenelement neu definieren!");
-						myLib.first = nItem;
+						inLib->first = nItem;
 					}
 					break;
 				} else { ///- - Ansonsten Element am Listenende je nach größe davor oder danach einfügen.
-					if (strcmp(myLib.curr->item->lendee, nMedium->lendee) > 0){
-						libprint(status,"%10.10s kleiner %10.10s, also davor einfügen.", nMedium->lendee,myLib.curr->item->lendee);
-						nItem->prev = myLib.curr->prev;
-						nItem->next = myLib.curr;
-						myLib.curr->prev->next = nItem;
-						myLib.curr->prev = nItem;
+					if (strcicmp(inLib->curr->item->lendee, nMedium->lendee) > 0){
+						libprint(status,"%10.10s kleiner %10.10s, also davor einfügen.", nMedium->lendee,inLib->curr->item->lendee);
+						nItem->prev = inLib->curr->prev;
+						nItem->next = inLib->curr;
+						inLib->curr->prev->next = nItem;
+						inLib->curr->prev = nItem;
 						
 					} else {
-						libprint(status,"%10.10s größer %10.10s, also danach einfügen.", nMedium->lendee,myLib.curr->item->lendee);
-						nItem->prev = myLib.curr;
-						nItem->next = myLib.curr->next;
-						myLib.curr->next->prev = nItem;
-						myLib.curr->next = nItem;
+						libprint(status,"%10.10s größer %10.10s, also danach einfügen.", nMedium->lendee,inLib->curr->item->lendee);
+						nItem->prev = inLib->curr;
+						nItem->next = inLib->curr->next;
+						inLib->curr->next->prev = nItem;
+						inLib->curr->next = nItem;
 					}
 					break;
 				}
@@ -233,7 +240,7 @@ void insertItem(medium *nMedium, theLib *inLib){
 		
 	}
 	libprint(status, "%s eingefügt.", nMedium->title);	
-	myLib.size++;
+	inLib->size++;
 // 	printItems();
 }
 
@@ -254,36 +261,63 @@ char* getmType(int type){
 /**
  * @ingroup LendLibItem
  * @brief Löscht Medium aus der Liste
- * @param iMedium Das zu löschende Medium
+ * @param theID Das zu löschende Medium (ID)
+ * @param inLib in dieser Liste
  */
-void deleteItem(medium *nMedium){}
+void deleteItem(int theID, theLib *inLib){
+	int i;
+	inLib->curr = inLib->first;
+	for (i = 0; i < inLib->size; i++){
+		if ( inLib->curr->item->id == theID){
+			libprint(status, "Eintrag gefunden.");
+			break;
+		} else{
+			inLib->curr = inLib->curr->next;
+		}
+	}
+	lItem *dItem = inLib->curr;
+	if (inLib->first == dItem){
+		inLib->first = dItem->next;
+	}
+	inLib->curr = inLib->first;
+	inLib->size--;
+	dItem->prev->next = dItem->next;
+	dItem->next->prev = dItem->prev;
+	free(dItem->item->title);
+	free(dItem->item->author);
+	free(dItem->item->lendee);
+	free(dItem->item);
+// 	inLib.curr = inLib.first
+	libprint(out, "Eintrag gelöscht.");
+}
 
 /**
  * @ingroup LendLibItem
  * @brief Sortiert die Liste nach Mediumtitel/Leihendem
  * @param sortBy Nach was sortiert werden soll (::sBy)
+ * @param inLib in dieser Liste
  */
-void sortItems(sBy sortBy){
+void sortItems(sBy sortBy, theLib *inLib){
 	int i, size;
-	size = myLib.size;
+	size = inLib->size;
 	medium *allMedia[size];
-	myLib.curr = myLib.first;
+	inLib->curr = inLib->first;
 	
 	for ( i = 0; i < size; i++){
-		allMedia[i] = myLib.curr->item;
+		allMedia[i] = inLib->curr->item;
 		if (i < size-1){
-			myLib.curr = myLib.curr->next;
-			free(myLib.curr->prev);
+			inLib->curr = inLib->curr->next;
+			free(inLib->curr->prev);
 		} else {
-			free(myLib.curr);
+			free(inLib->curr);
 		}
 	}
-	myLib.curr = NULL;
-	myLib.first = NULL;
-	myLib.sort = sortBy;
-	myLib.size = 0;
+	inLib->curr = NULL;
+	inLib->first = NULL;
+	inLib->sort = sortBy;
+	inLib->size = 0;
 	for (i = 0; i < size; i++){
-		insertItem(allMedia[i]);
+		insertItem(allMedia[i], &myLib);
 	}
 	printItems();
 }
@@ -293,31 +327,62 @@ void sortItems(sBy sortBy){
  * @brief Suche, bzw. finde ein ausgeliehenes Medium
  * @param sItem Nach dieser Zeichenkette soll gesucht werden
  * @param findBy Die Zeichenkette soll in diesem Eintrag des ausgeliehen Mediums gesucht werden (::sBy)
+ * @param inLib in dieser Liste
  * @return Gibt das gefundene Medium zurück
  */
-theLib findItem(char *sItem, sBy findBy){
-// 	theLib foundLib = {NULL, NULL, 0, sBy);
+void findItem(char *sItem, sBy findBy, theLib *inLib){
+	theLib foundLib = {NULL, NULL, 0, findBy};
+	sItem = strtok(sItem, "\n");
+	int i, size;
+	size = inLib->size;
+	inLib->curr = inLib->first;
+	if (findBy == (sBy)title){
+		for (i = 0; i< size; i++){
+			if (strcasestr(inLib->curr->item->title, sItem)!=0){
+				libprint(status, "%s enthält %s", inLib->curr->item->title, sItem);
+				insertItem( inLib->curr->item, &foundLib );
+			}
+			inLib->curr = inLib->curr->next;
+		}
+	}
+	currLib = &foundLib;
+	printItems();
+	currLib = &myLib;
 }
 
 /**
  * @ingroup LendLibItem
  * @brief Den gesamten Speicher freigeben
+ * @param inLib in dieser Liste
  */
-void freeAll(){
+void freeAll(theLib *inLib){
 	int i, size;
-	size = myLib.size;
-	myLib.curr = myLib.first;
+	size = inLib->size;
+	inLib->curr = inLib->first;
 	for (i=0; i<size; i++){
-		free(myLib.curr->item->title);
-		free(myLib.curr->item->author);
-		free(myLib.curr->item->lendee);
-		free(myLib.curr->item);
+		free(inLib->curr->item->title);
+		free(inLib->curr->item->author);
+		free(inLib->curr->item->lendee);
+		free(inLib->curr->item);
 		if (i < size-1){
-			myLib.curr = myLib.curr->next;
-			free(myLib.curr->prev);
+			inLib->curr = inLib->curr->next;
+			free(inLib->curr->prev);
 		} else {
-			free(myLib.curr);
+			free(inLib->curr);
 		}
 	}
 	libprint(out, "Speicher freigegeben");
+}
+
+/**
+ * @ingroup LendLibItem
+ * @brief Vergleicht zwei "Strings" unabhängig von Groß- oder Kleinbuchstaben
+ * Quelle: http://stackoverflow.com/a/5820991
+ */
+int strcicmp(char const *a, char const *b){
+    for (;; a++, b++) {
+        int d = tolower(*a) - tolower(*b);
+        if (d != 0 || !*a)
+            return d;
+    }
 }

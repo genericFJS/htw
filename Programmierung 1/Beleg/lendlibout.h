@@ -20,7 +20,6 @@ typedef enum{
 } ptype;
 
 void libprint(ptype type, const char* printable, ...);
-void saveDBtoFile();
 void setColor(int ptype);
 void resetColor();
 void printHead();

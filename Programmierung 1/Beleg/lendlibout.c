@@ -29,25 +29,26 @@ void prepareOut(){
  */
 void printItems(){
 	int i, size = 0;
-	myLib.curr = myLib.first;
-	size = myLib.size;
+	currLib->curr = currLib->first;
+	size = currLib->size;
 	char sortedT = ' ', sortedL = ' ';
-	if (myLib.sort == 0){
+	if (currLib->sort == 0){
 		sortedT = 'v';
 	} else {
 		sortedL = 'v';
 	}
-	libprint(out, "== Ausgeliehene Medien: ==");
-	libprint(out, "%5s | %26c  %5s  %20s  %4c  %s", "Typ", sortedT, "Titel", "Autor/Interpret", sortedL, "Ausgeliehen an");
-	printTLine('-', 85);
+	libprint(out, "\n\e[4mAusgeliehene Medien:\e[0m\n");
+	libprint(out, "%2s | %5s | %26c  %5s  %20s  %4c  %s","ID", "Typ", sortedT, "Titel", "Autor/Interpret", sortedL, "Ausgeliehen an");
+	printTLine('-', 90);
 	printf("\n");
 	for (i = 0; i < size; i++){
-		libprint(out, "%5.5s | %33.33s  %20.20s  %20.20s", 
-			getmType(myLib.curr->item->type),
-			myLib.curr->item->title,
-			myLib.curr->item->author,
-			myLib.curr->item->lendee);
-		myLib.curr = myLib.curr->next;
+		libprint(out, "%2d | %5.5s | %33.33s  %20.20s  %20.20s", 
+			currLib->curr->item->id, 
+			getmType(currLib->curr->item->type),
+			currLib->curr->item->title,
+			(strcmp(currLib->curr->item->author, "")==40 ? " " : currLib->curr->item->author),
+			currLib->curr->item->lendee);
+		currLib->curr = currLib->curr->next;
 	}
 	printTLine('~', 0);
 	printf("\n");
@@ -192,7 +193,11 @@ void printTLine(char type, int length){
 	if (length <= 0){
 		length = termw;
 	}
-	setColor(1);
+	if (type != '~') {
+		setColor(1);
+	}else {
+		setColor(4);
+	}
 	for (i=0; i<length; i++){
 		printf("%c", type);
 	}
