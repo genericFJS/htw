@@ -8,6 +8,7 @@
 
 FILE *libdb;
 char vbuf[128];
+const char *filename;
 
 void readfile();
 int getSize(FILE *libdb);

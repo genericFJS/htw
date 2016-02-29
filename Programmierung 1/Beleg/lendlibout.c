@@ -5,8 +5,9 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include "lendlibitem.h"
+#include "lendlibin.h"
 
-#define SLEEPDURATION 10
+#define SLEEPDURATION 1
 
 int termw = 55; ///< Breite des Terminals (falls Terminalausgabe)
 
@@ -19,7 +20,7 @@ void prepareOut(){
 	struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 	if (w.ws_col > 55)
-		termw = w.ws_col-1;	// -1, damit es nicht so gequetscht aussieht
+		termw = w.ws_col;
 }
 
 /**
@@ -28,25 +29,28 @@ void prepareOut(){
  */
 void printItems(){
 	int i, size = 0;
-	
-// 	for (i = 0; i < myMediaCount; i++)
-// 	libprint(out, "%1.1d  %33.33s  %20.20s  %20.20s", (myMedia+i)->type, (myMedia+i)->title, (myMedia+i)->author, (myMedia+i)->lendee);
-// 	for (i = 0; i < myItemsCount; i++)
-// 	libprint(out, "%1.1d  %33.33s  %20.20s  %20.20s", (myItems+i)->item->type, (myItems+i)->item->title, (myItems+i)->item->author, (myItems+i)->item->lendee);
-	
 	myLib.curr = myLib.first;
 	size = myLib.size;
-	libprint(out, "%3s  %33s  %20s  %20s", "Typ", "Titel", "Autor/Interpret", "Ausgeliehen an");
-	printTLine('-', 82);
+	char sortedT = ' ', sortedL = ' ';
+	if (myLib.sort == 0){
+		sortedT = 'v';
+	} else {
+		sortedL = 'v';
+	}
+	libprint(out, "== Ausgeliehene Medien: ==");
+	libprint(out, "%5s | %26c  %5s  %20s  %4c  %s", "Typ", sortedT, "Titel", "Autor/Interpret", sortedL, "Ausgeliehen an");
+	printTLine('-', 85);
 	printf("\n");
 	for (i = 0; i < size; i++){
-		libprint(out, "%1.1d  %33.33s  %20.20s  %20.20s", 
-			myLib.curr->item->type,
+		libprint(out, "%5.5s | %33.33s  %20.20s  %20.20s", 
+			getmType(myLib.curr->item->type),
 			myLib.curr->item->title,
 			myLib.curr->item->author,
 			myLib.curr->item->lendee);
 		myLib.curr = myLib.curr->next;
 	}
+	printTLine('~', 0);
+	printf("\n");
 }
 
 /**
@@ -193,6 +197,31 @@ void printTLine(char type, int length){
 		printf("%c", type);
 	}
 	resetColor();
+}
+
+/**
+ * @ingroup LendLibOut
+ * @brief Speichert Liste in Datei
+ */
+void saveDBtoFile(){
+	libprint(status, "Schreibe in Datei.");
+	libdb = fopen(filename,"wt");
+	if (libdb){
+		int i, size = 0;
+		myLib.curr = myLib.first;
+		size = myLib.size;
+		for (i = 0; i < size; i++){
+			fprintf(libdb, "%d;%s;%s;%s\n", 
+				myLib.curr->item->type,
+				myLib.curr->item->title,
+				myLib.curr->item->author,
+				myLib.curr->item->lendee);
+			myLib.curr = myLib.curr->next;
+		}
+	} else {
+		libprint(error, "Datei konnte nicht zum schreiben geöffnet werden");
+	}
+	libprint(out, "Daten wurden in Datei gespeichert");
 }
 
 /**

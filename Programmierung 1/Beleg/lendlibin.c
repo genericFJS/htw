@@ -12,8 +12,8 @@ const char *filename = "lendlib.csv";
  * @brief Liest Verleihmediendaten aus Datei aus
  */
 void readfile(){
-	libprint(status, "Datei '%s' wird geöffnet", filename);
-	libdb=fopen(filename,"rt");
+	libprint(status, "Datei '%s' wird geöffnet.", filename);
+	libdb = fopen(filename,"rt");
 	if (libdb){
  		int listSize = getSize(libdb);
 		int i;
@@ -24,7 +24,7 @@ void readfile(){
 		}
 		printItems();
 	} else{
-		libprint(status, "Datei wurde nicht gefunden");
+		libprint(status, "Datei konnte nicht geöffnet werden.");
 	}
 }
 
@@ -61,13 +61,13 @@ void getInput(){
 	fgets(vbuf, 128, stdin);
 	switch (vbuf[0]){
 		case 'h':
-			libprint(out, "Mögliche Funktionen:");
+			libprint(out, "  Mögliche Funktionen:");
 			libprint(out, "c - Ausleihmedium hinzufügen");
 			libprint(out, "d - Ausleihmedium löschen");
 			libprint(out, "s - Ausleihmedien sortieren");
 			libprint(out, "f - Ausleihmedium finden");
-			libprint(out, "alle anderen: Programm beenden");
-			printTLine('-',0); printf("\n");
+			libprint(out, "alle anderen Eingaben beenden das Programm");
+			printTLine('~',0); printf("\n");
 			getInput();
 			break;
 		case 'c':	/// Ausleihmedium hinzufügen
@@ -129,7 +129,7 @@ void getInput(){
 				libprint(out, "Kein Interpret/Autor angegeben");
 			}else {
 				strcpy(nauthor, vbuf);	
-				libprint(out, "Interpret/Autor ist '%s' (Länge: %d).", nauthor, strlen(vbuf));
+				libprint(out, "Interpret/Autor ist '%s'.", nauthor);
 			}
 			libprint(in, "%16s: ", "Ausgeliehen an");
 			fgets(vbuf, 128, stdin);
@@ -154,6 +154,31 @@ void getInput(){
 			
 			getInput();
 			break;
+		case 's':	/// Medien sortieren
+			libprint(in, "Sortieren nach (\e[1mT\e[0m\e[32mitel=0, \e[1mA\e[0m\e[32mus\e[1mL\e[0m\e[32meihender=1):");
+			fgets(vbuf, 128, stdin);
+			int sortingBy = vbuf[0];
+			printTLine('~',0); printf("\n");
+			switch (sortingBy){
+				case 'a':
+				case 'A':
+				case 'l':
+				case 'L':
+				case '1':
+					sortItems(1);
+					break;
+				case 't':
+				case 'T':
+				case '0':
+					sortItems(0);
+				default:
+					break;				
+			}
+			getInput();
+			break;
+		case 'd':
+				
+		case 'f':
 		default:
 			break;
 	}

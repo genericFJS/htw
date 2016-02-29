@@ -12,7 +12,6 @@
  */
 int main(int argc, char* argv[]){
 	prepareOut();	///- Ausgabevariablen vorbereiten
-	initLib();
 	printHead();	///- Kopfzeilen ausgeben
 	readfile();	///- Einträge aus Datei einlesen (falls sie existiert)
 #ifdef CGI	/// CGI-Ausgabe:
@@ -20,8 +19,9 @@ int main(int argc, char* argv[]){
 #else	/// Terminalausgabe:
 // 	printItems();	///- aus Datei erhaltene Medien anzeigen
 	getInput();		///- Nutzerinput verarbeiten
-#endif	/// beide:
-	printFoot();	///- Fußzeilen ausgeben
+#endif	/// beide:	
+	saveDBtoFile();
 	freeAll();
+	printFoot();	///- Fußzeilen ausgeben
 	return 1;
 }
