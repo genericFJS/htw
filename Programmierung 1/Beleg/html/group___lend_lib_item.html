@@ -120,7 +120,8 @@ Aufzählungen</h2></td></tr>
 </td></tr>
 <tr class="separator:ga636cfca014f3212ea82d45e28f9cb51b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga557119015745f6890b5eb4367beba8f3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___lend_lib_item.html#ga557119015745f6890b5eb4367beba8f3">sBy</a> { <a class="el" href="group___lend_lib_item.html#gga557119015745f6890b5eb4367beba8f3ae9eadc6828eb5edd3ed076e4f07a551b">title</a>, 
-<a class="el" href="group___lend_lib_item.html#gga557119015745f6890b5eb4367beba8f3af2cee0a493fa3e44b3dca715f7202db9">lendee</a>
+<a class="el" href="group___lend_lib_item.html#gga557119015745f6890b5eb4367beba8f3af2cee0a493fa3e44b3dca715f7202db9">lendee</a>, 
+<a class="el" href="group___lend_lib_item.html#gga557119015745f6890b5eb4367beba8f3a280d7329079c73a4a5df3f35697b60b1">id</a>
  }<tr class="memdesc:ga557119015745f6890b5eb4367beba8f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Möglichkeiten, nach denen Sortiert/gesucht werden kann.  <a href="group___lend_lib_item.html#ga557119015745f6890b5eb4367beba8f3">Mehr ...</a><br /></td></tr>
 </td></tr>
 <tr class="separator:ga557119015745f6890b5eb4367beba8f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -232,6 +233,9 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>idc</b></td><
 <tr><td class="fieldname"><a class="anchor" id="gga557119015745f6890b5eb4367beba8f3af2cee0a493fa3e44b3dca715f7202db9"></a>lendee&#160;</td><td class="fielddoc">
 <p>Nach Leihendem. </p>
 </td></tr>
+<tr><td class="fieldname"><a class="anchor" id="gga557119015745f6890b5eb4367beba8f3a280d7329079c73a4a5df3f35697b60b1"></a>id&#160;</td><td class="fielddoc">
+<p>Nach ID. </p>
+</td></tr>
 </table>
 
 </div>
@@ -285,6 +289,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>idc</b></td><
 </dl>
 <dl class="section return"><dt>Rückgabe</dt><dd>Gibt das erstellte <a class="el" href="structmedium.html" title="Das ausgeliehene Medium. ">medium</a> zurück </dd></dl>
 <ul>
+<li>ID festlegen, dazu wird die Liste nach IDs sortiert und nach der ersten "Zahlenlücke" gesucht</li>
 <li>Type festlegen</li>
 <li>Titel festlegen</li>
 <li>Interpret/Autor festlegen</li>
@@ -357,6 +362,10 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>idc</b></td><
   </table>
   </dd>
 </dl>
+<ul>
+<li>Medium mit ID finden</li>
+<li>Medium aus Liste löschen indem Zeiger der Nachbarn neu gesetzt werden und anschließend der Speicher freigegeben wird. </li>
+</ul>
 
 </div>
 </div>
@@ -400,6 +409,9 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>idc</b></td><
   </dd>
 </dl>
 <dl class="section return"><dt>Rückgabe</dt><dd>Gibt das gefundene Medium zurück </dd></dl>
+<ul>
+<li>Durch myLib <a class="el" href="structthe_lib.html" title="Verwaltet die Liste der verliehenen Medien. ">theLib</a> gehen und alle gefunden in eine neue, temporäre <a class="el" href="structthe_lib.html" title="Verwaltet die Liste der verliehenen Medien. ">theLib</a> Liste einfügen, die dann ausgegeben wird. </li>
+</ul>
 
 </div>
 </div>
@@ -485,12 +497,27 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>idc</b></td><
 </dl>
 <ul>
 <li>Listenobjekt erstellen und Inhalt zuweisen</li>
+</ul>
+<p>Je nach Sortierung der Liste, muss anders eingefügt werden, falls nach Titel sortiert:</p>
+<ul>
 <li>Falls Liste noch leer, diese initialisieren</li>
 <li>Falls Liste einelementig ist, das nächste Element einfach einfügen</li>
 <li>Alle anderen Elemente sortiert in Liste einfügen</li>
 <li>- Nach einem Element suchen, welches größer ist, damit man das einzufügende Element vor diesem einfügen kann.</li>
 <li>- Wenn größeres vorm Listenende gefunden wurde, Element davor einfügen</li>
 <li>- Ansonsten Element am Listenende je nach größe davor oder danach einfügen.</li>
+</ul>
+<p>falls nach Ausleihendem sortiert:</p>
+<ul>
+<li>Falls Liste noch leer, diese initialisieren</li>
+<li>Falls Liste einelementig ist, das nächste Element einfach einfügen</li>
+<li>Alle anderen Elemente sortiert in Liste einfügen</li>
+<li>- Nach einem Element suchen, welches größer ist, damit man das einzufügende Element vor diesem einfügen kann.</li>
+<li>- Wenn größeres vorm Listenende gefunden wurde, Element davor einfügen</li>
+<li>- Ansonsten Element am Listenende je nach größe davor oder danach einfügen.</li>
+</ul>
+<p>Falls nach ID sortiert:</p>
+<ul>
 <li>Falls Liste noch leer, diese initialisieren</li>
 <li>Falls Liste einelementig ist, das nächste Element einfach einfügen</li>
 <li>Alle anderen Elemente sortiert in Liste einfügen</li>
@@ -529,17 +556,18 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>idc</b></td><
 <dl class="params"><dt>Parameter</dt><dd>
   <table class="params">
     <tr><td class="paramname">sortBy</td><td>Nach was sortiert werden soll (<a class="el" href="group___lend_lib_item.html#ga557119015745f6890b5eb4367beba8f3" title="Möglichkeiten, nach denen Sortiert/gesucht werden kann. ">sBy</a>) </td></tr>
-    <tr><td class="paramname">inLib</td><td>in dieser Liste </td></tr>
+    <tr><td class="paramname">inLib</td><td>in dieser Liste</td></tr>
   </table>
   </dd>
 </dl>
+<p>Zum Sortieren wird eine <a class="el" href="structmedium.html" title="Das ausgeliehene Medium. ">medium</a> Hilfsliste erstellt, in die alle Medien aus der <a class="el" href="structthe_lib.html" title="Verwaltet die Liste der verliehenen Medien. ">theLib</a> Originalliste kopiert werden, um sie dann wieder in die Originalliste einzufügen(dabei sortiert ::insertItem schon). </p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Erzeugt am Mon Feb 29 2016 22:40:13 für Beleg 39467 von &#160;<a href="http://www.doxygen.org/index.html">
+Erzeugt am Die Mär 1 2016 16:00:21 für Beleg 39467 von &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

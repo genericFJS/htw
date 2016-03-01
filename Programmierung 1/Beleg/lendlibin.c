@@ -8,7 +8,7 @@
 #define min(X,Y) ((X) < (Y) ? (X) : (Y))
 #define max(X,Y) ((X) > (Y) ? (X) : (Y))
 
-const char *filename = "lendlib.csv";
+const char *filename = "../lendlib.csv";
 
 /**
  * @ingroup LendLibIn
@@ -16,11 +16,14 @@ const char *filename = "lendlib.csv";
  */
 void readfile(){
 	libprint(status, "Datei '%s' wird geöffnet.", filename);
-	libdb = fopen(filename,"rt");
+#ifndef CGI
+	filename = "lendlib.csv";	/// Je nach Terminal- oder CGI-Anwendung ist der Dateipfad anders
+#endif
+	libdb = fopen(filename,"rt");	///- Datei öffnen
 	if (libdb){
  		int listSize = getSize(libdb);
 		int i;
-		for (i=0 ; i < listSize; i++){
+		for (i=0 ; i < listSize; i++){	///- Datei Zeilenweise durchgehen und als Medium in Liste einfügen
 // 			libprint(out, "Lese Zeile: %d ", i);
 			medium *newMedium = createItemF(libdb);
 			insertItem( newMedium, &myLib );
@@ -62,7 +65,7 @@ void getInput(){
 	libprint(in, "Wähle Funktion (h für Hilfe): ");
 	fgets(vbuf, 128, stdin);
 	switch (vbuf[0]){
-		case 'h':
+		case 'h':	/// Hilfezeilen mit Anweisungen anzeigen
 			libprint(out, "  Mögliche Funktionen:");
 			libprint(out, "l - Ausleihmedien erneut auflisten");
 			libprint(out, "c - Ausleihmedium hinzufügen");
@@ -73,7 +76,7 @@ void getInput(){
 			printTLine('~',0); printf("\n");
 			getInput();
 			break;
-		case 'l':
+		case 'l':	/// Dateien noch einmal auflisten
 			printItems();
 			getInput();
 			break;
@@ -83,7 +86,7 @@ void getInput(){
 			int type = vbuf[0];
 			mType ntype;
 			char *ntitle, *nauthor, *nlendee;
-			/// (Festlegung der Medienart durch entsprechende Zahl aus mType oder Anfangsbuchstabe: Buch, Cd, Dvd)
+			///- (Festlegung der Medienart durch entsprechende Zahl aus mType oder Anfangsbuchstabe: Buch, Cd, Dvd)
 			switch (type){
 				case 'b':
 				case 'B':
@@ -108,6 +111,7 @@ void getInput(){
 					ntype = other;
 					break;
 			}
+			///- (Titel, Interpret/Autor und Ausleihender eingeben lassen) und jeweils in freigegebenen Speicher schreiben
 			libprint(in, "%16s: ", "Medientitel");
 			fgets(vbuf, 128, stdin);
 			while (strlen(vbuf) < 2){
@@ -150,7 +154,7 @@ void getInput(){
 			strcpy(nlendee, vbuf);
 			libprint(out, "Ausgeliehen an '%s'.", nlendee);
 			
-			
+			///- Eingegebene Daten als Medium speicher und in Liste einfügen
 			medium *newMedium = createItem(ntype, ntitle, nauthor, nlendee);
 			insertItem( newMedium, &myLib );
 			printTLine('~',0); printf("\n");			
@@ -158,7 +162,7 @@ void getInput(){
 			
 			getInput();
 			break;
-		case 's':	/// Medien sortieren
+		case 's':	/// Medien sortieren, dazu nach Sortierkategorie fragen
 			libprint(in, "Sortieren nach (\e[1mT\e[0m\e[32mitel=0, \e[1mA\e[0m\e[32mus\e[1mL\e[0m\e[32meihender=1): ");
 			fgets(vbuf, 128, stdin);
 			int sortingBy = vbuf[0];
@@ -170,17 +174,19 @@ void getInput(){
 				case 'L':
 				case '1':
 					sortItems(1, &myLib);
+					printItems();
 					break;
 				case 't':
 				case 'T':
 				case '0':
 					sortItems(0, &myLib);
+					printItems();
 				default:
 					break;				
 			}
 			getInput();
 			break;
-		case 'd':
+		case 'd':	/// Medium löschen, dazu ID abfragen
 			libprint(in, "Medium löschen (ID): ");
 			fgets(vbuf, 128, stdin);
 			deleteItem(atoi(vbuf), &myLib);
@@ -188,7 +194,7 @@ void getInput(){
 			printItems();
 			getInput();
 			break;
-		case 'f':
+		case 'f':	/// Medien finden, dazu nach Suchkategorie (Titel oder Ausleihender) und der zu suchenden Zeichenkette fragen
 			libprint(in, "Medium suchen nach (\e[1mT\e[0m\e[32mitel=0, \e[1mA\e[0m\e[32mus\e[1mL\e[0m\e[32meihender=1): ");
 			fgets(vbuf, 128, stdin);
 			int fBy = vbuf[0];
@@ -212,7 +218,7 @@ void getInput(){
 			}
 			getInput();
 			break;
-		default:
+		default: /// Ansonsten Programm beenden
 			break;
 	}
 }
@@ -220,22 +226,29 @@ void getInput(){
 /**
  * @ingroup LendLibIn
  * @brief Verarbeitet POSTs des CGI
+ * 
+ * Der POST wird jeweils mit ::strtok2 auseinandergeschnitten und verarbeitet. Die vorgehensweise ist ähnlich wie bei der Terminaleingabe.
  */
 void getPost(){
-	fgets(posted,256,stdin);
-	switch (posted[0]){
-		case 's':
+	fgets(posted,256,stdin);	/// POST einlesen
+#ifdef DEBUG
+	libprint(error, "%s", posted);
+#endif
+	switch (posted[0]){	/// POSTs unterscheiden sich durch den Anfangsbuchstaben (wie bei Terminaleingabe)
+		case 's':	///- Sucheingabe verarbeiten
 // 			printf("<p>sortieren</p>");
 			printf("<h2>Ausgeliehene Medien: </h2>\n");
 			if(posted[1] == 'l'){
-				printf("<p>Sortiert nach Ausleihenden</p>");
+// 				printf("<p>Sortiert nach Ausleihenden</p>");
 				sortItems(1, &myLib);
+				printItems();
 			} else {
-				printf("<p>Sortiert nach Titel</p>");
+// 				printf("<p>Sortiert nach Titel</p>");
 				sortItems(0, &myLib);
+				printItems();
 			}
 			break;
-		case 'f':
+		case 'f':	///- Etwas finden
 // 			printf("<p>finden</p>");
 			;
 			strtok2(posted, "=");
@@ -245,15 +258,15 @@ void getPost(){
 			if ((tmpf+4)[0] != 0){
 				char* fStr = strtok2(NULL, "=");
 				printf("<h2>Ausgeliehene Medien: </h2>\n");
-				printf("<p>Medien, die Begriff '%s' enthalten:</p>", fStr);
 				findItem(fStr, fType, &myLib);
 			} else {
 				printf("<h2>Ausgeliehene Medien: </h2>\n");
 				libprint(error, "Keinen Suchbegriff eingegeben.");
+				currLib = &myLib;
 				printItems();
 			}
 			break;
-		case 'c':
+		case 'c':	///- Medium einfügen
 // 			printf("<p>hinzufügen</p>");
 			;
 			strtok2(posted, "=&");
@@ -275,7 +288,7 @@ void getPost(){
 			char* cTitle = NULL;
 			char* cLendee = NULL;
 			char* cAuthor = NULL;
-			if ((tmpc+4)[0] != 61){
+			if ((tmpc+4)[0] != 61){	///- (Funktioniert wie bei Terminaleingabe: Es wird jeweils Speicher bereitgestellt und Angaben darin geschrieben.
 				cTitle = malloc (sizeof(tmpc));
 				if ( cTitle == NULL){
 					libprint(error, MALLOCERR);
@@ -319,26 +332,13 @@ void getPost(){
 				libprint(error, "Keinen Titel eingegeben.");
 				printItems();
 			}
-			if (cTitle != NULL){
-				free(cTitle);
-			}
-			if (cAuthor != NULL){
-				free(cAuthor);
-			}
-			if (cLendee != NULL){
-				free(cLendee);
-			}
 			break;
-		case 'd':
+		case 'd':///- Löschen
 // 			printf("<p>löschen</p>");
 			;
 			int dID = atoi(posted+4);
-			if (dID != 0){
 // 				printf("<p>ID: %d</p>", dID);
-				deleteItem(atoi(posted+4), &myLib);
-			} else {
-				libprint(error, "Es wurde keine gültige ID eingegeben");
-			}
+			deleteItem(atoi(posted+4), &myLib);
 			printf("<h2>Ausgeliehene Medien: </h2>\n");
 			printItems();
 			break;

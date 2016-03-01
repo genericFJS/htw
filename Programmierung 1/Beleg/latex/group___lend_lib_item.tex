@@ -30,7 +30,8 @@ enum \hyperlink{group___lend_lib_item_ga636cfca014f3212ea82d45e28f9cb51b}{m\+Typ
  \}\begin{DoxyCompactList}\small\item\em Typ des ausgeliehenen Mediums. \end{DoxyCompactList}
 \item 
 enum \hyperlink{group___lend_lib_item_ga557119015745f6890b5eb4367beba8f3}{s\+By} \{ \hyperlink{group___lend_lib_item_gga557119015745f6890b5eb4367beba8f3ae9eadc6828eb5edd3ed076e4f07a551b}{title}, 
-\hyperlink{group___lend_lib_item_gga557119015745f6890b5eb4367beba8f3af2cee0a493fa3e44b3dca715f7202db9}{lendee}
+\hyperlink{group___lend_lib_item_gga557119015745f6890b5eb4367beba8f3af2cee0a493fa3e44b3dca715f7202db9}{lendee}, 
+\hyperlink{group___lend_lib_item_gga557119015745f6890b5eb4367beba8f3a280d7329079c73a4a5df3f35697b60b1}{id}
  \}\begin{DoxyCompactList}\small\item\em Möglichkeiten, nach denen Sortiert/gesucht werden kann. \end{DoxyCompactList}
 \end{DoxyCompactItemize}
 \subsection*{Funktionen}
@@ -124,7 +125,9 @@ Möglichkeiten, nach denen Sortiert/gesucht werden kann.
 title\hypertarget{group___lend_lib_item_gga557119015745f6890b5eb4367beba8f3ae9eadc6828eb5edd3ed076e4f07a551b}{}\label{group___lend_lib_item_gga557119015745f6890b5eb4367beba8f3ae9eadc6828eb5edd3ed076e4f07a551b}
 }]Nach Medientitel. \index{lendee@{lendee}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!lendee@{lendee}}\item[{\em 
 lendee\hypertarget{group___lend_lib_item_gga557119015745f6890b5eb4367beba8f3af2cee0a493fa3e44b3dca715f7202db9}{}\label{group___lend_lib_item_gga557119015745f6890b5eb4367beba8f3af2cee0a493fa3e44b3dca715f7202db9}
-}]Nach Leihendem. \end{description}
+}]Nach Leihendem. \index{id@{id}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!id@{id}}\item[{\em 
+id\hypertarget{group___lend_lib_item_gga557119015745f6890b5eb4367beba8f3a280d7329079c73a4a5df3f35697b60b1}{}\label{group___lend_lib_item_gga557119015745f6890b5eb4367beba8f3a280d7329079c73a4a5df3f35697b60b1}
+}]Nach ID. \end{description}
 \end{Desc}
 
 
@@ -159,6 +162,7 @@ Gibt das erstellte \hyperlink{structmedium}{medium} zurück
 \end{DoxyReturn}
 
 \begin{DoxyItemize}
+\item ID festlegen, dazu wird die Liste nach I\+Ds sortiert und nach der ersten \char`\"{}\+Zahlenlücke\char`\"{} gesucht
 \item Type festlegen
 \item Titel festlegen
 \item Interpret/\+Autor festlegen
@@ -208,7 +212,11 @@ Löscht Medium aus der Liste.
 {\em in\+Lib} & in dieser Liste \\
 \hline
 \end{DoxyParams}
-\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!find\+Item@{find\+Item}}
+
+\begin{DoxyItemize}
+\item Medium mit ID finden
+\item Medium aus Liste löschen indem Zeiger der Nachbarn neu gesetzt werden und anschließend der Speicher freigegeben wird. 
+\end{DoxyItemize}\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!find\+Item@{find\+Item}}
 \index{find\+Item@{find\+Item}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}
 \subsubsection[{\texorpdfstring{find\+Item(char $\ast$s\+Item, s\+By find\+By, the\+Lib $\ast$in\+Lib)}{findItem(char *sItem, sBy findBy, theLib *inLib)}}]{\setlength{\rightskip}{0pt plus 5cm}void find\+Item (
 \begin{DoxyParamCaption}
@@ -233,7 +241,10 @@ Suche, bzw. finde ein ausgeliehenes Medium.
 \begin{DoxyReturn}{Rückgabe}
 Gibt das gefundene Medium zurück 
 \end{DoxyReturn}
-\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!free\+All@{free\+All}}
+
+\begin{DoxyItemize}
+\item Durch my\+Lib \hyperlink{structthe_lib}{the\+Lib} gehen und alle gefunden in eine neue, temporäre \hyperlink{structthe_lib}{the\+Lib} Liste einfügen, die dann ausgegeben wird. 
+\end{DoxyItemize}\index{Lend\+Lib\+Item@{Lend\+Lib\+Item}!free\+All@{free\+All}}
 \index{free\+All@{free\+All}!Lend\+Lib\+Item@{Lend\+Lib\+Item}}
 \subsubsection[{\texorpdfstring{free\+All(the\+Lib $\ast$in\+Lib)}{freeAll(theLib *inLib)}}]{\setlength{\rightskip}{0pt plus 5cm}void free\+All (
 \begin{DoxyParamCaption}
@@ -288,12 +299,36 @@ Fügt Medium in Liste ein.
 
 \begin{DoxyItemize}
 \item Listenobjekt erstellen und Inhalt zuweisen
+\end{DoxyItemize}
+
+Je nach Sortierung der Liste, muss anders eingefügt werden, falls nach Titel sortiert\+:
+
+
+\begin{DoxyItemize}
 \item Falls Liste noch leer, diese initialisieren
 \item Falls Liste einelementig ist, das nächste Element einfach einfügen
 \item Alle anderen Elemente sortiert in Liste einfügen
 \item -\/ Nach einem Element suchen, welches größer ist, damit man das einzufügende Element vor diesem einfügen kann.
 \item -\/ Wenn größeres vorm Listenende gefunden wurde, Element davor einfügen
 \item -\/ Ansonsten Element am Listenende je nach größe davor oder danach einfügen.
+\end{DoxyItemize}
+
+falls nach Ausleihendem sortiert\+:
+
+
+\begin{DoxyItemize}
+\item Falls Liste noch leer, diese initialisieren
+\item Falls Liste einelementig ist, das nächste Element einfach einfügen
+\item Alle anderen Elemente sortiert in Liste einfügen
+\item -\/ Nach einem Element suchen, welches größer ist, damit man das einzufügende Element vor diesem einfügen kann.
+\item -\/ Wenn größeres vorm Listenende gefunden wurde, Element davor einfügen
+\item -\/ Ansonsten Element am Listenende je nach größe davor oder danach einfügen.
+\end{DoxyItemize}
+
+Falls nach ID sortiert\+:
+
+
+\begin{DoxyItemize}
 \item Falls Liste noch leer, diese initialisieren
 \item Falls Liste einelementig ist, das nächste Element einfach einfügen
 \item Alle anderen Elemente sortiert in Liste einfügen
@@ -316,6 +351,7 @@ Sortiert die Liste nach Mediumtitel/\+Leihendem.
 \begin{DoxyParams}{Parameter}
 {\em sort\+By} & Nach was sortiert werden soll (\hyperlink{group___lend_lib_item_ga557119015745f6890b5eb4367beba8f3}{s\+By}) \\
 \hline
-{\em in\+Lib} & in dieser Liste \\
+{\em in\+Lib} & in dieser Liste\\
 \hline
 \end{DoxyParams}
+Zum Sortieren wird eine \hyperlink{structmedium}{medium} Hilfsliste erstellt, in die alle Medien aus der \hyperlink{structthe_lib}{the\+Lib} Originalliste kopiert werden, um sie dann wieder in die Originalliste einzufügen(dabei sortiert \+::insert\+Item schon). 

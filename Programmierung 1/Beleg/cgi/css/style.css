@@ -45,6 +45,7 @@ footer,
 .wlinecontent {
 	height: 66px;
 }
+
 nav,
 footer {
 	background: hsl(75, 25%, 85%);
@@ -65,6 +66,7 @@ footer {
 }
 main {
 	padding: 30px;
+	padding-top: 10px;
 }
 .inner-shadow {
 	-webkit-box-shadow: inset 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
@@ -265,13 +267,54 @@ th {
 	background: rgba(100, 0, 0, 50)
 }
 
-.div{
+.error {
 	padding: 10px;
+	color: hsl(0,60%, 50%);
+	background: hsl(0,30%, 95%);
+	position: absolute;
+/* 	width: 150px; */
+	right: 10px;
+	top: 10px;
 }
 
-.error {
-	color: hsl(0,60%, 50%);
+.out {	
+	padding: 10px;
+	background: hsl(75, 25%, 85%);
+	color: hsl(50, 50%, 5%);
+	position: absolute;
+/* 	width: 150px; */
+	right: 10px;
+	top: 10px;
 }
+
+#media {
+	width: 100%
+}
+
+#media td{
+	overflow:hidden;
+	white-space: nowrap;
+}
+
+#media tr td:nth-child(1){
+	width: 5%;
+}
+#media tr td:nth-child(2){
+	width: 10%;
+}
+#media tr td:nth-child(3){
+	width: 45%;
+}
+#media tr td input[type="text"]{
+	width: 100%;
+}
+#media tr td:nth-child(4){
+	width: 20%;
+}
+#media tr td:nth-child(5){
+	width: 20%;
+}
+
 
 /* CMS: */
 
@@ -297,6 +340,14 @@ th {
 	text-align: right;
 }
 
+.fa-sort-alpha-asc{
+	margin-left: .5em;
+}
+
+#interface{
+	margin-top: 15px;
+	border-top: solid 4px hsl(75, 25%, 85%);
+}
 /* google Doc*/
 
 #gdoc {

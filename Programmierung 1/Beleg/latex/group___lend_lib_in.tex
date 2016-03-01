@@ -14,15 +14,13 @@ Funktionen für jegliche Art von Ausgabe.
 \subsection*{Funktionen}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{group___lend_lib_in_gabd7e68463503c5745a70e1d19c66f812}{readfile} ()\hypertarget{group___lend_lib_in_gabd7e68463503c5745a70e1d19c66f812}{}\label{group___lend_lib_in_gabd7e68463503c5745a70e1d19c66f812}
-
+void \hyperlink{group___lend_lib_in_gabd7e68463503c5745a70e1d19c66f812}{readfile} ()
 \begin{DoxyCompactList}\small\item\em Liest Verleihmediendaten aus Datei aus. \end{DoxyCompactList}\item 
 int \hyperlink{group___lend_lib_in_ga6630e38513358b73fa2ce1c1f6cb71cb}{get\+Size} (F\+I\+LE $\ast$libdb)
 \begin{DoxyCompactList}\small\item\em Gibt Größe der gespeicherten C\+S\+V-\/\+Datenbank aus. \end{DoxyCompactList}\item 
 void \hyperlink{group___lend_lib_in_ga46d47190cb20b54826fb665f1859968f}{get\+Input} ()
 \begin{DoxyCompactList}\small\item\em Verarbeitet Nutzerinput im Terminal. \end{DoxyCompactList}\item 
-void \hyperlink{group___lend_lib_in_ga1817e73244fbbe5d1ae571f6010404ee}{get\+Post} ()\hypertarget{group___lend_lib_in_ga1817e73244fbbe5d1ae571f6010404ee}{}\label{group___lend_lib_in_ga1817e73244fbbe5d1ae571f6010404ee}
-
+void \hyperlink{group___lend_lib_in_ga1817e73244fbbe5d1ae571f6010404ee}{get\+Post} ()
 \begin{DoxyCompactList}\small\item\em Verarbeitet P\+O\+S\+Ts des C\+GI. \end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{group___lend_lib_in_gaccb55b34bbc589d5c47830fdcd889e17}{strtok2} (char $\ast$str, char const $\ast$delims)
 \begin{DoxyCompactList}\small\item\em Eigenes strtok, welches auch leere Einträge ausgibt. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -69,16 +67,49 @@ Funktionen für jegliche Art von Ausgabe.
 
 Verarbeitet Nutzerinput im Terminal. 
 
+Hilfezeilen mit Anweisungen anzeigen
+
+Dateien noch einmal auflisten
+
 Ausleihmedium hinzufügen
 
 
 \begin{DoxyItemize}
 \item Eingabe Medienart
+\item (Festlegung der Medienart durch entsprechende Zahl aus m\+Type oder Anfangsbuchstabe\+: Buch, Cd, Dvd)
+\item (Titel, Interpret/\+Autor und Ausleihender eingeben lassen) und jeweils in freigegebenen Speicher schreiben
+\item Eingegebene Daten als Medium speicher und in Liste einfügen
 \end{DoxyItemize}
 
-(Festlegung der Medienart durch entsprechende Zahl aus m\+Type oder Anfangsbuchstabe\+: Buch, Cd, Dvd)
+Medien sortieren, dazu nach Sortierkategorie fragen
 
-Medien sortieren \index{Lend\+Lib\+In@{Lend\+Lib\+In}!get\+Size@{get\+Size}}
+Medium löschen, dazu ID abfragen
+
+Medien finden, dazu nach Suchkategorie (Titel oder Ausleihender) und der zu suchenden Zeichenkette fragen
+
+Ansonsten Programm beenden \index{Lend\+Lib\+In@{Lend\+Lib\+In}!get\+Post@{get\+Post}}
+\index{get\+Post@{get\+Post}!Lend\+Lib\+In@{Lend\+Lib\+In}}
+\subsubsection[{\texorpdfstring{get\+Post()}{getPost()}}]{\setlength{\rightskip}{0pt plus 5cm}void get\+Post (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_in_ga1817e73244fbbe5d1ae571f6010404ee}{}\label{group___lend_lib_in_ga1817e73244fbbe5d1ae571f6010404ee}
+
+
+Verarbeitet P\+O\+S\+Ts des C\+GI. 
+
+Der P\+O\+ST wird jeweils mit \hyperlink{group___lend_lib_in_gaccb55b34bbc589d5c47830fdcd889e17}{strtok2} auseinandergeschnitten und verarbeitet. Die vorgehensweise ist ähnlich wie bei der Terminaleingabe. P\+O\+ST einlesen
+
+P\+O\+S\+Ts unterscheiden sich durch den Anfangsbuchstaben (wie bei Terminaleingabe)
+
+
+\begin{DoxyItemize}
+\item Sucheingabe verarbeiten
+\item Etwas finden
+\item Medium einfügen
+\item (Funktioniert wie bei Terminaleingabe\+: Es wird jeweils Speicher bereitgestellt und Angaben darin geschrieben.
+\item Löschen 
+\end{DoxyItemize}\index{Lend\+Lib\+In@{Lend\+Lib\+In}!get\+Size@{get\+Size}}
 \index{get\+Size@{get\+Size}!Lend\+Lib\+In@{Lend\+Lib\+In}}
 \subsubsection[{\texorpdfstring{get\+Size(\+F\+I\+L\+E $\ast$libdb)}{getSize(FILE *libdb)}}]{\setlength{\rightskip}{0pt plus 5cm}int get\+Size (
 \begin{DoxyParamCaption}
@@ -101,6 +132,23 @@ Quelle\+: \href{http://stackoverflow.com/a/1910795}{\tt http\+://stackoverflow.\
 \begin{DoxyItemize}
 \item Anzahl der Zeilenumbrüche zählen
 \item Im Fall, dass die letzte Zeile keinen Umbruch enthält oder leer ist (bis auf den Umbruch), wird diese dazu gezählt oder eben nicht 
+\end{DoxyItemize}\index{Lend\+Lib\+In@{Lend\+Lib\+In}!readfile@{readfile}}
+\index{readfile@{readfile}!Lend\+Lib\+In@{Lend\+Lib\+In}}
+\subsubsection[{\texorpdfstring{readfile()}{readfile()}}]{\setlength{\rightskip}{0pt plus 5cm}void readfile (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_in_gabd7e68463503c5745a70e1d19c66f812}{}\label{group___lend_lib_in_gabd7e68463503c5745a70e1d19c66f812}
+
+
+Liest Verleihmediendaten aus Datei aus. 
+
+Je nach Terminal-\/ oder C\+G\+I-\/\+Anwendung ist der Dateipfad anders
+
+
+\begin{DoxyItemize}
+\item Datei öffnen
+\item Datei Zeilenweise durchgehen und als Medium in Liste einfügen 
 \end{DoxyItemize}\index{Lend\+Lib\+In@{Lend\+Lib\+In}!strtok2@{strtok2}}
 \index{strtok2@{strtok2}!Lend\+Lib\+In@{Lend\+Lib\+In}}
 \subsubsection[{\texorpdfstring{strtok2(char $\ast$str, char const $\ast$delims)}{strtok2(char *str, char const *delims)}}]{\setlength{\rightskip}{0pt plus 5cm}char $\ast$ strtok2 (

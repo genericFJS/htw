@@ -87,8 +87,8 @@ lendlibitem & Medium & Verwaltung Ausleihmedium\\
 \begin{itemize}
 \item Daten erfassen: einfügen in doppelt verkettete Ringliste
 \item Daten löschen: löschen aus doppelt verketteter Ringliste
-\item Daten sortieren (nach Mediumart, Mediumtitel, Interpret und Verleihname): Mergesort
-\item Daten suchen (nach Mediumtitel und Verleihname): Binäre Suche
+\item Daten sortieren (nach Mediumart, Mediumtitel, Interpret und Verleihname)
+\item Daten suchen (nach Mediumtitel und Verleihname)
 \item Anzeige der Daten: siehe Quelltext
 \end{itemize}
 \item Quelltext-Dokumentation:\\
@@ -109,7 +109,12 @@ gcc -o lendlib -D DEBUG *.c & Anzeigen von Debug-Meldungen\\
 gcc -o lendlib -D DCOLOR *.c & Farbige Anzeige im Terminal\\
 gcc -o lendlib -D DPRE *.c S & Möglichkeit des Verlangsamten, anschaulichen Ablaufes\\
 \end{tabular}\medskip\\
-Achtung: Das CGI-Programm muss aufgrund Dateiabhängigkeiten in Ordner „cgi-bin“ liegen (sodass bpsw. Ordner „cgi“ oder die „.csv“-Datei in „..“ liegen)!
+Achtung: Das CGI-Programm muss aufgrund Dateiabhängigkeiten in Ordner „cgi-bin“ liegen (sodass bpsw. Ordner „cgi“ oder die „.csv“-Datei in „..“ liegen)!\\
+Empfohlene Anweisungen:
+\begin{itemize}
+\item gcc -DDEBUG -DDCOLOR -o lendlib *.c && ./lendlib
+\item gcc -DCGI -o cgi-bin/lendlib.cgi *.c && sensible-browser localhost/cgi-bin/lendlib.cgi
+\end{itemize}
 
 \section{Doc}
 \includepdf[pages=5-]{latex/refman.pdf}

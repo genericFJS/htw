@@ -1,10 +1,10 @@
-0;Nichts;Serbien;Gustav
-0;Ohne Namen;;Friederike
-0;Otherland;Tad Williams;Hans
-0;Die sieben Zwerge;;Harald
-3;Star Wars;George Lucas;Klara
-1;Die unendliche Geschichte, Teil 1;Michal Ende;Klaus
-;Die unendliche Geschichte, Teil 1;Michal Ende;Klaus
-1;Die Bibel;;Paul
-2;Mozart: Best of;Mozart;Rudolf
-2;Best of Take That;Take That;Sieglinde
+1;0;Nichts;Serbien;Gustav
+2;0;Ohne Namen;;Friederike
+3;0;Otherland;Tad Williams;Hans
+4;0;Die sieben Zwerge;;Harald
+5;3;Star Wars;George Lucas;Klara
+6;1;Die unendliche Geschichte, Teil 1;Michal Ende;Klaus
+7;;Die unendliche Geschichte, Teil 1;Michal Ende;Klaus
+8;1;Die Bibel;;Paul
+9;2;Mozart: Best of;Mozart;Rudolf
+99;2;Best of Take That;Take That;Sieglinde
