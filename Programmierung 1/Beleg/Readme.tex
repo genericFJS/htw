@@ -67,15 +67,15 @@ Es soll sowohl nach dem Medium, als auch nach der leihenden Person gesucht werde
 Modul & Nutzen & Beschreibung\\
 \hline
 lendlib & Hauptmodul & \\
-lendliblogic & Datenverarbeitung & Logische Operationen wie sortieren, suchen, …\\ 
 lendlibin & Input & Eingabeverarbeitung aus Webform/Terminal und Datei\\
 lendlibout & Output & Ausgabe über Webform/Terminal und Datei\\
-lendlibitem & Medium & Interaktionen mit Ausleihmedium\\
+lendlibitem & Medium & Verwaltung Ausleihmedium\\
 \end{tabular}
 \item Datenstruktur
 \begin{itemize}
 \item Struct für Medien
 \begin{itemize}
+\item ID
 \item Medienart (enum: Buch, CD, DVD, andere) [optional]
 \item Titel des Mediums (Name)
 \item Autor/Interpret des Mediums [optional]
@@ -104,37 +104,14 @@ siehe Vorführung
 \begin{tabular}{l l}
 Kommando & Ergebnis\\
 \hline
-gcc *.c -D CGI & für Web-CGI kompilieren\\
-gcc *.c -D DEBUG & Anzeigen von Debug-Meldungen\\
-gcc *.c -D DCOLOR & Farbige Anzeige im Terminal\\
-\end{tabular}
+gcc -o cgi-bin/lendlib.cgi -D CGI *.c & für Web-CGI kompilieren \\
+gcc -o lendlib -D DEBUG *.c & Anzeigen von Debug-Meldungen\\
+gcc -o lendlib -D DCOLOR *.c & Farbige Anzeige im Terminal\\
+gcc -o lendlib -D DPRE *.c S & Möglichkeit des Verlangsamten, anschaulichen Ablaufes\\
+\end{tabular}\medskip\\
+Achtung: Das CGI-Programm muss aufgrund Dateiabhängigkeiten in Ordner „cgi-bin“ liegen (sodass bpsw. Ordner „cgi“ oder die „.csv“-Datei in „..“ liegen)!
 
-\section{Quellen}
-\paragraph{Wartezeiten für Anschauliche Abarbeitung}
-http://stackoverflow.com/a/28827188
-\begin{lstlisting}[language=C]
-#ifdef WIN32
-#include <windows.h>
-#elif _POSIX_C_SOURCE >= 199309L
-#include <time.h>   // for nanosleep
-#else
-#include <unistd.h> // for usleep
-#endif
+\section{Doc}
+\includepdf[pages=5-]{latex/refman.pdf}
 
-void sleep_ms(int milliseconds) // cross-platform sleep function
-{
-#ifdef WIN32
-    Sleep(milliseconds);
-#elif _POSIX_C_SOURCE >= 199309L
-    struct timespec ts;
-    ts.tv_sec = milliseconds / 1000;
-    ts.tv_nsec = (milliseconds % 1000) * 1000000;
-    nanosleep(&ts, NULL);
-#else
-    usleep(milliseconds * 1000);
-#endif
-}
-\end{lstlisting}
-\paragraph{Mergsesort}
-http://www.sorting-algorithms.com/merge-sort
 \end{document}
