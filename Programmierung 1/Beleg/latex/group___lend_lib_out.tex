@@ -22,8 +22,7 @@ enum \hyperlink{group___lend_lib_out_ga0916607956575302a93dbd21440edc1a}{ptype} 
 \item 
 void \hyperlink{group___lend_lib_out_gae6bfc3bcebb80e387b4ad8a773496437}{prepare\+Out} ()
 \begin{DoxyCompactList}\small\item\em Bereitet Variablen für den Output vor. \end{DoxyCompactList}\item 
-void \hyperlink{group___lend_lib_out_ga83cb01db1bc577a2e4a54cbe62773c17}{print\+Items} ()\hypertarget{group___lend_lib_out_ga83cb01db1bc577a2e4a54cbe62773c17}{}\label{group___lend_lib_out_ga83cb01db1bc577a2e4a54cbe62773c17}
-
+void \hyperlink{group___lend_lib_out_ga83cb01db1bc577a2e4a54cbe62773c17}{print\+Items} ()
 \begin{DoxyCompactList}\small\item\em Gibt die Liste der ausgeliehenen Medien aus. \end{DoxyCompactList}\item 
 void \hyperlink{group___lend_lib_out_ga152ba05f7c1a27f69bd9c243359609c6}{libprint} (\hyperlink{group___lend_lib_out_ga0916607956575302a93dbd21440edc1a}{ptype} type, const char $\ast$printable,...)
 \begin{DoxyCompactList}\small\item\em Terminalausgabe abhängig von (beim kompilieren) definierten Paramtern. \end{DoxyCompactList}\item 
@@ -103,7 +102,13 @@ Terminalausgabe abhängig von (beim kompilieren) definierten Paramtern.
 {\em type} & Ausgabetyp (\hyperlink{group___lend_lib_out_ga0916607956575302a93dbd21440edc1a}{ptype})\\
 \hline
 \end{DoxyParams}
-Quelle\+: \href{http://www.ozzu.com/cpp-tutorials/tutorial-writing-custom-printf-wrapper-function-t89166.html}{\tt http\+://www.\+ozzu.\+com/cpp-\/tutorials/tutorial-\/writing-\/custom-\/printf-\/wrapper-\/function-\/t89166.\+html} \index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!prepare\+Out@{prepare\+Out}}
+Quelle\+: \href{http://www.ozzu.com/cpp-tutorials/tutorial-writing-custom-printf-wrapper-function-t89166.html}{\tt http\+://www.\+ozzu.\+com/cpp-\/tutorials/tutorial-\/writing-\/custom-\/printf-\/wrapper-\/function-\/t89166.\+html} 
+\begin{DoxyItemize}
+\item Im Falle C\+GI werden die Ausgaben in verschieden Formatierte divs gefüllt
+\item Im Terminal wird je nach definierten Strings etwas mit oder Farbe ausgegeben -\/ oder nicht
+\end{DoxyItemize}
+
+Falls Fehlerausgabe deaktiviert ist, keine Fehler ausgeben! \index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!prepare\+Out@{prepare\+Out}}
 \index{prepare\+Out@{prepare\+Out}!Lend\+Lib\+Out@{Lend\+Lib\+Out}}
 \subsubsection[{\texorpdfstring{prepare\+Out()}{prepareOut()}}]{\setlength{\rightskip}{0pt plus 5cm}void prepare\+Out (
 \begin{DoxyParamCaption}
@@ -139,7 +144,20 @@ Im Terminal ein Abschlussstrich, im C\+GI den H\+T\+M\+L-\/\+Footer \index{Lend\
 
 Gibt einen Header aus. 
 
-Im Terminal ein paar erste Zeilen, im C\+GI den H\+T\+M\+L-\/\+Header \index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!print\+T\+Line@{print\+T\+Line}}
+Im Terminal ein paar erste Zeilen, im C\+GI den H\+T\+M\+L-\/\+Header \index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!print\+Items@{print\+Items}}
+\index{print\+Items@{print\+Items}!Lend\+Lib\+Out@{Lend\+Lib\+Out}}
+\subsubsection[{\texorpdfstring{print\+Items()}{printItems()}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+Items (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_out_ga83cb01db1bc577a2e4a54cbe62773c17}{}\label{group___lend_lib_out_ga83cb01db1bc577a2e4a54cbe62773c17}
+
+
+Gibt die Liste der ausgeliehenen Medien aus. 
+
+Im C\+GI durch eine Tabelle (in der auch schon Bedienelemente fürs löschen, sortieren usw. eingeschlossen sind)
+
+Im Terminal in einer Tabellenimitation \index{Lend\+Lib\+Out@{Lend\+Lib\+Out}!print\+T\+Line@{print\+T\+Line}}
 \index{print\+T\+Line@{print\+T\+Line}!Lend\+Lib\+Out@{Lend\+Lib\+Out}}
 \subsubsection[{\texorpdfstring{print\+T\+Line(char type, int length)}{printTLine(char type, int length)}}]{\setlength{\rightskip}{0pt plus 5cm}void print\+T\+Line (
 \begin{DoxyParamCaption}

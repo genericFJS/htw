@@ -19,7 +19,8 @@ typedef enum{
  */
 typedef enum{
 	title,	///< Nach Medientitel
-	lendee	///< Nach Leihendem
+	lendee,	///< Nach Leihendem
+	id		///< Nach ID
 } sBy;
 
 /**

@@ -1,48 +1,9 @@
-<table>
-	<tr>
-		<td>
-		<form name="stitle" action="lendlib.cgi" METHOD="POST">
-			<input style="display: none" name="sti" type="text" value="1"></input>
-			<input type="submit" value="Nach Titel sortieren"></input>
-			</form>
-		</td><td>
-			<form name="slendee" action="lendlib.cgi" METHOD="POST">
-			<input style="display: none" name="sle" type="text" value="1"></input>
-			<input type="submit" value="Nach Ausleihendem sortieren"></input>
-			</form>
-		</td>
-	</tr>
-<table>
-<table id="interface">
-	<tr>
-		<td>
-			<h4>Suchen</h4>
-			<form name="find" action="lendlib.cgi" METHOD="POST">
-			<input name="fty" type="radio" value="ti" checked>Unter Titeln suchen</input><br>
-			<input name="fty" type="radio" value="le">Unter Ausleihenden suchen</input><br>
-			<input name="fst" type="text" maxlength="250" placeholder="Suchbegriff"></input><br>
-			<input type="submit" value="Nach Medium suchen"></input> 
-			</form>
-		</td>
-		<td>
-			<h4>Eintragen</h4>
-			<form name="create" action="lendlib.cgi" METHOD="POST">
-			<input name="cty" type="radio" value="bu">Buch</input><br>
-			<input name="cty" type="radio" value="cd">CD</input><br>
-			<input name="cty" type="radio" value="dv">DVD</input><br>
-			<input name="cty" type="radio" value="ot" checked>Anderes</input><br>
-			<input name="cti" type="text" maxlength="250" placeholder="Titel"></input><br>
-			<input name="cau" type="text" maxlength="250" placeholder="Autor/Interpret"></input><br>
-			<input name="cle" type="text" maxlength="250" placeholder="Ausgeliehen an"></input><br>
-			<input type="submit" value="Medium hinzufügen"></input> 
-			</form>
-		</td>
-		<td>
-			<h4>Löschen</h4>
-			<form  name="delete" action="lendlib.cgi" METHOD="POST">
-			<input name="del" type="number" placeholder="Medium-ID"></input><br>
-			<input type="submit" value="Medium löschen"></input> 
-			</form>
-		</td>
-	</tr>
-</table>
+<div id='interface'>
+	<b>Suchen</b>
+	<form name="find" action="lendlib.cgi" METHOD="POST">
+	<input name="fty" type="radio" value="ti" checked>Nach Titel suchen</input><br>
+	<input name="fty" type="radio" value="le">Nach Ausleihendem suchen</input><br>
+	<input name="fst" type="text" maxlength="250" placeholder="Suchbegriff"></input><br>
+	<input type="submit" value="Nach Medium suchen"></input> 
+	</form>
+</div>

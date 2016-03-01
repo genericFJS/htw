@@ -26,6 +26,29 @@ medium* createItem(int ntype, char* ntitle, char* nauthor, char* nlendee){
 		libprint(error, MALLOCERR);
 		exit(-1);
 	}
+	///- ID festlegen, dazu wird die Liste nach IDs sortiert und nach der ersten "Zahlenlücke" gesucht
+	int prevSort = myLib.sort;
+	int nid;
+	sortItems(2, &myLib);
+	int i, size = 0;
+	myLib.curr = myLib.first;
+	size = myLib.size;
+	for (i = 0; i < size-1; i++){
+		if (myLib.curr->next->item->id != i+1){
+			if (myLib.curr->item->id != i){
+				nid = i;
+			} else {
+				nid = i+1;
+			}
+			break;
+		}
+		myLib.curr = myLib.curr->next;
+	}
+	if (i == size-1){
+		nid = (myLib.curr->item->id)+1;
+	}
+	sortItems(prevSort, &myLib);
+	nMedia->id = nid;
 	///- Type festlegen
 	libprint(status, "Schreibe Typ: %d", ntype);
 	nMedia->type = ntype;
@@ -72,20 +95,20 @@ medium* createItemF(FILE *libitem){
 	char *entry;
 	if ( fgets(vbuf, 128, libitem)){
 		///- ID festlegen
-		libprint(status, "Setze ID:");
-		nMedia->id = idc;
-		idc++;
-		///- Typ festlegen
 		entry = strtok2(vbuf, ";\n");
-		libprint(status, "Lese Typ aus: %d", atoi(entry));
+		libprint(status, "Lese ID aus: %d", atoi(entry));
 		if (vbuf == NULL){
-			nMedia->type = other;
+			nMedia->id = -1;
 		}else {
-			nMedia->type = atoi(vbuf);
+			nMedia->id = atoi(vbuf);
 		}
+		///- Typ festlegen
+		entry = strtok2(NULL, ";\n");
+		libprint(status, "Lese Typ aus: %d", atoi(entry));
+		nMedia->type = atoi(entry);
 		///- Titel festlegen
 		entry = strtok2(NULL, ";\n");
-		if (strlen(entry)==0){
+		if ( !entry || strlen(entry)==0){
 			libprint(error, "Konnte Titel nicht lesen. Datei ungültig formatiert!");
 			exit(-1);
 		}
@@ -98,6 +121,10 @@ medium* createItemF(FILE *libitem){
 		strcpy(nMedia->title, entry);
 		///- Interpret/Autor festlegen
 		entry = strtok2(NULL, ";\n");
+		if ( !entry){
+			libprint(error, "Konnte Interpret/Autor nicht lesen. Datei ungültig formatiert!");
+			exit(-1);
+		}
 		libprint(status, "Lese Interpret/Autor aus: %s", entry);
 		nMedia->author = malloc (strlen(entry)+1);
 		if ( nMedia->author == 0){
@@ -107,7 +134,7 @@ medium* createItemF(FILE *libitem){
 		strcpy(nMedia->author, entry);
 		///- Leihendem festlegen
 		entry = strtok2(NULL, ";\n");
-		if (strlen(entry)==0){
+		if ( !entry || strlen(entry)==0){
 			libprint(error, "Konnte Leihenden nicht lesen. Datei ungültig formatiert!");
 			exit(-1);
 		}
@@ -119,7 +146,6 @@ medium* createItemF(FILE *libitem){
 		}
 		strcpy(nMedia->lendee, entry);
 	}
-	
 	return nMedia;
 }
 
@@ -137,7 +163,7 @@ void insertItem(medium *nMedium, theLib *inLib){
 		exit(-1);
 	}
 	nItem->item = nMedium;		
-	if ( inLib->sort == (sBy) title){
+	if ( inLib->sort == (sBy) title){ /// Je nach Sortierung der Liste, muss anders eingefügt werden, falls nach Titel sortiert:
 		if (inLib->size == 0){	///- Falls Liste noch leer, diese initialisieren
 			libprint(status, "1. Element einfügen.");
 			nItem->prev = nItem->next = nItem;
@@ -187,7 +213,7 @@ void insertItem(medium *nMedium, theLib *inLib){
 				}
 			}
 		}
-	} else {
+	} else if ( inLib->sort == (sBy) lendee) { /// falls nach Ausleihendem sortiert:
 		if (inLib->size == 0){	///- Falls Liste noch leer, diese initialisieren
 			libprint(status, "1. Element einfügen.");
 			nItem->prev = nItem->next = nItem;
@@ -238,6 +264,57 @@ void insertItem(medium *nMedium, theLib *inLib){
 			}
 		}
 		
+	} else { /// Falls nach ID sortiert:
+		if (inLib->size == 0){	///- Falls Liste noch leer, diese initialisieren
+			libprint(status, "1. Element einfügen.");
+			nItem->prev = nItem->next = nItem;
+			inLib->first = nItem;
+			inLib->curr = nItem;
+		} else if (inLib->size == 1){	///- Falls Liste einelementig ist, das nächste Element einfach einfügen
+			libprint(status,"2. Element einfügen.");
+			inLib->curr->next = nItem;
+			inLib->curr->prev = nItem;
+			nItem->next = nItem->prev = inLib->curr;
+			if ( inLib->curr->item->id > nMedium->id )
+				inLib->first = nItem;
+		} else{///- Alle anderen Elemente sortiert in Liste einfügen
+			int i;
+			inLib->curr = inLib->first;
+			for (i = 0; i < inLib->size; i++){
+				if ( inLib->curr->item->id <= nMedium->id && i < inLib->size-1){	///- - Nach einem Element suchen, welches größer ist, damit man das einzufügende Element vor diesem einfügen kann.
+					libprint(status,"%d kleiner %d -> weiter nach größerem Suchen.",inLib->curr->item->id, nMedium->id);
+					inLib->curr = inLib->curr->next;
+				} else if(i < inLib->size-1) {	///- - Wenn größeres vorm Listenende gefunden wurde, Element davor einfügen
+					libprint(status,"%d größer %d, also vorher einfügen.",inLib->curr->item->id, nMedium->id);
+					nItem->prev = inLib->curr->prev;
+					nItem->next = inLib->curr;
+					inLib->curr->prev->next = nItem;
+					inLib->curr->prev = nItem;
+					if (inLib->curr == inLib->first){
+						libprint(status,"Eingefügtes Element ist kleinste, wird vorne angefügt. Also erstes Listenelement neu definieren!");
+						inLib->first = nItem;
+					}
+					break;
+				} else { ///- - Ansonsten Element am Listenende je nach größe davor oder danach einfügen.
+					if (inLib->curr->item->id > nMedium->id){
+						libprint(status,"%d kleiner %d, also davor einfügen.", nMedium->id,inLib->curr->item->id);
+						nItem->prev = inLib->curr->prev;
+						nItem->next = inLib->curr;
+						inLib->curr->prev->next = nItem;
+						inLib->curr->prev = nItem;
+						
+					} else {
+						libprint(status,"%d größer %d, also danach einfügen.", nMedium->id,inLib->curr->item->id);
+						nItem->prev = inLib->curr;
+						nItem->next = inLib->curr->next;
+						inLib->curr->next->prev = nItem;
+						inLib->curr->next = nItem;
+					}
+					break;
+				}
+			}
+		}
+		
 	}
 	libprint(status, "%s eingefügt.", nMedium->title);	
 	inLib->size++;
@@ -272,7 +349,7 @@ char* getmType(int type){
 void deleteItem(int theID, theLib *inLib){
 	int i, succ = 0;
 	inLib->curr = inLib->first;
-	for (i = 0; i < inLib->size; i++){
+	for (i = 0; i < inLib->size; i++){	///- Medium mit ID finden
 		if ( inLib->curr->item->id == theID){
 			libprint(status, "Eintrag gefunden.");
 			succ = 1;
@@ -281,7 +358,7 @@ void deleteItem(int theID, theLib *inLib){
 			inLib->curr = inLib->curr->next;
 		}
 	}
-	if (succ){
+	if (succ){	///- Medium aus Liste löschen indem Zeiger der Nachbarn neu gesetzt werden und anschließend der Speicher freigegeben wird.
 		lItem *dItem = inLib->curr;
 		if (inLib->first == dItem){
 			inLib->first = dItem->next;
@@ -306,6 +383,8 @@ void deleteItem(int theID, theLib *inLib){
  * @brief Sortiert die Liste nach Mediumtitel/Leihendem
  * @param sortBy Nach was sortiert werden soll (::sBy)
  * @param inLib in dieser Liste
+ * 
+ * Zum Sortieren wird eine ::medium Hilfsliste erstellt, in die alle Medien aus der ::theLib Originalliste kopiert werden, um sie dann wieder in die Originalliste einzufügen(dabei sortiert ::insertItem schon).
  */
 void sortItems(sBy sortBy, theLib *inLib){
 	int i, size;
@@ -329,7 +408,6 @@ void sortItems(sBy sortBy, theLib *inLib){
 	for (i = 0; i < size; i++){
 		insertItem(allMedia[i], &myLib);
 	}
-	printItems();
 }
 
 /**
@@ -346,7 +424,7 @@ void findItem(char *sItem, sBy findBy, theLib *inLib){
 	int i, size;
 	size = inLib->size;
 	inLib->curr = inLib->first;
-	if (findBy == (sBy)title){
+	if (findBy == (sBy)title){	///- Durch myLib ::theLib gehen und alle gefunden in eine neue, temporäre ::theLib Liste einfügen, die dann ausgegeben wird.
 		for (i = 0; i< size; i++){
 			if (strcasestr(inLib->curr->item->title, sItem)!=0){
 				libprint(status, "%s enthält %s", inLib->curr->item->title, sItem);

@@ -97,9 +97,8 @@ Makrodefinitionen</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Funktionen</h2></td></tr>
-<tr class="memitem:gabd7e68463503c5745a70e1d19c66f812"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabd7e68463503c5745a70e1d19c66f812"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___lend_lib_in.html#gabd7e68463503c5745a70e1d19c66f812">readfile</a> ()</td></tr>
-<tr class="memdesc:gabd7e68463503c5745a70e1d19c66f812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Liest Verleihmediendaten aus Datei aus. <br /></td></tr>
+<tr class="memitem:gabd7e68463503c5745a70e1d19c66f812"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___lend_lib_in.html#gabd7e68463503c5745a70e1d19c66f812">readfile</a> ()</td></tr>
+<tr class="memdesc:gabd7e68463503c5745a70e1d19c66f812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Liest Verleihmediendaten aus Datei aus.  <a href="#gabd7e68463503c5745a70e1d19c66f812">Mehr ...</a><br /></td></tr>
 <tr class="separator:gabd7e68463503c5745a70e1d19c66f812"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6630e38513358b73fa2ce1c1f6cb71cb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___lend_lib_in.html#ga6630e38513358b73fa2ce1c1f6cb71cb">getSize</a> (FILE *libdb)</td></tr>
 <tr class="memdesc:ga6630e38513358b73fa2ce1c1f6cb71cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gibt Größe der gespeicherten CSV-Datenbank aus.  <a href="#ga6630e38513358b73fa2ce1c1f6cb71cb">Mehr ...</a><br /></td></tr>
@@ -107,9 +106,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <tr class="memitem:ga46d47190cb20b54826fb665f1859968f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___lend_lib_in.html#ga46d47190cb20b54826fb665f1859968f">getInput</a> ()</td></tr>
 <tr class="memdesc:ga46d47190cb20b54826fb665f1859968f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verarbeitet Nutzerinput im Terminal.  <a href="#ga46d47190cb20b54826fb665f1859968f">Mehr ...</a><br /></td></tr>
 <tr class="separator:ga46d47190cb20b54826fb665f1859968f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1817e73244fbbe5d1ae571f6010404ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1817e73244fbbe5d1ae571f6010404ee"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___lend_lib_in.html#ga1817e73244fbbe5d1ae571f6010404ee">getPost</a> ()</td></tr>
-<tr class="memdesc:ga1817e73244fbbe5d1ae571f6010404ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verarbeitet POSTs des CGI. <br /></td></tr>
+<tr class="memitem:ga1817e73244fbbe5d1ae571f6010404ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___lend_lib_in.html#ga1817e73244fbbe5d1ae571f6010404ee">getPost</a> ()</td></tr>
+<tr class="memdesc:ga1817e73244fbbe5d1ae571f6010404ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verarbeitet POSTs des CGI.  <a href="#ga1817e73244fbbe5d1ae571f6010404ee">Mehr ...</a><br /></td></tr>
 <tr class="separator:ga1817e73244fbbe5d1ae571f6010404ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaccb55b34bbc589d5c47830fdcd889e17"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___lend_lib_in.html#gaccb55b34bbc589d5c47830fdcd889e17">strtok2</a> (char *str, char const *delims)</td></tr>
 <tr class="memdesc:gaccb55b34bbc589d5c47830fdcd889e17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Eigenes strtok, welches auch leere Einträge ausgibt.  <a href="#gaccb55b34bbc589d5c47830fdcd889e17">Mehr ...</a><br /></td></tr>
@@ -156,12 +154,46 @@ char&#160;</td><td class="memItemRight" valign="bottom"><b>pTemp3</b> [256]</td>
 </div><div class="memdoc">
 
 <p>Verarbeitet Nutzerinput im Terminal. </p>
+<p>Hilfezeilen mit Anweisungen anzeigen</p>
+<p>Dateien noch einmal auflisten</p>
 <p>Ausleihmedium hinzufügen</p>
 <ul>
 <li>Eingabe Medienart</li>
+<li>(Festlegung der Medienart durch entsprechende Zahl aus mType oder Anfangsbuchstabe: Buch, Cd, Dvd)</li>
+<li>(Titel, Interpret/Autor und Ausleihender eingeben lassen) und jeweils in freigegebenen Speicher schreiben</li>
+<li>Eingegebene Daten als Medium speicher und in Liste einfügen</li>
 </ul>
-<p>(Festlegung der Medienart durch entsprechende Zahl aus mType oder Anfangsbuchstabe: Buch, Cd, Dvd)</p>
-<p>Medien sortieren </p>
+<p>Medien sortieren, dazu nach Sortierkategorie fragen</p>
+<p>Medium löschen, dazu ID abfragen</p>
+<p>Medien finden, dazu nach Suchkategorie (Titel oder Ausleihender) und der zu suchenden Zeichenkette fragen</p>
+<p>Ansonsten Programm beenden </p>
+
+</div>
+</div>
+<a class="anchor" id="ga1817e73244fbbe5d1ae571f6010404ee"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void getPost </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Verarbeitet POSTs des CGI. </p>
+<p>Der POST wird jeweils mit <a class="el" href="group___lend_lib_in.html#gaccb55b34bbc589d5c47830fdcd889e17" title="Eigenes strtok, welches auch leere Einträge ausgibt. ">strtok2</a> auseinandergeschnitten und verarbeitet. Die vorgehensweise ist ähnlich wie bei der Terminaleingabe. </p>
+<p>POST einlesen</p>
+<p>POSTs unterscheiden sich durch den Anfangsbuchstaben (wie bei Terminaleingabe)</p>
+<ul>
+<li>Sucheingabe verarbeiten</li>
+<li>Etwas finden</li>
+<li>Medium einfügen</li>
+<li>(Funktioniert wie bei Terminaleingabe: Es wird jeweils Speicher bereitgestellt und Angaben darin geschrieben.</li>
+<li>Löschen </li>
+</ul>
 
 </div>
 </div>
@@ -191,6 +223,28 @@ char&#160;</td><td class="memItemRight" valign="bottom"><b>pTemp3</b> [256]</td>
 <ul>
 <li>Anzahl der Zeilenumbrüche zählen</li>
 <li>Im Fall, dass die letzte Zeile keinen Umbruch enthält oder leer ist (bis auf den Umbruch), wird diese dazu gezählt oder eben nicht </li>
+</ul>
+
+</div>
+</div>
+<a class="anchor" id="gabd7e68463503c5745a70e1d19c66f812"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void readfile </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Liest Verleihmediendaten aus Datei aus. </p>
+<p>Je nach Terminal- oder CGI-Anwendung ist der Dateipfad anders</p>
+<ul>
+<li>Datei öffnen</li>
+<li>Datei Zeilenweise durchgehen und als Medium in Liste einfügen </li>
 </ul>
 
 </div>
@@ -233,7 +287,7 @@ char&#160;</td><td class="memItemRight" valign="bottom"><b>pTemp3</b> [256]</td>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Erzeugt am Mon Feb 29 2016 22:40:13 für Beleg 39467 von &#160;<a href="http://www.doxygen.org/index.html">
+Erzeugt am Die Mär 1 2016 16:00:21 für Beleg 39467 von &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

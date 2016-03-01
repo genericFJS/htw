@@ -32,24 +32,47 @@ void printItems(){
 	int i, size = 0;
 	currLib->curr = currLib->first;
 	size = currLib->size;
-#ifdef CGI
+#ifdef CGI	/// Im CGI durch eine Tabelle (in der auch schon Bedienelemente fürs löschen, sortieren usw. eingeschlossen sind)
 	if (size == 0){
-		printf("<h4> Keine Medien gefunden!</h4>");
+		libprint(error, "Keine Medien gefunden!");
+		currLib = &myLib;
+		printItems();
 		return;
 	}
 	printf("<table id='media'>\n");
-	printf("<tr>\n<th>\nID</th> \n<th>Typ</th>\n <th>Titel</th>\n <th>Interpret/Autor</th>\n <th>Ausgeliehen an</th>\n</tr>\n");
+	printf("<tr>\n<th>\n</th> \n<th>Typ</th>\n <th>");
+	printf("<form name='stitle' id='stitle' action='lendlib.cgi' METHOD='POST'>Titel\n\
+	<input style='display: none' name='sti' type='text' value='0'></input>\n\
+	<a href=\"javascript: document.forms['stitle'].submit();\"><i class='fa fa-sort-alpha-asc'></i></a> \n</form>\n</th>\n");
+	printf("<th>Interpret/Autor</th>\n <th>");
+	printf("<form name='slendee' id='slendee' action='lendlib.cgi' METHOD='POST'>Ausgeliehen an\n\
+	<input style='display: none' name='sle' type='text' value='1'></input>\n\
+	<a href=\"javascript: document.forms['slendee'].submit();\"><i class='fa fa-sort-alpha-asc'></i></a> \n</form>\n</th>\n");
 	for (i = 0; i < size; i++){
-		printf("<tr>\n<td>\n%d</td> \n<td>%s</td>\n <td>%s</td>\n <td>%s</td>\n <td>%s</td>\n</tr>\n", 
-			/*currLib->curr->item->id*/((currLib > &myLib || currLib < &myLib)?0:i+1), 
+		printf("<tr>\n<td>\n<form  name='delete%d' action='lendlib.cgi' METHOD='POST'>\n<input style='display: none' name='del' type='text' value='%d'></input>\n<a href=\"javascript: document.forms['delete%d'].submit();\"><i class='fa fa-trash-o'></i></a>\n</form>\n</td> \n", currLib->curr->item->id, currLib->curr->item->id, currLib->curr->item->id);
+		printf("<td>%s</td>\n <td>%s</td>\n <td>%s</td>\n <td>%s</td>\n",
 			getmType(currLib->curr->item->type),
 			currLib->curr->item->title,
 			(strcmp(currLib->curr->item->author, "")==40 ? " " : currLib->curr->item->author),
 			currLib->curr->item->lendee);
+		printf("</tr>");
 		currLib->curr = currLib->curr->next;
 	}
+	if (currLib == &myLib){
+		printf("<form name='create' action='lendlib.cgi' METHOD='POST'>\n\
+			<tr>\n\
+			<td><a href=\"javascript: document.forms['create'].submit();\"><i class='fa fa-plus-circle fa-lg'></i></a></td>\
+			<td><input name='cty' type='radio' value='bu'>Buch</input><br>\n\
+			<input name='cty' type='radio' value='cd'>CD</input><br>\n\
+			<input name='cty' type='radio' value='dv'>DVD</input><br>\n\
+			<input name='cty' type='radio' value='ot' checked>Anderes</input></td>\n\
+			<td><input name='cti' type='text' maxlength='250' placeholder='Titel'></input></td>\n\
+			<td><input name='cau' type='text' maxlength='250' placeholder='Autor/Interpret'></input></td>\n\
+			<td><input name='cle' type='text' maxlength='250' placeholder='Ausgeliehen an'></input></td>\n\
+			</tr></form>");
+	}
 	printf("</table>\n");
-#else
+#else	/// Im Terminal in einer Tabellenimitation
 	char sortedT = ' ', sortedL = ' ';
 	if (currLib->sort == 0){
 		sortedT = 'v';
@@ -57,11 +80,11 @@ void printItems(){
 		sortedL = 'v';
 	}
 	libprint(out, "\n\e[4mAusgeliehene Medien:\e[0m\n");
-	libprint(out, "%2s | %5s | %26c  %5s  %20s  %4c  %s","ID", "Typ", sortedT, "Titel", "Autor/Interpret", sortedL, "Ausgeliehen an");
+	libprint(out, "%2s | %5s   %26c  %5s  %20s  %4c  %s","ID", "Typ", sortedT, "Titel", "Autor/Interpret", sortedL, "Ausgeliehen an");
 	printTLine('-', 90);
 	printf("\n");
 	for (i = 0; i < size; i++){
-		libprint(out, "%2d | %5.5s | %33.33s  %20.20s  %20.20s", 
+		libprint(out, "%2d | %5.5s   %33.33s  %20.20s  %20.20s", 
 			currLib->curr->item->id, 
 			getmType(currLib->curr->item->type),
 			currLib->curr->item->title,
@@ -85,25 +108,27 @@ void libprint(ptype type, const char* printable, ...){
 	va_list args;
 	va_start(args, printable);
 	int pType = type;
-#ifdef CGI
+#ifdef CGI	/// - Im Falle CGI werden die Ausgaben in verschieden Formatierte divs gefüllt
 	if(pType != 3) {
 		if (pType==2)
-			printf("<div class='div error'>");
+			printf("<div class='error'>");
+		if (pType==1)
+			printf("<div class='out'>");
 			vprintf(printable, args);
 			va_end(args);		
-		if (pType==2){
+		if (pType==2 || pType ==1){
 			printf("</div>");
 		} else {
 			printf("<br>\n");
 		}
 	}
-#else
+#else	///- Im Terminal wird je nach definierten Strings etwas mit oder Farbe ausgegeben - oder nicht
 #ifdef DCOLOR
 	setColor(type);
 #endif
 #ifndef DEBUG
 	if (pType == 2)
-		// Falls Fehlerausgabe deaktiviert ist, keine Fehler ausgeben!
+		/// Falls Fehlerausgabe deaktiviert ist, keine Fehler ausgeben!
 		return;
 #endif
 	printf("%c[2K", 27);
@@ -113,7 +138,7 @@ void libprint(ptype type, const char* printable, ...){
 	
 #ifdef DPRES
 	if (pType == 3){
-		// Statusmeldungen bei Bedarf mit Verzögerung
+		/// Statusmeldungen bei Bedarf mit Verzögerung
 		fflush(0);
 		sleep_ms(SLEEPDURATION);
 	}
@@ -214,7 +239,6 @@ void printHead(){
  * 
  */
 void printHTMLInter(){
-	printf("<h3>Aktion wählen:</h3>\n");
 	htmlF = fopen("../cgi/index_interf.html", "rt");
 	if (htmlF) {
 		while (fgets(vbuf,256,htmlF))
@@ -273,13 +297,15 @@ void printTLine(char type, int length){
  */
 void saveDBtoFile(){
 	libprint(status, "Schreibe in Datei.");
+	sortItems(2, &myLib);
 	libdb = fopen(filename,"wt");
 	if (libdb){
 		int i, size = 0;
 		myLib.curr = myLib.first;
 		size = myLib.size;
 		for (i = 0; i < size; i++){
-			fprintf(libdb, "%d;%s;%s;%s\n", 
+			fprintf(libdb, "%d;%d;%s;%s;%s\n", 
+				myLib.curr->item->id,
 				myLib.curr->item->type,
 				myLib.curr->item->title,
 				myLib.curr->item->author,
