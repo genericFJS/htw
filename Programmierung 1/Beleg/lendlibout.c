@@ -70,8 +70,11 @@ void printItems(){
 			<td><input name='cau' type='text' maxlength='250' placeholder='Autor/Interpret'></input></td>\n\
 			<td><input name='cle' type='text' maxlength='250' placeholder='Ausgeliehen an'></input></td>\n\
 			</tr></form>");
+		printf("</table>\n");
+	} else {
+		printf("</table>\n");		
+		printf("<a href="">Alle Medien anzeigen</a>");
 	}
-	printf("</table>\n");
 #else	/// Im Terminal in einer Tabellenimitation
 	char sortedT = ' ', sortedL = ' ';
 	if (currLib->sort == 0){

@@ -432,6 +432,14 @@ void findItem(char *sItem, sBy findBy, theLib *inLib){
 			}
 			inLib->curr = inLib->curr->next;
 		}
+	} else {
+		for (i = 0; i< size; i++){
+			if (strcasestr(inLib->curr->item->lendee, sItem)!=0){
+				libprint(status, "%s enthält %s", inLib->curr->item->lendee, sItem);
+				insertItem( inLib->curr->item, &foundLib );
+			}
+			inLib->curr = inLib->curr->next;
+		}
 	}
 	currLib = &foundLib;
 	printItems();
