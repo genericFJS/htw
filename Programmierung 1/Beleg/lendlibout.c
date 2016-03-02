@@ -193,7 +193,7 @@ void resetColor(){
  */
 void printHead(){
 #ifdef CGI
-	puts("Content Type: text/html\n\n");
+// 	puts("Content Type: text/html\n\n");
 	htmlF = fopen("../cgi/index_head.html", "rt");
 	if (htmlF) {
 		while (fgets(vbuf,256,htmlF))
@@ -262,6 +262,7 @@ void printFoot(){
 			printf("%s",vbuf);		
 	} else {
 		puts("<h1>Vorlagendatei konnte nicht geoeffnet werden<h1>");
+		exit(-1);
 	}
 #else
 	printTLine('=', 0);
@@ -314,7 +315,7 @@ void saveDBtoFile(){
 		}
 	} else {
 		libprint(error, "Datei konnte nicht zum schreiben geöffnet werden");
-		exit(-1);
+		return;
 	}
 #ifndef CGI
 	libprint(out, "Daten wurden in Datei gespeichert");

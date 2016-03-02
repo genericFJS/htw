@@ -12,6 +12,9 @@
 int main(int argc, char* argv[]){
 #ifndef CGI
 	prepareOut();	///- Ausgabevariablen vorbereiten
+#else 
+	printf("Content-Type: text/html");
+	printf("\n\n")  ;
 #endif
 	printHead();	///- Kopfzeilen ausgeben
 	readfile();	///- Einträge aus Datei einlesen (falls sie existiert)
@@ -23,7 +26,7 @@ int main(int argc, char* argv[]){
 	getInput();		///- Nutzerinput verarbeiten
 #endif	/// beide:	
 	saveDBtoFile();		///- Daten in Datei speichern
-	freeAll(&myLib);	///- Speicher freigeben
 	printFoot();	///- Fußzeilen ausgeben
+	freeAll(&myLib);	///- Speicher freigeben
 	return 0;
 }
