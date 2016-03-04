@@ -112,8 +112,8 @@ gcc -o lendlib -D DPRE *.c S & Möglichkeit des Verlangsamten, anschaulichen Abl
 Achtung: Das CGI-Programm muss aufgrund Dateiabhängigkeiten in Ordner „cgi-bin“ liegen (sodass bpsw. Ordner „cgi“ oder die „.csv“-Datei in „..“ liegen)!\\
 Empfohlene Anweisungen:
 \begin{itemize}
-\item gcc -DDEBUG -DDCOLOR -o lendlib *.c \&\& ./lendlib
-\item gcc -DCGI -o cgi-bin/lendlib.cgi *.c \&\& sensible-browser localhost/cgi-bin/lendlib.cgi
+\item gcc -DDEBUG -DDCOLOR -o lendlib *.c \&\& ./lendlib % gcc -DDEBUG -DDCOLOR -o lendlib *.c && ./lendlib
+\item gcc -DCGI -o cgi-bin/lendlib.cgi *.c \&\& sensible-browser localhost/cgi-bin/lendlib.cgi % gcc -DCGI -o cgi-bin/lendlib.cgi *.c && sensible-browser localhost/cgi-bin/lendlib.cgi
 \end{itemize}
 
 \section{Doc}

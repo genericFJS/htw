@@ -1,0 +1,25 @@
+<style>
+table.fixed {table-layout:fixed; width:100%;}/*Setting the table width is important!*/
+table.fixed td {overflow:hidden; 
+	white-space: nowrap;
+    border: 1px solid black;
+	}/*Hide text outside the cell.*/
+table.fixed td:nth-of-type(1) {width:20%;}/*Setting the width of column 1.*/
+table.fixed td:nth-of-type(2) {width:50%;}/*Setting the width of column 2.*/
+table.fixed td:nth-of-type(3) {width:30%;}/*Setting the width of column 3.*/
+#main{
+	min-width: 400px;
+	max-width: 800px;
+}
+</style>
+
+<div id='main'>
+<table class="fixed">
+    <tr>
+        <td>Veryverylongtext</td>
+        <td>Actuallythistextismuchlongeeeeeer</td>
+        <td>We should use spaces tooooooooooooo</td>
+    </tr>
+</table>
+
+</div>

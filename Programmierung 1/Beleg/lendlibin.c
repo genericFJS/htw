@@ -232,7 +232,7 @@ void getInput(){
 void getPost(){
 	fgets(posted,256,stdin);	/// POST einlesen
 #ifdef DEBUG
-	libprint(error, "%s", posted);
+	printf("Querry: %s", posted);
 #endif
 	switch (posted[0]){	/// POSTs unterscheiden sich durch den Anfangsbuchstaben (wie bei Terminaleingabe)
 		case 's':	///- Sucheingabe verarbeiten
@@ -269,9 +269,12 @@ void getPost(){
 		case 'c':	///- Medium einfügen
 // 			printf("<p>hinzufügen</p>");
 			;
-			strtok2(posted, "=&");
+			strtok2(posted, "=");
 			int cType;
 			char* tmpc = strtok2(NULL, "&");
+#ifdef DEBUG
+			printf("<p> Medium: '%1s'</p>", tmpc);
+#endif
 			if ( strcmp(tmpc,"bu") == 0 ){
 				cType = 1;
 			}else if ( strcmp(tmpc,"cd") == 0 ){
@@ -284,39 +287,41 @@ void getPost(){
 // 			printf("Typ: %d<br>", cType);
 			strtok2(NULL, "=");
 			tmpc = strtok2(NULL, "&");
-// 			printf("%s: %c, %d",tmpc,(tmpc+4)[0], (tmpc+4)[0]);				
-			char* cTitle = NULL;
-			char* cLendee = NULL;
-			char* cAuthor = NULL;
-			if ((tmpc+4)[0] != 61){	///- (Funktioniert wie bei Terminaleingabe: Es wird jeweils Speicher bereitgestellt und Angaben darin geschrieben.
-				cTitle = malloc (sizeof(tmpc));
-				if ( cTitle == NULL){
-					libprint(error, MALLOCERR);
-					exit(-1);
-				}
-				strcpy(cTitle, tmpc);
+#ifdef DEBUG
+			printf("<p> Titel: '%1s'", tmpc);
+#endif
+// 			printf("'%1s': char: '%1c', dezi: '%d'",tmpc,(tmpc)[0], (tmpc)[0]);				
+			if (tmpc[0] != 0){	///- (Funktioniert wie bei Terminaleingabe: Es wird jeweils Speicher bereitgestellt und Angaben darin geschrieben.
+				replaceSpecial(tmpc, cTitle);
+#ifdef DEBUG
+				printf(" / '%1s'</p>", cTitle);
+#endif
+// 				strcpy(cTitle, tmpc);
 // 				printf("%s", fStr);
 				strtok2(NULL, "=");
 				tmpc = strtok2(NULL, "&");
-				if ((tmpc+4)[0] != 61){	
+#ifdef DEBUG
+				printf("<p> Interpret/Autor: '%1s'", tmpc);
+#endif
+				if (tmpc[0] == 0){	
 					tmpc = "";
 				}
-				cAuthor = malloc (sizeof(tmpc));
-				if ( cAuthor == NULL){
-					libprint(error, "Autor: %s",MALLOCERR);
-					exit(-1);
-				}
-				strcpy(cAuthor, tmpc);
+				replaceSpecial(tmpc, cAuthor);
+#ifdef DEBUG
+				printf(" / '%1s'</p>", cAuthor);
+#endif
+// 				strcpy(cAuthor, tmpc);
+				strtok2(NULL, "=");
 				tmpc = strtok2(NULL, "=");
-// 				printf("%s: %c, %d <br>",tmpc,(tmpc+4)[0], (tmpc+4)[0]);
-				if ((tmpc+4)[0] != 0){
-					cLendee = malloc (sizeof(tmpc+4));
-					if ( cLendee == NULL){
-						libprint(error, "Lendee: %s",MALLOCERR);
-						exit(-1);
-					}
-					strcpy(cLendee, tmpc+4);
-// 					printf("%s: %c, %d",tmpc,(tmpc+4)[0], (tmpc+4)[0]);
+#ifdef DEBUG
+				printf("<p> Ausgeliehen an: '%1s'", tmpc);
+#endif
+				if (tmpc[0] != 0){
+					replaceSpecial(tmpc, cLendee);
+#ifdef DEBUG
+					printf(" / '%1s'</p>", cLendee);
+#endif
+// 					strcpy(cLendee, tmpc);
 					printf("<h2>Ausgeliehene Medien: </h2>\n");
 // 					printf("%d, %s, %s, %s", cType, cTitle, cAuthor, cLendee);
 					medium *newMedium = createItem(cType, cTitle, cAuthor, cLendee);
@@ -348,6 +353,43 @@ void getPost(){
 			break;
 	}
 }
+
+/** @ingroup LendLibIn
+ * @brief Ersetz '+' mit Leerzeichen und andere Sonderzeichen in HTML-Eingabe
+ * @param inS Zeichenkette mit + und Sonderzeichen
+ * @param outS Zeichenkette, in die die Eingabe mit Ersetzung geschrieben werder soll 
+ */
+void replaceSpecial(char *inS, char* outS){
+	int i;
+	char sp[3];
+	sp[2] = 0;
+	char* no;
+// 	printf("<p>");
+	for (i=0; *inS!=0; inS++, i++) {
+// 		printf(" %d ", i);
+		switch (*inS){
+			case '+': 
+				outS[i]=' '; 
+				break;
+			case '%': 
+				inS++; 
+				sp[0] = inS[0];
+				sp[1] = inS[1];
+				outS[i]=(char)strtol(inS,&no,16);
+				inS += 2;
+// 				printf("<br>%s (%c) | ", sp, outS[i]);
+				inS--;
+				break;
+			default: 
+				outS[i]=*inS; 
+				break;
+		}
+	}
+// 	printf(" (%d)</p>", i);
+	outS[i]=0;
+}
+
+
 
 /**
  * @ingroup LendLibIn
