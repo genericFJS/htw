@@ -22,8 +22,13 @@ void \hyperlink{group___lend_lib_in_ga46d47190cb20b54826fb665f1859968f}{get\+Inp
 \begin{DoxyCompactList}\small\item\em Verarbeitet Nutzerinput im Terminal. \end{DoxyCompactList}\item 
 void \hyperlink{group___lend_lib_in_ga1817e73244fbbe5d1ae571f6010404ee}{get\+Post} ()
 \begin{DoxyCompactList}\small\item\em Verarbeitet P\+O\+S\+Ts des C\+GI. \end{DoxyCompactList}\item 
+void \hyperlink{group___lend_lib_in_ga46e2e4a786681c507f83d84e75c214e2}{replace\+Special} (char $\ast$inS, char $\ast$outS)
+\begin{DoxyCompactList}\small\item\em Ersetz \textquotesingle{}+\textquotesingle{} mit Leerzeichen und andere Sonderzeichen in H\+T\+M\+L-\/\+Eingabe. \end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{group___lend_lib_in_gaccb55b34bbc589d5c47830fdcd889e17}{strtok2} (char $\ast$str, char const $\ast$delims)
-\begin{DoxyCompactList}\small\item\em Eigenes strtok, welches auch leere Einträge ausgibt. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Eigenes strtok, welches auch leere Einträge ausgibt. \end{DoxyCompactList}\item 
+void {\bfseries replace\+Special} ()\hypertarget{group___lend_lib_in_gaa0229b9cd129793927019728b8d6d8c0}{}\label{group___lend_lib_in_gaa0229b9cd129793927019728b8d6d8c0}
+
+\end{DoxyCompactItemize}
 \subsection*{Variablen}
 \begin{DoxyCompactItemize}
 \item 
@@ -39,13 +44,13 @@ const char $\ast$ {\bfseries filename}\hypertarget{group___lend_lib_in_ga7efa5e9
 char {\bfseries posted} \mbox{[}256\mbox{]}\hypertarget{group___lend_lib_in_gae232d1b0328c97f6e77fb1a94660cb44}{}\label{group___lend_lib_in_gae232d1b0328c97f6e77fb1a94660cb44}
 
 \item 
-char {\bfseries p\+Temp1} \mbox{[}256\mbox{]}\hypertarget{group___lend_lib_in_gae025d31afa273093de589a20f4f2df35}{}\label{group___lend_lib_in_gae025d31afa273093de589a20f4f2df35}
+char {\bfseries c\+Title} \mbox{[}128\mbox{]}\hypertarget{group___lend_lib_in_ga315209623aaa2e9efc8a7a9a2220b98e}{}\label{group___lend_lib_in_ga315209623aaa2e9efc8a7a9a2220b98e}
 
 \item 
-char {\bfseries p\+Temp2} \mbox{[}256\mbox{]}\hypertarget{group___lend_lib_in_ga8144306ebceace04737ff8da7aca7f26}{}\label{group___lend_lib_in_ga8144306ebceace04737ff8da7aca7f26}
+char {\bfseries c\+Author} \mbox{[}128\mbox{]}\hypertarget{group___lend_lib_in_ga7c9df77d0b6c8b7a0da2c589149d72b7}{}\label{group___lend_lib_in_ga7c9df77d0b6c8b7a0da2c589149d72b7}
 
 \item 
-char {\bfseries p\+Temp3} \mbox{[}256\mbox{]}\hypertarget{group___lend_lib_in_ga82b1ac173d307099c82705e2ac9b968c}{}\label{group___lend_lib_in_ga82b1ac173d307099c82705e2ac9b968c}
+char {\bfseries c\+Lendee} \mbox{[}128\mbox{]}\hypertarget{group___lend_lib_in_ga0bf0e5c36ad41414ebe9a6e1b60d52dd}{}\label{group___lend_lib_in_ga0bf0e5c36ad41414ebe9a6e1b60d52dd}
 
 \end{DoxyCompactItemize}
 
@@ -149,7 +154,26 @@ Je nach Terminal-\/ oder C\+G\+I-\/\+Anwendung ist der Dateipfad anders
 \begin{DoxyItemize}
 \item Datei öffnen
 \item Datei Zeilenweise durchgehen und als Medium in Liste einfügen 
-\end{DoxyItemize}\index{Lend\+Lib\+In@{Lend\+Lib\+In}!strtok2@{strtok2}}
+\end{DoxyItemize}\index{Lend\+Lib\+In@{Lend\+Lib\+In}!replace\+Special@{replace\+Special}}
+\index{replace\+Special@{replace\+Special}!Lend\+Lib\+In@{Lend\+Lib\+In}}
+\subsubsection[{\texorpdfstring{replace\+Special(char $\ast$in\+S, char $\ast$out\+S)}{replaceSpecial(char *inS, char *outS)}}]{\setlength{\rightskip}{0pt plus 5cm}void replace\+Special (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{inS, }
+\item[{char $\ast$}]{outS}
+\end{DoxyParamCaption}
+)}\hypertarget{group___lend_lib_in_ga46e2e4a786681c507f83d84e75c214e2}{}\label{group___lend_lib_in_ga46e2e4a786681c507f83d84e75c214e2}
+
+
+Ersetz \textquotesingle{}+\textquotesingle{} mit Leerzeichen und andere Sonderzeichen in H\+T\+M\+L-\/\+Eingabe. 
+
+
+\begin{DoxyParams}{Parameter}
+{\em inS} & Zeichenkette mit + und Sonderzeichen \\
+\hline
+{\em outS} & Zeichenkette, in die die Eingabe mit Ersetzung geschrieben werder soll \\
+\hline
+\end{DoxyParams}
+\index{Lend\+Lib\+In@{Lend\+Lib\+In}!strtok2@{strtok2}}
 \index{strtok2@{strtok2}!Lend\+Lib\+In@{Lend\+Lib\+In}}
 \subsubsection[{\texorpdfstring{strtok2(char $\ast$str, char const $\ast$delims)}{strtok2(char *str, char const *delims)}}]{\setlength{\rightskip}{0pt plus 5cm}char $\ast$ strtok2 (
 \begin{DoxyParamCaption}
