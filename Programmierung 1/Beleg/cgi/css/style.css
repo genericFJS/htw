@@ -170,7 +170,7 @@ th {
 	vertical-align: top;
 }
 
-#media tr:nth-child(2n) {
+.media tr:nth-child(2n) {
     background: hsl(75, 25%, 95%);
 }
 .colorshowcase {
@@ -287,31 +287,32 @@ th {
 	top: 10px;
 }
 
-#media {
-	width: 100%
+.media {
+	table-layout: fixed;
+	width: 100%;
 }
 
-#media td{
+.media td, .media th{
 	overflow:hidden;
 	white-space: nowrap;
 }
 
-#media tr td:nth-child(1){
+.media td:nth-of-type(1), .media th:nth-of-type(1){
 	width: 5%;
 }
-#media tr td:nth-child(2){
+.media td:nth-of-type(2), .media th:nth-of-type(2){
 	width: 10%;
 }
-#media tr td:nth-child(3){
+.media td:nth-of-type(3), .media th:nth-of-type(3){
 	width: 45%;
 }
-#media tr td input[type="text"]{
-	width: 100%;
+table.media td input[type="text"]{
+	width: 95%;
 }
-#media tr td:nth-child(4){
+.media td:nth-of-type(4), .media th:nth-of-type(4){
 	width: 20%;
 }
-#media tr td:nth-child(5){
+.media td:nth-of-type(5), .media th:nth-of-type(5){
 	width: 20%;
 }
 

@@ -39,7 +39,7 @@ void printItems(){
 		printItems();
 		return;
 	}
-	printf("<table id='media'>\n");
+	printf("<table class='media'>\n");
 	printf("<tr>\n<th>\n</th> \n<th>Typ</th>\n <th>");
 	printf("<form name='stitle' id='stitle' action='lendlib.cgi' METHOD='POST'>Titel\n\
 	<input style='display: none' name='sti' type='text' value='0'></input>\n\
@@ -66,9 +66,9 @@ void printItems(){
 			<input name='cty' type='radio' value='cd'>CD</input><br>\n\
 			<input name='cty' type='radio' value='dv'>DVD</input><br>\n\
 			<input name='cty' type='radio' value='ot' checked>Anderes</input></td>\n\
-			<td><input name='cti' type='text' maxlength='250' placeholder='Titel'></input></td>\n\
-			<td><input name='cau' type='text' maxlength='250' placeholder='Autor/Interpret'></input></td>\n\
-			<td><input name='cle' type='text' maxlength='250' placeholder='Ausgeliehen an'></input></td>\n\
+			<td><input name='cti' type='text' maxlength='75' placeholder='Titel'></input></td>\n\
+			<td><input name='cau' type='text' maxlength='75' placeholder='Autor/Interpret'></input></td>\n\
+			<td><input name='cle' type='text' maxlength='75' placeholder='Ausgeliehen an'></input></td>\n\
 			</tr></form>");
 		printf("</table>\n");
 	} else {
