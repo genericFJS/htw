@@ -1,0 +1,1355 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Writing Guide: Communicating as an Electrical Engineer</title>
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+	
+	
+
+  
+	
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+
+
+
+ 
+ 
+ 
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+<style>
+BODY  {
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	color: #1A5829;
+	font-style: normal;
+	font-size: 11pt;
+	margin: 0;
+	padding: 0;
+	background-color: #FFF8DE;
+	}
+
+P  {
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	color: #1A5829;
+	font-style: normal;
+	font-size: 11pt;
+	}
+
+table {
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	color: #1A5829;
+	font-style: normal;
+	font-size: 11pt;
+	}
+	
+ul, ol {
+	list-style-position: inside;
+	}
+
+H1  {
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-weight: bold;
+	color: #CB9A3A;
+	font-size: 17pt;
+	}
+
+H2  {
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-weight: bold;
+	color: #CB9A3A;
+	font-size: 15pt;
+	}
+
+H3  {
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-weight: bold;
+	color: #CB9A3A;
+	font-size: 14pt;
+	}
+
+H4  {
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	color: #CB9A3A;
+	font-weight: bold;
+	margin-bottom: 4px;
+	font-size: 13pt;
+	}
+
+H5  {
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	color: #CB9A3A;
+	font-weight: bold;
+	margin-top: 0px;
+	padding-top: 0px;
+	font-size: 11pt;
+	}
+	
+H6  {
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	color:#CB9A3A;
+	font-weight: normal;
+	font-style: italic;
+	margin-top: 0px;
+	padding-top: 0px;
+	font-size: 11pt;
+	}
+
+
+
+A:Link  {
+	color: #742A22;
+	text-decoration: none;
+	}
+
+A:Visited  {
+	color: #572E29;
+	text-decoration: none;	
+	}
+
+A:Active  {
+	color: #742A22;
+	text-decoration: none;
+	}
+
+A:Hover  {
+	color: #164048;
+	text-decoration: underline;
+	}
+
+
+
+#breadcrumbs {
+	color: #164048;
+	font: bold x-small Verdana, Arial, Helvetica, sans-serif;
+	margin: 0px 0 3px 0px;
+	}
+
+#breadcrumbs .current { color: #1A5829; }
+
+#breadcrumbs a:link, #breadcrumbs a:visited {
+	color: #164048;
+	font-weight: normal;
+	text-decoration: none;
+	}
+
+#breadcrumbs a:hover {
+	color: #154745;
+	text-decoration: none;
+	}
+
+#breadcrumbs img { margin: 0 .25em .10em 0em; padding: 0; }
+
+
+#banner_top {
+	margin: 0;
+	padding: 0 0 3px 0;
+	width: 860px;
+	height: 30px;
+	background-color: #1A5829;
+	}
+
+
+
+
+#banner {
+	background: url(/graphics/banners/longs_meekers.jpg) #1A5829 no-repeat;
+	}
+
+
+#content {
+	background: #ffffff;
+	min-height: 350px;
+	}
+
+#content img {
+	border: none;
+	}
+
+ #content img a:hover, #content img a:link {
+	background: #ffffff;
+	}
+
+
+#csu_logo {
+	height: 27px;
+	position: absolute;
+	right: 6px;
+	top: 5px;
+	width: 550px;
+	z-index: 0;
+	text-align: right;
+	}
+
+#csu_logo img {
+	border: none;
+	margin: 0;
+	padding: 0;
+	}
+
+#footer {
+	clear: both;
+	font-size: 8pt;
+	line-height: normal;
+	margin-top: 5px;
+	text-align: left;
+	font-weight: normal;
+	}
+	
+#footer a {text-decoration: underline;}
+
+#header {
+	position: relative;
+	}
+
+#menucontainer {
+	background-color: #1A5829;
+	margin-bottom: 0px;
+	}
+
+#pg_content {
+	padding: 5px;
+	margin: 0px;
+    }
+	
+#pg_nav {
+	background: #ffffff;
+	text-align: right;
+	}
+
+#pg_nav img {
+
+	}
+
+#page_nav_top .pg_nos, #page_nav_bottom .pg_nos {
+	color: #000000;
+	}
+
+#page_nav_top img, #page_nav_bottom img {
+	border: none;
+	}
+
+#page_nav_top, #page_nav_bottom {
+	background: #ffffff;
+	color: #FFF8DE;
+	font-size: 8pt; 
+	}
+
+#pg_title {
+	color: #CB9A3A;
+	}
+
+#pg_wrapper {
+	margin: 0 auto;
+	padding: 0;
+	width: 860px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	background: white;
+	border: 1px solid #1A5829;
+	border-top: none;
+	}
+
+
+
+
+
+
+#search_div {
+	position: absolute;
+	right: 5px;
+	top: 1px;
+	z-index: 1000;
+
+
+	}
+
+#sidenav {
+	float: right;
+	padding-top: 5px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+	padding-left: 0px;
+	width: 200px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #1A5829;
+	color: #164048; 
+	font-size: 10pt; 
+	font-family: verdana, geneva, arial, helvetica, sans-serif; 
+	line-height: 133%;
+	}
+
+
+#top_navigation {
+	color: #FFF8DE;
+	font-size: 8pt;
+	font-weight: normal;
+	position: absolute;
+	top: 14px;
+	left: 6px;
+	}
+
+#top_navigation a {
+	color: #FFF8DE;
+	}
+
+
+
+
+.button_standard{
+	font-size: 10pt;
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	}
+
+.borderbox {
+	border-left: 1px solid #1A5829; 
+	border-top: 1px solid #1A5829; 
+	border-bottom: 1px solid #1A5829; 
+	border-right: 1px solid #1A5829; 
+	padding: 5px; 
+	margin-bottom: 5px;
+	margin-left: 5px;
+	}
+	
+.borderboxheading {
+	margin-top: 0px; 
+	margin-bottom: 3px; 
+	font-style: normal; 
+	font-size: 13px; 
+	font-weight: bold;
+	color: #CB9A3A;
+	}
+
+.container {
+	padding: 5px;
+	border: 1px solid #1A5829;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	}
+
+
+
+
+.perspectives {
+	font-family: georgia, 'palatino linotype', 'book antiqua', palatino, 'times new roman', times, serif;
+    color: #4C2B0B;
+    }
+
+
+
+
+.navheader {
+	color: #154745;
+	font-size: 10pt;
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	}
+
+
+
+.contentsdiv {
+	margin-left: 10px;
+	}
+
+.contents {
+	color: #164048; 
+	font-size: 10pt; 
+	font-family: verdana, geneva, arial, helvetica, sans-serif; 
+	margin-bottom: 3px; 
+	margin-top: 0px; 
+	margin-left: 0px; 
+	margin-right: 0px; 
+	}
+
+.quotation {
+	font-family: georgia, 'palatino linotype', 'book antiqua', palatino, 'times new roman', times, serif;
+	color: #4C2B0B;
+	font-size: 10pt;
+	line-height: 130%;
+	padding-left: 18px;
+	padding-right: 18px;
+	}
+
+.copyright {
+	font-size: 9pt; 
+    color: #164048;
+	}
+
+.example {
+	font-family: georgia, 'palatino linotype', 'book antiqua', palatino, 'times new roman', times, serif;
+	font-size: 10pt;
+	color: #4C2B0B;
+	}
+
+.highlight {
+	background-color: yellow;
+	}
+
+
+
+.comment {
+	font-family: georgia, 'palatino linotype', 'book antiqua', palatino, 'times new roman', times, serif; 
+	font-size: 10pt; 
+	color: #4C2B0B;
+	}
+
+.note {
+	color: #CB9A3A; 
+    font-weight: bold;
+    }
+
+
+
+.activity_question {
+    font-size: 10pt;
+	font-weight: bold;
+	margin-top: 12px;
+	margin-bottom: 3px;
+    }
+	
+.activity_response {
+	margin-left: 10px;
+	margin-right: 10px;
+	color: #1A5829;
+    }	
+
+.activity_finalpagequestion {
+	margin-bottom: 10px;
+    }	
+	
+
+
+.referencelist_apa {
+	font-family: georgia, 'palatino linotype', 'book antiqua', palatino, 'times new roman', times, serif;
+	text-indent: -30px; 
+	margin-left: 30px; 
+	margin-bottom: 10px;
+	line-height: 150%;
+	color: #4C2B0B;
+	}
+	
+.referencelist_mla {
+	font-family: georgia, 'palatino linotype', 'book antiqua', palatino, 'times new roman', times, serif;
+	text-indent: -30px; 
+	margin-left: 30px; 
+	margin-bottom: 10px;
+	line-height: 150%;
+	color: #4C2B0B;
+	}
+	
+.cmsnotes_note {
+	font-family: georgia, 'palatino linotype', 'book antiqua', palatino, 'times new roman', times, serif;
+	text-indent: 30px; 
+	margin-left: 0px; 
+	margin-bottom: 10px;
+	line-height: 150%;
+	color: #4C2B0B;
+	}
+	
+.cmsnotes_bib {
+	font-family: georgia, 'palatino linotype', 'book antiqua', palatino, 'times new roman', times, serif;
+	text-indent: -30px; 
+	margin-left: 30px; 
+	margin-bottom: 10px;
+	line-height: 150%;
+	color: #4C2B0B;
+	}
+	
+.example_intext {
+	font-family: georgia, 'palatino linotype', 'book antiqua', palatino, 'times new roman', times, serif;
+	color: #4C2B0B;
+	}
+	
+.blogcomments {
+	font-size: 9pt; 
+	color: #999999;
+	}
+
+.blogcommentstitle {
+	font-size: 9pt; 
+	color: #666666;
+	font-weight: bold;
+	}
+	
+
+
+.wrap1, .wrap2, .wrap3 {
+  display:inline-table;
+  /* \*/display:block;/**/
+  }
+.wrap1 {
+  float:left;
+  background:url(/templates/images/shadow.gif) right bottom no-repeat;
+  }
+.wrap2 {
+  background:url(/templates/images/corner_bl.gif) -8% 100% no-repeat;
+  }
+.wrap3 {
+  padding: 0px 7px 7px 0px;
+  background:url(/templates/images/corner_tr.gif) 100% -7% no-repeat;
+  }
+.box {
+	padding-top: 10px;
+    padding-right: 5px;
+    padding-bottom: 10px;
+    padding-left: -3px;
+	background: #FFFFF5;
+	border: 1px solid;
+	border-color: #1A5829;
+	width: 100%;
+	}
+
+
+
+
+.box_link {
+	font-size: 9pt; 
+	font-family: verdana, geneva, arial, helvetica, sans-serif; 
+	color: #164048;
+	}
+	
+
+
+.emphasis {
+	font-weight: bold;
+	}
+
+.form_label {
+	font-size: 11pt;
+    color: #CB9A3A;
+	font-weight: bold;
+    }
+
+.form1 {
+	color: black; 
+	font-size: 9pt; 
+	font-weight: normal;
+	}
+	
+.form2 {
+	color: black; 
+	font-size: 9pt; 
+	font-weight: bold;
+	}
+	
+.intro_text {color: #CB9A3A; font-size: 10pt; font-weight: normal; line-height: 150%; margin-top: 0px;}
+	
+.list_heading {margin-top: 5px; margin-bottom: 5px; color: #CB9A3A; font-size: 10pt; font-weight: bold;}
+
+.list_item {margin-top: 0px; margin-bottom: 3px; margin-left: 0px; font-size: 10pt; font-weight: normal;}
+
+.smalltext {
+	font-size: 9pt; 
+	}
+	
+
+
+.menuheader2 {
+	font-size: 10pt; 
+	font-family: verdana, geneva, arial, helvetica, sans-serif; 
+	color: #4C2B0B; 
+	font-weight: bold; 
+	margin-top: 10px; 
+	padding: 0px;
+	} 
+
+.menulink {
+	font-size: 9pt; 
+	font-family: verdana, geneva, arial, helvetica, sans-serif; 
+	color: #742A22; 
+	font-weight: normal; 
+	padding: 0 0 0 1em; 
+	} 
+	
+#sidebar_nav {
+	background: #fff;
+	font-size: 10pt;
+	text-align: left;
+	}
+
+#sidebar_nav a {
+	color: #742A22;
+	}
+
+#sidebar_nav h2 {
+	background-color: #1A5829;
+	color: #ffffff;
+	font-weight: bold;
+    font-size: 8pt;
+	}
+
+#sidebar_nav p {
+	font-size: 8pt;
+	}
+
+
+#sidebar_nav .menuheader1 {
+	background-color: #CB9A3A;
+	color: #fff; 
+	font-size: 11pt; 
+	font-family: verdana, geneva, arial, helvetica, sans-serif; 
+	font-weight: bold;
+	} 
+	
+
+
+.video_container {
+	border: 1px solid #CB9A3A;		
+	}
+.video_container_caption {
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	color: #CB9A3A;
+	font-style: italic;
+	font-size: 11pt;
+	}
+
+
+
+.classtemplates_default_cell {
+	background-color:  #164048; 
+	color: #FFF8DE; 
+	font-weight: normal;
+	font-size: 9pt;
+	padding: 3px;
+	}
+
+.classtemplates_default_header {
+	background-color: #1A5829; 
+	color: #FFF8DE; 
+	font-weight: bold;
+	padding: 3px;
+	}
+	
+A.contents:link {color: #742A22;}
+
+A.contents:visited {color: #572E29;}
+
+A.contents:active {color: #742A22;}
+
+A.contents:hover {color: #164048;}
+
+
+</style>
+
+
+	  <script language="JavaScript" type="text/javascript">
+<!-- Hide the script from old browsers --
+  function OpenPage(page) {
+var NewWindow=open('','popup','menubar=1,toolbar=1,location=1,directories=1,scrollbars=1,resizable=1,status=1,width=700,height=500');
+NewWindow.focus();
+window.open(page,target="popup");
+  }
+  // -->
+</script>
+
+
+	<script type="text/javascript">
+<!--
+function logout_confirm() {
+	var answer = confirm("Are You Sure You Want to Log Out?")
+	if (answer){
+		window.location = "/login/logout_confirm_action.cfm";
+	}
+	else{
+		// alert("Ok. You are still logged in.")
+	}
+}
+//-->
+</script>
+
+
+	<script language="JavaScript" type="text/javascript">
+<!-- Hide the script from old browsers --
+  function OpenHelp(page) {
+var NewWindow=open('','help','menubar=1,toolbar=1,location=1,directories=1,scrollbars=1,resizable=1,status=1,width=850,height=700');
+NewWindow.focus();
+window.open(page,target="help");
+  }
+  // -->
+</script>
+
+	<script language="JavaScript" type="text/javascript">
+<!-- Hide the script from old browsers --
+  function OpenTool(page) {
+var NewWindow=open('','tool','menubar=1,toolbar=1,location=1,directories=1,scrollbars=1,resizable=1,status=1,width=640,height=480');
+NewWindow.focus();
+window.open(page,target="tool");
+  }
+  // -->
+</script>
+
+	
+ <script language="JavaScript" type="text/javascript">
+<!-- Hide the script from old browsers --
+  function OpenVideo(page) {
+var NewWindow=open('','video','menubar=0,toolbar=0,location=0,directories=0,scrollbars=0,resizable=1,status=0,width=200,height=295');
+NewWindow.focus();
+window.open(page,target="video");
+  }
+  // -->
+</script>
+
+
+
+	<script language="JavaScript" type="text/javascript">
+<!-- Hide the script from old browsers --
+  function OpenPageTiny(page) {
+var NewWindow=open('','popuptiny','menubar=0,toolbar=0,location=0,directories=0,scrollbars=1,resizable=1,status=0,width=5,height=5');
+NewWindow.focus();
+window.open(page,target="popuptiny");
+  }
+  // -->
+</script>
+
+	 <script language="JavaScript" type="text/javascript">
+<!-- Hide the script from old browsers --
+  function OpenMail(page) {
+var NewWindow=open('','help','menubar=1,toolbar=1,location=1,directories=1,scrollbars=1,resizable=1,status=1,width=600,height=500');
+NewWindow.focus();
+window.open(page,target="help");
+  }
+  // -->
+</script>
+
+	 <script language="JavaScript" type="text/javascript">
+<!-- Hide the script from old browsers --
+  function OpenComments(page) {
+var NewWindow=open('','comments','menubar=0,toolbar=0,location=0,directories=0,scrollbars=1,resizable=1,status=0,width=640,height=550');
+NewWindow.focus();
+window.open(page,target="comments");
+  }
+  // -->
+</script>
+
+	  <script language="JavaScript" type="text/javascript">
+<!-- Hide the script from old browsers --
+  function OpenHelpVideo(page) {
+var NewWindow=open('','helpvideo','menubar=1,toolbar=1,location=1,directories=1,scrollbars=1,resizable=1,status=1,width=850,height=700');
+NewWindow.focus();
+window.open(page,target="helpvideo");
+  }
+  // -->
+</script>
+
+	  <script language="JavaScript" type="text/javascript">
+<!-- Hide the script from old browsers --
+  function OpenHelpVideoMedium(page) {
+var NewWindow=open('','helpvideo','menubar=1,toolbar=1,location=1,directories=1,scrollbars=1,resizable=1,status=1,width=850,height=800');
+NewWindow.focus();
+window.open(page,target="helpvideo");
+  }
+  // -->
+</script>
+
+	  <script language="JavaScript" type="text/javascript">
+<!-- Hide the script from old browsers --
+  function OpenHelpVideoLarge(page) {
+var NewWindow=open('','helpvideo','menubar=1,toolbar=1,location=1,directories=1,scrollbars=1,resizable=1,status=1,width=850,height=850');
+NewWindow.focus();
+window.open(page,target="helpvideo");
+  }
+  // -->
+</script>
+
+	<script language="JavaScript" type="text/javascript">
+<!-- Hide the script from old browsers --
+  function OpenPageOutlineEntry(page) {
+var NewWindow=open('','popupoutline','menubar=0,toolbar=0,location=0,directories=0,scrollbars=1,resizable=1,status=0,width=500,height=200');
+NewWindow.focus();
+window.open(page,target="popupoutline");
+  }
+  // -->
+</script>
+
+
+	<script language="JavaScript" type="text/javascript">
+<!-- Hide the script from old browsers --
+  function OpenPageBlank(page) {
+var NewWindow=open('','popupblank','menubar=0,toolbar=0,location=0,directories=0,scrollbars=1,resizable=1,status=0,width=500,height=350');
+NewWindow.focus();
+window.open(page,target="popupblank");
+  }
+  // -->
+</script>
+
+	<script language="JavaScript" type="text/javascript">
+<!-- Hide the script from old browsers --
+  function OpenPageMini(page) {
+var NewWindow=open('','popupmini','menubar=0,toolbar=0,location=0,directories=0,scrollbars=0,resizable=1,status=0,width=400,height=90');
+NewWindow.focus();
+window.open(page,target="popupmini");
+  }
+  // -->
+</script>
+
+	<script language="JavaScript" type="text/javascript">
+<!-- Hide the script from old browsers --
+  function OpenPageBlankLarge(page) {
+var NewWindow=open('','popupblank','menubar=0,toolbar=0,location=0,directories=0,scrollbars=1,resizable=1,status=0,width=600,height=500');
+NewWindow.focus();
+window.open(page,target="popupblank");
+  }
+  // -->
+</script>
+
+	<!--
+	 Milonic DHTML Website Navigation Menu Version 5.0
+	 Copyright 2004 (c) Milonic Solutions Limited (UK). All Rights Reserved.
+	 Please visit http://www.milonic.com/ for more information.
+	 
+	 License Number: 185340
+-->	
+
+<script language="JavaScript" src="CSU%20Writing%20Guide%20for%20Engineers-Dateien/milonic_src.js" type="text/javascript"></script>	
+
+<script language="JavaScript">
+if (parent.frames.length) { top.location=document.location;}
+if(ns4)_d.write("<scr"+"ipt language=JavaScript src=/dhtml/mmenuns4.js><\/scr"+"ipt>");		
+  else _d.write("<scr"+"ipt language=JavaScript src=/dhtml/mmenudom.js><\/scr"+"ipt>"); 
+</script><script language="JavaScript" src="/dhtml/mmenudom.js"></script><script language="JavaScript" src="CSU%20Writing%20Guide%20for%20Engineers-Dateien/mmenudom.js"></script>
+<script>
+_menuCloseDelay=150           // The time delay for menus to remain visible on mouse out
+_menuOpenDelay=100            // The time delay before menus open on mouse over
+_followSpeed=5                // Follow scrolling speed
+_followRate=40                // Follow scrolling Rate
+_subOffsetTop=0              // Sub menu top offset
+_subOffsetLeft=0            // Sub menu left offset
+_scrollAmount=3               // Only needed for Netscape 4.x
+_scrollDelay=20               // Only needed for Netcsape 4.x
+_CFix = true;				  // Fixes problem with viewing pages using Contribute
+
+//menu styles for all menus used on Writing@CSU follow
+
+
+with(style1=new mm_style()){
+offcolor="#FFF8DE";
+offbgcolor="#1A5829";
+oncolor="#FFF8DE";
+onbgcolor="#164048";
+bordercolor="#FFFFFF";
+borderstyle="solid";
+fontsize="11px";
+fontstyle="normal";
+fontweight="bold";
+fontfamily="Verdana, Arial, Helvetica, Sans-Serif";
+padding=6;
+pagecolor="#FFF8DE";
+pagebgcolor="#CB9A3A";
+separatorcolor="#FFFFFF";
+horizontalMenuDelay = true;
+// overfilter="Fade(duration=0.2);Alpha(opacity=90);Shadow(color='#777777', Direction=135, Strength=5)";
+// outfilter="randomdissolve(duration=0.3)";
+}
+
+with(style2=new mm_style()){
+offcolor="#FFF8DE";
+offbgcolor="#1A5829";
+oncolor="#FFF8DE";
+onbgcolor="#164048";
+bordercolor="#FFFFFF";
+borderstyle="solid";
+fontsize="11px";
+fontstyle="normal";
+fontweight="bold";
+fontfamily="Verdana, Arial, Helvetica, Sans-Serif";
+padding=6;
+pagecolor="#FFF8DE";
+pagebgcolor="#CB9A3A";
+separatorcolor="#FFFFFF";
+horizontalMenuDelay = true;
+// overfilter="Fade(duration=0.2);Alpha(opacity=90);Shadow(color='#777777', Direction=135, Strength=5)";
+// outfilter="randomdissolve(duration=0.3)";
+subimage="/dhtml/graphics/white_13x13_tb.gif";
+subimagepadding=5;
+}
+
+with(MainMenuStyle=new mm_style()){
+offcolor="#FFF8DE";
+offbgcolor="#1A5829";
+oncolor="#FFF8DE";
+onbgcolor="#164048";
+offborder='1px solid #1A5829';
+onborder='1px solid #FFF8DE';
+fontsize="11px";
+fontstyle="normal";
+fontweight="bold";
+fontfamily="Verdana, Arial, Helvetica, Sans-Serif";
+padding=6;
+pagecolor="#FFF8DE";
+pagebgcolor="#CB9A3A";
+separatorcolor="#FFFFFF";
+// overfilter="Fade(duration=0.2);Alpha(opacity=90);Shadow(color='#777777', Direction=135, Strength=5)";
+// outfilter="randomdissolve(duration=0.3)";
+}
+
+with(SubMenuStyle=new mm_style()){
+offcolor="#FFF8DE";
+offbgcolor="#1A5829";
+oncolor="#FFF8DE";
+onbgcolor="#164048";
+offborder='1px solid #FFF8DE';
+onborder='1px solid #FFF8DE';
+fontsize="11px";
+fontstyle="normal";
+fontweight="bold";
+fontfamily="Verdana, Arial, Helvetica, Sans-Serif";
+padding=6;
+pagecolor="#FFF8DE";
+pagebgcolor="#CB9A3A";
+separatorcolor="#FFFFFF";
+// overfilter="Fade(duration=0.2);Alpha(opacity=90);Shadow(color='#777777', Direction=135, Strength=5)";
+// outfilter="randomdissolve(duration=0.3)";
+subimage="/dhtml/graphics/white_13x13_tb.gif";
+subimagepadding=5;
+}
+
+with(style_optionbuttons=new mm_style()){
+offcolor="#FFF8DE";
+offbgcolor="";
+oncolor="#FFF8DE";
+onbgcolor="";
+offborder='';
+onborder='';
+fontsize="11px";
+fontstyle="normal";
+fontweight="bold";
+fontfamily="Verdana, Arial, Helvetica, Sans-Serif";
+padding=6;
+separatorcolor="white";
+overfilter="Fade(duration=0.2);Alpha(opacity=90);Shadow(color='#777777', Direction=135, Strength=5)";
+outfilter="randomdissolve(duration=0.3)";
+}
+
+with(style_optionbuttonsflat=new mm_style()){
+offcolor="#FFF8DE";
+offbgcolor="white";
+oncolor="#FFF8DE";
+onbgcolor="white";
+offborder='1px solid #FFF8DE';
+onborder='1px solid #FFF8DE';
+fontsize="11px";
+fontstyle="normal";
+fontweight="bold";
+fontfamily="Verdana, Arial, Helvetica, Sans-Serif";
+padding=6;
+separatorcolor="white";
+}
+
+with(style_optionmenus=new mm_style()){
+offcolor="#FFF8DE";
+offbgcolor="#1A5829";
+oncolor="#FFF8DE";
+onbgcolor="#164048";
+offborder='1px solid #FFF8DE';
+onborder='1px solid #FFF8DE';
+fontsize="11px";
+fontstyle="normal";
+fontweight="bold";
+fontfamily="Verdana, Arial, Helvetica, Sans-Serif";
+padding=6;
+separatorcolor="white";
+separatorsize=1;
+overfilter="Fade(duration=0.2);Alpha(opacity=90);Shadow(color='#777777', Direction=135, Strength=5)";
+outfilter="randomdissolve(duration=0.3)";
+subimage="/dhtml/graphics/white_13x13_tb.gif";
+subimagepadding=5;
+imagepadding=5;
+}
+
+with(style_blogoptionslabel=new mm_style()){
+offcolor="#FFF8DE";
+offbgcolor="#1A5829";
+oncolor="#FFF8DE";
+onbgcolor="#164048";
+offborder='1px solid #FFF8DE';
+onborder='1px solid #FFF8DE';
+fontsize="11px";
+fontstyle="normal";
+fontweight="bold";
+fontfamily="Verdana, Arial, Helvetica, Sans-Serif";
+padding=6;
+separatorcolor="white";
+overfilter="Fade(duration=0.2);Alpha(opacity=90);Shadow(color='#777777', Direction=135, Strength=5)";
+outfilter="randomdissolve(duration=0.3)";
+}
+
+with(style_blogoptionbuttons=new mm_style()){
+offcolor="#FFF8DE";
+offbgcolor="";
+oncolor="#FFF8DE";
+onbgcolor="";
+offborder='1px solid #FFF8DE';
+onborder='1px solid #FFF8DE';
+fontstyle="normal";
+fontweight="bold";
+fontfamily="Verdana, Arial, Helvetica, Sans-Serif";
+padding=6;
+separatorcolor="white";
+overfilter="Fade(duration=0.2);Alpha(opacity=90);Shadow(color='#777777', Direction=135, Strength=5)";
+outfilter="randomdissolve(duration=0.3)";
+}
+
+with(style_blogoptionmenus=new mm_style()){
+offcolor="#FFF8DE";
+offbgcolor="#1A5829";
+oncolor="#FFF8DE";
+onbgcolor="#164048";
+offborder='1px solid #FFF8DE';
+onborder='1px solid #FFF8DE';
+fontsize="11px";
+fontstyle="normal";
+fontweight="bold";
+fontfamily="Verdana, Arial, Helvetica, Sans-Serif";
+padding=6;
+separatorcolor="white";
+separatorsize=1;
+overfilter="Fade(duration=0.2);Alpha(opacity=90);Shadow(color='#777777', Direction=135, Strength=5)";
+outfilter="randomdissolve(duration=0.3)";
+// subimage="/dhtml/graphics/darkgreen_13x13_tb.gif";
+subimagepadding=5;
+imagepadding=5;
+}
+
+
+</script>
+
+<script type="text/javascript" src="CSU%20Writing%20Guide%20for%20Engineers-Dateien/keypress.js"></script>
+
+
+	
+ </head><body>
+<div id="pg_wrapper">
+  
+  <div id="header">
+    <div id="csu_logo">
+    
+    
+    <a href="http://www.colostate.edu/"><img src="CSU%20Writing%20Guide%20for%20Engineers-Dateien/csu_logo.png" alt="Colorado State University home page" title="Visit the CSU Main Page"></a>
+    
+    </div>
+    <div id="top_navigation"><a href="http://writing.colostate.edu/help/" title="View the Writing@CSU Help Pages">Help</a>&nbsp;&nbsp;<a href="http://writing.colostate.edu/about.cfm" title="Learn about Writing@CSU">About</a>&nbsp;&nbsp;<a href="http://writing.colostate.edu/contact.cfm" title="View Writing@CSU Contact Information">Contact</a></div>	
+    <div id="banner_top"></div>
+	
+      <div id="banner"><img src="CSU%20Writing%20Guide%20for%20Engineers-Dateien/blank.gif" width="1" height="120"></div>
+    
+    </div>       
+  <div id="menucontainer"><table width="100%" cellpadding="0" cellspacing="0"><tbody><tr><td>
+
+
+
+
+
+
+
+
+
+<script>
+
+with(milonic=new menuname("MainMenu")){
+top=0;
+left=0;
+borderwidth=0;
+style=style1;
+alwaysvisible=1;
+alignment="left";
+orientation="horizontal";
+position="relative";
+aI("text=Home;url=/index.cfm;target=_self;status=Return to the Writing@CSU Home Page;separatorsize=1;");
+aI("text=My Page;url=/work/;target=_self;status=View Your Personal Writing@CSU Home Page;separatorsize=1;");
+
+aI("text=Writing;url=/learn.cfm;target=_self;status=View Resources for Learning to Write;separatorsize=1;");
+aI("text=Teaching;url=/teaching.cfm;target=_self;status=View Resources for Teachers;separatorsize=1;");
+aI("text=Feedback;url=/feedback.cfm;target=_self;status=Ask for Help with Your Writing or Make Comments on Other Writer&rsquo;s Work;separatorsize=1;");
+aI("text=Tools;url=/tools.cfm;target=_self;status=Writing Tools;separatorsize=1;");
+aI("text=Related Sites;url=/relatedsites.cfm;target=_self;status=Related Sites;separatorsize=1;");
+aI("text=Writing Center;url=/wcenter/;target=_self;status=Visit the Colarado State University Writing Center;separatorsize=1;");
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+drawMenus();
+</script><div class="mmenucontainer" onmouseout="$I()" onmouseover="$J(0)" onselectstart="return 0" id="menu0" style="padding: 0px; background: none repeat scroll 0% 0% rgb(26, 88, 41); z-index: 999; visibility: visible; position: relative; width: 577px;"><table class="milonictable" style="line-height: normal; padding: 0px;" id="tbl0" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td id="el0" onmouseover="h$(0,0,1)" style="padding: 6px; background: none repeat scroll 0% 0% rgb(26, 88, 41);" nowrap="nowrap"><a onclick="return $K(0)" name="mM1" onfocus="_iF0C(0)" href="file:///index.cfm" id="lnk0" style="border: medium none; background: none repeat scroll 0% 0% transparent; display: block; color: rgb(255, 248, 222); font-family: Verdana,Arial,Helvetica,Sans-Serif; font-weight: bold; font-style: normal; font-size: 11px; text-decoration: none;">Home</a></td><td id="sep0" style="padding: 0px; width: 1px; background: none repeat scroll 0% 0% rgb(255, 255, 255);"><table class="milonictable" style="line-height: normal; padding: 0px;" width="1" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding: 0px;"></td></tr></tbody></table></td><td id="el1" onmouseover="h$(1,0,1)" style="padding: 6px; background: none repeat scroll 0% 0% rgb(26, 88, 41);" nowrap="nowrap"><a onclick="return $K(1)" name="mM1" onfocus="_iF0C(1)" href="file:///work/" id="lnk1" style="border: medium none; background: none repeat scroll 0% 0% transparent; display: block; color: rgb(255, 248, 222); font-family: Verdana,Arial,Helvetica,Sans-Serif; font-weight: bold; font-style: normal; font-size: 11px; text-decoration: none;">My Page</a></td><td id="sep1" style="padding: 0px; width: 1px; background: none repeat scroll 0% 0% rgb(255, 255, 255);"><table class="milonictable" style="line-height: normal; padding: 0px;" width="1" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding: 0px;"></td></tr></tbody></table></td><td id="el2" onmouseover="h$(2,0,1)" style="padding: 6px; background: none repeat scroll 0% 0% rgb(26, 88, 41);" nowrap="nowrap"><a onclick="return $K(2)" name="mM1" onfocus="_iF0C(2)" href="file:///learn.cfm" id="lnk2" style="border: medium none; background: none repeat scroll 0% 0% transparent; display: block; color: rgb(255, 248, 222); font-family: Verdana,Arial,Helvetica,Sans-Serif; font-weight: bold; font-style: normal; font-size: 11px; text-decoration: none;">Writing</a></td><td id="sep2" style="padding: 0px; width: 1px; background: none repeat scroll 0% 0% rgb(255, 255, 255);"><table class="milonictable" style="line-height: normal; padding: 0px;" width="1" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding: 0px;"></td></tr></tbody></table></td><td id="el3" onmouseover="h$(3,0,1)" style="padding: 6px; background: none repeat scroll 0% 0% rgb(26, 88, 41);" nowrap="nowrap"><a onclick="return $K(3)" name="mM1" onfocus="_iF0C(3)" href="file:///teaching.cfm" id="lnk3" style="border: medium none; background: none repeat scroll 0% 0% transparent; display: block; color: rgb(255, 248, 222); font-family: Verdana,Arial,Helvetica,Sans-Serif; font-weight: bold; font-style: normal; font-size: 11px; text-decoration: none;">Teaching</a></td><td id="sep3" style="padding: 0px; width: 1px; background: none repeat scroll 0% 0% rgb(255, 255, 255);"><table class="milonictable" style="line-height: normal; padding: 0px;" width="1" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding: 0px;"></td></tr></tbody></table></td><td id="el4" onmouseover="h$(4,0,1)" style="padding: 6px; background: none repeat scroll 0% 0% rgb(26, 88, 41);" nowrap="nowrap"><a onclick="return $K(4)" name="mM1" onfocus="_iF0C(4)" href="file:///feedback.cfm" id="lnk4" style="border: medium none; background: none repeat scroll 0% 0% transparent; display: block; color: rgb(255, 248, 222); font-family: Verdana,Arial,Helvetica,Sans-Serif; font-weight: bold; font-style: normal; font-size: 11px; text-decoration: none;">Feedback</a></td><td id="sep4" style="padding: 0px; width: 1px; background: none repeat scroll 0% 0% rgb(255, 255, 255);"><table class="milonictable" style="line-height: normal; padding: 0px;" width="1" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding: 0px;"></td></tr></tbody></table></td><td id="el5" onmouseover="h$(5,0,1)" style="padding: 6px; background: none repeat scroll 0% 0% rgb(26, 88, 41);" nowrap="nowrap"><a onclick="return $K(5)" name="mM1" onfocus="_iF0C(5)" href="file:///tools.cfm" id="lnk5" style="border: medium none; background: none repeat scroll 0% 0% transparent; display: block; color: rgb(255, 248, 222); font-family: Verdana,Arial,Helvetica,Sans-Serif; font-weight: bold; font-style: normal; font-size: 11px; text-decoration: none;">Tools</a></td><td id="sep5" style="padding: 0px; width: 1px; background: none repeat scroll 0% 0% rgb(255, 255, 255);"><table class="milonictable" style="line-height: normal; padding: 0px;" width="1" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding: 0px;"></td></tr></tbody></table></td><td id="el6" onmouseover="h$(6,0,1)" style="padding: 6px; background: none repeat scroll 0% 0% rgb(26, 88, 41);" nowrap="nowrap"><a onclick="return $K(6)" name="mM1" onfocus="_iF0C(6)" href="file:///relatedsites.cfm" id="lnk6" style="border: medium none; background: none repeat scroll 0% 0% transparent; display: block; color: rgb(255, 248, 222); font-family: Verdana,Arial,Helvetica,Sans-Serif; font-weight: bold; font-style: normal; font-size: 11px; text-decoration: none;">Related Sites</a></td><td id="sep6" style="padding: 0px; width: 1px; background: none repeat scroll 0% 0% rgb(255, 255, 255);"><table class="milonictable" style="line-height: normal; padding: 0px;" width="1" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding: 0px;"></td></tr></tbody></table></td><td id="el7" onmouseover="h$(7,0,1)" style="padding: 6px; background: none repeat scroll 0% 0% rgb(26, 88, 41);" nowrap="nowrap"><a onclick="return $K(7)" name="mM1" onfocus="_iF0C(7)" href="file:///wcenter/" id="lnk7" style="border: medium none; background: none repeat scroll 0% 0% transparent; display: block; color: rgb(255, 248, 222); font-family: Verdana,Arial,Helvetica,Sans-Serif; font-weight: bold; font-style: normal; font-size: 11px; text-decoration: none;">Writing Center</a></td></tr></tbody></table> <a name="mM1" id="mmlink0" href="#" onclick="return $K(this._itemRef)" onmouseover="_p1(this);_mot=$P(_mot)" style="outline: medium none; line-height: normal; background: none repeat scroll 0% 0% transparent; text-decoration: none; height: 1px; width: 1px; overflow: hidden; position: absolute; visibility: hidden;"></a></div><div class="mmenucontainer" onmouseout="$I()" onmouseover="$J(0)" onselectstart="return 0" id="menu0" style="padding: 0px; background-color: rgb(26, 88, 41); background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; z-index: 999; visibility: visible; position: relative; width: 577px;"><table class="milonictable" style="padding: 0px; line-height: normal;" id="tbl0" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td id="el0" onmouseover="h$(0,0,1)" style="padding: 6px; background-color: rgb(26, 88, 41); background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" nowrap="nowrap"><a onclick="return $K(0)" name="mM1" onfocus="_iF0C(0)" href="http://writing.colostate.edu/index.cfm" id="lnk0" style="border: medium none; background-color: transparent; background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; display: block; color: rgb(255, 248, 222); font-family: Verdana,Arial,Helvetica,Sans-Serif; font-weight: bold; font-style: normal; font-size: 11px; text-decoration: none;">Home</a></td><td id="sep0" style="padding: 0px; background-color: rgb(255, 255, 255); background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; width: 1px; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;"><table class="milonictable" style="padding: 0px; line-height: normal;" width="1" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding: 0px;"></td></tr></tbody></table></td><td id="el1" onmouseover="h$(1,0,1)" style="padding: 6px; background-color: rgb(26, 88, 41); background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" nowrap="nowrap"><a onclick="return $K(1)" name="mM1" onfocus="_iF0C(1)" href="http://writing.colostate.edu/work/" id="lnk1" style="border: medium none; background-color: transparent; background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; display: block; color: rgb(255, 248, 222); font-family: Verdana,Arial,Helvetica,Sans-Serif; font-weight: bold; font-style: normal; font-size: 11px; text-decoration: none;">My Page</a></td><td id="sep1" style="padding: 0px; background-color: rgb(255, 255, 255); background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; width: 1px; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;"><table class="milonictable" style="padding: 0px; line-height: normal;" width="1" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding: 0px;"></td></tr></tbody></table></td><td id="el2" onmouseover="h$(2,0,1)" style="padding: 6px; background-color: rgb(26, 88, 41); background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" nowrap="nowrap"><a onclick="return $K(2)" name="mM1" onfocus="_iF0C(2)" href="http://writing.colostate.edu/learn.cfm" id="lnk2" style="border: medium none; background-color: transparent; background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; display: block; color: rgb(255, 248, 222); font-family: Verdana,Arial,Helvetica,Sans-Serif; font-weight: bold; font-style: normal; font-size: 11px; text-decoration: none;">Writing</a></td><td id="sep2" style="padding: 0px; background-color: rgb(255, 255, 255); background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; width: 1px; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;"><table class="milonictable" style="padding: 0px; line-height: normal;" width="1" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding: 0px;"></td></tr></tbody></table></td><td id="el3" onmouseover="h$(3,0,1)" style="padding: 6px; background-color: rgb(26, 88, 41); background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" nowrap="nowrap"><a onclick="return $K(3)" name="mM1" onfocus="_iF0C(3)" href="http://writing.colostate.edu/teaching.cfm" id="lnk3" style="border: medium none; background-color: transparent; background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; display: block; color: rgb(255, 248, 222); font-family: Verdana,Arial,Helvetica,Sans-Serif; font-weight: bold; font-style: normal; font-size: 11px; text-decoration: none;">Teaching</a></td><td id="sep3" style="padding: 0px; background-color: rgb(255, 255, 255); background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; width: 1px; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;"><table class="milonictable" style="padding: 0px; line-height: normal;" width="1" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding: 0px;"></td></tr></tbody></table></td><td id="el4" onmouseover="h$(4,0,1)" style="padding: 6px; background-color: rgb(26, 88, 41); background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" nowrap="nowrap"><a onclick="return $K(4)" name="mM1" onfocus="_iF0C(4)" href="http://writing.colostate.edu/feedback.cfm" id="lnk4" style="border: medium none; background-color: transparent; background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; display: block; color: rgb(255, 248, 222); font-family: Verdana,Arial,Helvetica,Sans-Serif; font-weight: bold; font-style: normal; font-size: 11px; text-decoration: none;">Feedback</a></td><td id="sep4" style="padding: 0px; background-color: rgb(255, 255, 255); background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; width: 1px; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;"><table class="milonictable" style="padding: 0px; line-height: normal;" width="1" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding: 0px;"></td></tr></tbody></table></td><td id="el5" onmouseover="h$(5,0,1)" style="padding: 6px; background-color: rgb(26, 88, 41); background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" nowrap="nowrap"><a onclick="return $K(5)" name="mM1" onfocus="_iF0C(5)" href="http://writing.colostate.edu/tools.cfm" id="lnk5" style="border: medium none; background-color: transparent; background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; display: block; color: rgb(255, 248, 222); font-family: Verdana,Arial,Helvetica,Sans-Serif; font-weight: bold; font-style: normal; font-size: 11px; text-decoration: none;">Tools</a></td><td id="sep5" style="padding: 0px; background-color: rgb(255, 255, 255); background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; width: 1px; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;"><table class="milonictable" style="padding: 0px; line-height: normal;" width="1" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding: 0px;"></td></tr></tbody></table></td><td id="el6" onmouseover="h$(6,0,1)" style="padding: 6px; background-color: rgb(26, 88, 41); background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" nowrap="nowrap"><a onclick="return $K(6)" name="mM1" onfocus="_iF0C(6)" href="http://writing.colostate.edu/relatedsites.cfm" id="lnk6" style="border: medium none; background-color: transparent; background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; display: block; color: rgb(255, 248, 222); font-family: Verdana,Arial,Helvetica,Sans-Serif; font-weight: bold; font-style: normal; font-size: 11px; text-decoration: none;">Related Sites</a></td><td id="sep6" style="padding: 0px; background-color: rgb(255, 255, 255); background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; width: 1px; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;"><table class="milonictable" style="padding: 0px; line-height: normal;" width="1" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding: 0px;"></td></tr></tbody></table></td><td id="el7" onmouseover="h$(7,0,1)" style="padding: 6px; background-color: rgb(26, 88, 41); background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" nowrap="nowrap"><a onclick="return $K(7)" name="mM1" onfocus="_iF0C(7)" href="http://writing.colostate.edu/wcenter/" id="lnk7" style="border: medium none; background-color: transparent; background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; display: block; color: rgb(255, 248, 222); font-family: Verdana,Arial,Helvetica,Sans-Serif; font-weight: bold; font-style: normal; font-size: 11px; text-decoration: none;">Writing Center</a></td></tr></tbody></table> <a name="mM1" id="mmlink0" href="#" onclick="return $K(this._itemRef)" onmouseover="_p1(this);_mot=$P(_mot)" style="background-color: transparent; background-image: none; background-repeat: repeat; background-attachment: scroll; background-position: 0% 0%; -moz-background-size: auto auto; overflow: hidden; outline: medium none; line-height: normal; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-decoration: none; height: 1px; width: 1px; position: absolute; visibility: hidden;"></a></div>
+
+
+
+</td><td><!-- Google CSE Search Box Begins -->
+  
+	<form method="get" action="http://www.google.com/custom" style="margin: 0px; padding: 0px; background-color: rgb(26, 88, 41);">
+    <input name="q" id="googlesearchinput" size="10" maxlength="255" title="Click Here to Search Writing@CSU" style="border: 1px solid rgb(153, 153, 153); width: 120px; vertical-align: middle; background-image: url(&quot;/graphics/google_custom_search_watermark.jpg&quot;);" onclick="this.style.backgroundImage=''" onblur="if(document.getElementById('googlesearchinput').value == '') { this.style.backgroundImage='url(/graphics/google_custom_search_watermark.jpg)'; }" type="text">
+      <input name="sa" value="Go" style="font-size: 12px; width: 38px;" title="Click Here to Search" type="submit">
+      <input name="cof" value="T:black;LW:640;ALC:#006400;L:http://writing.colostate.edu/graphics/banner_google_search.jpg;LC:#3366FF;LH:60;BGC:white;AH:left;VLC:#003399;GL:0;S:http://writing.colostate.edu;AWFID:a36f48a6b1a9a51b;" type="hidden">
+      <input name="sitesearch" value="writing.colostate.edu" type="hidden">
+    </form>
+    <!-- Google CSE Search Box Ends -->
+</td></tr></tbody></table></div>
+
+<div id="pg_content">
+
+  
+
+
+  
+    <div id="breadcrumbs">
+	<a href="http://writing.colostate.edu/index.cfm" title="Return to the Home Page">Home</a>      
+
+	
+    	<img src="CSU%20Writing%20Guide%20for%20Engineers-Dateien/bc_arrow.gif" alt=""><a href="http://writing.colostate.edu/guides/" title="Return to this Page">Guides</a>
+          
+
+	
+    	<img src="CSU%20Writing%20Guide%20for%20Engineers-Dateien/bc_arrow.gif" alt="">Writing Guide: Communicating as an Electrical Engineer
+          
+
+	      
+
+	      
+
+	      
+
+	      
+
+	      
+    </div>
+  
+
+
+  
+
+
+
+<div id="sidenav">
+	<div class="contentsdiv">
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/index.cfm" title="Return to the Main Page of this Guide">Introduction</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop2a.cfm">Types of Communication</a></p>
+<div class="contentsdiv">
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/list3.cfm">More on Types of Communication</a></p>
+<div class="contentsdiv">
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop3b.cfm">Graphics</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop3h.cfm">Presentations</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop3m.cfm">Lab Reports</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop3i.cfm">Project Notebooks</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop3c.cfm">Letters, Memos, E-mail</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop3j.cfm">Proposals</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop3d.cfm">Narrative Writing</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop3l.cfm">Engineering Reports</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop3e.cfm">Operating Manuals</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop3n.cfm">Standards</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop3g.cfm">Poster Sessions</a></p>
+</div>
+</div>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop2b.cfm">Communication Conventions</a></p>
+<div class="contentsdiv">
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/list4.cfm">More on the Communication Conventions</a></p>
+<div class="contentsdiv">
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop4a.cfm">Headings &amp; Subheadings</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop4g.cfm">Group Writing</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop4c.cfm">Lists</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9o.cfm">Perspective: Writing Style</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop4b.cfm">Graphics</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9i.cfm">Perspective: Engineering Writing</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop4d.cfm">Active &amp; Passive Voice</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9e.cfm">Perspective: Writing in Industry</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop4e.cfm">Terseness</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9f.cfm">Perspective: Terseness in Writing</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop4f.cfm">Pronouns</a></p>
+</div>
+</div>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop2c.cfm">Advice from Engineers</a></p>
+<div class="contentsdiv">
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/list5.cfm">More on Advice from Engineers </a></p>
+<div class="contentsdiv">
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop5a.cfm">Present Information Logically</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9g.cfm">Perspective: Writing Style</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop5b.cfm">Format your Documents</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9l.cfm">Perspective: Creativity in Engineering Writing</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop5c.cfm">Know your Purpose and Audience</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9n.cfm">Perspective: Logical Flow</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9m.cfm">Perspective: Structured Writing</a></p>
+</div>
+</div>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop2d.cfm">Perspectives on Communicating as an Engineer</a></p>
+<div class="contentsdiv">
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/list9.cfm">More on Perspectives</a></p>
+<div class="contentsdiv">
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9g.cfm">Writing Style</a></p> 
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9l.cfm">Creativity in Engineering Writing</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9f.cfm">Terseness in Writing</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9a.cfm">Narrative Writing in Publications</a></p> 
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9b.cfm">Presentation Levels</a></p> 
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9k.cfm">Explaining a Concept</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9q.cfm">Writing Specifications that Satisfy Codes and Citizens</a></p> 
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9s.cfm">Operating Procedures</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9h.cfm">Being Hired as an Engineer</a></p> 
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9n.cfm">Logical Flow</a></p> 
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9o.cfm">Writing Style</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9i.cfm">Engineering Writing</a></p> 
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9m.cfm">Structured Writing</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9j.cfm">Details in Engineering Writing</a></p> 
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9p.cfm">Developing Your Writing</a></p>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9c.cfm">Public Meetings</a></p> 
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9d.cfm">Technical Presentations</a></p> 
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9e.cfm">Writing in Industry</a></p> 
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9r.cfm">Codes</a></p> 
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9t.cfm">The Language Used in Operating Procedures</a></p> 
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop9u.cfm">Policy Statements and Earthquakes</a></p>
+</div>
+</div>
+<p class="contents"><a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/pop2e.cfm">Additional Resources</a></p>
+</div>
+
+	<hr style="margin-top: 10px; margin-bottom: 10px;">
+	  <div style="padding-left: 10px;">
+	  <a class="contents" href="http://writing.colostate.edu/guides/documents/ee-com/relatedresources.cfm?resourceid=37">Related Resources <img src="CSU%20Writing%20Guide%20for%20Engineers-Dateien/icon_diskette_options.gif" alt="View Related Resources" title="View Related Resources" align="absbottom" border="0"></a><br>
+		<a href="http://writing.colostate.edu/guides/documents/ee-com/printformat.cfm?printformat=yes" title="View this Guide on a Page Formatted for Printing" class="contents"> Print-Friendly Page <img src="CSU%20Writing%20Guide%20for%20Engineers-Dateien/icon_printer.gif" alt="Print Page" title="View this Guide on a Page Formatted for Printing" width="16" align="absbottom" border="0" height="15"></a><br>
+		<a href="http://writing.colostate.edu/guides/documents/ee-com/contrib.cfm" title="View Information About Authors, Coders, Designers, and Contributors" class="contents">Authors &amp; Contributors</a><br>
+		</div>
+  
+</div>
+
+ 
+
+
+    <h2 style="margin-top: 0px;">Writing Guide: Communicating as an Electrical Engineer</h2>
+
+
+
+ 
+
+
+ 
+
+<p><span class="DropCap">I</span>n both academia and industry, engineers speak 
+and write their ideas. While some communication tasks are completed 
+individually, others are performed as a group. Engineers also work as 
+project teams to write proposals and reports. To learn more about 
+communicating as an engineer, choose any of the items below:
+</p><ul>
+<li><a href="http://writing.colostate.edu/guides/documents/ee-com/pop2a.cfm">Types of Communication</a>
+</li><li><a href="http://writing.colostate.edu/guides/documents/ee-com/pop2b.cfm">Communication Conventions</a>
+</li><li><a href="http://writing.colostate.edu/guides/documents/ee-com/pop2c.cfm">Advice from Engineers</a>
+</li><li><a href="http://writing.colostate.edu/guides/documents/ee-com/pop2d.cfm">Perspectives on Communicating as an Engineer</a>
+</li><li><a href="http://writing.colostate.edu/guides/documents/ee-com/pop2e.cfm">Additional Resources</a>
+</li></ul>
+
+
+
+
+
+
+<div id="footer" style="border-top: 1px solid rgb(26, 88, 41); padding: 5px;">Writing@CSU is a project of <a href="http://www.colostate.edu/" title="Visit the Colorado State University Web Site" style="text-decoration: underline; color: rgb(26, 88, 41);">Colorado State University</a>. <a href="http://writing.colostate.edu/disclaimer.cfm" title="View Copyright Information" style="text-decoration: underline; color: rgb(26, 88, 41);">Copyright © 1993-2010</a>
+Colorado State University and/or this site's authors, developers, and
+contributors. Some material displayed on this site is used with
+permission.</div>
+</div> 
+
+
+</div> 
+</body></html>

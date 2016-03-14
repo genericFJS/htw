@@ -1,0 +1,97 @@
+// Vorlesungsbeispiel Vererbung C++
+// A. Beck
+// Beispiel basiert auf Tutorial C++ Microsoft Press
+
+#ifndef _BESCH_H_
+#define _BESCH_H_
+#include "cstrg.h"
+class Besch
+{
+  public:
+    Besch( CString BeschName):Name(BeschName){};
+    CString getName() const{return Name;}
+    void setName(CString Name){this->Name=Name;};
+    void display()const{cout<<this->Name;}
+    double calc(){return 0.0;}
+    //~Besch(){}
+  private:
+    CString Name;
+};
+#endif
+-------------------------------------------------------------------------
+#ifndef _LOHN_H_
+#define _LOHN_H_
+#include "besch.h"
+
+class Arbeiter : public Besch
+{
+  public:
+    Arbeiter(CString BName, double StdLohn):Besch(BName){Stunden=0;Lohn=StdLohn;};
+    void setLohn(float StdLohn){Lohn=StdLohn;};
+    void setStd (float Stunden){this->Stunden=Stunden;}
+    void display()const
+      {Besch::display();cout<<' '<<Stunden<<"Std a "<<Lohn << "Euro";}
+    double calc()const{return Lohn*Stunden;}
+  private:
+    float Lohn, Stunden;
+};
+#endif
+-------------------------------------------------------------------------
+#ifndef _GEHALT_H_
+#define _GEHALT_H_
+#include "besch.h"
+
+class Angest : public Besch
+{
+  public:
+    Angest(CString BName, double Gehalt):Besch(BName){this->Gehalt=Gehalt;};
+    void setGehalt(double Gehalt){this->Gehalt=Gehalt;};
+    void display()const
+      {Besch::display();cout<<' '<< Gehalt << " Euro Gehalt";}
+    double calc()const{return Gehalt;}
+  private:
+    double Gehalt;
+};
+#endif
+-------------------------------------------------------------------------
+#ifndef _VERK_H_
+#define _VERK_H_
+#include "besch.h"
+#include "lohn.h"
+
+class Verkaeufer : public Arbeiter
+{
+  public:
+    Verkaeufer(CString Name,double Lohn,double Prov):Arbeiter(Name,Lohn)
+    { this-> Provision=Provision;}
+    void setProv (double Prov){Provision=Prov;}
+    void setStd (double Ums){Umsatz=Ums;}
+    void display()const {Arbeiter::display();cout<<" Provision:"<<Provision<<"%";}
+    double  calc()const {return Arbeiter::calc()+Provision*Umsatz;}
+private:
+    double Provision, Umsatz;
+};
+#endif
+--------------------------------------------------------------------------
+#include <iostream>
+using namespace std;
+#include "cstrg.h"
+#include "besch.h"
+#include "lohn.h"
+#include "gehalt.h"
+#include "verk.h"
+
+int main()
+{
+  Arbeiter L=Arbeiter("Egon Olsen",7.77);
+  L.display(); cout<< endl;
+  Angest G=Angest(CString("Insp. Mortensen"),2321.00);
+  G.display(); cout<< endl<<endl;
+  Verkaeufer V=Verkaeufer("Bang-Johansen",12.21,9.0);
+  V.display(); cout<< endl<<endl;
+  Besch* Beschtigte[3]={&L,&G,&V};
+  Besch* pB;
+  for (int i=0; i<3;i++) 
+  { pB=Beschtigte[i];pB->display(); cout<<endl;}
+}
+
