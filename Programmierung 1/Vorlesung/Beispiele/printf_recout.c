@@ -1,11 +1,8 @@
-// gcc -c librecout.c
-// ar rvs librecout.a librecout.c
-// sudo cp librecout.a /usr/local/librecout.a
-// sudo cp recout.h /usr/local/include
 
+#include <stdarg.h>
 #include "recout.h"
 
-
+char x;
 
 void myputc(char c)
 {
@@ -25,13 +22,32 @@ void mydputc(int fdescr, char c)
     asm("int $0x80");
 }
 
-void myfputs(char *c,int fdescr, int len)
+void mydputs(char *c,int fdescr, int len)
 {
     asm("mov $4,%eax");
     asm("mov 12(%ebp),%ebx");
     asm("mov 8 (%ebp),%ecx");
     asm("mov 16(%ebp),%edx");
     asm("int $0x80");
+}
+/*
+void myputs(char* p)
+{
+  while(*p)myputc(*p++);
+}*/
+
+void myputdouble(double d)
+{
+  int i;
+  if(d<0){myputc('-');d=-d;}
+  i=d;
+  myuputd(i);myputc('.');
+  d-=i;
+  d*=1000;
+  i=d;
+  if (i<10)  {myputs("00"); myuputd(i);} else
+  if (i<100) {myputs("0");  myuputd(i);} else
+                            myuputd(i);
 }
 
 void myputs(char* p)
@@ -108,30 +124,43 @@ int myatoi(char* p)
   return i;
 }
 
-void mydputs(char *c,int fdescr, int len)
+int  myprintf(char* fmt,...)
 {
-    asm("mov $4,%eax");
-    asm("mov 12(%ebp),%ebx");
-    asm("mov 8 (%ebp),%ecx");
-    asm("mov 16(%ebp),%edx");
-    asm("int $0x80");
-}
-/*
-void myputs(char* p)
-{
-  while(*p)myputc(*p++);
-}*/
+  va_list ap;
+  char    *p,
+          *sval,
+           cval;
+  int      ival;
+  unsigned uval;
+  double   dval;
 
-void myputdouble(double d)
-{
-  int i;
-  if(d<0){myputc('-');d=-d;}
-  i=d;
-  myuputd(i);myputc('.');
-  d-=i;
-  d*=1000;
-  i=d;
-  if (i<10)  {myputs("00"); myuputd(i);} else
-  if (i<100) {myputs("0");  myuputd(i);} else
-                            myuputd(i);
+  va_start(ap,fmt);
+  for (p=fmt;*p;p++)
+  {
+    if(*p !='%')
+    {
+      myputc(*p);
+      
+    }
+    else
+    switch (*++p)
+    {
+      case 'd':	ival=va_arg(ap,int);
+      		myputd(ival);	 	break;
+      case 'u': uval=va_arg(ap,unsigned);
+                myuputd(uval);		break;
+      case 'x':	ival=va_arg(ap,int);
+      		myputx(ival);	 	break;
+      case 'f': dval=va_arg(ap,double);
+      		myputdouble(dval);	break;
+      case 's': sval=va_arg(ap,char*);
+	        myputs(sval);		break;
+      case 'c': cval=va_arg(ap,int);
+      			myputc(cval);	break;
+			
+      default : myputc(*p);		break;
+    }
+  }
+  va_end (ap);
 }
+
