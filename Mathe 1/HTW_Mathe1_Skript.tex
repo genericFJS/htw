@@ -25,19 +25,19 @@
 \part{Elementare Grundlagen}\partNumbering
 
 \section{Aussagen und Grundzüge der Logik}
-\input{HTW_Mathe1_Skript_sec1}
+%\input{HTW_Mathe1_Skript_sec1}
 
 \section{Mengen}\label{sec:Mengen}
-\input{HTW_Mathe1_Skript_sec2}
+%\input{HTW_Mathe1_Skript_sec2}
 
 \section{Zahlen}
-\input{HTW_Mathe1_Skript_sec3}
+%\input{HTW_Mathe1_Skript_sec3}
 
 \section{Reellwertige Funktionen einer reellen Veränderlichen}
-\input{HTW_Mathe1_Skript_sec4}
+%\input{HTW_Mathe1_Skript_sec4}
 
 \section{Lineare Algebra}
-\input{HTW_Mathe1_Skript_sec5}
+%\input{HTW_Mathe1_Skript_sec5}
 
 \newpage
 \part{Folgen, Reihen, Grenzwerte}\partNumbering
@@ -188,6 +188,88 @@ Wichtig ist die Differenz zwischen höchstem und niedrigstem Index von $x$ (=Ord
 Zur Lösung von der Differenzengleichung (aus erstem Punkt oberhalb):
 \begin{enumerate}
 \item Allgemeine Lösung: $\boxed{x_n=x_n^{(h)}+x_n^{(p)}}$, dabei ist $x_n^{(h)}$ die \emph{allgemeine Lösung der zugehörigen homogenen Gleichung} $\boxed{x_n=a_1 x_{n-1}+...+a_k x_{n-k}}$ und $x_n^{(p)}$ eine \emph{partikuläre (spezielle) Lösung der inhomogenen Gleichung}.
+\end{enumerate}
+
+FEHLENDE VL
+
+\subsection{Unendliche Reihen}
+\subsubsection{Grundbegriffe}
+\paragraph{Def. 6:} 
+Gegeben sei die Zahlenfolge $(a_n)_n \geq n_0, \; n\in \mathbb{N}$. Die Zahlenfolge $(s_n)_n \geq n_0$ mit $s_{n_0}:=a_{n_0}, \; s_{n_0 + 1} := a_{n_0}+a_{n_0 +1}, \; s_{n_0 +2} := a_{n_0} + a_{n_0 +1} + a_{n_0 +2}, \; ..., \; s_n=a_{n_0}+a_{n_0 +1} +...+a_n$ (\emph{Partialsumeenfolge}) heißt \emph{unendliche Reihe}.\\
+Bezeichnung: $\boxed{\sum_{n=n_0}^{\infty} a_n}$
+\begin{itemize}
+\item Die Zahlen $a_n$ heißen Glieder der Reihe, die Zahlen $s_n$ heißen Partialsummen der Reihe
+\item Ist die Reihe konvergent, d.h. die Folge $(s_n)$ ist konvergent, so heißt $s:=\lim_{n\to \infty}s_n=: \sum_{n=n_0}^{\infty} a_n$ die Summe der Reihe
+\item Die Reihe heißt (bestimmt oder unbestimmt) divergent, wenn die Partialsummen die entsprechende Eigenschaft haben.
+\end{itemize}
+Bemerkung: Oft $n_0=0$ oder $=1$
+\subparagraph{Bsp. 6:} $a_n=a q^n$ mit $a\not = 0, q \not = 0, n=0,1,2,...$\\
+$(a_n)=(a, aq, aq^2, aq^3,...)$ (\emph{geometrische Zahlenfolge})\\
+$(s_n)=\sum_{n=0}^\infty aq^n$ (\emph{geometrische Reihe})\\
+$= (\underbrace{a}_{s_0}, \underbrace{a+aq}_{s_1}, \underbrace{a+ aq+ aq^2}_{s_2}, ...)$\\
+$s_n=a + aq + aq^2 + aq^3+...+aq^n \quad | \cdot q$\\
+$s_nq=aq+aq^2+aq^3+aq^4+...+aq^{n+1}$\\
+Beide Zeilen voneinander abgezogen:\\
+$s_n-s_nq = a - aq^{n+1}\\
+s_n(1-q) = a - aq^{n+1} \quad | : (1-q) \text{ falls }q\not = 1\\
+s_n = a\cdot \frac{1-q^{n+1}}{a-q}$ (\emph{Summenformale für die endliche geometrische Reihe} mit Anfangsglied $a$ und $n+1$ Summanden)\\
+$\Rightarrow \lim_{n\to \infty}s_n=\frac{a}{a-q}$ falls $|q|<1$
+$\Rightarrow$ Summe der unendlichen geometrischen Reihe:\\
+$\boxed{\sum_{n=0}^\infty a q^n=\frac{a}{1-q}}$ für $|q|<1$.\\
+z.B. $0,\overline{72}=0,727272...=\frac{72}{100}+\frac{72}{10.000}+\frac{72}{1.000.000}+...=\frac{72}{99}=\frac{8}{11}$
+
+\subparagraph{Bsp. 7:} $\sum_{n=1}^\infty \frac{1}{n}=1+\frac{1}{2}+\frac{1}{3}+...$ heißt \emph{harmonische Reihe}. Offensichtlich ist $(s_n)$ streng monoton wachsend. Man kann zeigen, dass $(s_n)$ nicht beschränkt ist. Aus Satz 3 folgt: die harmonische Reihe ist bestimmt divergent.\\
+Schreibweise: $\sum_{n=1}^\infty \frac{1}{n}=\infty$
+
+\paragraph{Def. 7:} Die Reihe $\sum_{n=n_0}^\infty a_n$ heißt
+\begin{enumerate}[label=(\alph*)]
+\item absolut konvergent, falls $\sum_{n=n_0}^\infty|a_n|$ konvergent ist.
+\item bedingt konvergent, falls $\sum_{n=n_0}^\infty a_n$ konvergent, aber $\sum_{n=n_0}^\infty |a|$ nicht konvergent ist.
+\end{enumerate}
+
+\paragraph{Satz 5:} $\sum_{n=n_0}^\infty a_n$ absolut konvergent $\Rightarrow$ $\sum_{n=n_0}^\infty a_n$ konvergent.
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Die Umkehrung gilt im Allgemeinen nicht. Es gibt konvergente Reihen, die nicht absolut konvergieren. Z.B. $\sum_{n=1}^\infty (-1)^{n-1}\frac{1}{n}=1-\frac{1}{2}+\frac{1}{3}-\frac{1}{4}+...$
+\item Für Reihen mit nicht-negativen Gliedern ($a_n \geq 0$ für alle $n$) ist absolute Konvergenz identisch mit (gewöhnlicher) Konvergenz. Für solche Reihen gilt entweder $\sum_{n=n_0}^\infty a_n<\infty$ [(absolut) konvergent] oder $\sum_{n=n_0}^\infty a_n = \infty$ [bestimmt divergent].
+\end{enumerate}
+
+\subsubsection{Konvergenzkriterien}
+\begin{enumerate} [label= \arabic*.]
+\item Notwendiges Konvergenzkriterium
+\paragraph{Satz 6:} $\sum_{n=n_0}^\infty a_n$ konv. $\Rightarrow$ $\lim_{n\to \infty} a_n = 0$
+\subparagraph{Beweis:} $a_n = s_n - s_{n-1}$\\
+$\Rightarrow \lim_{n\to \infty}a_n = \lim_{n\to\infty}s_n - \lim_{n\to\infty}s_{n-1}=s-s=0$
+\subparagraph{Bemerkung:} 
+\begin{enumerate}
+\item Bedingung $\lim_{n\to\infty}a_n = 0$ ist notwendig, aber nicht hinreichend. Z.B. $a_n=\frac{1}{n}$, dann $\lim_{n\to\infty}a_n=0$ aber $\sum_{n=1}^\infty a_n=\infty$
+\item Anwendung des Satzes meist in logisch äquivalenter Form: $\lim_{n \to \infty} a_n \not = 0 \Rightarrow \sum_{n=n_0}^\infty a_n$ divergiert
+\end{enumerate}
+
+\subparagraph{Bsp. 8:} $\sum_{n=1}^\infty \left(\frac{n}{10n-1}\right)^{50}$\\
+$a_1=1,94\cdot 10^{-48}, a_2=1,3 \cdot 10^{-49}, ...$\\
+$\lim_{n\to\infty}a_n=\lim_{n\to\infty}\left(\frac{n}{10-\frac{1}{n}}\right)^{50}\not = 0$\\
+$\Rightarrow$ Reihe divergent (sogar besimmt divergent, da alle $a_n \geq 0$)
+
+\item Hinreichendes Kriterien
+\begin{enumerate}[label=(\Alph*)]
+\item \emph{Leibnitzkriterium für alternierende Reihen}
+\paragraph{Satz 7:} Sei $(b_n)$ Folge mit 
+\begin{itemize}
+\item $b_n \geq b_{n+1} > 0$ für alle $n \in \mathbb{N}$
+\item $\lim_{n\to\infty} b_n = 0$
+\end{itemize}
+Dann ist $\sum_{n=0}^\infty(-1)^n b_n=b_0-b_1+b_2-b_3+...$ konvergent. D.h. wenn die Beträge $b_n$ der Glieder einer alternierenden Reihe mit $a_n = (-1)^n b_n$ eine Nullfolge bilden, dann ist die Reihe konvergent.\\
+Weiter gilt: $|s-s_n| \leq | a_{n+1} |$\\
+Also ist der Fehler bei der Approximation von $s$ durch $s_n$ beschränkt durch den Beträg von $a_{n+1}$.
+
+\subparagraph{Bsp. 9:} $\sum_{n=1}^\infty (-1)^{n-1} \frac{1}{n}=1-\frac{1}{2}+\frac{1}{3}-\frac{1}{4}+...$ (alternierende harmonische Reihe)\\
+$s_1=1, \; s_2=0,5, \; s_3\approx 0,83, \; s_4\approx 0,583, \; s_5\approx 0,78, \; s_6\approx 0,62$\\
+ABB 6\\
+Man kann zeigen: $s=\ln 2 = 0,6931$
+
+\end{enumerate}
+
 \end{enumerate}
 
 

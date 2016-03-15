@@ -1,0 +1,141 @@
+% Header aus der Vorlage
+\input{../LaTeX_master/LaTeX_master_HTW}
+
+%\bibliography{../Literatur/HTW_Literatur.bib}
+
+% Definition von Titel, Autor usw.
+\DTitel{Datenbanksysteme I}
+\DUntertitel{Vorlesungsskript}
+\DAutor{Falk-Jonatan Strube}
+\DNotiz{Vorlesung von Dr. Axel Toll}
+
+\begin{document}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\section*{Prüfungsmodalitäten}
+\paragraph{PVL} unbenoteter Beleg als Voraussetzung zur Prüfung
+\begin{enumerate}
+\item Access-Beleg (in Papier-Form abzugeben)
+\item Abnahme der SQL-Praktikums-Aufgaben (Abnahme während Praktikumszeit)
+\end{enumerate}
+
+\paragraph{SP} schriftliche Prüfung, 90min\\
+keine eigenen Unterlagen zugelassen. Nur zuvor ausgegeben Referenzen.
+
+\section[Datenbank als System und Modell]{Betriebliche Informations- und Kommunikationssysteme - Unternehmensmodell - Datenbank}
+
+\subsection{Daten als Unternehmensressource}
+\subsubsection{Daten und Informationen}
+Redundante Daten bergen Gefahr von Inkonsistenz $\Rightarrow$ Ziel: Schaffen von Datenbank mit folgenden Eigenschaften:
+\begin{itemize}
+\item ohne Inkonsistenzen (redundanzarm)
+\item Zugriffsschutz
+\item Mehrfachzugriff
+\item Backup-Möglichkeiten (mit Widerspruchsfreier Wiederherstellung)
+\end{itemize}
+
+\subparagraph{Folie 1.1}\parskp
+\begin{tabular}{r | c c}
+& Daten & Informationen\\
+\hline
+Zweck & zweckneutral & zweckgebunden\\
+Verarbeitung & maschinell & Interpretation durch Menschen\\
+Speicherform & vergegenständlicht & an Menschen gebunden\\
+\end{tabular}
+\paragraph{Betriebliche Produktionsfaktoren}
+\begin{itemize}
+\item klassische Faktoren
+\begin{itemize}
+\item Betriebsmittel
+\item Werkstoffe
+\item Arbeitskraft
+\end{itemize}
+\item Daten + Informationen
+\end{itemize}
+
+\subparagraph{Folie 1.2}\parskp
+große Datenbestände $\Rightarrow$ Maßnahmen zur Datenorganisation\bigskip\\
+Eine mögliche Organisationsform (logisches Konzept): Ablage in Relationen (=Tabelle)\bigskip\\
+Eine Zeile in dieser Tabelle nennt man \emph{Datensatz} (Tupel, Record, …).\\
+Eine Spalte nennt man Datenfeld.
+
+\subsubsection{Klassifikation von Daten}
+\paragraph{Mögliche Kriterien} für Datenfeld
+\begin{itemize}
+\item Zeichenart
+\begin{itemize}
+\item ganze Zahl $\Rightarrow$ für Aufzählungen
+\item reelle zahl $\Rightarrow$ numerische Berechnungen
+\item Währung $\Rightarrow$ finanztechnische Berechnungen
+\item Datum $\Rightarrow$ kalendarische Berechnungen/Werte
+\item Text $\Rightarrow$ Beschreibung
+\item Bitmuster $\Rightarrow$ Video, Bilder, …
+\end{itemize}
+\item Erscheinungsform
+\begin{itemize}
+\item sprachlich
+\item bildlich
+\item schriftlich
+\end{itemize}
+\item Stellung im Verarbeitungsprozess (E - V - A)
+\begin{itemize}
+\item Eingabe
+\item Verarbeitung
+\item Ausgabe
+\end{itemize}
+\item Verarbeitbarkeit mittels IT\\
+(Umwandlung in digitale Daten: analog $\rightarrow$ diskret $\rightarrow$ digital)
+\item Verwendungszweck\\
+\begin{tabular}{
+p{\dimexpr0.2\columnwidth-2\tabcolsep-1.5\arrayrulewidth} | >{\raggedright}
+p{\dimexpr0.4\columnwidth-2\tabcolsep-1.5\arrayrulewidth} | >{\raggedright}
+p{\dimexpr0.3\columnwidth-2\tabcolsep-1.5\arrayrulewidth}}
+& Charakterisierung & Beispiel\tabularnewline
+\hline
+Stammdaten & selten zu verändern (über längeren Zeitraum in Struktur und Inhalt konstant) & Personalstammdaten (Name, Adresse)\tabularnewline
+Änderungsdaten & Aktualisierung der Stammdaten & Änderung der Adresse\tabularnewline
+Bestandsdaten & Periodische Änderung des wertes (Inhalt) von Feldern, Datenstruktur besteht über längeren Zeitraum konstant & Lagerbestände, Kassenbestände\tabularnewline
+Bewegungsdaten & Daten zur Aktualisierung des Wertes von Bestandsdaten & Lagerzugänge und -abgänge\tabularnewline
+Archivdaten & vergangenheitsbezogene Daten die über langeren Zeitraum aufbewahrt werden & Rechnungen, Buchungen der vergangenen 5 Jahre\tabularnewline
+Transferdaten & Daten, die von einem anderen Programm erzeugt wurden und an ein anderes transferiert werden & Verkauf von Kundenadresson\tabularnewline
+Vormerkdaten & Daten, die solange existieren, bis ein genau definiertes Ereignis eintritt & Reservierung einer Materialmenge im Lager
+\end{tabular}
+\end{itemize}
+
+\subsubsection{Datenverschlüsselung}
+Gemeint ist nicht die Codierung und Decodierung von Daten, sondern das Zuweisen von Schlüsseln zu Datensätzen.
+\paragraph{Folie 1.3}
+\paragraph{Identifizierender Schlüssel} \parskp
+kennzeichnet Objekteindeutig\\
+Bsp.:
+\begin{itemize}
+\item Personal-Nr.
+\item Material-Nr.
+\end{itemize}
+\paragraph{Klassifiziernder Schlüssel} \parskp
+ordnet Objekt einer Klasse zu\\
+Bsp.:
+\begin{itemize}
+\item Länderkennung: D, C, CH, …
+\item Geschlecht: M, W
+\end{itemize}
+\paragraph{Hierarchischer Verbundschlüssel} \parskp
+identifizierender Teil hängt vom klassifizierenden Teil ab\\
+Bsp.:
+\begin{itemize}
+\item Autokennzeichen: $\underbrace{\text{DD}}_{\text{klass.}} \underbrace{\text{XY 715}}_{\text{ident.}}$
+\end{itemize}
+\paragraph{Parallelschlüssel} \parskp
+zwei unabhängige Schlüsselteile\\
+Bsp.:
+\begin{itemize}
+\item Flugnummer $\underbrace{\text{LH 283}}_{\text{Flugnr.}} \underbrace{\text{AB3}}_{\text{Flugzeug}}$
+\end{itemize}
+\paragraph{Folie 1.4}
+%\newpage
+%\printbibliography
+\end{document}
