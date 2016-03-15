@@ -1,0 +1,120 @@
+% Header aus der Vorlage
+\input{../LaTeX_master/LaTeX_master_HTW}
+
+\bibliography{../Literatur/HTW_Literatur.bib}
+
+% Definition von Titel, Autor usw.
+\DTitel{Technische Informatik}
+\DUntertitel{Vorlesungsskript}
+\DAutor{Falk-Jonatan Strube}
+\DNotiz{Vorlesung von Dr. Boris Hollas}
+
+\begin{document}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\section*{Inhalte}
+Grundlage: Grundkurs Theoretische Informatik \cite{hollas2015grundkurs}
+\begin{itemize}
+\item Formale Sprachen
+\begin{itemize}
+\item Reguläre Sprachen
+\begin{itemize}
+\item Endliche Automaten
+\item Reguläre Ausdrücke
+\end{itemize}
+\item Nichtreguläre Sprachen
+\item Kontextfreie Sprachen
+\begin{itemize}
+\item Kellerautomaten
+\item Grammatiken
+\end{itemize}
+\end{itemize}
+\item Berechenbarkeit
+\begin{itemize}
+\item Halteproblem
+\end{itemize}
+\item Komplexitätsklassen
+\begin{itemize}
+\item $P$
+\item $NP$
+\item $NP$-vollständige Probleme
+\end{itemize}
+\end{itemize}
+
+\section{Automaten und Formale Sprachen}
+\subsection{Formale Sprachen}
+\paragraph{Def.:} Ein Alphabet ist eine Menge $\Sigma \not = \emptyset$ (Symbole in $\Sigma$ -- müssen nicht einzelne Buchstaben sein, auch Wörter usw. [bspw. „if“ oder „else“ im Alphabet der Programmiersprache C]).
+
+\paragraph{Def.:} Für $w_1, ..., w_n \in \Sigma$ ist $w=w_1...w_n$ ein Wort der Länge $n$.\\
+Das Wort $\varepsilon$ ist das \emph{leere Wort}.\\
+Die Menge aller Wörter bezeichnen wir mit $\Sigma^*$ (einschließlich dem leeren Wort).
+
+\subparagraph{Bsp.:} $\Sigma = \{a,b,c\}\quad \rightarrow \Sigma^*=\{\varepsilon, a, b, c, aa, ab,a c, aaa, ...\}$
+\paragraph{Def.:} Für Wörter $a,b \in \Sigma^*$ ist $ab$ die Konkatenation dieser Wörter.\\
+Für ein Wort $w$ ist $w^n$ die $n$-fache Konkatenation von $w$, wobei $w^0=\varepsilon$.
+
+\subparagraph{Bemerkung:} Für alle $w \in \Sigma^*$ gilt $\varepsilon w = w = w \varepsilon$. $\varepsilon$ ist also das neutrale Element der Konkatenation.
+
+\paragraph{Def.:} Eine \emph{formale Sprache} ist eine Teilmenge von $\sigma^*$.
+
+\paragraph{Def.:} Für Sprachen $A, B$ ist $AB=\{ab \;|\; a \in A, \; b \in B\}$ sowie $A^n=\prod_{i=1}^{n}A$, wobei $A^0=\{\varepsilon\}$.
+\subparagraph{Bemerkung:} $\emptyset, \varepsilon, \{\varepsilon\}$ sind unterschiedliche Dinge (leere Menge, leeres Wort, Menge mit leerem Wort).
+
+\subparagraph{Bemerkung:} $\Sigma^*$ lässt sich ebenfalls definieren durch $\Sigma^*=\bigcup_{n\geq 0}\Sigma^n$.\\
+Ferner ist $\Sigma^+=\Sigma^*-\{\varepsilon\}$.
+
+\subsection{Reguläre Sprachen}
+\subsubsection{Deterministische endliche Automaten (DFA)}
+\subparagraph{Bsp.:} \parskp
+ABB1\\
+(Pfeil zeigt auf Startzustand, Endzustand ist doppelt umrandet)\\
+Dieser DFA akzeptiert alle Wörter über $\Sigma = \{a,b,c\}$, die $abc$ enthalten.\\
+Deterministisch: Es gibt genau ein Folgezustand. Von jedem Knoten aus gibt es genau eine Kante für jedes Zeichen, nicht mehrere und nicht keine.
+\subparagraph{Bsp.:} \parskp
+ABB2\\
+Dieser DFA erkennt die Sprache $\{a,b,c\}^*$.
+\paragraph{Def.:} Ein DFA ist ein Tupel $\mathcal{M}=(Z, \Sigma, \delta, z_0, )$
+\begin{itemize}
+\item $Z$: Menge der Zustände
+\item $\Sigma$: Eingabealphabet
+\item $\delta$: Überführungsfunktion $Z\times \Sigma \rightarrow Z$. Dabei bedeutet $\delta (z,a) = z'$, dass $\mathcal{M}$ im Zustand $z$ für das Zeichen $a$ in den Zustand $z'$ wechselt.
+\item $z_0\in Z$: Startzustand
+\item $E$: Menge der Endzustände
+\end{itemize}
+$\delta$: ABB3
+
+\paragraph{Def.:} Die erweiterte Überführungsfunktion $\hat{\delta}:Z\times \Sigma^*\rightarrow Z$ ist definiert durch\\
+$\hat{\delta}(z,w)=\begin{cases}
+z & \text{für }w = \varepsilon\\
+\hat{\delta}(\delta(z,a),x) & \text{für }w=ax \text{ mit } a\in \Sigma ,x \in \Sigma^*
+\end{cases}$\\
+Dazu vergleichbarer C-Code:
+\begin{lstlisting}[language=C]
+int $\hat{\delta}$(int z, char* w){
+	if ( strlen(w) == 0 )
+		return z;
+	else
+		return $\hat{\delta}$($\delta$(z, w[0]), w[1]);
+\end{lstlisting}
+Veranschaulichung:\\
+ABB4\\
+Die erweiterte Überführungsfunktion bestimmt den Zustand nach dem vollständingen Lesen eines Wortes.
+
+\subparagraph{Bsp.:} \parskp
+ABB5
+\begin{align*}
+\hat{\delta}(z_0, aaba) &= \hat{\delta}(\delta(z_0,a),aba)=\\
+\hat{\delta}(z_0, aba) &= \hat{\delta}(\delta(z_0,a),ba)=\\
+\hat{\delta}(z_0, ba) &= \hat{\delta}(\delta(z_0,b),a)=\\
+\hat{\delta}(z_E, a) &= \hat{\delta}(\delta(z_E,a), \varepsilon)=\\
+\hat{\delta}(z_E, \varepsilon) &= z_E\\
+\end{align*}
+Die von $\mathcal{M}$ \emph{akzeptierte Sprache} ist $L(\mathcal{M})=\{w\in \Sigma^* \;|\; \hat{\delta}(z_0, w) \in E\}$
+
+\newpage
+\printbibliography
+\end{document}
