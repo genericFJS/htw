@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<root text="&#34;double rdin(eof, s)&#34;,&#34;Eingangsparameter:  s&#34;,&#34;Rueckgabeparameter: eof&#34;,&#34;Funktionswert: d&#34;" comment="&#34;&#34;" color="ffffff" type="sub" style="abbr">
+	<children>
+		<instruction text="&#34;d := 0&#34;" comment="&#34;Funktionswert fuer Rueckgabe&#34;" color="ffffff" rotated="0"></instruction>
+		<instruction text="&#34;eof := false&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+		<instruction text="&#34;c := '\n'&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+		<repeat text="&#34;(Eingabefehler oder (c ungleich '\n')) ?                         &#34;" comment="&#34;&#34;" color="ffffff">
+			<qRepeat>
+				<alternative text="&#34;                        (Eingabefehler oder (c ungleich '\n'))?                                &#34;" comment="&#34;&#34;" color="ffffff">
+					<qTrue>
+						<instruction text="&#34;Write(&#34;&#34;Fehler, Eingabe wiederholen&#34;&#34;)&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+						<instruction text="&#34;Fehlerstatus zuruecksetzen&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+						<instruction text="&#34;falsche Zeichen ueberspringen&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+					</qTrue>
+					<qFalse>
+					</qFalse>
+				</alternative>
+				<instruction text="&#34;Write( s )&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+				<instruction text="&#34;Read( d )&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+				<alternative text="&#34;(EOF gelesen) ?&#34;" comment="&#34;&#34;" color="ffffff">
+					<qTrue>
+						<instruction text="&#34;eof := true&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+						<jump text="&#34;return d&#34;" comment="&#34;&#34;" color="ffffff"></jump>
+					</qTrue>
+					<qFalse>
+					</qFalse>
+				</alternative>
+				<instruction text="&#34;c := Vorschau naechstes Zeichen (ohne einzulesen)&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+			</qRepeat>
+		</repeat>
+		<jump text="&#34;return d&#34;" comment="&#34;&#34;" color="ffffff"></jump>
+	</children>
+</root>

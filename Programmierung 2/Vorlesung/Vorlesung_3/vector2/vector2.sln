@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vector2", "vector2\vector2.vcxproj", "{548EF0E0-67C9-4162-9BAB-D5724B62D632}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{548EF0E0-67C9-4162-9BAB-D5724B62D632}.Debug|Win32.ActiveCfg = Debug|Win32
+		{548EF0E0-67C9-4162-9BAB-D5724B62D632}.Debug|Win32.Build.0 = Debug|Win32
+		{548EF0E0-67C9-4162-9BAB-D5724B62D632}.Release|Win32.ActiveCfg = Release|Win32
+		{548EF0E0-67C9-4162-9BAB-D5724B62D632}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

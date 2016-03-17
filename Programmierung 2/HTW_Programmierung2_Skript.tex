@@ -1,0 +1,115 @@
+% Header aus der Vorlage
+\input{../LaTeX_master/LaTeX_master_HTW}
+
+\bibliography{../Literatur/HTW_Literatur.bib}
+
+% Definition von Titel, Autor usw.
+\DTitel{Programmierung II}
+\DUntertitel{Vorlesungsskript}
+\DAutor{Falk-Jonatan Strube}
+\DNotiz{Vorlesung von Dr. Arnold Beck}
+
+\begin{document}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\section*{Hinweise}
+Unterlagen unter:
+\begin{lstlisting}[language=bash]
+cd /home/rex/fi1/nestler/Programmierung_II_2016/
+\end{lstlisting}
+\paragraph{Compiler} 
+\begin{itemize}
+\item Intel i16, i13 (für Linux oder Visual Studio) \url{www.hocomputer.de} (kostenpflichtig)
+\item gcc 5.3, 4.85 \url{gcc.gnu.org}
+\end{itemize}
+Zugriff auf Windows-Programme (Visual Studio 2013) in Linux-Laboren:
+\begin{lstlisting}[language=bash]
+rdesktop -f its56 # oder its59
+\end{lstlisting}
+Empfohlene Literatur: Breymann\cite{breymann2009c++}
+
+\section{C++}
+(siehe Folie CPP\_01\_stdio)
+\begin{lstlisting}[language=C++]
+#include <iostream>	// alternativ zu <stdio.h> in C
+using namespace std;	// namespace: für bestimmte Abkürzungen (bpsw. cout anstatt std::cout)
+// Hinweis: "::" zeigt, dass das davorstehende "static" ist (hier: std)
+
+class integer {}; // class: Vergleichbar mit typedef
+
+int main() {
+	integer i0;	// i0: Instanz bzw. Objekt der Klasse integer
+	cin.get();	// Eingabe abwarten
+}
+\end{lstlisting}
+(vgl. integer.cpp)
+\begin{lstlisting}[language=C++]
+#include <iostream>
+using namespace std;
+
+class integer { // int - Variable in class verpacken
+//	private:    // private ist default
+		int i;  // this->i bzw. (*this).i
+		// private nur für andere Klassen, andere Instanzen der gleichen Klasse können drauf zugreifen
+	public: // wenn nichts steht, wird automatisch das vorherige angenommen. Hier: private
+		integer(int i=0):i(i){  // Konstruktor und Defaultkonstruktor
+			// i=0 default Wert, wenn keiner Angegeben
+			// :i(i) übergebenes i wird dem i der Klasse zugewiesen: i_1(i_2) i_1 ist this->i, und i_2 ist das übergebene i
+			cout<<"integer-Objekt i = "<<this->i<<endl; 
+		}
+
+		int get(){ return i; }
+
+		void set(int i=0){ this->i = i; }
+
+		// statische Methode: aufrufbar ohne Instanziierung der Klasse
+		static integer add(integer i1, integer i2){  // Wertkopien von i1 und i2
+			// return integer(i1.i + i2.i); // alternativ und explizit: Konstruktor-Aufruf
+			// return erstellt eine Kopie (mit Konstruktur erstellt)!
+			// return i1.get()+i2.get();    // Umwandlung int nach integer, Aufruf Konstruktor implizit
+			return i1.i + i2.i;
+			// i1.i Möglich, da innerhalb der Klasse integer und somit privates i sichtbar
+		}
+};
+
+auto max(int x, int y) -> int { return x>y ? x : y; }	// Lambda-Funktion
+// auto: Rückgabetyp ergibt sich aus dem Kontext bzw. über das "-> int"
+
+template<typename Typ1, typename Typ2>	// Weiterentwicklung Makro: wählt automatisch Typ aus
+auto quotient(Typ1 a, Typ2 b) -> decltype(a/b) { return a/b; }
+
+auto main() -> int {
+	auto k = 0;        // C++11: da 0 vom Typ int ist auch k vom Typ int
+	decltype(k) j = 5; // C++11: da k vom Typ int ist auch j vom Typ int
+	char *c = nullptr; //C++ 11: Zeigerliteral
+	int *ip = NULL;
+
+	integer i0(5), i1=4;     // 2 (alternative) Initialisiierungen von Objekten
+	// i1=4 nur möglich, wenn 1 Parameter gefordert ist.
+	cout<<"i0.i = "<<i0.get()<<endl;
+	// cout im Vergleich zu printf() typsicher.
+	cout<<"i0.i + i0.i = "<<integer::add(i0, i0).get()<<endl; // Aufruf static-Methode add
+	integer i3 = integer::add(i0, i0);                        // Initialisierung von i3
+	cout<<"i3.i     = "<<i3.get()<<endl;
+	i0.set(22);
+	cout<<"i0.i     = "<<i0.get()<<endl;
+	cout<<"max(3,5) = "<<max(3,5)<<endl;
+	cout<<"5/3      = "<<quotient(5, 3)<<endl;
+	cout<<"5.0/3.0  = "<<quotient(5.0, 3.0)<<endl;
+	cout<<"b / 1    = "<<quotient('b', '1')<<endl;
+	cin.get();
+}
+\end{lstlisting}
+
+(vgl iostream.pdf)
+\begin{itemize}
+\item nach jeder cin Eingabe: „cin.clear();“, damit Fehler ignoriert werden um weiter cin's abhandeln zu können (vgl. robust\_ea)
+\end{itemize}
+
+\newpage
+\printbibliography
+\end{document}
