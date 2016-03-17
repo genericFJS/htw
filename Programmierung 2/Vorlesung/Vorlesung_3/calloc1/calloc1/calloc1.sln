@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "calloc1", "calloc1\calloc1.vcxproj", "{7270DDAA-0584-48BC-A0E8-ED1F10EA7FF3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7270DDAA-0584-48BC-A0E8-ED1F10EA7FF3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7270DDAA-0584-48BC-A0E8-ED1F10EA7FF3}.Debug|Win32.Build.0 = Debug|Win32
+		{7270DDAA-0584-48BC-A0E8-ED1F10EA7FF3}.Release|Win32.ActiveCfg = Release|Win32
+		{7270DDAA-0584-48BC-A0E8-ED1F10EA7FF3}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
