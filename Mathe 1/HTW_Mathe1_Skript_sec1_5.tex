@@ -934,7 +934,7 @@ x_3
 
 \subsubsection{Das Skalarprodukt}
 \paragraph{Def. 10:} \parskp
-Die Zahl $(\underline{a}, \underline{b}):=|\underline{a}|\cdot |\underline{b}|\cdot cos (\varphi)$ heißt \emph{Skalarprodukt} der Vektoren $\underline{a}$ und $\underline{b}$. Dabei ist $\varphi$ der Winkel zwischen den Vektoren $\underline{a}$ und $\underline{b}$.\medskip\\
+Die Zahl $(\underline{a}, \underline{b}):=|\underline{a}|\cdot |\underline{b}|\cdot \cos(\varphi)$ heißt \emph{Skalarprodukt} der Vektoren $\underline{a}$ und $\underline{b}$. Dabei ist $\varphi$ der Winkel zwischen den Vektoren $\underline{a}$ und $\underline{b}$.\medskip\\
 Eigenschaften des Sklarproduktes:
 \begin{enumerate}[label=\alph*.)]
 \item $(\underline{a}, \underline{a})>0$ für $\underline{a}\not = \underline{0}$
@@ -968,9 +968,9 @@ Anwendungen:
 \draw [-latex, red] (0,-0.1) -- (3,-0.1) node[pos=.5, below]{$\underline{a}_{\underline{b}}$};
 \end{tikzpicture}\\
 Herleitung:\\
-$|\underline{a}_{\underline{b}}|=|\underline{a}|\cdot cos(\varphi)$\\
-$\underline{a}_{\underline{b}}=|\underline{a}|\cdot cos(\varphi)\frac{\underline{b}}{|\underline{b}|}=|\underline{a}| \cdot |\underline{b}| \cdot cos (\varphi) \frac{\underline{b}}{|\underline{b}|^2}=(\underline{a}, \underline{b})\cdot \frac{1}{|\underline{b}|^2}\cdot \underline{b}$
-\item Winkel $\varphi$ zwischen zwei Vektoren: $\boxed{cos(\varphi)=\frac{(\underline{a}, \underline{b})}{|\underline{a}|\cdot |\underline{b}|}}$
+$|\underline{a}_{\underline{b}}|=|\underline{a}|\cdot \cos(\varphi)$\\
+$\underline{a}_{\underline{b}}=|\underline{a}|\cdot \cos(\varphi)\frac{\underline{b}}{|\underline{b}|}=|\underline{a}| \cdot |\underline{b}| \cdot \cos(\varphi) \frac{\underline{b}}{|\underline{b}|^2}=(\underline{a}, \underline{b})\cdot \frac{1}{|\underline{b}|^2}\cdot \underline{b}$
+\item Winkel $\varphi$ zwischen zwei Vektoren: $\boxed{\cos(\varphi)=\frac{(\underline{a}, \underline{b})}{|\underline{a}|\cdot |\underline{b}|}}$
 \subparagraph{Bsp. 12:} \parskp
 $\underline{a}=\begin{pmatrix}
 1\\
@@ -983,7 +983,7 @@ $\underline{a}=\begin{pmatrix}
 \end{pmatrix}$
 \begin{enumerate} [label=\alph*.)]
 \item $|\underline{a}| = \sqrt{1^2+(-2)^2+3^2}=\sqrt{14}, |\underline{b}|=\sqrt{0^2+(-4)^2+7^2}=\sqrt{65}$\\
-$cos(\varphi)=\frac{(\underline{a}, \underline{b})}{|\underline{a}|\cdot |\underline{b}|}=\frac{1 \cdot 0 + (-2) \cdot (-4) + 3\cdot 7}{\sqrt{14} \cdot \sqrt{65}}=\frac{29}{\sqrt{14} \cdot \sqrt{65}}$\\
+$\cos(\varphi)=\frac{(\underline{a}, \underline{b})}{|\underline{a}|\cdot |\underline{b}|}=\frac{1 \cdot 0 + (-2) \cdot (-4) + 3\cdot 7}{\sqrt{14} \cdot \sqrt{65}}=\frac{29}{\sqrt{14} \cdot \sqrt{65}}$\\
 $\varphi=arccos\left(\frac{29}{\sqrt{14} \cdot \sqrt{65}}\right)\approx 15,92^{\circ}$
 \item Projektion von $\underline{b}$ auf $\underline{a}$: $\underline{b}\underline{a}=\frac{(\underline{a}, \underline{b})}{|\underline{a}|^2}\underline{a}=\frac{29}{14}\begin{pmatrix}
 1\\
@@ -992,7 +992,7 @@ $\varphi=arccos\left(\frac{29}{\sqrt{14} \cdot \sqrt{65}}\right)\approx 15,92^{\
 \end{pmatrix}=\frac{29}{14}\underline{e}_1-\frac{29}{7}\underline{e}_2+\frac{29\cdot 3}{14} \underline{e}_3$
 \end{enumerate}
 \item \emph{Orthogonalitätskriterium}:\\
-$(\underline{a}, \underline{b})=0 \Leftrightarrow (\underbrace{|\underline{a}|=0}_{\underline{a}=} \vee \underbrace{|\underline{b}|=\underline{0}}_{\underline{b}=\underline{0}} \vee cos(\varphi)=0)$\\
+$(\underline{a}, \underline{b})=0 \Leftrightarrow (\underbrace{|\underline{a}|=0}_{\underline{a}=} \vee \underbrace{|\underline{b}|=\underline{0}}_{\underline{b}=\underline{0}} \vee \cos(\varphi)=0)$\\
 Vereinbarung: $\underline{0}$ orthogonal zu jedem Vektor
 $\curvearrowright \boxed{(\underline{a}, \underline{b})=0 \;\Leftrightarrow\; \underline{a} \bot \underline{b}}$
 
@@ -1083,8 +1083,8 @@ Anwendungen:
 \draw (1.5,3) -- (6.5,3) -- (5,0);
 \node at (4.5,2) {$F$};
 \end{tikzpicture}\\
-$sin(\alpha)=\frac{h}{|\underline{b}|}$\\
-$F=|\underline{a}|\cdot h = |\underline{a}| \cdot |\underline{b}| \cdot sin(\alpha)=|\underline{a} \times \underline{b}|$
+$\sin(\alpha)=\frac{h}{|\underline{b}|}$\\
+$F=|\underline{a}|\cdot h = |\underline{a}| \cdot |\underline{b}| \cdot \sin(\alpha)=|\underline{a} \times \underline{b}|$
 \item Flächeninhalt eines Dreiecks $\Delta P_1P_2P_3$: $\boxed{F= \frac{1}{2}\left|\overrightarrow{P_1P_2}\times \overrightarrow{P_1P_2}\right|}$ (halbes Parallelogramm)\\
 \begin{tikzpicture}[scale=.7]
 \pattern [pattern=north west lines,pattern color=lightgray] (0,0) -- (2,4) -- (4,0) -- cycle;
@@ -1098,7 +1098,7 @@ $F=|\underline{a}|\cdot h = |\underline{a}| \cdot |\underline{b}| \cdot sin(\alp
 \draw[dashed] (2,4) -- (6,4) -- (4,0);
 \draw (2,4) -- (4,0);
 \end{tikzpicture}
-\item \emph{Parallelitätskriterium}: $\underline{a}\times \underline{b}=\underline{0} \; \Leftrightarrow \; |\underline{a} \times \underline{b}|=0 \; \Leftrightarrow \; (|\underline{a}| =0 \vee |\underline{b}|=0 \vee sin(\varphi)=0)$\\
+\item \emph{Parallelitätskriterium}: $\underline{a}\times \underline{b}=\underline{0} \; \Leftrightarrow \; |\underline{a} \times \underline{b}|=0 \; \Leftrightarrow \; (|\underline{a}| =0 \vee |\underline{b}|=0 \vee \sin(\varphi)=0)$\\
 Vereinbarung: $\underline{0}\; ||$ zu jedem Vektor\\
 $\curvearrowright \boxed{\underline{a}\times \underline{b}=\underline{0} \; \Leftrightarrow \; \underline{a} || \underline{b}}$
 \end{enumerate}
@@ -1135,7 +1135,7 @@ Anwendung:
 
 \draw [orange] (0,0) (63.5:1.5) arc (28:83:.85) node [pos=.5, below]{$\varphi$};
 \end{tikzpicture}\\
-$V=F_{\text{Grundfläche}} \cdot h=|\underline{a}\times \underline{b}| \cdot |\underline{c}| \cdot |cos(\alpha)|=|(\underline{a}\times \underline{b}, \underline{c})|$\\
+$V=F_{\text{Grundfläche}} \cdot h=|\underline{a}\times \underline{b}| \cdot |\underline{c}| \cdot |\cos(\alpha)|=|(\underline{a}\times \underline{b}, \underline{c})|$\\
 Bemerkung:\\
 Spatprodukt $\begin{cases}
 >0 & \text{... Rechtssystem}\\

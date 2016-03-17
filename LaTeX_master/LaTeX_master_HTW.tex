@@ -34,6 +34,12 @@
 \usepackage{esint}	% Schönere Integrale, \oiint vorhanden
 \everymath=\expandafter{\the\everymath\displaystyle}	% Mathe Inhalte werden weniger verkleinert
 \usepackage{wasysym}	% mehr Symbole, bspw \lightning
+% Auch arcus-Hyperbolicus-Funktionen
+\DeclareMathOperator{\arccot}{arccot}
+\DeclareMathOperator{\arccosh}{arccosh}
+\DeclareMathOperator{\arcsinh}{arcsinh}
+\DeclareMathOperator{\arctanh}{arctanh}
+\DeclareMathOperator{\arccoth}{arccoth} 
 
 % tikz usw.
 \usepackage{tikz}
@@ -79,6 +85,7 @@
 \usepackage{lstautogobble} 
 \usepackage{enumitem}	% Anpassung der enumerates
 \setlist[enumerate,1]{label=\arabic*.)}	% global andere Enum-Items
+\renewcommand{\labelitemiii}{$\scriptscriptstyle ^\blacklozenge$} % global andere 3. Item-Aufzählungszeichen
 \usepackage{letltxmacro} % neue Definiton von Grundbefehlen
 % Nutzen:
 %\LetLtxMacro{\oldemph}{\emph}

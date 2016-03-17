@@ -5,15 +5,18 @@
 \DTitel{Mathematik I}
 \DUntertitel{Vorlesungsskript}
 \DAutor{Falk-Jonatan Strube}
-\DNotiz{Vorlesung von Herrn Meinhold}
+\DNotiz{Vorlesung von Herrn Michael Meinhold\\ \& Prof. Dr. Fabian Schwarzenberger}
 
-% Entscheide wie Sektionen nummeriert werden (nach Teilen ODER kontinierlich)
-\newcounter{myPartCounter}
-% diese Zeilen unkommentiert lassen und untere auskommentieren für Nummerierung nach Teilen:
-\renewcommand*{\theHsection}{ch\arabic{myPartCounter}.\the\value{section}}
-\newcommand{\partNumbering}{\stepcounter{myPartCounter} \setcounter{section}{0}}
-% diese Zeile unkommentiert lassen und obere auskommentieren für kontinuierliche Nummerierung:
-%\newcommand{\partNumbering}{}
+% Parts mit in die Nummerierung einbeziehen
+\renewcommand \thepart {\arabic{part}} % Parts nicht römisch nummerieren
+\renewcommand \thesection {\thepart.\arabic{section}}	% Parts in sections mit einbeziehen
+\newcounter{myPartCounter}	% Neuer Counter für Parts
+\renewcommand*{\theHsection}{ch\arabic{myPartCounter}.\the\value{section}}	% für \ref die Verweise anpassen
+\newcommand{\partNumbering}{\stepcounter{myPartCounter} \setcounter{section}{0}} % an jeden Part anfügen, um die Section-Counter zurück zu setzen
+\usepackage{tocloft}	% mehr Platz für erweiterte TOC-Nummerierung
+\setlength{\cftsecnumwidth}{1.9em}
+\setlength{\cftsubsecnumwidth}{2.7em}
+\setlength{\cftsubsubsecnumwidth}{3.6em}
 
 \begin{document}
 
@@ -25,252 +28,92 @@
 \part{Elementare Grundlagen}\partNumbering
 
 \section{Aussagen und Grundzüge der Logik}
-%\input{HTW_Mathe1_Skript_sec1}
+%\input{HTW_Mathe1_Skript_sec1_1}
 
 \section{Mengen}\label{sec:Mengen}
-%\input{HTW_Mathe1_Skript_sec2}
+%\input{HTW_Mathe1_Skript_sec1_2}
 
 \section{Zahlen}
-%\input{HTW_Mathe1_Skript_sec3}
+%\input{HTW_Mathe1_Skript_sec1_3}
 
 \section{Reellwertige Funktionen einer reellen Veränderlichen}
-%\input{HTW_Mathe1_Skript_sec4}
+%\input{HTW_Mathe1_Skript_sec1_4}
 
 \section{Lineare Algebra}
-%\input{HTW_Mathe1_Skript_sec5}
+%\input{HTW_Mathe1_Skript_sec1_5}
 
 \newpage
 \part{Folgen, Reihen, Grenzwerte}\partNumbering
 \section{Zahlenfolgen}
-\subsection{Grenzwerte von Zahlenfolgen}
-\paragraph{Def. 1:} \parskp
-Es sei $n_0 \in \mathbb{N}$. Eine Funktion $f$ mit $Db(f)=\{u\in \mathbb{N}|n\geq n_0\}$ und $Wb(f) \subset \mathbb{R}$ heißt reelle Zahlenfolge.\\
-Schreibweise: \\
-$a_n=f(n)$ \qquad ($n \in Db(f)$)\\
-$\left(a_n\right)_{n\geq n_0}=\left(a_{n_0}, a_{n_0+1}, a_{n_0+2}, ...\right)$\\
-oft $n_0=0$ oder $n_0=1$.
-\subparagraph{Bsp. 1:} 
-\begin{enumerate}[label=\alph*.)]
-\item $a_n=(-1)^n\cdot n \quad (n \in \mathbb{N})\\
-(a_n)=(0,-1,2,-3,4,...)$
-\item $a_0=-1,\; a_n=n\cdot a_{n-1} \quad (n \in \mathbb{N}^*)$ \quad (rekursive Def.)\\
-$(a_n)=(-1,-1,-2,-6,-24,...), \; a_n = -n!$
-\item $a_n=\frac{3}{10}+\frac{3}{10^2}+...+\frac{3}{10^n} \quad (n\in \mathbb{N}^*)$\\
-$(a_n)=(0.3, 0.33, 0.333, ... )$
-\item $a_n=1+(-1)^n\frac{1}{n^2} \quad (n \in \mathbb{N}^*)$\\
-$(a_n)=\left( \frac{5}{4}, \frac{8}{9}, \frac{17}{16}, \frac{24}{25},...\right)$
-\end{enumerate}
-\paragraph{Def. 2:} 
-\begin{itemize}
-\item $(a_n)$ heißt \emph{konvergent}, wenn es eine Zahl $a \in \mathbb{R}$ gibt mit folgender Eigenschaft:\\
-Zu jedem $\varepsilon > 0$ existiert eine natürliche Zahl $n_0(\varepsilon)$, sodass für alle $n \geq n_0(\varepsilon)$ gilt: $|a_n-a|< \varepsilon$.
-\item Die Zahl $a$ heißt \emph{Grenzwert} von $(a_n)$.\\
-Schreibweisen:\\
-$\boxed{a=\underset{n\rightarrow \infty}{lim}(a_n)}$ oder $\boxed{a_n \underset{\color{gray}n\rightarrow\infty}{\longrightarrow} a}$
-\item $(a_n)$ heißt \emph{divergent}, falls $(a_n)$ nicht konvergent ist.
-\end{itemize}
-\subparagraph{Diskussion}
-\begin{enumerate}
-\item Für $\varepsilon>0$ heißt $U_{\varepsilon}(a):=(a-\varepsilon, a+\varepsilon)$ (offenes Intervall) \emph{$\varepsilon$-Umgebung von $a$}.\\
-\begin{tikzpicture}
-\draw [-latex] (-5,0) -- (5,0);
-\draw (-3,0) node{(};
-\draw (-3,0) node[below]{$a-\varepsilon$};
-\draw (3,0) node{)};
-\draw (3,0) node[below]{$a+\varepsilon$};
-\draw (0,0.1) -- (0,-0.1);
-\draw (0,0) node[below] {$a$};
-\draw [red, thick] (-3,0)--(3,0);
-\draw [red] (-1,0) node [above] {$U_{\varepsilon}(a)$};
+%\input{HTW_Mathe1_Skript_sec2_1}
+
+\section{Grenzwerte und Stetigkeit von Funktionen}
+\subsection{Grenzwerte von Funktionen}
+\paragraph{Def. 1:} Es sei $x_0 \in \mathbb{R}$ und es existiere eine Umgebung $U(x_0)$ mit $U(x_0)\{x_0\}\subseteq Db(f)$.\\
+\begin{tikzpicture}[scale=1]
+\draw[-latex] (0.5,0) -- (8.5,0);
+\path[pattern= north east lines, pattern color=green] (1.2,0.2) rectangle (3.2,-0.2);
+\path[pattern= north east lines, pattern color=green] (4,0.2) rectangle (5.4,-0.2);
+\path[pattern= north east lines, pattern color=green] (6.4,0.2) rectangle (7.8,-0.2);
+\draw (4.6,0.4) -- (4.6,-0.4) node[below]{$x_0$};
+\draw [orange, thick] (4.2,0.01) -- (5,0.01);
+\draw [orange, thick] plot[smooth, tension=1] coordinates {(4.3,0.25) (4.2,0) (4.3,-0.25)};
+\draw [orange, thick] plot[smooth, tension=1] coordinates {(4.9,0.25) (5,0) (4.9,-0.25)};
+\node [above right, orange] at (4.6,0.3) {$U(x_0)$};
+\node [right] at (8,0.5) {korrekt};
 \end{tikzpicture}\\
-$\left( \underset{n\rightarrow \infty}{lim}a_n=a\right)\equiv \left( \forall\varepsilon>0 \; \exists n_0(\varepsilon) \; \forall n\geq n_0(\varepsilon) \; a_n \in U_{\varepsilon}(a)\right)$\\
-d.h. für jedes (noch so kleine) $\varepsilon$, liegen ab einem bestimmten (von $\varepsilon$ abhängigen) Index $n_0(\varepsilon)$ alle Glieder $a_n(n\geq n_0(\varepsilon))$ in $U_{\varepsilon}(a)$.
-\item Im Bsp. 1 sind:\\
-konvergente Folgen: \\
-c.) mit $\underset{n\rightarrow\infty}{a_n}=\frac{1}{3}$\\
-d.) mit $\underset{n\rightarrow\infty}{a_n}=1$\\
-divergente Folgen: a.) und b.)
-\item Ist $\underset{n\rightarrow\infty}{a_n}=0$, so heißt $(a_n)$ \emph{Nullfolge}.
-\end{enumerate}
-\paragraph{Def. 3:} \parskp
-$(a_n)$ heißt:
+\begin{tikzpicture}[scale=1]
+\draw[-latex] (0.5,0) -- (8.5,0);
+\path[pattern= north east lines, pattern color=green] (2.2,0.2) rectangle (4.52,-0.2);
+\path[pattern= north east lines, pattern color=green] (4.68,0.2) rectangle (6.6,-0.2);
+\draw (4.6,0.4) -- (4.6,-0.4) node[below]{$x_0$};
+\draw [orange, thick] (4.2,0.01) -- (5,0.01);
+\draw [orange, thick] plot[smooth, tension=1] coordinates {(4.3,0.25) (4.2,0) (4.3,-0.25)};
+\draw [orange, thick] plot[smooth, tension=1] coordinates {(4.9,0.25) (5,0) (4.9,-0.25)};
+\node [above right, orange] at (4.6,0.3) {$U(x_0)$};
+\node [right] at (8,0.5) {korrekt};
+\draw  (4.6,0) ellipse (0.2 and 0.2);
+\end{tikzpicture}\\
+\begin{tikzpicture}[scale=1]
+\draw[-latex] (0.5,0) -- (8.5,0);
+\path[pattern= north east lines, pattern color=green] (1.6,0.2) rectangle (3.8,-0.2);
+\path[pattern= north east lines, pattern color=green] (6.4,0.2) rectangle (8,-0.2);
+\draw (4.6,0.4) -- (4.6,-0.4) node[below]{$x_0$};
+\draw [orange, thick] (4.2,0.01) -- (5,0.01);
+\draw [orange, thick] plot[smooth, tension=1] coordinates {(4.3,0.25) (4.2,0) (4.3,-0.25)};
+\draw [orange, thick] plot[smooth, tension=1] coordinates {(4.9,0.25) (5,0) (4.9,-0.25)};
+\node [above right, orange] at (4.6,0.3) {$U(x_0)$};
+\node [right] at (8,0.5) {falsch};
+\end{tikzpicture}\\
+$\lim_{x\to x_0} f(x)=\lambda : \Leftrightarrow$ Für jede Folge $(x_n)$ mit $x_n\in Db(f)$, $x_n \not = x$ (für alle $n$) und $\lim_{n\to\infty}x_n=x_0$ gilt $\lim_{n\to\infty}f(x_n)=a$.\\
+Anschaulich: $f(x)$ strebt gegen $a$, wenn $x$ gegen $x_0$ strebt.
+\subparagraph{Bemerkung:} Die Stelle $x_0$ muss \emph{nicht} selbst zum Definitionsbereich gehören.
+\subparagraph{Bsp. 1:}
 \begin{itemize}
-\item \emph{streng monoton wachsend}, falls für jedes $n$ gilt: $a_n<a_{n+1}$.
-\item \emph{monoton wachsend}, falls für jedes $n$ gilt: $a_n\leq a_{n+1}$.
-\item \emph{streng monoton fallend}, falls für jedes $n$ gilt: $a_n>a_{n+1}$.
-\item \emph{monoton fallend}, falls für jedes $n$ gilt: $a_n\geq a_{n+1}$.
+\item $\lim_{x\to 0} \frac{\sin(x)}{x}$\\
+\begin{tikzpicture}[scale=4]
+
+\draw (0,0) -- (1,0) -- (1,1) -- cycle;
+\fill  (0,0) circle (0.015) node [below]{$M$};
+\fill  (1,0) circle (0.015) node [below right]{$A$};
+\fill  (1,1) circle (0.015) node [above right]{$C$};
+\fill  (0.707,0.707) circle (0.015) node [above left]{$B$};
+
+\draw [ {[-]} ] (0,-0.2) -- (1,-0.2) node[pos=.5, below]{$1$};
+\draw [ {[-]} ] (-0.1,0.1) -- (0.607,0.807) node[pos=.5, above left]{$1$};
+\draw (1,0) arc (0:45:1);
+
+\draw (0.25,0) arc (0:45:0.25) node [left, pos=.4]{$x$};
+\draw [green] (0,-.03) -- (0.707, -0.03) node[below, pos=.5]{$\cos x$};
+\draw [orange] (0.707,0) -- (0.707, 0.707) node[left, pos=.5]{$\sin x$};
+\draw [brown] (1.03,0) -- (1.03, 1) node[right, pos=.5]{$\tan x$};
+\draw [blue] (0.707,0.707)-- (1,0);
+\end{tikzpicture}\\
+$F_{\vartriangle MAB}\leq F_{Sektor\; MAB} \leq F_{\vartriangle MAC}$\\
+$\frac{1}{2}\sin x < \frac{1}{2} x < \frac{1}{2} \tan x \quad |\cdot \frac{2}{\sin x}$\\
+$\Leftrightarrow 1 < \frac{x}{\sin x} < \frac{1}{\cos x}$\\
+$\Leftrightarrow 1 > \frac{\sin x}{x} > \cos x$\\
+$\Rightarrow \lim_{x\to 0} \frac{\sin(x)}{x}=1$
 \end{itemize}
-\paragraph{Def. 4:} \parskp
-$(a_n)$ heißt beschränkt, wenn es eine Konstante $C>0$ gibt mit $|a_n|\leq C$ für alle $n$.
-\subparagraph{Diskussion:}
-\begin{enumerate}
-\item $(a_n)$ beschränkt \\
-$\Leftrightarrow \exists c>0 \; \forall n \quad |a_n| \leq C \\
-\Leftrightarrow \exists c_1\in \mathbb{R}\; \exists c_2 \in \mathbb{R}\; \forall n \quad c_1 \leq a_n \leq c_2$
-\item Folgen aus Bsp. 1:\\
-\begin{tabular}{l l l l}
-&Folge & Monotonie & Beschränktheit\\
-a.)& $a_n=(-1)^n\cdot n$ & --  & --\\
-b.)& $a_n=-n!$ & streng monoton fallend (ab $n=1$) & --\\
-c.)& $a_n=\tfrac{3}{10}+\tfrac{3}{10^2}+...+\tfrac{3}{10^n}$ & streng monoton wachsend & $0,3\leq a_n < \tfrac{1}{3}$\\
-d.) & $a_n=1+(-1)^n\tfrac{1}{n^2}$ & -- & $0\leq a_n <\tfrac{5}{4}$
-\end{tabular}
-\end{enumerate}
-\paragraph{Satz 1:} \parskp
-Jede konvergente folge ist beschränkt.
-\paragraph{Satz 2:} \parskp
-Jede monotone und beschränkte Folge ist konvergent.
-\paragraph{Def. 5:} \parskp
-$(a_n)$ heißt \emph{bestimmt konvergent} gegen $\begin{cases}
-+\infty\\
-- \infty
-\end{cases}$, falls gilt: $\forall c \in \mathbb{R} \; \exists n_0(c) \; \forall n \geq n_0(c) \begin{cases}
-a_n>c\\
-a_n<c
-\end{cases}$.\\
-Schreibweise: $\boxed{\lim_{n\to \infty} a_n = \begin{cases}
-+\infty\\
-- \infty
-\end{cases}}$
-\subparagraph{Bsp. 2:} 
-\begin{enumerate}[label=\alph*.)]
-\item aus Bsp. 1c.): $a_n=\frac{3}{10}+...+\frac{3}{10^n}, \; (a_n)$ monoton wachsend und beschränkt $\Rightarrow (a_n)$ ist konvergent, $\lim_{n\to \infty}a_n = \frac{1}{3}$. 
-\item aus Bsp. 1b.): $a_n=-n!$, $(a_n)$ monoton fallend und unbeschränkt $\Rightarrow$ $(a_n)$ ist bestimmt divergent, $\lim_{n\to \infty}a_n=-\infty$
-\end{enumerate}
-\subparagraph{Diskussion:}\parskp
-Eine divergente Folge, die nicht bestimmt divergent ist, heißt \emph{unbestimmt divergent}.\\
-Bpsw. Folge aus Bsp. 1a.) $a_n=(-1)^n\cdot n$.\bigskip\\
-Einige wichtige Grenzwerte:
-\begin{enumerate} [label=\alph*.)]
-\item $\lim_{n\to \infty} \left(1+\frac{1}{n}\right)^n=e=2.71...$ (EULERsche Zahl)
-\item $\lim_{n\to\infty} \sqrt[n]{n}=1$
-\item $\lim_{n\to\infty} \frac{\ln n}{n}=0$
-\item $\lim_{n \to \infty} \sqrt[n]{a}=1 \quad (a>0)$
-\end{enumerate}
-\paragraph{Satz 4:} Rechenregeln (Grenzwertsätze)\\
-$(a_n)$ und $(b_n)$ seien zwei konvergente Folgen mit $\lim_{n\to \infty}=a, \; \lim_{n\to \infty} = b$. Dann gilt:
-\begin{itemize}
-\item $\lim_{n\to \infty}(a_n+b_n)=a+b$
-\item $\lim_{n\to \infty}(c\cdot a_n)=c \cdot a$
-\item $\lim_{n\to\infty} (a_n \cdot b_n) = a \cdot b$
-\item $\lim_{n \to \infty} \left(\frac{a_n}{b_n}\right) = \frac{a}{b} \qquad (b_n\not = 0, b\not = 0)$
-\end{itemize}
-\subparagraph{Bsp. 3:}
-\begin{enumerate} [label=\alph*.)]
-\item $a_n=\frac{2n^2-1}{3n^2+n} \qquad (n=1,2,3,...)$\\
-$a_n=\frac{n^2\left(2-\frac{1}{n^2}\right)}{n^2\left(3+\frac{n}{n^2}\right)}=\frac{2-\frac{1}{n^2}}{3+\frac{1}{n}}=\frac{\lim_{n\to\infty}\left(2-\frac{1}{n^2}\right)}{\lim_{n\to\infty}\left(3+\frac{1}{n}\right)}=\resultul{\frac{2}{3}}$\\
-\fbox{Ausklammern der höchsten Potenzen in Zähler und Nenner}
-\item $a_n=n\cdot \left(\sqrt{n^2+1}-n\right)$ \\
-(in Klammern: „$\infty-\infty$“ $\curvearrowright$ Erweitern mit 3. binomischer Formel)\\
-$a_n=\frac{n\cdot \left( \sqrt{n^2+1}-n\right) \cdot \tgreen{\left(\sqrt{n^2+1}+n\right)}}{\tgreen{\left(\sqrt{n^2+1}+n\right)}}
-=\frac{n\cdot (n^2+1-n^2)}{n\cdot \sqrt{1+\frac{1}{n^2}}+n}
-=\frac{n\cdot 1 }{n\left(\sqrt{1+\frac{1}{n^2}}+1\right)}
-\underset{n\to \infty}{\longrightarrow} \frac{1}{2}$ \\
-oder:
-$\lim_{n\to\infty} = \resultul{\frac{ 1}{2}}$
-\item $a_n=\frac{\sin n}{n} \qquad \left(0\leq |a_n|=\frac{|\sin n|}{n}\leq \frac{1}{n}\right)\Rightarrow\lim_{n\to\infty}a_n=0$\bigskip\\
-Allgemein: $(a_n)$ beschränkt und $(b_n)$ bestimmt divergent $\Rightarrow\lim_{n\to\infty}\frac{a_n}{b_n}=0$.
-\end{enumerate}
-
-\subsection{Lineare Rekursionsgleichungen (Differenzengleichungen)}
-\begin{itemize}
-\item Allgemeine Form einer Rekursionsgleichung $k$-ter Ordnung:\\
-$x_n=f(n,x_{n-1},x_{n-2},...,x_{n-k}) \qquad (k \geq 1,\; n\geq n_0+k)$
-\item Wir betrachten nur \emph{lineare Rekursionsgleichungen mit konstanten Koeffizienten} (d.h. $a_j$ nicht von $n$ abhängig):\\
-$\boxed{x_n=a_1 x_{n-1}+a_2 x_{n-2}+...+a_k a_{n-k}+h_n}\quad k\geq 1, \; a_k \not = 0, \; n\geq n_0 +k$\\
-$x_n$ gesucht, $a_1,a_2,...,a_k, h_n \; (n\geq n_0)$ bekannt.
-\item Indexverschiebung möglich:\\
-$\boxed{x_{n+k}=a_1 x_{n+k-1}+a_2 x_{n+k-2}+...+a_k a_{n}+h_{n+k}}\quad (n\leq n_0)$\\
-Wichtig ist die Differenz zwischen höchstem und niedrigstem Index von $x$ (=Ordnung der Rekursionsgleichung).
-\item Da die größen $x_n, x_{n-1}, x_{n-2},...$ auch durch $x_n$ und die Differenzen $\Delta x_n:=x_n-x_{n-1}, \Delta^2x_n:=\Delta x_n-\Delta x_{n-1}=x_n-2x_{n-1}+x_{n-2}, ...$ ausgedrückt werden können, ist der Name \emph{Differenzengleichung} sehr verbreitet.
-\item Die Differenzengleichung (aus erstem Punkt) heißt homogen, falls $h_n=0$ (für alle $n$), sonst inhomogen.
-\end{itemize}
-Zur Lösung von der Differenzengleichung (aus erstem Punkt oberhalb):
-\begin{enumerate}
-\item Allgemeine Lösung: $\boxed{x_n=x_n^{(h)}+x_n^{(p)}}$, dabei ist $x_n^{(h)}$ die \emph{allgemeine Lösung der zugehörigen homogenen Gleichung} $\boxed{x_n=a_1 x_{n-1}+...+a_k x_{n-k}}$ und $x_n^{(p)}$ eine \emph{partikuläre (spezielle) Lösung der inhomogenen Gleichung}.
-\end{enumerate}
-
-FEHLENDE VL
-
-\subsection{Unendliche Reihen}
-\subsubsection{Grundbegriffe}
-\paragraph{Def. 6:} 
-Gegeben sei die Zahlenfolge $(a_n)_n \geq n_0, \; n\in \mathbb{N}$. Die Zahlenfolge $(s_n)_n \geq n_0$ mit $s_{n_0}:=a_{n_0}, \; s_{n_0 + 1} := a_{n_0}+a_{n_0 +1}, \; s_{n_0 +2} := a_{n_0} + a_{n_0 +1} + a_{n_0 +2}, \; ..., \; s_n=a_{n_0}+a_{n_0 +1} +...+a_n$ (\emph{Partialsumeenfolge}) heißt \emph{unendliche Reihe}.\\
-Bezeichnung: $\boxed{\sum_{n=n_0}^{\infty} a_n}$
-\begin{itemize}
-\item Die Zahlen $a_n$ heißen Glieder der Reihe, die Zahlen $s_n$ heißen Partialsummen der Reihe
-\item Ist die Reihe konvergent, d.h. die Folge $(s_n)$ ist konvergent, so heißt $s:=\lim_{n\to \infty}s_n=: \sum_{n=n_0}^{\infty} a_n$ die Summe der Reihe
-\item Die Reihe heißt (bestimmt oder unbestimmt) divergent, wenn die Partialsummen die entsprechende Eigenschaft haben.
-\end{itemize}
-Bemerkung: Oft $n_0=0$ oder $=1$
-\subparagraph{Bsp. 6:} $a_n=a q^n$ mit $a\not = 0, q \not = 0, n=0,1,2,...$\\
-$(a_n)=(a, aq, aq^2, aq^3,...)$ (\emph{geometrische Zahlenfolge})\\
-$(s_n)=\sum_{n=0}^\infty aq^n$ (\emph{geometrische Reihe})\\
-$= (\underbrace{a}_{s_0}, \underbrace{a+aq}_{s_1}, \underbrace{a+ aq+ aq^2}_{s_2}, ...)$\\
-$s_n=a + aq + aq^2 + aq^3+...+aq^n \quad | \cdot q$\\
-$s_nq=aq+aq^2+aq^3+aq^4+...+aq^{n+1}$\\
-Beide Zeilen voneinander abgezogen:\\
-$s_n-s_nq = a - aq^{n+1}\\
-s_n(1-q) = a - aq^{n+1} \quad | : (1-q) \text{ falls }q\not = 1\\
-s_n = a\cdot \frac{1-q^{n+1}}{a-q}$ (\emph{Summenformale für die endliche geometrische Reihe} mit Anfangsglied $a$ und $n+1$ Summanden)\\
-$\Rightarrow \lim_{n\to \infty}s_n=\frac{a}{a-q}$ falls $|q|<1$
-$\Rightarrow$ Summe der unendlichen geometrischen Reihe:\\
-$\boxed{\sum_{n=0}^\infty a q^n=\frac{a}{1-q}}$ für $|q|<1$.\\
-z.B. $0,\overline{72}=0,727272...=\frac{72}{100}+\frac{72}{10.000}+\frac{72}{1.000.000}+...=\frac{72}{99}=\frac{8}{11}$
-
-\subparagraph{Bsp. 7:} $\sum_{n=1}^\infty \frac{1}{n}=1+\frac{1}{2}+\frac{1}{3}+...$ heißt \emph{harmonische Reihe}. Offensichtlich ist $(s_n)$ streng monoton wachsend. Man kann zeigen, dass $(s_n)$ nicht beschränkt ist. Aus Satz 3 folgt: die harmonische Reihe ist bestimmt divergent.\\
-Schreibweise: $\sum_{n=1}^\infty \frac{1}{n}=\infty$
-
-\paragraph{Def. 7:} Die Reihe $\sum_{n=n_0}^\infty a_n$ heißt
-\begin{enumerate}[label=(\alph*)]
-\item absolut konvergent, falls $\sum_{n=n_0}^\infty|a_n|$ konvergent ist.
-\item bedingt konvergent, falls $\sum_{n=n_0}^\infty a_n$ konvergent, aber $\sum_{n=n_0}^\infty |a|$ nicht konvergent ist.
-\end{enumerate}
-
-\paragraph{Satz 5:} $\sum_{n=n_0}^\infty a_n$ absolut konvergent $\Rightarrow$ $\sum_{n=n_0}^\infty a_n$ konvergent.
-\subparagraph{Diskussion:}
-\begin{enumerate}
-\item Die Umkehrung gilt im Allgemeinen nicht. Es gibt konvergente Reihen, die nicht absolut konvergieren. Z.B. $\sum_{n=1}^\infty (-1)^{n-1}\frac{1}{n}=1-\frac{1}{2}+\frac{1}{3}-\frac{1}{4}+...$
-\item Für Reihen mit nicht-negativen Gliedern ($a_n \geq 0$ für alle $n$) ist absolute Konvergenz identisch mit (gewöhnlicher) Konvergenz. Für solche Reihen gilt entweder $\sum_{n=n_0}^\infty a_n<\infty$ [(absolut) konvergent] oder $\sum_{n=n_0}^\infty a_n = \infty$ [bestimmt divergent].
-\end{enumerate}
-
-\subsubsection{Konvergenzkriterien}
-\begin{enumerate} [label= \arabic*.]
-\item Notwendiges Konvergenzkriterium
-\paragraph{Satz 6:} $\sum_{n=n_0}^\infty a_n$ konv. $\Rightarrow$ $\lim_{n\to \infty} a_n = 0$
-\subparagraph{Beweis:} $a_n = s_n - s_{n-1}$\\
-$\Rightarrow \lim_{n\to \infty}a_n = \lim_{n\to\infty}s_n - \lim_{n\to\infty}s_{n-1}=s-s=0$
-\subparagraph{Bemerkung:} 
-\begin{enumerate}
-\item Bedingung $\lim_{n\to\infty}a_n = 0$ ist notwendig, aber nicht hinreichend. Z.B. $a_n=\frac{1}{n}$, dann $\lim_{n\to\infty}a_n=0$ aber $\sum_{n=1}^\infty a_n=\infty$
-\item Anwendung des Satzes meist in logisch äquivalenter Form: $\lim_{n \to \infty} a_n \not = 0 \Rightarrow \sum_{n=n_0}^\infty a_n$ divergiert
-\end{enumerate}
-
-\subparagraph{Bsp. 8:} $\sum_{n=1}^\infty \left(\frac{n}{10n-1}\right)^{50}$\\
-$a_1=1,94\cdot 10^{-48}, a_2=1,3 \cdot 10^{-49}, ...$\\
-$\lim_{n\to\infty}a_n=\lim_{n\to\infty}\left(\frac{n}{10-\frac{1}{n}}\right)^{50}\not = 0$\\
-$\Rightarrow$ Reihe divergent (sogar besimmt divergent, da alle $a_n \geq 0$)
-
-\item Hinreichendes Kriterien
-\begin{enumerate}[label=(\Alph*)]
-\item \emph{Leibnitzkriterium für alternierende Reihen}
-\paragraph{Satz 7:} Sei $(b_n)$ Folge mit 
-\begin{itemize}
-\item $b_n \geq b_{n+1} > 0$ für alle $n \in \mathbb{N}$
-\item $\lim_{n\to\infty} b_n = 0$
-\end{itemize}
-Dann ist $\sum_{n=0}^\infty(-1)^n b_n=b_0-b_1+b_2-b_3+...$ konvergent. D.h. wenn die Beträge $b_n$ der Glieder einer alternierenden Reihe mit $a_n = (-1)^n b_n$ eine Nullfolge bilden, dann ist die Reihe konvergent.\\
-Weiter gilt: $|s-s_n| \leq | a_{n+1} |$\\
-Also ist der Fehler bei der Approximation von $s$ durch $s_n$ beschränkt durch den Beträg von $a_{n+1}$.
-
-\subparagraph{Bsp. 9:} $\sum_{n=1}^\infty (-1)^{n-1} \frac{1}{n}=1-\frac{1}{2}+\frac{1}{3}-\frac{1}{4}+...$ (alternierende harmonische Reihe)\\
-$s_1=1, \; s_2=0,5, \; s_3\approx 0,83, \; s_4\approx 0,583, \; s_5\approx 0,78, \; s_6\approx 0,62$\\
-ABB 6\\
-Man kann zeigen: $s=\ln 2 = 0,6931$
-
-\end{enumerate}
-
-\end{enumerate}
-
 
 \end{document} 

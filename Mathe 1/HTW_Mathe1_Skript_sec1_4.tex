@@ -204,11 +204,11 @@ log_c b&=\frac{log_a b}{log_a c}
 \end{enumerate}
 \subsubsection{Arcusfunktionen}
 Vorbetrachtung: $y=f(x)=sin\; x (x \in \mathbb{R})$ ist nicht injektiv, also existiert keine Umkehrfunktion.\\
-Aber: $y=sin(x)$, eingeschränkt auf z.B. $\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$ ist injektiv und damit umkehrbar.\\
+Aber: $y=\sin(x)$, eingeschränkt auf z.B. $\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$ ist injektiv und damit umkehrbar.\\
 \begin{tikzpicture}[scale=.7]
 \draw  [-latex](-6.5,0) -- (6.5,0) node[right]{$x$};
 \draw [-latex] (0,-1.5) -- (0,1.5) node[above]{$y$};
-\draw [domain= -6:6]plot [smooth] (\x, {sin(\x*66)}) node[right]{$y=sin(x)$};
+\draw [domain= -6:6]plot [smooth] (\x, {sin(\x*66)}) node[right]{$y=\sin(x)$};
 \draw [dashed, green] (-1.4,-1.2) node [below] {$-\frac{\pi}{2}$}-- (-1.4,1.2);
 \draw [dashed, green] (1.4,-1.2) node [below] {$\frac{\pi}{2}$}-- (1.4,1.2);
 \draw [green] (-1.4,0.05) -- (1.4,0.05);
@@ -217,7 +217,7 @@ Aber: $y=sin(x)$, eingeschränkt auf z.B. $\left[-\frac{\pi}{2}, \frac{\pi}{2}\r
 \draw  [-latex](-2,0) -- (2,0) node[right]{$x$};
 \draw [-latex] (0,-2) -- (0,2) node[above]{$y$};
 \begin{scope}[yscale=-1,xscale=1]
-\draw [domain= -1.37:1.37, rotate=90]plot [smooth] (\x, {sin(\x*66)}) node [below left]{$y=arcsin(x)$};
+\draw [domain= -1.37:1.37, rotate=90]plot [smooth] (\x, {sin(\x*66)}) node [below left]{$y=\arcsin(x)$};
 \end{scope}
 \draw (-1,-0.1) node [below]{-1} -- (-1,0.1);
 \draw (1,-0.1) node [below]{1} -- (1,0.1);
@@ -250,13 +250,13 @@ Die Umkehrfunktionen der Hyperbelfunktionen\\
 \begin{tabular}{c | c | c | c l}
  & Db & Wb & Umkehrfunktion von ...\\
 \hline
-$y=arsinh\; x$ & $\mathbb{R}$ & $\mathbb{R}$ & $y=sinh\;x$ & $ x \in \mathbb{R}$\\
-$y=arcosh\; x $ & $[1,\infty)$ & $[0,\infty)$ & $y=cosh\; x$ & $x\geq 0$\\
-$y=artanh\; x$ & $(-1,1)$ & $\mathbb{R}$ & $y=tanh \; x $ & $x \in \mathbb{R}$\\
-$y=arcoth\; x $ & $\mathbb{R}\setminus[-1,1]$ & $\mathbb{R}\setminus\{0\}$ & $y=coth\; x$ & $x \not = 0$\\
+$y=\arcsinh\; x$ & $\mathbb{R}$ & $\mathbb{R}$ & $y=\sinh\;x$ & $ x \in \mathbb{R}$\\
+$y=\arccosh\; x $ & $[1,\infty)$ & $[0,\infty)$ & $y=cosh\; x$ & $x\geq 0$\\
+$y=\arctanh\; x$ & $(-1,1)$ & $\mathbb{R}$ & $y=tanh \; x $ & $x \in \mathbb{R}$\\
+$y=\arccoth\; x $ & $\mathbb{R}\setminus[-1,1]$ & $\mathbb{R}\setminus\{0\}$ & $y=coth\; x$ & $x \not = 0$\\
 \end{tabular}\\
 Aus der Def. der Hyberbelfunktionen (Def. 5) folgt:\\
-$arsinh\; x = ln (x+\sqrt{x^2+1})$\\
-$artanh\; x=\frac{1}{2}ln\left(\frac{1+x}{1-x}\right)$\\
-$arcosh\; x = ln (x+\sqrt{x^2+1}$\\
-$arcoth\; x = \frac{1}{2}ln\left(\frac{x+1}{x-1}\right)$
+$\arcsinh\; x = ln (x+\sqrt{x^2+1})$\\
+$\arctanh\; x=\frac{1}{2}ln\left(\frac{1+x}{1-x}\right)$\\
+$\arccosh\; x = ln (x+\sqrt{x^2+1}$\\
+$\arccoth\; x = \frac{1}{2}ln\left(\frac{x+1}{x-1}\right)$
