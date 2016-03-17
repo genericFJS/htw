@@ -30,3 +30,7 @@ Bei den Dokumenten (oder Abschnitten innerhalb von Dokumenten), die nicht von mi
 In der Regel wurden diese Dokumente von der öffentlich zugänglichen Seite des jeweiligen Lehrstuhls runter geladen.
 
 Rechte zur Nutzung und Weiterverteilung müssen dort entsprechend erfragt werden.
+
+## Wiki
+
+Im [Wiki](https://github.com/Nos-/htw/wiki) befinden sich weitere Informationen rund um die Themen des Studiums und dieses Repos.
