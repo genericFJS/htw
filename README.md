@@ -17,7 +17,11 @@ Des weiteren sind im Ordner */Modulname/Praktikum/prak##* Umsetzungen von Prakti
 Der Ordner */LaTeX_master* enthält das TeX-Headerfile, das Grundlage für (fast) alle anderen *.tex*-Dateien ist. Dies ist komplett, inklusive package-Auswahl und Macros, von mir zusammengestellt. 
 
 
-Diese von mir erstellten Dateien dürfen beliebig weiter verwendet werden. Beim Übernehmen von größeren Text- bzw. Code-Passagen wäre es höflich mich als Quelle zu erwähnen.
+Diese von mir erstellten Dateien dürfen beliebig für den privaten Gebrauch weiter verwendet werden. Beim Übernehmen von größeren Text- bzw. Code-Passagen wäre es höflich mich als Quelle zu erwähnen.
+
+Ohne meine explizite Zustimmung ist es nicht erlaubt die von mir erstellten Dateien:
+- Über den privaten Gebrauch hinaus gehend zu verwenden. 
+- Außerhalb dieses Repos hochzuladen und anzubieten.
 
 ### Dateien von dritten
 
