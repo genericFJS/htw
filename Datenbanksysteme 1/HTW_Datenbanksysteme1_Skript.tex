@@ -9,6 +9,10 @@
 \DAutor{Falk-Jonatan Strube}
 \DNotiz{Vorlesung von Dr. Axel Toll}
 
+\newcommand{\folie}[2]{\begin{center}
+\includegraphics[page=#2]{Vorlesung/oneperpage/Kap#1.pdf}
+\end{center}}
+
 \begin{document}
 
 \maketitle
@@ -38,10 +42,7 @@ Redundante Daten bergen Gefahr von Inkonsistenz $\Rightarrow$ Ziel: Schaffen von
 \item Backup-Möglichkeiten (mit Widerspruchsfreier Wiederherstellung)
 \end{itemize}
 
-\begin{center}
-\includegraphics[page=1]{Vorlesung/oneperpage/Kap1_BIK_UDM_Datenbank.pdf}
-\end{center}
-%\subparagraph{Folie 1.1}\parskp
+\folie{1}{1}
 \begin{tabular}{r | c c}
 & Daten & Informationen\\
 \hline
@@ -60,14 +61,11 @@ Speicherform & vergegenständlicht & an Menschen gebunden\\
 \item Daten + Informationen
 \end{itemize}
 
-\begin{center}
-\includegraphics[page=2]{Vorlesung/oneperpage/Kap1_BIK_UDM_Datenbank.pdf}
-\end{center}
-%\subparagraph{Folie 1.2}\parskp
+\folie{1}{2}
 Große Datenbestände $\Rightarrow$ Maßnahmen zur Datenorganisation\bigskip\\
 Eine mögliche Organisationsform (logisches Konzept): Ablage in Relationen (=Tabelle)\bigskip\\
 Eine Zeile in dieser Tabelle nennt man \emph{Datensatz} (Tupel, Record, …).\\
-Eine Spalte nennt man Datenfeld.
+Eine Spalte nennt man \emph{Datenfeld}.
 
 \subsubsection{Klassifikation von Daten}
 \paragraph{Mögliche Kriterien} für Datenfeld
@@ -114,10 +112,7 @@ Vormerkdaten & Daten, die solange existieren, bis ein genau definiertes Ereignis
 
 \subsubsection{Datenverschlüsselung}
 Gemeint ist nicht die Codierung und Decodierung von Daten, sondern das Zuweisen von Schlüsseln zu Datensätzen.
-\begin{center}
-\includegraphics[page=3]{Vorlesung/oneperpage/Kap1_BIK_UDM_Datenbank.pdf}
-\end{center}
-%\paragraph{Folie 1.3}
+\folie{1}{3}
 \paragraph{Identifizierender Schlüssel} \parskp
 kennzeichnet Objekteindeutig\\
 Bsp.:
@@ -144,10 +139,106 @@ Bsp.:
 \begin{itemize}
 \item Flugnummer $\underbrace{\text{LH 283}}_{\text{Flugnr.}} \underbrace{\text{AB3}}_{\text{Flugzeug}}$
 \end{itemize}
-\begin{center}
-\includegraphics[page=4]{Vorlesung/oneperpage/Kap1_BIK_UDM_Datenbank.pdf}
-\end{center}
-%\paragraph{Folie 1.4}
+\paragraph{spezielle Schlüssel in Datenbanksystemen}
+\begin{itemize}
+\item \emph{Primärschlüssel} (primary key PK): Datenfeld oder die Kombination aus Datenfeldern, die den Datensatz in der Tabelle eindeutig identifizieren.\\
+Bsp. Vereinsdatenbank: \\
+Primärschlüssel als einzelnes Datenfeld (Mitgliedertabelle): Migtlieds-ID\\ 
+Primärschlüssel als eine Kombination von Datendfeldern (Betragstabelle): ID mit Jahr (für Vereinsbeitrag abhängig von Jahr)
+\item \emph{Fremdschlüssel} (foreign key FK): Datenfeld, oder Kombination aus Datenfeldern, der (die) auf den PK einer anderen Tabelle zeigt.\\
+Bsp.: Mitglieds-ID in Tabelle mit Datenfelder-Primärschlüssel kommt aus der ersten Tabelle
+\item \emph{Referentielle Integrität}: Jeder Wert eines FK muss gleich dem Wert des PK sein, auf den der FK zeigt.\\
+Bsp.: Neuer Eintrag in Beitragstabelle kann nur neue Einträge bekommen, die Mitglieder aus Mitgliedertabelle enthält. Anders herum kann aus der Mitgliedertabelle kein Mitglied gelöscht werden, das noch in der Beitragstabelle genutzt wird.
+\end{itemize}
+\folie{1}{4}
+
+\subsubsection{Speicher- und Zugriffsformen}
+\begin{itemize}
+\item \emph{sequentielle Speicherung} (fortlaufend)\\
+Bsp.: Bandlaufwerk\\
+\begin{tabular}{| c | c | c | c}
+101 & 102 & 103 & ...\\
+\hline
+\end{tabular}
+\item \emph{verkettete Speicherung}\\
+Bsp.: verkette Listen (vgl. Programmierung I)
+\item \emph{indexverkettete Speicherung}\\
+Trennung: Datenspeicherung und „Weg“ zu den Daten
+\begin{itemize}
+\item Indexdatei (sortiert nach entsprechendem Index)
+\begin{itemize}
+\item Primärindex zeigt auf physische Adresse
+\item Sekundärindex zeigt auf Primärindex
+\end{itemize}
+\item Hauptdatei
+\end{itemize}
+\folie{1}{5}
+\end{itemize}
+Unterschied Primärschlüssel-Primärindex:
+\begin{itemize}
+\item Primärschlüssel dient dem Identifizieren
+\item Primärindex zum schnellen Suchen
+\end{itemize}
+
+\subsection[Datenmodelle als Abbild]{Datenmodelle als informationelles Abbild der Unternehmensrealität}
+\folie{1}{6}
+Informationssystem
+\begin{itemize}
+\item \emph{Funktionsmodell} (was soll das System leisten: Produktion, Lager, Beschaffung, …) $\Rightarrow$ Kernfrage: „Was will ich machen“\\
+Strukturen, Abläufe\\
+Technik: Programm-Ablauf-Plan (PAP), Ereignisorientierte Prozessketten (EPK), …
+\item \emph{Datenmodell}\\
+Daten und deren logische Struktur\\
+Technik: Entity-Relationship-Modell (ERM)
+\end{itemize}
+\folie{1}{7}
+\folie{1}{8}
+\folie{1}{9}
+\subparagraph{Bsp.:} \parskp
+ABB9 (1-3)
+
+\subsection[Datenbanksysteme als Grundlage]{Datenbanksysteme als technologische Grundlage der Datenverwaltung}
+\folie{1}{10}
+ABB10\\
+Datenbasis: Tabellen mit Metadaten\\
+Datenbankbetriebssystem (DBMS): Software, die mit Datenbasis kommuniziert
+
+\section[Datenbanksystem]{Grundlagen und Architektur eines Datenbanksystems (DBS)}
+
+\subsection[Konventioneller / Datenbankorientierter Ansatz]{Defekte des konventionellen Ansatzes der Datenverwaltung / Zielstellung des datenbankorientierten Ansatzes}
+\paragraph{konventionell} \parskp
+ABB 11
+\paragraph{konventionelle Datenorganisation}\parskp
+\emph{Merkmale}
+\begin{itemize}
+\item Datenspeicherung je Anwendung
+\item Datenspeicherung auf physischem Niveau
+\end{itemize}
+\emph{Nachteile}
+\begin{itemize}
+\item mangelnde Passfähigkeit (Zugriffskonflikte usw.)
+\item Redundanz
+\item Konsistenzprobleme
+\item mangelnde Flexibilität
+\item Daten-Programm-Abhängigkeit (kurz: Datenabhängigkeit)
+\end{itemize}
+\folie{2}{1}
+\folie{2}{2}
+\folie{2}{3}
+\paragraph{Zielsetzung des Datenbankeinsatzes}
+\folie{2}{4}
+\begin{enumerate}
+\item Bsp. für gewollte Redundanz: Sekundärindex
+\item Datensicherheit:
+\begin{itemize}
+\item physisch, falls bspw. der Server abbrennt
+\item logisch, dass bspw. alle Daten den richtigen Typ haben
+\end{itemize}
+\end{enumerate}
+
+
+
+
 
 
 
