@@ -115,5 +115,139 @@ $\Leftrightarrow 1 < \frac{x}{\sin x} < \frac{1}{\cos x}$\\
 $\Leftrightarrow 1 > \frac{\sin x}{x} > \cos x$\\
 $\Rightarrow \lim_{x\to 0} \frac{\sin(x)}{x}=1$
 \end{itemize}
+Analog zu Grenzwertsätzen für Zahlenfolgen gilt:
+\paragraph{Satz 1:} Es gelte $\lim_{x\to x_0} f(x) = a$ und $\lim_{x\to x_0} g(x) = b$. Dann:
+\begin{itemize}
+\item $\lim_{x\to x_0} (f(x)+g(x) = a+b$
+\item $\lim_{x\to x_0} c \cdot f(x) = c \cdot a$
+\item $\lim_{x\to x_0} (f(x) \cdot g(x)) = a \cdot b$
+\item $\lim_{x\to x_0}\frac{f(x)}{g(x)}=\frac{a}{b} \quad $ (falls $b\not = 0$)
+\end{itemize}
+\subparagraph{Bsp. 2:}
+\begin{enumerate}[label=\alph*.)]
+\item $\lim_{x\to 0} \frac{3x^3-7x+4}{3 \cos x} = \frac{4}{3}$
+\item $\lim_{x\to 3} \frac{x^2-x-6}{x-3}=\mq{\frac{0}{0}}$ Satz nicht anwendbar.\\
+$= \lim_{x\to 3} \frac{(x-3)(x+2)}{(x-3)} = \lim_{x\to 3} x+2 = 5$\\
+(andere Möglichkeit mit $\mq{\frac{0}{0}}$ umzugehen lernen wir später)
+\end{enumerate}
+\paragraph{Def. 2:} 
+\begin{enumerate}[label = \alph*.)]
+\item rechtseitiger Grenzwert:\\
+$\lim_{x\searrow x_0} f(x)=a : \Leftrightarrow $ für jede Folge $(x_n)$ mit $x_n \in Db(f)$ und $x_n > x_0$ und $\lim_{n\to \infty} x_n =x_0$ gilt $\lim_{n\to \infty} f(x_n)=a$.\\
+Andere Schreibweise: $\lim_{x\searrow x_0}=\lim_{x\to x_0+0}$
+\begin{tikzpicture}[scale=2]
+\draw [-latex] (-0.8, 0) -- (1.7, 0);
+\draw (0, 0.1) -- (0,-0.1) node[below]{$x_0$};
+\draw (1, 0.1) -- (1,-0.1)node[below]{$x$};
+\draw [-latex] (0.9,0.15) -- (0.4,0.15);
+\end{tikzpicture}
+\item linkseitiger Grenzwert:\\
+$\lim_{x\nearrow x_0} f(x) =a :\Leftrightarrow$ analog rechtsseitiger Grenzwert
+\item $\lim_{x\to \infty} f(x) = a :\Leftrightarrow$ für jede Folge $(x_n)$ mit $x_n \in Db(f)$ und $\lim_{x\to \infty} x_n = \infty$ gilt $\lim_{n\to \infty} f(x_n)=a$.
+\item $\lim_{x\to \infty} f(x) =a :\Leftrightarrow$ analog s.o.
+\end{enumerate}
+\subparagraph{Diskussion:} Uneigentliche Grenzwerte:\\
+Wir schreiben 
+ $\lim_{\bullet} f(x) 0 \begin{cases}
+ \infty\\
+ -\infty
+ \end{cases}$  bei bestimmter Divergenz der Funktionswerte für:\\
+$\bullet \begin{cases}
+x \to x_0\\
+x \nearrow x_0\\
+x \searrow x_0\\
+x\to \infty\\
+x\to -\infty
+\end{cases}$
+
+\paragraph{Satz 2:}\parskp
+$\lim_{x\to x_0} f(x) =a \Leftrightarrow \lim_{x\nearrow x_0} f(x)=\lim_{x\searrow x_0}=a$
+
+\subparagraph{Bsp. 3:} (einseitiger Grenzwert)\\
+$f(x)=\begin{cases}
+-x^2 & \text{ für } x<0\\
+\sqrt{x+1} & \text{ für } x\geq 0
+\end{cases}$\\
+ABB13\\
+$\lim_{x\nearrow 0}f(x) = 0, \; \lim_{x\searrow 0}f(x)=1$\\
+$\Rightarrow \lim_{x\to 0}f(x)$ existiert nicht!
+
+\paragraph{Bsp. 4:} \parskp
+$\lim_{x\to \infty} x \cdot \sin \left(\frac{4}{x}\right)= \mq{\infty \cdot 0}$\\
+$\overset{u=\frac{4}{x}}{=}\lim_{u\searrow 0}\frac{4}{u} \sin(u) = 4$
+\paragraph{Bsp. 5:} \parskp
+$\lim_{x\nearrow \frac{\pi}{2}} \tan x = \infty$\\
+$\lim_{x\searrow \frac{\pi}{2}} \tan x = -\infty$\\
+ABB14
+\subsection{Stetigkeit von Funktionen}
+\paragraph{Def. 3:} Sei $f: Db(f)\to \mathbb{R}, \; Db(f) \subseteq \mathbb{R}$ eine Funktion und $x_0 \in Db(f)$ gegeben.\\
+Es heißt $f$:
+\begin{enumerate}[label=\alph*.)]
+\item stetig in $x_0$ falls $\lim_{x \to x_0} f(x) = f(x_0)$ gilt\\
+(also $\lim_{x\to x_0} f(x)=f(\lim_{x\to x_0}x)$, d.h. Limes und Funktion kann vertauscht werden).\\
+ABB15
+\item linksseitig stetig in $x_0$, falls $\lim_{x\nearrow x_0}f(x)=f(x_0)$.
+\item rechtsseitig stetig in $x_0$, falls $\lim_{x\searrow x_0}f(x)=f(x_0)$.
+\end{enumerate}
+
+\subparagraph{Bsp. 6:}
+\begin{enumerate}[label=\alph*.)]
+\item $f_1(x)=\begin{cases}
+\frac{\sin x}{x} & x\not = 0 \\
+0 & x = 0
+\end{cases}$ ist in $x_0=0$ nicht stetig, da $\lim_{x\to 0} f(x) = 1 \not = 0 = f(0)$.\\
+Aber $\overset{\sim}{f}_1(x)=\begin{cases}
+f(x) & x\not = 0\\
+1 & x= 0
+\end{cases}$ ist in $x_0=0$ stetig.\\
+Bezeichnung: hebbare Unstetigkeit.\\
+ABB16
+\item $f_2(x)=\begin{cases}
+\arctan \left(\frac{1}{x}\right) & x\not = 0\\
+0 & x = 0
+\end{cases}$ ist unstetig in $x_0=0$, da $\lim_{x\nearrow 0}f_2(x) \not = f_2(0) \not = \lim_{x\nearrow 0} f_2(x)$\\
+Bezeichnung: endlicher Sprung.\\
+ABB17
+\item $f_3(x)=\begin{cases}
+\frac{1}{x} & x\not = 0\\
+0 & x=0
+\end{cases}$ ist unstetig in $x_0=0$, da $\lim_{x\nearrow 0}f_3(x) = \infty \not = f_3(0)$.\\
+ABB18
+\item $f_3(x)=\begin{cases}
+\sin \frac{1}{x} & x \not = 0\\
+1 & x=0
+\end{cases}$ ist unstetig in $x_0=0$, da der Grenzwert $\lim_{x\to 0}\sin \frac{1}{x}$ nicht existiert.\\
+ABB19
+\end{enumerate}
+\paragraph{Def. 4:} Die Funktion $f: DB(f) \to \mathbb{R}, \; Db(f) \subseteq \mathbb{R}$ heißt
+\begin{enumerate}[label=\alph*.)]
+\item \emph{in einem Intervall $I \subset Db(f)$ stetig}, falls $f$ an jeder inneren Stelle $x_0 \in I$ stetig ist und in evtl. zu $I$ gehörenden Randpunkten einseitig stetig ist.
+\item \emph{stetig}, falls $f$ in allen Punkten $x_0\in Db(f)$ stetig ist.
+\end{enumerate}
+\subparagraph{Bemerkung:} Jede der in \ref{1.4.1} und \ref{1.4.3} betrachteten Funktionen ist stetig.
+\subparagraph{Bsp. 7:} $f: \mathbb{R}\setminus \{0\} \to \mathbb{R}, \; f(x)=\frac{1}{x}$ ist stetig.
+
+\paragraph{Satz 3:} Sind $f$ und $g$ stetig in $x_0$, so sind auch $c_1 \cdot f + c_2 \cdot g, \; f\cdot g$ und $\frac{f}{g}$(falls $g(x_0)\not = 0$) stetig in $x_0$.
+
+\paragraph{Satz 4:} (Stetigkeit und Verknüpfungen)\\
+Seien $g: Db(g) \to \mathbb{R}$ und $f: Db(f) \to \mathbb{R}$ Funktionen mit $Wb(g)\subseteq Db(f)$, dann gilt:\\
+Ist $g$ stetig in $x_0$ und $f$ stetig in $g(x_0)$, so ist $f\circ g:Db(g) \to \mathbb{R}, \; (f\circ g)(x) = f(g(x))$ stetig in $x_0$.
+
+\paragraph{Satz 5:} (Zwischenwertsatz)\\
+Sei $f: Db(f) \to \mathbb{R}, \; Db(f)\subseteq \mathbb{R}$ stetig auf $[a,b]  Db(f)$. Falls $f(a) \cdot f(b) < 0$ (also haben unterschiedliche Vorzeichen), so gilt $\exists x^*\in [a,b]$ mit $f(x^*)=0$\\
+ABB20
+\paragraph{Satz 6:} Sei $f: Db(f) \to \mathbb{R}, \; Db(f) \subseteq \mathbb{R}$ stetig auf $[a,b]$. Dann nimmt $f$ auf $[a,b]$ Minimum und Maximum an.
+
+\subparagraph{Diskussion:}
+\begin{enumerate}[label=\alph*.)]
+\item $f(x) = \tan x$ nimmt auf $\left( - \frac{\pi}{2}, \frac{\pi}{2}\right)$ kein Maximum an.\\
+ABB21
+\item $f(x) = \begin{cases}
+\arctan \frac{1}{x} & x \in [-1,1]\setminus \{0\}\\
+0 & x = 0
+\end{cases}$ nicht stetig und nimmt kein Maximum auf $[-1,1]$ an.\\
+ABB22
+\end{enumerate}
+
 
 \end{document} 
