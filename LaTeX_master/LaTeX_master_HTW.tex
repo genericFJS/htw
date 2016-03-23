@@ -40,6 +40,15 @@
 \DeclareMathOperator{\arcsinh}{arcsinh}
 \DeclareMathOperator{\arctanh}{arctanh}
 \DeclareMathOperator{\arccoth}{arccoth} 
+% Mathe in Anführungszeichen:
+\newsavebox{\mathbox}\newsavebox{\mathquote}
+\makeatletter
+\newcommand{\mq}[1]{% \mathquotes{<stuff>}
+  \savebox{\mathquote}{\text{"`}}% Save quotes
+  \savebox{\mathbox}{$\displaystyle #1$}% Save <stuff>
+  \raisebox{\dimexpr\ht\mathbox-\ht\mathquote\relax}{"'}#1\raisebox{\dimexpr\ht\mathbox-\ht\mathquote\relax}{''}
+}
+\makeatother
 
 % tikz usw.
 \usepackage{tikz}

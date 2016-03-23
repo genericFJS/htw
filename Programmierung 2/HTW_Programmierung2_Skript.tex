@@ -109,6 +109,41 @@ auto main() -> int {
 \begin{itemize}
 \item nach jeder cin Eingabe: „cin.clear();“, damit Fehler ignoriert werden um weiter cin's abhandeln zu können (vgl. robust\_ea)
 \end{itemize}
+Einlesen:
+\begin{lstlisting}[language=C++]
+char sc;
+cout << "sc=";
+cin >> sc;
+cin.clear();	// clear, um quasi Fehler zu ignorieren
+cin.ignore(INT_MAX, '\n');	// braucht #include <limits.h>
+cout << "sc" << dec << (int) sc << endl;
+
+// alternativ:
+char vb[128];
+cout << "s=";
+cin.getline(vb, sizeof(vb), '\n');	// lesen als String, dann wieder umwandeln (liest auch Leerzeichen ein)
+sc = atoi(vb);	// braucht #include <cstdlib>
+
+// alternative zu getline:
+cin.get(...);	// lässt aber \n im Strom
+cin.get();
+
+// alternativ
+cin >> setw(sizeof(vb)) >> vb;	// verhindert Überlauf
+sc = atoi(vb);
+
+// alternativ
+String s;	// braucht #include <string>
+size_t ie=0;
+cin >> s;
+unsigned int ni = stoi(s, &ie, 10);
+
+// alternativ
+getline(cin, s, '\n');
+double d = stod(s, &ie);
+
+// zum compilieren: g++ p2a1.cpp -std=c++11 -o a.out
+\end{lstlisting}
 
 \newpage
 \printbibliography
