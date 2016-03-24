@@ -32,7 +32,8 @@ rdesktop -f its56 # oder its59
 \end{lstlisting}
 Empfohlene Literatur: Breymann\cite{breymann2009c++}
 
-\section{C++}
+\chapter{C++}
+\section{Ein- und Ausgabe}
 (siehe Folie CPP\_01\_stdio)
 \begin{lstlisting}[language=C++]
 #include <iostream>	// alternativ zu <stdio.h> in C
@@ -114,7 +115,7 @@ Einlesen:
 char sc;
 cout << "sc=";
 cin >> sc;
-cin.clear();	// clear, um quasi Fehler zu ignorieren
+cin.clear();	// clear, um die Eingabezeile freizumachen, damit man nicht an Falscher Eingabe hängen bleibt
 cin.ignore(INT_MAX, '\n');	// braucht #include <limits.h>
 cout << "sc" << dec << (int) sc << endl;
 
@@ -144,6 +145,51 @@ double d = stod(s, &ie);
 
 // zum compilieren: g++ p2a1.cpp -std=c++11 -o a.out
 \end{lstlisting}
+
+robust\_ea1.cpp:
+\begin{lstlisting}[language=C++]
+	do {
+		cout<<"d = "; cin>>d; 	// einlesen
+		if(cin.eof()) break;		// break bei Strg+D oä.
+		if(cin.fail() || (cin.peek() != '\n')){		// ist nächstes Zeichen ungültig?
+			cin.clear(); cin.ignore(INT_MAX,'\n');	// Strom zurücksetzen und zum \n gehen
+			continue;
+		}
+		break; % Schleife verlassen, wenn korrekte Eingabe
+	} while(true);
+	
+	if(cin.eof()){ cin.clear(); cout<<"eof\n"; }
+	else {
+		cin.clear(); cin.ignore(INT_MAX,'\n');
+		cout<<"Wert d = "<<d<<endl;
+	}
+	cin.ignore();
+\end{lstlisting}
+
+\section{Defaultargumente}
+Defaultargumente müssen immer von rechts angefangen definiert sein:
+\begin{lstlisting}[language=C++]
+myFunc(int i = 5, int j = 7)	// korrekt
+myFunc(int i, int j = 7)			// korrekt
+myFunc(int i = 5, int j)			// falsch!!!
+\end{lstlisting}
+
+\section{Überladen}
+overload.pdf
+
+Hinweis: cast auf zwei Möglichkeiten:
+\begin{lstlisting}[language=C++]
+int i = 5;
+double d;
+d = (long) i;
+d = long(i);
+\end{lstlisting}
+
+\section{Typisierte Konstanten}
+
+\section{Referenzen}
+referenzen.pdf\\
+Ein Speicherplatz wird mit mehreren Variablen-Namen beschrieben.
 
 \newpage
 \printbibliography

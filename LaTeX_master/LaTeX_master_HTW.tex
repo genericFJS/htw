@@ -1,11 +1,14 @@
 \documentclass[a4paper,11pt, footheight=26pt
 %,twoside
-]{scrartcl}
+]{scrreprt}
 \usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
 \geometry{a4paper, top=30mm, bottom=22mm,headsep=10mm, footskip=12mm
 , left=20mm, right=20mm
 %, inner=27mm, outer=13mm
 }
+
+\setcounter{secnumdepth}{3}	% zählt auch subsubsection
+\setcounter{tocdepth}{3}	% Inhaltsverzeichnis bis in subsubsection
 
 % Zeile 2 (,twoside) und 7 (inner=...) für eine Druckversion (doppelseitig) ent-kommentieren (Rand für Hefter)
 
@@ -44,9 +47,9 @@
 \newsavebox{\mathbox}\newsavebox{\mathquote}
 \makeatletter
 \newcommand{\mq}[1]{% \mathquotes{<stuff>}
-  \savebox{\mathquote}{\text{"`}}% Save quotes
+  \savebox{\mathquote}{\text{"}}% Save quotes
   \savebox{\mathbox}{$\displaystyle #1$}% Save <stuff>
-  \raisebox{\dimexpr\ht\mathbox-\ht\mathquote\relax}{"'}#1\raisebox{\dimexpr\ht\mathbox-\ht\mathquote\relax}{''}
+  \raisebox{\dimexpr\ht\mathbox-\ht\mathquote\relax}{"}#1\raisebox{\dimexpr\ht\mathbox-\ht\mathquote\relax}{''}
 }
 \makeatother
 
@@ -58,7 +61,7 @@
 %\usetikzlibrary{through}	% ???
 \usetikzlibrary{arrows}
 \usetikzlibrary{arrows.meta}	% Pfeile verändern / vergrößern: \draw[-{>[scale=1.5]}] (-3,5) -> (-3,3);
-\usetikzlibrary{automata,positioning} % Zeilenumbruch im Node node[align=center] {Text\\nächste Zeile}
+\usetikzlibrary{automata,positioning} % Zeilenumbruch im Node node[align=center] {Text\\nächste Zeile} automata für Graphen
 \usetikzlibrary{matrix}
 \usetikzlibrary{patterns}	% Schraffierte Füllung
 \tikzstyle{reverseclip}=[insert path={	% Inverser Clip \clip
@@ -104,7 +107,7 @@
 \lstset{
 basicstyle=\ttfamily, 
 mathescape=true, 
-escapeinside=||, 
+%escapeinside=^^, 
 autogobble, 
 tabsize=2,
 basicstyle=\footnotesize\sffamily\color{black},
@@ -112,17 +115,13 @@ frame=single,
 rulecolor=\color{lightgray},
 numbers=left,
 numbersep=5pt,
-%basicstyle=\footnotesize\sffamily\color{black},
-commentstyle=\color{gray},
-%frame=single,
-%numbers=left,
-%numbersep=5pt,
 numberstyle=\tiny\color{gray},
+commentstyle=\color{gray},
 keywordstyle=\color{green},
+stringstyle=\color{orange},
+morecomment=[l][\color{magenta}]{\#}
 %showspaces=false,
 showstringspaces=false,
-stringstyle=\color{orange},
-tabsize=2,
 breaklines=true,
 literate=%
     {Ö}{{\"O}}1
@@ -134,6 +133,7 @@ literate=%
     {ö}{{\"o}}1
     {~}{{\textasciitilde}}1
 }
+\usepackage{scrhack} % Fehler umgehen
 \def\ContinueLineNumber{\lstset{firstnumber=last}} % vor lstlisting. Zum wechsel zum nicht-kontinuierlichen muss wieder \StartLineAt1 eingegeben werden
 \def\StartLineAt#1{\lstset{firstnumber=#1}} % vor lstlisting \StartLineAt30 eingeben, um bei Zeile 30 zu starten
 \let\numberLineAt\StartLineAt

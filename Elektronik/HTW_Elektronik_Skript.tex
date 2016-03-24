@@ -16,13 +16,13 @@
 \tableofcontents
 \newpage
 
-\section*{Einführung}
+\chapter*{Einführung}
 
 Passwort Materialien: lvf\_ws2015
 
 Prüfung: 1 Blatt A4 hanbeschrieben, doppelseitig beschrieben
 
-\section{Anliegen der Lehrveranstaltung}
+\chapter{Anliegen der Lehrveranstaltung}
 
 \begin{tabular}{c c}
 \mpb[0.4]
@@ -54,9 +54,9 @@ Informatik: automatisierte Informationsverarbeitung
 
 \emph{FAZIT: Grundkenntnisse, gemeinsames Vokabular mit HW-Ingenieuren}
 
-\section{Grundlagen der Elektrotechnik}
+\chapter{Grundlagen der Elektrotechnik}
 
-\subsection{Grundgrößen und Grundbeziehungen}
+\section{Grundgrößen und Grundbeziehungen}
 
 \paragraph{Bsp.:} Elektrophor mit Bernsteinplatte und Katzenfell\\
 \begin{tikzpicture}[scale=0.8, remember picture]%, overlay]
@@ -196,7 +196,7 @@ $F \sim Q_1 \cdot Q_2$\\
 $F \sim \frac{1}{r^2}$\\
 \boxed{F=k\frac{Q_1 \cdot Q_2}{r^2}}
 
-\subsection{Potential und Spannung}
+\section{Potential und Spannung}
 
 \begin{itemize}
 \item Ladungen im elektrischen Feld haben unterschiedliche Potenziale.
@@ -215,7 +215,7 @@ $F \sim \frac{1}{r^2}$\\
 \item Freileitungen … $380 kV$
 \end{itemize}
 
-\subsection{Stromfluss, Ladungsausgleich}
+\section{Stromfluss, Ladungsausgleich}
 
 \begin{tikzpicture} [scale=0.15]
 
@@ -262,7 +262,7 @@ Höhenunterschied - Potential\\
 Flussbett - Leitung\\
 Wasser - Leiter
 
-\subsection{Widerstand}
+\section{Widerstand}
 
 \paragraph{Beobachtung:} $I\sim U$, $I=G\cdot U$ mit \quad $G$ … Leitwert
 
@@ -295,7 +295,7 @@ Widerstand ist …
 \end{tikzpicture}
 \end{itemize}
 
-\subsection{Zusammenschaltung von Widerständen}
+\section{Zusammenschaltung von Widerständen}
 
 \begin{enumerate} [label=\alph*)]
 \item Reihenschaltung\\
@@ -472,7 +472,7 @@ $R^*=R||2R=\frac{2R \cdot R}{3R}=\frac{2}{3}R\\
 R'=R|| (R+R^*)=\frac{R\cdot \frac{5}{3}R}{\frac{8}{3}R}=\frac{5}{8}R\\
 R_{ges}=R+ R' + R = 2R + \frac{5}{8}R = \frac{21}{8}R$
 
-\subsection{Leistung und Energie}
+\section{Leistung und Energie}
 \begin{tikzpicture}[scale=0.2]
 
 \draw  (5,-8) rectangle (3,-2);
@@ -493,7 +493,7 @@ R_{ges}=R+ R' + R = 2R + \frac{5}{8}R = \frac{21}{8}R$
 $P=U\cdot I \overset{U=R\cdot I}{=}I^2 \cdot R = \frac{U^2}{R}\\
 W=P\cdot t=U \cdot I \cdot t = \frac{U^2}{R}\cdot t = I^2 \cdot R \cdot t$
 
-\subsection{Stromkreise und Schaltbilder}
+\section{Stromkreise und Schaltbilder}
 \begin{itemize}
 \item Modellierung elektronischer Erscheinungen
 \item Berechnung von Stromkreisen
@@ -508,9 +508,9 @@ W=P\cdot t=U \cdot I \cdot t = \frac{U^2}{R}\cdot t = I^2 \cdot R \cdot t$
 \end{itemize}
 \includegraphics[scale=.75]{Abbildungen/ABB208}
 
-\section{Berechnung von Stromkreisen}
+\chapter{Berechnung von Stromkreisen}
 
-\subsection{Spannungsteiler}
+\section{Spannungsteiler}
 
 \includegraphics[scale=.75]{Abbildungen/ABB209}\\
 $U_{R_1}=IR_1 \quad U_{R_2}=IR_2 \quad U_q= I(R_1+R_2)$\\
@@ -532,7 +532,7 @@ $\frac{U_{out}}{U_{in}}=\underbrace{\frac{R_2|| (R_3+R_4)}{R_1+R_2||(R_3+R_4}}_{
 \paragraph{gesteuerter Spannungsteiler}\parskp
 \includegraphics[scale=.75]{Abbildungen/ABB301}
 
-\subsection{Stromteiler}
+\section{Stromteiler}
 
 \includegraphics[scale=.75]{Abbildungen/ABB302}\\
 $U_{out}=I_3 \cdot R_3 = I_2 \cdot R_2 = I_1 \cdot (R_2||R_3)$\\
@@ -552,7 +552,7 @@ $I_1=\frac{U_{in}}{R_{AB}}$\\
 $\frac{I_2}{I_1}=\frac{R_3+R_4}{R_2+R_3+R_4} \Rightarrow I_2=\frac{U_{in}}{R_{AB}}\cdot \frac{R_3+R_4}{R_2+R_3+R_4}$\\
 $\frac{I_3}{I_1}=\frac{R_2}{R_2+R_3+R_4}\Rightarrow I_3 = \frac{U_{in}}{R_{AB}}\cdot \frac{R_2}{R_2+R_3+R_4}$
 
-\subsection{Strom-Spannungskennlinie}
+\section{Strom-Spannungskennlinie}
 Ziel: anschauliche Beschreibung des Klemmverhaltens von Bauelementen\\
 \includegraphics[scale=.75]{Abbildungen/ABB304}
 \begin{itemize}
@@ -568,7 +568,7 @@ $I_S$ … Sperrstrom\\
 $U_T$ … Temperaturspannung 
 \end{itemize}
 
-\subsection{Spannungsquelle}
+\section{Spannungsquelle}
 
 Was ist eine Spannungsquelle?
 
@@ -589,7 +589,7 @@ $U_q$ … Leerlaufspannung\\
 $R_i$ … Innenwiderstand\\
 $I_k$ … Kurzschlussstrom
 
-\subsection{Grundstromkreis}
+\section{Grundstromkreis}
 reale Quelle + Verbraucher\\
 \includegraphics[scale=.75]{Abbildungen/ABB310}\\
 Strom-Spannungs-Kennlinienfeld des Grundstromkreises\\
@@ -606,7 +606,7 @@ $P_V=U_q\cdot I + I^2 \cdot R_i$ \quad $I=\frac{U_{AB}}{R_V}$\\
 $P_V=f(R_V)$\\
 maximale Leistung am Verbraucher: $\frac{d P_V}{dR_V}=0 \Rightarrow P_{V,max}$ für $R_V=R_i$ (dann $P_{V,max}=\frac{I_k \cdot U_q}{4}$)
 
-\subsubsection{Betrachtung der Leistung im Grundstromkreis}
+\subsection{Betrachtung der Leistung im Grundstromkreis}
 
 \includegraphics[scale=.75]{Abbildungen/ABB401}\\
 \begin{tabular}{l l}
@@ -640,7 +640,7 @@ Zwei realistische Betriebsfälle:
 \item Wirkungsgrad bei 50\% und maximale Leistung
 \end{itemize}
 
-\subsection{Spannungszeitfunktion}
+\section{Spannungszeitfunktion}
 Verlauf einer Spannung über der Zeit.
 \begin{itemize}
 \item Gleichspannung $U= const \not = f(t)$ (Batterien, Stromversorgung für elektrische Geräte
@@ -663,7 +663,7 @@ $u(t)=\hat{U}\cdot sin(\omega t+\varphi_o)$
 \includegraphics[scale=.75]{Abbildungen/ABB405}
 \end{itemize}
 
-\subsection{Kondensator, Kapazität}
+\section{Kondensator, Kapazität}
 
 Kapazität \\
 $\rightarrow$ Fähigkeit, Ladungen zu speichern\\
@@ -679,7 +679,7 @@ relevante Werte: zwischen $\underset{\mu}{10^{-6}}... \underset{n}{10^{-9}}...\u
 $C \sim A$, $C\sim \frac{1}{d}$, $C\sim  \frac{A}{d} \Rightarrow C=\varepsilon \cdot \frac{A}{d}$ \\
 ($\varepsilon = \varepsilon_r \cdot \varepsilon_0$ … $\varepsilon_0$: Dielektrizitätskonstate des Vakuums$=8,856\cdot 10^{-12}\frac{As}{Vm}$)\\
 Symbol: \includegraphics[scale=.75]{Abbildungen/ABB407}
-\subsubsection{Strom-Spannungs-Beziehung am Kondensator}
+\subsection{Strom-Spannungs-Beziehung am Kondensator}
 $u_C(t)=\frac{1}{C}\int i_C(t) dt$\\
 $i_C(t)=C\cdot \frac{du_c(t)}{dt}$\\
 \emph{Konsequenzen:} $u(t)=\hat{U}\cdot sin (\omega t) \Rightarrow i_C(t)=\underbrace{\hat{U}\cdot \omega C}_{=\hat{I}}(sin (\omega t) + 90^{\circ})$\\

@@ -16,7 +16,7 @@
 \tableofcontents
 \newpage
 
-\section*{Inhalte}
+\chapter*{Inhalte}
 Grundlage: Grundkurs Theoretische Informatik \cite{hollas2015grundkurs}
 \begin{itemize}
 \item Formale Sprachen
@@ -45,8 +45,8 @@ Grundlage: Grundkurs Theoretische Informatik \cite{hollas2015grundkurs}
 \end{itemize}
 \end{itemize}
 
-\section{Automaten und Formale Sprachen}
-\subsection{Formale Sprachen}
+\chapter{Automaten und Formale Sprachen}
+%\section{Formale Sprachen}
 \paragraph{Def.:} Ein Alphabet ist eine Menge $\Sigma \not = \emptyset$ (Symbole in $\Sigma$ -- müssen nicht einzelne Buchstaben sein, auch Wörter usw. [bspw. „if“ oder „else“ im Alphabet der Programmiersprache C]).
 
 \paragraph{Def.:} Für $w_1, ..., w_n \in \Sigma$ ist $w=w_1...w_n$ ein Wort der Länge $n$.\\
@@ -68,8 +68,8 @@ Für ein Wort $w$ ist $w^n$ die $n$-fache Konkatenation von $w$, wobei $w^0=\var
 \subparagraph{Bemerkung:} $\Sigma^*$ lässt sich ebenfalls definieren durch $\Sigma^*=\bigcup_{n\geq 0}\Sigma^n$.\\
 Ferner ist $\Sigma^+=\Sigma^*-\{\varepsilon\}$.
 
-\subsection{Reguläre Sprachen}
-\subsubsection{Deterministische endliche Automaten (DFA)}
+\section{Reguläre Sprachen}
+\subsection{Deterministische endliche Automaten (DFA)}
 \subparagraph{Bsp.:} \parskp
 ABB1\\
 (Pfeil zeigt auf Startzustand, Endzustand ist doppelt umrandet)\\
@@ -115,6 +115,80 @@ ABB5
 \hat{\delta}(z_E, \varepsilon) &= z_E\\
 \end{align*}
 Die von $\mathcal{M}$ \emph{akzeptierte Sprache} ist $L(\mathcal{M})=\{w\in \Sigma^* \;|\; \hat{\delta}(z_0, w) \in E\}$
+
+\subsection{Nichtdeterministischer endliche Automaten (NFA)}
+ABB23\\
+NFA, der alles akzeptiert, was $abc$ enthält:\\
+ABB24\\
+Beispiel: Wort $abaabcab$
+\subparagraph{Beispiel:} NFA, der alle Wörter akzeptiert, die auf $001$ enden:\\
+ABB25\\
+Akzeptierte Worte unter anderem: $01011001$, $001001$\\
+Ein Wort wird vom NFA akzeptiert, wenn es einen Weg, ausgehend von einem Startzustand, gibt, mit den ein End-Zustand erreicht wird.\\
+Der NFA „weiß“ nicht, welcher Pfad zu durchlaufen ist; diesen muss der Benutzer ermitteln (wie bei einer Straßenkarte).\\
+Ein NFA lässt sich formalisieren durch ein Tupel $\mathcal{M}=(Z, \Sigma, \delta, S, E)$
+\begin{itemize}
+\item $Z$: Zustände
+\item $\Sigma$: Eingabealphabet
+\item $\delta$: $Z \times \Sigma \to \mathcal{P}(Z)$ Überführungsfunktion (bildet ab in Potenzmenge von $Z$)
+\item $S$: Menge der Startzustände
+\item $E$: Menge der Endzustände
+\end{itemize}
+Dabei bedeutet $\delta(z,a)\ni z'$, dass der NEA im Zustand $z$ für die Eingabe $a$ die Möglichkeit besitzt, in den Zustand $z'$ zu wechseln.
+
+\subsection{Umwandlung eines NFA in einen DFA}\parskp
+Wir wollen den NFA\\
+ABB 27\\
+in einen DFA umwandeln. Der Startzustand des DFA besteht aus den Startzuständen des NFA:\\
+ABB 28\\
+Betrachten die Folgezustände für $a \in \Sigma$:\\
+ABB 29\\
+nächster Schritt:\\
+ABB 30\\
+nächster Schritt:\\
+ABB 31\\
+weitere Schritte:\\
+$z_0,b: \{z_0\}$\\
+$z_1,b: \{z_2\}$\\
+ABB 32\\
+$z_0,c: \{z_0\}$\\
+$z_1,c: \{\}$\\
+ABB 33\\
+usw.:\\
+ABB 34\\
+Wenn ein Zustand des DFA einen Endzustand des NFA enthält, so ist es ein Endzustand.\\
+Der auf diese Weise erhaltene DFA kann Zustände enthalten, die sich zu einem Zustand zusammen fassen lassen. Mit dem Algorithmus Minimalautomat lässt sich ein DFA konstruieren, der minimal bezüglich der Anzahl seiner Zustände ist. Der Minimalautomat ist eindeutig, d.h. Minimalautomaten unterscheiden sich höchstens in der Benennung der Zustände.
+
+\subsection{Reguläre Ausdrücke}
+\paragraph{Def.:} Sei $\Sigma$ ein Alphabet. Ein \emph{regulärer Ausdruck} $E$ sowie die durch $E$ \emph{erzeugte Sprache $L(E)$} sind induktiv definiert:
+\begin{itemize}
+\item $\emptyset$ ist ein regulärer Ausdruck und $L(\emptyset)=\emptyset$.\\
+Bsp.: \\
+ABB35
+\item Für $a \in \Sigma \cup \{\varepsilon\}$ ist $a$ ein regulärer Ausdruck und $L(a)=\{a\}$.
+\item Für reguläre Ausdrücke $E_1, E_2$ sind $(E_1 | E_2), \; (E_1 E_2), \; (E_1^*)$ reguläre Ausdrücke (hier: $|=$„oder“) und $L(E_1|E_2)=L(E_1)\cup L(E_2), \; L(E_1E_2)=L(E_1)L(E_2), \; L(E_1^*)=L(E_1)^*$ die davon erzeugten Sprachen:\\
+\begin{tabular}{l | r l}
+Ausdruck & Sprache &\\
+\hline
+$E_1 | E_2$ & $L(E_1|E_2)$&$=L(E_1)\cup L(E_2)$\\
+$E_1 E_2$ & $L(E_1E_2)$&$=L(E_1)L(E_2)$\\
+$E_1^*$ & $L(E_1^*)$&$=L(E_1)^*$\\
+\end{tabular}
+\end{itemize}
+\subparagraph{Bsp.:} 
+\begin{itemize}
+\item $L( (0|1)^*) =(L(0|1))^*=(L(0)\cup L(1))^*=(\{0\}\cup\{1\})^*=\{0,1\}^*$
+\item Regulärer Ausdruck über $\Sigma=\{a,b,c\}$, der die gleiche Sprache erzeugt wie der DFA aus dem letzten Automaten-Beispiel:\\
+$L((a|b|c)^*abc(a|b|c)^*)=\{a,b,c\}^*\{abc\}\{a,b,c\}^*$
+\end{itemize}
+
+
+
+
+
+
+
+
 
 \newpage
 \printbibliography

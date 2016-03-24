@@ -16,7 +16,7 @@
 \tableofcontents
 \newpage
 
-\section{Eingebaute Datentypen}
+\chapter{Eingebaute Datentypen}
 
 \begin{itemize}
 \item int
@@ -35,7 +35,7 @@ $int=0\corr false$\\
 $int \not =0 \corr true$
 \end{itemize}
 
-\subsection{Zahlentypen}
+\section{Zahlentypen}
 Zahl: $\underset{8\cdot 10^0}{1} \; \underset{0 \cdot 10^1}{0} \;\underset{1\cdot 10^2}{8}$\\
 $\Rightarrow$ 10er-System (Decimal)\\
 Zahl: $0110\underset{\leftarrow usw.}{1}\;\underset{1\cdot 2^2}{0}\;\underset{0\cdot 2^1}{0}\;\underset{0\cdot 2^0}{0} = 0 + 0 + 4+8+0+32+64+0 =108$\\
@@ -103,7 +103,7 @@ $1$&$0$&$0$&$0$&$0$&$0$&$0$&$0$&$0$&\\
 
 \end{tabular}
 
-\subsection{Variable}
+\section{Variable}
 4 Kennzeichen einer Variable:
 \begin{itemize}
 \item Adresse im Speicher (Ort)
@@ -113,7 +113,7 @@ $1$&$0$&$0$&$0$&$0$&$0$&$0$&$0$&$0$&\\
 \end{itemize}
 Ein Vektor fasst mehrere Variablen gleichen Datentyps unter einer zusammen.
 
-\subsubsection{Initialisierung}
+\subsection{Initialisierung}
 Bei der Initialisierung hat die Variable einen Ausgangswert:
 \begin{itemize}
 \item Initialisierung innerhalb einer Funktion: zufälliger Wert (alte Speicherbelegung)
@@ -173,7 +173,7 @@ printf("%d\n",i && j);
 printf("%d\n",i & j);
 \end{lstlisting}
 
-\section{Ausdrücke}
+\chapter{Ausdrücke}
 
 Simple Sort
 
@@ -248,7 +248,7 @@ int main(){
 }
 \end{lstlisting}
 
-\section{Speicherklassen}
+\chapter{Speicherklassen}
 \begin{itemize}
 \item Register: Prozessor-Register relativ schnell
 \item Volatile: Variable wird immer im Hauptspeicher gespeichert (Gegenteil von Register)
@@ -257,7 +257,7 @@ int main(){
 \item Auto: automatische Variable. Wird beim Aufruf der Funktion, die die Variablendefinition enthält, angelegt. Bei jedem Funktionsaufruf neu. Wird vernichtet, wenn Funktion beendet ist.
 \end{itemize}
 
-\section{Funktionen}
+\chapter{Funktionen}
 \begin{lstlisting}[language=C]
 int test(){...}
 // gleich wie int main: Leerer Ausgabewert ist int (nicht void!)
@@ -299,7 +299,7 @@ double sinus(double x){
 
 \end{lstlisting}
 
-\section{Pointer}
+\chapter{Pointer}
 
 \begin{lstlisting}[language=C]
 #include <stdlib.h>
@@ -418,7 +418,7 @@ int main (int argc, char* argv[]){
 }
 \end{lstlisting}
 
-\section{Benutzerdefinierte Datentypen}
+\chapter{Benutzerdefinierte Datentypen}
 
 Enum:
 
@@ -433,7 +433,7 @@ Union:
 
 Datensätze werden im Vergleich zum Struct übereinander geschrieben.
 
-\section{Listen}
+\chapter{Listen}
 \paragraph{Implementation 1}(Ringliste)
 \begin{tikzpicture}[scale=.4]
 \draw  (0,4) rectangle (6,6);
@@ -575,9 +575,9 @@ Unterschied: Offene Liste und Ringliste. Offene Liste startet mit NULL-Zeigern.
 \draw [-latex] (-1,3) -- (-2,3) -- (-2,-1) -- (29,-1) -- (29,3) -- (26,3);
 \end{tikzpicture}\\
 Vorteil: Jedes Element hat einen Vorgänger und einen Nachfolger. Dadurch reicht eine Funktion, die nach einem Element ein neues einfügen kann. Das kann an beliebiger Stelle passieren.\\
-list.h\\
+list.h
 
-\section{Binäre Bäume}
+\chapter{Binäre Bäume}
 
 \begin{tikzpicture}[scale=.2]
 \draw  (0,0) rectangle (3,-3);
