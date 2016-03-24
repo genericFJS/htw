@@ -16,7 +16,7 @@
 \tableofcontents
 \newpage
 
-\section*{Allgemeine Informationen}
+\chapter*{Allgemeine Informationen}
 
 Zugelassene Hilfsmittel Klausur: A-4 Blatt (doppelseitig, handbeschrieben)
 
@@ -26,11 +26,11 @@ Grundlage der Vorlesung: Grundkurs theoretische Informatik \cite{hollas2007grund
 
 Lernkontrolle ab 23.10.2015 alle zwei Wochen.
 
-\section{Aussagenlogik}
+\chapter{Aussagenlogik}
 
 Mit der Aussagenlogik lassen sich Aussagen formulieren, die entweder wahr oder falsch sind. Aussagen sind atomare Aussagen wie „die Straße ist nass“ oder mit Hilfe von logischen Operatoren zusammengesetzte Aussagen.
 
-\subsection{Syntax und Semantik}
+\section{Syntax und Semantik}
 
 \paragraph{Definition:} Die \emph{Formeln der Aussagenlogik} sind induktiv definiert.
 
@@ -115,10 +115,10 @@ Dargestellt als Formel der Assagenlogik: $((x\geq 0) \rightarrow y=x)\wedge(\neg
 
 \paragraph{Definition:} Wir schreiben $F \equiv G$ („$F$ ist äquivalent zu $G$“), wenn für jede Belegung gilt: $F \leftrightarrow G$ wahr (d.h., $F\leftrightarrow G$ ist gültig).
 
-\subsection{Rechenregeln}
+\section{Rechenregeln}
 siehe Mathematik I
 
-\section{Beweistechniken}
+\chapter{Beweistechniken}
 
 \begin{tikzpicture} [scale=.4]
 
@@ -221,7 +221,7 @@ Beispiel Dominosteine: Wenn der erste Stein fällt, fällt auch der Zweite. Und 
 \end{align*}
 \end{itemize}
 
-\section{Elementare Kombinatorik}
+\chapter{Elementare Kombinatorik}
 
 Kreuzprodukt:\\
 $A\times B = \{(a,b)|a \in A, b \in B\}$\\
@@ -270,7 +270,7 @@ $\nok{n}{2}=\frac{n(n-1)}{2}$, denn für das 1. Element gibt es $n$ Möglichkeit
 \subparagraph{Beweis:} Um aus einer $n$-elementigen Menge $k$ Elemente auszuwählen, gibt es $n$ Möglichkeiten, um das erste Element auszuwählen, für das zweite Element $n-1$ Möglichkeiten, …, für das $k$. Element $n-k+1$ Möglichkeiten, insgesamt daher $n \cdot ...\cdot (n-k+1)$ Möglichkeiten. Da die Reihenfolge, in der diese $k$ Elemente ausgewählt werden, keine Rolle spielt, muss dieses Produkt durch $k!$ geteilt werden. \\
 Daher erhalten wir $\nok{n}{k}= \frac{n\cdot ...\cdot (n-k+1)}{k!}= \frac{n!}{k! (n-k)!}$
 
-\section{O-Notation}
+\chapter{O-Notation}
 Mit Hilfe der O-Notation lassen sich obere Schranken für die Laufzeit eines Algorithmus angeben (Abschätzung mit $\leq$, die die maximale Laufzeit eines Algorithmus angibt, bspw. $\leq c \cdot n^2$). Um die Laufzeit eines Algorithmus zu messen, bestimmen wir die Anzahl Schritte und geben mit Hilfe der O-Notation deren Größenordnung in Abhängigkeit der Länge der Eingabe an.
 
 \subparagraph{Beispiel:} lineare Suche
@@ -334,7 +334,7 @@ $n^2+1\leq n^3 \Leftrightarrow \\
 0\leq 1 \qquad \text{ für } n \rightarrow\infty$\\
 $2\cdot log(n^2+1)\leq 2 log (n^3)=6log(n)\in O(log(n))$
 
-\section{Graphen}
+\chapter{Graphen}
 
 \begin{tikzpicture}[scale=0.5,remember picture]
 \begin{scope}
@@ -478,7 +478,7 @@ Beispiele:\\
 Ein Graph heißt \emph{zusammenhängend}, wenn es für alle Paare von Knoten $u,v$ einen Weg von $u$ nach $v$ gibt.\\
 Ein \emph{Pfad} ist ein Weg, der keinen Knoten mehrfach enthält.
 
-\subsection{Bäume}
+\section{Bäume}
 \begin{tikzpicture}[scale=0.3]
 \draw [green] (-2,6) node (v2) {} ellipse (0.5 and 0.5);
 \draw  (0,6) node (v4) {} ellipse (0.5 and 0.5);
@@ -622,7 +622,7 @@ Anmerkung: Auch ein Graph mit nur einem Knoten ist ein Baum - ein Baum der keine
 \subparagraph{Beweis:} (Indkution)
 \begin{itemize}
 \item[IA:] $d=0$: Ein binärer Wurzelbaum, der nur aus der Wurzel besteht, enthält $2^0=1$ Blätter.
-\item[IV:] $|Blätter| =2^d$
+\item[IV:] $|\text{Blätter}| =2^d$
 \item[IS:] $d\rightarrow d+1$: Ein binärer Wurzelbaum der Tief $d+1$ enthält zwei binäre Wurzelbäume (laut vorhergehender Definition) der Tiefe $d$.\\
 \begin{tikzpicture}[scale=0.3]
 \draw  (1,6) node (v5) {} ellipse (0.5 and 0.5);
@@ -641,7 +641,7 @@ Anmerkung: Auch ein Graph mit nur einem Knoten ist ein Baum - ein Baum der keine
 Diese enthalten nach Induktionsvoraussetzung jeweils $2^d$ Blätter. Folglich besitzt der binäre Wurzelbaum der Tiefe $d+1$ genau $2\cdot 2^d=2^{d+1}$ Blätter.
 \end{itemize}
 
-\subsection{Datenstrukturen zur Repräsentation}
+\section{Datenstrukturen zur Repräsentation}
 Es gibt zwei Möglichkeiten, um Graphen darzustellen:
 \paragraph{Adjazenzmatrix}
 Für einen Graphen $G=(V,E)$ ist die Adjazenzmatrix eine $|V|\times |V|$-Matrix ($a_{uv}$) mit
@@ -764,9 +764,9 @@ Dieser Graph:\\
 würde dann als $Array(List(2,3,4), List(1,4), List(1), List(1,2))$ dargestellt werden.
 
 
-\subsection{Grundlegende Graphalgorithmen}
+\section{Grundlegende Graphalgorithmen}
 
-\subsubsection{Breitensuche}
+\subsection{Breitensuche}
 \begin{tikzpicture}[scale=0.5]
 \draw (4,9) node (v3) {1} ellipse (0.5 and 0.5);
 \draw  (2,6) node (v5) {2} ellipse (0.5 and 0.5);
@@ -903,7 +903,7 @@ boolean bfs (node start, node goal){
 \end{scope}
 \end{tikzpicture}
 
-\subsubsection{Tiefensuche}
+\subsection{Tiefensuche}
 Die Tiefensuche lässt sich implementieren…
 \begin{enumerate}
 \item wie die Breitensuche, aber mit einem Stack anstelle einer Warteschlange
@@ -1015,7 +1015,7 @@ boolean tfs (node start, node goal){
 \end{tikzpicture}\\
 Problem bei Breiten und Tiefensuche: Man braucht das Feld „discovered“. Das kann bei großer Anzahl von Knoten ein Problem sein $\rightarrow$ Speicheraufwändig
 
-\subsubsection{Topologisches Sortieren}
+\subsection{Topologisches Sortieren}
 \begin{tikzpicture}[scale=0.5]
 \draw  (-6,4) ellipse (0.5 and 0.5);
 \draw  (-2,6.5) ellipse (0.5 and 0.5);
@@ -1195,7 +1195,7 @@ $\downarrow$ &$\downarrow$ &$\downarrow$ &$\downarrow$ &$\downarrow$ &$\downarro
 Laufzeit dieser topologischen Suche: $O(|V|+|E|)$\\
 Sowohl die Tiefensuche als auch die Breitesuche besitzen eine Laufzeit in $O(|V|+|E|)$.
 
-\subsubsection{Suche}
+\subsection{Suche}
 \paragraph{Lineare Suche} Laufzeit: $O(n)$
 \paragraph{Binäre Suche} Voraussetzung: Sortiertes Array\\
 \begin{tikzpicture}[scale=0.3]
@@ -1433,7 +1433,7 @@ Lösung: Überlauflisten:\\
 An Position $h(s)$ wird eine Liste aller Elemente gespeichert, die diesen Hashwert besitzen.\\
 Unter geeigneten Voraussetzungen besitzt Hashing eine Laufzeit von $O(1)$.
 
-\subsubsection{Sortierverfahren}
+\subsection{Sortierverfahren}
 
 \paragraph{Quicksort} 
 partitioniert das zu sortierende Feld anhand eines Pivot-Elements und sortiert rekursiv die dadurch entstandenen Teilfelder.\medskip\\
@@ -1788,7 +1788,7 @@ Zum erzeugen der Hälften und dem Zusammenfügen fällt der Aufwand O(|linke Lis
 Mergesort besitzt immer die LZ $O(n\; log(n))$. Dies ist nahe am Optimum. Quicksort besitzt eine durchschnittliche LZ in $O(n\; log(n))$ und eine Worst-Case-LZ in $O(n^2)$.\\
 Da Quicksort mit vorsortierten Listen nicht so gut umgehen kann (wird linear entartet), ist es kein sehr gutes Suchverfahren.
 
-\section{Codierungstheorie}
+\chapter{Codierungstheorie}
 
 \paragraph{Gruppen}
 Erläuternde Beispiele:\\
@@ -1810,7 +1810,7 @@ Problem: Daten können bei der Übertragung verändert werden. Wie können diese
 \draw [-latex] (3,0.5) -- (9.5,0.5) node [pos=0.25, below]{Kanal};
 \end{tikzpicture}\\
 Häufige Lösung zur Fehlererkennung: Prüfsummen.
-\subsection{Paritätsprüfung}
+\section{Paritätsprüfung}
 Für eine Folge von Bits $b_1,...,b_{n-1}\in \{0,1\}$ wird das \emph{Paritätsbit} $b_n= \left( \sum_{i=1}^{n-1}b_i\right) mod \; 2$ berechnet. Das enthaltene Codewort ist $b_1...b_n$
 \subparagraph{Bsp.:} Für die Folge von Bits $0,1,1,0,1,0$ ist $1$ (Anzahl aller $1$er-Bits $mod\;2$) das Paritätsbit. Das Codewort ist also $0,1,1,0,1,0,1$.\medskip\\
 Aus $\sum_{i=1}^{n-1}b_i\equiv b_n (mod\; 2)$ folgt daher (indem auf beiden Seiten $+b_n$ rechnet) $\sum_{i=1}^{n}b_i \equiv 0 (mod\;2)$.\\
@@ -1861,7 +1861,7 @@ Anwendung: RAID4, RAID5 -- Daten und Parität werden auf $n$ Festplatten verteil
 \end{tikzpicture}
 \subparagraph{Bsp.:} $0100x110$ wird korrigiert zu $01001110$ (da Parity-Check-Code $mod\;2=0$ ergeben muss).
 
-\subsubsection{ISBN-Code}
+\subsection{ISBN-Code}
 Der ISBN-Code enthält eine Prüfsumme.
 \subparagraph{Bsp.:} $\underbrace{382741826}_{\text{9-stellige Buchnummer}} \underbrace{7}_{\text{Prüfziffer}}$\\
 Für die Prüfziffer gilt:\\
@@ -1897,7 +1897,7 @@ k(z_l-z_k)\equiv l (z_k-z_k)$ \\
 Da für $z_l \not= z_k$ das Element $(z_l-z_k)\not = 0 $ und daher $(z_l-z_k)^{-1}$ existiert, folgt 
 $k\equiv l$. Widerpsruch zu der Annahme $k<l$!
 
-\subsection{Fehlerkorrigierende Codes}
+\section{Fehlerkorrigierende Codes}
 
 Idee: Für ein empfangenes Wort $w$ suchen wir ein Codewort $v$, so dass der Abstand $d(v,w)$ minimal ist (nearest neighbor decoding).\\
 \begin{tikzpicture}[scale=0.5]
@@ -2028,7 +2028,7 @@ Naiver Ansatz zur Fehlerkorrektur: Nachricht mehrfach senden.
 Der Code $\{000,111\}$ hat Minimalabstand 3 (Nachricht wurde 3 mal gesendet) und ist daher 1-fehlerkorrigierend.\\
 Nachteil: Platzverschwendung.\medskip\\
 Effizienter sind lineare Codes.
-\subsubsection{Lineare Codes}
+\subsection{Lineare Codes}
 Die Decodierung durch eine Nearest-Neighbor-Suche im Coderaum ist ineffizient. Um ein effizienteres Verfahren zu erhalten, beschreiben wir Codes durch Matrix-Vektor-Operationen.
 \subparagraph{Bsp.:} Mit $A = (\underbrace{1 ... 1}_{n})$ lässt sich der Parity-Check-Code beschreiben durch $\{w\in \{0,1\}^n| A\cdot w^T=0\}$ ($w,A$: Zeilenvektoren) [Veranschaulichung: $(1111)\cdot(0101)^T=0$]
 
@@ -2135,8 +2135,8 @@ $\begin{pmatrix}
 \draw [-latex, red] (-3.5,-2.5) node[below]{nicht erfasst} -- (-3.5,1);
 \end{tikzpicture}
 
-\section{Ausblick: Klassische Kryptoverfahren}
-\subsection{Caesar-Chiffre}
+\chapter{Ausblick: Klassische Kryptoverfahren}
+\section{Caesar-Chiffre}
 Verschiebechiffre:\\
 Verschiebetabelle, z.B.\\
 \begin{tabular}{c c c c c c c c c c c c c c c c c c c c c c c c c c c}
@@ -2148,7 +2148,7 @@ Die Chiffrierung und Dechiffrierung lasst sich in der Gruppe $\mathbb{Z}_{26}(+)
 Chiffrierung: $E_k(x)=(x+k)mod\;26$ \footnote{E wie encrypt, D wie decrypt}\\
 Dechiffrierung: $D_k(x)=(x-k)mod\;26$\\
 Wesentliche Schwäche des Verfahrens: Es gibt nur 26 Schlüssel. Sicherheit des Verfahrens beruht darauf, dass der Angreifer das Verfahren nicht kennt (Prinzip „Security by Obscurity“).
-\subsection{Vigenère-Verfahren}
+\section{Vigenère-Verfahren}
 Idee: Mehrere Verschiebechiffren mit unterschiedlichen Schlüsseln kombinieren. Der Schlüssel für das Vigenère-Verfahren ist ein Schlüsselwort (z.B. DRESDEN), wobei jeder Buchstabe des Schlüsselwortes der Verschiebeschlüssel des Caesar-Verfahrens ist.\\
 Verschiebetabelle dazu:\\
 \begin{tabular}{ c| c c c c c c c c c c c c c c c c c c c c c c c c c c c c c c}
@@ -2191,9 +2191,9 @@ S & I & Q & U
 Jede Spalte der Tabelle ist dann eine Verschiebechiffre. In deutschen Texten ist das E der häufigtste Buchstabe. Durch eine Analyse der Häufigkeiten der Buchstaben in jeder Spalte lässt sich der Schlüssel bestimmen.
 \end{itemize}
 
-\section{Wiederholung}
-\subsection{Beweistechniken}
-\subsubsection{Induktion}
+\chapter{Wiederholung}
+\section{Beweistechniken}
+\subsection{Induktion}
 Anwendbar für Aussagen wie $\forall_n A(n)$
 \begin{itemize}
 \item Induktions-Anfang: $A(1)$ muss wahr sein!
@@ -2201,7 +2201,7 @@ Anwendbar für Aussagen wie $\forall_n A(n)$
 \item Induktions-Schritt: $A(n)\to A(n+1)$
 \end{itemize}
 Also muss gelten $A(1)\vee (A(n)\to A(n+1)) = \top$
-\subsubsection{Beweis durch Widerspruch}
+\subsection{Beweis durch Widerspruch}
 $A \Leftrightarrow \neg A \to \bot$\\
 Anfang: Angenommen $A$ gilt nicht. Dann Widerspruch suchen.\\
 Negation von $A$? $\rightarrow$ aus $\exists$ wird $\forall$ und anders herum. \\
@@ -2210,7 +2210,7 @@ Die Beweisführung muss nachvollziehbar sein, sie müssen also auf bekannten Aus
 „Es ist nicht wie in Gemeinschaftskunde, wo gilt, dass man bei 3 Seiten Text auf jeden Fall Punkte bekommt. Man bekommt nur Punkte für richtige Folgerungen, egal wie lang der Beweis ist.“ (Hollas, 2016)
 \end{quote}
 
-\subsection{Kombinatorik}
+\section{Kombinatorik}
 $|A^n|=|A|^n$ (Bspw.: Möglichkeiten ein Zahlenschloss zu öffnen. Herangehensweise: Anzahl Kombinationen=Kreuzprodukt einer Menge)\\
 Bspw.: $|\{0,..,9\}^4|=10^4$\\
 Visualisierung: als Baum. Jeder Knoten hat 10 Knoten/Blätter. Die Gesamtmenge ist dann die Summe aller Blätter\\

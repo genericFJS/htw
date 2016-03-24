@@ -7,17 +7,6 @@
 \DAutor{Falk-Jonatan Strube}
 \DNotiz{Vorlesung von Herrn Michael Meinhold\\ \& Prof. Dr. Fabian Schwarzenberger}
 
-% Parts mit in die Nummerierung einbeziehen
-\renewcommand \thepart {\arabic{part}} % Parts nicht römisch nummerieren
-\renewcommand \thesection {\thepart.\arabic{section}}	% Parts in sections mit einbeziehen
-\newcounter{myPartCounter}	% Neuer Counter für Parts
-\renewcommand*{\theHsection}{ch\arabic{myPartCounter}.\the\value{section}}	% für \ref die Verweise anpassen
-\newcommand{\partNumbering}{\stepcounter{myPartCounter} \setcounter{section}{0}} % an jeden Part anfügen, um die Section-Counter zurück zu setzen
-\usepackage{tocloft}	% mehr Platz für erweiterte TOC-Nummerierung
-\setlength{\cftsecnumwidth}{1.9em}
-\setlength{\cftsubsecnumwidth}{2.7em}
-\setlength{\cftsubsubsecnumwidth}{3.6em}
-
 \begin{document}
 
 \maketitle
@@ -25,7 +14,7 @@
 \tableofcontents
 \newpage
 
-\part{Elementare Grundlagen}\partNumbering
+\chapter{Elementare Grundlagen}
 
 \section{Aussagen und Grundzüge der Logik}
 %\input{HTW_Mathe1_Skript_sec1_1}
@@ -43,7 +32,7 @@
 %\input{HTW_Mathe1_Skript_sec1_5}
 
 \newpage
-\part{Folgen, Reihen, Grenzwerte}\partNumbering
+\chapter{Folgen, Reihen, Grenzwerte}
 \section{Zahlenfolgen}
 %\input{HTW_Mathe1_Skript_sec2_1}
 
@@ -168,7 +157,15 @@ $f(x)=\begin{cases}
 -x^2 & \text{ für } x<0\\
 \sqrt{x+1} & \text{ für } x\geq 0
 \end{cases}$\\
-ABB13\\
+\begin{tikzpicture}
+\draw [thick, domain=0:3] plot[smooth] (\x,{sqrt(\x+1)});
+\draw [thick, domain=-1.5:0] plot[smooth] (\x,{-(\x*\x)});
+\draw (0,0) circle(0.1);
+\fill (0,1) circle(0.1);
+
+\draw [-latex] (-3.2,0) -- (3.2,0) node [below right] {$x$};
+\draw [-latex] (0,-2.2) -- (0,2.2) node [above right] {$y$};
+\end{tikzpicture}\\
 $\lim_{x\nearrow 0}f(x) = 0, \; \lim_{x\searrow 0}f(x)=1$\\
 $\Rightarrow \lim_{x\to 0}f(x)$ existiert nicht!
 
@@ -178,14 +175,32 @@ $\overset{u=\frac{4}{x}}{=}\lim_{u\searrow 0}\frac{4}{u} \sin(u) = 4$
 \paragraph{Bsp. 5:} \parskp
 $\lim_{x\nearrow \frac{\pi}{2}} \tan x = \infty$\\
 $\lim_{x\searrow \frac{\pi}{2}} \tan x = -\infty$\\
-ABB14
+\begin{tikzpicture}[scale = 0.5]
+\draw plot [domain=(3.15-1.3):(3.15+1.3)] (\x, {tan(\x r)} );
+\draw plot [domain=(-1.3):(1.3)] (\x, {tan(\x r)} );
+%\draw [dashed] ((0.5*3.14),-3) -- ((0.5*3.14),3); 
+\draw [dashed] (1.56, -4) -- (1.56, 4);
+\draw [thick] (1.56, 0.5) -- (1.56, -0.5) node [below left]{$\frac{\pi}{2}$};
+
+\draw [-latex] (-3.2*2,0) -- (3.2*2,0) node [below right] {$x$};
+\draw [-latex] (0,-2.2*2) -- (0,2.2*2) node [above right] {$y$};
+\end{tikzpicture}
 \subsection{Stetigkeit von Funktionen}
 \paragraph{Def. 3:} Sei $f: Db(f)\to \mathbb{R}, \; Db(f) \subseteq \mathbb{R}$ eine Funktion und $x_0 \in Db(f)$ gegeben.\\
 Es heißt $f$:
 \begin{enumerate}[label=\alph*.)]
 \item stetig in $x_0$ falls $\lim_{x \to x_0} f(x) = f(x_0)$ gilt\\
 (also $\lim_{x\to x_0} f(x)=f(\lim_{x\to x_0}x)$, d.h. Limes und Funktion kann vertauscht werden).\\
-ABB15
+\begin{tikzpicture}[scale = 0.5]
+\draw  plot[smooth, tension=.7] coordinates {(1,.5) (2,2) (4,4) (5,4.5)} node[right] {$f$};
+\fill (2,2) circle (.1);
+\draw [latex-]( 2.5, 2.8)--(3,3.3);
+\draw[dashed] (2,0) node[below]{$x_0$}-- (2,2) -- (0,2) node[left]{$f(x_0)$};
+\draw[dashed] (4,0) node[below]{$x$} -- (4,4) -- (0,4) node[left]{$f(x)$};
+
+\draw [-latex] (-1.4,0) -- (6.4,0) node [below right] {$x$};
+\draw [-latex] (0,-0.4) -- (0,4.4) node [above right] {$y$};
+\end{tikzpicture}
 \item linksseitig stetig in $x_0$, falls $\lim_{x\nearrow x_0}f(x)=f(x_0)$.
 \item rechtsseitig stetig in $x_0$, falls $\lim_{x\searrow x_0}f(x)=f(x_0)$.
 \end{enumerate}
@@ -249,5 +264,99 @@ ABB21
 ABB22
 \end{enumerate}
 
+\section{Potenzreihen}
+\paragraph{Def.:} Sei $(a_n)$ eine Zahlenfolge und $x_0 \in \mathbb{R}$ heißt $\boxed{\sum_{n=0}^\infty a_n (x-x_0)^n}$ Potenzreihe mit dem Mittelpunkt $x_0$.
+\subparagraph{Diskussion:} 
+\begin{itemize}
+\item Für jedes feste $x \in \mathbb{R}$ ist die Potenzreihe eine feste Reihe.
+\item Konvergenzbereich $K:=\{x\in \mathbb{R} | \text{Potenzreihe ist konvergent}\}$
+\item Für jedes $x\in K$ existiert der Summenwert der Potenzreihe. Die Funktion $f: K \to \mathbb{R}$ mit $f(x) = \sum_{n=0}^\infty a_n (x-x_0)^n$ heißt Grenzfunktion der Potenzreihe.
+\end{itemize}
+Zur Bestimmung des Konvergenzbereichs nutz man Satz 10 und 11 aus \ref{2.1.3} und erhält absolute Konvergenz in einem um $x_0$ liegendem Konvergenzintervall $I:=(x_0-r, x_0+r)$.\\
+Wie $r$ bestimmt wird liefert:
 
-\end{document} 
+\paragraph{Satz 1:} Sei $(a_n)$ Zahlenfolge mit $r:=\lim_{n\to \infty} \left| \frac{a_n}{a_{n+1}}\right|=\lim \frac{1}{2qrt[n]{|a_n|}}$ existiert.\\
+Dann ist $\sum_{n=0}^\infty a_n (x-x_0)^n\begin{cases}
+\text{absolut konvergent} & \text{für }x\in \mathbb{R} \text{ mit }|x-x_0|<r\\
+\text{divergent} & \text{für }x\in \mathbb{R} \text{ mit }|x-x_0|>r
+\end{cases}$.
+
+\subparagraph{Diskussion:} 
+\begin{itemize}
+\item Verwechslungsgefahr:
+\begin{itemize}
+\item Satz 10 und 11 betrachten (Zahlen-)Reihen $\sum_{n=0}^\infty a_n$
+\item Satz 1 betrachtet Potenzreihen $\sum_{n=0}^\infty a_n (x-x_0)^n$, wobei $a_n$ ein Faktor vor $(x-x_0)^n$ ist.
+\end{itemize}
+\item Falls der Grenzwert $r$ aus Satz 1 nicht existiert, so gibt es trotzdem einen Konvergenzradius.\\
+Den gilt es auf andere Weise zu betrachten/ermitteln.
+\item Satz 1 sagt nichts über das Verhalten an den Randpunkten aus $\rightarrow$ gesonderte Untersuchung nötig.
+\end{itemize}
+\subparagraph{Bsp. 1:} 
+\begin{enumerate}[label=\alph*.)]
+\item $\sum_{n=1}^\infty \frac{x^n}{n}$, d.h. $x_0=0$, $a_n=\frac{1}{n}$, $n=1,2,...$\\
+$r= \lim_{n\to\infty} \frac{1}{\sqrt[n]{\left|\frac{1}{n}\right|}}=\lim_{n\to \infty}=\frac{1}{\frac{1}{\sqrt[n]{n}}}=\lim_{n\to\infty}\sqrt[n]{n}=1$\\
+$\Rightarrow$ Konvergenzintervall $I=(-1,1)$\\
+Randpunkte:\\
+$x=-1: \sum_{n=1}^\infty \frac{(-1)^n}{n}$ bedingt konvergent (alternierenden harmonische Reihe)\\
+$x=1: \sum_{n=1}^\infty \frac{1}{n}$ divergent\\
+$\Rightarrow$ Konvergenzbereich: $K=[-1,1)$
+\item $\sum_{n=0}^\infty \frac{x^n}{n!}$, d.h. $x_0=0$, $a_n=\frac{1}{n!}$\\
+$\left| \frac{a_n}{a_{n+1}}\right| = \frac{\frac{1}{n!}}{\frac{1}{(n+1)!}}=\frac{(n+1)!}{n!}=n+1\overset{n\to \infty}{\longrightarrow} \infty$\\
+$\Rightarrow r = \infty$\\
+d.h. die Reihe ist absolut konvergent für alle $x \in \mathbb{R}$.\\
+Bezeichnung: \emph{beständige Konvergenz}
+\item $\sum_{n=0}^\infty \frac{x^{2n}}{(2n)!}=1+\frac{x^2}{2!}+\frac{x^2}{4!}+...\quad$ d.h. $x_0 = 0$, $a_n=\begin{cases}
+\frac{1}{n} & n \text{ gerade}\\
+0 & n \text{ungerade}
+\end{cases}$\\
+Satz 1 ist aber nicht unmittelbar anwendbar.\\
+Substitution $u:=x^2$ liefert aber $\sum_{n=0}^\infty \frac{u^n}{(2n)!}$ mit $u_0=0$, $b_n=\frac{1}{(2n)!}$ ($\sum b_n (u-u_0)^n$)\\
+$\left| \frac{b_n}{b_{n+1}}\right|=\frac{(2n+2)!}{(2n)!}=(2n+2)\cdot (2n+1) \overset{n\to \infty}{\longrightarrow} \infty$\\
+$\Rightarrow r_u=\infty$ (Konvergenzradius für die Substituierte Reihe)\\
+$\Rightarrow r_x=\mq{\sqrt{\infty}\,}= \infty$ (Konvergenzradius für die untersuchte Funktion)\\
+Im Konvergenzbereich $K$ wird dadurch eine Potenzreihe eine Funktion dargestellt, die Grenzfunktion (siehe vorhergehende Diskussion).
+\end{enumerate}
+\subparagraph{Bsp. 2:}
+\begin{enumerate}[label=\alph*.)]
+\item $\sum_{n=0}^\infty x^n = \frac{1}{1-x}$ für $x\in (-1,1)$ (geometrische Reihe)
+\item $\sum_{n=0}^\infty \frac{x^n}{n!}=e^x$ für $x\in \mathbb{R}$ (Beweis später)
+\end{enumerate}
+\paragraph{Satz 2:} Die \emph{Grenzfunktion} jeder Potenzreihe ist \emph{im Konvergenzbereich stetig}.
+
+\chapter{Differentialrechnung für Funktionen einer reellen Variablen}
+\section{Grundbegriffe}
+\emph{Tangentenproblem}\\
+ABB38\\
+Gegeben: $y=f(x)$\\
+Gesucht: Tangente im Punkt $(x_0, f(x_0))$
+\begin{itemize}
+\item Zunächst \tgreen{Sekante} durch $(x_1, f(x_1))$ und $(x_0, f(x_0))$
+\item Dann betrachten wir $x_1 \to x_0$
+\item Damit geht \tgreen{Sekante} über in die \torange{Tangente}.\\
+Außerdem geht \tgreen{$\varphi$} in \torange{$\alpha$} über.
+\end{itemize}
+$\tan \alpha = \lim_{\varphi \to \alpha} \tan \varphi = \lim_{x_1\to x_0} \underbrace{\frac{f(x_1)-f(x_0)}{x_1-x_0}}_{\text{Differenzenquotient}}$
+
+\paragraph{Def. 1:} Die Funktion $f:Db(f) \to \mathbb{R}$ heißt an der Stelle $x_0$ (mit $U(x_0)\subseteq Db(f)$) differenzierbar, falls der Grenzwert $\boxed{f'(x_0):=\lim_{x\to x_0} \frac{f(x)-f(x_0)}{x-x_0}}$ existiert.\\
+$f'(x_0)$ heißt dann \emph{1. Ableitung} von $f$ an der Stelle $x_0$.
+
+\subparagraph{Diskussion:}
+\begin{itemize}
+\item $f'(x_0)=\lim_{h\to 0} \frac{f(x_0+h)-f(x_0)}{h}$
+\item Gleichung der Tangente in $(x_0, f(x_0)) $ ist $t(x)=f(x_0)+f'(x_0)(x-x_0)$ ($t: \mathbb{R}\to \mathbb{R}$)
+Anstieg der Tangente ist als $m=\tan \alpha = f'(x_0)$
+\item $f$ in $x_0$ differenzierbar bedeutet es existiert eine eindeutige Tangente an die Kurve in dieser Stelle.\\
+z.B. ist $f: \mathbb{R}\to \mathbb{R}, \; f(x) = |x|$ in $x_0=0$ nicht differenzierbar:\\
+ABB39
+\end{itemize}
+
+\paragraph{Satz 1:} Ist $f: \mathbb{R}\to \mathbb{R}$ in $x_0$ differenzierbar, so ist $f$ in $x_0$ stetig.\\
+Beweis:\\
+Sei $f$ in $x_n$ differenzierbar und $(x_n)$ eine beliebige Folge mit $x_n\to x_0$. Dann gilt:\\
+$\lim_{n\to \infty}\frac{f(x_n)-f(x_0)}{x_n-x_0}$ existiert.\\
+$\Rightarrow \exists\; K > 0$ mit $\left| \frac{f(x_n)-f(x_0)}{x_n-x_0} \right| = \frac{|f(x_n)-f(x_0)|}{|x_n-x_0|}\leq K$\\
+$\Rightarrow |f(x_n) - f(x_0) | \leq K \cdot |x_n - x_0| \overset{n\to \infty}{\longrightarrow} 0$\\
+$\Rightarrow \lim_{n\to \infty} f(x_n)=f(x_0) \Rightarrow f$ ist stetig.
+
+\end{document}

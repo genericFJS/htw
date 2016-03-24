@@ -14,19 +14,19 @@
 \tableofcontents
 \newpage
 
-\section*{Hinweise}
+\chapter*{Hinweise}
 Bei der Klausur sind keine Hilfsmittel zugelassen.
 
 Die Praktikumsaufgaben, die mit * gekennzeichnet sind, sind nicht Voraussetzung für die Prüfung.
 
-\section{Einführung}
+\chapter{Einführung}
 
 \paragraph{Unix} ist eine Betriebssystem-Familie.
 
 \paragraph{Lizensierung:} open source VS closed source
 
 GNU: „vererbendes“ open source
-\subsection{Klassifikation BS}
+\section{Klassifikation BS}
 \begin{itemize}
 \item Nutzer: single/multi
 \item Tasking: single/multi
@@ -35,7 +35,7 @@ GNU: „vererbendes“ open source
 \item Architektur und Zweck: Server/eingebettet/Echtzeit/PC/…
 \end{itemize}
 
-\subsection{Modellierung BS}
+\section{Modellierung BS}
 \begin{itemize}
 \item \imptnt{monolithisch:} jede Routine/Funktion/… darf auf alles zugreifen (kein Information Hiding)
 \item \imptnt{geschichtet:} Kommunikation nur zwischen benachbarten Schichten.
@@ -65,9 +65,9 @@ Hardware\\
 \item Schutz + Sicherheit
 \end{itemize}
 
-\section{Shell}
+\chapter{Shell}
 
-\subsection{Wichtige Shell-Befehle}
+\section{Wichtige Shell-Befehle}
 \begin{longtable}[l]{ l | l } 
 Befehl & Wirkung\\
 \hline
@@ -114,7 +114,7 @@ pgrep & Suche nach Prozess anhand von regexp.\\
 nice & Setze Prozess-Priorität
 \end{longtable}
 
-\subsection[Weiterleitung]{\imptnt{Weiterleitung}}
+\section[Weiterleitung]{\imptnt{Weiterleitung}}
 \begin{tabular}{l l}
 ls > ls.txt & Ausgabe von ls in Datei ls.txt (neu erstellt)\\
 ls >> ls.txt & Ausgabe von ls in Datei ls.txt (ergänzend, hängt an)\\
@@ -129,7 +129,7 @@ stdout & 1 &\\
 stderr & 2 & find xyz 2>/dev/null (Fehler ins nichts umleiten) 
 \end{tabular}
 
-\subsection{Schleifen/Anweisungen}
+\section{Schleifen/Anweisungen}
 \begin{lstlisting}[language=bash]
 if [ ... ] 
 then 
@@ -167,7 +167,7 @@ x = '...' $\Leftrightarrow$ x = |\$|(...)			|\$|(...) weißt stdout einer Fkt ei
 let x = |\$|a + |\$|b $\Leftrightarrow$ (( x = |\$|a + |\$|b ))
 \end{lstlisting}
 
-\subsection[Regex]{\imptnt{Regex}}
+\section[Regex]{\imptnt{Regex}}
 \begin{tabular}{c l}
 . & beliebiges Zeichen\\
 * & beliebig viele des vorhergehenden Zeichens\\
@@ -192,7 +192,7 @@ $[[$:space:$]]$ & Leerzeichen\\
 x \textbackslash | y & x oder y\\
 \end{tabular}
 
-\subsection{Brace Expansion}
+\section{Brace Expansion}
 \{a,b,c\}xyz $\to$ Permutation von a,b,c mit xyz: axyz, bxyz, cxyz\\
 \{a..c\}\{x..z\} = \{a,b,c\}\{x,y,z\} $\to$ alle a,b,c mit x,y,z: ax, ay, az, bx, by, bz, cx, cy, cz\\
 Auch geschachtelt: \{ \{a..z\}$\underset{oder}{,}$\{A..Z\} \} $\to$ alle Buchstaben: Kleinbuchstaben oder Großbuchstaben
@@ -210,7 +210,7 @@ Auch geschachtelt: \{ \{a..z\}$\underset{oder}{,}$\{A..Z\} \} $\to$ alle Buchsta
 \end{enumerate}
 \end{enumerate}
 
-\section{Dateisystem}
+\chapter{Dateisystem}
 Abstraktion zur Strukturierung von Informationen\\
 $\rightarrow$ Abhängig von: Geschwindigkeit des Mediums, Informationsmenge, Fehlertoleranz\\
 Aufbau einer Festplatte:
@@ -285,7 +285,7 @@ chmod u+rwx g+r-wx o-rwx FILE
 Darstellung ls -l:\\
 $\underset{\text{Typ}}{-}\;\underset{\text{Rechte (u g o)}}{rwxrwxrwx}\;\underset{\text{Anz. Verz.}}{1}\;\underset{\text{owner}}{nutzerA}\;\underset{\text{group}}{gruppeC}\;\underset{\text{size}}{1234}\;\underset{\text{last changed}}{2016-...07:42}\; \underset{\text{file name}}{FILE}$
 
-\section{Ressource}
+\chapter{Ressource}
 \begin{tabular}{l | l}
 Schnittstelle & Protokoll\\
 \hline
@@ -299,7 +299,7 @@ Wird von Aktivitäten genutzt.
 \item existiert in allen Schichten des Systems (Datei, Code, Festplatte (Hardware), …)
 \item hat Zustand (Dateiinhalt, Registerinhalt, …)
 \end{itemize}
-\subsection{Ressource entziehen}
+\section{Ressource entziehen}
 Voraussetzung Entziehbarkeit:
 \begin{itemize}
 \item Ressourcen-Zustand ist \imptnt{vollständig auslesbar}
@@ -325,7 +325,7 @@ Hauptspeicherblock & Drucker\\
 \begin{itemize}
 \item maximal von einer Aktivität geilchzeitig verwendbar (wird von BS durchgesetzt durch Zuteilung)
 \end{itemize}
-\subsection{Klassifikation}
+\section{Klassifikation}
 \begin{tabular}{l | l}
 \imptnt{entziehbar} & \imptnt{nicht entziehbar}\\
 (Prozessor, Speicher) & (verbrauchbare Betriebsmittel, ext. Hardware)\\
@@ -339,7 +339,7 @@ Hauptspeicherblock & Drucker\\
 \imptnt{physisch} & \imptnt{logisch/virtuell}\\
 (Hardware: CPU, RAM, …) & (Datei, Signal, CPU)
 \end{tabular}
-\subsection{Ressourcen-Transformation}
+\section{Ressourcen-Transformation}
 (in Ebenen)\\
 \begin{tabular}{l | l}
 Applikation & $\uparrow$ Byte der Datei\\
@@ -348,7 +348,7 @@ Treiber & $\uparrow$ physischer Sektor\\
 Hardware & 
 \end{tabular}
 
-\subsection{Kernel}
+\section{Kernel}
 \imptnt{Kernel-Modus} (Gegensatz: User-Modus)\\
 Beschreibt einen previligierten Zugriff auf Hardware (bei entsprechender Unterstützung der CPU)\\
 Nutzer hat nur eingeschränkte Rechte, Kernel exklusive:
@@ -358,11 +358,11 @@ Nutzer hat nur eingeschränkte Rechte, Kernel exklusive:
 \item $\Rightarrow$ \imptnt{Diensterbringung des BS}
 \end{itemize}
 Damit der Nutzer trotzdem auf diese Systemfunktionen zugreifen kann gibt es die:
-\subsubsection{Systemrufe}
+\subsection{Systemrufe}
 Anweisungen, mit denen ein User Kernel-Dienste nutze kann (siehe Tabelle im Kapitel \ref{tab:syscalls} (Dateisysteme))
 
-\section{Aktivität}
-\subsection{Prozesseigenschaften}
+\chapter{Aktivität}
+\section{Prozesseigenschaften}
 \begin{itemize}
 \item hat Lebenszyklus: Erzeugung $\to$ Abarbeitung $\to $ Beendigung
 \item benötigt Ressourcen beim Start (Speicher, PID, Code)
@@ -405,7 +405,7 @@ initialisierte Daten\\
 Text (Code)\\
 \hline
 \end{tabular}
-\subsection{Prozess beenden}
+\section{Prozess beenden}
 \begin{itemize}
 \item \imptnt{durch sich selbst}:
 \begin{itemize}
@@ -419,7 +419,7 @@ Text (Code)\\
 \end{itemize}
 \end{itemize}
 
-\subsection[Fork]{\imptnt{Fork}}
+\section[Fork]{\imptnt{Fork}}
 \begin{lstlisting}[language=C]
 pid_t fork(void);
 \end{lstlisting}
@@ -454,7 +454,7 @@ if ( ret == 0 ) {
 	puts(ret);
 }
 \end{lstlisting}
-\subsection[Exec]{\imptnt{Exec}}
+\section[Exec]{\imptnt{Exec}}
 \begin{lstlisting}[language=C]
 int execl("Programmpfad", "Argumente...");
 \end{lstlisting}
@@ -466,7 +466,7 @@ int execl("Programmpfad", "Argumente...");
 \end{itemize}
 \item erzeugt keinen neuen Prozess (muss bspw. im Sohn nach fork() ausgeführt werden, wenn der Prozess (Vater) erhalten werden soll)!
 \end{itemize}
-\subsection{System}
+\section{System}
 \begin{lstlisting}[language=C]
 int system("Kommando");
 \end{lstlisting}
@@ -476,7 +476,7 @@ int system("Kommando");
 \item kehrt erst zurück, wenn Kommando abgearbeitet ist
 \end{itemize}
 \end{itemize}
-\subsection[Wait]{\imptnt{Wait}}
+\section[Wait]{\imptnt{Wait}}
 \begin{lstlisting}[language=C]
 pid_t wait (int *status);
 \end{lstlisting}
@@ -485,7 +485,7 @@ pid_t wait (int *status);
 \item Status kann u.a. erwarteter Rückkehrcode des Sohns sein.
 \item return: -1 bei Fehler, Sohn-PID sonst
 \end{itemize}
-\section{Kommunikation}
+\chapter{Kommunikation}
 IPC (inter process communication)\\
 bspw. über: Datei, Pipe, Signal, shared memory, …\\
 Unterscheidung bzgl. Anforderung:
@@ -495,7 +495,7 @@ Unterscheidung bzgl. Anforderung:
 \item lokale/entfernte Kommunikation
 \item direkte/indirekte Kommunikation
 \end{itemize}
-\subsection{Übertragungsarten}
+\section{Übertragungsarten}
 \paragraph{\imptnt{Synchron}}
 \begin{itemize}
 \item wartet, bis Sende-/Empfangvorgang abgeschlossen ist
@@ -527,14 +527,14 @@ $1-1$ & unicast\\
 $1-x_i$ & multicast\\
 $1-all$ & broadcast (bpsw. in Subnetz)
 \end{tabular}
-\subsection[Übertragung über Datei]{Übertragung \imptnt{über Datei}}
+\section[Übertragung über Datei]{Übertragung \imptnt{über Datei}}
 Schlecht, da:
 \begin{itemize}
 \item doppelter Zugriff auf langsame HDD (nur gut, wenn Dateisystem im RAM)
 \item überlappender Zugriff muss mit lockf() geregelt wender $\Rightarrow$ fehleranfällig
 \end{itemize}
 
-\subsection[Übertragung über Pipe]{Übertragung über \imptnt{Pipe}}
+\section[Übertragung über Pipe]{Übertragung über \imptnt{Pipe}}
 \begin{lstlisting}[language=C]
 int pipe ( int filedes[2] );
 \end{lstlisting}
@@ -582,7 +582,7 @@ du | sort -n -r | less
 \end{lstlisting}
 $\Rightarrow$stdout von du in stdin von sort
 
-\subsubsection{popen}
+\subsection{popen}
 \begin{lstlisting}[language=C]
 FILE *popen (Kommando, Pipe-Typ [w/r]);
 \end{lstlisting}
@@ -596,7 +596,7 @@ r: stdout vom Kommando zeigt auf Pipe $\Rightarrow$ Kommando schreibt
 \item pclose() $\Rightarrow$ wieder schließen
 \end{itemize}
 
-\subsection[Signale]{\imptnt{Signale}}
+\section[Signale]{\imptnt{Signale}}
 \begin{itemize}
 \item Informationsübertragung (in der Form von Anweisungen) ohne nötige Vererbung
 \end{itemize}
@@ -608,7 +608,7 @@ r: stdout vom Kommando zeigt auf Pipe $\Rightarrow$ Kommando schreibt
 \item Aufruf default-Aktion (falls kein handler implementiert)
 \end{enumerate}
 Signal bpsw. SIGINT mit default-Aktion: Abbruch (auch durch Strg+C zu erreichen)
-\subsubsection{Signalhandler}
+\subsection{Signalhandler}
 \paragraph{Bash} $ $
 \begin{lstlisting}[language=bash]
 trap handleIt SIGINT
@@ -630,7 +630,7 @@ main (){
 }
 \end{lstlisting}
 
-\subsubsection[kill]{\imptnt{kill}}
+\subsection[kill]{\imptnt{kill}}
 Signal senden
 \begin{lstlisting}[language=C]
 int kill (pid_t pid, int sig);
@@ -657,13 +657,13 @@ Anweisung bzgl. Signalen:
 \item keine Speicherung (Warteschlange)
 \end{itemize}
 
-\subsection{Shared Memory}
+\section{Shared Memory}
 \begin{itemize}
 \item gemeinsam genutzer Speicher
 \item Segmente bleiben \imptnt{persistent}
 \end{itemize}
 
-\subsection{Message Passing}
+\section{Message Passing}
 \paragraph{Prinzip}
 \begin{enumerate}
 \item Sender trägt Nachricht in Puffer ein
@@ -677,7 +677,7 @@ und schreibt Daten in Puffer
 \item synchron und asynchron möglich
 \end{itemize}
 
-\section{Prozessorzuteilung}
+\chapter{Prozessorzuteilung}
 Zielgrößen Prozess(or)-Verteilung:
 \begin{itemize}
 \item Durschnittliche Reaktionszeit Prozesse
@@ -689,7 +689,7 @@ Zielgrößen Prozess(or)-Verteilung:
 \item Ausschluss des Verhungerns
 \end{itemize}
 
-\subsection[Off-Line Scheduling]{\imptnt{Off-Line Scheduling}}
+\section[Off-Line Scheduling]{\imptnt{Off-Line Scheduling}}
 \begin{itemize}
 \item Ermittlung Abarbeitungsreihenfolge und Prozessorzuteilung vor Laufzeit
 \begin{itemize}[label=$\to$]
@@ -719,7 +719,7 @@ $\Rightarrow$ \imptnt{Gantt-Diagramm}:\\
 \node at (0,1) [above left] {$P_1$};
 \node at (0,1) [below left] {$P_2$};
 \end{tikzpicture}
-\subsection{On-Line Scheduling}
+\section{On-Line Scheduling}
 \begin{itemize}
 \item Auswahl der Abarbeitungs-Reihenfolge zu Laufzeit
 \begin{itemize}[label=$\to$]
@@ -728,7 +728,7 @@ $\Rightarrow$ \imptnt{Gantt-Diagramm}:\\
 \end{itemize}
 \end{itemize}
 
-\subsubsection[Zeitgesteuertes Scheduling]{\imptnt{Zeitgesteuertes Scheduling}}
+\subsection[Zeitgesteuertes Scheduling]{\imptnt{Zeitgesteuertes Scheduling}}
 \begin{itemize}
 \item Abläufe periodisch
 \item keine Interrupts
@@ -739,7 +739,7 @@ $\Rightarrow$ \imptnt{Gantt-Diagramm}:\\
 $\Rightarrow$ keine Kollision möglich
 \end{itemize}
 
-\subsubsection[Ereignisgesteuertes Scheduling]{\imptnt{Ereignisgesteuertes Scheduling}}
+\subsection[Ereignisgesteuertes Scheduling]{\imptnt{Ereignisgesteuertes Scheduling}}
 \begin{itemize}
 \item reagiert auf Einflüsse von außen
 \item keine Garantie von Ausführungszeiten möglich, da Interrupts unvorhersehbar
@@ -750,7 +750,7 @@ $\Rightarrow$ keine Kollision möglich
 
 \paragraph{\imptnt{Interrupt}} passiert asynchron zum Programmablauf. Bspw. durch IO-Geräte, BS, Programm, …
 
-\subsubsection{Schedulingzeitpunkt}
+\subsection{Schedulingzeitpunkt}
 \begin{itemize}
 \item \imptnt{präemtptives Multiptasking}:\\
 Unterbrechung jederzeit durch BS möglich (Prozess blockiert, bereit, fertig) [idR. an bestimmten „Preemption Points“)
@@ -759,7 +759,7 @@ Freiwilliges Unterbrechen durch Prozess, bpsw. durch Systemaufrufe
 \item oder wenn Aktivität komplett (run-to-completion)
 \end{itemize}
 
-\subsubsection[Priorisierung]{\imptnt{Priorisierung}}
+\subsection[Priorisierung]{\imptnt{Priorisierung}}
 Prozesse besitzen unterschiedliche Wichtigkeiten (unfair)
 \begin{itemize}
 \item \imptnt{statische Priorität}
@@ -793,26 +793,26 @@ Priorität basiert auf bspw.:
 \item wo wird Prozess abgearbeitet (am besten unbeschäftigter Prozessor oder Prozessor auf dem Prozess zuvor lief)
 \end{itemize}
 
-\subsubsection[Round-Robin]{\imptnt{Round-Robin}}
+\subsection[Round-Robin]{\imptnt{Round-Robin}}
 Kenngrößen:\\
 \imptnt{$t_q$} \quad Prozesszeit (Quantum)\\
 \imptnt{$t_{cs}$} \quad Umschaltzeit
 
 Je größer die Prozesszeit ist, desto träger kann das System werden (lange Reaktionszeit). Bei kurzer Prozesszeit ist die Umschaltzeit im vergleich relativ groß $\Rightarrow$ ineffizient (aber schnelle Reaktionszeit)
 
-\subsubsection[FIFO/FCFS]{\imptnt{FIFO/FCFS}}
+\subsection[FIFO/FCFS]{\imptnt{FIFO/FCFS}}
 fair, leicht zu analysieren ($\to$ Warteschlange)
 \begin{itemize}
 \item Prozesse werden in Reihenfolge des Eintreffens vollständig abgearbeitet
 \end{itemize}
-\subsubsection[Shortest Job Next (SJN)]{\imptnt{Shortest Job Next (SJN)}}
+\subsection[Shortest Job Next (SJN)]{\imptnt{Shortest Job Next (SJN)}}
 \begin{itemize}
 \item kleine Prozesse werden immer vor großen abgearbeitet\\
 $\Rightarrow$ kann zum \imptnt{verhungern} führen, unfair!
 \item Ausführzeit muss bekannt sein!
 \end{itemize}
 
-\subsection{Unix}
+\section{Unix}
 \begin{itemize}
 \item Unterscheidet fürs Scheduling \imptnt{2 Arten von Prozessen}:
 \begin{enumerate}
@@ -827,6 +827,6 @@ $\Rightarrow$ kann zum \imptnt{verhungern} führen, unfair!
 \item Prioritäten + Zeitscheiben (Prioritäten von 19 (niedrigste) über 0 (normal) bis -20 (höchste))
 \end{itemize}
 
-\subsection[Priority Boost]{\imptnt{Priority Boost}}
+\section[Priority Boost]{\imptnt{Priority Boost}}
 Priorität wird durch langes Warten erhöht und durch Abarbeiten schrittweise verringert.
 \end{document}
