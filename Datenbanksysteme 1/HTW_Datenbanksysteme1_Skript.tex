@@ -12,9 +12,7 @@
 \newcommand{\folie}[2]{\begin{center}
 \includegraphics[page=#2]{Vorlesung/oneperpage/Kap#1.pdf}
 \end{center}}
-
 \begin{document}
-
 \maketitle
 \newpage
 \tableofcontents
@@ -236,10 +234,125 @@ ABB 11
 \end{itemize}
 \end{enumerate}
 
+\section{Architektur von Datenbanksystemen}
 
+\subsection{Grundlegende Begriffe}
+Am Beispiel der Objekte der Datenmodellierung mittels ERM\\
+\begin{tabular}{>{\raggedright}
+p{\dimexpr0.2\columnwidth-2\tabcolsep-1.5\arrayrulewidth} | >{\raggedright}
+p{\dimexpr0.4\columnwidth-2\tabcolsep-1.5\arrayrulewidth} | >{\raggedright}
+p{\dimexpr0.3\columnwidth-2\tabcolsep-1.5\arrayrulewidth}
+}
+Begriff & Erklärung & Beispiel\tabularnewline
+\hline 
+Entity & Objekt der realen Welt & Max Meier, Arbeitsaufgabe Reportgenerator\tabularnewline
+Entity-Typ & Objektklasse (-Menge), enthält Elemente mit struktureller Ähnlichkeit & Mitarbeiter, Arbeitsaufgabe, Abteilung \tabularnewline
+Merkmale / Attribut / Prädikat & Beschreibungen eines Entity-Typs & Name, Vorname, Gehalt\tabularnewline
+Wert & Ausprägung des Merkmals je Entity, aus einem bestimmten Wertevorrat (Domain) & „Meier“, „Max“, 3800,-\tabularnewline
+Beziehung, Set & Logischer Zusammenhang zwischen Entity-Typen & Mitarbeiter -- \underline{arbeitet an} -- Arbeitsaufgabe \tabularnewline
+Beziehungstyp, Settyp & Art der Beziehung (mögliche Anzahl an Entitäten, die in Beziehung treten) & $n:1$ Mitarbeiter -- \underline{gehört zu} -- Abteilung ABB50\tabularnewline
+\end{tabular}
 
+\subsection{3-Ebenen-Architektur}
+gemäß ANSI x3/SPARC (1975)
+\begin{itemize}
+\item Architekturebene
+\begin{itemize}
+\item externe Ebene
+\item konzeptionelle Ebene
+\item interne Ebene
+\end{itemize}
+\item Modell
+\begin{itemize}
+\item externes Modell
+\item konzeptionelles Modell
+\item internes Modell
+\end{itemize}
+\item Schema (konkrete Ausprägung des Modells)
+\begin{itemize}
+\item externes Schema
+\item konzeptionelles Schema
+\item internes Schema
+\end{itemize}
+\end{itemize}
 
+\subsubsection{Konzeptionelle Ebene}
+\paragraph{Gegenstand:} logisches Modell des gesamten Systems
+\paragraph{Beschreibungselemente:}
+\begin{itemize}
+\item Entity-Typen
+\item Beziehungen
+\item Attribute
+\item Wertevorrate (bspw. Einschränkung von Alter: nur Zahlen zwischen 1 und 100)
+\item Integritätsbedingung (bspw. NOT NULL, vgl. Wertevorrat)
+\end{itemize}
+\subsubsection{Externe Ebene}
+\paragraph{Gegenstand:} Beschreibung \emph{ausgewählter} Elemente der konzeptionellen Ebene aus Sicht des jeweiligen Endbenutzers
+\folie{2}{5}
+\paragraph{Element:} Sicht (View)
+\subsubsection{Interne Ebene}
+\paragraph{Gegenstand:} Form/Art der Ablage der Elemente der konzeptionellen Ebene im physischen Speicher
+\paragraph{Element:} Index
+\folie{2}{7}
 
+\section{Aufgbau und Arbeitsweise von DBMS}
+5 Grundfunktionen eines DBMS
+\folie{2}{8}
+\subsection{Zugriffsvermittlung}
+\folie{2}{9}
+\subsection{Unterstützung Datenbeschreibung-Entwicklung}
+\folie{2}{10}
+\subsection{Integritätssicherung}
+\folie{2}{11}
+Bsp. operationale Integrität:\\
+Gehaltserhöhungen sowohl für Organisatoren (O) und Programmierer (P) um \euro{50,-}.\\
+Gehaltserhöhung darf nicht doppelt erfolgen $\Rightarrow$ Sperren von Gehalt, solange ein Nutzer das Gehalt ändert (bei Gefahr bezgl. Deadlock, muss das System das Problem erkennen und entsprechend auflösen).
+\subsection{Zugriffsschutz}
+\folie{2}{12}
+\subsection{Dienstprogrammfunktionen}
+\folie{2}{13}
+
+\section{Datenorganisation}
+\begin{itemize}
+\item logische Datenorganisation (DO)
+\begin{itemize}
+\item externe Ebene
+\item konzeptionelle Ebene
+\end{itemize}
+\item physische DO
+\begin{itemize}
+\item interne Ebene
+\end{itemize}
+\end{itemize}
+\paragraph{klassische Datermodelle (logisch)}
+\begin{itemize}
+\item hierarchisch DM (graphisches DM)
+\item Netzwerk DM (graphisches DM)
+\item relationales DM (behandelt in DBS I+II)
+\end{itemize}
+\paragraph{weitere DM}
+\begin{itemize}
+\item objektorientiertes DM (DBS II)
+\item objektrelationales DM (DBS II)
+\item XML-DM / NoSQL DM … (DBS III)
+\end{itemize}
+\folie{2}{14}
+
+\begin{tabular}{
+>{\raggedright} p{\dimexpr0.3\columnwidth-2\tabcolsep-1.5\arrayrulewidth} |
+>{\raggedright} p{\dimexpr0.22\columnwidth-2\tabcolsep-1.5\arrayrulewidth} |
+>{\raggedright} p{\dimexpr0.22\columnwidth-2\tabcolsep-1.5\arrayrulewidth} |
+>{\raggedright} p{\dimexpr0.22\columnwidth-2\tabcolsep-1.5\arrayrulewidth} 
+}
+& Hierarchisches DM & Netzwerk DM & relationales DM\tabularnewline
+& ABB 51 & ABB 52 & ABB 53 \tabularnewline
+\hline
+Einstiegspunkt & ein Entity-Typ & mehrere Entity & beliebig\tabularnewline
+strukturelle Beschräknung & Hierarchie & keine & keine \tabularnewline
+Zeitpunkt des Aufbau der Beziehung & zur Entwicklungszeit & zur Entwicklungszeit & zur Laufzeit \tabularnewline
+Performance & + & + & \textbf{--}\tabularnewline
+Flexibilität bzgl. Änderung & -- & -- & \textbf{+}
+\end{tabular}
 
 
 
