@@ -173,7 +173,8 @@ Ausdruck & Sprache &\\
 $E_1 | E_2$ & $L(E_1|E_2)$&$=L(E_1)\cup L(E_2)$\\
 $E_1 E_2$ & $L(E_1E_2)$&$=L(E_1)L(E_2)$\\
 $E_1^*$ & $L(E_1^*)$&$=L(E_1)^*$\\
-\end{tabular}
+\end{tabular}\medskip\\
+Hinweis: $E^+=E E^*$, $E?=\varepsilon|E$
 \end{itemize}
 \subparagraph{Bsp.:} 
 \begin{itemize}
@@ -182,10 +183,71 @@ $E_1^*$ & $L(E_1^*)$&$=L(E_1)^*$\\
 $L((a|b|c)^*abc(a|b|c)^*)=\{a,b,c\}^*\{abc\}\{a,b,c\}^*$
 \end{itemize}
 
+\paragraph{Satz:} Reguläre Ausdrücke erzeugen genau die regulären Sprachen.
+\subparagraph{Skizze:} Umwandlung eines regulären Ausdrucks in einen endlichen Automaten.
+\begin{itemize}
+\item $\emptyset$: ABB 40
+\item $a \in \Sigma$: ABB 41 1.\\
+$\varepsilon$: ABB 41 2.
+\item Seien $E_1, E_2$ reguläre Ausdrücke und $\mathcal{M}_1, \mathcal{M}_2$ DFAs mit $L(E_1)=L(\mathcal{M}_1), L(E_2)=L(\mathcal{M}_2)$.
+\begin{itemize}
+\item $E_1 | E_2$: $\mathcal{M}_1, \mathcal{M}_2$ sind zusammen ein NFA, der $L(\mathcal{M}_1) \vee L(\mathcal{M}_2)$ erkennt.\\
+Bsp.: $E_1=a, E_2=b$\\
+ABB 42
+\item $E_1 E_2$: $\mathcal{M}_1, \mathcal{M}_2$ müssen hintereinander geschaltet werden, wobei ggf. neue Kanten eingefügt werden müssen. Dazu betrachtet man die Kante nach der neuen Verbindung und erzeugt dem entsprechend die Übergangskanten.\\
+ABB 43
+\item $E_1^*$: Es müssen Kanten zurück zum Startzustand eingefügt werden\\
+ABB 44
+\end{itemize}
+\end{itemize}
+Der Beweis für die umgekehrte Richtung (DFA $\to$ reg. Ausdruck) ist schwierig.
+\subparagraph{Bsp.:}
+\begin{itemize}
+\item $E=0(0|1)^*$\\
+ABB 45
+\item ABB 46\\
+Beobachtungen:
+\begin{itemize}
+\item um zum Endzustand zu kommen, braucht man eine $1$.
+\item vor der $1$ kann $\varepsilon$ stehen, oder beliebig viele $0$en der $1$en.
+\end{itemize}
+$\Rightarrow E=(0|1)^* 1$
+\end{itemize}
 
-
-
-
+\subsection{Das Pumping-Lemma}
+Wenn ein DFA ein Wort akzeptiert, das mindestens so lang ist wie die Anzahl seiner Zustände, dann muss er einen Zustand zweimal durchlaufen (Schubfachprinzip). Daraus folgt, dass der DFA dabei eine Schleife durchläuft.
+\subparagraph{Bsp.:}\parskp
+ABB 47\\
+Für $x=abcdecfg$ durchläuft der Automat eine Schleife: $x=ab\,\boxed{cde}\,cfg$. Daher akzeptiert der DFA auch alle Wärter $ab(cde)^k cfg$ für $k \geq 0$.
+\paragraph{Satz:} (Pumping Lemma)\\
+Für jede reguläre Sprache $L$ gibt es ein $n>0$ ($n$: Anzahl Zustände des Minimalautomaten), so dass es für alle Wörter $x \in L$ mit $|x|\geq n$ eine Zerlegung $x=uvw$ gibt (in vorherigem Bsp.: $u=ab, \; v=cde \; w =cfg$), so dass gilt:
+\begin{enumerate}
+\item $|v| \geq 1$, $|uv|\geq n$ \quad ($u, w$ können auch $\varepsilon$ sein)
+\item $uv^kw \in L$ für alle $k\geq 0$.
+\end{enumerate}
+Ohne Einschränkung ist $n$ die Anzahl Zustände des Minimalautomaten.\\
+$\Rightarrow \forall \text{ regulären Sprachen }L\quad \exists \;n>0 \quad\forall \; x \in L, \; |x| \geq n \quad \exists \;u,v,w \text{ mit }x=uvw \text{ und }|v| \geq 1,|uv|\geq n \quad \forall \; k\geq 0 \; uv^kw\in L$.\\
+Das Pumping-Lemma lässt sich nutzen, um zu zeigen, dass eine Sprache nicht regulär ist.
+\subparagraph{Bsp.:} Wir zeigen, dass $L=\{a^nb^n|n\in \mathbb{N}\}$ nicht regulär ist.\\
+Problemstellung: Der Automat kann sich das $n$ nicht „merken“, um nach $n$ $a$s wieder $n$ $b$s zu erzeugen. \\
+Beweis (Widerspruch):
+\begin{itemize}
+\item Angenommen, $L$ sei regulär.
+\item Nach Pumping-Lemma gibt es dann ein $n>0$, so dass sich alle $x\in L$ mit $|x|\geq n$ gemäß Pumping-Lemma zerlegen lassen.
+\item Sei $x=a^nb^n$. 
+\item Angenommen $v$ enthalte ein $b$, dann wäre $|uv| > n$. \\
+Aus $|uv|\geq n$ folgt aber, dass $v$ kein $b$ enthält. aus $|v|\geq 1$ folgt, dass $v$ mindestens ein $a$ enthält.\\
+ABB 48
+\item Das Wort $uw$ enthält daher weniger $a$s als $b$s und kann somit nicht in $L$ enthalten sein (denn $w$ enthält $b^n$, da $v$ mindestens ein $a$ enthält, ist durch $uw$ mindestens ein $a$ „verloren gegangen“: $uw=a^{n/|v|}b^n$) und ist deshalb nicht in $L$ enthälten, Widerspruch\,\lightning \; \#
+\end{itemize}
+Vorgehen:
+\begin{itemize}
+\item ist regulär
+\item Def. Pumping Lemma
+\item $x$ finden (trivial)
+\item durch 1.) einschränken
+\item durch 2.) zum Widerspruch führen
+\end{itemize}
 
 
 
