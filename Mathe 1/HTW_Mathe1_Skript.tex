@@ -359,4 +359,101 @@ $\Rightarrow \exists\; K > 0$ mit $\left| \frac{f(x_n)-f(x_0)}{x_n-x_0} \right| 
 $\Rightarrow |f(x_n) - f(x_0) | \leq K \cdot |x_n - x_0| \overset{n\to \infty}{\longrightarrow} 0$\\
 $\Rightarrow \lim_{n\to \infty} f(x_n)=f(x_0) \Rightarrow f$ ist stetig.
 
+\paragraph{Def. 2:} Eine Funktion $f: Db(f)\to \mathbb{R}$\\
+$Db(f)\subseteq \mathbb{R}$ heißt
+\begin{enumerate}[label=\alph*.)]
+\item differenzierbar im Interval $I \subseteq Db(f)$, falls $f$ an jeder inneren Stelle $x_0\in I$ differenzierbar ist und in eventuellen Randpunkten einseitig differenzierbar ist.\\
+d.h. $\lim_{x\nearrow x_r} \text{ bzw. } \lim_{x\searrow x_r} \frac{f(x)-f(x_r)}{x-x_r}$ existiert
+\item differenzierbar, wenn $f$ in jedem Punkt $x_0 \in Db(f)$ differenzierbar ist.
+\end{enumerate}
+\emph{Schreibweise:}\\
+Die resultierende Funktion bezeichnen wir mit \\
+$f': Db(f')\to \mathbb{R}, f'(x)=\lim_{h\to 0} \frac{f(x+h)-f(x)}{h}$\\
+wobei $Db(f')$ aus allen Punkten $x \in Db(f)$ besteht für welche der genannte Grenzwert existiert.
+
+\paragraph{Def. 3:} Sei $f: Db(f) \to \mathbb{R}, Db(f) \subseteq \mathbb{R}$. Wir definieren rekursiv die $n$-te Ableitung von $f$ an der Stelle $x_0$ mittels\\
+$f^{(n)}(x_0):= \left(f^{(n-1)}\right)'(x_0) \quad n=1,2,3,...$\\
+wobei $f^{(0)}(x_0)=f(x_0)$ (unter der Voraussetzung, dass die jeweilige Ableitung existiert).
+
+\subparagraph{Bsp. 1:} $f: \mathbb{R}\to \mathbb{R}, \; f(x): x^n, \; n \in \mathbb{N}$
+\begin{align*}
+\frac{f(x+h)-f(x)}{h}&=\frac{1}{h}\left((x+h)^n-x^n\right)\\
+&=\frac{1}{h}\left(x^n+\nok{n}{1}\cdot x^{n-1}h+\nok{n}{2}x^{n-2}h^2+...+\nok{n}{n}h^n-x^n\right)\\
+&\overset{h\to 0}{\longrightarrow}n\cdot x^{n-1}
+\end{align*}
+d.h. $f$ ist auf $\mathbb{R}$ differenzierbar. $f'(x)=n\cdot x^{n-1}$.
+
+\subparagraph{Bsp. 2:} $f: \mathbb{R} \to \mathbb{R}$, $f(x):= \sin(x)$
+\begin{align*}
+\frac{f(x+h)-f(x)}{h}&=\frac{\sin(x+h)-\sin(x)}{h} \qquad |\; \sin x-\sin y=2\cos\frac{x+y}{2}\cdot\\
+&= \frac{2\cdot \cos \frac{2x+h}{2}\cdot \sin \frac{h}{2}}{h}\\
+&= \frac{\cos \left( x+\frac{h}{2}\right) \cdot \sin \frac{h}{2}}{\frac{h}{2}} \qquad |\; \frac{\sin \frac{h}{2}}{\frac{h}{2}} \overset{h\to 0}{\longrightarrow}1\\
+&= \cos x
+\end{align*}
+Also $f'(x)=\cos x$.\\
+\emph{Bemerkung:} Ableitung der wichtigsten Grundfunktionen findet man in Formelsammlungen.\\
+Zur Ableitung zusammengesetzter Funktionen lernen wir im später weitere Ableitungsregeln kennen.
+
+\subsection{Das Differential} \parskp
+ABB 49\\
+$dy=h\cdot \tan \alpha = f \cdot f'(x_0)$
+\paragraph{Def. 4:} 
+\begin{enumerate}[label=\alph*.)]
+\item $dy:= f'(x_0)\cdot h$ heißt das zur Stelle $x_0$ und dem Zuwachs $h=\Delta x$ gehörende \emph{Differential} von $f$.
+\item $\Delta y := f(x_0+h)-f(x_0)$ heißt die zur Stelle $x_0$ und dem Zuwachs $h=\Delta x$ gehörende \emph{Differenz} von $f$.
+\end{enumerate}
+\subparagraph{Diskussion}
+\begin{enumerate}
+\item $\Delta y$ ist die Änderung der Funktion $f$, wenn $x$ in $x+h$ übergeht; $dy$ ist die entsprechende Änderung wenn statt $f$ die Tangente an der Stelle $x_0$ betrachtet wird (Linearisierung).
+\item Für kleine Zuwächse $\Delta x$ gilt: $\Delta y \approx dy$\\
+d.h. $\Delta y \approx f'(x_0)\cdot \Delta x$ für kleines $\Delta x$ (nutzt man in der Fehlerrechnung)
+\item Sei $y=f(x)=x \Rightarrow dy=dx=1\cdot h$ also $\boxed{h=\Delta x = dx}$
+\item Damit $f'(x)=\frac{dy}{dx}$\\
+Also: 1. Ableitung = Differentialquotient\\
+andere Schreibweise: $f'(x)=\frac{d}{dx}f(x)$
+\item Höhere Ableitungen:\\
+$f^{(n)}(x)=\frac{d^n y}{dx^n}=\frac{d^n}{dx^n}f(x)$
+\end{enumerate}
+\section{Differentiationsregeln}
+\paragraph{Satz 1:} Falls die Ableitungen auf der rechten Seite existieren:
+\begin{itemize}
+\item $(C_1 u(x)+C_2 v(x))' = C_1 u'(x)+C_2 v'(x)$ (Linearität)
+\item $(u(x) \cdot v(x))' = u'(x)v(x)+v'(x)u(x)$ (Produktregel)
+\item $\left( \frac{u(x)}{v(x)}\right)' = \frac{u'(x)v(x)-v'(x)u(x)}{(v(x))^2}$ (Quotientenregel)
+\end{itemize}
+
+\subparagraph{Bsp. 1:}
+\begin{enumerate}[label=\alph*.)]
+\item $f(x)=7x^4+\sqrt[3]{x}+\frac{2}{\sqrt{x}} = 7x^4+x^{\frac{1}{3}}+2x^{-\frac{1}{2}} \quad (x>0)$\\
+$\Rightarrow f'(x) = 28 x^3 + \frac{1}{3}x^{-\frac{2}{3}}-x^{\frac{3}{2}}=28x^3+\frac{1}{3\sqrt[3]{x^2}}-\frac{1}{\sqrt{x^3}}$
+\item $f(x)=x\cdot \ln x \quad (x\geq 0)$\\
+$\Rightarrow f'(x) = 1 \cdot \ln x + \frac{1}{x} \cdot x = \ln x + 1$ (Produktregel)
+\item $f(x)=\frac{e^x}{x^2+2}$\\
+$\Rightarrow f'(x)=\frac{e^x\cdot (x^2+2)-e^x\cdot 2x}{(x^2+2)^2}=\frac{e^x(x^2-2x+2)}{(x^2+2)^2}$ (Quotientenregel)
+
+\end{enumerate}
+
+\paragraph{Satz 2:} Seien $f: Db(f)\to \mathbb{R}, \; g: Db(g) \to \mathbb{R}$ Funktionen mit $Db(f) \subseteq \mathbb{R}, \; Db(g) \subseteq \mathbb{R}$ und 
+\begin{itemize}
+\item $g$ bei $x_0 \in Db(g)$ differenzierbar
+\item $f$ bei $g(x_0) \in Db (f)$ differenzierbar
+\end{itemize}
+so gilt:\\
+$(f\circ g)'(x_0)=f'(g(x_0))\cdot g'(x_0)$
+\subparagraph{Diskussion:} $y=f( \underbrace{g(x)}_{u})=f(u)$ mit $u=g(x)$\\
+Differentialschreibweise:\\
+$y'=\frac{dy}{dx}=\frac{dy}{du}\cdot \frac{du}{dx}$ \quad (äußere Ableitung $\cdot$ innere Ableitung)
+
+\subparagraph{Bsp. 2:}
+\begin{enumerate}[label=\alph*.)]
+\item $y=f(x)=\sin \underbrace{3x}_u$\\
+$y'=\frac{dy}{dx}=\frac{dy}{du}\cdot \frac{du}{dx}=\cos u \cdot 3=3 \cos 3x$
+\item $y=f(x)=2^{\tan(3x)} \quad \left(-\frac{\pi}{6}<x<\frac{\pi}{6}\right)$\\
+Substitution: \\
+$u:=\tan 3x$\\
+$v:=3x$\\
+$\Rightarrow y = 2^u, \; u = \tan v$\\
+$\Rightarrow y' = \frac{dy}{dx}=\frac{dy}{du} \cdot \frac{du}{dv} \cdot \frac{dv}{dx} = 2^u\cdot \ln 2 \cdot (1+\tan^2 v) \cdot 3= 3\cdot 2^{\tan 3x} \cdot \ln 2 \cdot (1+\tan^2 3x)$
+\end{enumerate}
+
 \end{document}
