@@ -330,7 +330,7 @@ ABB 68
 \item $Z$: Zustände
 \item $\Sigma$: Eingabealphabet
 \item $\Gamma$: Stackalphabet
-\item $\delta$:
+\item $\delta$: $Z\times \Sigma_\varepsilon \times \Gamma_\varepsilon \to \mathcal{P}(Z\times \Gamma_\varepsilon)$, wobei $\Sigma_\varepsilon=\Sigma \cup \{\varepsilon\}$, $\Gamma_\varepsilon = \Gamma \cup \{\varepsilon\}$
 \item $z_0\in Z$: Startzustand
 \item $\# \in \Gamma$: Unterstes Stackzeichen
 \item $E \in Z$: Endzustände
@@ -339,6 +339,45 @@ ABB 69\\
 $a \in \Sigma \cup \{\varepsilon\}$\\
 $\gamma \in \Gamma \cup \{\varepsilon\}$\\
 $\gamma' \in \Gamma \cup \{\varepsilon\}$
+
+\paragraph{Def.:} Die von einem PDA $M$ akzeptierte Sprache $L(M)$ ist die Menge aller $x \in \Sigma^*$, für die gilt: Der PDA $M$ kann, ausgehend vom Startzustand und dem initialen Stackzustand $\#$, durch das Lesen des Wortes $x$ einen Endzustand erreichen.
+
+\subsection{Kontextfreie Grammatiken}
+Eine kontextfreie Grammatik beschreibt, wie durch das Ersetzen von variablen Wörter der Sprache erzeugt werden können. Jede Ersetzungsregel hat die Form „linke Seite $\to$ rechte Seite“ (linke Seite der Regel kann ersetzt werden durch die rechte Seite), wobei „linke Seite“ eine Variable ist. 
+
+Beginnend mit dem Startsymbol werden solange Ersetzungsregeln angewendet, bis alle Variablen durch Terminalsymbole (Elemente aus $\Sigma$) ersetzt wurden.
+
+\subparagraph{Bsp.:}
+\begin{itemize}
+\item Satz $\to$ NP VP\footnote{Nominalphase, Verbalphase}
+\item NP $\to$ Artikel Nomen
+\item Artikel $\to$ \tgreen{die}
+\item Nomen $\to$ \tgreen{Katze}
+\item Nomen $\to$ \tgreen{Maus}
+\item VP $\to$ Verb NP
+\item Verb $\to$ \tgreen{jagt}
+\end{itemize}
+Satz $\Rightarrow$ NP VP $\Rightarrow$ Artikel Nomen VP $\Rightarrow$ Artikel Nomen Verb NP $\Rightarrow$ Artikel Nomen Verb Artikel Nomen $\Rightarrow$ … $\Rightarrow$ die Katze jagt die Maus\\
+Syntax dazu:\\
+ABB 71
+
+\paragraph{Def.:} Eine kontextfreie Grammatik ist ein Tupel $\sigma = (V, \Sigma, P, S)$
+\begin{itemize}
+\item $V$: Endliche Menge der Variablen oder Nonterminalzeichen
+\item $\Sigma$: Alphabet oder Terminalzeichen $V\cap \Sigma = \emptyset$
+\item $P$: Regeln oder Produktionen der Form $u \to v$ mit $u \in V$ und $v \in (V\cup \Sigma)^*$
+\item $S \in V$
+\end{itemize}
+
+Für $x,y\in (V \cup \Sigma)^*$ schreiben wir $x \Rightarrow y$, wenn sich durch das Ersetzen einer Variablen in $x$ die Satzform $y$ erzeugen lässt.
+\subparagraph{Bsp.:} die Nomen Verb $\Rightarrow$ die Katze Verb\medskip\\
+Die reflexive und transitive Hülle der Relation $\Rightarrow$ bezeichnen wir mit $\Rightarrow^*$. Umgangssprachlich: durch $\Rightarrow^*$ werden nicht alle $\Rightarrow$-Umformungen dargestellt, sondern teils übersprungen.
+\subparagraph{Bsp.:} \parskp
+Satz $\Rightarrow^*$ die Katze VP, \\
+Satz $\Rightarrow^*$ die Katze jagt die Maus.
+\paragraph{Def.:} Die von einer Grammatik erzeugte Sprache ist $L(G)=\{w\in \Sigma^* | S \Rightarrow^* w\}$.
+
+
 
 
 \newpage
