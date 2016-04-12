@@ -21,7 +21,7 @@
 \chapter*{Prüfungsmodalitäten}
 \paragraph{PVL} unbenoteter Beleg als Voraussetzung zur Prüfung
 \begin{enumerate}
-\item Access-Beleg (in Papier-Form abzugeben)
+\item Access-Beleg (in Papier-Form abzugeben bis 27.05.2016)
 \item Abnahme der SQL-Praktikums-Aufgaben (Abnahme während Praktikumszeit)
 \end{enumerate}
 
@@ -350,9 +350,137 @@ Gehaltserhöhung darf nicht doppelt erfolgen $\Rightarrow$ Sperren von Gehalt, s
 Einstiegspunkt & ein Entity-Typ & mehrere Entity & beliebig\tabularnewline
 strukturelle Beschräknung & Hierarchie & keine & keine \tabularnewline
 Zeitpunkt des Aufbau der Beziehung & zur Entwicklungszeit & zur Entwicklungszeit & zur Laufzeit \tabularnewline
-Performance & + & + & \textbf{--}\tabularnewline
-Flexibilität bzgl. Änderung & -- & -- & \textbf{+}
+Performance & + & + & \Large{\textbf{--}}\tabularnewline
+Flexibilität bzgl. Änderung & -- & -- & \Large{\textbf{+}}
 \end{tabular}
+\chapter{Relationales Datenmodell}
+\section{Terminologie im Relationenmodell}
+\folie{3}{1}
+
+\paragraph{Bsp.:} \parskp
+Entitytyp: 
+\begin{itemize}
+\item Zeugnis
+\end{itemize}
+Attribute:
+\begin{itemize}
+\item $A_1$ Fach
+\item $A_2$ Note
+\end{itemize}
+Wertebereiche:
+\begin{itemize}
+\item $W_1 \; \{\text{Ma, Ph}\}$
+\item $W_2 \{\text{1 ,2 ,3 , 4 , 5}\}$
+\end{itemize}
+$n=2$, d.h. 2-stellige Relation ableitbar (Grad = degree = 2)\\
+$PM = W_1 * W_2 = W_1 \times W_2$\\
+\begin{tabular}{c | c}
+Fach & Note\\
+\hline
+Ma & 1\\
+Ma & 2\\
+Ma & 3\\
+Ma & 4\\
+Ma & 5\\
+Pd & 1\\
+Pd & 2\\
+Pd & 3\\
+Pd & 4\\
+Pd & 5\\
+\end{tabular}\\
+Teilmenge 1  = Relation 1:\\
+\begin{tabular}{c | c}
+Fach & Note \\
+\hline
+Ma & 1\\
+Ph & 2\\
+\end{tabular} \tgreen{gültig}\\
+Teilmenge 2  = Relation 2:\\
+\begin{tabular}{c | c}
+Fach & Note \\
+\hline
+Ma & 1\\
+Ph & 1\\
+Ph & 4\\
+\end{tabular} \tgreen{gültige Relation} (unabhängig von der semantischen Sinnhaftigkeit)
+\folie{3}{2}
+\paragraph{Weitere Kernaussagen zum relationalen Modell:}
+\begin{itemize}
+\item Darstellung der Relation als Tabelle
+\item Identifikation der Relation über Namen
+\item Anzahl an Attributen (Spalten) ist fest (degree)
+\item Anzahl der Tupel (Zeilen) ist variabel (Mächtigkeit)
+\item Wertebereiche der Attribute = Domain
+\item Im Kreuzungspunkt von Attribut und Tupel stehen \emph{atomare} Werte
+\end{itemize}
+\section{Definition und Manipulation im relationalen Datenmodell}
+\subsection{Datendefinition}
+$\Rightarrow$ Definition von Relationen
+\folie{3}{3}
+\folie{3}{4}
+\subsection{Datenmanipulation / Relationenalgebra}
+Relationenalgebra nach: Codd\\
+Grundidee:\\
+Operationen auf Relationen\\
+$\Rightarrow$ Ergebnis ist wieder eine \emph{Relation}\\
+D.h. mengenweise Arbeit \emph{nicht} satzweise.
+\subsubsection{Mengenoperationen} $\cup\; \cap\; \setminus\; \times$\\
+ABB57
+\paragraph{Vereinigung} $\cup$\\
+ABB58 orange\\
+UNION
+\paragraph{Durchschnitt} $\cap$\\
+ABB58 grün\\
+INTERSECTION
+\paragraph{Differenz} $\setminus$\\
+$R_1\setminus R_2$
+ABB 58 lila\\
+Bedingung für $\cup, \cap, \setminus$ (\emph{Vereinigungsverträglichkeit}):
+\begin{itemize}
+\item Anzahl an Attributen ist gleich
+\item unzugeordnete Attribute besitzen gleiche Domain (Domainverträglichkeit)
+\end{itemize}
+$R_1\cup R_2 = R_2 \cup R_1$\\
+$R_1 \cap R_2 = R_2 \cap R_1$\\
+$R_1 \setminus R_2 \not = R_2 \setminus R_1$
+\paragraph{Kartesissches Produkt} $\times$\\
+$R_1\times R_2$\\
+Ergebnisrelation enthält: 
+\begin{itemize}
+\item alle Attribute aus $R_1$ und $R_2$.
+\item alle Kombinationen an Tupeln aus $R_1$ und $R_2$.
+\end{itemize}
+ABB 59
+\subsubsection{Relationale Operationen}
+\paragraph{Projektion} Spaltenauswahl\\
+PROJ\\
+ABB 60 grün
+\paragraph{Selektion} Tupelauswahl (laut Bedingung)\\
+REST\\
+ABB 60 orange
+\paragraph{Verbund} Verbindung zwischen zwei Relationen bezüglich der Gleichheit der Attributwerte in einer Verbindungsspalte\\
+JOIN\\
+intern:
+\begin{enumerate}
+\item Kartesisches Produkt der Relation
+\item auf Ergebnisrelation Selektion nach Gleichheit der Werte in der/den Verbindungsspalten
+\end{enumerate}
+Merkmale des JOIN:
+\begin{itemize}
+\item Attribute über die den JOIN ausgeführt wird, müssen
+\begin{itemize}
+\item \emph{keine} Schlüsselspalten sein
+\item gleiche Domain besitzen
+\item \emph{nicht} die gleichen Namen besitzen
+\end{itemize}
+Jede Relation ist mit jeder Relation via JOIN verbindbar (auch mit sich selbst).
+\end{itemize}
+%\includegraphics[pages=1-13]{Vorlesung/Kap3_Beispiele.pdf}
+%\folie{3}{5}
+
+
+
+
 
 
 

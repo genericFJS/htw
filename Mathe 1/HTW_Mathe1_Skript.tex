@@ -33,7 +33,7 @@
 
 \newpage
 \chapter{Folgen, Reihen, Grenzwerte}
-\section{Zahlenfolgen}
+%\section{Zahlenfolgen}
 %\input{HTW_Mathe1_Skript_sec2_1}
 
 \section{Grenzwerte und Stetigkeit von Funktionen}
@@ -275,7 +275,7 @@ ABB22
 Zur Bestimmung des Konvergenzbereichs nutz man Satz 10 und 11 aus \ref{2.1.3} und erhält absolute Konvergenz in einem um $x_0$ liegendem Konvergenzintervall $I:=(x_0-r, x_0+r)$.\\
 Wie $r$ bestimmt wird liefert:
 
-\paragraph{Satz 1:} Sei $(a_n)$ Zahlenfolge mit $r:=\lim_{n\to \infty} \left| \frac{a_n}{a_{n+1}}\right|=\lim \frac{1}{2qrt[n]{|a_n|}}$ existiert.\\
+\paragraph{Satz 1:} Sei $(a_n)$ Zahlenfolge mit $r:=\lim_{n\to \infty} \left| \frac{a_n}{a_{n+1}}\right|=\lim \frac{1}{\sqrt[n]{|a_n|}}$ existiert.\\
 Dann ist $\sum_{n=0}^\infty a_n (x-x_0)^n\begin{cases}
 \text{absolut konvergent} & \text{für }x\in \mathbb{R} \text{ mit }|x-x_0|<r\\
 \text{divergent} & \text{für }x\in \mathbb{R} \text{ mit }|x-x_0|>r
@@ -455,5 +455,296 @@ $v:=3x$\\
 $\Rightarrow y = 2^u, \; u = \tan v$\\
 $\Rightarrow y' = \frac{dy}{dx}=\frac{dy}{du} \cdot \frac{du}{dv} \cdot \frac{dv}{dx} = 2^u\cdot \ln 2 \cdot (1+\tan^2 v) \cdot 3= 3\cdot 2^{\tan 3x} \cdot \ln 2 \cdot (1+\tan^2 3x)$
 \end{enumerate}
+
+\subparagraph{Bsp. 3:} (Logarithmische Differentiation)\\
+$f(x)=x^{\sin x} \qquad x \in (0,\infty)$\\
+Basis und Exponent hängen von $x$ ab!\\
+Die Regeln $(x^a)'=a x^{a-1}$ bzw. $(a^x)'=a^x\cdot \ln a$ sind nicht unmittelbar anwendbar.\\
+Betrachten: 
+\begin{align*}
+f(x)&= x^{\sin} \\
+\ln(f(x))&=\sin x \cdot \ln x\\
+\overset{\text{Ableiten}}{\Longrightarrow} \frac{1}{f(x)}\cdot f'(x)&=\cos x \cdot \ln x + \sin x \cdot \frac{1}{x}\\
+\Rightarrow f'(x)&= f(x) \cdot (cos(x)\cdot \ln x + \sin x \frac{1}{x})\\
+&= x^{\sin x} (\cos x \ln x + \frac{\sin x}{x}
+\end{align*}
+
+\paragraph{Satz 3:} Sei $f: (x_0-r, x_0+r) \to \mathbb{R}$, $f(x)=\sum_{n=0}^\infty a_n (x-x_0)^n$ Grenzfunktion einer Potenzreihe mit Kurvenradius $r$.\\
+Dann gilt für alle $x \in (x_0-r, x_0+r)$: $f'(x) = \sum_{n=1}^\infty a_n \cdot n (x-x_0)^{n-1}$
+
+\subparagraph{Bsp. 4:} $\frac{1}{1-x}=1+x+x^2+x^3+...= \sum_{n=0}^\infty x^n, \quad |x|<1$\\
+$\left(\frac{1}{1-x}\right)' = 0+1+2x+3x^2+...=\sum_{n=1}^\infty n x^{n-1} \quad |x| <1$
+
+\section{Anwendungen}
+\subsection{Taylorsche Formel, Taylor-Reihe}
+
+\emph{Problem:} „Komplizierte“ Funktionen $f$ soll in der Umgebung von $x_0$ durch ein Polynom $p_n$ $n$-ten Grades angenähert werden.\\
+\emph{Ansatz:} $p_n(x)=a_0 + a_1 (x-x_0) + a_2(x-x_0)^2+...+ a_n (x-x_0)^n$\\
+\emph{Forderung:} $p_n(x_0)= f(x_0), \; p_n'(x_0)=f'(x_0), \; p_n''(x_0)=f''(x_0), ...$\\
+liefert: $p_n(x_0)=a_0, \; p_n'(x_0)=a_1, \; p_n''(x_0)=2a_2, ...$\\
+und $a_k=\frac{f^{(k)}(x_0)}{k!}$.\\
+Allgemein: $\boxed{p^{(k)}_n = k! a_k} \quad \text{für }k=0,1,...,n$
+\paragraph{Def. 1:} Das Polynom $p_n(x)=f(x_0)+\frac{f'(x_0)}{1!}(x-x_0)+\frac{f''(x_0)}{2!}(x-x_0)^2+...+\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n$ heißt \emph{Taylorpolynom} $n$-ten Grades mit Entwicklungsstelle $x_0$.
+
+\subparagraph{Diskussion:} 
+\begin{enumerate}
+\item $p_n$ ist eine Näherung für $f$.\\
+Fehler: $f(x)-p_n(x)=: R_n(x)$ heißt Restglied
+\item Restglied ist im Allgemeinen umso kleiner, je kleiner $|x-x_0|$ ist und je größer $n$ ist.\\
+ABB 54
+\end{enumerate}
+\paragraph{Satz 1:} Taylorsche Formel\\
+Es sei $f$ in $[a,b]$ $(n+1)$-mal differenzierbar, sowie $x_0,x \in [a,b]$. Dann existiert ein $\xi$ zwischen $x_0$ und $x$ (d.h. $\xi = x_0 + \vartheta (x-x_0)$ mit $\vartheta \in (0,1)$) mit $R_n (x) = \frac{f^{n+1}(\xi)}{(n+1)!}(x-x_0)^{n+1}$: \emph{Restgliedform von Lagrange}.\\
+Es gilt also $f(x) = \underbrace{\sum_{k=0}^n \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k}_{p_n(x)} +\underbrace{\frac{f^{(n+1)}(x_0+\vartheta(x-x_0))}{(n+1)!}(x-x_0)^{n+1}}_{R_n(x)}$
+\subparagraph{Diskussion:}
+Spezialfall $n=0$: $f(x)=f(x_0)+f'(\xi)(x-x_0)$ (\emph{Mittelwertsatz der Differentialrechnung})\\
+ABB 55\\
+Satz sagt: es gibt zwischen $x_0$ und $x_1$ einen Punkt auf der Funktion, sodass die Senkante die Tangente dieses Punktes ist. \\
+Umstellen liefert: $\underbrace{f'(\xi)}_{\text{Anstieg der Tangente}}= \underbrace{\frac{f(x)-f(x_0)}{x-x-}}_{\text{Anstieg der Sekante}}$
+
+\subparagraph{Bsp. 1:} $f(x) = e^x$ \qquad $x\in \mathbb{R}$
+\begin{align*}
+f'(x) &= e^x = f''(x) = f'''(x) = ...\\
+\overset{x_0=0}{\Longrightarrow} f'(0) &= 1 = f''(x) = f'''(x) = ... 
+\end{align*}
+$\Rightarrow e^x = \sum_{k=0}^n \frac{1}{k!}\cdot x^k + \frac{e^{\vartheta x}}{(n+1)!}x^{n+1} \quad 0 < \vartheta <1$\\
+Wie gut ist diese Näherung?\\
+Für $x=\frac{1}{10}=0,1$ und $n=4$ gilt: \\
+$e^{0,1}=1+\frac{0,1}{1!}+\frac{0,1^2}{2!}+\frac{0,1^3}{3!}+\frac{0,1^4}{4!}+\underbrace{\frac{0,1^5}{5!}e^{\vartheta \cdot 0,1}}_{R_4(0,1)}$ für ein $\vartheta \in (0,1)$.\\
+$\Rightarrow e^{0,1} = \underbrace{1 + 0,1 + 0,005 + 0,0001\overline{6} + 0,0000041\overline{6}}_{=1,1051708\overline{3}}+R_4(0,1)$
+Abschätzen des $\vartheta$:
+\begin{alignat*}{3}
+8,\overline{3}\cdot 10^{-8} = \frac{0,1^5}{5!}= \frac{0,1^5}{5!}e^0&< \frac{0,1^5}{5!}e^{\vartheta \cdot 0,1} &&< \frac{0,1^5}{5!} e^{1\cdot 0,1} < \frac{0,1^5}{5!}\cdot 3 = 25 \cdot 10^{-8}\\
+\Rightarrow 1,1051708\overline{3} +8,\overline{3} &\leq e^{0,1} &&\leq 1,1051708\overline{3}+25\cdot 10^{-8} \\
+1,10517091\overline{6} &\leq e^{0,1} &&\leq 1,10517108\overline{3}
+%&&& =1,10517091808...
+\end{alignat*}
+\subparagraph{Bsp. 2:} 
+\begin{alignat*}{3}
+f(x) &= \cos (x), \; x_0 = 0 &&\Rightarrow f(x_0)=1\\
+f'(x)&=-\sin x && \Rightarrow f'(x_0) = 0\\
+f''(x) &= -\cos x && \Rightarrow f''(x_0)=-1\\
+f'''(x) &= \sin x && \Rightarrow f'''(x_0) = 0 \\
+f^{(4)}(x) &= \cos x && \Rightarrow f^{(4)}(x_0) = 1 \\
+&...
+\end{alignat*}
+$n=2m+1$
+\begin{align*}
+\cos x &= \underbrace{1}_{f(x_0)}+\underbrace{0}_{\frac{f'(x_0)}{1!}(x-x_0)}\underbrace{-\frac{x^2}{2!}}_{\frac{f''(x_0}{2!}(x-x_0)^2}+0+\frac{x^4}{4!}+...+ (-1)^m \frac{x^{2m}}{(2m)!}+0+R_{2m+1}\\
+&= 1 + \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!}+...+(-1)^m\frac{x^{2m}}{(2m)!}+(-1)^{m+1}\cos (\vartheta x) \frac{x^{2m+2}}{(2m+2)!}
+\end{align*}
+ABB 56\\
+Näherung: $\cos x \equiv 1-\frac{x^2}{2}$ für $|x| \ll 1$\\
+Fehler: $|R_3(x)| \leq \frac{x^4}{4!}$\\
+Bsp.:\\
+$\cos 5^\circ = \cos \left( \frac{\pi}{36}\right) = \underbrace{1-\frac{\pi^2}{2 \cdot 36^2}}_{0,9961923}+ R_3$\\
+...\\
+$|R_2| \leq \frac{\pi^4}{36^4\cdot 24}= 2,416\cdot 10^{-6}$\\
+genau gilt: $\cos 5^\circ = 0,99619 $ (auf 5 Stellen genau)
+
+\subparagraph{Bsp. 3:} $f(x)=(1+x)^\alpha$ mit $\alpha \in \mathbb{R}\setminus \{0\}$
+\begin{align*}
+f'(x)&=\alpha (1+x)^{\alpha-1}\\
+f''(x)&=\alpha (\alpha -1)(1+x)^{\alpha -2}\\
+&...\\
+f^{(k)}(x)&=\alpha (\alpha -1)(\alpha -2)\cdot ... \cdot (\alpha -k+1)(1+x)^{\alpha-k}\\
+&=\nok{\alpha}{k}\cdot k! (1+x)^{\alpha-k}\\
+\end{align*}
+wir betrachten $x_0=0$\\
+$f(0)=1$, $f'(0)=\alpha$, $f''(0)=\alpha(\alpha-1)$, …, $f^{(k)}(0)=\nok{\alpha}{k}k!$\\
+Erinnerung:\\
+$\nok{n}{k}=
+\begin{cases}
+\frac{n!}{k!(n-k)!} &\text{falls }n,k \in \mathbb{N}, \; k \leq n\\
+\frac{n\cdot (n+1)\cdot...\cdot (n-k+1)}{k!} & \text{kann für beliebige }n\in \mathbb{R} \text{ ausgewertet werden.}
+\end{cases}$\\
+$\Rightarrow (1+x)^\alpha = \sum_{k=0}^n \nok{\alpha}{k} x^k+\nok{\alpha}{n+1}(1+\vartheta x)^{\alpha -n-1}x^{n+1}$ mit $\vartheta\in (0,1)$
+\subparagraph{Bsp. 4:} $f(x)$… Polynom $n$-ten Grades\\
+$\Rightarrow f^{(n+1)}(x)=0$ für $x \in \mathbb{R}$\\
+$\Rightarrow R_n(x)=0$ für $x \in \mathbb{R}$\\
+$\Rightarrow$ Taylorpolynom stellt $f$ exakt dar (Entwicklung nach Potenzen von $(x-x_0)$)
+
+\subsubsection{Taylor Reihen}
+\paragraph{Satz 2:} Es sei $f$ auf $U(x_0)$ beliebig oft differenzierbar und es gelte $\lim_{n\to\infty} R_n(x)=0$.\\
+Dann gilt $\boxed{f(x)=\sum_{k=0}^\infty \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k}$.\\
+Denn: Taylor-Formel sagt $f(x)=\sum_{k=0}^n \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k + R_n(x)$. Mit $n\to \infty$ folgt die Behauptung.
+
+\subparagraph{Bsp. 5:} $e^x=\sum_{k=0}^n \frac{x^k}{k!}+R_n(x)$ (vgl. Bsp. 1)\\
+Es gilt $\lim_{n\to \infty}R_n(x) = 0$ für alle $x\in \mathbb{R}$.\\
+\emph{Beweis:} Sei $x\in \mathbb{R}$ fest. Wähle $n_0$ so, dass $q:= \frac{|x|}{n_0}<1$.\\
+$\Rightarrow$ für $n> n_0$ gilt:
+\begin{align*}
+|R_n(x)| &= \left| e^{\vartheta x} \cdot \frac{x^{n+1}}{(n+1)!}\right| \leq e^{|\vartheta x|} \cdot \frac{x^{n+1}}{(n+1)!}\leq e^{|x|} \cdot \frac{x^{n+1}}{(n+1)!}\\
+&<e^{|x|}\cdot \frac{|x|}{1}\cdot \frac{|x|}{2}\cdot ... \cdot \frac{|x|}{n_0} \underbrace{\cdot \frac{|x|}{n_0} \cdot...\cdot \frac{|x|}{n_0}}_{(n-n_0+1)\text{ Faktoren}}\\
+&= e^{|x|}\cdot \frac{|x|^{n_0}}{n_0!}\cdot q^{n-n_0+1} \to 0 
+\end{align*}
+$\Rightarrow e^x=\sum_{k=0}^\infty \frac{x^k}{k!}$ für alle $x \in (-\infty, \infty)$
+\subparagraph{Bsp. 6:} $\cos x = \sum_{k=0}^m (-1)^k \frac{x^{2k}}{(2k)!}+R_{2m+1}(x)$ (vgl. Bsp. 2)\\
+Ähnlich wie in Bsp. 5 kann man zeigen $\lim_{n\to \infty}R_{2m+1}(x)=0$ für alle $x\in \mathbb{R}$.\\
+$\Rightarrow \cos x = \sum_{k=0}^\infty (-1)^k \frac{x^{2k}}{(2k)!} \qquad x \in (-\infty, \infty)$\\
+Analog: $\sin x = \sum_{k=0}^\infty (-1)^k \frac{x^{2k+1}}{(2k+1)!} \qquad x \in (-\infty, \infty)$
+
+\subparagraph{Bsp. 7:} Restglieduntersuchung in Bsp. 3 führt zu:\\
+$(1+x)^\alpha = \sum_{k=0}^\infty \nok{\alpha}{k}x^k \qquad |x|<1, \; \alpha \in \mathbb{R}$\\
+z.B. für $\alpha = \frac{1}{2}$: 
+\begin{align*}
+\sqrt{1+x}&=1+\frac{1}{2}x-\frac{1}{8}x^2+\frac{1}{16}x^3-... \\
+&\approx 1+\frac{1}{2}x \qquad \text{falls }|x|\ll 1
+\end{align*}
+
+\subsection{Grenzwertbestimmung mittels der Regel von l'Hopital}
+\paragraph{Satz 3:} (Regel von l'Hopital)\\
+Es gelte: 
+\begin{enumerate}
+\item $\lim_{x\to a} f(x) = 0$ und $\lim_{x\to a} g(x)=0$.
+\item $\lim_{x\to a} \frac{f'(x)}{g'(x)}$ existiert (als eigentlicher und uneigentlicher Grenzwert).
+\end{enumerate}
+Dann folgt:
+$\boxed{\lim_{x\to a} \frac{f(x)}{g(x)}=\lim_{x \to a} \frac{f'(x)}{g'(x)}}$ $\left(\text{Typ: }\mq{\frac{0}{0}}\right)$\\
+Die gleiche Aussage gilt, wenn 1.) ersetzt wird durch
+\begin{enumerate}
+\item[1'.)] $\lim_{x\to a}f(x)=\pm \infty$, $\lim_{x\to a}g(x)=\pm \infty$ $\left(\text{Typ: }\mq{\frac{\infty}{\infty}}\right)$
+\end{enumerate}
+\emph{Beweis:} seien $f,g,f',g'$ stetig in $x_0$ und $g'(x_0)\not = 0$\\
+Mittelwertsatz: $\frac{f(x)}{g(x)}=\frac{\overbrace{f(x_0)}^{0}+f'(\xi)(x-x_0)}{\underbrace{g(x_0)}_{0}+g'(\xi)(x-x_0)}=\frac{f'(\xi_1)}{g'(\xi_2)}\overset{x\to x_0}{\longrightarrow}\frac{f'(x_0)}{g'(x_0)}$
+
+\subparagraph{Bsp. 8:}
+\begin{enumerate}[label=\alph*.)]
+\item $\lim_{x\to 1} \frac{\ln x}{x-1}=\mq{\frac{0}{0}}$\\
+$\lim_{x\to 1} \frac{\frac{1}{x}}{1}=\lim_{x\to 1} \frac{1}{x}=1$\\
+$\Rightarrow \lim_{x \to 1} \frac{\ln x}{x-1}=1$
+\item $\lim_{x \to \infty} \frac{\ln x}{\sqrt{x}}=\mq{\frac{\infty}{\infty}}$\\
+$\lim_{x\to \infty} \frac{\frac{1}{x}}{\frac{1}{2}x^{-\frac{1}{2}}}=\lim_{x \to \infty} \frac{2x^{\frac{1}{2}}}{x}=\lim_{x\to \infty} \frac{2}{\sqrt{x}}=0$\\
+$\Rightarrow \lim_{x\to \infty} \frac{\ln x}{\sqrt{x}}=0$
+\item $\lim_{x\to 0} \frac{x^2}{1-\cos x} = \mq{\frac{0}{0}}$\\
+$\lim_{x\to 0}\frac{2x}{\sin x}=\mq{\frac{0}{0}}$\\
+$\lim_{x\to 0}\frac{2}{\cos x}=2$\\
+$\Rightarrow \lim_{x\to 1} \frac{\ln x}{x-1}=\lim_{x\to 0}\frac{2x}{\sin x}=2$\\
+Regel also auch mehrfach hintereinander anwendbar.
+\item $\lim_{x\to \infty} \frac{\sinh (x+1)}{\cosh x}=\mq{\frac{\infty}{\infty}}$\\
+$\lim_{x\to \infty} \frac{\cosh(x+1)}{\sinh x}=\mq{\frac{\infty}{\infty}}$\\
+$\lim_{x\to \infty} \frac{\sinh (x+1)}{\cosh x} = \mq{\frac{\infty}{\infty}}$\\
+…\\
+$\Rightarrow$ Satz nicht anwendbar, da 2.) nie erfüllt ist.\\
+Aber: \\
+$\lim_{n\to \infty} \frac{\sinh (x+1)}{\cosh x}=\lim_{x\to \infty} \frac{e^{x+1}-e^{-(x+1)}}{e^x+e^{-x}}=\lim_{x\to \infty} \frac{e^{x+1}\left(1-e^{-2(x+1)} \right)}{e^x \left( 1+ e^{-2x}\right)}=e \underbrace{\lim \frac{1-e^{-2(x+1)}}{1+e^{-2x}}}_{=1}=e$
+\end{enumerate}
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Man beachte, dass der Anwendung von Satz 3 Zähler und Nenner einzeln differenziert werden (keine Quotientenregel)!
+\item Falls $\lim_{x\to a} \frac{f'(x)}{g'(x)}$ nicht existiert, \emph{darf man nicht} schlussfolgern, dass $\lim_{x\to a} \frac{f(x)}{g(x)}$ nicht existiert (siehe Bsp. 9).
+\end{enumerate}
+
+\subparagraph{Bsp. 9:} $\lim_{x\to \infty} \frac{5x+\sin x}{3x-\cos x} = \mq{\frac{\infty}{\infty}}$\\
+$\lim_{x\to\infty} \frac{5+\cos x}{3+\sin x}$ existiert nicht.\\
+1.) erfüllt, 2.) nicht erfüllt $\Rightarrow$ Satz nicht anwendbar\\
+Aber:\\
+$\frac{5x+\sin x}{3x-\cos x}=\frac{x\left( 5 + \frac{\sin x}{x}\right)}{x\left(3-\frac{\cos x}{x}\right)}=\frac{5+\frac{\sin x}{x}}{3-\frac{\cos x}{x}}\overset{x \to \infty}{\longrightarrow} \frac{5}{3}$\\
+Weitere unbestimmte Ausdrücke:\\
+Durch Zurückführen auf $\mq{\frac{0}{0}}$ oder $\mq{\frac{\infty}{\infty}}$ lässt sich auch folgendes behandeln:\\
+$\mq{0\cdot \infty}$: $f(x)\cdot g(x)$ als Doppelbruch schreiben, d.h. $\frac{f(x)}{\frac{1}{g(x)}}$ oder $\frac{g(x)}{\frac{1}{f(x)}}$ ist dann vom Typ $\mq{\frac{0}{0}}$ oder $\mq{\frac{\infty}{\infty}}$.\\
+$\mq{\infty - \infty}$: Ausklammern $f(x)-g(x)=f(x)\left( 1 - \frac{g(x)}{f(x)}\right)$ oder falls Brüche vorliegen Hauptnenner bilden.\\
+$\mq{0^0} / \mq{1^\infty} / \mq{\infty^0}$: Umformung 
+\begin{align*}
+\lim_{x \to a} f(x)^{g(x)} &= \lim_{x\to a} \exp\left(\ln\left(f(x)^{g(x)}\right)\right)\\
+&= \lim_{x\to a} \exp\left(g(x) \ln f(x) \right)\\
+&= \exp \left( \lim_{x\to a} \underbrace{g(x) \cdot \ln f(x)}_{\text{Typ }\mq{0\cdot \infty}}\right)\\
+\end{align*}
+\subparagraph{Bsp. 10:}
+\begin{enumerate}[label=\alph*.)]
+\item $\lim_{x\to 0} \tan x \cdot \cot 3x \overset{\mq{0 \cdot \infty}}{=}\lim_{x\to 0} \frac{\tan x}{\frac{1}{\cot 3x}}$\\
+$=\lim_{x\to 0} \frac{\tan x}{\tan 3x}\overset{\mq{\tfrac{0}{0}}}{=}\lim_{x\to 0} \frac{1+\tan^2x}{3(1+\tan^23x)}=\resultul{\frac{1}{3}}$
+\item $\lim_{x \to 0} \left( \frac{1}{\sin x}-\frac{1}{e^x-1}\right)\overset{\mq{\infty - \infty}}{=} \lim_{x\to 0} \frac{e^x-1-\sin x}{\sin x \cdot (e^x-1)}\overset{\mq{\tfrac{0}{0}}}{=}... \\
+= \lim_{x\to 0} \frac{e^x - \cos x}{\cos x (e^x+1)+\sin (x) \cdot e^x}\\
+\overset{\mq{\tfrac{0}{0}}}{=}\lim_{x \to 0}\frac{e^x + \sin x}{-\sin x \cdot  (e^x-1) + \cos (x) \cdot  e^x+\cos (x) \cdot  e^x + \sin(x) \cdot e^x }= \resultul{\frac{1}{2}}$
+\item $\lim_{x\to 0 } (1-x)^{\frac{1}{x}} \overset{\mq{1^\infty}}{=}\lim_{x\to 0} \left( \ln\left( (1-x)^{\frac{1}{x}}\right)\right)=\underbrace{\lim_{x\to 0} \exp}_{\text{tauschen geht, da $\exp(\cdot)$ stetig ist}}\left(\frac{\ln(1-x)}{x}\right)\\
+= \exp\underbrace{\left(\lim_{x\to 0}\frac{\ln (1-x)}{x}\right)}_{Typ \mq{\frac{0}{0}}}$\\
+Denn: $\lim_{x\to 0} \frac{\ln (1-x)}{x}=\lim_{x\to 0} \frac{-\frac{1}{1-x}}{1}=\lim_{x\to 0} - \frac{1}{1-x}=-1$
+\end{enumerate}
+
+\subsection{Kurvendisskusion}
+\emph{Problemstellung:} Gegeben ist eine Funktion $f: Db(f) \to \mathbb{R}$ $Db(f) \subseteq \mathbb{R}$.\\
+Dann ist der Graph der Funktion definiert durch: $\{ (x,f(x))\in \mathbb{R}^2| x \in Db(f)\}$.\\
+Dieser Graph ist zu untersuchen auf 
+\begin{enumerate}[label=\alph*.)]
+\item Nullstellen
+\item Stellen lokaler bzw. globaler Extrema
+\item Wendestellen
+\item Verhalten im Unendlichen, bzw. an den Randstellen des Definitionsbereichs $Db(f)$ und (falls vorhanden) bei Annäherung an Unstetigkeitsstellen.
+\end{enumerate}
+\subparagraph{Diskussion:} 
+\begin{enumerate}
+\item $x_0 \in Db(f)$ heißt \emph{Nullstelle $n$-ter Ordnung}, falls \\
+$f(x_0) = f'(x_0)=...=f^{(n-1)}(x_0)=0 \wedge f^n (x_0) \not = 0$.\\
+Zur Nullstellenbestimmung lernen wir bald das (iterative) Newton-Verfahren kennen.
+\item \emph{Lokale Extrema} sind extremal bzgl. einer Umgebung der Extremstelle.\\
+\emph{Globale Extrema} sind extremal bzgl. des gesamten Definitionbereichs, sie sind lokale Extram oder Funktionswerte in den Randpunkten.
+\item \emph{Wendepunkte} sind Punkte, an denen die Kurve von konkav in konvex oder von konvex in konkav übergeht.\\
+ABB 64\\
+ABB 65
+\item Einige einfache Zusammenhänge zwischen Eigenschaften der Kurve und der Ableitungen an der Stelle $x_0$ ($f$ sei auf $U(x_0)$ hinreichend oft differenzierbar).\\
+\begin{tabular}{l c l }
+$f'(x_0)<0$ & $\Rightarrow$ & $f$ in Umgebung von $x_0$ streng monoton fallend.\\
+$f'(x_0)>0$ & $\Rightarrow$ & $f$ in Umgebung von $x_0$ streng monoton wachsend.\\
+$f'(x_0)=0$ & $\Leftarrow$ & $f$ in $x_0$ lokal extremal.\\
+\hline
+$f''(x_0)<0$ & $\Rightarrow$ & $f$ in Umgebung von $x_0$ konkav.\\
+$f''(x_0)>0$ & $\Rightarrow$ & $f$ in Umgebung von $x_0$ konvex.\\
+$f''(x_0)=0$ & $\Leftarrow$ & $x_0$ Wendestelle.\\
+\hline 
+$f'(x_0)=0 \wedge f''(x_0)<0$ & $\Rightarrow$ & $f$ in $x_0$ lokal minimal\\
+$f'(x_0)=0 \wedge f''(x_0)>0$ & $\Rightarrow$ & $f$ in $x_0$ lokal maximal\\
+\end{tabular}
+\item Problem: $f'(x_0)=0 \wedge f''(x_0)=0$ ?\\
+Extremstelle oder Wendestelle oder was?
+\end{enumerate}
+\subsubsection*{Hinreichende Bedingungen für das Vorliegen von Extremstellen}
+\paragraph{Satz 4:} Sei $f:Db(f) \to \mathbb{R} , \; Db(f) \subseteq \mathbb{R}$ eine in $x_0 \in Db(f)$ $n$-mal differenzierbare Funktion und sei $f^{(n)}$ stetig in $x_0$. Dann gilt falls $f'(x_0)=f''(x_0)=...=f^{(n-1)}(x_0)=0 \wedge f^{(n)}(x_0)\not = 0$:
+\begin{enumerate}[label=\alph*.)]
+\item $n=2,4,6,...$ (also gerade), so ist $x_0$ lokale Extremstelle (Maximum falls $f^{(n)}(x_0)<0$, Minimum falls $f^{(n)}(x_0)>0$).
+\item $n=3,5,7,...$ (also ungerade), so ist $x_0$ eine Horizontal-Wendestelle (konvex$\to$konkav, falls $f^{(n)}(x_0)<0$; konkav$\to$konvex, falls $f^{(n)}(x_0)>0$).\\
+ABB 66
+\end{enumerate}
+Beweis mittels Taylor-Formal.\\
+Oft ist auch folgendes Kriterium nützlich:
+\paragraph{Satz 4':} Sei $f:Db(f)\to \mathbb{R}, Db(f) \subseteq \mathbb{R}$ differenzierbar und $x_0\in Db(f)$, sowie $f'(x_0)=0$. Dann:
+\begin{enumerate}[label=\alph*.)]
+\item $f'$ wechselt bei $x_0$ das Vorzeichen $\begin{cases}
+\text{von }+ \text{ auf }- \Rightarrow x_0 \text{ lokale Maximumstelle}\\
+\text{von }- \text{ auf }+ \Rightarrow x_0 \text{ lokale Minimumstelle}
+\end{cases}$
+\item kein Vorzeichenwechsel $\Rightarrow x_0$ ist Horizontal-Wendestelle
+\end{enumerate}
+\subsubsection*{Hinreichende Bedingung für das Vorliegen einer Wendestelle}
+
+\paragraph{Satz 5:} Sei $f: Db(f) \to \mathbb{R}, Db(f) \subseteq \mathbb{R}$ $n$-mal differenzierbar an $x_0$ und $f^{(n)}$ stetig in $x_0$. Dann gilt falls $f''(x_0)=f'''(x_0)=...=f^{(n-1)}(x_0)=0 \wedge f^{(n)}(x_0)\not = 0$ und
+\begin{enumerate}[label=\alph*.)]
+\item $n=3,5,7,... \Rightarrow x_0$ ist Wendestelle $\begin{cases}
+f^{(n)}(x_0)<0 & konvex \Rightarrow konkav\\
+f^{(n)}(x_0)>0 & kankav \Rightarrow konvex
+\end{cases}$
+\item $n=4,6,8,... \Rightarrow x_0$ keine Wendestelle, sondern sogenannte Flachstelle und Extremstelle, falls zusätzlich $f'(x_0) = 0$.\\
+ABB 67
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \end{document}
