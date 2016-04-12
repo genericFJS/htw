@@ -71,14 +71,39 @@ Ferner ist $\Sigma^+=\Sigma^*-\{\varepsilon\}$.
 \section{Reguläre Sprachen}
 \subsection{Deterministische endliche Automaten (DFA)}
 \subparagraph{Bsp.:} \parskp
-ABB1\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+%\node[initial,state]		(A)	{$q_a$};
+%\node[state]	(B) [above right of=A] {$q_b$};
+
+%\path (A) edge		node {0} (B)
+\node[initial, initial text =, state] (z0) {$z_0$};
+\node[state] (z1) [right of=z0] {$z_1$};
+\node[state] (z2) [right of=z1] {$z_2$};
+\node[state, double, double distance = .5mm] (zE) [right of=z2] {$z_E$};
+\path (z0) edge [loop above] node{$b,c$} (z0);
+\path (z1) edge [loop above] node{$a$} (z1);
+\path (zE) edge [loop above] node{$a,b,c$} (zE);
+\path (z0) edge [bend left=20] node{$a$} (z1);
+\path (z1) edge [bend left=20] node{$c$} (z0);
+\path (z1) edge [bend left=20] node{$b$} (z2);
+\path (z2) edge [bend left=20] node{$a$} (z1);
+\path (z2) edge [bend left = 35] node{$b$} (z0);
+\path (z2) edge node{$c$} (zE);
+\end{tikzpicture}\\
 (Pfeil zeigt auf Startzustand, Endzustand ist doppelt umrandet)\\
 Dieser DFA akzeptiert alle Wörter über $\Sigma = \{a,b,c\}$, die $abc$ enthalten.\\
 Deterministisch: Es gibt genau ein Folgezustand. Von jedem Knoten aus gibt es genau eine Kante für jedes Zeichen, nicht mehrere und nicht keine.
 \subparagraph{Bsp.:} \parskp
-ABB2\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+%\node[initial,state]		(A)	{$q_a$};
+%\node[state]	(B) [above right of=A] {$q_b$};
+
+%\path (A) edge		node {0} (B)
+\node[initial, initial text = , state, double, double distance = .5mm] (zE){};
+\path (z0) edge [loop above] node{$a,b,c$} (zE);
+\end{tikzpicture}\\
 Dieser DFA erkennt die Sprache $\{a,b,c\}^*$.
-\paragraph{Def.:} Ein DFA ist ein Tupel $\mathcal{M}=(Z, \Sigma, \delta, z_0, )$
+\paragraph{Def.:} Ein DFA ist ein Tupel $\mathcal{M}=(Z, \Sigma, \delta, z_0, E)$
 \begin{itemize}
 \item $Z$: Menge der Zustände
 \item $\Sigma$: Eingabealphabet
@@ -86,7 +111,16 @@ Dieser DFA erkennt die Sprache $\{a,b,c\}^*$.
 \item $z_0\in Z$: Startzustand
 \item $E$: Menge der Endzustände
 \end{itemize}
-$\delta$: ABB3
+$\delta$: \\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+%\node[initial,state]		(A)	{$q_a$};
+%\node[state]	(B) [above right of=A] {$q_b$};
+
+%\path (A) edge		node {0} (B)
+\node[initial, state] (z0) {$z$};
+\node[state] (z1) [right of=z0] {$z'$};
+\path (z0) edge [bend left=20] node{$a$} (z1);
+\end{tikzpicture}
 
 \paragraph{Def.:} Die erweiterte Überführungsfunktion $\hat{\delta}:Z\times \Sigma^*\rightarrow Z$ ist definiert durch\\
 $\hat{\delta}(z,w)=\begin{cases}
@@ -174,7 +208,8 @@ $E_1 | E_2$ & $L(E_1|E_2)$&$=L(E_1)\cup L(E_2)$\\
 $E_1 E_2$ & $L(E_1E_2)$&$=L(E_1)L(E_2)$\\
 $E_1^*$ & $L(E_1^*)$&$=L(E_1)^*$\\
 \end{tabular}\medskip\\
-Hinweis: $E^+=E E^*$, $E?=\varepsilon|E$
+Hinweis: $E^+=E E^*$, $E?=\varepsilon|E$\\
+$\boxed{\text{Wenn }E_1, E_2 \text{ regulär, dann auch } (E_1 | E_2), \; (E_1 E_2), \; (E_1^*) \text{ regulär}}$
 \end{itemize}
 \subparagraph{Bsp.:} 
 \begin{itemize}
@@ -222,7 +257,8 @@ Für $x=abcdecfg$ durchläuft der Automat eine Schleife: $x=ab\,\boxed{cde}\,cfg
 \paragraph{Satz:} (Pumping Lemma)\\
 Für jede reguläre Sprache $L$ gibt es ein $n>0$ ($n$: Anzahl Zustände des Minimalautomaten), so dass es für alle Wörter $x \in L$ mit $|x|\geq n$ eine Zerlegung $x=uvw$ gibt (in vorherigem Bsp.: $u=ab, \; v=cde \; w =cfg$), so dass gilt:
 \begin{enumerate}
-\item $|v| \geq 1$, $|uv|\geq n$ \quad ($u, w$ können auch $\varepsilon$ sein)
+\item $|v| \geq 1$
+\item $|uv|\leq n$ \quad ($u, w$ können auch $\varepsilon$ sein)
 \item $uv^kw \in L$ für alle $k\geq 0$.
 \end{enumerate}
 Ohne Einschränkung ist $n$ die Anzahl Zustände des Minimalautomaten.\\
@@ -236,20 +272,73 @@ Beweis (Widerspruch):
 \item Nach Pumping-Lemma gibt es dann ein $n>0$, so dass sich alle $x\in L$ mit $|x|\geq n$ gemäß Pumping-Lemma zerlegen lassen.
 \item Sei $x=a^nb^n$. 
 \item Angenommen $v$ enthalte ein $b$, dann wäre $|uv| > n$. \\
-Aus $|uv|\geq n$ folgt aber, dass $v$ kein $b$ enthält. aus $|v|\geq 1$ folgt, dass $v$ mindestens ein $a$ enthält.\\
+Aus $|uv|\leq n$ folgt aber, dass $v$ kein $b$ enthält. aus $|v|\geq 1$ folgt, dass $v$ mindestens ein $a$ enthält.\\
 ABB 48
-\item Das Wort $uw$ enthält daher weniger $a$s als $b$s und kann somit nicht in $L$ enthalten sein (denn $w$ enthält $b^n$, da $v$ mindestens ein $a$ enthält, ist durch $uw$ mindestens ein $a$ „verloren gegangen“: $uw=a^{n/|v|}b^n$) und ist deshalb nicht in $L$ enthälten, Widerspruch\,\lightning \; \#
+\item Das Wort $uw$ enthält daher weniger $a$s als $b$s und kann somit nicht in $L$ enthalten sein (denn $w$ enthält $b^n$, da $v$ mindestens ein $a$ enthält, ist durch $uw$ mindestens ein $a$ „verloren gegangen“: $uw=a^{n-|v|}b^n$) und ist deshalb nicht in $L$ enthälten, Widerspruch\,\lightning \; \#
 \end{itemize}
 Vorgehen:
 \begin{itemize}
 \item ist regulär
 \item Def. Pumping Lemma
-\item $x$ finden (trivial)
-\item durch 1.) einschränken
-\item durch 2.) zum Widerspruch führen
+\item $x$ finden (gilt für alle $x$, also ein günstiges $x$ aussuchen, mit dem sich Beweis führen lässt)
+\item durch 1.) und/oder 2.) einschränken
+\item durch 3.) zum Widerspruch führen
 \end{itemize}
 
+\subparagraph{Bsp.:} Wir zeigen, dass $L=\{zz|z\in \{a,b\}^*\}$ nicht regulär ist.\\
+Intuitiver Hinweis: Kann nicht regulär sein, da sich der Automat nicht merken kann, wie viele $a$s und $b$s im ersten $z$ gelesen wurden, um dann das gleiche im zweiten $z$ zu fabrizieren.\\
+Beweis: 
+\begin{itemize}
+\item Angenommen, $L$ ist regulär.
+\item Dann gibt es ein $n>0$, so dass sich alle $x \in L$ mit $|x|\geq n$ zerlegen lassen gemäß Pumping-Lemma.
+\item Sei $x=a^nb a^nb$.
+\item Wegen $|uv|\leq n$ und $|v|\geq 1$ besteht $v$ aus mindestens einem $a$.\\
+ABB 61
+\item Dann enthält $uw=a^{n-|v|}ba^nb$ (für $k=0$) weniger $a$s in der vorderen Hälfte als in der hinteren Hälfte. Da sich $uw$ deshalb nicht in die Form $zz$ mit $z\in \{a,b\}^*$ brigen lässt, ist $uw \not \in L$, Widerspruch!
+\end{itemize}
 
+\paragraph{Satz:} Seien $L$ regulär und $n$ die Anzahl Zustände des Minimalautomaten zu $L$. Dann gilt $|L| = \infty$ genau dann, wenn es ein $x \in L$ gibt mit $n\leq  |x| < 2n$.\\
+Beweis:\\
+($\Leftarrow$):\\
+Gemäß Pumping Lemma gibt es eine Zerlegung $x=uvw$ mit $|v| \geq 1$ und $uv^kw\in L$ für alle $k \in \mathbb{N}_0$ ($\mathbb{N}$ ist unendlich).\\
+Daraus folg $|L|=\infty$.\\
+($\Rightarrow$):\\
+Da es nur endlich viele Wörter $x$ mit $|x|<n$ gibt, gibt es ein $x\in L$ mit $|x|\geq n$.\\
+Sei daher $x\in L$ mit $|x| \geq n$ und $|x|$ minimal.\\
+Gemäß PL lässt sich $x$ zerlegen in $x=uvw$.\\
+Da $uw \in L$ und $|x|$ minimal ist, gilt $|uw|<n$.\\
+Wegen $|x|\geq \underbrace{|uv|}_{<n \text{ gemäß PL}}+\underbrace{|uw|}_{<n \text{ Satz zuvor}}<n+n=2n$ folgt die Behauptung $n \leq |x| \leq 2n$. \\
+Regulärer Ausdruck: Generator\\
+Automat: Validator
+\section{Kontextfreie Sprachen}
+
+\subsection{Kellerautomaten (PDA)}
+Ein Kellerautomat (Pushdown Automaton, PDA) besitzt gegenüber einem NFA zwei zusätzliche Eigenschaften:
+\begin{itemize}
+\item Es gibt $\varepsilon$-Übergänge.
+\item Er besitzt einen Stack, auf dem Zeichen abgelegt oder von dem Zeichen gelesen werden können.
+\end{itemize}
+Zur graphischen Darstellung von PDAs verwenden wir eine erweiterte Automatennotation:\\
+ABB62\\
+Unten auf dem Stack liegt das Symbol \#. Dies ist das einzige Symbol, das sich zu Beginn einer Rechnung auf dem Stack befindet.
+\subparagraph{Bsp.:} PDA, der $\{a^nb^n|n\in \mathbb{N}\}$ akzeptiert.\\
+ABB63\\
+Wir erlauben nun, dass der PDA in einem Schritt auch mehrere Zeichen auf den Stack schreibt. Dazu erweitern wir die graphische Notation wie folgt:\\
+ABB 68
+\subparagraph{Def.:} Ein PDA ist ein Tupel $M=(Z,\Sigma, \Gamma, \delta, z_0, \#, E)$
+\begin{itemize}
+\item $Z$: Zustände
+\item $\Sigma$: Eingabealphabet
+\item $\Gamma$: Stackalphabet
+\item $\delta$:
+\item $z_0\in Z$: Startzustand
+\item $\# \in \Gamma$: Unterstes Stackzeichen
+\item $E \in Z$: Endzustände
+\end{itemize}
+ABB 69\\
+$a \in \Sigma \cup \{\varepsilon\}$\\
+$\gamma \in \Gamma \cup \{\varepsilon\}$\\
+$\gamma' \in \Gamma \cup \{\varepsilon\}$
 
 
 \newpage
