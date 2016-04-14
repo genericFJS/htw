@@ -7,10 +7,10 @@
 %, inner=27mm, outer=13mm
 }
 
+% Zeile 2 (,twoside) und 7 (inner=...) für eine Druckversion (doppelseitig) ent-kommentieren (Rand für Hefter)
+
 \setcounter{secnumdepth}{3}	% zählt auch subsubsection
 \setcounter{tocdepth}{3}	% Inhaltsverzeichnis bis in subsubsection
-
-% Zeile 2 (,twoside) und 7 (inner=...) für eine Druckversion (doppelseitig) ent-kommentieren (Rand für Hefter)
 
 % Input inkl. Umlaute, Silbentrennung
 \usepackage[T1]{fontenc}
@@ -90,6 +90,10 @@
 \renewcommand{\arraystretch}{1.3} % Tabellenlinien nicht zu dicht
 \usepackage{colortbl}
 \arrayrulecolor{gray}	% heller Tabellenlinien
+\usepackage{array}	% für folgende 3 Zeilen (für Spalten fester breite mit entsprechender Ausrichtung):
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{\dimexpr#1\columnwidth-2\tabcolsep-1.5\arrayrulewidth}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{\dimexpr#1\columnwidth-2\tabcolsep-1.5\arrayrulewidth}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{\dimexpr#1\columnwidth-2\tabcolsep-1.5\arrayrulewidth}}
 
 % Nützliches
 \usepackage{verbatim}	% u.a. zum auskommentieren via \begin{comment} \end{comment}
@@ -99,6 +103,7 @@
 \usepackage{lstautogobble} 
 \usepackage{enumitem}	% Anpassung der enumerates
 \setlist[enumerate,1]{label=\arabic*.)}	% global andere Enum-Items
+\newenvironment{anumerate}{\begin{enumerate}[label=\alph*.)]}{\end{enumerate}} % Alphabetische Aufzählung
 \renewcommand{\labelitemiii}{$\scriptscriptstyle ^\blacklozenge$} % global andere 3. Item-Aufzählungszeichen
 \usepackage{letltxmacro} % neue Definiton von Grundbefehlen
 % Nutzen:
@@ -189,6 +194,37 @@ urlcolor=green,%
 }
 
 %% EIGENE BEFEHLE
+
+% Abkürzungen Mathe
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\PP}{\mathbb{P}}
+\renewcommand{\SS}{\mathbb{S}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\epsilon}{\varepsilon}
 
 % Arbeitsordner (in Abhängigkeit vom Master)
 \newcommand{\workingdir}{../}

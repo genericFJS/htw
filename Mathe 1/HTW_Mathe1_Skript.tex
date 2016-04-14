@@ -662,7 +662,7 @@ $=\lim_{x\to 0} \frac{\tan x}{\tan 3x}\overset{\mq{\tfrac{0}{0}}}{=}\lim_{x\to 0
 Denn: $\lim_{x\to 0} \frac{\ln (1-x)}{x}=\lim_{x\to 0} \frac{-\frac{1}{1-x}}{1}=\lim_{x\to 0} - \frac{1}{1-x}=-1$
 \end{enumerate}
 
-\subsection{Kurvendisskusion}
+\subsection{Kurvendisskusion}\label{3.3.3}
 \emph{Problemstellung:} Gegeben ist eine Funktion $f: Db(f) \to \mathbb{R}$ $Db(f) \subseteq \mathbb{R}$.\\
 Dann ist der Graph der Funktion definiert durch: $\{ (x,f(x))\in \mathbb{R}^2| x \in Db(f)\}$.\\
 Dieser Graph ist zu untersuchen auf 
@@ -726,19 +726,150 @@ f^{(n)}(x_0)>0 & kankav \Rightarrow konvex
 \item $n=4,6,8,... \Rightarrow x_0$ keine Wendestelle, sondern sogenannte Flachstelle und Extremstelle, falls zusätzlich $f'(x_0) = 0$.\\
 ABB 67
 \end{enumerate}
+Analog zu Satz 4 und 4' gibt es auch für Wendestellen ein alternatives hinreichendes Kriterium:
+\paragraph{Satz 5':} Es sei $f$ eine 2 mal differenzierbare Funktion (in Umgebung von $x_0$), und es gelte $f''(x_0)=0$. Dann:
+\begin{enumerate}[label=\alph*.)]
+\item $f''$ wechselt bei $x_0$ das Vorzeichen $\begin{cases}
+\text{von } + \text{ auf } -: \text{(konvex}\to \text{konkav) Wendestelle}\\
+\text{von } - \text{ auf } +: \text{(konkav}\to \text{konvex) Wendestelle}\\
+\end{cases}$
+\item kein Vorzeichenwechsel $\Rightarrow$ keine Wendestelle (sondern Flachstelle)
+\end{enumerate}
+\emph{Bemerkung} (zu Satz 4' und 5'):\\
+Vorzeichenwechsel von $f'$ bzw. $f''$ bei $x=x_0 \Leftrightarrow f'$ bzw. $f''$ hat bei $x_0$ Nullstelle ungerader Ordnung.
 
+\subsection[Kurvendarstellungen]{Kurvendarstellungen, Tangenten- und Normalengleichungen, Krümmung}
+\subsubsection{Darstellung ebener Kurven}
+\begin{enumerate}
+\item \emph{Explizite karthesische Darstellungen} $y=f(x)$\\
+Wobei $f: \mathbb{R}\to \mathbb{R}$ (vgl. Abschnitt \ref{3.3.3}).
+\item \emph{Implizite karthesische Darstellungen} $F(x,y)=0$\\
+Für graphische Darstellung ungünstig. Unter bestimmten Voraussetzungen lässt sich $F(x,y)=0$ auflösen nach $y$ (oder $x$). Mehr dazu im Kapitel \ref{5} (Differentialrechnung für Funktionen mehrer Veränderlicher).
+\item \emph{Parameter Darstellung} $x=x(t), y=y(t), t/in I$ (kurz PD)\\
+vektorielle Form: $\vec{r}=\mtr{x//y}=\mtr{x(t)\\y(t)}, t \in I$
+\subparagraph{Bsp. 13:}\parskp
+$x=a \cos t$\\
+$y=b \sin t$\\
+$t\in [0,2\pi) \quad a,b>0$
+\begin{align*}
+t=0 &\Rightarrow x(0)=a, \; y(0)=0\\
+t=\frac{\pi}{2} &\Rightarrow x\left(\frac{\pi}{2}\right)=0, \; y\left(\frac{\pi}{2}\right)=b\\
+t=\pi &\Rightarrow x\left(\pi\right)=-a,\; y(\pi)=0
+\end{align*}
+Dies ergibt eine Ellipse.\\
+ABB R1\\
+Übergang zur Parameterfreien Darstellung: $t$ eleminieren.\\
+$\frac{x}{a}=\cos t, \; \frac{y}{b}=\sin t \qquad|$ Quadrieren und Addieren\\
+$\boxed{\frac{x^2}{a^2}+\frac{y^2}{b^2}=\cos^2t+\sin^2t=1}$
+\subparagraph{Bsp. 14:} Kreis mit Mittelpunkt $M=(x_0, y_0) $ und Radius $R$.\\
+PD bspw.: $x=x_0+r\cos t \qquad y=y_0+R \sin t \qquad t \in [0,2\pi)$\\
+Parameterfreie Darstellung: \\
+$(x-x_0)^2+(y-y_0)^2=R^2$\\
+ABB R2
+\item Explizite Darstellung in Polar-Koordinaten
+\begin{itemize}
+\item Darstellung eines Punktes in der Ebene\\
+ABB 72\\
+$x,y$ … karthesische Koordinaten\\
+$r, \varphi$ … Polarkoordinaten von $P$ (analog Betrag und Argument einer komplexen Zahl) $r\geq 0, \; \varphi\in \mathbb{R}$\\
+Umrechnung:
+\begin{align*}
+x &= r \cdot \cos \varphi\\
+y &= r \cdot \sin \varphi
+\end{align*}
+\item Kurvendarstellung $r=r(\varphi) \quad , \; \varphi \in [\alpha, \beta]$\\
+Bsp.: $r(\varphi)=2, \; \varphi\in [0,2\pi)$\\
+ABB 73\\
+Für jeden Winkel $\varphi \in [\alpha, \beta]$ die Strecke $r(\varphi)$ auf den $\varphi$ entsprechenden Strahl von $0$ abtragen.
+\subparagraph{Bsp. 15:}$r=r(\varphi)=8 \cos \varphi \quad, \; \left(0\leq \varphi \leq \frac{\pi}{2}\right)$\\
+\begin{tabular}{l | c c c c c c c c c c c c c}
+$\varphi$ & $0^\circ$ & $15^\circ$ & $30^\circ$ & $45^\circ$ & $60^\circ$ & $75^\circ$ & $90^\circ$\\
+\hline
+$8 \cos \varphi$ & $8$ & $7,73$ & $6,92$ & $5,66$ & $4$ & $2,07$ & $0$
+\end{tabular}\\
+ABB R3
+\end{itemize}
+\end{enumerate}
+\paragraph{Bemerkung}
+\begin{itemize}
+\item Übergang „explizite Darstellung $\to$ Parameterdarstellung“\\
+$y=f(x), \; x\in [a,b]\\
+\Rightarrow x=t, \; y=f(t), \; t\in [a,b]$ ($t$ als Parameter)
+\item Übergang „explizite Polardarstellung $\to$ Parameterdarstellung“\\
+$r=r(\varphi), \; \varphi\in [a,b]\\
+\Rightarrow x=r(\varphi)\cos \varphi, \; y=r(\varphi) \sin \varphi , \; \varphi \in [a,b]$ ($\varphi$ als Parameter)
+\end{itemize}
+\subparagraph{Im Bsp. 15:} \parskp
+$x=8\cos^2 \varphi$\\
+$y=8\cos \varphi \sin \varphi \qquad \varphi \in \left[0,\frac{\pi}{2}\right]$\\
+Parameterfreie Darstellung:
+\begin{align*}
+y^2&=64\underbrace{\cos^2 \varphi}_{\tfrac{x}{8}} \underbrace{\sin^2\varphi}_{1-\tfrac{x}{8}}\\
+&=x(8-x)\\
+&\Rightarrow x^2-8x+y^2=0\\
+&\Rightarrow (x-4)^2+y^2=4^2
+\end{align*}
+(Halb-)Kreis mit Radius $4$ und Mittelpunkt $(4,0)$.
+\subsubsection{Tangenten und Normalen ebener Kurven}
+\begin{itemize}
+\item Anstieg $y'$ einer in PD gegebener Kurve $x=x(t), \; y=y(t), \; t\in I$.\\
+Dazu sei $y=f(x)$ die explizite karthesiche Form (ohne die Elimination von $t$ durchzuführen).\\
+$\Rightarrow \frac{dy}{dt}=\frac{dy}{dx}\cdot \frac{dx}{dt}$ (Kettenregel)\\
+In Anwendungen in $t$ oft die Zeit, üblicher Weise schreibt man dann:\\
+$\frac{dx}{dt}=:\dot{x} \quad \frac{dy}{dt}=:\dot{y} \quad \Rightarrow y'=\frac{\dot{y}}{\dot{x}}$\\
+$\frac{d^2x}{dt^2}=:\ddot{x} \dots $
+\item Tangente im Punkt $P_0=(x_0,y_0), \; x_0 = x(t_0), \; y_0=y(t_0)$\\
+ABB 74\\
+(Ein) Richtungsvektor der Tangente in $x_0, y_0$ ist gegeben durch $\vec{t}=\mtr{\dot{x}(t_0)\\ \dot{y}(t_0)}$.\\
+Für $\vec{n}=\vec{n}(t_0)=\mtr{-\dot{y}(t_0)\\ \dot{x}(t_0)}$ gilt $(\vec{t}, \vec{n})=0$. Also ist $\vec{n}\perp \vec{t}$ und $\vec{n}$ ist daher ein Richtungsvektor.\\
+\begin{tabular}{L{.18} | l | L{.18} | l}
+Kurve & $y=f(x),\;x\in I$ & $x=x(t)$\newline $y=y(t), \; t\in I$ & $r(\varphi), \; \varphi \in I$ \\
+\hline 
+Punkt \newline$P_0=(x_0,y_0)$ & $P_0=(x_0,f(x_0))$ & $P_0=(x(t_0),y(t_0))$& $P_0=(r(\varphi_0)\cdot \cos\varphi_0 , \; r(\varphi_0) \cdot \sin \varphi_0$\\
+Anstieg $m=\tan\alpha$ in $P_0$ & $f'(x_0)$ & $\frac{\dot{y}(t_0)}{\dot{x}(t_0)}$ & $\frac{r'(\varphi_0)\sin\varphi_0 + r(\varphi_0)\cos \varphi_0}{r'(\varphi_0)\cos\varphi_0 - r(\varphi_0)\sin \varphi_0}$\\
+Tangenten-\newline vektor $\vec{t}$ & $\mtr{1\\ f'(x_0)}$ & $\mtr{\dot{x}(t_0) \\ \dot{y}(t_0)}$ & $\mtr{r'(\varphi_0)\cos\varphi_0 - r(\varphi_0)\sin \varphi_0\\r'(\varphi_0)\sin\varphi_0 + r(\varphi_0)\cos \varphi_0}$\\
+Normalen-\newline vektor $\vec{n}$ & $\mtr{-f'(x_0) \\ 1}$ & $\mtr{-\dot{y}(t_0)\\\dot{x}(t_0)}$ & $\mtr{-r'(\varphi_0)\sin\varphi_0 - r(\varphi_0)\cos \varphi_0\\ r'(\varphi_0)\cos\varphi_0 - r(\varphi_0)\sin \varphi_0}$ \\
+\end{tabular}
+\end{itemize}
+Tangentengleichungen:\\
+$y=y_0+m(x-x_0)$\\
+$\vec{r}=\mtr{x\\y}=\mtr{x_0\\y_0}+s \cdot t\vec{t} \quad s\in \mathbb{R}$\\
+Normalengleichungen:\\
+$y=y_0-\frac{1}{m}(x-x_0)$\\
+$\vec{r}=\mtr{x\\y}=\mtr{x_0\\y_0}+s\cdot \vec{n} \quad s \in \mathbb{R}$
 
+\paragraph{Bsp. 16:} Für welche Werte des Parameters $\varphi$ ist die Tangente an die Kurve $r=r(\varphi)=a(1+\cos \varphi), \; \varphi \in [0,2\pi)$ parallel zur y-Achse?\\
+Lösung: $r'(\varphi)=-a\sin \varphi$ mit der Bedingung $r'(\varphi)\cdot \cos \varphi - r(\varphi)\cdot \sin \varphi = 0$\\
+$\Rightarrow -a \sin \varphi \cos \varphi - a(1+\cos \varphi)\cdot \sin \varphi = 0$\\
+$\Rightarrow -a \sin \varphi(\cos \varphi + 1 + \cos \varphi) = 0$\\
+$\Rightarrow \sin \varphi = 0 \vee \cos \varphi = -\frac{1}{2}$\\
+$\Rightarrow \varphi_1=0^\circ, \; \varphi_2=180^\circ, \; \varphi_3 = 120^\circ, \; \varphi_4 = 240^\circ $\\
+Allerdings entfällt $\varphi_2$, da $r'(\varphi_2)\sin\varphi_2+r(\varphi_2)\cos\varphi_2 = 0$
 
-
-
-
-
-
-
-
-
-
-
+\subsubsection{Krümmung ebener Kurven}
+ABB 75\\
+Gegeben sei die Kurve $C$ und der feste Punkt $P_0=(x_0, y_0)$. Außerdem sind zwei Punkte $R$ und $S$ auf der Kurve gegeben. Durch 3 Punkte $P_0, \; R$ und $S$ im Allgemeinen eindeutig ein Kreis festgelegt.\\
+Es sei $K$ die Grenzlage dieses Kreises, wenn $R$ und $S$ in $P_0$ übergeben.\\
+Es heißt dann:\\
+$K$… Krümmungskreis (Schmiegkreis)\\
+$\varkappa$ (Kappa)… Krümmung\\
+$\varrho$… Krümmungsradius mit $\varrho=\frac{1}{|\varkappa|}$\\
+$M$… Mittelpunkt des Krümmungskreises $\overrightarrow{OM}=\mtr{x_0 \\ y_0}+\frac{1}{\varkappa}\cdot \frac{\vec{n}}{|n|}$\\
+Tabelle (Krümmungen)\\
+\begin{tabular}{l | l | L{.2} | l}
+Kurve & $y=f(x),\;x\in I$ & $x=x(t)$\newline $y=y(t), \; t\in I$ & $r(\varphi), \; \varphi \in I$ \\
+\hline 
+Krümmung $\varkappa$ in Punkt $P=(x,y)$ & $\varkappa=\frac{y''}{(1+(y')^2)^{\tfrac{3}{2}}}$ & $\varkappa=\frac{\dot{x}\ddot{y}-\ddot{x}\dot{y}}{(\dot{x}^2+\dot{y}^2)^{\tfrac{3}{2}}}$ & $\varkappa=\frac{r^2+2(r')^2-rr''}{(r^2+(r')^2)^{\tfrac{3}{2}}}$
+\end{tabular}
+\paragraph{Bsp. 17:} In welchem Punkt ist $f(x)=e^x$ am stärksten gekrümmt (d.h. maximiere $|\varkappa|$)\\
+Lösung: $y'=e^x+y''$\\
+$\varkappa=\frac{e^x}{(1+e^{2x}){\tfrac{3}{2}}}=|\varkappa|$\\
+$\frac{d|\varkappa|}{dx}=\frac{e^x(1+e^{2x})^{\tfrac{3}{2}}-e^x\cdot\frac{3}{2}(1+e^{2x})^{\tfrac{1}{2}}\cdot 2e^{2x}}{(1+e^{2x})^3}\overset{!}{=}0$\\
+$\Rightarrow\underbrace{e^x(1+^{2x})^{\tfrac{1}{2}}}_{\not = 0}(1+e^{2x}-3e^{2x})=0$\\
+$\Rightarrow 1-2e^{2x}=0$\\
+$\Rightarrow x_1 = \frac{1}{2}\ln \tfrac{1}{2}=-\frac{1}{2}\ln 2 \qquad y_1=\sqrt{\frac{1}{2}}$\\
+mit $\varkappa = \frac{\sqrt{\frac{1}{2}}}{\left(\sqrt{\frac{3}{3}}\right)^3}=\frac{2}{3\sqrt{3}}, \; \varrho=\frac{3\sqrt{3}}{2}$\\
+ABB 76
 
 
 
