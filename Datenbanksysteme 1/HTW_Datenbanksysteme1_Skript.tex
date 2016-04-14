@@ -426,12 +426,15 @@ $\Rightarrow$ Ergebnis ist wieder eine \emph{Relation}\\
 D.h. mengenweise Arbeit \emph{nicht} satzweise.
 \subsubsection{Mengenoperationen} $\cup\; \cap\; \setminus\; \times$\\
 ABB57
+\folie{3_Beispiele}{1, scale=0.8}
 \paragraph{Vereinigung} $\cup$\\
 ABB58 orange\\
 UNION
+\folie{3_Beispiele}{2, scale=0.8}
 \paragraph{Durchschnitt} $\cap$\\
 ABB58 grün\\
 INTERSECTION
+\folie{3_Beispiele}{3, scale=0.8}
 \paragraph{Differenz} $\setminus$\\
 $R_1\setminus R_2$
 ABB 58 lila\\
@@ -442,7 +445,9 @@ Bedingung für $\cup, \cap, \setminus$ (\emph{Vereinigungsverträglichkeit}):
 \end{itemize}
 $R_1\cup R_2 = R_2 \cup R_1$\\
 $R_1 \cap R_2 = R_2 \cap R_1$\\
-$R_1 \setminus R_2 \not = R_2 \setminus R_1$
+$R_1 \setminus R_2 \not = R_2 \setminus R_1$\\
+DIFFERENCE
+\folie{3_Beispiele}{4, scale=0.8}
 \paragraph{Kartesissches Produkt} $\times$\\
 $R_1\times R_2$\\
 Ergebnisrelation enthält: 
@@ -451,13 +456,16 @@ Ergebnisrelation enthält:
 \item alle Kombinationen an Tupeln aus $R_1$ und $R_2$.
 \end{itemize}
 ABB 59
+\folie{3_Beispiele}{7, scale=0.8}
 \subsubsection{Relationale Operationen}
 \paragraph{Projektion} Spaltenauswahl\\
 PROJ\\
 ABB 60 grün
+\folie{3_Beispiele}{5, scale=0.8}
 \paragraph{Selektion} Tupelauswahl (laut Bedingung)\\
 REST\\
 ABB 60 orange
+\folie{3_Beispiele}{6, scale=0.8}
 \paragraph{Verbund} Verbindung zwischen zwei Relationen bezüglich der Gleichheit der Attributwerte in einer Verbindungsspalte\\
 JOIN\\
 intern:
@@ -475,12 +483,81 @@ Merkmale des JOIN:
 \end{itemize}
 Jede Relation ist mit jeder Relation via JOIN verbindbar (auch mit sich selbst).
 \end{itemize}
-%\includegraphics[pages=1-13]{Vorlesung/Kap3_Beispiele.pdf}
-%\folie{3}{5}
+\folie{3_Beispiele}{8, scale=0.8}
 
+\section{Normalformenlehre}
+Ziele der Normalisierung:
+\begin{itemize}
+\item Vermeidung unerwünschter Abhängigkeiten beim Ändern, Löschen und Einfügen
+\item Reduzierung der Umbildung von Relationen bei Einführung neuer Attribute
+\item Erhöhung der Transparenz und Aussagekraft für den Nutzer (Trennung der unterschiedlichen Konzepte der realen Welt)
+\item Gewährung der Korrektheit der Datenbakn (zu jedem Zeitpunkt)
+\end{itemize}
+Vorteile der Normalisierung:
+\begin{itemize}
+\item Sicherung von relativ einfachen, überschaubaren und einfach handhabbaren Relationen
+\item Beseitigung von Update-/Insert- und Delete-Anomalien
+\item Einfachere Überprüfung von Konsistenzbedingungen
+\end{itemize}
+Nachteile:
+\begin{itemize}
+\item größere Redundanz (Schlüsselredundanz)
+\item höherer Aufwand bei komplexen Auswertungen
+\end{itemize}
+\paragraph{Codd} (1970)\\
+Normalform (NF):
+$\underbrace{\text{1. NF} \Rightarrow \text{2. NF} \Rightarrow \text{3. NF}}_{\text{praktisch relevant}}\Rightarrow\text{4. NF}\Rightarrow\text{5. NF}$
+\subsection{1. Normalform}
+\folie{3}{5}
+\begin{itemize}[label=$\Rightarrow$]
+\item Relation
+\begin{itemize}
+\item atomare Werte
+\item PS erweitern
+\end{itemize}
+\end{itemize}
+\subsection{2. Normalform}
+\folie{3}{6}
+Abhängigkeiten:\\
+\begin{tabular}{r | l | l}
+PS & Nichtschlüssel-Attribute & 2. NF\\
+\hline
+\underline{Mitnr}, \underline{Projnr} & Anteil & MiPro\\
+\underline{Mitnr} & Name, Beruf, Gehalt, Abtnr, Abtbez & Mitarbeiter\\
+\underline{Projnr} & Projbez & Projekt
+\end{tabular}
+\begin{itemize}[label=$\Rightarrow$]
+\item Zerlegung
+\begin{itemize}
+\item volle funktionale Abhängigkeit
+\end{itemize}
+\end{itemize}
+\subsection{3. Normalform}
+\folie{3}{7}
+für Mitarbeiter (M): (x$\to$y: von x kann man auf y schließen)\\
+M.Mitnr $\to$ M.Abtnr\\
+M.Abtnr $\not \to$ M.Mitnr\\
+M.Abtnr $\to$ M.Abtbez\\
+Also:\\
+M.Mitnr $\to$ M.Abtnr $\to$ M.Abtbez\\
+aber:\\
+M.Abtnr $\not \to$ M.Mitnr
+\begin{itemize}[label=$\Rightarrow$]
+\item weitere Zerlegung
+\end{itemize}
+\underline{Abtnr} $\to$ weitere Tabelle Abteilung mit PS=\underline{Abtnr}.
+\folie{3}{8}
+\folie{3_Beispiele}{9, scale=0.8}
+\folie{3_Beispiele}{10, scale=0.8}
 
-
-
+\section{Vergleich relationaler DBMS}
+\folie{3}{9}
+\begin{align*}
+\text{NULL} &= \text{missing value (kein Wert)}\\
+&\not = \text{' '}\\
+&\not = \emptyset
+\end{align*}
+\folie{3}{10}
 
 
 
