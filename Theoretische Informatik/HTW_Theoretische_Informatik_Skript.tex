@@ -72,10 +72,6 @@ Ferner ist $\Sigma^+=\Sigma^*-\{\varepsilon\}$.
 \subsection{Deterministische endliche Automaten (DFA)}
 \subparagraph{Bsp.:} \parskp
 \begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
-%\node[initial,state]		(A)	{$q_a$};
-%\node[state]	(B) [above right of=A] {$q_b$};
-
-%\path (A) edge		node {0} (B)
 \node[initial, initial text =, state] (z0) {$z_0$};
 \node[state] (z1) [right of=z0] {$z_1$};
 \node[state] (z2) [right of=z1] {$z_2$};
@@ -95,10 +91,6 @@ Dieser DFA akzeptiert alle Wörter über $\Sigma = \{a,b,c\}$, die $abc$ enthalt
 Deterministisch: Es gibt genau ein Folgezustand. Von jedem Knoten aus gibt es genau eine Kante für jedes Zeichen, nicht mehrere und nicht keine.
 \subparagraph{Bsp.:} \parskp
 \begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
-%\node[initial,state]		(A)	{$q_a$};
-%\node[state]	(B) [above right of=A] {$q_b$};
-
-%\path (A) edge		node {0} (B)
 \node[initial, initial text = , state, double, double distance = .5mm] (zE){};
 \path (z0) edge [loop above] node{$a,b,c$} (zE);
 \end{tikzpicture}\\
@@ -113,10 +105,6 @@ Dieser DFA erkennt die Sprache $\{a,b,c\}^*$.
 \end{itemize}
 $\delta$: \\
 \begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
-%\node[initial,state]		(A)	{$q_a$};
-%\node[state]	(B) [above right of=A] {$q_b$};
-
-%\path (A) edge		node {0} (B)
 \node[initial, state] (z0) {$z$};
 \node[state] (z1) [right of=z0] {$z'$};
 \path (z0) edge [bend left=20] node{$a$} (z1);
@@ -136,17 +124,31 @@ int $\hat{\delta}$(int z, char* w){
 		return $\hat{\delta}$($\delta$(z, w[0]), w[1]);
 \end{lstlisting}
 Veranschaulichung:\\
-ABB4\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial, state] (z0) {$z$};
+\node[state] (z1) [above right of=z0] {$z'$};
+\node[state, white] (z2) [below right of=z0] {};
+\node[state] (z3) [right of=z1, node distance=10em] {};
+\path (z0) edge node{$w[0]$} (z1);
+\path (z0) edge node{} (z2);
+\path [dashed] (z1) edge (z3);
+\end{tikzpicture}\\
 Die erweiterte Überführungsfunktion bestimmt den Zustand nach dem vollständingen Lesen eines Wortes.
 
 \subparagraph{Bsp.:} \parskp
-ABB5
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial, state] (z0) {$z_0$};
+\node[state, double, double distance = .5mm] (zE) [right of=z0] {$z_E$};
+\path (z0) edge node{$b$} (zE);
+\path (z0) [loop above] edge node{$a$} (z0);
+\path (zE) [loop above] edge node{$a,b$} (zE);
+\end{tikzpicture}
 \begin{align*}
 \hat{\delta}(z_0, aaba) &= \hat{\delta}(\delta(z_0,a),aba)=\\
 \hat{\delta}(z_0, aba) &= \hat{\delta}(\delta(z_0,a),ba)=\\
 \hat{\delta}(z_0, ba) &= \hat{\delta}(\delta(z_0,b),a)=\\
 \hat{\delta}(z_E, a) &= \hat{\delta}(\delta(z_E,a), \varepsilon)=\\
-\hat{\delta}(z_E, \varepsilon) &= z_E\\
+\hat{\delta}(z_E, \varepsilon) &= z_E
 \end{align*}
 Die von $\mathcal{M}$ \emph{akzeptierte Sprache} ist $L(\mathcal{M})=\{w\in \Sigma^* \;|\; \hat{\delta}(z_0, w) \in E\}$
 

@@ -191,7 +191,7 @@ Es heißt $f$:
 \begin{enumerate}[label=\alph*.)]
 \item stetig in $x_0$ falls $\lim_{x \to x_0} f(x) = f(x_0)$ gilt\\
 (also $\lim_{x\to x_0} f(x)=f(\lim_{x\to x_0}x)$, d.h. Limes und Funktion kann vertauscht werden).\\
-\begin{tikzpicture}[scale = 0.5]
+\begin{tikzpicture}[scale = 0.5];
 \draw  plot[smooth, tension=.7] coordinates {(1,.5) (2,2) (4,4) (5,4.5)} node[right] {$f$};
 \fill (2,2) circle (.1);
 \draw [latex-]( 2.5, 2.8)--(3,3.3);
@@ -200,6 +200,8 @@ Es heißt $f$:
 
 \draw [-latex] (-1.4,0) -- (6.4,0) node [below right] {$x$};
 \draw [-latex] (0,-0.4) -- (0,4.4) node [above right] {$y$};
+\draw [-latex] (3.5,-0.5) -- (2.5,-0.5);
+\draw [-latex] (-0.5,3.5) -- (-0.5,2.5);
 \end{tikzpicture}
 \item linksseitig stetig in $x_0$, falls $\lim_{x\nearrow x_0}f(x)=f(x_0)$.
 \item rechtsseitig stetig in $x_0$, falls $\lim_{x\searrow x_0}f(x)=f(x_0)$.
@@ -216,23 +218,55 @@ f(x) & x\not = 0\\
 1 & x= 0
 \end{cases}$ ist in $x_0=0$ stetig.\\
 Bezeichnung: hebbare Unstetigkeit.\\
-ABB16
+\begin{tikzpicture}[scale = 0.5]
+\draw [-latex] (-6.4,0) -- (6.4,0) node [below right] {$x$};
+\draw [-latex] (0,-4.4) -- (0,4.4) node [above right] {$y$};
+\draw plot[domain=-5:-0.2, smooth] (\x, {4.12*sin(50*\x)/\x});
+\draw plot[domain=0.2:5, smooth] (\x, {4.12*sin(50*\x)/\x});
+\draw  (0,3.6) circle (0.2) node[above right]{$1$};
+\draw (3.6,0.2) -- (3.6,-0.2) node[below]{$\pi$};
+\draw (-3.6,0.2) -- (-3.6,-0.2) node[below]{$-\pi$};
+\end{tikzpicture}
 \item $f_2(x)=\begin{cases}
 \arctan \left(\frac{1}{x}\right) & x\not = 0\\
 0 & x = 0
 \end{cases}$ ist unstetig in $x_0=0$, da $\lim_{x\nearrow 0}f_2(x) \not = f_2(0) \not = \lim_{x\nearrow 0} f_2(x)$\\
 Bezeichnung: endlicher Sprung.\\
-ABB17
+\begin{tikzpicture}[scale = 0.5]
+\draw [-latex] (-6.4,0) -- (6.4,0) node [below right] {$x$};
+\draw [-latex] (0,-4.4) -- (0,4.4) node [above right] {$y$};
+\draw plot[domain=-5:-0.01, smooth] (\x, {-2.7^(\x)-1});
+\draw plot[domain=0.01:5, smooth] (\x, {2.7^(-\x)+1});
+\draw  (0,2) circle (0.2);
+\draw  (0,-2) circle (0.2);
+\fill  (0,0) circle (0.2);
+\end{tikzpicture}
 \item $f_3(x)=\begin{cases}
 \frac{1}{x} & x\not = 0\\
 0 & x=0
 \end{cases}$ ist unstetig in $x_0=0$, da $\lim_{x\nearrow 0}f_3(x) = \infty \not = f_3(0)$.\\
-ABB18
+\begin{tikzpicture}[scale = 0.5]
+\draw [-latex] (-6.4,0) -- (6.4,0) node [below right] {$x$};
+\draw [-latex] (0,-4.4) -- (0,4.4) node [above right] {$y$};
+\draw plot[domain=-5:-0.3, smooth] (\x, {1/\x});
+\draw plot[domain=0.3:5, smooth] (\x, {1/\x});
+\draw (2,0.2) -- (2,-0.2) node[below]{$x$};
+\draw [-latex] (1.5,-0.2) -- (0.5,-0.2);
+\end{tikzpicture}
 \item $f_3(x)=\begin{cases}
 \sin \frac{1}{x} & x \not = 0\\
 1 & x=0
 \end{cases}$ ist unstetig in $x_0=0$, da der Grenzwert $\lim_{x\to 0}\sin \frac{1}{x}$ nicht existiert.\\
-ABB19
+\begin{tikzpicture}[scale = 0.5]
+\draw [-latex] (-10.4,0) -- (10.4,0) node [below right] {$x$};
+\draw [-latex] (0,-4.4) -- (0,4.4) node [above right] {$y$};
+\def \sc {1000};
+\draw plot[domain=-10:-1, smooth, samples=100] (\x, {3.6*sin(\sc/\x)});
+\draw plot[domain=-1:-0.5, smooth, samples=100] (\x, {3.6*sin(\sc/\x)});
+\draw plot[domain=1:10, smooth, samples=100] (\x, {3.6*sin(\sc/\x)});
+\draw plot[domain=0.5:1, smooth, samples=100] (\x, {3.6*sin(\sc/\x)});
+\fill [rounded corners=1pt] (-0.5,-3.6) rectangle (0.5,3.6);
+\end{tikzpicture}
 \end{enumerate}
 \paragraph{Def. 4:} Die Funktion $f: DB(f) \to \mathbb{R}, \; Db(f) \subseteq \mathbb{R}$ heißt
 \begin{enumerate}[label=\alph*.)]
@@ -250,7 +284,20 @@ Ist $g$ stetig in $x_0$ und $f$ stetig in $g(x_0)$, so ist $f\circ g:Db(g) \to \
 
 \paragraph{Satz 5:} (Zwischenwertsatz)\\
 Sei $f: Db(f) \to \mathbb{R}, \; Db(f)\subseteq \mathbb{R}$ stetig auf $[a,b]  Db(f)$. Falls $f(a) \cdot f(b) < 0$ (also haben unterschiedliche Vorzeichen), so gilt $\exists x^*\in [a,b]$ mit $f(x^*)=0$\\
-ABB20
+\begin{tikzpicture}[scale = 0.5]
+\draw [-latex] (-6.4,0) -- (6.4,0) node [below right] {$x$};
+\draw [-latex] (0,-4.4) -- (0,4.4) node [above right] {$y$};
+
+\fill  (0.5,-2.5) circle (0.1);
+\fill  (5.5,3.5) circle (0.1);
+\draw  plot[smooth, tension=.7] coordinates {(0.5,-2.5) (1.5,-1.5) (2,-0.5) (3,0) (3.5,2) (4.5,3) (5.5,3.5)};
+
+\draw (0.75,-0.5) -- (0.5,-0.5) -- (0.5,0.5) -- (0.75,0.5) node[above]{$a$};
+\draw (5.5,0.5) node[above]{$b$} -- (5.75,0.5) -- (5.75,-0.5) -- (5.5,-0.5);
+\draw (3,0.25) -- (3,-0.25) node[below]{$x^*$};
+\draw (0.25,-2.5) -- (-0.25,-2.5) node[left]{$f(a)$};
+\draw (0.25,3.5) -- (-0.25,3.5) node[left]{$f(b)$};
+\end{tikzpicture}
 \paragraph{Satz 6:} Sei $f: Db(f) \to \mathbb{R}, \; Db(f) \subseteq \mathbb{R}$ stetig auf $[a,b]$. Dann nimmt $f$ auf $[a,b]$ Minimum und Maximum an.
 
 \subparagraph{Diskussion:}
@@ -261,7 +308,15 @@ ABB21
 \arctan \frac{1}{x} & x \in [-1,1]\setminus \{0\}\\
 0 & x = 0
 \end{cases}$ nicht stetig und nimmt kein Maximum auf $[-1,1]$ an.\\
-ABB22
+\begin{tikzpicture}[scale = 0.5]
+\draw [-latex] (-6.4,0) -- (6.4,0) node [below right] {$x$};
+\draw [-latex] (0,-4.4) -- (0,4.4) node [above right] {$y$};
+\draw plot[domain=-5:-0.01, smooth] (\x, {-2.7^(\x)-1});
+\draw plot[domain=0.01:5, smooth] (\x, {2.7^(-\x)+1});
+\draw  (0,2) circle (0.2);
+\draw  (0,-2) circle (0.2);
+\fill  (0,0) circle (0.2);
+\end{tikzpicture}
 \end{enumerate}
 
 \section{Potenzreihen}
