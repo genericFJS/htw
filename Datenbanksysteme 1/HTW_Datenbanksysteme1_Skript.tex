@@ -12,6 +12,10 @@
 \newcommand{\folie}[2]{\begin{center}
 \includegraphics[page=#2]{Vorlesung/oneperpage/Kap#1.pdf}
 \end{center}}
+\newcommand{\Folie}[2]{\begin{center}
+\includegraphics[page=#2, height=9.63cm]{Vorlesung/oneperpage/Kap#1.pdf}
+\end{center}}
+
 \begin{document}
 \maketitle
 \newpage
@@ -684,6 +688,143 @@ M.Abtnr $\not \to$ M.Mitnr
 &\not = \emptyset
 \end{align*}
 \folie{3}{10}
+\folie{3}{11}
+
+\chapter{Datenbanksprachen für relationale DBMS}
+\section{Benutzergruppen und Datenbanksprachen}
+Benutzergruppen:\\
+ABB 77
+\paragraph{Einordnung der Datenbanksprache SQL}
+Einteilung der Programmiersprachen:
+\begin{itemize}
+\item klassisch nach Gen. 1-4
+\item weitere Einteilung
+\end{itemize}
+\Folie{4}{1}
+\Folie{4}{2}
+\subparagraph{3. Generation of Language (GL)}
+(prozedural)
+\begin{lstlisting}[language=C]
+opne (buecher);
+while (not EOF(buecker)){
+	read (buch);
+	if (buch.leihfrist > 21)
+		print (buch.titel);
+}
+close (buecher);
+\end{lstlisting}
+$\Rightarrow$ WIE
+\subparagraph{4. GL}
+(descriptiv, \emph{nicht} prozedural)
+\begin{lstlisting}[language=SQL]
+SELECT titel
+FROM buecher
+WHERE leihfrist > 21
+\end{lstlisting}
+$\Rightarrow$ WAS
+\Folie{4}{3}
+
+\section{SQL als Standardsprache für relationale DBMS}
+\subsection{Überblick}
+SQL - Structured Query Language
+\begin{itemize}
+\item Structured -- „oft etwas übertrieben“
+\item Query -- „bescheiden“
+\item Language -- „unanfechtbar“
+\end{itemize}
+\Folie{4}{4}
+\Folie{4}{5}
+Klassen an SQL-Befehlen:
+\begin{itemize}
+\item DDL -- Data Definition Language
+\item DCL -- Data Control Language
+\item DML -- Data Manipulation Language
+\end{itemize}
+Dialekte:\\
+z.B.:
+\begin{itemize}
+\item pl SQL $\Rightarrow$ Oracle (Postgresql)
+\item t SQL $\Rightarrow$ MS SQL-Server, Sybase (SAP)
+\end{itemize}
+\subsubsection{SQL-Datentypen (Auswahl)}
+\begin{itemize}
+\item exakte Numerische Werte
+\begin{itemize}
+\item INT ganze Zahl mit VZ
+\item SMALLINT ganze Zahl mit VZ (kleinerer Wertebereich als INT)
+\item DECIMAL (m,n) Dezimalzahl mit $m$ Stellen, davon $n$ \emph{exakte} Nachkommastellen
+\end{itemize}
+\item numerische Näherungswerte (Gleitkommazahl)
+\begin{itemize}
+\item FLOAT (n) Gesamtstellenanzahl $n$
+\item DOUBLE PRECISION i.A. größerer Wertebereich als FLOAT
+\end{itemize}
+\item Datum/Uhrzeit (abhängig vom System)
+\begin{itemize}
+\item DATE
+\item TIME
+\item DATETIME
+\end{itemize}
+\item Zeichenketten (Zeichenkette der Länge $n$)
+\begin{itemize}
+\item CHAR (n) (Speichert gesamte Zeichenketten)
+\item VARCHAR (n) (Speichert Zeichenkette ohne Leerzeichen)
+\end{itemize}
+\item weitere spezielle Typen
+\begin{itemize}
+\item BIT (n) Bitkette der Länge $n$
+\item BLOB (n) Binary-Array
+\item TEXT Zeichenkette
+\item CLOB (n) Zeichenkette
+\item IMAGE Bilder
+\item BOOLEAN Boolsche Werte
+\item MONEY Währung
+\item XML
+\item …
+\end{itemize}
+\end{itemize}
+\subsubsection{Symbole der Syntaxbeschreibung:} (EBNF)\\
+\begin{tabular}{c l}
+$|$ & Alternative (XOR)\\
+$[\;]$ & optionales Element (ein- oder keinmal)\\
+$\{\;\}$ & Gruppierungen (ein- oder mehrmals)\\
+$...$ & Wiederholung\\
+$<\;>$ & Sprachbeschreibende Variablen\\
+$::=$ & Definitionssymbol
+\end{tabular}
+\subsection{Anweisungen zur Definiton}
+\subsubsection{Tabellendefinition}
+\paragraph{Anlegen einer Tabelle}
+\Folie{4}{6}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE Kunde(
+	KuNr	 			INT PRIMARY KEY,
+	Name 				CHAR(10) NOT NULL, 
+	Vorname 		CHAR(10),
+	Ort					CHAR(20),
+	Gebdatum 		DATETIME NULL,
+	Geschlecht	CHAR(1) NULL,
+	TelNr				INT,
+	CHECK( 999 < TelNr < 10000)
+)
+\end{lstlisting}
+\begin{itemize}
+\item PRIMARY KEY: Primärschlüssel
+\item NULL: missing value (empty) $\not =0\; \not = '\,'$ (typübergreifend)
+\item NOT NULL: Werteingabe zwingend\\
+(wenn weder NULL noch NOT NULL da steht: wird vom System bestimmt $\to$ wird entweder NULL oder NOT NULL gesetzt. Empfehlung: für jeden Eintrag selber festlegen!)
+\item UNIQUE: eindeutiger Wert
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
 
 
 
