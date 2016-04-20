@@ -428,6 +428,9 @@ paket-files/
 .idea/
 *.sln.iml
 
+# R
+*.Rhistory
+
 # nicht benötigtes
 Ordnungen/
 Weiteres/
