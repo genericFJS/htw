@@ -173,6 +173,7 @@ urlcolor=green,%
 \newcommand{\DSign}[1]{\newcommand{\Dokumentensignatur}{#1}}
 \DSign{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \Dokumentenautor}}}
 \newcommand{\Autorformat}[1]{\textcolor{darkgray}{Mitschrift von #1}}
+\newcommand{\workingdir}{../}	% Arbeitsordner (in Abhängigkeit vom Master) Standard: LateX_master Ordner liegt im Eltern-Ordner
 % … Deswegen folgendes erst Nach Dokumentenbeginn ausführen:
 \AtBeginDocument{
 	\hypersetup{
@@ -193,7 +194,7 @@ urlcolor=green,%
 	\author{\Autorformat{\Dokumentenautor} \vspace*{1cm}\\\Dokumentennotiz}
 }
 
-%% EIGENE BEFEHLE
+%% EINFACHE BEFEHLE
 
 % Abkürzungen Mathe
 \newcommand{\EE}{\mathbb{E}}
@@ -214,6 +215,7 @@ urlcolor=green,%
 \newcommand{\cH}{\mathcal{H}}
 \newcommand{\cI}{\mathcal{I}}
 \newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cM}{\mathcal{M}}
 \newcommand{\cN}{\mathcal{N}}
 \newcommand{\cP}{\mathcal{P}}
 \newcommand{\cR}{\mathcal{R}}
@@ -225,9 +227,6 @@ urlcolor=green,%
 \newcommand{\cV}{\mathcal{V}}
 \renewcommand{\phi}{\varphi}
 \renewcommand{\epsilon}{\varepsilon}
-
-% Arbeitsordner (in Abhängigkeit vom Master)
-\newcommand{\workingdir}{../}
 
 % Farbdefinitionen
 \definecolor{red}{RGB}{180,0,0}
@@ -271,7 +270,7 @@ urlcolor=green,%
 \newcommand{\corr}{\;\widehat{=}\;}
 \newcommand{\mdeg}{^{\circ}}
 
-\newcommand{\nok}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}	% n über k
+\newcommand{\nok}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}	% n über k BESSER: \binom{n}{k}
 \newcommand{\mtr}[1]{\begin{pmatrix}#1\end{pmatrix}}	% Matrix
 \newcommand{\dtr}[1]{\begin{vmatrix}#1\end{vmatrix}}	% Determinante (Betragsmatrix)
 \renewcommand{\vec}[1]{\underline{#1}}	% Vektorschreibweise

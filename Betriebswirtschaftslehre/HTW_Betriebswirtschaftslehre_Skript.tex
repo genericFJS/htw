@@ -461,8 +461,97 @@ $\text{Produktivität} = \frac{\text{Ergebnis}}{\text{Faktoreinsatz}}$
 \begin{tabular}{L{0.3} L{0.7}}
 Humanziele & Messgröße\tabularnewline
 \hline
-Mitarbeiterzufriedenheit erhöhen & $\Delta$ Arbeitsproduktivität oder $\Delta$ Einhaltung Arbeitsziele oder Mitarbeiter-Zufriedenheitsumfrage\tabularnewline
+Mitarbeiterzufriedenheit erhöhen & $\Delta$ Arbeitsproduktivität, $\Delta$ Einhaltung Arbeitsziele oder Mitarbeiter-Zufriedenheitsumfrage\tabularnewline
+Verbessertung der Arbeitsbedingungen: & \tabularnewline
+-- Umfeldziel & $\Delta$ Anzahl positiven Medienmeldungen (oder Verhältnis positive-negative)\tabularnewline
+-- MA-Ziel & $\Delta$ Output der MA, $\Delta$ Terminerfüllung bei Projekten/Aufgaben \tabularnewline
+Erhöhung der MA-Motivation & $\Delta$ Terminerfüllung bei Projekten/Aufgaben, $\Delta$ Anzahl der Fehltage \tabularnewline
+Erhöhung Kundenzufriedenheit & $\Delta$ Anzahl Wiederkäufe \tabularnewline
 \end{tabular}
+
+\chapter{Beschaffung}
+Hinweis: Themengebiet nicht primär Klausurrelevant.
+\section{Grundlagen und Ziele}
+\folie{75}
+\folie{76}
+Logistik: Bewegen von …
+\begin{itemize}
+\item Gütern
+\item Leistungen
+\item Informationen
+\end{itemize}
+\folie{77}
+\paragraph{Übung} Zielkonflikte:\\
+\begin{tabular}{L{0.5} L{0.5}}
+geringe Kapitalbindung (wenig Material im Lager) & hohe Flexibilität (mit wenig im Lager, kann nicht schnell auf geänderte Kundenwünsche eingegangen werden)\tabularnewline
+Umweltverträglichkeit & Wirtschaftlichkeit
+\end{tabular}
+\section{Beschaffungsgüter}
+\folie{78}
+\paragraph{Übung} \parskp
+\begin{tabular}{l l l }
+A & Komplettgeräte (PC, Smartphone, …) & hoher Einzelwert, geringe Stückzahlen\\
+B & Kleinesatzteile, Kabel, Leitungen \\
+C & Verbrauchsmaterial (Tintenpatronen, Toner)
+\end{tabular}
+\subsection{ABC-Analyse}
+\folie{79}
+\folie{80}
+\folie{81}
+\folie{82}
+\folie{83}
+\folie{84}
+\folie{85}
+\subsection{XYZ-Analyse}
+\folie{86}
+\paragraph{Übung} \parskp
+\begin{tabular}{L{0.1} L{0.9}}
+X & Virenschutz-Software (Jahreslizenzen, werden jährlich erneuert) $\Rightarrow$ Zeitverträge (Mobilfunk, Internet usw.)\\
+Y & Bereitstellung Serverkapazität (vgl. Amazon zur Weihnachtszeit)\\
+Z & Privatkunden-Aufträge
+\end{tabular}
+\section{Make or Buy}
+\folie{87}
+Vorteil Outsourcen:
+\begin{itemize}
+\item Leistungsauslastung nur bei Bedarf -- nicht ganzjährig
+\end{itemize}
+\folie{88}
+\folie{89}
+Transaktion: mehrere Vorgänge, die als ein Vorgang betrachtet werden (entweder es laufen alle Vorgänge ab oder keiner [vgl. Datenbank-Schreibtransaktion])
+\folie{90}
+\folie{91}
+\section{Beschaffungsarten}
+\folie{92}
+\section{Lagerkenngrößen}
+\folie{93}
+\begin{align*}
+\text{durschnitllicher Lagerbestand} &=\frac{\text{Anfangsbestand}+\text{Endbestand}}{2}\\
+&= \frac{\text{Anfangsbesand}+12 \cdot \text{Monatsbestand}}{13}
+\end{align*}
+\folie{94}
+\begin{tikzpicture}
+\draw [-latex] (0,0) -- (5,0) node[below right]{$t$};
+\draw [-latex] (0,0) -- (0,2) node[above]{Bestand};
+\draw [red] (0,1) node[left]{Sicherheitsbestand} -- (4,1);
+\draw [latex-](2,-.1) -- (3,-.1) node[below, pos=.5]{$t_\text{Beschaffung}$};
+\draw [dashed] (3,0) -- (3,1);
+\draw [dashed] (2,1.5) -- (0,1.5) node[left]{Meldebestand};
+\draw (1,2) -- (4,0.5);
+\fill (2,1.5) circle (.1);
+\draw [dashed, -latex] (2,0) -- (2,1.5);
+\end{tikzpicture}
+\folie{95}
+\section{Lieferantenauswahl}
+\folie{96}
+
+
+
+
+
+
+
+
 
 %\newpage
 %\printbibliography
