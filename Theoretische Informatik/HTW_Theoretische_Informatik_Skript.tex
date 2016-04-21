@@ -378,7 +378,75 @@ Die reflexive und transitive Hülle der Relation $\Rightarrow$ bezeichnen wir mi
 Satz $\Rightarrow^*$ die Katze VP, \\
 Satz $\Rightarrow^*$ die Katze jagt die Maus.
 \paragraph{Def.:} Die von einer Grammatik erzeugte Sprache ist $L(G)=\{w\in \Sigma^* | S \Rightarrow^* w\}$.
+\paragraph{Abkürzende Notation:} \parskp
+$S\to \varepsilon | 0S1$ für $S\to \varepsilon, \; S \to 0S1$
 
+\subsubsection{Konstruktionsprinzipien für kontextfreie Grammatiken}
+Regeln der Form $X\to aXb$ führen zu:\\
+ABB 83\\
+Dies lässt sich für balancierte Strukturen nutzen.\\
+Mit der Regel $X\to XX$ wächst der Syntaxbaum in die Breite.\\
+ABB 84\\
+Beispiel, die beide Prinzipien anwendet: $S\to [S] | SS | \varepsilon$\\
+ABB 85\\
+Damit lässt sich bspw. auch folgendes als Grammatik darstellen: $(3*(4+5)-1)*2+1$.
+\subparagraph{Bsp.:} Grammatik für arithmetische Ausdrücke.
+\begin{itemize}
+\item Zahlen: Lassen sich darstellen durch die Grammatik mit den Regeln:\\
+$S_N\to 0S_N\,|\,\dots \,|\, 0S_N \,|\, 0 \,|\, ... \,|\, 9$\\
+Beispiel für $123$: \\
+ABB 86
+\item Zeichen: Diese Grammatik verwenden wir, um Ausdrücke darzustellen mit folgender Grammatik:\\
+$S_E\to S_E+S_E \,|\, S_E - S_E \,|\, S_E*S_E \,|\, S_E/S_E \,|\, (S_E) \,|\, S_N$\\
+Damit lassen sich Ausdrücke erstellen, z.B.:\\
+ABB 87\\
+$(1+2)*3*4$
+\end{itemize}
+
+\subsection{Kellerautomaten und kontextfreie Sprachen}
+\paragraph{Satz:} Kellerautomaten akzeptieren genau die kontextfreien Sprachen.\\
+Beweis: Wir zeigen nur: Für jede kontextfreie Grammatik $G$ gibt es einen PDA $\cM$ mit $L(G)=L(\cM)$.\\
+Skizze: \\
+Wir konstruieren einen PDA mit drei Zuständen:\\
+ABB 88\\
+Im Startzustand wird das Startsymbol $S$ der Grammatik auf den Stack abgelegt und der PDA wechselt in Zustand $Z$.\\
+Wir unterscheiden 3 Fälle: Das oberste Stackzeichen ist…
+\begin{itemize}
+\item eine Variable $A$.\\
+Wenn es eine Regel $A\to \gamma$ der Grammatik gibt, dann kann der PDA $A$ vom Stack entfernen und $\gamma$ auf den Stack schreiben.
+\item ein Symbol $a\in \Sigma$.\\
+Wenn das nächste Zeichen der Eingabe mit $a$ übereinstimmt, wird $a$ vom Stack entfernt.
+\item das Zeichen $\#$.\\
+Dann geht der PDA in den Endzustand über.
+\end{itemize}
+Richtung PDA$\to$kontextfreie Grammatik: Ohne Beweis.
+\subparagraph{Bsp.:} Wir betrachten die Sprache $L=\{a^nb^n|n\geq 0\}$, die erzeugt wird von der Grammatik mit den Regeln:\\
+$S\to aSb \,|\, \varepsilon$\\
+Aus obiger Konstruktion erhalten wir folgenden PDA:\\
+ABB 89\\
+Verhalten für die Eingabe $aabb$:\\
+ABB 90\\
+
+\subsubsection{Der CYK-Algorithmus}
+\paragraph{Def.:} Eine Grammatik $G=(V,\Sigma, P, S)$ liegt in \emph{Chomsky-Normalform} (CNF), wenn alle Regeln die Form $A\to BC$ oder $A\to a$ für $A,B,C \in V$, $a \in \Sigma$ haben.\\
+Jede kontextfreie Grammatik $G$ mit $\varepsilon \not \in L(G)$ kann in CNF umgeformt werden.
+\subparagraph{Bsp.:} Wir formen die Grammatik  mit den Regeln $S\to SS \,|\, (S) \,|\, ()$ in CNF um.
+\begin{enumerate}[label=\arabic*.]
+\item Schritt:\\
+Terminalsymbole ersetzen durch neue Variablen: \\
+$S\to SS | \,|\, LSR \,|\, LR$
+$L\to ($, $R \to )$\\
+\item Schritt:\\
+Mehrfache Variablen auf der rechten Seite ersetzen:\\
+$S\to SS \,|\, LA \,|\, LR$\\
+$A \to SR$\\
+$L\to ($\\
+$R\to )$
+\end{enumerate}
+Der Ableitungsbaum eines Wortes aus einer Grammatik in CNF ist -- bis auf die unterste Ebene -- ein binärer Wurzelbaum.\\
+ABB 91\\
+Wenn ein Wort $x=x_1x_2\dots x_n$ aus $S$ ableitbar ist ($S\Rightarrow^*x$), dann gibt es ein $ k $ und $ A,B $, sodass $ S\Rightarrow AB $ und $ A \Rightarrow* x_1\dots x_k , \; B\Rightarrow^*x_{k+1}...x_n $\\
+ABB 92
 
 
 
