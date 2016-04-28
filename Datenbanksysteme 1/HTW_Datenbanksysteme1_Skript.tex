@@ -792,7 +792,7 @@ $...$ & Wiederholung\\
 $<\;>$ & Sprachbeschreibende Variablen\\
 $::=$ & Definitionssymbol
 \end{tabular}
-\subsection{Anweisungen zur Definiton}
+\subsection{Anweisungen zur Definiton (DDL-Befehle)}
 \subsubsection{Tabellendefinition}
 \paragraph{Anlegen einer Tabelle}
 \Folie{4}{6}
@@ -815,19 +815,140 @@ CREATE TABLE Kunde(
 (wenn weder NULL noch NOT NULL da steht: wird vom System bestimmt $\to$ wird entweder NULL oder NOT NULL gesetzt. Empfehlung: für jeden Eintrag selber festlegen!)
 \item UNIQUE: eindeutiger Wert
 \end{itemize}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE Artikel (
+	Artnr SMALLINT PRIMARY KEY, 
+	Bezeichnung CHAR(15) NOT NULL,
+	Beschreibung CHAR(30) NULL,
+	EPreis DECIMAL(7,2) NOT NULL
+)
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE Kauf (
+	Kunr INT,
+	Artnr SMALLINT,
+	Menge INT NOT NULL,
+	VPreis decimal(8,2) NOT NULL, 
+	PRIMARY KEY(Kunr, Artnr), 
+	FOREIGN KEY(Kunr) REFERENCES Kunde(Kunr),
+	FOREIGN KEY(Artnr) REFERENCES Artikel(Artnr)
+)
+\end{lstlisting}
+Bei zusammengesetzten Primärschlüsseln muss dieser am Ende von \emph{creat table} definiert werden. Bei einem einfachen kann dies \emph{inline} passieren oder auch wie beim zusammengesetzten am Schluss: 
+\begin{lstlisting}[language=SQL]
+CREATE TABLE Artikel (
+	Artnr SMALLINT, 
+	Bezeichnung CHAR(15) NOT NULL,
+	Beschreibung CHAR(30) NULL,
+	EPreis DECIMAL(7,2) NOT NULL,
+	PRIMARY KEY (Artnr)
+)
+\end{lstlisting}
+\paragraph{Ändern der Tabellendefinition}
+\Folie{4}{7}
+\subparagraph{Bsp.:} Spalte Email an Tabelle Kunde anfügen.
+\begin{lstlisting}[language=SQL]
+ALTER TABLE Kunde ADD email CHAR(20) NULL
+\end{lstlisting}
+Fall: neue Spalte soll \emph{NOT NULL} sein. Entweder \emph{default}-Wert übergeben oder erst als \emph{NULL} einführen, Inhalte befüllen und dann \emph{NOT NULL setzen}.
+\paragraph{Löschen einer Tabelle} $ $
+\begin{lstlisting}[language=SQL]
+DROP TABLE tab_name
+\end{lstlisting}
+Beispiel:
+\begin{lstlisting}[language=SQL]
+DROP TABLE Kauf
+\end{lstlisting}
+Befehl wird ohne Nachfrage ausgeführt (wenn Tabelle nicht als Referenz verwendet wird)!
+\subsubsection{Arbeiten mit Index}
+(Primär-)Index dient dem schnellen Suchen, Primärschlüssel dient nur dem Identifizieren.
+\paragraph{Anlegen des Index} $ $
+\begin{lstlisting}[language=SQL]
+CREATE INDEX index_name ON tab_name(index)
+\end{lstlisting}
+Bsp.: Zusammengesetzter Index (Kunde nach Ort und dann nach Name indexiert)
+\begin{lstlisting}[language=SQL]
+CREATE INDEX iOrtName ON Kunde(Ort,Name)
+\end{lstlisting}
+\paragraph{Löschen eines (Sekundär-)Index} $ $
+\begin{lstlisting}[language=SQL]
+DROP INDEX tab_name.index_name
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+DROP INDEX Kunde.iOrtName
+\end{lstlisting}
+\subsubsection{View-Definition}
+\Folie{4}{8}
+Eine View kann auch Daten aus mehreren Tabellen nehmen.
+\paragraph{Anlegen einer View} $ $
+\begin{lstlisting}[language=SQL]
+CREATE VIEW view_name [ ( <Spaltenliste> ) ] 
+AS <select_anweisung>
+\end{lstlisting}
+Bsp.:
+\begin{lstlisting}[language=SQL]
+CREATE VIEW Beruf_Inf
+AS (
+	SELECT Kunr, Name, Vorname, Ort
+	FROM Kunde
+	WHERE Beruf = 'Informatiker'
+)
+\end{lstlisting}
+\paragraph{Löschen einer View} $ $
+\begin{lstlisting}[language=SQL]
+DROP VIEW view_name
+\end{lstlisting}
+Bsp.:
+\begin{lstlisting}[language=SQL]
+DROP VIEW Beruf_Inf
+\end{lstlisting}
+\paragraph{Zugriff auf eine View} $ $
+\begin{lstlisting}[language=SQL]
+SELECT Kunr, Name
+FROM Beruf_Inf -- (View Name)
+\end{lstlisting}
 
+\subsection{Anweisungen zur Abfrage (DML-Befehle)}
+\subsubsection{Standardabfrage}
+\Folie{4}{9}
+\begin{lstlisting}[language=SQL]
+SELECT	Bilbereich					<Attributliste>		Was?
+FROM		Definitionsbereich	<Relation>				Wovon?
+WHERE		Auswahlkriterien		<Bedingungen>			Bedingung?
+\end{lstlisting}
+\subsubsection{Einfache Abfrage auf eine Relation}
+\begin{lstlisting}[language=SQL]
+SELECT < attributliste >
+FROM < tab_name > | < view_name >
+[ WHERE < auswahlbedingung > ]
+\end{lstlisting}
+einfachste Abfrage:
+\begin{lstlisting}[language=SQL]
+SELECT *	-- * ... alle Attribute (Spalten)
+FROM Kunde
+\end{lstlisting}
+Beim Programmieren am besten nicht * verwenden. Nur für's Abfragen. * ist Fehleranfällig bei Veränderungen!
+\begin{lstlisting}[language=SQL]
+SELECT Name, Vorname
+FROM im15s12345.dbo.Kunde 		-- (Datenbank.Eigentümer.Tabellenname)
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+SELECT Name, Vorname
+FROM Kunde
+WHERE Ort='Dresden'
+\end{lstlisting}
 
+\paragraph{Abfrage mit Vergleichs- und logischen Operatoren} $ $
+\begin{lstlisting}[language=SQL]
+SELECT * FROM Kunde 
+	WHERE Geschl = 'M'
 
+SELECT * FROM Kunde 
+	WHERE (Ort='Pirna' OR Ort='Dresden') AND Beruf = 'Projektant'
 
-
-
-
-
-
-
-
-
-
+SELECT * FROM Artikel
+	WHERE NOT Artnr = '1234'		-- Alternativ: Artnr != '1234'
+\end{lstlisting}
 %\newpage
 %\printbibliography
 \end{document}

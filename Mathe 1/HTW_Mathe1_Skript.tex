@@ -1076,23 +1076,124 @@ $I=\int_0^{\sqrt{8}}x\sqrt{1+x^2}\intd{x}=\frac{1}{3}(1+x^2)^{\tfrac{3}{2}}+C$\\
 Dann Grenzen einsetzen:\\
 $I=\left[\frac{1}{3}(1+x^2)^{\tfrac{3}{2}}\right]_0^{\sqrt{8}}=\frac{1}{3}(27-1)=\frac{26}{3}$
 \end{itemize}
-\paragraph{Bsp. 4:} $\int \frac{f'(x)}{f(x)}\intd{x}=\ln |f(x)|+C$\\
+\subparagraph{Bsp. 4:} $\int \frac{f'(x)}{f(x)}\intd{x}=\ln |f(x)|+C$\\
 (Zähler = Ableitung des Nenners)\\
 Nutze dazu die Substitution $u=f(x), \; \intd{x}=\frac{\intd{u}}{f'(x)}$\\
 $\Rightarrow \int \dots = \int \frac{1}{u} \intd{u}=\ln | u| + C = \ln | f(x) | + C$
+\paragraph{Bsp. 5:}(lineare Substitution)\\
+Allgemein: $\int f(ax+b) \intd{x} \overset{\substack{u=ax+b\\\tfrac{du}{dx}=a}}{=} \int f(u) \frac{\intd{u}}{a}\overset{\substack{F: \text{ Stammfkt.}\\ \text{von } f}}{=}\frac{1}{a}\cdot F(u) + C$
+\begin{anumerate}
+\item $\int \cos (3x) = \frac{1}{3}\sin (3x) + C$
+\item $\int e^{-2x} \intd{x}=\frac{1}{-2}e^{-2x}+C$
+\item $\int (3x+4)^6 \intd{x}=\frac{1}{3}\cdot \frac{1}{7}(3x+4)^7+C$
+\item $\int \sin \left( \frac{x}{2}+\pi\right) \intd{x}=2 \cdot  -\cos\left(\frac{x}{2}+\pi\right)+C$
+\end{anumerate}
 
+\subparagraph{Diskussion:} Neben diesen „natürlichen“ und leicht erkennbaren Substitutionen sind weiter Substitutionen durch die Einführung von „künstlichen“ Variablen möglich:\\
+$\int f(x) \intd{x}\overset{\substack{x=f(t)\\\tfrac{\diffd{x}}{\diffd{t}}=\dot{\varphi}(t)}}{=}\int f(\varphi(t)) \cdot \dot{\varphi}(t) \intd{t}$\\
+Dies entsprecht der Substitutionsregel, von rechts nach links gelesen. Falls die rechte Seite davon integrierbar ist (mit Stammfunktion $H$), dann:\\
+$\int f(x) \intd{x}=H(t) + C = H\big(\varphi^{-1}(t)\big) + C$ \qquad (falls $\varphi^{-1}$ existiert)
+\subparagraph{Bsp. 6:} \parskp
+$\int \frac{1}{\sqrt{1+x^2}}\intd{x}\overset{\substack{x=\sinh(t)\\\tfrac{\diffd{x}}{\diffd{t}}=\cosh(t)\\\cosh^2(t)-\sinh^2(t)=1}}{=}\int \frac{1}{\cosh(t)}\cosh(t)\intd{t}=\int \intd{t}=t+C = \arcsinh (x) + C$\\
+Für weitere geeignete Substitutionen siehe Integrationstabelle.
 
+\subsection{Partielle Integration}
+Produktregel der Differentiation:\\
+$\frac{\diffd{}}{\diffd{x}}\big(u(x)\cdot v(x)\big) = u'(x)\cdot v(x)+u(x)\cdot v'(x)$\\
+$\Rightarrow u(x) v(x) \int u'(x) v(x) \intd{x} + \int u(x) v'(x) \intd{x}$\\
+$\Rightarrow \boxed{\int u(x)v'(x)\intd{x}=u(x)v(x)- \int u'(x) v(x) \intd{x} }$
 
-
-
-
-
-
-
-
-
-
-
+\subparagraph{Bsp. 7:}
+\begin{anumerate}
+\item $\int \underbrace{x}_{u(x)} \underbrace{\sin(2x)}_{v'(x)} \intd{x}=\underbrace{x}_{u}\cdot \underbrace{-\frac{1}{2}\cos(2x)}_{v} - \int \underbrace{1}_{u'}\cdot \underbrace{-\frac{1}{2}\cos (2x)}_{v}\intd{x}=-\frac{x}{2}\cos(2x)+\frac{1}{4}\sin(2x) + C $\\
+$u'(x) = 1 \qquad v(x) = -\frac{1}{2}\cos (2x)$
+\item $\int \underbrace{x^3}_{v'}\underbrace{\ln x}_{u} = \frac{1}{4}x^4 \ln x - \int \frac{1}{x}\cdot \frac{1}{4}x^4 \intd{x} = \frac{1}{4} x^4 \ln x - \frac{1}{16} x^4 + C = \frac{1}{4}x^4 \left(\ln x - \frac{1}{4} \right) ++C$
+\end{anumerate}
+\emph{Merke:} Typische Anwendungsfälle für partielle Integration (mit $p(x)$ jeweils als $u$):
+\begin{itemize}
+\item $\int p(x) e^{ax} \intd{x}$
+\item $\int p(x) \cos (ax) \intd{x}$
+\item $\int p(x) \sin (ax) \intd{x}$
+\end{itemize}
+aber (mit $\ln(x)$ jeweils als $u$):
+\begin{itemize}
+\item $\int p(x) \cdot \ln (x) \intd{x}$
+\item $\int x^\alpha \cdot \ln(x) \intd{x}$
+\end{itemize}
+\subparagraph{Bsp. 8:} \parskp
+$\int \arctan (x ) \intd{x} \overset{\substack{u=\arctan(x)\\ v'=1}}{=}x \cdot \arctan
+(x) - \int x \cdot \frac{1}{1+x^2}\intd{x}=x \cdot \arctan (x) - \frac{1}{2}\ln(|x^2+1|)+C$\\
+$u'=\frac{1}{1+x^2} \qquad v = x$
+\subsection{Integration gebrochen rationaler Funktionen}
+Gegeben: Gebrochen rationale Funktion $f(x)=\frac{p(x)}{q(x)}$\\
+Integration erfolgt in 5 Schritten:
+\begin{enumerate}
+\item Falls $f$ unecht gebrochen: Polynomdivision erhalten dann $f(x) =\underbrace{a(x)}_{\text{Polynom}} + \underbrace{\frac{r(x)}{q(x)}}_{\text{echt gebrochen}}$
+\item Nullstellen von $q$ ermitteln. Dann Zerlegung $q$: \\
+$q(x) = (x-\alpha_1)^{k_1}\cdot (x-\alpha_2)^{k_2}\cdot \dots \cdot (x^2+p_1+q_1)^{m_1}\cdot (x^2+p_2+q_2)^{m_2}\cdot \dots$\\
+$k_i$: reelle Nullstellen \qquad $m_i$: nicht reell zerlegbar\\
+Dabei kürzt man eventuelle gemeinsame Faktoren in $r$ und $q$ heraus.
+\item \emph{Ansatz für die Partialbruchzerlegung}\\
+$\frac{r(x)}{q(x)}= $Summe von Partialbrüchen\\
+Jeden Faktor der Form $\begin{cases}
+(x-\alpha)^k\\
+(x^2+px+q)^m
+\end{cases}$ der Gleichung entspricht der Anteil \\
+$\begin{cases}
+\frac{A_1}{x-\alpha}+\frac{A_2}{(x-\alpha)^2}+\dots + \frac{A_2}{(x-\alpha)^k}\\
+\frac{B_1x+C_1}{x^2+px+q}+\frac{B_2 x + C_2}{(x^2+px+q)^2}+\dots + \frac{B_m x + C_m}{(x^2+px+q)^m}
+\end{cases}$ in dieser Summe.
+\subparagraph{Bsp. 9:}
+\begin{align*}
+f(x) &= \frac{x^2+4}{(x-1)^3(x+5)(x^2+2x+2)^2}\\
+&=\frac{A}{x-1}+\frac{B}{(x-1)^2}+\frac{C}{(x-1)^3}+ \frac{D}{x+5}+ \frac{Ex+F}{x^2+2x+2}+\frac{Gx+H}{(x^2+2x+2)^2}
+\end{align*}
+Beachte: $x^2+2x+2$ ist reell nicht weiter zerlegbar, Nullstelle: $1\pm i$.
+\item Ermittlung der Koeffizienten durch 
+\begin{itemize}
+\item Multiplikation des Ansatzes der Partialbruchzerlegung mit $q(x)$
+\item Kombination der folgenden beiden Methoden
+\begin{anumerate}
+\item Einsetzen der reellen Nullstellen
+\item Koeffizientenvergleich
+\end{anumerate}
+(falls $q$ nur reelle Nullstellen hat, recht Methode a.)
+\end{itemize}
+\item Integration der Partialbrüche
+\begin{anumerate}
+\item $\int \frac{1}{(x-\alpha)^j} \intd{x}=\begin{cases}
+\ln(|x-\alpha|)+C & j=1\\
+\frac{1}{1-j}(x-\alpha)^{1-j}+C & j=2,3,4,\dots
+\end{cases}$
+\item $\int \frac{3x+C}{(x^2+px+q)^j}\intd{x}=\int \frac{\tfrac{B}{2}(2x+q)}{(x^2+px+q)^j}+\frac{C-\tfrac{Bp}{2}}{(x^2+px+q)^j}\intd{x}$
+\begin{itemize}
+\item $\int \frac{2x+p}{(x^2+px+q)^2}\intd{x}$: Nutze Substitution.
+\item $\int \frac{1}{(x^2+px+q)^j}\overset{\substack{\text{quadratische}\\\text{Ergänzung}}}{=}\int \frac{1}{\left(\left(x+\frac{p}{2}\right)^2+q-\frac{p^2}{4}\right)^j}\intd{x}\overset{u=x+\frac{p}{2}}{=}\int \frac{1}{\left(u^2+a^2\right)^j}\intd{x}$\\
+$\begin{cases}
+j=1 & \text{Stammfunktion siehe Merkblatt}\\
+j>1 & \text{siehe weitere Formelsammlung (selten)}
+\end{cases}$
+\end{itemize}
+\end{anumerate}
+\end{enumerate}
+\subparagraph{Bsp. 10:} $I=\int \frac{3x+4}{x^2+2x-3}\intd{x}$
+\begin{itemize}
+\item echt gebrochen
+\item Nullstellen des Nenners: $x_1=-3, \; x_2 = 1$\\
+$\Rightarrow x^2+2x-3=(x+3)(x-1)$
+\end{itemize}
+Ansatz für PBZ:\\
+\begin{align*}
+\frac{3x+4}{(x+3)(x-1)}&=\frac{A}{x+3}+\frac{B}{x-1} \qquad |\cdot (x+3)(x-1)\\
+3x+4 &= A(x-1)+B(x+3)
+\end{align*}
+Einsetzen der NS: \\
+$x_1: \qquad -5 = A\cdot (-4) \Rightarrow A = \frac{5}{4}$\\
+$x_2: \qquad 7 = B \cdot 4 \Rightarrow B=\frac{7}{4}$\\
+\begin{align*}
+\Rightarrow I &= \int \frac{\frac{5}{4}}{x+3}\intd{x}+\int \frac{\frac{7}{4}}{x-1}\intd{x}\\
+ &= \frac{5}{4} \ln (|x+3|) + \frac{7}{4}\ln(|x-1|)+C
+\end{align*}
 
 
 

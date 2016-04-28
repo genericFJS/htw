@@ -425,7 +425,7 @@ $S\to aSb \,|\, \varepsilon$\\
 Aus obiger Konstruktion erhalten wir folgenden PDA:\\
 ABB 89\\
 Verhalten für die Eingabe $aabb$:\\
-ABB 90\\
+ABB 90
 
 \subsubsection{Der CYK-Algorithmus}
 \paragraph{Def.:} Eine Grammatik $G=(V,\Sigma, P, S)$ liegt in \emph{Chomsky-Normalform} (CNF), wenn alle Regeln die Form $A\to BC$ oder $A\to a$ für $A,B,C \in V$, $a \in \Sigma$ haben.\\
@@ -434,8 +434,8 @@ Jede kontextfreie Grammatik $G$ mit $\varepsilon \not \in L(G)$ kann in CNF umge
 \begin{enumerate}[label=\arabic*.]
 \item Schritt:\\
 Terminalsymbole ersetzen durch neue Variablen: \\
-$S\to SS | \,|\, LSR \,|\, LR$
-$L\to ($, $R \to )$\\
+$S\to SS \,|\, LSR \,|\, LR$\\
+$L\to ($, $R \to )$
 \item Schritt:\\
 Mehrfache Variablen auf der rechten Seite ersetzen:\\
 $S\to SS \,|\, LA \,|\, LR$\\
@@ -446,9 +446,35 @@ $R\to )$
 Der Ableitungsbaum eines Wortes aus einer Grammatik in CNF ist -- bis auf die unterste Ebene -- ein binärer Wurzelbaum.\\
 ABB 91\\
 Wenn ein Wort $x=x_1x_2\dots x_n$ aus $S$ ableitbar ist ($S\Rightarrow^*x$), dann gibt es ein $ k $ und $ A,B $, sodass $ S\Rightarrow AB $ und $ A \Rightarrow* x_1\dots x_k , \; B\Rightarrow^*x_{k+1}...x_n $\\
-ABB 92
-
-
+ABB 92 / 96\\
+Der CYK-Algorithmus entscheidet das Wortproblem, indem eine Tabelle konstruiert wird. Der Eintrag $T_{ij}$ ist die Menge der Variablen $X$ mit $X\Rightarrow^* x_i \dots x_j$:\\
+ABB 97\\
+Für $i<j$ wird geprüft, ob sich $x_i\dots x_j$ zerlegen lässt in $x_i\dots x_k,\; x_{k+1} \dots x_j$, so dass gilt:
+\begin{enumerate} [label=(\roman*)]
+\item es gibt eine Regel $X\to AB$
+\item $A\Rightarrow^* x_i \dots x_k$, $B\Rightarrow^* x_{k+1}\dots x_j$.
+\end{enumerate} 
+Die Menge $T_{ij}$ enthält alle Variablen $x$ mit dieser Eigenschaft. Da (ii) nach Definition von $T_{ij}$ äquivalent ist zu $A \in T_{ik}, \; B\in T_{k+1\,j}$, erhalten wir $T_{(ii)}=\{x| \text{ es gibt eine Regel }X\to x_i\}$.\\
+$T_{ij}=\bigcup_{i\leq k<j} \{x | \text{ es gibt eine Regel }X\to AB \wedge A \in T_{ik} \wedge B\in T_{k+1\, j}\}$\\
+Wenn die Menge $T_{ij}$ in aufsteigender Reihenfolge von $j-i$ berechnet werden, dann können die Einträge der Tabelle aus bereits berechneten Einträgen bestimmt werden (dynamisches Programmieren). Für den Eintrag $T_{ij}$ müssen dabei alle Kombinationen geprüft werden, die den Zerlegungen $x_i \dots x_j=x_i\dots x_k x_{k+1} \dots x_j$ für $i\leq k < j$ entsprechen. Das Wort $x$ liegt genau dann in der Sprache, wenn $S \in T_{1n}$.\\
+ABB 99\\
+$T_{26}=\bigcup_{2\leq k<5}\{x| x\to AB \wedge \underbrace{A \Rightarrow^* x_2\dots x_k}_{\Leftrightarrow A \in T_{2k}}, \; \underbrace{B\Rightarrow^* x_{k+1}\dots x_6}_{\Leftrightarrow B \in T_{k+1\, 6}}\}$
+\begin{itemize}
+\item $k=2$: $A\in T_{22},\; B \in T_{36}$ (lila)
+\item $k=3$: $A \in T_{23}, \; B \in T_{46}$ (grün)
+\item $k=4$: $A\in T_{24}, \; B \in T_{56}$ (braun)
+\item $k=5$: $A \in T_{25}, \; B \in T_{66}$ (hellgrün)
+\end{itemize}
+\subparagraph{Bsp.:} Wir prüfen $(()()) \in L(G')$ für die Grammatik $G'$ in CNF, die die Sprache der korrekten Klammerung erzeugt.\\
+ABB100 \\
+Die Laufzeit des CYK-Algorithmus ergibt sich aus (Größe der Tabelle)$\cdot$(Aufwand pro Tabelleneintrag)$=O(n^2) \cdot O(n)=O(n^3)$.
+\begin{lstlisting}[language=C]
+$T_{ij}:= \emptyset$
+for (k=i; k<j; k++) {
+	if (Regel $X\to AB$ $\wedge$ $A \in T_{ik}$ $\wedge$ $B \in T_{k+1\,j}$)
+		$T_{ij}$ += {x}
+}
+\end{lstlisting}
 
 \newpage
 \printbibliography
