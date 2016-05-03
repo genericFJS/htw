@@ -1,0 +1,292 @@
+% Header aus der Vorlage
+\input{../LaTeX_master_HTW_en_beamer}
+
+\bibliography{../proposal/EngC1_Proposal_Literature.bib}
+
+% Definition von Titel, Autor usw.
+\title{Object oriented programming / modeling}
+\author{Falk-Jonatan Strube}
+\date{May 4, 2016} 
+
+\begin{document}
+
+\begin{frame}[plain]
+\begin{center}
+\includegraphics[width=.3\textwidth]{../../../LaTeX_master/HTW-Logo.eps}
+\end{center}
+\maketitle
+\end{frame}
+\section*{Seminar outline}
+\begin{frame}
+\begin{itemize}
+\setlength\itemsep{1em}
+\item Selected glossary
+\item Presentation of the topic
+\begin{itemize}
+\item Generic programming
+\item Object oriented programming and modeling
+\begin{itemize}
+\item Inheritance
+\item Polymorphism
+\end{itemize}
+\item Relevance of the topic
+\item Sources
+\end{itemize}
+\item (Language) practice
+\item Discussion
+\end{itemize}
+\end{frame}
+
+\section*{Selected glossary}
+\begin{frame}
+\begin{itemize}
+\setlength\itemsep{1em}
+\item Generic
+\item Redundant
+\item Class
+\item Object
+\item Implementation
+\item Inheritance
+\item Polymorphism
+\end{itemize}
+\end{frame}
+
+\section*{Presentation of the topic}
+
+\begin{frame}
+\begin{center}
+\LARGE Object oriented\\programming / modeling
+\end{center}
+\end{frame}
+
+\section*{Generic programming}
+
+\begin{frame}
+\begin{itemize}
+\setlength\itemsep{3em}
+\item easy to use % you write what you want to have, without a concept
+\item limited scalability % you have limited concepts to describe complex programms
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+(Exaggerated) example:\bigskip\\
+Programming a Human being:\medskip\\
+Eating as …
+\begin{itemize}
+\setlength\itemsep{1em}
+\item … an adult
+\item … a student
+\item … a child
+\item … a baby
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{lstlisting}[language=C]
+if ( adult ) {
+	cook_something();
+	eat();
+} else if ( student ) {
+	call_pizza_service();
+	wait();
+	eat();
+} else if ( child ) {
+	tell_mom_youre_hungry();
+	wait();
+	eat_only_dessert();
+} else if ( baby ) {
+	while ( nothing_happens ) {
+		cry();
+	}
+	suck_delicious_milk_from_moms_breasts();
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\setlength\itemsep{3em}
+\item some redundancy
+\item code can become unclear with more complex functions
+\end{itemize}
+\end{frame}
+
+\section*{Object oriented programming and modeling}
+\begin{frame}
+Model:
+\begin{center}
+\resizebox{.9\textwidth}{!}{
+\begin{tikzpicture}
+\tikzumlset{fill class=white!0}
+\umlclass{Human}{hunger}{satisfy\_hunger()}
+\umlclass[x=-3, y=-4, anchor=north]{Adult}{time\_available}{\textcolor{white}{M}}
+\umlclass[x=3, y=-4, anchor=north]{Student}{motivation}{satisfy\_hunger()}
+\umlVHVinherit{Adult}{Human} 
+\umlVHVinherit{Student}{Human} 
+
+
+\tikzumlset{fill class=white!0, text=gray, draw=gray}
+\umlclass[x=8, y= 1] {Class name}{properties}{functions}
+\end{tikzpicture}
+}
+\end{center}
+\end{frame}
+
+\section*{Inheritance}
+
+\begin{frame}
+\begin{center}
+\resizebox{.5\textwidth}{!}{
+\begin{tikzpicture}
+\tikzumlset{fill class=white!0}
+\umlclass{Human}{hunger}{satisfy\_hunger()}
+\umlclass[x=-3, y=-4, anchor=north]{Adult}{time\_available}{\strut}
+\umlclass[x=3, y=-4, anchor=north]{Student}{motivation}{satisfy\_hunger()}
+\umlVHVinherit{Adult}{Human} 
+\umlVHVinherit{Student}{Human} 
+\end{tikzpicture}
+}
+\end{center}
+\begin{itemize}
+\setlength\itemsep{1em}
+\item Adult uses unchanged function \\(or may implement a new based on \emph{time\_available})
+\item Student implements new function \\(and may use \emph{parent}-function)
+\end{itemize}
+\end{frame}
+
+\section*{Polymorphism}
+\begin{frame}
+\begin{itemize}
+\setlength\itemsep{1em}
+\item easy to expand upon
+\item \emph{child}-classes use
+\begin{itemize}
+\item parent properties
+\item parent functions
+\end{itemize}
+$\Rightarrow$ \textbf{Inheritance}
+\item \emph{child}-classes can change behavior of
+\begin{itemize}
+\item parent properties
+\item parent functions
+\end{itemize}
+$\Rightarrow$ \textbf{Polymorphism}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\section*{Inheritance + Polymorphism}
+Putting \emph{inheritance} and \emph{polymorphism} to use:
+\begin{center}
+\resizebox{.8\textwidth}{!}{
+\begin{tikzpicture}
+\tikzumlset{fill class=white!0}
+\umlclass{Human}{hunger}{satisfy\_hunger()}
+\umlclass[x=-3, y=-4, anchor=north]{Adult}{time\_available}{\strut\\\strut}
+\umlclass[x=3, y=-4, anchor=north]{Student}{motivation}{satisfy\_hunger()\\\strut}
+\umlclass[x=7, y=-4, anchor=north]{Child}{defiance}{satisfy\_hunger() \\ bug\_parents()}
+\umlclass[x=11, y=-4, anchor=north]{Baby}{\strut}{satisfy\_hunger()\\\strut}
+\umlVHVinherit{Adult}{Human} 
+\umlVHVinherit{Student}{Human} 
+\umlVHVinherit{Child}{Human} 
+\umlVHVinherit{Baby}{Human} 
+\end{tikzpicture}
+}
+\end{center}
+\end{frame}
+
+\section*{Relevance of the topic}
+\begin{frame}
+\begin{itemize}
+\item Unified Modeling Language (UML) $\Rightarrow$ Team coordination even for not computer science students
+\resizebox{.4\textwidth}{!}{
+\begin{tikzpicture}
+\tikzumlset{fill class=white!0}
+\umlclass{Human}{hunger}{satisfy\_hunger()}
+\umlclass[x=-3, y=-4, anchor=north]{Adult}{time\_available}{\strut}
+\umlclass[x=3, y=-4, anchor=north]{Student}{motivation}{satisfy\_hunger()}
+\umlVHVinherit{Adult}{Human} 
+\umlVHVinherit{Student}{Human} 
+\end{tikzpicture}
+}
+\item Good coding practice for computer science students
+\end{itemize}
+\end{frame}
+
+\section*{Sources}
+\begin{frame}
+Sources and tips for further reading:
+\nocite{*}
+\renewcommand*{\bibfont}{\scriptsize}
+\printbibliography[heading=none]
+\end{frame}
+
+\section*{(Language) practice}
+\begin{frame}
+\begin{center}
+\resizebox{.8\textwidth}{!}{
+\begin{tikzpicture}
+\tikzumlset{fill class=white!0, text=white!0}
+\umlclass{Person}{name\textcolor{white}{MMMM}\\}{eat()\\ work() \\ sleep()}
+\umlclass[x=-3, y=-4, anchor=north]{Alumnus}{\strut}{visitUniversity()\\ drinkBeer()}
+\umlclass[x=3, y=-4, anchor=north]{Student}{\strut}{visitLecture()\\ drinkBeer()}
+\umlclass[x=9, y=-4, anchor=north]{Employee}{salary}{\strut\\\strut}
+\umlclass[x=9, y=-9, anchor=north]{Professor}{\strut}{giveLecture()}
+\umlclass[x=0, y=-9, anchor=north]{Beginner}{\strut}{visitEverything()}
+\umlclass[x=5, y=-9, anchor=north]{Long-term student}{salary}{ignoreLecture()}
+\umlVHVinherit{Alumnus}{Person} 
+\umlVHVinherit{Student}{Person} 
+\umlVHVinherit{Employee}{Person} 
+\umlVHVinherit{Beginner}{Student} 
+\umlVHVinherit{Long-term student}{Student} 
+\umlVHVinherit{Professor}{Employee} 
+\end{tikzpicture}
+}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\resizebox{.8\textwidth}{!}{
+\begin{tikzpicture}
+\tikzumlset{fill class=white!0}%, text=white!0}
+\umlclass{Person}{name\textcolor{white}{MMMM}\\}{eat()\\ work() \\ sleep()}
+\umlclass[x=-3, y=-4, anchor=north]{Alumnus}{\strut}{visitUniversity()\\ drinkBeer()}
+\umlclass[x=3, y=-4, anchor=north]{Student}{\strut}{visitLecture()\\ drinkBeer()}
+\umlclass[x=9, y=-4, anchor=north]{Employee}{salary}{\strut\\\strut}
+\umlclass[x=9, y=-9, anchor=north]{Professor}{\strut}{giveLecture()}
+\umlclass[x=0, y=-9, anchor=north]{Beginner}{\strut}{visitEverything()}
+\umlclass[x=5, y=-9, anchor=north]{Long-term student}{salary}{ignoreLecture()}
+\umlVHVinherit{Alumnus}{Person} 
+\umlVHVinherit{Student}{Person} 
+\umlVHVinherit{Employee}{Person} 
+\umlVHVinherit{Beginner}{Student} 
+\umlVHVinherit{Long-term student}{Student} 
+\umlVHVinherit{Professor}{Employee} 
+\end{tikzpicture}
+}
+\end{center}
+\end{frame}
+
+\section*{Discussion}
+
+\begin{frame}
+\begin{itemize}
+\setlength\itemsep{1em}
+\item Comprehensibility:\\
+Generic > Object oriented ?
+\item Own experiences?
+\item Used in everyday applications?
+\end{itemize}
+\end{frame}
+
+\section*{The End}
+
+\begin{frame}
+\begin{center}
+\LARGE Thank you for listening\\
+and your collaboration!
+\end{center}
+\end{frame}
+
+\end{document}

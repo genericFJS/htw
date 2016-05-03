@@ -1,0 +1,46 @@
+\begin{tikzpicture}[mindmap, grow cyclic, every node/.style=concept, concept color=black!10, 
+    level 1/.append style={level distance=5cm,sibling angle=90},
+    level 2/.append style={level distance=3cm,sibling angle=45},
+    level 3/.append style={level distance=2.2cm,sibling angle=55},]
+
+\node{Object oriented programming / modelling}
+   child { node {Object orientated programming}
+        child { node {Im\-ple\-men\-ta\-tion}}
+        child { node {Effi\-cien\-cy}}
+        child { node {reusabilty}}
+        child { node {Pro\-gramm\-ing lang\-uag\-es}
+        	child {node{Java}}
+        	child {node{C++}}
+        	child {node{C\#}}
+        }
+        child { node (psc) {scope (code)}}
+        child { node (pcm) {com\-pre\-hen\-si\-bil\-ity (code)}}
+        child { node {Difficult to understand (concept)}}
+    }
+    child [concept color=black!20] { node {Object oriented modelling}
+        child { node {UML}}
+        child { node {Com\-mu\-ni\-ca\-tion}
+        	child {node{Team}}
+        	child {node{Client}}
+        }
+        child { node {Scalability}}
+        child { node (msc) {scope (project)}}
+        child { node (mcm) {com\-pre\-hen\-si\-bil\-ity (project)}}
+    }
+    child [concept color=black!25] { node {Generic programming}
+        child { node {Easy to understand (concept)}}
+        child { node {Difficult to understand (code)}}
+        child { node {Duplicate code}}
+        child { node {Pro\-gramm\-ing lang\-uag\-es}
+        	child {node{C}}
+        	child {node{Haskell}}
+        	child {node{SQL}}
+        }
+        child { node {Lacks scale}}
+    }
+    child [concept color=black!30] { node {Concepts}
+        child [grow=60] { node {In\-heri\-tance}}
+        child [grow=0] { node {Poly\-morphism}}
+        child [grow=-60] { node {Objects and Classes}}
+    };
+\end{tikzpicture}
