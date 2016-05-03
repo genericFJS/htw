@@ -949,6 +949,201 @@ SELECT * FROM Kunde
 SELECT * FROM Artikel
 	WHERE NOT Artnr = '1234'		-- Alternativ: Artnr != '1234'
 \end{lstlisting}
+
+\paragraph{Abfrage mit Patternsuche}$ $
+\begin{lstlisting}[language=SQL]
+... WHERE <spaltenname> LIKE 'muster'
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+SELECT * FROM Kunde
+WHERE Name LIKE '%GmbH'
+
+SELECT * FROM Kunde
+WHERE Name LIKE 'M_$\,$_er' -- sucht bspw. Maier, Meyer oder Mayer
+\end{lstlisting}
+
+\subparagraph{Funktion}
+\begin{lstlisting}[language=SQL]
+SUBSTR ( <spaltenname>, <startpos>, <länge> )
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+SELECT * FROM Kunde 
+WHERE SUBSTR(Name, 2,2)='ei'	-- ACHTUNG: substring fängt bei 1 an zu zählen: 1. Zeichen ist nicht an der Stelle 0, sondern tatsächlich 1
+-- das gleiche wie:
+WHERE Name LIKE '_ei%'
+\end{lstlisting}
+\subparagraph{Bereich}$ $
+\begin{lstlisting}[language=SQL]
+SELECT * FROM Kunde 
+WHERE Name LIKE '[E-N]%'	-- alle Namen die mit Buchstaben zwischen E und N beginnen
+WHERE Name LIKE '[^E-N]%'	-- alle, die nicht mit Buchstaben zwischen E und N beginnen
+\end{lstlisting}
+
+\paragraph{Attributzuweisung in Abfrage}$ $
+\begin{lstlisting}[language=SQL]
+AS <spaltenname>
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+SELECT Kunr, Name, AS Kundenname
+FROM Kunde 
+
+SELECT Kunr, Vorname | ', ' | Vorname AS Kundenname
+FROM Kunde
+\end{lstlisting}
+zweiteres würde liefern:\\
+\begin{tabular}{l | l}
+Kunr & Kundenname\\
+\hline
+123 & Maier, Uwe\\
+234 & Adler, Sabine\\
+…
+\end{tabular}
+\begin{lstlisting}[language=SQL]
+SELECT Kunr, Artnr, Menge*vPreis AS Umsatz
+FROM Kauf
+\end{lstlisting}
+liefert:\\
+\begin{tabular}{l l | l}
+Kunr & Artnr & Umsatz\\
+\hline
+123 & 1234 & 3600\\
+234 & 5555 & 500\\
+…
+\end{tabular}
+\paragraph{Datumsfunktionen}$ $
+\begin{enumerate}
+\item $ $ \begin{lstlisting}[language=SQL]
+DAY(), MONTH(), YEAR(), HOUR(), ...
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+SELECT YEAR(GebDat)
+FROM Kunde
+\end{lstlisting}
+\item $ $\begin{lstlisting}[language=SQL]
+DATEDIFF ( <datepart>, <begin>, <end> ) -- <datepart>: dd, mm, yy
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+SELECT DATEDIFF (dd, GETDATE(), '24/12/2016') -- Achtung Formatierung des Datums ist von DBMS abhängig (ob / oder . und Reihenfolge)
+\end{lstlisting}
+\item $ $\begin{lstlisting}[language=SQL]
+DATEADD ( <datepart>, <number>, <date> )
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+DATEADD ( dd, 50, GETDATE() )
+\end{lstlisting}
+\end{enumerate}
+
+\subsubsection{Sortierung / Gruppenbildung}
+\Folie{4}{10}
+\paragraph{Sortierung} $ $
+\begin{lstlisting}[language=SQL]
+SELECT * FROM Kunde
+ORDER BY Name, Vorname
+
+SELECT * FROM Kunde
+ORDER BY GebDat DESC	-- jüngste zuerst
+\end{lstlisting}
+\paragraph{Gruppierung} $ $
+\begin{lstlisting}[language=SQL]
+SELECT Ort, SUM( Kredit ) AS Kreditsumme
+-- Achtung! Auswahl kann nicht auf bspw. Name erweitert werden, weil dann die Tabelle für einen Ort mehrere Namen hätte
+-- Ähnlich: Nicht mit bspw. Kredit erweitertbar. ABER: Möglich ist SUM(Kredit), was dann alle Werte für den Ort aufsummieren würde
+FROM Kunde
+GROUP BY Ort	-- Jeder Ort taucht nur einmal auf
+\end{lstlisting}
+
+\subsubsection{Built-in-Funktionen}
+(Aggregatfunktionen, Statistikfunktionen)
+\begin{lstlisting}[language=SQL]
+SUM ()
+AVG ()
+MAX ()
+MIN ()
+COUNT ()
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+SELECT SUM( Kredit ) 
+FROM Kunde		-- Summe aller Kredite von allen Kunden (eine Tabelle mit nur einem Eintrag: der Summe)
+
+-- weiteres Bsp. siehe Gruppierung
+
+SELECT Artnr, SUM( Menge*vPreis ) AS UmSum
+FROM Kauf
+GROUP BY Artnr
+\end{lstlisting}
+Count:
+\begin{lstlisting}[language=SQL]
+COUNT (<spaltenname>)	-- zählt belegte Werte einer Spalte. Einträge mit NULL werden nicht gezählt.
+COUNT (*)		-- zählt auch NULL-Werte, also einfach alle Zeilen
+DISTINCT		-- zählt keinen Wert mehrfach
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+SELECT COUNT(*)		-- Anzahl der Kunden
+FROM Kunde
+
+SELECT COUNT(DISTINCT Ort)	-- Anzahl der Orte ohne Dopplungen
+FROM Kunde
+
+SELECT DISTINCT Ort	-- Zählt Orte ohne Dopplungen auf
+FROM Kunde
+\end{lstlisting}
+
+\subsubsection{Abfrage mit Bereichsgrenzen und Wertaufzählungen}
+\paragraph{Bereich} $ $
+\begin{lstlisting}[language=SQL]
+BETWEEN x AND y
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+SELECT * FROM Kauf
+WHERE vPreis BETWEEN 400 AND 1000
+\end{lstlisting}
+\paragraph{Aufzählung} $ $
+\begin{lstlisting}[language=SQL]
+IN (<liste>)
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+SELECT * FROM Kunde
+WHERE Beruf IN('Maler', 'Schlosser', 'Tischler')
+\end{lstlisting}
+
+\subsubsection{Einfache Abfrageschachtelung}
+(hinter dem WHERE steht eine Unterabfrage)
+\begin{lstlisting}[language=SQL]
+SELECT * FROM <tab_name>
+WHERE <spaltenname> [ = | IN ] (	-- = benutzen, falls Unterabfrage einzelnen Wert zurück gibt, IN-Operator benutzen, falls eine Wertliste durch Unterabfrage erzeugt wird
+	SELECT <sp_name>
+	FROM <tab_name>
+	[WHERE]
+)
+\end{lstlisting}
+Abfrage von Name, Ort, GebDat des ältesten Dresdner Kunden:
+\begin{lstlisting}[language=SQL]
+SELECT Name, Ort, GebDat FROM Kunde
+WHERE GebDat = (
+	SELECT MIN(GebDat)
+	FROM Kunde
+	WHERE Ort='Dresden'	-- genau ein Wert
+)	-- Achtung: hätten zwei älteste am gleichen Tag Geburtstag und einer würde nicht aus Dresden kommen, dann würde diese mit angegeben. Also:
+AND Ort='Dresden'
+\end{lstlisting}
+Alle Kunden, die etwas gekauft haben (bzw. in Kauf eingetragen sind) aus Dresden:
+\begin{lstlisting}[language=SQL]
+SELECT * FROM Kauf
+WHERE Kunr IN (
+	SELECT KuNr FROM Kunde
+	WHERE Ort='Dresden'
+)
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
 %\newpage
 %\printbibliography
 \end{document}
