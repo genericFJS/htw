@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fstream2_", "fstream2_\fstream2_.vcxproj", "{CD68DD69-9615-4EA6-92BE-5396870863DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD68DD69-9615-4EA6-92BE-5396870863DE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CD68DD69-9615-4EA6-92BE-5396870863DE}.Debug|Win32.Build.0 = Debug|Win32
+		{CD68DD69-9615-4EA6-92BE-5396870863DE}.Release|Win32.ActiveCfg = Release|Win32
+		{CD68DD69-9615-4EA6-92BE-5396870863DE}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -914,7 +914,7 @@ Tabelle (Krümmungen)\\
 \begin{tabular}{l | l | L{.2} | l}
 Kurve & $y=f(x),\;x\in I$ & $x=x(t)$\newline $y=y(t), \; t\in I$ & $r(\varphi), \; \varphi \in I$ \\
 \hline 
-Krümmung $\varkappa$ in Punkt $P=(x,y)$ & $\varkappa=\frac{y''}{(1+(y')^2)^{\tfrac{3}{2}}}$ & $\varkappa=\frac{\dot{x}\ddot{y}-\ddot{x}\dot{y}}{(\dot{x}^2+\dot{y}^2)^{\tfrac{3}{2}}}$ & $\varkappa=\frac{r^2+2(r')^2-r''}{(r^2+(r')^2)^{\tfrac{3}{2}}}$
+Krümmung $\varkappa$ in Punkt $P=(x,y)$ & $\varkappa=\frac{y''}{(1+(y')^2)^{\tfrac{3}{2}}}$ & $\varkappa=\frac{\dot{x}\ddot{y}-\ddot{x}\dot{y}}{(\dot{x}^2+\dot{y}^2)^{\tfrac{3}{2}}}$ & $\varkappa=\frac{r^2+2(r')^2-r\cdot r''}{(r^2+(r')^2)^{\tfrac{3}{2}}}$
 \end{tabular}
 \paragraph{Bsp. 17:} In welchem Punkt ist $f(x)=e^x$ am stärksten gekrümmt (d.h. maximiere $|\varkappa|$)\\
 Lösung: $y'=e^x+y''$\\
@@ -1182,20 +1182,101 @@ j>1 & \text{siehe weitere Formelsammlung (selten)}
 \item Nullstellen des Nenners: $x_1=-3, \; x_2 = 1$\\
 $\Rightarrow x^2+2x-3=(x+3)(x-1)$
 \end{itemize}
-Ansatz für PBZ:\\
+Ansatz für PBZ:
 \begin{align*}
 \frac{3x+4}{(x+3)(x-1)}&=\frac{A}{x+3}+\frac{B}{x-1} \qquad |\cdot (x+3)(x-1)\\
 3x+4 &= A(x-1)+B(x+3)
 \end{align*}
 Einsetzen der NS: \\
 $x_1: \qquad -5 = A\cdot (-4) \Rightarrow A = \frac{5}{4}$\\
-$x_2: \qquad 7 = B \cdot 4 \Rightarrow B=\frac{7}{4}$\\
+$x_2: \qquad 7 = B \cdot 4 \Rightarrow B=\frac{7}{4}$
 \begin{align*}
 \Rightarrow I &= \int \frac{\frac{5}{4}}{x+3}\intd{x}+\int \frac{\frac{7}{4}}{x-1}\intd{x}\\
  &= \frac{5}{4} \ln (|x+3|) + \frac{7}{4}\ln(|x-1|)+C
 \end{align*}
+\subparagraph{Bsp. 11:} $I=\int \frac{7x^2-10x+37}{(x+1)(x^2-4x+13)}\intd{x}$
+\begin{itemize}
+\item echt gebrochen
+\item Nenner reell nicht weiter zerlegbar (denn Nullstellen von $x^2-4x+13$ sind $x_{1/2}=2\pm3i$)
+\item Partialbruchzerlegung:
+\begin{align*}
+\frac{7x^2-10x+37}{(x+1)(x^2-4x+13)}&=\frac{A}{x+1}+\frac{Bx+C}{x^2-4x+13} \quad |\cdot \text{Nenner}\\
+7x^2-10x+37&=A(x^2-4x+13)+(Bx+C)(x+1)\\
+&= (A+B)x^2+(-4A+B+C)x+(13A+C)
+\end{align*}
+\begin{tabular}{l l l}
+Einsetzen der Nullstelle $x=-1$: & $54=18 A$ & $\Rightarrow A=3$\\
+Koeffizientenvergleich $x^2$: & $7=A+B $ & $\Rightarrow B=4$\\
+ $x^0$ & $13A+C)$ & $\Rightarrow C=-2$ 
+\end{tabular}\\
+$\Rightarrow \int \frac{7x^2-10x+37}{(x+1)(x^2-4x+13)}\intd{x}=\int \underbrace{\frac{3}{x+1}}_{a}+ \underbrace{\frac{4x-2}{x^2-4x+13}}_{b}\intd{x} $\\
+$a: \; \int \frac{3}{x+1} \intd{x} = 3 \ln|x+1| +C_1$\\
+$b: \; \int \frac{4x-2}{x^2-4x+13}\intd{x}=\int\frac{2(2x-4)-2+8}{x^2-4x+13}=2\underbrace{\int \frac{2x-4}{x^2-4x+13}}_{I_1}+\underbrace{\frac{6}{x^2-4x+13}}_{I_2}\intd{x}$\\
+$I_1 = \int \frac{2x-4}{x^2-4x+13}\intd{x}\overset{\text{Subst.}}{=}\ln|x^2-4x+13| + C_2$\\
+$I_2 = 6\int \frac{\intd{x}}{(x-2)^2+9}=6\int \frac{\intd{u}}{u^2+3^2}=6\cdot \frac{1}{3}\arctan\left(\frac{u}{3}\right)+C_3=2\cdot\arctan\left(\frac{x-2}{3}\right)+C_3$\medskip\\
+$\Rightarrow I = 3\ln|x+1| + 2 \ln\left(x^2-4x+13\right)+2\arctan\left(\frac{x-2}{3}\right)+C_4$
+\end{itemize}
 
+\subsection{Integration von Potenzreihen}
+\paragraph{Satz 1:} Es sei $f:(x_0-r, x_0+r)\to \RR$, $f(x)=\sum_{n=0}^\infty a_n (x-x_0)^n$ die Grenzfunktion der Potenzreihe (mit Konvergenzradius $r$). Dann ist $F: (x_0-r,x_0+r)\to \RR$, $F(x)=\sum_{n=0}^\infty \frac{a_n}{n+1}(x-x_0)^{n+1}$ eine Stammfunktion von $f$ (gliedweises Integrieren im Konvergenzintervall).
+\subparagraph{Bsp. 12:} \parskp
+$f(x)=\frac{1}{1+x^2}=1-x^2+x^4-x^6+\dots \quad |x|<1$ (siehe Übung, nutze geometrische Reihe)\\
+$\Rightarrow \int \frac{1}{1+x^2}\intd{x}=x-\frac{x^3}{3}+\frac{x^5}{5}-\frac{x^7}{7}+\dots + C_1$\\
+Wir wissen aber auch: $\int \frac{1}{1+x^2}\intd{x}=\arctan (x) + C_2$\\
+$\Rightarrow \arctan(x) = x-\frac{x^3}{3}+\frac{x^5}{5}-\frac{x^7}{7}+\dots + C_3$ \quad mit $C_3=0$ (setze $x=0$ ein) und $|x|<1$.
+\subparagraph{Bsp. 13:} Gesucht ist Stammfunktion zu $f(x)=e^{-x^2}$
+\begin{align*}
+F(x)&=\int_0^x e^{-t^2}\intd{t}=\int_0^x\left(1-t^2+\frac{(t^2)^2}{2!}-\frac{(t^2)^3}{3!}+\dots\right)\intd{t}\\
+&= x - \frac{x^3}{3}+\frac{x^5}{5\cdot 2!}-\frac{x^7}{7\cdot 3!}+\frac{x^9}{9\cdot 4!}-\cdots 
+\quad (x\in \RR)
+\end{align*}
+\subparagraph{Diskussion:} 
+\begin{itemize}
+\item $\int e^{-t^2}\intd{t}$ nicht geschlossen auswertbar.
+\item Für nicht zu große $x$ ist die Reihendarstellung zur Auswertung von $F$ gut geeignet.\\
+z.B. $\int_0^1 e^{-x^2}\intd{x}=\underbrace{1-\frac{1}{3}+\frac{1}{5\cdot 2!}-\frac{1}{7\cdot 3!}+\frac{1}{9\cdot 4!}-\frac{1}{11\cdot 5!}+\frac{1}{13\cdot 6!}-\frac{1}{15\cdot 7!}+\frac{1}{17\cdot 8!}}_{0,746824\cdots}-\dots$\\
+$\left|\text{Fehler}\right| < \frac{1}{19\cdot 9!}=1,4504\cdot 10^{-7}$ (vgl. Satz über Leibnitz-Kriterium)
+\end{itemize}
 
+\section{Numerische Integration}
+\emph{Ziel:} Berechne $I=\int_a^b f(x) \intd{x}$ falls Stammfunktion „kompliziert“ oder nicht elementar angebbar.\\
+\emph{Prinzip:} 
+\begin{anumerate}
+\item Zerlegung von $[a,b]$ in $n$ gleichlange Teilintervalle der Länge $h=\frac{1}{n}(b-a)$\\
+$\Rightarrow$ Teilpunkte sind $x_k=a+k\cdot h \quad (k=0,1,\dots,n)$, $y_k=f(x_k)$\\
+ABB 101
+\item Ersetze $f(x)$ über den Teilintervallen durch einfachere Funktionen.\\
+z.B.: \begin{itemize}
+\item lineare Funktionen \quad $\rightsquigarrow$ Trapez Regel
+\item quadratische Funktionen \quad$\rightsquigarrow$ SIMPSON-Regel
+\end{itemize}
+ABB 102+3\\
+Als Näherung für $I$ ergibt sich für die Simpson-Regel: \\
+$I \approx S_n(h)=\frac{h}{3}\left(\tblue{(y_0+y_n)}+4\tgreen{(y_1+y_3+\dots+y_{n-1})}+2\tred{(y_2+y_4+\dots+y_{n-2})}\right)$\\
+falls $n$ gerade ist.
+\end{anumerate}
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Fehlerabschätzung:\\
+$I=S_n(h)-\frac{h^4(b-a)}{180}f^{(4)}(\xi) \quad a < \xi < b$\\
+(falls $f^{(4)}$ stetig in $[a,b]$)
+\item Simpson-Regel ist für Polynome einschließlich Grad 3 exakt.
+\item Praktische Durchführung: Schrittweitenhalbierung\\
+Startwert: $S^{(1)}=S_n(h)$ für geeignetes $h$. $S^{(2)}=S_{2n}\left(\frac{h}{2}\right)$, $S^{(3)}=S_{4n}\left(\frac{h}{4}\right)$, usw. bis dich die Ziffern in gewünschter Genauigkeit nicht mehr ändern.
+\subparagraph{Bsp.:} $\int_0^1 e^{-x^2}\intd{x}$\\
+$n=4, \; h=0,25$\\
+\begin{tabular}{l l l l l }
+$k$ & $x_k$ & \tblue{$y_0, y_n$} & \tgreen{$y_{2j+1}$} & \tred{$y_{2j}$}\\
+\hline
+0 & 0		& 1	&\\
+1 & 0,25& 	&0,939413\\
+2 & 0,5	&		&					& 0,778801\\
+3 & 0,75&		&0,569783\\
+4 & 1		& 0,367879\\
+\hline 
+ & &		1,367879 & 1,509196 & 0,778801
+\end{tabular}\\
+$S_4(0,25)=\frac{0,25}{3}\left(1,367879 + 4\cdot 1,509196 + 2\cdot 0,778801\right)$\\
 
-
+\end{enumerate}
 \end{document}
