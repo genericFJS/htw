@@ -1,14 +1,61 @@
-\documentclass[a4paper,11pt, footheight=26pt
-%,twoside
-]{scrreprt}
-\usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
-\geometry{a4paper%, top=30mm, bottom=22mm,headsep=10mm, footskip=12mm
-%, left=20mm, right=20mm
-%, inner=27mm, outer=13mm
-, bottom=22mm, footskip=12mm
-}
-
+%\documentclass[a4paper,11pt, footheight=26pt]{scrreprt}
+%\usepackage[head=23pt]{geometry}
+%\geometry{a4paper, bottom=22mm, footskip=12mm}
 % Zeile 2 (,twoside) und 7 (inner=...) für eine Druckversion (doppelseitig) ent-kommentieren (Rand für Hefter)
+%\usepackage{scrlayer-scrpage}
+
+\documentclass[ignorenonframetext, 11pt, table]{beamer}
+
+\usenavigationsymbolstemplate{}
+\setbeamercolor{author in head/foot}{fg=black}
+\setbeamercolor{title}{fg=black}
+\setbeamercolor{bibliography entry author}{fg=htworange!70}
+%\setbeamercolor{bibliography entry title}{fg=blue} 
+\setbeamercolor{bibliography entry location}{fg=htworange!60} 
+\setbeamercolor{bibliography entry note}{fg=htworange!60}  
+
+\setbeamertemplate{itemize item}{\color{black}$\bullet$}
+\setbeamertemplate{itemize subitem}{\color{black}--}
+\setbeamertemplate{itemize subsubitem}{\color{black}$\bullet$}
+\makeatother
+\setbeamertemplate{footline}
+{
+\leavevmode
+\def\arraystretch{1.2}
+\arrayrulecolor{gray}
+\begin{tabular}{ p{0.167\textwidth} | p{0.491\textwidth} | p{0.089\textwidth} | p{0.103\textwidth}}
+\hline
+\strut\insertshortauthor & \insertshorttitle & Slide \insertframenumber{}% / \inserttotalframenumber{}
+ & May 4, 2016\\
+\end{tabular}
+}
+\setbeamertemplate{headline}
+{
+\leavevmode
+\setlength{\arrayrulewidth}{1pt}
+\hspace*{2em}	
+\begin{tabular}{p{0.63\textwidth}}
+\rule{0pt}{3em}\normalsize{\textbf{\insertsection\strut}}\\
+\arrayrulecolor{htworange}
+\hline
+\end{tabular}
+\begin{tabular}{l}
+\rule{0pt}{4em}\includegraphics[width=3.25cm]{\workingdir HTW_GESAMTLOGO_CMYK.eps}\\
+\end{tabular}
+}
+\makeatletter
+
+% Recalculate the head of head- and footlines for each frame
+% (http://tex.stackexchange.com/a/61788/3323)
+\usepackage{etoolbox}
+\makeatletter
+\pretocmd{\beamer@@@@frame}{%
+  \addtocounter{framenumber}{1}%
+  \beamer@calculateheadfoot%
+  \addtocounter{framenumber}{-1}}{}{}
+\makeatother
+
+\definecolor{htworange}{RGB}{249,155,28}
 
 \setcounter{secnumdepth}{3}	% zählt auch subsubsection
 \setcounter{tocdepth}{3}	% Inhaltsverzeichnis bis in subsubsection
@@ -26,15 +73,15 @@
 
 % Style-Aufhübschung
 \usepackage{soul, color}	% Kapitälchen, Unterstrichen, Durchgestrichen usw. im Text
-\usepackage{scrlayer-scrpage}	% Kopf-/Fußzeile
+%\usepackage{scrlayer-scrpage}	% Kopf-/Fußzeile
 %\usepackage{titleref}
-\usepackage[perpage]{footmisc}	% Fußnotenzählung Seitenweit, nicht Dokumentenweit
-\renewcommand*{\thefootnote}{\fnsymbol{footnote}}	% Fußnoten-Symbole anstatt Zahlen
-\renewcommand*{\titlepagestyle}{empty} % Keine Seitennummer auf Titelseite
+%\usepackage[perpage]{footmisc}	% Fußnotenzählung Seitenweit, nicht Dokumentenweit
+%\renewcommand*{\thefootnote}{\fnsymbol{footnote}}	% Fußnoten-Symbole anstatt Zahlen
+%\renewcommand*{\titlepagestyle}{empty} % Keine Seitennummer auf Titelseite
 
 % Mathe usw.
 \usepackage{amssymb}
-\usepackage[fleqn, intlimits]{amsmath}	% fleqn: align-Umgebung rechtsbündig; intlimits: Integralgrenzen immer ober-/unterhalb
+%\usepackage[fleqn, intlimits]{amsmath}	% fleqn: align-Umgebung rechtsbündig; intlimits: Integralgrenzen immer ober-/unterhalb
 %\usepackage{mathtools} % u.a. schönere underbraces
 \usepackage{xcolor}
 \usepackage{esint}	% Schönere Integrale, \oiint vorhanden
@@ -85,6 +132,8 @@
 ]	% Achtung: dafür muss doppelt kompliert werden!
 \usepackage{graphpap}	% Grid für Graphen
 \tikzset{every state/.style={inner sep=2pt, minimum size=2em}}
+\usetikzlibrary{mindmap, backgrounds}
+\usepackage{tikz-uml} 
 
 % Tabular
 \usepackage{longtable}	% Große Tabellen über mehrere Seiten
@@ -103,10 +152,10 @@
 \NumTabs{6}	% Anzahl von Tabs pro Zeile zum springen
 \usepackage{listings} % Source-Code mit Tabs
 \usepackage{lstautogobble} 
-\usepackage{enumitem}	% Anpassung der enumerates
-\setlist[enumerate,1]{label=\arabic*.)}	% global andere Enum-Items
+%\usepackage{enumitem}	% Anpassung der enumerates
+%\setlist[enumerate,1]{label=\arabic*.)}	% global andere Enum-Items
 \newenvironment{anumerate}{\begin{enumerate}[label=\alph*.)]}{\end{enumerate}} % Alphabetische Aufzählung
-\renewcommand{\labelitemiii}{$\scriptscriptstyle ^\blacklozenge$} % global andere 3. Item-Aufzählungszeichen
+%\renewcommand{\labelitemiii}{$\scriptscriptstyle ^\blacklozenge$} % global andere 3. Item-Aufzählungszeichen
 \usepackage{letltxmacro} % neue Definiton von Grundbefehlen
 % Nutzen:
 %\LetLtxMacro{\oldemph}{\emph}
@@ -164,42 +213,16 @@ literate=%
 
 % pdf-Setup
 \usepackage{pdfpages}
-\usepackage[bookmarks,%
-bookmarksopen=false,% Klappt die Bookmarks in Acrobat aus
-colorlinks=true,%
-linkcolor=black,%
-citecolor=red,%
-urlcolor=black,%
-]{hyperref}
+%\usepackage[bookmarks,%
+%bookmarksopen=false,% Klappt die Bookmarks in Acrobat aus
+%colorlinks=true,%
+%linkcolor=black,%
+%citecolor=red,%
+%urlcolor=black,%
+%]{hyperref}
 
 % Titel, Autor usw. werden vor dem Anfang des Dokuments in einem Rutsch definiert…
-\newcommand{\DTitel}[1]{\newcommand{\Dokumententitel}{#1}}
-\newcommand{\DUntertitel}[1]{\newcommand{\Dokumentenuntertitel}{#1}}
-\newcommand{\DAutor}[1]{\newcommand{\Dokumentenautor}{#1}}
-\newcommand{\DNotiz}[1]{\newcommand{\Dokumentennotiz}{#1}}
-\newcommand{\DSign}[1]{\newcommand{\Dokumentensignatur}{#1}}
-\DSign{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \Dokumentenautor}}}
-\newcommand{\Autorformat}[1]{\textcolor{darkgray}{Mitschrift von #1}}
-\newcommand{\workingdir}{../}	% Arbeitsordner (in Abhängigkeit vom Master) Standard: LateX_master Ordner liegt im Eltern-Ordner
-% … Deswegen folgendes erst Nach Dokumentenbeginn ausführen:
-\AtBeginDocument{
-	\hypersetup{
-		pdfauthor={\Dokumentenautor},
-		pdftitle={HTW Dresden | \Dokumententitel - \Dokumentenuntertitel},
-	}
-	\automark[section]{section}
-	\automark*[subsection]{subsection}
-	\pagestyle{scrheadings}
-	\ihead{\includegraphics[height=1.7em]{\workingdir LaTeX_master/HTW-Logo.eps}}
-	\ohead{\Dokumententitel}
-	\cfoot{\pagemark}
-	\ofoot{\Dokumentensignatur}
-	% Titelseite
-	\title{\includegraphics[width=0.35\textwidth]{\workingdir LaTeX_master/HTW-Logo.eps}\\\vspace{0.5em}
-	\Huge\textbf{\Dokumententitel} \\\vspace*{0,5cm}
-	\Large \Dokumentenuntertitel \\\vspace*{4cm}}
-	\author{\Autorformat{\Dokumentenautor} \vspace*{1cm}\\\Dokumentennotiz}
-}
+\newcommand{\workingdir}{../}
 
 %% EINFACHE BEFEHLE
 
