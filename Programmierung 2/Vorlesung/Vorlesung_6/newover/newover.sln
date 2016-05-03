@@ -1,0 +1,19 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "newover", "newover.vcxproj", "{35FA2299-235A-4C95-8B87-E05CA4AD8402}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35FA2299-235A-4C95-8B87-E05CA4AD8402}.Debug|Win32.ActiveCfg = Debug|Win32
+		{35FA2299-235A-4C95-8B87-E05CA4AD8402}.Debug|Win32.Build.0 = Debug|Win32
+		{35FA2299-235A-4C95-8B87-E05CA4AD8402}.Release|Win32.ActiveCfg = Release|Win32
+		{35FA2299-235A-4C95-8B87-E05CA4AD8402}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
