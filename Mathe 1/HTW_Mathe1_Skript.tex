@@ -911,7 +911,7 @@ $\varkappa$ (Kappa)… Krümmung\\
 $\varrho$… Krümmungsradius mit $\varrho=\frac{1}{|\varkappa|}$\\
 $M$… Mittelpunkt des Krümmungskreises $\overrightarrow{OM}=\mtr{x_0 \\ y_0}+\frac{1}{\varkappa}\cdot \frac{\vec{n}}{|\vec{n}|}$\\
 Tabelle (Krümmungen)\\
-\begin{tabular}{l | l | L{.2} | l}
+\begin{tabular}{L{.2} | L{.3} | L{.199} | L{.3}}
 Kurve & $y=f(x),\;x\in I$ & $x=x(t)$\newline $y=y(t), \; t\in I$ & $r(\varphi), \; \varphi \in I$ \\
 \hline 
 Krümmung $\varkappa$ in Punkt $P=(x,y)$ & $\varkappa=\frac{y''}{(1+(y')^2)^{\tfrac{3}{2}}}$ & $\varkappa=\frac{\dot{x}\ddot{y}-\ddot{x}\dot{y}}{(\dot{x}^2+\dot{y}^2)^{\tfrac{3}{2}}}$ & $\varkappa=\frac{r^2+2(r')^2-r\cdot r''}{(r^2+(r')^2)^{\tfrac{3}{2}}}$
@@ -1263,9 +1263,10 @@ $I=S_n(h)-\frac{h^4(b-a)}{180}f^{(4)}(\xi) \quad a < \xi < b$\\
 \item Simpson-Regel ist für Polynome einschließlich Grad 3 exakt.
 \item Praktische Durchführung: Schrittweitenhalbierung\\
 Startwert: $S^{(1)}=S_n(h)$ für geeignetes $h$. $S^{(2)}=S_{2n}\left(\frac{h}{2}\right)$, $S^{(3)}=S_{4n}\left(\frac{h}{4}\right)$, usw. bis dich die Ziffern in gewünschter Genauigkeit nicht mehr ändern.
+\end{enumerate}
 \subparagraph{Bsp.:} $\int_0^1 e^{-x^2}\intd{x}$\\
 $n=4, \; h=0,25$\\
-\begin{tabular}{l l l l l }
+\begin{tabular}{l l l l l}
 $k$ & $x_k$ & \tblue{$y_0, y_n$} & \tgreen{$y_{2j+1}$} & \tred{$y_{2j}$}\\
 \hline
 0 & 0		& 1	&\\
@@ -1276,7 +1277,114 @@ $k$ & $x_k$ & \tblue{$y_0, y_n$} & \tgreen{$y_{2j+1}$} & \tred{$y_{2j}$}\\
 \hline 
  & &		1,367879 & 1,509196 & 0,778801
 \end{tabular}\\
-$S_4(0,25)=\frac{0,25}{3}\left(1,367879 + 4\cdot 1,509196 + 2\cdot 0,778801\right)$\\
+$S_4(0,25)=\frac{0,25}{3}\left(1,367879 + 4\cdot 1,509196 + 2\cdot 0,778801\right)$
 
+\section{Uneigentliche Integrale}
+\begin{itemize}
+\item Vorbetrachtung:\\
+Bisher $\int_a^b f(x) \intd{x}$ wobei $[a,b]$ endliches Integral auf $f$ stückweise stetig auf $[a,b]$ (daher beschränkt)
+\item 2 Erweiterungen:
+\begin{enumerate}
+\item unendliches Intervall $(-\infty, b]$, $[a,\infty)$ oder $(-\infty, \infty)$
+\item Funktion $f$ unbeschränkt (Unendlichkeits- bzw. Polstellen)
 \end{enumerate}
+\end{itemize}
+\paragraph{Unendliches Intervall} (zu 1.)
+\begin{anumerate}
+\item $\int_{-infty}^b f(x) \intd{x}:= \lim_{A\to \infty} \int_A^b f(x) \intd{x}$\\
+analog:\\
+$\int_a^{\infty} f(x) \intd{x} := \lim_{B \to \infty} \int_a^{\infty} f(x) \intd{x}$
+\item $\int_{-\infty}^{\infty} f(x) \intd{x} := \int_{-\infty}^c f(x) \intd{x} + \int_c^{\infty} f(x) \intd{x}$ für beliebiges $c \in \RR$ (bpsw. $c=0$).
+\end{anumerate}
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Falls die Grenzwerte existieren, so heißt das Integral konvergent, sonst divergent.
+\item Ein berühmtes Beispiel ist die $\Gamma$-Funktion:\\
+$\Gamma (x) = \int_0^{\infty} e^{-t} t^{x-1} \intd{t} \qquad (x >0 )$\\
+Eigenschaft: $\Gamma (n) = (n-1)!$ falls $n \in \NN$
+\end{enumerate}
+\subparagraph{Bsp. 1:} 
+\begin{anumerate}
+\item $\int_0^{\infty} e^{-x} \intd{x} = \lim_{A \to \infty} \int_0^A e^{-x} \intd{x} = \lim_{A \to \infty} \left[ -e^{-x}\right]_0^A = \lim_{A \to \infty} \left( -e^{-A}+e^0\right) =1$
+\item $\int_0^{\infty} \cos x \intd{x}= \lim_{A\to \infty} \int_0^A \cos x \intd{x} = \lim_{a\to \infty} \left[ \sin (x) \right]_0^A = \lim_{A\to \infty} \left( \sin A - \underbrace{\sin 0}_{=0}\right)$\\
+Grenzwert existiert nicht $\Rightarrow$ Integral unbestimmt divergent.
+\item $\int_1^{\infty} = \lim_{A\to \infty} \int_1^A \frac{1}{x} \intd{x} = \lim_{A\to \infty} \left[ \ln | x| \right]_1^A = \lim_{A\to \infty} \left( \ln A - \underbrace{\ln 1}_{0}\right) = \infty$\\
+$\Rightarrow$ bestimmt divergent
+\end{anumerate}
+\paragraph{Unbeschränkter Integrand} (zu 2.)
+\begin{anumerate}
+\item bspw. Unendlichkeitsstellen bei $b$:\\
+$\int_a^b f(x) \intd{x} := \lim_{\varepsilon \searrow 0} \int_a^{b-\varepsilon} f(x) \intd{x}$\\
+ABB 104
+\item falls Unendlichkeitsstelle $x_0$ im Inneren von $[a,b]$ liegt:\\
+$\int_a^b f(x) \intd{x} := \int_a^{x_0} f(x) \intd{x} + \int_{x_0}^b f(x) \intd{x}$\\
+… und nutzen nun a.):\\
+$\lim_{\varepsilon\searrow 0} \int_a^{x_0-\varepsilon} f(x) \intd{x} + \lim_{\varepsilon\searrow 0} \int_{x_0 + \varepsilon}^b f(x) \intd{x}$
+\end{anumerate}
+\subparagraph{Bsp. 2:} \parskp
+$\int_0^4 \frac{1}{\sqrt{x}}\intd{x} = \lim_{\varepsilon\searrow0} \left[2\sqrt{x}\right]_{\varepsilon}^4 = \lim_{\varepsilon \searrow 0} \left( 2 \sqrt{4}-2 \sqrt{\varepsilon}\right) = 4$
+\paragraph{Unendliches Intervall und unbeschränkter Integrand} (Kombination von 1. und 2.)
+\subparagraph{Bsp. 3} \parskp
+$I = \int_1^{\infty} \frac{\intd{x}}{x \sqrt{x-1}}= \int_1^2 \frac{\intd{x}}{x\sqrt{x-1}}+ \int_2^{\infty} \frac{\intd{x}}{x\sqrt{x-1}}$\\
+mit $\int \frac{\intd{x}}{x\sqrt{x-1}}= \underbrace{\dots}_{\text{Subst. }t=\sqrt{x-1}} = 2 \arctan \sqrt{x-1} + C$:
+\begin{align*}
+I &= \lim_{\varepsilon \searrow 0} \int_{1+\varepsilon}^2 \frac{\intd{x}}{x \sqrt{x-1}}+ \lim_{a\to \infty} \int_2^A \frac{\intd{x}}{x\sqrt{x-1}}\\
+&= \lim_{\varepsilon\searrow0} \left[ 2\arctan \sqrt{x-1}\right]_{1+\varepsilon}^2 + \lim_{A\to \infty} \left[ 2 \arctan\sqrt{x-1}\right]_2^A\\
+&= \lim_{\varepsilon\searrow 0} ( 2 \arctan 1 - 2 \arctan \sqrt{\varepsilon}) + \lim_{A\to\infty} (2 \arctan \sqrt{A-1}-2\arctan 1 )\\
+&= \underbrace{\lim_{A \to \infty} 2 \arctan \sqrt{A-1}}_{\pi} - \underbrace{\lim_{\varepsilon \searrow} 2 \arctan \sqrt{\varepsilon}}_{0}\\
+&= \pi
+\end{align*}
+
+\section{Anwendungen}
+\subsection{Geometrische Anwendungen}
+\subsubsection{Inhalte ebener Flächen}
+\begin{itemize}
+\item ABB 105\\
+mit $a<b$ und $f(x) \geq 0$:\\
+$F=\int_a^b f(x) \intd{x}$
+\item ABB 106\\
+mit $a<b<c$:\\
+$F=\int_a^c |f(x)| \intd{x}=\left| \int_a^b f(x) \intd{x}\right| + \left| \int_b^c f(x) \intd{x}\right|= \int_a^b f(x) \intd{x} + \int_c^b f(x) \intd{x}$
+\item ABB 107\\
+mit $f(x)$: obere Funktion und $g(x)$: untere Funktion:\\
+$F=\int_{x_1}^{x_2} f(x) - g(x) \intd{x}$
+\end{itemize}
+\subparagraph{Bsp. 1:} Gesucht ist der Flächeninhalt $F$ des von der Ellipse $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1 \quad (a>0, \; b>0)$ begrenzten Bereichs.\\
+ABB 108\\
+$y= \pm b\sqrt{a-\frac{x^2}{a2}}$
+\begin{align*}
+F&=4 \cdot \int_0^a b \sqrt{1-\frac{x^2}{a}}\intd{x}=\frac{4b}{a}\int_0^a\sqrt{a^2-x^2}\intd{x}\overset{\substack{\text{Subst.}\\x=a\sin t}}{=}\frac{4b}{a}\left[\frac{1}{2}\left(x\sqrt{a^2-x^2}+a^2 \arcsin\frac{x}{a}\right)\right]_0^a\\
+&=\frac{4b}{a}\frac{1}{2}a^2\underbrace{\arcsin 1}_{\frac{\pi}{2}}=\pi \cdot ab
+\end{align*}
+
+\subsubsection{Bogenlänge}
+Bogenlänge ebener Kurven\\
+ABB 109\\
+Kurve $K$ mit Parameterdarstellung. $x=x(t) \quad y = y(t) \quad t \in [\alpha, \beta]$
+\begin{itemize}
+\item Vorgehen: Approximieren durch Streckenzug, dann Verfeinerung\\
+Länge des Streckenzugs: $\sum_{i=1}^n \overline{P_{i-1}P_i}=\sum_{i=1}^n \sqrt{(\Delta x_i)^2+(\Delta y_i)^2}$\\
+ABB 110\\
+$\Rightarrow \text{(Mittelwertsatz der Differentialrechnung} \sum_{i=1}^n \overline{P_{i-1}P_i}= \sum_{i=1}^n \sqrt{(\dot{x}(u_i))^2 + (\dot{y}(v_i))^2}\cdot \Delta t_i$\\
+mit $u_i, v_i\in (t_{i-1},t_i)$\\
+Verfeinerung:\\
+$\int_{\alpha}^{\beta} \sqrt{(\dot{x}(t))^2 + (\dot{y}(t))^2}\intd{t}$
+\end{itemize}
+\subparagraph{Diskussion:}
+\begin{itemize}
+\item Bogenlänge der Kurve $\vec{r} = \vec{r}(t) = \mtr{x(t) \\ y(t)}$ zwischen $\alpha$ und $t$ ist\\
+$S=\int_{\alpha}^t \underbrace{\sqrt{(\dot{x}(u))^2 + (\dot{y}(u))^2}}_{|\dot{r}(u)|}\intd{u} =: f(t)$\\
+$\Rightarrow \frac{\diffd{s}}{\diffd{s}}= |\dot{r}(t)| \Rightarrow \diffd{s}=|\dot{r}(t)| \intd{t}=\sqrt{\dot{x}^2+\dot{y}^2}\intd{t}$ (heißt Bogenelement)
+\item \begin{tabular}{l l}
+Kurvendarstellung & \\ 
+$x=x(t),\; y=y(t),$
+
+\end{tabular}
+\end{itemize}
+
+
+
+
+
+
 \end{document}
