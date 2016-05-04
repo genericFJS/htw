@@ -467,7 +467,8 @@ $T_{26}=\bigcup_{2\leq k<5}\{x| x\to AB \wedge \underbrace{A \Rightarrow^* x_2\d
 \end{itemize}
 \subparagraph{Bsp.:} Wir prüfen $(()()) \in L(G')$ für die Grammatik $G'$ in CNF, die die Sprache der korrekten Klammerung erzeugt.\\
 ABB100 \\
-Die Laufzeit des CYK-Algorithmus ergibt sich aus (Größe der Tabelle)$\cdot$(Aufwand pro Tabelleneintrag)$=O(n^2) \cdot O(n)=O(n^3)$.
+Die Laufzeit des CYK-Algorithmus ergibt sich aus\\
+(Größe der Tabelle)$\cdot$(Aufwand pro Tabelleneintrag)$=O(n^2) \cdot O(n)=O(n^3)$.
 \begin{lstlisting}[language=C]
 $T_{ij}:= \emptyset$
 for (k=i; k<j; k++) {
@@ -476,6 +477,105 @@ for (k=i; k<j; k++) {
 }
 \end{lstlisting}
 
+\subsection{Mehrdeutigkeit}
+Grammatik für arithmetische Ausdrücke:\\
+$E\to E+E \,|\, E - E \,|\, E*E \,|\, E/E \,|\, x \,|\, y \,|\, z$\\
+Daraus lässt sich abbilden:\\
+ABB 111\\
+Diese Grammatik ist auch mehrdeutig, wenn man sich auf nur einen Operator beschränkt:\\
+ABB 112\\
+Da $-$ links-assoziativ ist, stellt nur der linke Ableitungsbaum die korrekte Interpretation des Ausdrucks $x-y-z$ dar.\\
+$\Rightarrow$ Ableitungsbäume dürfen nicht verdreht werden!\\
+Eine Grammatik $G$ heißt \emph{eindeutig}, wenn es für alle Wörter $w \in L(G)$ \emph{genau einen} Ableitungsbaum gibt.\\
+Um eine eindeutige Grammatik zu erhalten, müssen zwei Probleme gelöst werden:
+\begin{enumerate}
+\item Die Priorität der Operatoren
+\item Die Assoziativität der Operatoren
+\end{enumerate}
+… müssen beachtet werden.\\
+Lösung für:
+\begin{enumerate}
+\item Die Grammatik muss so konstruiert werden, dass die Strichoperatoren nur auf der obersten Ebene, die Punktoperatoren nur auf der untersten Ebene erzeugt werden können.\\
+$E\to E+E \,|\, E-E \,|\, F \\
+F \to F*F \,|\, F/F \,|\, x \,|\, y \,|\, z$
+\item Die Grammatik muss so beschaffen sein, dass der Ableitungsbaum, gemäß der Richtung der Assoziativität, bei einem links-assoziativen Operator nur nach links wachsen kann.\\
+Basierend auf der Lösung für 1.) (mit $T$: Term, $F$: Faktor):\\
+$E\to E+T \,|\, E-T \,|\, T \\
+T \to T*F \,|\, T/F \,|\, F\\
+F \to x \,|\, y \,|\, z$
+\end{enumerate}
+Diese Grammatik ist eindeutig.\\
+Der Ableitungsbaum für $x*y+z$ ist:\\
+ABB 113\\
+Der Ableitungsbaum für $x-y-z$ ist:\\
+ABB 114
+
+\subsection{Syntaxanalyse}
+
+\begin{lstlisting}[language=C]
+if ( x<0 || y<0 ) {
+	...
+} else if
+	...
+\end{lstlisting}
+$\downarrow$\\
+Lexer\\
+ABB 115\\
+$\downarrow$\\
+Parser\\
+$\downarrow$\\
+Syntaxbaum
+\paragraph{Ziel:} Aus einem Wort einer kontextfreien Sprache soll ein soll ein Syntaxbaum erzeugt werden. Der CYK-Algorithmus ist dafür geeignet, besitzt jedoch eine Laufzeit in $O(n^3)$. Für deterministische kontextfreie Sprachen lässt sich das Wortproblem in Zeit $O(n)$ entscheiden.\\
+Wir erlauben dem Parser, die nächsten $k$ Zeichen der Eingabe (\emph{lookahead}) zu sehen, um abhängig davon Entscheidungen zu treffen.
+
+\subsubsection{Top-Down-Parser}
+Ein Top-Down-Parser baut den Syntaxbaum von oben nach unten auf. Ein \emph{Recursive Descent Parser} ist ein Top-Down-Parser, der die Regeln der kontextfreien Grammatik als rekursive Funktionen implementiert.
+
+\begin{lstlisting}[language=java]
+public class Parser {
+	String input;
+	int pos;
+	
+	boolean parse (String inptu0) {
+		input = input0 + "#";
+		pos = 0;
+		return S() && match('#');
+	}
+	
+	boolean S() {	
+		if( next() == 'a' )
+			return match('a') && S() && match('b');	// entspricht S$\to$aSb
+		else return true;	// entsrpicht S$\to$$\varepsilon$
+	}
+	
+	char next() {
+		return input.charAt(pos);
+	}
+	
+	boolean match(char c) {	// entspricht Schleife im Kellerautomat: a,a/$\varepsilon$ und b,b/$\varepsilon$ bzw. S,$\varepsilon$/aSb
+		if( next() == c ){
+			pos++;
+			return true;
+		}
+		else return false;
+	}
+	
+	public static void main(String[] args){
+		Parser p = new Parser();
+		System.out.println(p.parse("aabb"));	// true
+		System.out.println(p.parse("aaabb"));	// false
+		System.out.println(p.parse("aabbb"));	// false
+	}
+}
+\end{lstlisting}
+Ablauf des Programms für \emph{aabb}:\\
+ABB 116\\
+Achtung: nicht alle Grammatiken lassen sich mit einem rekursiven Abstiegsparser darstellen. Bsp.: $E\to E+T$:
+\begin{lstlisting}[language=java]
+boolean E() {
+	return E() && match('+') && T();	// Endlosschleife durch Selbstaufruf
+}	
+\end{lstlisting}
 \newpage
 \printbibliography
 \end{document}
