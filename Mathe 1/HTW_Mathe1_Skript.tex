@@ -1358,7 +1358,7 @@ F&=4 \cdot \int_0^a b \sqrt{1-\frac{x^2}{a}}\intd{x}=\frac{4b}{a}\int_0^a\sqrt{a
 \end{align*}
 
 \subsubsection{Bogenlänge}
-Bogenlänge ebener Kurven\\
+\paragraph{Bogenlänge ebener Kurven}\parskp
 ABB 109\\
 Kurve $K$ mit Parameterdarstellung. $x=x(t) \quad y = y(t) \quad t \in [\alpha, \beta]$
 \begin{itemize}
@@ -1373,18 +1373,107 @@ $\int_{\alpha}^{\beta} \sqrt{(\dot{x}(t))^2 + (\dot{y}(t))^2}\intd{t}$
 \subparagraph{Diskussion:}
 \begin{itemize}
 \item Bogenlänge der Kurve $\vec{r} = \vec{r}(t) = \mtr{x(t) \\ y(t)}$ zwischen $\alpha$ und $t$ ist\\
-$S=\int_{\alpha}^t \underbrace{\sqrt{(\dot{x}(u))^2 + (\dot{y}(u))^2}}_{|\dot{r}(u)|}\intd{u} =: f(t)$\\
+$s=\int_{\alpha}^t \underbrace{\sqrt{(\dot{x}(u))^2 + (\dot{y}(u))^2}}_{|\dot{r}(u)|}\intd{u} =: f(t)$\\
 $\Rightarrow \frac{\diffd{s}}{\diffd{s}}= |\dot{r}(t)| \Rightarrow \diffd{s}=|\dot{r}(t)| \intd{t}=\sqrt{\dot{x}^2+\dot{y}^2}\intd{t}$ (heißt Bogenelement)
-\item \begin{tabular}{l l}
-Kurvendarstellung & \\ 
-$x=x(t),\; y=y(t),$
-
+\item Tabelle (Bogenlänge ebener Kurven)\\
+\begin{tabular}{l | l}
+Kurvendarstellung & Bogenlänge $s$, Bogenelement $\diffd{s}$\\ 
+\hline
+$x=x(t),\; y=y(t),\; t \in [\alpha,\beta]$ & $s= \int_{\alpha}^{\beta} \underbrace{\sqrt{(\dot{x}(t))^2-(\dot{y}(t))^2}\intd{t}}_{\diffd{s}}$\\
+$y =f(x),\; x\in [a,b]$ & $s=\int_a^b\underbrace{\sqrt{a+(f'(x))^2}\intd{x}}_{\diffd{s}}$\\
+$x= g(y), \; y \in [c,d] $ & $s=\int_c^d\underbrace{\sqrt{1+(g'(y))^2}\intd{y}}_{\diffd{s}}$\\
+$r=r(\varphi), \; \varphi\in [\alpha, \beta]$ & $s=\int_{\alpha}^{\beta}\underbrace{\sqrt{(r(\varphi))^2+(r'(\varphi))^2}\intd{\varphi}}_{\diffd{s}}$
 \end{tabular}
 \end{itemize}
+\paragraph{Bogenlänge von Raumkurven} \parskp
+Gegeben sei Kurve $K $mit Parameterdarstellung $x=x(t), \; y=y(t), \; z=z(t), \; t \in [\alpha
+, \beta]$.\\
+Die Bogenlänge berechnet sich dann mittels\\
+$s=\int_{\alpha}^{\beta} \sqrt{(\dot{x}(t))^2+(\dot{y}(t))^2+(\dot{z}(t))^2}\intd{t}$
+\subparagraph{Bsp. 2} (Schraubenlinie)\\
+$\vec{r}= \vec{r}(t)=\mtr{a \cos t \\ a \sin t \\ \frac{h}{2\pi}t}, \; t \in [0,2\pi]$\\
+$\dot{r}(t) = \mtr{-a \sin t \\ a \cos t \\ \frac{h}{2\pi}}$
+\begin{align*}
+s&= \int_0^{2\pi} \sqrt{\dot{x}^2+\dot{y}^2+\dot{z}^2}\intd{t}\\
+&= \int_0^{2\pi} \sqrt{\underbrace{a^2 \sin^2t - a^2 \cos^2t}_{a^2}+\frac{h^2}{(2\pi)^2}}\intd{t}\\
+&= 2\pi \sqrt{a^2+\frac{h^2}{4\pi^2}}\\
+&= \sqrt{4\pi^2a^2+h^2}
+\end{align*}
+\subsubsection{Volumen von Rotationskörpern}
+ABB 118
+\begin{anumerate}
+\item Gegeben:
+\begin{itemize}
+\item Kurve $K$ mit $y=f(x), \; x \in [a,b]$
+\item Das Flächenstück $F_x$ zwischen Kurve und $x$-Achse rotiere um die $x$-Achse.
+\end{itemize}
+Gesucht:
+\begin{itemize}
+\item Volumen $V_x$ des dabei erzeugten Körpers
+\end{itemize}
+Es gilt: $V_x = \pi \cdot \int_a^b(f(x))^2\intd{x}$\\
+(Idee: Approximation von $F_x$ durch Rechteckflächen \\
+$\overset{Rotation}{\rightsquigarrow}$ Zylinderscheiben $V_{\alpha}\approx \sum_i \pi (f(\xi_i))^2\Delta x_i$\\
+Grenzübergang: $V_x=\pi \int_a^b (f(x))^2\intd{x}$)
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Allgemein gilt $V_x=\pi \int_a^b y^2\intd{x} \quad (a<b)$
+\item Falls K in Parameterform geggeben $x=x(t),\; y=y(t), \; \alpha ... t ... \beta$, dann ergibt sich \\
+$V_x=\pi \int_{\alpha}^{\beta} (y(t))^2\cdot \underbrace{\dot{x}(t) \intd{t}}_{\diffd{x}}$, wobei $...$ (die Orientierung) so zu wählen ist, dass $a:= x(\alpha) < x(\beta) = b$ gilt. Unter Umständen kann $\alpha<\beta$ sein.
+\end{enumerate}
+\item Gegeben: Kurve $x=g(y), \; y\in [c,d]$\\
+ABB 119\\
+Gesucht: Volumen $V_y$ bei Rotation von $F_y$ um $y$-Achse.\\
+$V_y=\pi \int_c^d x^2\intd{y} = \pi \int_c^d (g(y))^2\intd{y}$\\
+Für Parameterdarstellung:\\
+$V_y=\pi \int_{\alpha}^{\beta}(x(t))^2\cdot \underbrace{\dot{y}(t) \intd{t}}_{\diffd{y}}$, wobei $c=y(\alpha)<y(\beta)=d$
+\subparagraph{Bsp. 3:} Gesucht ist das Volumen eines Rotationsparaboloids der Höhe $h$ und mit Basisradius $R$.\\
+ABB 120\\
+Kurve: $y=ax^2, \; h=aR^2 \Rightarrow a =\frac{h}{R^2}$
+\begin{align*}
+V_y&=\pi\int_0^h x^2\intd{y}=\pi\int_0^h \frac{y}{a}\intd{y} = \pi\int_0^h \frac{R^2}{h}y  \intd{y}\\
+&= \frac{\pi R^2}{h}\int_0^h y \intd{y}=\frac{\pi R^2}{h}\left[\frac{1}{2}y^2\right]_0^h\\
+&= \frac{\pi R^2}{h}\cdot \frac{1}{2}h^2=\frac{\pi R^2 h}{2}
+\end{align*}
+\end{anumerate}
 
-
-
-
-
-
+\subsubsection{Mantelflächen von Rotationskörpern}
+\begin{anumerate}
+\item Gegeben: Kurve $K$ mit $y=f(x)\geq 0, \; x \in [a,b]$\\
+Gesucht: Die von der Kurve $K$, bei Rotation um $x$-Achse erzeugte Rotationsfläche $M_x$.\\
+ABB 121\\
+$M_x=2\pi \int_a^b f(x) \sqrt{1+(f'(x))^2}\intd{x}$\\
+(Approximation der Kurve $K$ durch Polygonzug\\
+$\overset{Rotation}{\rightsquigarrow}$ Kegelstumpffläche\\
+$M_x\approx \sum_i 2\pi f(\xi_i)\Delta s_i\\
+\to 2\pi \int_a^b f(x)\underbrace{\sqrt{1+(f'(x))^2}\intd{x}}_{\diffd{s}}$ (Bogenelement))\\
+Allgemein gilt: $M_x=2\pi \int_a^by\intd{s}$
+\item Gegeben: Kurve $x=g(y) \geq 0, \; y\in [c,d]$\\
+Gesucht: Mantelfläche bei Rotation um die $y$-Achse.\\
+$M_y=2\pi \int_K x \intd{s}=2\pi \int_c^d g(y) \sqrt{1+(g'(y))^2}\intd{y}$\\
+Für Parameterdarstellung:\\
+$M_y=2\pi \int_{\alpha}^{\beta} x(t) \sqrt{(\dot{x}(t))^2+(\dot{y}(t))^2}\intd{t}$ mit $\alpha \leq t \leq \beta$
+\subparagraph{Bsp. 4:} Kugeloberlfäche\\
+ABB 122\\
+Halbkreis $K$ soll um $x$-Achse rotiert werden.\\
+$x=R\cdot \cos t\\
+y = R \cdot \sin t\\
+t \in [0,\pi]$\\
+$\dot{x}(t) = -R \sin t \qquad \dot{y}(t) = R \cos t$
+\begin{align*}
+M_x&= 2\pi \int_K y\intd{s}=2\pi \int_0^{\pi} y(t) \sqrt{\dot{x}^2+\dot{y}^2}\intd{t}\\
+&= 2\pi \int_0^{\pi} R \sin t \cdot R \intd{t} = 2\pi R^2 \left[-\cos t\right]_0^{\pi}\\
+&= 4\pi R^2
+\end{align*}
+\end{anumerate}
+\subsubsection{Fourier-Reihen}
+Gegeben: Funktion $f(x), \; x \in [0,T]$\\
+ABB 123\\
+Gesucht: Reihendarstellung mit trigonometrischen Funktionen der Periode $T, \; \frac{T}{2}, \; \frac{T}{3}, \dots$\\
+d.h. (mit $\omega= \frac{2\pi}{T}$):\\
+$\cos (\omega x), \; \cos (2 \omega x) ,\; \cos (3 \omega x) , \dots$\\
+$\sin (\omega x), \; \sin (2 \omega x) ,\; \sin (3 \omega x), \dots$\\
+Ansatz ist daher:\\
+$f(x) = \frac{a_0}{2}+\sum_{k=1}^a \left( a_k \cos (k\omega x) + b_k \sin (k\omega x) \right)$, wobei die Koeffizienten $a_k, \; b_k,\; k\geq 0$ zu ermitteln sind.\\
+Motivation ist: Approximation von $f$ zum Zwecke der Speicherplatzreduzierung (Abgespeichert werden i.A. nur wenige der Koeffizienten $a_k$ und $b_k$. Das gilt auch dann, wenn $f$ in diskreter Form vorliegt, d.h. in Form von Messwerten $y_k$ an vielen Messstellen $x_k$.)
 \end{document}
