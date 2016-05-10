@@ -576,6 +576,95 @@ boolean E() {
 	return E() && match('+') && T();	// Endlosschleife durch Selbstaufruf
 }	
 \end{lstlisting}
+Aus der bereits behandelten Grammatik für arithmetische Ausdrücke kann kein Recursive Descent Parser erzeugt werden, weil die Grammatik linksrekursiv ist. Mögliche Abhilfe: Beseitigung der linksrekursion durch Umbau der Grammtik.\\
+Ansatz:\\
+$E \to T \tred{(}+E \tred{)} \,|\, T \tred{(}-E\tred{)} \,|\, T$\\
+$T \to F \tred{(}*T\tred{)} \,|\, F \tred{(}/T \tred{)} \,|\, F \tred{(\varepsilon)}$\\
+$\Rightarrow$\\
+$E \to T E'\\
+E' \to \varepsilon \,|\, + E \,|\, -E\\
+T \to FT'\\
+T' \to \varepsilon \,|\, *T \,|\, /T\\
+F \to x\,|\,y\,|\,z$\\
+Diese Grammatik erzeugt die gleiche Sprache wie die vorherige Grammatik und ist nicht linksrekursiv. Aber die Ableitungsbäume wachsen nach rechts, d.h. alle Operatoren sind rechts-assoziativ.\\
+ABB 117\\
+Das Problem lässt sich für Recursive Descent Parser nicht befriedigend lösen, Man kann links-assoziative Operatoren durch Schleifen verarbeiten. Dazu: EBNF (Extended Backus-Naur-Form).\\
+Obige Grammatik in EBNF:\\
+$E\to T \{ + T \}$\\
+$T \to F \{ (+|-)F\}\\
+F \to x\,|\,y\,|\,z$\\
+Dabei bedeutet $\{ +T \}$, dass beliebig viele $+T$ folgen können. $\{...\}$ entspricht $(...)^*$.\\
+Problem: Aus dieser Grammatik geht die Assoziativität der Operatoren nicht hervor. Diese muss festgelegt werden. Links-assoziative Operatoren können mit einer Schleife verarbeitet werden:
+\begin{lstlisting}[language=C]
+E() {
+ T();
+ while (next() == '+') {	// while-Schleife entspricht $\{+T\}$
+ 	match ('+');
+ 	T();
+ }
+}
+\end{lstlisting}
+
+\subsubsection{Bottom-Up-Parser}
+Ein \emph{Bottom-Up-Parser} baut einen Ableitungsbaum von unten nach oben auf und kontrolliert dabei die Rechtsableitung der Eingabe. Bottom-Up-Parser lassen sich effizient durch LR-Parser implementieren. Ein LR-Parser liest die Eingabe von links nach rechts und erzeugt den Ableitungsbaum der Rechtsableitung. Ein LR-Parser führt in jedem Schritt eine von vier möglichen Aktionen aus:
+\begin{itemize}
+\item \textbf{Shift}: Das nächste Zeichen der Eingabe wird auf den Stack geschoben.
+\item \textbf{Reduce}: Ein oder mehrere Symbole von der Spitze des Stack entsprechen der rechten Seite $A \to \gamma$ einer Regel und werden durch $A$ ersetzt.
+\item \textbf{Accept}: Die Eingabe wurde verarbeitet, der Stock enthält nur das Startsymbol.
+\item \textbf{Error}: Ein Syntaxfehler wird gemeldet.
+\end{itemize}
+\subparagraph{Bsp.:} Wir betrachten die Grammatik für arithmetische Ausdrücke:\\
+$E \to E + T \,|\, E-T \,|\, T\\
+T \to T*F \,|\, T/F \,|\, F\\
+F \to x \,|\, y \,|\, z$\\
+Für die Eingabe $x+y*z$ führt ein LR-Parser folgende Schritte aus:\\
+\begin{tabular}{l r c}
+Stack & restl. Eingabe &Aktion\\
+\hline
+& $x+y*z$ & shift\\
+$x$ & $+y*z$ & reduce\\
+$F$ & $+y*z$ & reduce\\
+$T$ & $+y*z$ & reduce\\
+$E$ & $+y*z$ & shift \\
+$E+$ & $y*z$ & shift \\
+$E+y$ & $*z$ & reduce\\
+$E+F$ & $*z$ & reduce\\
+$E+T$ & $*z$ & shift\footnotemark\\
+$E+T*$ & $z$ & shift \\
+$E+T*z$ & & reduce \\
+$E+T*F$ & & reduce \\
+$E+T$ & & reduce \\
+$E$ & & accept
+\end{tabular}
+\footnotetext{hier würde reduce stecken bleiben, weil es keine Regel für $E+E$ geben würde. Der Parser „weiß“ das aus Ableitungstabellen.}\\
+Der vom Parser erzeugte Ableitungsbaum der Rechtsableitung (Rechtsableitung ersichtlich dadurch, dass sich rechts alle Änderungen passieren, und die linke Seite unberührt bleibt) ergibt sich aus den ersten beiden Spalten, von unten nach oben gelesen.
+\begin{lstlisting}[language=C]
+%{
+#include "calc.tab.h"
+%}
+
+integer [0-9]+
+real {integer}("."{integer})?([eE][+-]?{integer})?
+
+%%
+
+{real}			{yylval.number = atof(yytext); return NUM;}
+[ \t]+			;
+\n					{return NL;}
+...
+
+// Mit diesem Code kann mit Bison ein C-Programm erzeugt werden, dass diesen Parser implementiert
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
 \newpage
 \printbibliography
 \end{document}

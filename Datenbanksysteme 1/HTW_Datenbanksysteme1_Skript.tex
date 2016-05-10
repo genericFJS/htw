@@ -1135,12 +1135,158 @@ WHERE Kunr IN (
 )
 \end{lstlisting}
 
+\subsubsection{Abfrage über mehrere Relationen}
+$\Rightarrow$ JOIN
+\Folie{4}{11}
+\subparagraph{Bsp.:} Anzeige der Artikeldaten und deren Käufe
+Mehrere Varianten:
+\begin{enumerate}
+\item WHERE:
+\begin{lstlisting}[language=SQL]
+SELECT  Artikel.Artnr, Bezeichnung, Menge, VPreis
+FROM Artikel, Kauf
+WHERE Artikel.Artnr = Kauf.Artnr
+\end{lstlisting}
+\item mit Alias:
+\begin{lstlisting}[language=SQL]
+SELECT a.Artnr, Bezeichnung, Menge, VPreis
+FROM Artikel a, Kauf k
+WHERE a.Artnr = k.Artnr
+\end{lstlisting}
+\item JOIN:
+\begin{lstlisting}[language=SQL]
+SELECT a.Artnr, Bezeichnung, Menge, VPreis
+FROM Artikel a
+JOIN Kauf k ON a.Artnr = k.Artnr
+\end{lstlisting}
+\end{enumerate} 
+Zusätzlich: Name des Kunden anzeigen und nur Kunden aus Dresden:
+\begin{enumerate}
+\item WHERE:
+\begin{lstlisting}[language=SQL]
+SELECT A.Artnr, Bezeichnung, Menge, U.Kunr, Name
+FROM Artikel A, Kauf K, Kunde U
+WHERE A.Artnr = K.Artnr		-- implizite Bedingung(en)
+	AND K.Kunr = U.Kunr			-- implizite Bedingung(en)
+	AND Ort = 'Dresden'			-- explizite Bedingung(en)
+\end{lstlisting}
+\item JOIN:
+\begin{lstlisting}[language=SQL]
+SELECT A.Artnr, Bezeichnung, Menge, U.Kunr, Name
+FROM Artikel A
+JOIN Kauf K ON A.Artnr = K.Artnr	-- JOIN: implizite Bedingung(en)
+JOIN Kunde U ON K.Kunr = U.Kunr		-- JOIN: implizite Bedingung(en)
+WHERE Ort='Dresden'								-- WHERE: explizite Bedingung(en)
+\end{lstlisting}
+$\Rightarrow$ JOIN ist der ersten Variante zu bevorzugen, da die impliziten und expliziten Bedingungen klar und auf den ersten Blicks erkennbar sind.
+\end{enumerate}
+\subsubsection{Weitere Abfragemöglichkeiten}
+\Folie{4}{12}
+\begin{itemize}
+\item Equi-JOIN
+\begin{lstlisting}[language=SQL]
+SELECT Kunde.*, Kauf.*
+FROM Kunde, Kauf
+WHERE Kunde.Kunr = Kauf.Kunr
+\end{lstlisting}
+\item Natural JOIN
+\begin{lstlisting}[language=SQL]
+SELECT Kunde.*, Artnr, Menge, VPreis -- Kauf.*-Kunr oder vergleichbares nicht möglich! Es müssen alle Spalten manuell angegeben werden
+FROM Kunde, Kauf
+WHERE Kunde.Kunr = Kauf.Kunr
 
-
-
-
-
-
+-- alternativ in JOIN-Schreibweise:
+SELECT Kunde.*, Artnr, Menge, VPreis
+FROM Kunde
+JOIN Kauf ON Kunde.Kunr = Kauf.Kunr
+\end{lstlisting}
+\item Kartesisches Produkt
+\begin{lstlisting}[language=SQL]
+SELECT *
+FROM Kunde, Kauf
+\end{lstlisting}
+\item Theta JOIN
+\begin{lstlisting}[language=SQL]
+SELECT *
+FROM Kunde, Kauf
+WHERE Kunde. Kunr != Kauf.Kunr
+\end{lstlisting}
+Entspricht $\text{(Kartesisches Produkt)}-\text{(Equi-Join)}$
+\item Outer JOIN
+\begin{itemize}
+\item Right
+\item Left
+\item Full
+\end{itemize}
+\begin{lstlisting}[language=SQL]
+SELECT *
+FROM Kunde K
+FULL OUTER JOIN Kauf F	-- Schaut in beide Tabellen (Kauf und Kunde) und fügt die hinzu, die keinen Zusammenhang haben
+-- bei LEFT OUTER JOIN: Schaut in die "linke" Tabelle (Kunde) und prüft, welche im Zusammenhang mit Kauf nicht auftauchen (sprich: welcher Kunde nichts gekauft hat)
+-- bei RIGHT OUTER JOIN: Schaut in die "rechte" Tabelle (Kauf) (sprich: welcher Kauf keinen Kunden hat: nicht möglich)
+	ON K.Kunr = F.Kunr
+\end{lstlisting}
+\end{itemize}
+\subsubsection{Abfrageschachtelungen}
+Arten von Unterabfragen(UA):
+\begin{itemize}
+\item einfach/unkorreliert
+\begin{itemize}
+\item UA wird einmal ausgeführt und in die Hauptabfrage (HA) eingesetzt
+\end{itemize}
+\item abhängig/korreliert
+\begin{itemize}
+\item UA wird für jeden Tupel der HA einmal ausgeführt
+\item UA (innere Abfrage) bezieht sich auf eine (oder mehrere) Tabellen, die \emph{nur} in der FROM-Klausel der HA aufgeführt sind
+\end{itemize}
+\end{itemize}
+\paragraph{Bsp.:} unkorrelierte UA
+\begin{itemize}
+\item Alle Käufe in Dresden (Kunden).
+\begin{lstlisting}[language=SQL]
+SELECT *
+FROM Kauf
+WHERE Kunr IN (
+	SELECT Kunr
+	FROM Kunde
+	WHERE Ort='Dresden'
+)
+\end{lstlisting}
+\item Anzeige Artnr, Bezeichnung und Einkaufspreis, sowie maximal erzielter VPreis je Artikel.
+\begin{lstlisting}[language=SQL]
+SELECT UA.Artnr, VPreisMax, Bezeichnung, EPreis
+FROM (SELECT Artnr, MAX(VPReis) AS VPreisMax	-- Alias sehr wichtig, damit Spalte in HA wieder verwendet werden kann!
+	FROM Kauf
+	GROUP BY Artnr
+) UA	-- Unterabfrage für Tabelle von max. VPreis
+JOIN Artikel ON Artikel.Artnr = UA.Artnr
+\end{lstlisting}
+Diese Schachtelung kann beliebig weiter fortgesetzt werden.
+\item Anzeige aller Kunden, deren Umsatz (= Menge * VPreis) größer als deren Kreditlimit ist.
+\begin{lstlisting}[language=SQL]
+SELECT K.*
+FROM (SELECT Kunr, SUM(Menge*VPreis) AS Umsatzsumme
+	FROM Kauf
+	GROUP BY Kunr
+) UA
+JOIN Kunde K ON UA.Kunr = K.Kunr
+WHERE Umsatzsumme > Kredit
+\end{lstlisting}
+\end{itemize}
+\paragraph{Bsp.:} korrelierte UA
+\begin{itemize}
+\item Gleiches Beispiel, wie letztes unkorreliertes.
+\begin{lstlisting}[language=SQL]
+SELECT * 				-- hier HA
+FROM Kunde 
+WHERE Kredit < (
+	SELECT SUM(Menge*VPreis)		-- ab hier UA
+	FROM Kauf
+	WHERE Kauf.Kunr = Kunde.Kunr
+)
+\end{lstlisting}
+Ergebnis ist das gleiche wie in der unkorrelierten Abfrage.
+\end{itemize}
 
 
 
