@@ -1418,7 +1418,7 @@ Grenzübergang: $V_x=\pi \int_a^b (f(x))^2\intd{x}$)
 \subparagraph{Diskussion:}
 \begin{enumerate}
 \item Allgemein gilt $V_x=\pi \int_a^b y^2\intd{x} \quad (a<b)$
-\item Falls K in Parameterform geggeben $x=x(t),\; y=y(t), \; \alpha ... t ... \beta$, dann ergibt sich \\
+\item Falls K in Parameterform gegeben $x=x(t),\; y=y(t), \; \alpha ... t ... \beta$, dann ergibt sich \\
 $V_x=\pi \int_{\alpha}^{\beta} (y(t))^2\cdot \underbrace{\dot{x}(t) \intd{t}}_{\diffd{x}}$, wobei $...$ (die Orientierung) so zu wählen ist, dass $a:= x(\alpha) < x(\beta) = b$ gilt. Unter Umständen kann $\alpha<\beta$ sein.
 \end{enumerate}
 \item Gegeben: Kurve $x=g(y), \; y\in [c,d]$\\
@@ -1453,7 +1453,7 @@ Gesucht: Mantelfläche bei Rotation um die $y$-Achse.\\
 $M_y=2\pi \int_K x \intd{s}=2\pi \int_c^d g(y) \sqrt{1+(g'(y))^2}\intd{y}$\\
 Für Parameterdarstellung:\\
 $M_y=2\pi \int_{\alpha}^{\beta} x(t) \sqrt{(\dot{x}(t))^2+(\dot{y}(t))^2}\intd{t}$ mit $\alpha \leq t \leq \beta$
-\subparagraph{Bsp. 4:} Kugeloberlfäche\\
+\subparagraph{Bsp. 4:} Kugeloberfläche\\
 ABB 122\\
 Halbkreis $K$ soll um $x$-Achse rotiert werden.\\
 $x=R\cdot \cos t\\
@@ -1475,5 +1475,86 @@ $\cos (\omega x), \; \cos (2 \omega x) ,\; \cos (3 \omega x) , \dots$\\
 $\sin (\omega x), \; \sin (2 \omega x) ,\; \sin (3 \omega x), \dots$\\
 Ansatz ist daher:\\
 $f(x) = \frac{a_0}{2}+\sum_{k=1}^a \left( a_k \cos (k\omega x) + b_k \sin (k\omega x) \right)$, wobei die Koeffizienten $a_k, \; b_k,\; k\geq 0$ zu ermitteln sind.\\
-Motivation ist: Approximation von $f$ zum Zwecke der Speicherplatzreduzierung (Abgespeichert werden i.A. nur wenige der Koeffizienten $a_k$ und $b_k$. Das gilt auch dann, wenn $f$ in diskreter Form vorliegt, d.h. in Form von Messwerten $y_k$ an vielen Messstellen $x_k$.)
+Motivation ist: Approximation von $f$ zum Zwecke der Speicherplatzreduzierung (Abgespeichert werden i.A. nur wenige der Koeffizienten $a_k$ und $b_k$. Das gilt auch dann, wenn $f$ in diskreter Form vorliegt, d.h. in Form von Messwerten $y_k$ an vielen Messstellen $x_k$.)\\
+Vorgehensweise:
+\begin{enumerate}
+\item Betrachte zunächst die endliche Reihe $f_n(x):= \frac{a_0}{2}+\sum_{k=1}^n a_k \cos (k\omega x) + b_k \sin (k \omega x )$.\\
+Ziel ist: $a_k$ und $b_k$ so wählen, dass $f_n$ möglichst gute Approximation von $f$ ist.
+\item Approximation in Vektorräumen mit Skalarprodukt
+\begin{itemize}
+\item Es sei $V$ ein Vektorraum. Das Skalarprodukt $(f,g)$ ist eine Abbildung von $V\times V$ nach $\RR$ mit den Eigenschaften 
+\begin{anumerate}
+\item $(f,f) > 0$ für alle $f \not = 0$
+\item $(f,g) = (g,f)$ für alle $f,g \in V$ (Symmetrie)
+\item $(\alpha f+\beta g,h) = \alpha (f,h) + \beta (g.h.)$ für $f,g,h \in V, \; \alpha, \beta \in \RR$ (Linearität)
+\end{anumerate}
+\item Die Norm von $f$ (oder Betrag von $f$) ist $\|f\|:= \sqrt{(f,f)}$ für $f\in V$
+\item $f$ und $g$ orthogonal $:\Leftrightarrow$ $(f,g) = 0$
+\item Beispiele:
+\begin{anumerate}
+\item $V=\RR^n, \; (\vec{x}, \vec{y}) = \sum_{i=1}^n x_i y_i$
+\item $C(a,b)$ … Menge der auf $[a,b]$ stetigen reellwertigen Funktionen mit Skalarprodukt: $(f,g) = \int_a^b f(x) g(x) \intd{x}$
+\end{anumerate} 
+\item Aufgabe: Approximation von $f\in V$ durch $f^*\in V^*$ wobei $V^*\subseteq V$ ein $m$-dimensionaler Unterraum ist, mit orthogonaler Basis $e_1,\dots,e_m$ (d.h. $(e_i, e_j) = 0 $ falls $i\not = j$). Gesucht ist also dasjenige $f^* \in V^*$, für welches $\| f - f^* \|$ minimal wird.\\
+ABB 126\\
+d.h. $f^*$ ist die orthogonale Projektion von $f$ auf $V^*$
+\paragraph{Satz 1:} Die orthogonale Projektion $f^*$ von $f$ auf $V^*$ ist gegeben durch: $f^* = \sum_{i=1}^m \alpha_i e_i$, wobei $\alpha_i=\frac{(f,e_i)}{(e_i,e_i)}, \; i=1,..,n$
+\end{itemize}
+\item Übertragung auf $C(O,T), \; T=\frac{2\pi}{\omega} \to \omega = \frac{2\pi}{T}$
+\begin{itemize}
+\item Man kann zeigen, dass die Funktion\\
+$\underbrace{1}_{g_0},\; \underbrace{\cos(\omega x)}_{g_1},\; \underbrace{\cos(2\omega x)}_{g_2},\; \cos (2\omega x) ,\; \dots ,\; \underbrace{\sin (\omega x)}_{h_1},\; \underbrace{\sin(2\omega x)}_{h_2},\; \sin(2\omega x ),\; \dots$\\
+in $C(O,T)$ orthogonal sind.\\
+z.B. $(g_0, g_1) = \int_0^T 1 \cdot \cos (\omega x) \intd{x}=\left[ \frac{1}{\omega }\sin (\omega x) \right]_0^T=0$
+\item Außerdem gilt $(g_0, g_0) = T ,\; (g_k, g_k) = \frac{T}{2}=(h_k, h_k)$ mit $k\in \NN$
+\end{itemize}
+\item Damit ergibt die Projektion von $f \in C(0,T)$ in $V^*=L(g_0,g_1, \dots, g_n, h_1, \dots, h_n)$ folgende Koeffizienten:\\
+$a_k = \frac{(f, g_k)}{(g_k, g_k)}=\frac{2}{T}\int_0^T f(x) \cos(k \omega x) \intd{x}$\\
+$b_k = \frac{(f, h_k)}{(h_k, h_k)}=\frac{2}{T}\int_0^T f(x) \sin(k \omega x) \intd{x}$\\
+(bei der Approximation in der Ausgangsgleichung $f_n$)
+\item Frage: $f_n\to f$ falls $n\to \infty$?
+\paragraph{Satz 2:} Seien $f$ und $f'$ auf $[0,T]$ stückweise stetig mit höchstens endlich vielen, endlichen Sprungquellen, dann gilt an allen Stetigkeitsstellen von $f$: \\
+$f(x) = \underbrace{\frac{a_0}{2}+\sum_{k=1}^{\infty} (a_k \cos (k\omega x) + b_k \sin (k \omega x) )}_{\lim_{n\to\infty} f_n(x)}$ mit\\
+ $a_0 = \frac{2}{T}\int_0^T f(x) \intd{x},\\
+a_k = \frac{2}{T}\int_0^T f(x) \cos (k \omega x) \intd{x}, \\
+b_k = \frac{2}{T} \int_0^T f(x) \sin (k \omega x) \intd{x}$ \qquad ($k\in \NN$)\\
+Für die Sprungstellen $x_S$ gilt $\lim_{n\to\infty} f_n(x_S) = \frac{1}{2}\left( \lim_{x\nearrow x_s} f(x) + \lim_{x \searrow x_S} f(x)\right)$\\
+ABB 127\\
+Also: Ja, $f_n\to f$ falls $n\to \infty$.
+\subparagraph{Bemerkung:} 
+\begin{enumerate}
+\item Die Vorstehenden Ausführungen gelten automatisch für die periodische Fortsetzung $\tilde f$ einer zunächst auf $[0,T]$ definierten Funktion $f$\\
+ABB 128
+\item Im Fall der periodischen Fortsetzung kann das Integrationsintervall $[0,T]$ durch beliebiges Intervall der Länge $T$ ersetzt werden, z.B. $\left[-\frac{T}{2}, \frac{T}{2}\right]$
+\item Ist $f$ symmetrisch gilt (vereinfachend):\\
+\begin{tabular}{l | l l l }
+$f$ gerade & $a_0 = \frac{4}{T}\int_0^{\frac{T}{2}}f(x) \intd{x}$, $ a_k = \frac{4}{T}\int_0^{\frac{T}{2}}f(x) \cos (k\omega x) \intd{x}$, $ b_k =0$\\
+\hline
+$f$ ungerade & $a_0=0$, $a_k = 0$, $b_k = \frac{4}{T}\int_0^{\frac{T}{2}}f(x) \sin (k\omega x) \intd{x}$
+\end{tabular}  
+\item Amplitudenspektrum\\
+$A_k := \sqrt{a_k^2+b_k^2}\quad k=1,2,3,\dots$\\
+… Amplituden der Schwingungen, die sich durch Zusammenfassung der Sinus- und Cosinusanteile gleicher Frequenz ergeben.\\
+(Möglichkeit der Verstärkung/Dämpfung der Schwingung)\\
+Die Fourier Reihe lässt sich mit diesem $A_k$ auf folgende Form bringen:\\
+$f(x)=\frac{A_0}{2}+\sum_{k=1}^{\infty} A_k \cos (k x - \varphi_k)$ mit $A_0=a_0$ und $\varphi_k = \arccos \left( \frac{a_k}{A_k}\right) \quad k\geq 1$
+\end{enumerate}
+\subparagraph{Bsp. 6:} $f(x) = \begin{cases}
+0 & -1 \leq x < 0\\
+1 & 0 \leq x <1
+\end{cases}$, $\tilde f$ periodische Fortsetzung\\
+ABB 129\\
+Gesucht: Fourier Reihe zu $f$ mit $T=2, \; \omega = \frac{2\pi}{2}= \pi$\\
+$a_0 = \frac{2}{2} \int_{-1}^1 f(x) \intd{x} = \int_0^1 1 \intd{x} = 1$\\
+$a_k = \frac{2}{2} \int_{-1}^1 f(x) \cos (k \pi x) \intd{x} = \int_0^1 \cos (k \pi x) = \frac{1}{k\pi}\left[\sin (k\pi x) \right]_0^1=0$\\
+$b_k = \frac{2}{2} \int_{-1}^1 f(x) \sin (k\pi x) \intd{x} = \int_0^1 \sin (k\pi x) \intd{x} = -\frac{1}{k\pi} \left[ \cos (k \pi x)\right]_0^1 = -\frac{1}{k\pi}(cos(k\pi)-1) \\
+\Rightarrow b_k=\begin{cases}
+0 & k \text{ gerade}\\
+\frac{2}{k\pi} & k \text{ ungerade}\\
+\end{cases}$\\
+$\tilde f ( x) = \frac{1}{2}+ \frac{2}{\pi} \left(\sin (\pi x) + \frac{1}{3} \sin (3\pi x) + \frac{1}{5} \sin (5 \pi x) + \dots\right) \quad x \in RR\setminus \ZZ$\\
+ABB 130
+\end{enumerate}
+ 
+
 \end{document}

@@ -213,10 +213,117 @@ Muss von Klasse mit privater Funktion festgelegt werden. Freundschaft wird nicht
 \section{Vererbung}
 vererben.pdf
 
+\section{Virtuelle Funktionen}
+\begin{itemize}
+\item überschriebene Funktionen 
+\item virtuelle Funktionen $\Rightarrow$Späte Bindung
+\item rein virtuelle Funktionen\\
+eine Klasse mit rein virtuellen Funktionen ist abstrakt
+\item VMT virtual method table ABB 124
+\end{itemize}
+besch1.cpp (Beschäftigte)
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <string>
+using namespace std;
 
+class Besch{
+	private:
+		string name;
+	public:	
+		Besch(string name): name(name){}	// :name(name) --> Member-Initialisierer
+		string getName() {return name;}
+		void setName(string name) {this->name = name;}
+		virtual void display(ostream& os) {os<<name;}	// virtuelle Funktion
+		virtual double calc(){return 0.0;}	// normalerweise Geld nicht mit double, sondern ganzzahlig rechnen!
+		// wenn Funktion eigentlich nicht benötigt wird: Polymorphes Interface:
+		// virtual double calc() = 0; // rein virtuelle Funktion
+		// diese rein virtuelle Funktion macht den Datentyp Besch abstract! D.h. davon kann keine Instanz erzeugt werden (wie in der Main passiert)!
+};
+ostream& operator<<(ostream& os, Besch& b) {b.display(os);}
 
+class Arbeiter:public Besch{	// public: durchsichtige Vererbung
+	private:
+		int stunden;
+		double stdLohn;
+	public:
+		Arbeiter(string name, double stdLohn):Besch(name){ // :Besch(name) --> Basis-Initialisierer
+			this->stdLohn = stdLohn;
+		}
+		int getStunden() { return stunden; }
+		void setStunden(int stunden) { this->stunden = stunden; }	// usw. getter und setter
+		void display(ostream& os){ Besch::display(); os<<""<<stdLohn<<" "<<stunden<<" "<<calc();}
+		double calc(){ return stdLohn * stunden; }
+};
+ostream& operator<<(ostream& os, Arbeiter& a) { a.display(os); }
 
+class Angest:public Besch{
+	private:
+		double gehalt;
+	public:
+		Angest(string name, double stdLohn):Besch(name){
+			this->gehalt = gehalt;
+		}
+		void display(ostream& os){ Besch::display()<<" "; os<<gehalt<<" ";}
+		double calc(){ return gehalt; }
+};
+ostream& operator<<(ostream& os, Angest& a) { a.display(os); }
 
+class Haendler:public Arbeiter{
+	private:
+		double prov;
+		double ums;
+	public:
+		Haendler(string name, double stdLohn, double prov):Arbeiter(name, stdLohn){this->prov=prov;};
+		void setUms(double ums){this->ums = ums;}
+		double calc(){return Arbeiter::calc() ++ ums*prov;}
+		void display(ostream &os){Arbeiter::display(os);}
+}
+
+int main() {
+	Besch* b1 = new Besch("Hans Huckebein");
+	b1->display(cout); cout<< " Euro"<<endl;
+	cout<< (*b1) << " Euro" << endl;
+	cout<< "=============="<<endl;
+	Arbeiter* b2 = new Arbeiter("Moriz Lehmann",  8.99);
+	b2->setStunden(140);
+	b2->display(cout); cout<< " Euro"<<endl;
+	cout<< (*b2) << " Euro"<< endl;
+	cout<< "=============="<<endl;
+	Angest* b3 = new Arbeiter("Friedrich Lempel",  3099.00);
+	b3->display(cout); cout<< "Euro"<<endl;
+	cout<< (*b3) << " Euro"<< endl;
+	cout<< "=============="<<endl
+	Haendler* b4 = new Handler("Bang Ohlufson",  15.80, 0.1);
+	b4->setStunden(350);
+	b4->setUms(12000);
+	b4->display(cout); cout<< "Euro"<<endl;
+	cout<< (*b3) << " Euro"<< endl;
+	cout<< "=============="<<endl
+	
+	Besch* be[] = {b1,b2,b3,b4};
+	for (int i=0; i<4; i++){
+		cout<<i<<": "; 
+		be[i]->display(cout); cout<<endl;	// gibt 0 für alle zurück, da nur calc() (und display()) vom Typ Besch ausgeführt, da das Array aus Besch besteht! Die Funktion calc() wurde überschrieben (Vgl. Überladen, wenn bei gleichen Namen verschiedene Paramater angegeben sind)!
+		// Pointer im Array bestimmt die ausgeführten Funktionen!
+		// Lösung: "virtual" als Schlüsselwort vor Funktion (s.o.). Angeben bei erstem Auftauchen in Vererbungshierarchie
+		cout<<(*(be[i]))<<endl<<"+++++++++++++++"<<endl;	// geht auch, da im Operator (die ja nicht virtuell gemacht werden kann, weil sie kein Member ist) die virtuelle display-Fkt aufgerufen wird.
+	}	
+	
+	return 0;
+}
+\end{lstlisting}
+Vererbungs Hierarchie:\\
+ABB 125\\
+Potentielle Mehrfachvererbung (bei Manager):
+\begin{itemize}
+\item Hat mehrfache Namen (wegen unterschiedlichen Vererbungslinien)
+\end{itemize}
+Problemlösung: Arbeiter, Angest und Händler von virtual Besch erben lassen (dort, wo es sich aufzweigt):
+\begin{lstlisting}[language=C++]
+class Arbeiter: virtual public Besch{};
+\end{lstlisting}
+Hat immer noch Einschränkungen!
 
 
 
