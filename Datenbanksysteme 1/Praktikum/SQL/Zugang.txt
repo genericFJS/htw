@@ -1,0 +1,4 @@
+Servername: 141.56.2.45
+Login (SQL-Auth): Nutzer: s-Nummer, Passwort: s-Nummer
+
+Datenbank unter Datenbanken/Studiengangkürzel+Jahrgang+s-Nummer
