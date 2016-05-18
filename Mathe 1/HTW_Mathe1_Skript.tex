@@ -1539,6 +1539,7 @@ $A_k := \sqrt{a_k^2+b_k^2}\quad k=1,2,3,\dots$\\
 Die Fourier Reihe lässt sich mit diesem $A_k$ auf folgende Form bringen:\\
 $f(x)=\frac{A_0}{2}+\sum_{k=1}^{\infty} A_k \cos (k x - \varphi_k)$ mit $A_0=a_0$ und $\varphi_k = \arccos \left( \frac{a_k}{A_k}\right) \quad k\geq 1$
 \end{enumerate}
+\end{enumerate}
 \subparagraph{Bsp. 6:} $f(x) = \begin{cases}
 0 & -1 \leq x < 0\\
 1 & 0 \leq x <1
@@ -1554,7 +1555,83 @@ $b_k = \frac{2}{2} \int_{-1}^1 f(x) \sin (k\pi x) \intd{x} = \int_0^1 \sin (k\pi
 \end{cases}$\\
 $\tilde f ( x) = \frac{1}{2}+ \frac{2}{\pi} \left(\sin (\pi x) + \frac{1}{3} \sin (3\pi x) + \frac{1}{5} \sin (5 \pi x) + \dots\right) \quad x \in RR\setminus \ZZ$\\
 ABB 130
+
+\paragraph{Diskreter Fall:} Gegeben $y=f(x), \; x\in [0,T]$ ausgewertet (gemessen) an $N$ Messstellen (wobei $N$ gerade) z.B. Messung alle $\frac{1}{100}\mathrm{sec}=\text{Samplingrate }100\; \mathrm{Hz}$ (bei Audio CDs $44,1\; \mathrm{kHz}$\\
+ABB 131\\
+$x_j = j\cdot h = j \cdot \frac{T}{N}$ für $j=0, \dots, N-1$\\
+$y_j = f(x_j)$
+\begin{itemize}
+\item Mit Ansatz von stetigen Funktionen für $n\leq \frac{N}{2}$ führt im Vektorraum $\RR^N$ mittels Satz 1 auf: \\
+$a_0=\frac{2}{N}\sum_{j=0}^{N-1} y_j, \; \\
+a_k = \frac{2}{N}\sum_{j=0}^{N-1} y_j \cdot \cos (k \omega x_j), \; \\
+b_k = \frac{2}{N} \sum_{j=0}^{N-1} y_j \cdot \sin (k \omega x_j)$
+\item Im Fall $2n = N$ ergibt sich keine Approximation, sondern eine exakte Darstellung des Vektors $\vec{y}=\left(y_j\right)_{j=0}^{N-1}$ mit einer anderen Basis.\\
+Mit Hilfe der Eulerschen Formel $e^{i\varphi}=\cos \varphi + i \sin \varphi$ lässt sich der Ansatz mit komplexen Koeffizienten $c_k$ umschreiben:\\
+$f(x)=\sum_{k=0}^{N-1} c_k e^{i\omega k x}$ und damit $y_j=f(x_j) = \sum_{k=0}^{N-1} c-k e^{i\frac{2\pi}{N}j\cdot k} \quad (j=0,1,\dots, N-1)$\\
+In Matrix-Schreibweise:\\
+Sei $ w:= e^{i\frac{2\pi}{N}}s$ (eine von $N$ Lösungen der Kreisgleichung $Z^N=1$)\\
+$\vec{F}=\left( w^{jk}\right)_{j,k=0}^{N-1}$\\
+$\Rightarrow \vec{y}=\vec{F}\, \vec{c}$ (inverse diskrete Fourier Transformation \emph{IDFT})
+\item Man kann zeigen, dass $\vec{F}$ regulär ist mit $\vec{F}^{-1}=\frac{1}{N}F^*$, wobei $F^*=\left(\overline{w}^{kj}\right)_{k,j=0}^{N-1}$ und $\overline{w}=e^{i\frac{2\pi}{N}}$ (konjugiert komplex). Damit $\vec{c}=\frac{1}{N}F^*\vec{y}$. D.h. $\boxed{c_k = \frac{1}{N}\sum_{j=0}^{N-1} y_j e^{-i\frac{2\pi}{N}k\cdot j}}$ (diskrete Fourier Transformation \emph{DFT})
+\item Fast Fourier Transformation \emph{FFT}\\
+Wenn $N=2^m$, lässt sich die Rechenzeit stark verkürzen.
+\item Diskrete Cosinus Transformation \emph{DCT}\\
+$y=f(x) , \; x \in [0,T], \; N$ gleiche Intervalle (meist $N=2^m$). Die Abtastpunkte sind hier die \emph{Mitten der Intervalle}.\\
+ABB 132\\
+$x_j=\frac{h}{2}+j\cdot h=T\cdot \frac{2j+1}{2N} \quad (j=0,\dots, N-1)$\\
+Ansatz: $y=\sum_{k=0}^n a_k \cos (k\frac{\omega}{k}x)$ (stetiger Fall)\\
+$y_j=\sum_{k=0}^{N-1} a_k \cos\left(\frac{k\pi (2j+1)}{2N}\right)$ (diskreter Fall)\\
+Matrixform: $\vec{y}=\vec{C}\vec{a}$\\
+Die Spalte von $\vec{C}$ bilden orthogonale Basis von $\RR^N$ (entsprechende Normierung führt zu \emph{orthonormaler Basis}). Daher können wir wie bei der Fourier-Transformation vorgehen:\\
+$\vec{a}=\vec{C}^{-1}y$ … DCT\\
+$\vec{y}=C \vec{a}$ … IDCT\\
+Anwendung: Audio und Videokompression (MP3, JPEG). Die Komprimierung erfolgt dabei im Frequenzbereich. kleine Amplituden $a_k\to 0$ $\rightsquigarrow$ Datenreduktion
+\end{itemize}
+
+\chapter{Differentialrechnung für Funktionen mehrerer reeller Veränderlichen}
+\section{Funktionen mehrerer reeller Veränderlicher}
+Betrachte Funktion $f: Db(f) \to \RR$ mit $Db(f)\subseteq \RR^n$ wobei $n\in \NN, \; n\geq 2$. Wir schreiben dann $Z=f(x_1, x_2, \dots, x_n)$ wobei $x_1, \dots, x_n$ unabhängige Variablen und $z$ die abhängige Variable heißen.
+\paragraph{Geometrische Veranschaulichung für $n=2$} Meist schreibt man hier $x,y$ statt $x_1, x_2$.\\
+$z=f(x,y) \quad (x,y) \in Db(f) \subseteq \RR^2$\\
+$\Rightarrow \{(x,y,z) | (x,y) \in Db(f) \wedge z = f(x,y)\}$ ist i.A. eine Fläche in $\RR^3$
+\subsection{Flächen in \texorpdfstring{$\RR^3$}{}}
+\begin{enumerate}
+\item Darstellung eines Punktes $(x,y,z)$ in $\RR^3$
+\begin{itemize}
+\item $x,y,z$ … karthesische Koordinaten\\
+ABB 133
+\item $r, \varphi, z$ … Zylinderkoordinaten\\
+$x=r\cdot \cos \varphi$ (ebene Polarkoordinate)\\
+$y= r \cdot \cos \varphi$ (ebene Polarkoordinate)\\
+$z=z$\\
+Umrechnung: $x^2+y^2=r^2$, …\\
+ABB 134
+\item $r, \varphi, \vartheta$ … Kugelkoordinaten (sphärische Polarkoordinaten)\\
+$x=r\sin(\vartheta) \cos (\varphi)$\\
+$x=r\sin(\vartheta) \sin(\varphi)$\\
+$z=r\cos (\vartheta)$\\
+ABB 135\\
+Beachte: $r$ hat hier andere Bedeutung als bei Zylinderkoordinaten.
+\end{itemize}
+\item Flächendarstellung:
+\begin{itemize}
+\item Explizite karthesische Koordinaten\\
+$z=f(x,y) \quad x,y \in Db(f) \subseteq \RR^2$
+\item Implizite karthesische Darstellung\\
+$F(x,y,z) = 0$
+\item Parameter-Darstellung\\
+$x=x(u,v)$\\
+$y=y(u,v)$\\
+$z=z(u,v)$, \quad $u,v \in B\subseteq \RR^2$ bzw.\\
+$\vec{r}=\vec{r}(u,v) = \mtr{x(u,v)\\ y(u,v)\\ z(u,v)a}$ \quad mit $(u,v) \in B \subseteq \RR^2$\\
+Koordinatenlinien: \\
+$v=v_0$ fest $\Rightarrow \vec{r}=r(u,v_0)$ … Kurvenschar mit Parameter $u$ auf der Fläche.\\
+$u=u_0$ fest $\Rightarrow \vec{r}=r(u_0, v)$ … Kurvenschar mit Parameter $v$ auf der Fläche.
+\end{itemize}
 \end{enumerate}
- 
+
+
+
+
 
 \end{document}
