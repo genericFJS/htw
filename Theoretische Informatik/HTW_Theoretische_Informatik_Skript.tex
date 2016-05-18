@@ -590,8 +590,8 @@ Diese Grammatik erzeugt die gleiche Sprache wie die vorherige Grammatik und ist 
 ABB 117\\
 Das Problem lässt sich für Recursive Descent Parser nicht befriedigend lösen, Man kann links-assoziative Operatoren durch Schleifen verarbeiten. Dazu: EBNF (Extended Backus-Naur-Form).\\
 Obige Grammatik in EBNF:\\
-$E\to T \{ + T \}$\\
-$T \to F \{ (+|-)F\}\\
+$E\to T \{ \{+|-\} T \}$\\
+$T \to F \{ (*|/)F\}\\
 F \to x\,|\,y\,|\,z$\\
 Dabei bedeutet $\{ +T \}$, dass beliebig viele $+T$ folgen können. $\{...\}$ entspricht $(...)^*$.\\
 Problem: Aus dieser Grammatik geht die Assoziativität der Operatoren nicht hervor. Diese muss festgelegt werden. Links-assoziative Operatoren können mit einer Schleife verarbeitet werden:
@@ -604,6 +604,8 @@ E() {
  }
 }
 \end{lstlisting}
+(SimpleInfixCalc.java)
+
 
 \subsubsection{Bottom-Up-Parser}
 Ein \emph{Bottom-Up-Parser} baut einen Ableitungsbaum von unten nach oben auf und kontrolliert dabei die Rechtsableitung der Eingabe. Bottom-Up-Parser lassen sich effizient durch LR-Parser implementieren. Ein LR-Parser liest die Eingabe von links nach rechts und erzeugt den Ableitungsbaum der Rechtsableitung. Ein LR-Parser führt in jedem Schritt eine von vier möglichen Aktionen aus:
@@ -657,11 +659,66 @@ real {integer}("."{integer})?([eE][+-]?{integer})?
 \end{lstlisting}
 
 
+\subsection{OL-Systeme}
+Zur Darstellung benötigen wir Turtle-Grafik:\\
+ABB 136\\
+Befehle:\\
+$forward (l)$ \\
+$left (\alpha)$ bzw. $right(\alpha)$
 
+Im Unterschied zu einer kontextfreien Grammatik wird in einem OL-System in jedem Ableitungsschritt jede Variable ersetzt. Jede Variable wird dabei durch die gleiche Regel ersetzt. Anstelle eines Startsymbols gibt es eine initiale Satzform.
+\subparagraph{Bsp.:} \parskp
+Variable: $F$\\
+Symbole: $+,-$\\
+Regel: $F\to F+F--F+F$\\
+$F\Rightarrow F+F --F + F \\
+\Rightarrow \underbrace{F + F -- F + F}_{1.\,F} + \underbrace{F + F -- F + F}_{2.\,F} -- \underbrace{F + F -- F + F}_{usw.} + \underbrace{F + F -- F + F}$\\
+Graphische Darstellung:\\
+$F= forward$\\
+$+=left(60^\circ)$\\
+$-=right(60^\circ)$\\
+ABB 137
+\section{Die Chomsky Hierarchie}
+\begin{tabular}{L{0.3} L{0.5} L{0.2}}
+Typ & in aller Regeln $u\to r$ gilt & Beispiele\\
+\hline
+0 (rekursiv aufzählbar) & $u,r$ beliebig & $ab\to c$\\
+1 (kontext sensitiv) & $u=\alpha X \beta, \; v = \alpha \gamma \beta$ mit $\alpha, \beta \in (V\cup \Sigma)^*, \; x \in V, \; \gamma \in (V\cup \Sigma)^+$ & $aAb \to aBb$\\
+2 (kontextfrei) & $u \in V, \; v\in (V \cup \Sigma)^*$ & $A \to aBb$\\
+3 (regulär) & $u\in V, \; v \in \Sigma \cup \{\varepsilon\} \cup \Sigma V$ & $A \to a$, $A\to aB$
+\end{tabular}\\
+weitere Beispiele:
+\begin{enumerate}[start=0]
+\item $(a+b) \cdot c \to a\cdot c + b \cdot c$
+\item Artikel$_m$ Nomen $\to$ Artikel$_m$ Kater\\
+Artikel$_f$ Nomen $\to$ Artikel$_f$ Katze
+\item - 
+\item (ist linear im rechten Teilbaum entartet)
+\end{enumerate}
+Chomsky-Hierarchie mit Beispielsprachen:\\
+ABB 138
+\chapter{Berechenbarkeit und Komplexität}
+Frage: Was können Computer berechnen, was können Computer effizient berechnen?\\
+ABB 139 (Turing Maschine)
+\section{Entscheidbarkeit}
+Entscheidungsproblem: Gegeben eine Sprache $L$ und ein Wort $w\in \Sigma^*$. Gehört $w$ zu $L$ ($w\in L$)?
 
-
-
-
+Wir kennen bereits entscheidbare Probleme:
+\begin{itemize}
+\item Wenn $L$ als regulärer Ausdruck gegeben ist, dann ist $w\in L$ entscheidbar durch folgendes Verfahren: 
+\begin{itemize}
+\item Regulären Ausdruck in DFA umwandeln.
+\item DFA die Eingabe $w$ übergeben.
+\item Wenn DFA einen Endzustand erreicht gilt $w\in L$, sonst $w\not \in L$.
+\end{itemize}
+\item $L=\emptyset$ ist entscheidbar, durch ein Entscheidungsverfahren, das immer „falsch“ liefert.
+\item $L=\Sigma^*$ ist entscheidbar, durch ein Entscheidungsverfahren, das immer „richtig“ liefert.
+\item Wenn $L$ als kontextfreie Grammatik gegeben ist, ist $L$ entscheidbar über:
+\begin{itemize}
+\item Umformung in CNF
+\item Anwendung des CYK-Algorithmus
+\end{itemize}
+\end{itemize}
 
 
 
