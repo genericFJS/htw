@@ -325,16 +325,87 @@ class Arbeiter: virtual public Besch{};
 \end{lstlisting}
 Hat immer noch Einschränkungen!
 
+\section{Templates}
+Templates Folie (enthält auch exception).
+Vor allem für Containerklassen/Collections verwendet (Vektoren, Hashtables, Listen).\\
+Schafft Möglichkeit Klassen parameterbehaftet zu generieren (generische Klassen in Java).\\
+Funktionen von Templates müssen (im Gegensatz zur bisherigen Vorgehensweise) im header-File ausprogrammiert werden. Alles, was zum Template gehört kommt ins header-file!!!
+\paragraph{Beispiel Array} Intarr.h
+\begin{lstlisting}[language=C++]
+const int SizeArr = 24;
 
+// Konstruktor, Kopierkonstruktor und Destruktor werden bei Klassen mit Pointer immer benötigt!
+class IntArr{
+	public:
+		IntArr (int Gr = SizeArr ) 	// Konstruktor
+		IntArr (const IntArr&) 			// Kopierkonstruktor
+		~IntArr() (delete IA;}			// Destruktor
+		IntArr & operator = (const IntArr&);
+		int& operator [] (int i);	
+		int getNum() const {return Size;}
+		void resize(int NewSz);
+	private:
+		int Size;
+		int * IA;
+};
+\end{lstlisting}
+Auszug Intarr.cpp
+\begin{lstlisting}[language=C++]
+...
+IntArr :: IntArr (int Sz){
+	Size = Sz;
+	IA = new int [Size];
+	for (int i=0; i<Sz; ++i) IA[i] = 0;
+}
+\end{lstlisting}
+Modifikation um es generisch zu machen (Template), Inhalte von Intarr.cpp müssen eingefügt werden:\\
+Intarr.h
+\begin{lstlisting}[language=C++]
+const int SizeArr = 24;
 
+template <class T>
+class IntArr{
+	public:
+		IntArr (int Gr = SizeArr );
+		IntArr (const IntArr<T>&);
+		~IntArr() (delete IA;}
+		IntArr & operator = (const IntArr<T>&);
+		T& operator [] (int i);	
+		int getNum() const {return Size;}
+		void resize(int NewSz);
+	private:
+		int Size;
+		T * IA;
+};
 
+//... + Inhalt von Intarr.cpp!!!
+template <class T>
+IntArr<T> :: IntArr (int Sz){
+	Size = Sz;
+	IA = new T [Size];
+	for (int i=0; i<Sz; ++i) IA[i] = 0;
+}
 
+template <class T>
+IntArr<T> :: IntArr (const IntArr<T>& Other){
+	Size = Other.Size;
+	IA = new T[Size];
+	for (int i=0; i<Size; i++) IA[i]=Other.IA[i];
+}
+usw.
+\end{lstlisting}
+in der Main dann:
+\begin{lstlisting}[language=C++]
+// vorher: IntArr IA (10);
+IntArr<int> IA (10);
+// oder auch 
+IntArr<double> IA (10);
+// auch möglich 
+IntArr<Fraction> IA (10); // wobei Fraction in einer anderen Klasse definiert ist.
+\end{lstlisting}
 
-
-
-
-
-
+\paragraph{Beispiel Listen}
+cobject.h
 
 \newpage
 \printbibliography
