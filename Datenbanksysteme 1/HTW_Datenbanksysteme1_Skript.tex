@@ -1288,7 +1288,180 @@ WHERE Kredit < (
 Ergebnis ist das gleiche wie in der unkorrelierten Abfrage.
 \end{itemize}
 
+\paragraph{Bsp.:} korrelierte, unkorrelierte UA\\
+Anzeige von Name und Ort der Kunden deren Umsatz (Umsatzsumme) größer als deren Kreditlimit ist.\\
+unkorreliert:
+\begin{lstlisting}[language=SQL]
+SELECT K.Kunr, K.Name, K.Ort
+FROM (
+	SELECT Kunr,
+	SUM (Menge*vPreis) AS U.Summe
+	FROM Kauf
+	GROUP BY Kunr) UA
+JOIN Kunde K
+ON K.Kunr = UA.Kunr
+WHERE U.Summe > Kredit
+\end{lstlisting}
+korreliert:
+\begin{lstlisting}[language=SQL]
+SELECT Kunr, Name, Ort
+FROM Kunde
+WHERE Kredit < (
+	SELECT Kunr
+	SUM (Menge * vPreis) AS U.Summe
+	FROM Kauf	-- Kunde hier nicht enthalten!
+	WHERE Kauf.Kunr = Kunde.Kunr )	-- Kunden-Info aus übergeordneter Abfrage
+\end{lstlisting}
 
+\subsubsection{Mengen-Operationen}
+\Folie{4}{13}
+ABB 150\\
+Allgemein in SQL:
+\begin{lstlisting}[language=SQL]
+SELECT ...
+FROM ...
+[WHERE ...]
+UNION | INTERSECT | EXCEPT
+SELECT ...
+FROM ...
+[WHERE ...]
+\end{lstlisting}
+\paragraph{Bsp.:}$ $
+\begin{lstlisting}[language=SQL]
+SELECT VNum, VName
+FROM Verkaeufer
+WHERE Ort='Dresden'
+UNION
+SELECT KNum, KName
+FROM Kunden
+WHERE Ort='Dresden'
+\end{lstlisting}
+
+\subsubsection{EXISTS / NOT EXISTS-Operator}
+\Folie{4}{14}
+\paragraph{Bsp.:} $ $
+\begin{lstlisting}[language=SQL]
+SELECT Name, Ort
+FROM Kunde
+WHERE EXISTS (
+	SELECT * 
+	FROM Kunde
+	WHERE Ort LIKE 'Dre%')
+\end{lstlisting}
+\subsubsection{SOME/ANY, ALL}
+\paragraph{Bsp.:}$ $
+\begin{lstlisting}[language=SQL]
+SELECT *
+FROM Kunde
+WHERE Kunr = ANY (
+	SELECT Kauf.Kunr
+	FROM Kauf
+	WHERE Kunde.Kunr = Kauf.Kunr) -- Kunde-Info wieder aus übergeordneter Abfrage
+\end{lstlisting}
+\paragraph{Bsp.:} Ausgabe aller Daten des jüngsten Kunden
+\begin{lstlisting}[language=SQL]
+SELECT * 
+FROM Kunde
+WHERE Gebdat >= ALL(
+	SELECT Gebdat
+	FROM Kunde)
+\end{lstlisting}
+\subsubsection{HAVING-Klausel (im Unterscheid zu WHERE)}
+HAVING „filtert“ auf Gruppen: „HAVING ist das WHERE vom GROUP BY“.
+\paragraph{Bsp.:} $ $
+\begin{lstlisting}[language=SQL]
+SELECT Ort, SUM (Kredit)
+FROM Kunde
+GROUP BY Ort
+HAVING SUM(Kredit) > 2000
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+SELECT Ort, SUM (Kredit)
+FROM Kunde
+WHERE Ort LIKE 'D%'	-- Filter auf Einzeldatensätzen
+GROUP BY Ort
+HAVING SUM(Kredit) > 2000	-- Filter auf den Gruppen
+\end{lstlisting}
+
+\subsection{Anweisung zur Datenmanipulation}
+\subsubsection{Einfügen vor Datensätzen}
+\begin{lstlisting}[language=SQL]
+INSERT INTO <tab_name> [ ( <spalte1>, <spalte2>, ... ) ]
+	{[VALUES (wert1, wert2, ...)] | 
+	[SELECT <spalte1>, <spalte2>, ... FROM <tab_name1>]}
+\end{lstlisting}
+INSERT-Varianten:
+\begin{itemize}
+\item 1 Datensatz:\\
+VALUES
+\item Datensatzmenge:\\
+SELECT
+\end{itemize}
+\paragraph{Bsp.:} $ $
+\begin{lstlisting}[language=SQL]
+INSERT INTO Kunde
+VALUES (110, 'Strobl', 'Frank', 'Dresden', '1977-2-27', 'm', 'Student', 500)
+-- oder auch (nicht in Microsoft SQL aber MySQL)
+VALUES (110, 'Strobel', 'Frank',,,,, 500)
+-- besser:
+VALUES (110, 'Strobel', 'Frank', null, null, null, null, 500)
+-- oder:
+INSERT INTO Kunde (Kunr, Name, Vorname, Ort)
+VALUES (110, 'Strobel', 'Frank', 'Dresden')
+\end{lstlisting}
+Datensatzmenge einfügen:
+\begin{lstlisting}[language=SQL]
+INSERT INTO Kunde(Kunr, Name, Vorname, Ort)
+	SELECT Kunr, AName, AVorname, AOrt
+	FROM Adresse
+	WHERE AOrt LIKE 'Dre%'
+\end{lstlisting}
+\subsubsection{Ändern von Datensätzen}
+\begin{lstlisting}[language=SQL]
+UPDATE <tab_name> SET <spalte1> <ausdruck1> [, <spalte2> <ausdruck2>, ...]
+\end{lstlisting}
+\paragraph{Bsp.:} $ $
+\begin{lstlisting}[language=SQL]
+UPDATE Kunde SET Ort='Pirna'
+WHERE Ort='Dresden' -- geht auch ohne WHERE, würde dann bloß in ALLEN Datensätze Ort auf Pirna setzen.
+
+UPDATE Artikel SET EPreis = EPreis*1.1	-- 10 % Preiserhöhung
+WHERE ... --korrelierte/unkorrelierte UA
+\end{lstlisting}
+\subsubsection{Löschen von Datensätzen}
+\begin{lstlisting}[language=SQL]
+DELETE <tab_name> [WHERE <bedingung> ]
+\end{lstlisting}
+\paragraph{Bsp.:} $ $
+\begin{lstlisting}[language=SQL]
+DELETE FROM Kauf
+WHERE KuNr IN ( 
+	SELECT KuNr
+	FROM Kunde
+	WHERE Ort LIKE 'Dre%')
+	
+DELETE FROM Kunde	-- Kann erst ausgeführt werden, wenn oberer Befehl ausgeführt werden. Wegen referenzieller Integrität!
+WHERE Ort LIKE 'Dre%'
+\end{lstlisting}
+\paragraph{Befehlsübersicht} Diese Befehle beziehen sich auf …
+\begin{itemize}
+\item Metadaten (Objekt) (z.B. Tabellendefinition, View-Definition)
+\begin{itemize}
+\item CREATE
+\item ALTER
+\item DROP
+\end{itemize}
+\item Dateninhalt (der Tabelle/View)
+\begin{itemize}
+\item INSERT
+\item UPDATE
+\item DELETE
+\end{itemize}
+\end{itemize}
+
+\section{Query By Example (QBE)}
+graphische Oberfläche\\
+Bsp.: Access
 
 %\newpage
 %\printbibliography
