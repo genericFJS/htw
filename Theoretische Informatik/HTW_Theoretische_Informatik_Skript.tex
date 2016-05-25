@@ -531,6 +531,7 @@ Wir erlauben dem Parser, die nächsten $k$ Zeichen der Eingabe (\emph{lookahead}
 \subsubsection{Top-Down-Parser}
 Ein Top-Down-Parser baut den Syntaxbaum von oben nach unten auf. Ein \emph{Recursive Descent Parser} ist ein Top-Down-Parser, der die Regeln der kontextfreien Grammatik als rekursive Funktionen implementiert.
 
+Beispiel für Sprache $a^nb^n$:
 \begin{lstlisting}[language=java]
 public class Parser {
 	String input;
@@ -679,6 +680,7 @@ $+=left(60^\circ)$\\
 $-=right(60^\circ)$\\
 ABB 137
 \section{Die Chomsky Hierarchie}
+Für Grammatiken:\\
 \begin{tabular}{L{0.3} L{0.5} L{0.2}}
 Typ & in aller Regeln $u\to r$ gilt & Beispiele\\
 \hline
@@ -696,7 +698,8 @@ Artikel$_f$ Nomen $\to$ Artikel$_f$ Katze
 \item (ist linear im rechten Teilbaum entartet)
 \end{enumerate}
 Chomsky-Hierarchie mit Beispielsprachen:\\
-ABB 138
+ABB 138\\
+Eine Sprache hat mindestens die gleiche Klasse wie seine Grammatik, kann aber auch eine höhere haben. Für eine reguläre Sprache muss ein regulärer Ausdruck konstruierbar sein.
 \chapter{Berechenbarkeit und Komplexität}
 Frage: Was können Computer berechnen, was können Computer effizient berechnen?\\
 ABB 139 (Turing Maschine)
@@ -720,8 +723,64 @@ Wir kennen bereits entscheidbare Probleme:
 \end{itemize}
 \end{itemize}
 
+\paragraph{Def.:} Eine Sprache $L$ heißt \emph{entscheidbar}, wenn es ein Programm $P_L$ (Entscheidungsverfahren) gibt, wenn gilt
+\begin{itemize}
+\item für $w\in L$ liefert $P_L$ die Ausgabe $true$
+\item für $w \not \in L$ liefert $P_L$ die Ausgabe $false$.
+\end{itemize}
 
-
+\subparagraph{Bsp.:}
+\begin{itemize}
+\item Wenn $L$ eine kontextfreie Sprache, ist, dann ist $L$ entscheidbar durch den CYK-Algorithmus.
+\item Die Sprache $L= \{ (M,w) \;|\; M \text{ ist ein DFA mit }w\in L(M)\}$ ist entscheidbar durch ein Programm des aus der Eingabe $(M,w)$ eine Repräsentation des DFA erstellt und damit $M$ für die Eingabe $w$ simuliert (vgl. Darstellung eines Interpreters in Zusammenhang mit der erweiterten Überführungsfunktion $\tilde{\delta}$).
+\item Die Sprache $\{ M \;|\; M \text{ ist ein DFA mit }L(M)=\Sigma^*\}$ ist entscheidbar (siehe Übung).
+\item Allgemein: $\{(P,w)\;|\;P \text{ hält für }w\}$. Im Beispiel: Collatz-Problem.
+\end{itemize}
+\section{Halteproblem}
+Das Halteproblem ist die Sprache $H=\{ (P,w) \;|\; \text{Das Programm $P$ hält für die Eingabe }w\}$. Die Frage, ob ein Programm $P$ für eine gegebene Eingabe $w$ hält, ist damit gleichwertig zur Frage $(P,w)\in H$. Wir beweisen zunächst die Unentscheidbarkeit eines Spezialfalls.
+\paragraph{Satz:} Das spezielle Halteproblem $K=\{P\;|\;\text{das Programm $P$ hält für die Eingabe }P\}$ ist unentscheidbar.
+\subparagraph{Bsp.:}
+\begin{itemize}
+\item für ein Programm $P \in K$:\begin{lstlisting}[language=C]
+void P( Input w ) {
+	return;
+}
+\end{lstlisting}
+\item für ein Programm $P \not \in K$:
+\begin{lstlisting}[language=C]
+void P( Input w ) {
+	while(true);
+}
+\end{lstlisting}
+\end{itemize}
+Beweis (Widerspruch):\\
+Angenommen, $K$ sei entscheidbar durch ein Entscheidungsverfahren $P_K$. Daraus konstruieren wir ein Programm $P_K^*$, das $P_K$ als Unterprogramm verwendet und das
+\begin{itemize}
+\item in eine Endlosschleife übergeht, wenn $P_K$ $true$ liefert
+\item hält, wenn $P_K$ $false$ liefert.
+\end{itemize}
+ABB 148\\
+Nach Konstruktion gilt dann:
+\begin{itemize}
+\item Für die Eingabe $P$ hält $P_K^*$ genau dann, wenn $P_k$ false enthält.
+\end{itemize}
+Da nach Annahme $P_K$ ein Entscheidungsverfahren für $K$ ist, bedeutet das:
+\begin{itemize}
+\item Für die Eingabe $P$ hält $P_K^*$ genau dann, wenn $P$ für die Eingabe $P$ nicht hält.
+\end{itemize}
+Für $P=P_K^*$ folgt:
+\begin{itemize}
+\item Für die Eingabe $P_K^*$ hält $P_K^*$ genau dann, wenn $P_K^*$ für die Eingabe $P_K^*$ nicht hält.
+\end{itemize}
+Widerspruch!\medskip\\
+Folgerung: Das Halteproblem $H$ ist unentscheidbar.\\
+Beweis: Angenommen, $H$ wäre entscheidbar durch $P_H$. Dann können wir folgendes Entscheidungsverfahren für $K$ konstruieren:
+\begin{lstlisting}[language=C]
+bool P_K ( Programm P ) {
+	return P_H(P,P);
+}
+\end{lstlisting}
+Widerspruch!
 \newpage
 \printbibliography
 \end{document}
