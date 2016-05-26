@@ -407,6 +407,109 @@ IntArr<Fraction> IA (10); // wobei Fraction in einer anderen Klasse definiert is
 \paragraph{Beispiel Listen}
 cobject.h
 
+\chapter{Java}
+\section{Grundlagen}
+Java0intro.pdf\\
+Klassenname und Dateiname müssen exakt übereinstimmen. Jede Datei darf nur eine Klasse enthalten.
+\begin{lstlisting}[language=Java]
+public class HelloOne{	// Dateiname: HelloOne.java
+	public static void main(String args[]}{	// im Vergleich zu C++ gibt es keinen public-Bereich, die Eigenschaft muss vor jede Funktion/Variabel geschrieben werden.
+		System.out.println("welcome to java");
+		System.out.println("today is " + new java.util.Date());
+		System.out.printf("JAVA test: %d\n", 26);
+	}
+}
+\end{lstlisting}
+javac HelloOne.java zum Übersetzen\\
+java HelloOne zum Ausführen
+\begin{lstlisting}[language=Java]
+public class HelloEcho{
+	public static void main(String args{]){
+		for (int i = 0; i<args.length; i++)
+			System.out.println(args[i]);
+		// oder:
+		for (String s:args)
+			System.out.println(s);
+		System.exit(0);
+	}
+}
+\end{lstlisting}
+\subsection{Parsen von Daten}
+\begin{lstlisting}[language=Java]
+public class HelloParse{
+	public static void main(String args{]){
+		int i;
+		double d;
+		i = Integer.parseInt(args[0]);
+		d = Double.parseDouble(args[1});
+		System.out.println("i: "+i+" d: "+d);
+	}
+}
+\end{lstlisting}
+\subsection{GUI mit AWT}
+\begin{lstlisting}[language=Java]
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+public class HelloTwo extends Panel {	// extends: erweitert. Also: "erbt von"
+	Label l1=new label("welcome to java", Label.CENTER);
+	Label l2=new Label("today is "+new Date(), Label.CENTER);	// wegen import javo.util.* kann hier nur Date() geschrieben werden.
+	Button close = new Button ("Close");
+	
+	public HellowTwo(){
+		setFont(new Font("System", Font.PLAIN, 24));
+		setLayout(new GridLayout(3,1,0,10));
+		add(l1);	// alternativ: this.add(l1);
+		add(l2);
+		close.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				// bpsw erweiterbar mit System.out.printl("Close...");
+				System.exit(0);
+			}
+		});
+	}
+	
+	public static void main(String args[]){
+		Frame f=new Frame("first Desktop Application");
+		HelloTwo h = new HelloTwo();
+		f.add(h);
+		f.setVisible(true);
+		f.pack();
+	}
+}
+\end{lstlisting}
+
+\subsection{Applet}
+\begin{lstlisting}[language=Java]
+import java.applet.*;
+import java.awt.*;
+
+public class HelloThree extends Applet{
+	public void init(){
+		Panel h= new HelloTwo();
+		add(h);
+	}
+}
+\end{lstlisting}
+\begin{lstlisting}[language=HTML]
+<html>
+<body>
+<applet code=HelloThree width=940 height=540></applet>
+</body>
+</html>
+\end{lstlisting}
+Zu jedem Applet gehört ein dazugehöriges HTML-File. Damit kann das Applet über einen Applet-Viewer benutzt werden. Hier funktioniert der Close-Button aber nicht. 
+\paragraph{Angepasstes HelloTwo} Hiermit wird der Close-Button implementiert, sodass er im Applet nicht erscheint.
+\begin{lstlisting}[language=Java]
+// Quit-Button wird erst in main-Funktion eingeführt
+\end{lstlisting}
+java1.pdf
+\subsection{Operatoren}
+\begin{itemize}
+\item $>>$ schiebt nach rechts und fügt abhängig vom ersten Bit $0$en (1. Bit $0$) oder $1$en (1. Bit $1$) nach. $>>>$ schiebt immer $0$en nach.
+\end{itemize}
+
+
 \newpage
 \printbibliography
 \end{document}
