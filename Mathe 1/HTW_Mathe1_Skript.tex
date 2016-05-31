@@ -1775,5 +1775,66 @@ $(x_0,y_0) \in Db(f)$ erklärt. Außerdem sei  $f_{xy}$ an der Stelle $(x_0,y_0)
 \end{itemize}
 Man sieht: $f_{xy}=f_{yx}$.
 
+\paragraph{Satz 2:} (Verallgemeinerte Kettenregel)\\
+Die Funktionen $z=f(u,v), \; u=g(x,y), \; v=h(x,y)$ seien stetig partiell differenzierbar (nach allen Variablen). Dann ist die Funktion $z=f^*(x,y)=f(g(x,y), h(x,y))$ partiell nach $x$ und $y$ differenzierbar. Und es gilt:\\
+$z_x=z_u\cdot u_x + z_v \cdot v_x\\
+z_y=z_u \cdot u_y + z_v \cdot v_y$
+
+\subparagraph{Bsp.:} $z=(x^2+3y^2)^{x+2y}$ ist nach $x$ und $y$ zu differenzieren.\\
+$u=x^2+3y^2, \; v=x+2y \;\Rightarrow\; z=f(u,v)=u^v$\\
+$z_x=z_u\cdot u_x + z_v \cdot v_x = v \cdot u ^{v-1} \cdot 2x + u^v \cdot \ln (u) \cdot 1=u^v\left(\frac{v}{u}\cdot 2x + \ln u \right)$\\
+$\Rightarrow z_x = (x^2+3y^2)^{x+2y} \left( \frac{x+2y}{x^2+3y^2e}\cdot 2x + \ln \left(x^2+3y^3\right)\right)$\\
+$z_y=z_u \cdot u_y + z_v \cdot v_y = v\cdot u^{v-1} \cdot 6y + u^v \ln (u) \cdot 2 = u^v\left(\frac{v}{u}\cdot 6y+2\ln u\right)$\\
+$\Rightarrow z_y = (x^2+3y^2)^{x+2y}\left(\frac{x+2y}{x^2+3y^2}\cdot 6y+2\ln\left(x^2+3y^2\right)\right)$
+\subparagraph{Bemerkung:} Verallgemeinerung auf mehr als 2 Variablen:\\
+$z=f(u_1,\dots, u_m), \; u_i = g_i(x_1, \dots , x_n) \quad i=1,\dots,m$\\
+$\Rightarrow\frac{\partial z}{\partial x_k}=\sum_{i=1}^m\frac{\partial z}{\partial u_i}\cdot \frac{\partial u_i}{\partial x_k} \quad , \; k=1,\dots, n$
+
+\paragraph{Satz 3:} (Satz über implizite Funktionen)\\
+Sei $F(x,y)$ in eine einer Umgebung von $(x_0, y_0)$ stetig partiell nach $x$ und $y$ differenzierbar und sei $F(x_0,y_0)=0$ und $F_y(x_0,y_0)\not = 0$. Dann existiert eine Umgebung $U(x_0)$, so dass die Gleichung $F(x,y)=0$ eindeutig eine Funktion $f: U(x_0) \to \RR$ erklärt, mit $F(x,f(x)) = 0 \forall x \in U(x_0)$. Außerdem gilt dann:\\
+$\boxed{f'(x)=-\frac{F_x}{F_y}} \quad \forall x \in U(x_0)$
+
+\subparagraph{Beweis der Ableitungsregel} \parskp
+$F(\underbrace{x}_u, \underbrace{y}_v)=F(x,f(x))=0$ differenzieren wir nach $x$:\\
+$F_u\cdot u_x + F_v \cdot v_x=F_x\cdot 1 + F_y \cdot f'(x) = 0$ durch Umformen erhält man dann:\\
+$\Rightarrow f'(x) = -\frac{F_x}{F_y}$
+
+\subparagraph{Diskussion:} Mittels Satz 3 ist eine Kurvendiskussion für implizit gegebene Kurven $F(x,y)=0$ möglich, ohne die Gleichung explizit aufzulösen. Für die 2. Ableitung ergibt sich:\\
+$f''(x) = -\frac{(F_{xx} \cdot 1 + F_{xy} \cdot y')\cdot F_y - F_x (F_{yx}\cdot 1 + F_{yy} \cdot y')}{F_y^2}$\\
+$\overset{y'=-\frac{F_x}{F_y}}{\Longrightarrow} \boxed{f''(x)=-\frac{F_{xx}F_y^2-2F_{xy}F_xF_y+F_{yy}F_x^2}{F_y^3}}$
+
+\paragraph{Def. 2:} Gegeben sei $f:Db(f) \to \RR, \; Db(f) \subseteq \RR^2$. Die vektorwertige Funktion (Vektorfeld) $\nabla f: Db(f) \to \RR^2$ $\nabla f(x,y) := \mtr{f_x(x,y)\\ f_y(x,y)}$ heißt \emph{Gradient} von $f$.\\
+Ist $f: Db(f) \to \RR$ mit $Db(f) \subseteq \RR^n$, so ist $\nabla f: Db(f)\to \RR^n$ $\nabla f(x_1,\dots, x_n)=\mtr{f_{x_1}(x_1,\dots, x_n)\\ \vdots \\ f_{x_n}(x_1,\dots, x_n)}$ der Gradient.
+
+\subparagraph{Bemerkung:} Häufig schreibt man auch $\mathrm{grad}f$ statt $\nabla f$.
+
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Eigenschaften des Gradienten und Anwendungen besprechen wir in Kapitel \ref{5.4.1}.
+\item Umkehrung: \\
+Gegeben: Vektorfeld $\vec{v}=\mtr{P(x,y)\\Q(x,y)}$\\
+Gesucht: Funktion $F$ mit $\vec{v}=\nabla F$ (d.h. die Ableitung ist vorgegeben, gesucht ist $F$)\\
+$F$ heißt dann Stammfunktion oder Potential von $\vec{v}$. Es existiert genau dann eine Stammfunktion $F(x,y)$ mit $F_x=P(x,y)$ und $F_y=Q(x,y)$, wenn 
+\begin{itemize}
+\item $F$ in einem \emph{einfach zusammenhängenden Gebiet} $G \subseteq \RR^2$ liegt und
+\item die sogenannten \emph{Integrabilitätsbedingungen} erfüllt: $P_y=Q_x$.
+\end{itemize}
+Ein Gebiet $G$ heißt einfach zusammenhängend, genau dann wenn jede geschlossene, doppelpunktfreie Kurve eindeutig auf einen Punkt zusammengezogen werden kann.\\
+ABB 151
+\end{enumerate}
+
+\section{Totale Differenzierbarkeit und Fehlerrechnung}
+\paragraph{Def. 1:} Die Funktion $f: Db(f) \to \RR, \; Db(f) \subseteq \RR^2$ heißt an der Stelle $(x_0,y_0)\in Db(f)$ total differenzierbar, falls es Konstanten $\alpha$ und $\beta$ gibt, so dass die lineare Abbildung $(h,k) \mapsto L(h,k) = \alpha h + \beta k$ die Abbildung $(h,k) \mapsto f(x_0 +h, y_0 + k) - f(x_0,y_0) $ approximiert. D.h. wenn für $R(h,k):= f(x_0+h, y_0 +k) - f(x_0,y_0) - L(h,k)$ der Grenzwert $\lim_{(h,k)\to (0,0)} \frac{R(h,k)}{\sqrt{h^2+k^2}}=0$ gilt.
+
+\paragraph{Satz 1:}
+\begin{anumerate}
+\item $f$ sei in Umgebung von $(x_0, y_0)$ stetig partiell nach $x$ und $y$ differenzierbar. Dann ist $f$ an der Stelle $(x_0,y_0)$ auch total differenzierbar.
+\item $f$ sei bei $(x_0,y_0)$ total differenzierbar. Dann ist $f$ an der Stelle $(x_0,y_0)$ partiell differenzierbar und es gilt $\alpha = f_x(x_0,y_0), \; \beta = f_y(x_0,y_0)$.
+\end{anumerate}
+
+
+
+
+
 
 \end{document}
