@@ -1463,6 +1463,130 @@ WHERE Ort LIKE 'Dre%'
 graphische Oberfläche\\
 Bsp.: Access
 
+\section{DBMS-spezifische Erweiterungen vom Standard-SQL (T-SQL)}
+\subsection{Statements zur Ablaufkontrolle}
+\Folie{4}{15}
+\subsubsection{IF}
+\begin{lstlisting}[language=SQL]
+IF SELECT AVERAGE(vPreis) FROM Kauf < 40
+	UPDATE Kauf SET vPreis=vPreis*1.1	-- für Produkte mit vPreis <40 wird der Preis um 10% erhöht
+\end{lstlisting}
+\subsubsection{IF EXISTS}
+\begin{lstlisting}[language=SQL]
+IF EXISTS (SELECT COUNT(*) FROM Kunde WHERE Name='Adler')
+	PRINT 'Adler vorhanden'
+\end{lstlisting}
+\subsubsection{WHILE / WAITFOR}
+\begin{lstlisting}[language=SQL]
+WHILE 2>1	-- Endlosschleife
+	BEGIN
+		WAITFOR DELAY '1:00:00'	-- eine Stunde warten
+		SELECT GETDATE()
+		EXEC sp_who	-- Liste aktiver Nutzer auf Server
+	END
+\end{lstlisting}
+\subsection{Benutzung von Variablen}
+\Folie{4}{16}
+\begin{tabular}{l l l}
+& \textbf{global} & \textbf{lokal} \\
+Deklaration: & System & im Programmcode\\
+Bezeichnung: & @@name & @myname\\
+Wertzuweisung: & System & select-Befehl (Konstante/Wert aus Relation übergeben)\\
+Zugriff: & Lesend & Lesend + Schreibend
+\end{tabular}
+\subsection{Anzeigen von Nachrichten}
+\begin{tabular}{l c l}
+PRINT & $\Rightarrow$ & ASCII-Zeichen\\
+SELECT & $\Rightarrow$ & Dateninhalte ausgeben\\
+& $\Rightarrow$ & Zuweisung von Variablen\\
+RAISERROR & $\Rightarrow$ & Fehlermeldungen ausgeben
+\end{tabular}
+
+\paragraph{Bsp.:}$ $
+\begin{lstlisting}[language=SQL]
+DECLARE @myName CHAR(10),
+	@myKnr INT
+SELECT @myKunr = 345	-- Wertzuweisung  braucht SELECT!!!
+SELECT @myName = Name	-- Wert aus Relation
+	FROM Kunde
+	WHERE Kunr = @myKunr
+-- diese beiden SELECTS liefern keine Ergebnismenge: sind nur Wertzuweisungen
+PRINT 'Kunr= ' + CONVERT(CHAR(10), @myKunr)
+PRINT 'Name= ' + @myName	-- Achtung: 'test'+NULL gäbe insgesamt NULL, also keine Ausgabe, Lösung:
+PRINT 'Name= ' + ISNULL(@myName, 'kein Name')
+\end{lstlisting}
+\paragraph{zu Bsp. 1:} (aus Folie 4.16)
+\begin{lstlisting}[language=SQL]
+DECLARE @Anz int
+SELECT @Anz = COUNT(*)
+	FROM Kauf
+	WHERE Artnr=5555
+IF @Anz > 3
+	PRINT 'Anzahl ist ' + CONVERT(CHAR(10), @Anz)
+ELSE
+	BEGIN
+		PRINT 'einzelne Käufe von 5555:'
+		SELECT K.Name, K.Vorname
+			FROM Kunde K
+			JOIN Kauf F ON K.Kunr = F.Kunr
+			WHERE Artnr = 5555
+	END
+\end{lstlisting}
+\paragraph{zu Bsp. 2:}$ $
+\begin{lstlisting}[language=SQL]
+WHILE (SELECT SUM(Kredit) FROM Kunde) < 100000
+	BEGIN
+		UPDATE Kunde
+			SET Kredit = Kredit * 1.1
+		IF (SELECT MAX(Kredit) FROM Kunde) > 50000
+			BEGIN
+				PRINT 'Abbruch > 50000'
+				BREAK
+			END
+	END
+\end{lstlisting}
+\paragraph{zu Bsp. 3:}$ $
+\begin{lstlisting}[language=SQL]
+DECLARE @dKredit MONEY,
+	@zKredit MONEY
+SELECT @zKredit = 10000
+SELECT @dKredit = AVG (Kredit)
+	FROM Kunde
+IF (SELECT Kredit FROM Kunde WHERE Kunr=123) < @dKredit
+ UPDATE Kunde SET Kredit = Kredit+@zKredit
+\end{lstlisting}
+
+\subsection{Arbeiten mit Batch}
+\Folie{4}{17}
+\subsection{Arbeiten mit Stored Procedure}
+\Folie{4}{18}
+\Folie{4}{19}
+\paragraph{zu Bsp. 1:} (aus Folie 4.19)
+\begin{lstlisting}[language=SQL]
+CREATE PROCEDURE Erhoehe_Preis (@Prozent in = 5) AS
+	UPDATE Kauf SET vPreis = vPreis + vPreis * @Prozent/100
+\end{lstlisting}
+\paragraph{zu Bsp. 2:} $ $
+\begin{lstlisting}[language=SQL]
+-- Aufruf bspw in einem Batch:
+EXECCUTE Erhoehe_Preis 10	-- keine Klammern um Paramter im Aufruf!
+\end{lstlisting}
+\paragraph{zu Bsp. 3:} $ $
+\begin{lstlisting}[language=SQL]
+CREATE PROC LoescheKu (@Kunr int, @Zaehler int OUTPUT) AS	-- CREATE PROC: Abkürzung für CREATE PROCEDURE
+	SELECT @Zaehler = COUNT(*)
+		FROM Kauf
+		WHERE Kunr = @Kunr
+	DELETE FROM Kauf WHERE Kunr = @Kunr
+	DELETE FROM Kunde WHERE Kunr = @Kunr	-- Referentielle Integrität: Erst Kauf, dann Kunde löschen!
+	
+-- Aufruf bspw. im Batch:
+DECLARE @Anz int
+EXEC LoescheKu 123, @Anz OUTPUT -- OUTPUT muss hier auch noch mal angegeben werden!
+PRINT 'Anzahl gelöschter Käufe: ' + CONVERT(CHAR(10), @Anz)
+\end{lstlisting}
+\Folie{4}{19}
+
 %\newpage
 %\printbibliography
 \end{document}
