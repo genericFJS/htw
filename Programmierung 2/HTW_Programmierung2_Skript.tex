@@ -506,8 +506,107 @@ Zu jedem Applet gehört ein dazugehöriges HTML-File. Damit kann das Applet übe
 java1.pdf
 \subsection{Operatoren}
 \begin{itemize}
-\item $>>$ schiebt nach rechts und fügt abhängig vom ersten Bit $0$en (1. Bit $0$) oder $1$en (1. Bit $1$) nach. $>>>$ schiebt immer $0$en nach.
+\item $>>$ schiebt nach rechts und fügt abhängig vom ersten Bit (Vorzeichen) $0$en (1. Bit $0$) oder $1$en (1. Bit $1$) nach. $>>>$ schiebt immer $0$en nach.
 \end{itemize}
+
+\subsection[Eingabekonvertierung, Formatierte Ausgabe]{Eingabekonvertierung, Formatierte Ausgabe / Konvertierung numerischer Werte}
+\begin{lstlisting}[language=Java]
+public class Num{
+	public static vaid main(String args[]){
+		int x;
+		x = Integer.parseInt(args[0]);	-- Exceptions bei keiner Eingabe und bspw. String-Eingabe
+		System.out.printf("x: %d", x);
+		System.out.println("x: "+x);
+	}
+}
+\end{lstlisting}
+
+\subsection{Vergleich von Objekten}
+\begin{itemize}
+\item == prüft Objekt gleich ist (nicht Inhalt!)
+\item .equals() prüft Gleichheit von Objektinhalt
+\end{itemize}
+\begin{lstlisting}[language=Java]
+public class Cmp{
+	public static vaid main(String args[]){
+		String s="Hans";
+		if (args[0] == s)
+			System.out.println("args[0]==s liefert true");
+		else
+			System.out.println("args[0]==s liefert false");
+		if (s.equals(args[0]))
+			System.out.println("s.equals(args[0]) liefert true");
+		else
+			System.out.println("s.equals(args[0]) liefert false");
+		// ergibt das erste Mal false (weil Objekte ungleich) und das zweite Mal true (weil Objektinhalt gleich).
+			
+		if ("Hans" == s)
+			System.out.println("Hans==s liefert true");
+		else
+			System.out.println("Hans==s liefert false");
+		if (s.equals("Hans"))
+			System.out.println("s.equals(\"Hans\") liefert true");
+		else
+			System.out.println("s.equals(\"Hans\") liefert false");
+		// ergibt beides mal true, weil der Compiler optimiert und der "Hans" String nicht doppelt erzeugt wurde.
+	}
+}
+\end{lstlisting}
+
+\subsection{Arrays}
+\begin{lstlisting}[language=Java]
+int intArray[];	// [] bleibt hier immer leer!
+intArray = new int[2]	// jetzt [] füllen
+// alternativ, inkl. Initialisierung:
+int intArray[] = {1,2,3};
+
+// mehrdimensional:
+int mda[][] = { {1,2}, {1,2,3}, {1,2,3,4,5} };
+// alternativ:
+int mda[][];
+mda = new int{2][];
+mda[0] = new int[2];
+mda[1] = new in[5];
+// oder auch:
+mda = new int[2]{10];
+\end{lstlisting}
+Vgl. Byte Array (zum Verschicken über Netzwerk: Serialisierung)
+
+\subsection{Statements}
+if- und Schleifenbedingung braucht unbedingt boolsche Werte.\\
+Also bspw. nicht "if(i)", sondern "if(i!=0)".
+
+\begin{lstlisting}[language=Java]
+public class Cmp{
+	public static void main(String args[]){		
+		for ( String x:args) 	// for-each alternativ zu for(int i=0; i<args.length; i++) {x=args[i]; System.out.println(x);}
+			System.out.println(x);
+	}
+}
+\end{lstlisting}
+
+\subsection{Exceptions}
+\begin{lstlisting}[language=Java]
+class tryDemo{
+	...
+}
+\end{lstlisting}
+
+\section{Klassen}
+Java2\_classes.pdf
+
+\begin{lstlisting}[language=Java]
+class LocalVar{
+	public static void main(String args[]){
+		int i,j;
+		j=i+1;	// ergibt Fehler, weil i noch nicht initialisiert wurde.
+		System.out.println(j);
+	}
+}
+\end{lstlisting}
+
+\subsection{Initialisierer}
+Funktion ohne Funktionskopf. Wird ausgeführt, wenn Instanz erstellt wird. Ein static-Initialisierer wird ausgeführt, sobald die Klasse geladen wird.
 
 
 \newpage

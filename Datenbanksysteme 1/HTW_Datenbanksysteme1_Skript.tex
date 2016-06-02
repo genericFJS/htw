@@ -1295,20 +1295,19 @@ unkorreliert:
 SELECT K.Kunr, K.Name, K.Ort
 FROM (
 	SELECT Kunr,
-	SUM (Menge*vPreis) AS U.Summe
+	SUM (Menge*vPreis) AS U-Summe
 	FROM Kauf
 	GROUP BY Kunr) UA
 JOIN Kunde K
 ON K.Kunr = UA.Kunr
-WHERE U.Summe > Kredit
+WHERE U-Summe > Kredit
 \end{lstlisting}
 korreliert:
 \begin{lstlisting}[language=SQL]
 SELECT Kunr, Name, Ort
 FROM Kunde
 WHERE Kredit < (
-	SELECT Kunr
-	SUM (Menge * vPreis) AS U.Summe
+	SELECT SUM (Menge * vPreis) AS U.Summe
 	FROM Kauf	-- Kunde hier nicht enthalten!
 	WHERE Kauf.Kunr = Kunde.Kunr )	-- Kunden-Info aus übergeordneter Abfrage
 \end{lstlisting}
