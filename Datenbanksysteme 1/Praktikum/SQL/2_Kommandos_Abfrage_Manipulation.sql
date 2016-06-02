@@ -31,6 +31,7 @@ SELECT *
 FROM Projekt
 WHERE ProLeiter IS NULL
 
+--==================================================--
 -- Aufgabe 2,2
 
 -- a
@@ -57,6 +58,7 @@ GROUP BY MitID
 SELECT MAX(ProAufwand) AS MaxAufwand, SUM(ProAufwand) AS GesamtAufwand, COUNT(*) AS ProjektAnz
 FROM Projekt
 
+--==================================================--
 -- Aufgabe 2.3
 
 -- a
@@ -87,6 +89,7 @@ SELECT Ort, AVG(DATEDIFF(yyyy,Gebdat,GETDATE())) AS Durchschnittsalter
 FROM Mitarbeiter
 GROUP BY Ort
 
+--==================================================--
 -- Aufgabe 2.4
 
 -- a
@@ -148,4 +151,47 @@ FROM Projekt p
 WHERE p.Pronr NOT IN (SELECT z.Pronr FROM Zuordnung z)
 ORDER BY p.Pronr, z.MitID
 
+--==================================================--
 -- Aufgabe 2.5
+
+-- a
+SELECT *
+FROM Mitarbeiter
+WHERE Nachname NOT IN (
+	SELECT Nachname		-- wichtig: hier steht nur die Spalte, die tatsächlich zum Vergleich benötigt wird: Nachname NOT IN Nachname
+	FROM Mitarbeiter m
+	JOIN Projekt p ON m.Nachname = p.ProLeiter
+)
+
+-- b
+SELECT *
+FROM Mitarbeiter
+WHERE Gebdat = (
+	SELECT MAX(Gebdat)
+	FROM Mitarbeiter
+) AND Beruf = 'Dipl.-Ing.'
+
+-- c
+
+-- unkorreliert:
+SELECT z.ProNr, z.MitID, u.MaxPlan
+FROM (
+	SELECT Pronr,  MAX(Plananteil) AS MaxPlan
+	FROM Zuordnung
+	GROUP BY Pronr) u	-- u: Tabelle mit den Maximalen Plananteilen
+JOIN Zuordnung z ON u.MaxPlan=z.Plananteil AND u.Pronr = z.Pronr	-- u wird auf z gejoint, um die Mitarbeiter-ID der Maximalen Plananteile zu bekommen. 
+ORDER BY Pronr
+
+-- korreliert
+SELECT ProNr, MitID, Plananteil
+FROM Zuordnung z
+WHERE Plananteil = (
+	SELECT MAX(Plananteil) AS MaxPlan
+	FROM Zuordnung u
+	WHERE u.Pronr = z.Pronr)
+ORDER BY Pronr
+
+--==================================================--
+-- 2.6
+
+-- a
