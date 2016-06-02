@@ -1832,9 +1832,79 @@ ABB 151
 \item $f$ sei bei $(x_0,y_0)$ total differenzierbar. Dann ist $f$ an der Stelle $(x_0,y_0)$ partiell differenzierbar und es gilt $\alpha = f_x(x_0,y_0), \; \beta = f_y(x_0,y_0)$.
 \end{anumerate}
 
+\paragraph{Def. 2:} $\diffd{f}(x_0,y_0):=f_x(x_0,y_0)h+f_y(x_0,y_0)k$ heißt das zur Stelle $(x_0,y_0)$ und den Zuwächsen $h=\Delta x = \diffd{x}$ und $k=\Delta y = \diffd{y}$ gehörende \emph{totale Differential} von $f$. Die Summanden heißen partielle Differentiale.\\
+Schreibweise: $\diffd{f}=f_x \diffd{x}+f_y\diffd{y}$
+\subparagraph{Diskussion:} 
+\begin{enumerate}
+\item Es gilt $\Delta f := f(x_0+h, y_0+k) - f(x_0,y_0) = \diffd{f}+R(h,k)$.\\
+$\Rightarrow \Delta f \approx \diffd{y}$ (falls $|h|, \; |k|$ klein)\\
+$\Rightarrow$ Anwendung in der Fehlerrechnung: Absoluter Fehler\\
+$|\Delta f| \approx | \diffd{f}| \leq |f_x(x_0,y_0)| \cdot |\Delta h| + |f_y(x_0,y_0)|\cdot |\Delta y|$\\
+Mit den Fehlerschranken $S_f:=\max|\Delta f|$, $S_x:=\max|\Delta x|$, $S_y:=\max|\Delta y|$ gilt daher $S_f\approx |f_x(x_0,y_0)| \cdot  S_x + |f_y(x_0,y_0)| \cdot  S_y$ (lineares Fehlerfortpflanzungsgesetz)
+\item Geometrische Veranschaulichung
+\begin{itemize}
+\item $\Delta f$ ist Zuwachs der Funktion wenn $(x,y)$ von $(x_0,y_0)$ in $(x_0+\diffd{x}, y_0 + \diffd{y})$ übergeht
+\item $\diffd{f}$ ist der entsprechende Zuwachs der Tangentialebene (TE) an die Fläche $z=f(x,y)$ in $(x_0,y_0, z_0)$.\\
+ABB 152
+\end{itemize}
+\item Anwendung für die Fehlerrechnung: Übung
+\end{enumerate}
 
+\section{Weitere Begriffe, Anwendungen}
+\subsection{Richtungsableitung, Tangentialebenen}
+\paragraph{Def. 1:} $f(x,y)$ besitze in $(x_0,y_0)$ stetige partielle Ableitungen 1. Ordnung. Für jeden Vektor $\vec{s}=\mtr{s_1\\s_2}=|\vec{s}| \cdot \left(\cos (\alpha)\cdot \mtr{1\\0}+ \sin (\alpha) \mtr{0 \\ 1}\right)$ heißt \\
+$\frac{\partial f}{\partial s}(x_0,y_0):= \lim_{h\to 0} \frac{f(x_0+h \cos (\alpha) , y+h\sin (\alpha))-f(x_0,y_0)}{h}$ Richtungsableitung von $f$ an der Stelle $(x_0,y_0)$ in Richtung $\vec{s}$ (bzw. in Richtung $\alpha$).\\
+ABB 153
 
+\subparagraph{Diskussion:} 
+\begin{enumerate}
+\item $\frac{\partial f}{\partial s}(x_0,y_0)$ ist der Flächenanstieg in Richtung $\vec{s}$.
+\item Speziell: \\
+$\vec{s}=\mtr{1\\0}$, d.h. $\alpha=0 \Rightarrow \frac{\partial f}{\partial s}=f_x$\\
+$\vec{s}=\mtr{0\\1}$, d.h. $\alpha=90^\circ \Rightarrow \frac{\partial f}{\partial s}=f_y$
+\end{enumerate}
 
+\paragraph{Satz 1:} (Berechnung der Richtungsableitung)\\
+Es gilt 
+\begin{align*}
+\frac{\partial f}{\partial s} (x_0,y_0) &= f_x(x_0,y_0) \cdot \cos \alpha + f_y (x_0,y_0) \cdot \sin \alpha \\
+&= \frac{f_x(x_0,y_0) \cdot s_1+f_y (x_0,y_0) \cdot s_2}{\sqrt{s_1^2+s_2^2}}\\
+&= \left( \nabla f(x_0,y_0) , \vec{s}^\circ \right)	\qquad \text{(das Skalarprodukt)}
+\end{align*}
+wobei $\vec{s}^\circ = \frac{s}{\sqrt{s_1^2+s_2^2}}$ die auf Länge 1 normierte Version von $s$ ist.
 
+\paragraph{Satz 2:} (Eigenschaften des Gradienten im Fall $z=f(x,y)$)\\
+Der Vektor $\nabla f(x_0,y_0)$
+\begin{anumerate}
+\item steht senkrecht auf (der Projektion in die x-y-Ebene) der Höhenlinie $f(x,y)=c$ zum Niveau $z=c=f(x_0,y_0)$.
+\item zeigt in die Richtung des stärksten Funktionszuwachses. Dieser ergibt sich mittels\\
+$\max_{\vec{s}} \frac{\partial f}{\partial s} (x_0,y_0) = | \nabla f(x_0,y_0)|$
+\end{anumerate}
+Anschaulich: $z=f(x,y)$
+
+\subparagraph{Diskussion:} Anwendung Tangentialebenengleichungen (TE)
+\begin{itemize}
+\item TE an die Fläche $F(x,y,z) = 0$ im Punkt $(x_0,y_0,z_0)$:\\
+$F_x(x_0,y_0,z_0) (x-x_0) + F_y(\dots)(y-y_0) + F_z(\dots)(z-z_0)=0$\\
+Denn: Fläche $F(x,y,z)=0$ ist eine Niveaufläche von $u=F(x,y,z)$ zum Niveau $0$.\\
+$\Rightarrow n:= \nabla F(x_0,y_0,z_0)$ ist ein Normalenvektor dieser Fläche\\
+$\Rightarrow$ Tangentialebene ist gegeben durch $\left(\vec{n}, \vec{r}-\vec{r}_0\right)=0$ (Skalarprodukt).\\
+D.h. $\left(\mtr{F_x(x_0,y_0,z_0)\\F_y(\dots)\\F_z(\dots)}, \mtr{x-x_0\\y-y_0\\z-z_0}\right) = 0$
+\item Speziell: $z=f(x,y) \Rightarrow$ TE in $(x_0,y_0,z_0)$.\\
+$z=z_0+f_x(x_0,y_0)(x-x_0) + f_y(x_0,y_0)(y-y_0)$\\
+Denn: $z=f(x,y) \Leftrightarrow 0 = f(x,y) -z =: F(x,y,z)$\\
+$\Rightarrow F_x=f_x, \; F_y=f_y,\; F_z = -1$
+\end{itemize}
+
+\subparagraph{Bsp. 1:} $z=f(x,y)=4-\frac{1}{9}(x^2+y^2), \; P_0=(3,-3)$ $\Rightarrow$ $z_0=2$
+\begin{anumerate}
+\item Gradient : $\nabla f = \mtr{-\tfrac{2}{9}x\\-\tfrac{2}{9}y}$\\
+$\nabla f(x_0,y_0)=\mtr{-\tfrac{2}{3}\\-\tfrac{2}{3}}$
+\item max. Funktionsanstieg in $(x_0,y_0)$:\\
+$|\nabla f(x_0,y_0)|=\sqrt{\tfrac{8}{9}}=0,9428$
+\item Tantentialebene in $(x_0,y_0,z_0)$:\\
+$z=2+(-\tfrac{2}{3})(x-3)+\tfrac{2}{3}(y+3)$\\
+$\Leftrightarrow 2x-2y+3z-18=0 \Leftrightarrow \frac{x}{9}-\frac{y}{9}+\frac{z}{6}=1$
+\end{anumerate}
 
 \end{document}
