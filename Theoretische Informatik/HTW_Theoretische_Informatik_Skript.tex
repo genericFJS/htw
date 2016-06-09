@@ -781,6 +781,94 @@ bool P_K ( Programm P ) {
 }
 \end{lstlisting}
 Widerspruch!
+
+\subsection{Weitere unentscheidbare Probleme}
+Um die Unentscheidbarkeit weiterer Probleme zu zeigen, verwenden wir einen Beweis durch Widerspruch nach folgender Bauart:
+\begin{itemize}
+\item Um die Unentscheidbarkeit einer Formalen Sprache $B$ zu zeigen, verwenden wir eine unentscheidbare Sprache $A$.
+\item Wir nehmen an, dass die Sprache $B$ entscheidbar ist. Folglich gibt es ein Entscheidungsverfahren für $B$.
+\item Wir zeigen, dass sich damit ein Entscheidungsverfahren für A konstruieren lässt.\\
+Widerspruch!
+\end{itemize}
+
+Anwendung:
+\paragraph{Satz:} Das Halteproblem $H$ ist nicht entscheidbar.\\
+$H=\{(P,w)\;|\; P \text{ hält für }w \}$\\
+$K=\{P\;|\;P \text{ hält für } P\}$
+\begin{proof}
+Angenommen $H$ ist entscheidbar. \\
+Dann gibt es ein Entscheidungsverfahren $P_H$ für $H$. \\
+Dann können wir folgendes Programm konstruieren:
+\begin{lstlisting}[language=Java]
+boolean $P_K$ (Program P) {
+	return $P_H$(P,P);
+}
+\end{lstlisting}
+Dann gilt: $\underline{P\in K} \Leftrightarrow P \text{ hält für } P \Leftrightarrow (P,P) \in H \Leftrightarrow \underline{P_H(P,P) \text{ ist true}}$\\
+Widerspruch, da $K$ unentscheidbar ist.
+\end{proof}
+\paragraph{Satz:} $H_\varepsilon = \{P \;|\; P \text{ hält für die Eingabe }\varepsilon\}$
+\begin{proof}
+Angenommen, $H_\varepsilon$ ist entscheidbar.\\
+Dann gibt es Entscheidungsverfahren $P_{H_\varepsilon}$ für $H_\varepsilon$.\\
+Damit können wir folgendes Programm konstruieren:
+\begin{lstlisting}[language=Java]
+boolean $P_H$ (Program P, Input w){
+	void F() {
+		P(w);
+	}
+	return $P_{H_\varepsilon}$(F);
+}
+\end{lstlisting}
+Dann gilt: $(P,w) \in H \Leftrightarrow P \text{ hält für }w \Leftrightarrow F \text{ hält für }\varepsilon \Leftrightarrow F \in H_\varepsilon$\\
+Widerspruch, da $H$ unentscheidbar ist.
+\end{proof}
+\paragraph{Satz:} $H^*=\{P \;|\; P \text{ hält für jede Eingabe}\}$ ist nicht entscheidbar.
+\begin{proof}
+Angenommen, $H^*$ ist entscheidbar durch ein Entscheidungsverfahren $P_{H^*}$.\\
+Dann können wir folgendes Programm konstruieren:
+\begin{lstlisting}[language=Java]
+boolean $P_{H_\varepsilon}$(Program P) {
+	void F(Input w){
+		P($\varepsilon$);
+	}
+	return $P_{H^*}$(F);
+}
+\end{lstlisting}
+Dann gilt: $P\in H_\varepsilon \Leftarrow P \text{ hält für die Eingabe }\varepsilon\Leftrightarrow F \text{ hält für jede Eingabe }w \Leftrightarrow F \in H^*$\\
+Widerspruch, da $H_\varepsilon$ nicht entscheidbar.
+\end{proof}
+
+\paragraph{Satz:} $\ddot{A}=\{(P_1, P_2) \;|\; P_1, P_2 \text{ berechnen die gleichen Funktionen}\}$ ist nicht entscheidbar.
+\begin{proof}
+Angenommen $\ddot{A}$ ist entscheidbar durch $P_{\ddot{A}}$.\\
+Dann konstruieren wir das Programm:
+\begin{lstlisting}[language=Java]
+boolean $P_{H^*}$(Program P){
+	int F(Input w){
+		return 0;
+	}
+	int G(Input w){
+		P(w);	// hält P(w) immer? Nur dann ist G 0.
+		return 0;
+	}
+	return $P_{\ddot{A}}$(F,G);
+}
+\end{lstlisting}
+Dann gilt: $P\in H^* \Leftrightarrow P \text{ hält für jede Eingabe }w \Leftrightarrow G \text{ berechnet }w\mapsto 0\\
+\Leftrightarrow F,G \text{ berechnen die gleiche Funktion}\Leftrightarrow (F,g)\in \ddot{A}$ (genau dann, wenn ich $H^*$ entscheiden kann, kann ich $\ddot{A}$ entscheiden)\\
+Widerspruch, da $H^*$ unentscheidbar. 
+\end{proof}
+
+
+
+
+
+
+
+
+
+
 \newpage
 \printbibliography
 \end{document}
