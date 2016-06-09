@@ -18,6 +18,7 @@
 \usepackage[ngerman]{babel}
 \usepackage{csquotes}	% Anführungszeichen
 \usepackage{eurosym}
+\usepackage{trimclip} % Abschneiden von Zeilen: \clipbox{0pt 0pt {\width} 0pt}{text}
 
 % HTW Corporate Design: Arial (Helvetica)
 \usepackage{helvet}
@@ -193,6 +194,7 @@ urlcolor=green,%
 	\automark*[subsection]{subsection}
 	\pagestyle{scrheadings}
 	\ihead{\includegraphics[height=1.7em]{\workingdir LaTeX_master/HTW-Logo.eps}}
+	%\ohead{\truncate{5cm}{\Dokumententitel}}
 	\ohead{\Dokumententitel}
 	\cfoot{\pagemark}
 	\ofoot{\Dokumentensignatur}
