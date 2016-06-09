@@ -1907,4 +1907,118 @@ $z=2+(-\tfrac{2}{3})(x-3)+\tfrac{2}{3}(y+3)$\\
 $\Leftrightarrow 2x-2y+3z-18=0 \Leftrightarrow \frac{x}{9}-\frac{y}{9}+\frac{z}{6}=1$
 \end{anumerate}
 
+\subsection{Lokale Extrema (ohne Nebenbedingungen) von Funktionen zweier Veränderlicher}
+\paragraph{Def. 2:} $f: \RR^2\to \RR$ heißt in $(x_0,y_0)$ lokal $\begin{cases}
+\text{minimal}\\
+\text{maximal}
+\end{cases}$, wenn es eine Umgebung $U(x_0,y_0)$ gibt, so dass für alle $(x,y)\in U(x_0,y_0)\setminus (x_0,y_0)$ gilt $\begin{cases}
+f(x,y) > f(x_0,y_0)\\
+f(x,y) < f(x_0,y_0)
+\end{cases}$
+\subparagraph{Diskussion:} Anschaulich:\\
+ABB 155\\
+TE liegt parallel zur x-y-Ebene.\\
+Bezeichnungen: 
+\begin{itemize}
+\item $(x_0,y_0)$ … Extremstelle
+\item $z_0=f(x_0,y_0)$ … Extremwert
+\item $(x_0,y_0,z_0)$ … Extrempunkt
+\end{itemize}
+Offensichtlich ist der Funktionsanstieg (Richtungsableitung) für alle Richtungen $=0$. Daher auch $f_x(x_0,y_0)=0=f_y(x_0,y_0)$.
+\paragraph{Satz 3:} (Notwendige Bedingungen für lokale Extrema)\\
+$f: \RR^2\to \RR$ sei an der Stelle $(x_0,y_0)$ lokal und partiell differenzierbar. Dann gilt :\\
+$f_x(x_0,y_0)=0$\\
+$f_y(x_0,y_0)=0$
+\paragraph{Satz 4:} (Hinreichende Bedingung für lokale Extrema)
+\begin{enumerate}
+\item $f(x,y)$ besitze in $U(x_0,y_0)$ stetige partielle Ableitungen bis zur 2. Ordnung.
+\item Die notwendige Bedingung $f_x(x_0,y_0)=0=f_y(x_0,y_0)$ sei erfüllt.
+\end{enumerate}
+Dann gilt mit $D(x,y):= f_{xx}f_{yy}-f_{xy}^2=\dtr{f_{xx} & f_{xy}\\f_{yx} & f_{yy}}$\\
+$\boxed{D(x_0,y_0)>0} \Rightarrow$ $f$ in $(x_0,y_0)$ lokal extremal und insbesondere 
+\begin{itemize}
+\item lokal minimal, falls zusätzlich $f_{xx}(x_0,y_0) >0$.
+\item lokal maximal, falls zusätzlich $f_{xx}(x_0,y_0) <0$.
+\end{itemize}
+Beachte: $D(x,y)$ wird Diskriminante genannt.
+
+\subparagraph{Diskussion:} 
+\begin{enumerate}
+\item $D(x_0,y_0)>0 \Rightarrow f_{xx}(x_0,y_0)$ und $f_{yy}(x_0,y_0)$ haben beide das gleiche Vorzeichen.\\
+Daher kann die Bedingung an $f_{xx}$ durch die gleiche Bedingung an $f_{yy}$ ersetzt werden.
+\item Allgemeine Vorgehensweise zur Bestimmung von lokalen Extrema von $f(x,y)=z$:
+\begin{anumerate}
+\item Gleichungssystem $f_x=0$, $f_y=0$ lösen.\\
+$\rightsquigarrow$ liefert extremwertverdächtige Stellen $P_E=(x_E, y_E)$
+\item Für diese Stellen $P_E=(x_E,y_E)$ Diskriminante berechnen.\\
+1. Fall: $D(x_E,y_E)>0 \Rightarrow$ Extremum $f_{xx}\begin{cases}
+>0 & \text{… Minimum}\\
+<0 & \text{… Maximum}
+\end{cases}$\\
+2. Fall: $D(x_E, y_E)=0 \Rightarrow$ gesonderte Untersuchung notwendig\\
+3. Fall: $D(x_E,y_E)<0 \Rightarrow$ kein Extremum, sondern ein Sattelpunkt (im engeren Sinn).
+\end{anumerate}
+Allgemein: Stationäre Stellen, die keine Extrema sind werden als Sattelstellen bezeichnet.
+\subparagraph{Bsp. 2:} $z=f(x,y)=2xy^2-2x^2-y^2+4$
+\begin{anumerate}
+\item $f_x(x,y)=2y^2-4x\overset{!}{=}0$\\
+$f_y(x,y)=4xy-2y \overset{!}{=}0$\\
+aus $f_y$: $\Rightarrow 0 = \underset{y=0}{2y}\underset{x=\tfrac{1}{2}}{(2x-1)}$\\
+aus $f_x$: $\Rightarrow x=0, y=\pm 1$\\
+$\Rightarrow$ Extremwertverdächtige Stellen: $P_1(0,0), \; P_2=(\tfrac{1}{2},1), \; P_3=(\tfrac{1}{2},-1)$
+\item $f_{xx}=-4$, $f_{yy}=4x-2$, $f_{xy}=4y$\\
+$\Rightarrow D(x,y) = -4(4x-2-(4y)^2$\\
+Nun die Punkte einsetzen:\\
+$P_1:$ $D(0,0)=8>0$ $\Rightarrow$ Extremum $f_{xx}<0$ $\Rightarrow$ Maximum\\
+$P_2:$ $D(\tfrac{1}{2},-1)=-16<0$ $\Rightarrow$ Sattelpunkt\\
+$P_3:$ $D(\tfrac{1}{2},-1)=-16<0$ $\Rightarrow$ Sattelpunkt
+\end{anumerate}
+\item Sattelstellen anschaulich:\\
+ABB 156
+\item Im Falle $D(x_E, y_E)=0$ ist eine gesonderte Untersuchung notwendig.\\
+Bspw. Einschränkung des Definitionsbereichs auf Kurven , die durch $(x_E, y_E)$ verlaufen. Genau dann, wenn \emph{alle} diese Einschränkungen ein Maximum bei $(x_E, y_E)$ aufweisen ist $(x_E, y_E)$ eine Maximumstelle von $f$.
+
+\subparagraph{Bsp. 3:} $z=f(x,y)=x^4-y^4$\\
+$f_x=4x^3\overset{!}{=}0$\\
+$f_y=-4y^3 = 0$\\
+$\Rightarrow x=0, \; y=0 \to P_E=(0,0)$\\
+$f_{xx}=12x^2, \; f_{yy}=-12y^2, \; f_{xy}=0$\\
+$\Rightarrow D(0,0)=0$\\
+Einschränkung auf Gerade $x=0 \Rightarrow z=-y^4$ $\to$ hat Maximum (Parabel unten offen)\\
+Einschränknug auf Gerade $y=0 \Rightarrow z = x^4$ $\to$ hat Minimum (Parabel oben offen)\\
+$\Rightarrow$ keine Extremstelle
+\item $z=f(x_1, \dots, x_n), \; \vec{x} \in B \subseteq \RR^4$
+\begin{itemize}
+\item notwendige Bedingung $\frac{\partial f}{\partial x}=0$ für alle $i=1,\dots, n$\\
+$\rightsquigarrow$ liefert mögliche Extremstelle $x_E$
+\item hinreichende Bedingung: \\
+Definiere die Hesse Matrix: $\vec{H}(\vec{x})=\left(\frac{\partial ^2 f}{\partial_x\partial_y}\right)_{i,j=1}^n$ (alle möglichen Ableitung von 2 Variablen)
+\begin{anumerate}
+\item Alle Eigenwerte von $\vec{H}(\vec{x})$ sind positiv $\Rightarrow x_E$ ist lokales Minimum
+\item Alle Eigenwerte von $\vec{H}(\vec{x})$ sind negativ $\Rightarrow x_E$ ist lokales Maximum
+\item Eigenwerte von $\vec{H}(\vec{x})$ sind sowohl positiv als auch negativ $\Rightarrow x_E$ ist Sattelpunkt (keine Extremstelle)
+\item Wenigstens ein $EW = 0$ ($\Leftrightarrow \det \vec{H}(\vec{x_E})=0$) $\Rightarrow$ gesonderte Betrachtung notwendig (außer es gilt gleichzeitig c.))\\
+Beachte für $n=2$:\\
+$\det (\vec{H}(\vec{x_E})-\lambda \vec{E})=(\lambda - \lambda_1)(\lambda-\lambda_2)$\\
+$\overset{\lambda = 0}{\Rightarrow} \det (\vec{H}(\vec{x_E}))=\lambda_1 \cdot \lambda_2 = D(x_E)$\\
+$\lambda_1 + \lambda_2=f_{xx}(x_E)+f_{yy}(x_E)$\\
+Damit ist diese Vorgehensweise für hinreichende Bedingung identisch mit der Fallunterscheidung in Diskussion aus 2.).
+\end{anumerate}
+\end{itemize}
+\end{enumerate}
+
+\subsection{Lokale Extrema mit Nebenbedingungen}
+Problem: Gesucht sind lokale Extrema von $z=f(x,y)$ unter der Nebenbedingung (NB) $g(x,y)=0$.\\
+Anschaulich:
+\begin{itemize}
+\item Fläche $z=f(x,y)$ wird mit Zylinderfläche $g(x,y)=0$ geschnitten.\\
+$\rightsquigarrow$ Schnittkurve $C$
+\item Gesucht sind Stellen $(x_0,y_0)$ auf der Kurve $g(x,y)=0$ an denen $C$ extremale Höhe über der x-y-Ebene besitzt.\\
+ABB 157
+\end{itemize}
+
+
+
+
+
 \end{document}
