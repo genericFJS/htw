@@ -195,3 +195,121 @@ ORDER BY Pronr
 -- 2.6
 
 -- a
+SELECT MitID, SUM(Istanteil) AS SummeIstanteil
+FROM Zuordnung
+GROUP BY MitID
+HAVING SUM(Istanteil) > 0.7
+
+-- b
+SELECT ProName, ProAufwand, SUM(z.SummePlananteil) AS SummePlananteil
+FROM (
+	SELECT ProNr, SUM(Plananteil) AS SummePlananteil
+	FROM Zuordnung
+	GROUP BY ProNr
+) z
+JOIN Projekt p ON p.ProNr = z.ProNr
+GROUP BY p.ProName, p.ProAufwand
+HAVING p.ProAufwand > SUM(z.SummePlananteil)
+
+--==================================================--
+-- 2.7
+
+-- a 
+UPDATE Mitarbeiter SET Ort='Dresden'
+WHERE Nachname = 'Fuchs' OR Nachname = 'Elster'
+SELECT * FROM Mitarbeiter
+
+-- b
+UPDATE Mitarbeiter SET Beruf='Dipl.-Ing.'
+WHERE Nachname='Fuchs'
+SELECT * FROM Mitarbeiter
+
+-- c
+DELETE FROM Zuordnung 
+WHERE MitID IN(
+	SELECT MitID
+	FROM Mitarbeiter
+	WHERE Beruf='Industriekauf.'
+)
+
+DELETE FROM Mitarbeiter
+WHERE Beruf='Industriekauf.'
+
+SELECT * FROM Mitarbeiter
+
+-- d
+SELECT MitID INTO temp	-- Mitarbeiter, auf die das Kriterium zutrifft in temporäre Tabelle speichern
+FROM Zuordnung
+GROUP BY MitID
+HAVING SUM(Plananteil) < 0.3
+
+DELETE FROM Zuordnung
+WHERE MitID IN (	-- Abgleich mit temporärer Tabelle
+	SELECT *
+	FROM temp
+)
+
+DELETE FROM Mitarbeiter
+WHERE MitID IN(		-- Abgleich mit temporärer Tabelle
+	SELECT *
+	FROM temp
+)
+
+DROP TABLE temp	-- temporäre Tabelle wieder löschen
+
+--==================================================--
+-- 2.8
+
+-- e
+SELECT Ort
+FROM Mitarbeiter
+EXCEPT
+SELECT ProOrt
+FROM Projekt
+
+-- f
+SELECT Ort
+FROM Mitarbeiter
+INTERSECT
+SELECT ProOrt
+FROM Projekt
+
+-- g
+SELECT Ort
+FROM Mitarbeiter
+UNION
+SELECT ProOrt
+FROM Projekt
+
+--==================================================--
+-- 2.9
+
+-- a	Equijoin
+-- Mitarbeiter mit Projekten im gleichen Ort
+SELECT *
+FROM Mitarbeiter m, Projekt p
+WHERE m.Ort = p.ProOrt
+ORDER BY m.MitID
+
+-- b	Naturaljoin
+-- Mitarbeiter mit Projekten im gleichen Ort ohne die Spalte mit dem gleichen Inhalt: dem Ort
+SELECT m.*, p.ProNr, p.ProName, p.ProBeschreibung, p.ProAufwand, p.ProLeiter
+FROM Mitarbeiter m, Projekt p
+WHERE m.Ort = p.ProOrt
+ORDER BY m.MitID
+
+-- c	kartesisches Produkt
+-- jeder mit jedem
+SELECT *
+FROM Mitarbeiter, Projekt
+ORDER BY Mitarbeiter.MitID
+
+--==================================================--
+-- 2.10
+
+SELECT *, DATEDIFF(yyyy, Gebdat, GETDATE()) AS EZMitAlter, MitAlter= 
+CASE   
+	WHEN ( MONTH(Gebdat) < MONTH(GETDATE()) OR ( MONTH(Gebdat) = MONTH(GETDATE()) AND DAY(Gebdat) <= DAY(GETDATE()) ) )	THEN DATEDIFF(yyyy,Gebdat,GETDATE())
+	WHEN ( MONTH(Gebdat) > MONTH(GETDATE()) OR ( MONTH(Gebdat) = MONTH(GETDATE()) AND DAY(Gebdat) > DAY(GETDATE()) ) )	THEN DATEDIFF(yyyy,Gebdat,GETDATE())-1   
+END
+FROM Mitarbeiter

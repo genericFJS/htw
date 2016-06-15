@@ -607,6 +607,54 @@ class LocalVar{
 
 \subsection{Initialisierer}
 Funktion ohne Funktionskopf. Wird ausgeführt, wenn Instanz erstellt wird. Ein static-Initialisierer wird ausgeführt, sobald die Klasse geladen wird.
+\subsection{Vererbung}
+Überschriebene Methoden in Java verhalten sich wie virtuelle Methoden in C++.
+
+\begin{lstlisting}[language=Java]
+import java.awt.*;
+import java.awt.event.*;
+
+public class myPanel extends Component implements WindowListener{
+	private String myString;
+	
+	public void windowActivated(WindowEvent e){}
+	public void windowClosed(WindowEvent e){}
+	public void windowClosing(WindowEvent e){System.exit(1);}
+	public void windowDeactivated(WindowEvent e){}
+	public void windowDeiconified(WindowEvent e){}
+	public void windowIconified(WindowEvent e){}
+	public void windowOpened(WindowEvent e){}
+	
+	@Override
+	public Dimension getPreferredSize()	{
+		return new Dimension(400,200);
+	}
+	
+	myPanel(String s){
+		myString =s;
+	}
+	
+	public static void main(String args[]){
+		Frame f=new Frame (args.length>0?args[0]:"no String - no fun");
+		myPanel p=new myPanel(args.length>0?args[0]:"no String - no fun");
+		System.out.println(p.myString+" in main");
+		f.add(p);
+		f.addWindowListener(p);
+		f.pack(); //setSize(400,200);
+		f.setVisible(true);
+		f.repaint();
+	}
+	
+	@Override
+	public void paint(Graphics gc){
+		//System.out.println(myString+" in paint");
+		gc.drawString(myString,10,20);
+	}
+}
+\end{lstlisting}
+
+\section{Abstract Windowing Toolkit (AWT)}
+java4\_awt.pdf
 
 
 \newpage
