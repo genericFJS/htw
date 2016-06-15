@@ -1,14 +1,25 @@
-\documentclass{article}
-\usepackage{etoolbox}
+% Header aus der Vorlage
+\input{LaTeX_master_HTW}
 
-\newcounter{myc}[subsubsection]
-\patchcmd{\subsubsection}{\bfseries}{\bfseries\setcounter{myc}{1}}{}{}
+%\bibliography{../Literatur/HTW_Literatur.bib}
+
+% Definition von Titel, Autor usw.
+\DTitel{}
+\DUntertitel{Vorlesungsskript}
+\DAutor{Falk-Jonatan Strube}
+\DNotiz{Vorlesung von }
 
 \begin{document}
 
-\subsubsection{Test}
-\themyc
-\subsubsection{Test}
-\themyc
+\maketitle
+\newpage
+\tableofcontents
+\newpage
 
+\chapter{aoursdasoeu}
+\section{au}
+
+
+\newpage
+\printbibliography
 \end{document}

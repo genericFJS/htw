@@ -2017,6 +2017,191 @@ $\rightsquigarrow$ Schnittkurve $C$
 ABB 157
 \end{itemize}
 
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item $g(x,y)=0$ ist auffassbar…
+\begin{anumerate}
+\item als Kurve in x-y-Ebene $K=\{(x,y)\;|\; g(x,y)=0\}$
+\item als Zylinderfläche $\bot$ x-y-Ebene (Zylinderfläche wird erzeugt von einer ebenen Kurve $K$. Entlang dieser wird eine Gerade, die senkrecht auf der x-y-Ebene steht verschoben).
+\end{anumerate}
+\item Falls $g_y\not = 0 \Rightarrow g(x,y) = 0$ ist nach $y$ auflösbar, d.h. $y=y(x)$, damit $z=f(x,y(x)) \to$ Extrema berechnen. Notwendige Bedingung ist als $\frac{\diffd{z}}{\diffd{x}}=f_x+f_yy'=0$. Außerdem gilt $g(x,y(x))=0 \Rightarrow g_x+g_y y'=0$ mit $\vec{a}:= \mtr{ 1 \\ y'}\not =0, \; \vec{b}=\mtr{f_x\\f_y}, \; \vec{c}=\mtr{g_x\\g_y}$ gilt $(\vec{a}, \vec{b})=0$ und $(\vec{a}, \vec{c})=0$.\\
+$\Rightarrow \vec{b}+\lambda \vec{c}=0$ (mit geeignetem $\lambda \in \RR$)\\
+$\Leftrightarrow \boxed{f_x+\lambda g_x =0 \quad f_y+\lambda g_y=0}$ (falls $g_x\not =0$, analoges vorgehen)\\
+Dies ergibt die \emph{Lagrange-Methode}:
+\begin{anumerate}
+\item Bilde Lagrange Funktion:\\
+$F(x,y,\lambda)=f(x,y)+\lambda g(x,y)$\\
+unter Verwendung des Hilfsparameters $\lambda$.\\
+Beachte: NB muss in Form $g(x,y)=0$ gegeben sein.
+\item Es sei $(x_E, y_E)$ eine lokale Extremstelle von $z=f(x,y)$ unter der NB $g(x,y)=0$. Außerdem sollen $f$ und $g$ stetige partielle Ableitungen 1. Ordnung besitzen (in $U(x_0,y_0)$) und es gelte $\nabla g (x_E, y_E)\not = 0$ (d.h. $g_x(x_E,y_E)\not = 0 \vee g_y(x_E,y_E)\not =0$, denn dann kann NB nach $x$ oder $y$ aufgelöst werden). \emph{Dann} gibt es eine Lösung des Gleichungssystems 
+\begin{align*}
+F_x=0\\
+F_y=0\\
+F_z=0
+\end{align*}
+der Gestalt $(x_E, y_E, \lambda_E)$.
+D.h. die Lösungen des Gleichungssystems liefern stationäre Stellen (mögliche Extremstellen).\\
+\emph{Sonderfall}: Eventuell vorhandene Stellen $(x_0,y_0)$ mit $g(x_0,y_0)=g_x(x_0,y_0)=g_y(x_0,y_0)=0$ (sogenannte singuläre Punkte der Kurve $K$ $g(x,y)=0$) können Extremstellen sein, ohne dass sie sich aus dem Gleichungssystem ergeben. Diese müssen daher gesondert betrachtet werden.
+\item Untersuchung der stationären Stellen bspw. mittels
+\begin{itemize}
+\item Höhenlinienbild\\
+ABB 158
+\item geometrische Überlegung
+\item die hinreichende Bedingung:\\
+$D:= F_{xx}g_y^2-2F_{xy}g_xg_y+F_{yy}g_x^2$ mit $F=f+\lambda g$.\\
+Dann $D(x_E,y_E,\lambda_E)\begin{cases}
+<0 & \text{Maximum}\\
+>0 & \text{Minimum}
+\end{cases}$
+\end{itemize}
+\end{anumerate}
+\subparagraph{Bsp. 4:} $z=f(x,y)=x^2+y^2$ mit NB $x^2+\frac{y^2}{4}=1$
+\begin{anumerate}
+\item $F(x,y,\lambda) = \underbrace{x^2+y^2}_{f(x,y)}+\lambda \underbrace{\left(x^2+\frac{y^2}{4}-1\right)}_{g(x,y)}$
+\item \begin{align*}
+F_x &= 2x + 2\lambda x = 0\\
+F_y &= 2y + \frac{1}{2}\lambda y = 0\\
+F_\lambda &= x^2 + \frac{y^2}{4}-1=0
+\end{align*}
+Aus erster Gleichung: $\underbrace{2x}_{\to x=0} \underbrace{(1+\lambda)}_{\to \lambda = -1}=0$\\
+Fall $x=0$: $\overset{\text{3. Gl.}}{\Rightarrow} y=\pm 2, \; \lambda = \dots$\\
+Fall $\lambda = -1$: $\overset{\text{2. Gl.}}{\Rightarrow} 2y-\frac{1}{2}y=0 \Rightarrow y = 0 \overset{\text{3. Gl.}}{\Rightarrow} x=\pm 1$\\
+ABB 159\\
+Koordinaten für lokale Extrma sind also $P_1=(0,2), \; P_2=(0,-2), \;P_3=(-1,0),\; P_4=(1,0)$. Im Höhenlinienbild wird klar: $P_1$ und $P_2$ sind Maxima (mit Funktionswert $4$), $P_3$ und $P_4$ sind Minima (mit Funktionswert $1$).\\
+Beachte: Alternativ nutzt man das hinreichende Kriterium aus c.) (mit $D(x_E, y_E, \lambda_E)$).\\
+Also: Wenn möglich Bild Zeichen und als hinreichendes Kriterium nutzen oder das Kriterium aus c.) nutzen.
+\end{anumerate}
+\end{enumerate}
+
+\subparagraph{Bemerkung:} 
+\begin{enumerate}
+\item Für Funktionen $f(x_1,\dots, ,x_n)$ mit $n>2$ Veränderlichen und $k<n$ Nebenbedingungen $g:(x_1, \dots, x_n)=0$ analoges Vorgehen:\\
+Lagrange Funktion:\\
+$F(x_1,\dots, x_n, \lambda_1, \dots, \lambda_k)=f(x_1,\dots, x_n)+\lambda_1g_1(x_1,\dots,x_n)+\dots+\lambda_kg_k(x_1,\dots,x_n)$\\
+Die Bedingung 1.) wird dann zu \\
+$rang\left(\frac{\partial g_i}{\partial x_j}\right)_{\substack{i=1,\dots,k\\j=1,\dots,n}}=k$
+\item Falls NB eindeutig nach $k$ Veränderlichen auflösbar, dann Rückführung auf Problem \emph{ohne} NB mit $n-k$ Veränderlichen möglich.\\
+Vorsicht: in Bsp. 4 lösen wir nach $y$ auf: $y^2=4(1-x^2) \; \Rightarrow \; y=\pm\sqrt{4(1-x^2)}$\\
+Einsetzen liefert: $z=x^2+y^2=4-3x^2$\\
+$\frac{\diffd{z}}{\diffd{x}}=-6x \overset{!}{=} 0 \Rightarrow x=0$\\
+Es ergeben sich somit nur $P_1$ und $P_2$ und nicht alle Lösungen, da $y$ nicht eindeutig!
+\end{enumerate}
+
+\chapter{Integralrechnung für Funktionen mehrerer Veränderlicher}
+\section{Integrale über ebene Bereiche}
+\subsection{Begriff}
+\begin{itemize}
+\item Geg.: 
+\begin{enumerate}
+\item Beschränkter, abgeschlossener Bereich $B\subseteq \RR^2$
+\item Fläche $z=f(x,y) \geq 0$, $f$ stetig
+\end{enumerate}
+\item Ges.: Volumen $V$ des Körpers $K$ unter der Fläche über dem Bereich $B$\\
+ABB 160
+\item Idee: Zerlegung der Fläche $b$ in Teilbereiche $\Delta b$ $\rightsquigarrow$ Zerlegung von $K$ in Säulen mit dem Volumen $\Delta V $: $\Rightarrow V = \sum \Delta V_i \approx \sum f(\xi_i, \eta_i)\Delta b_i$\\
+ABB 161
+\item $f$ stetig, Verfeinerung, Grenzübergang $\rightsquigarrow$ Grenzwert $V$ existiert unabhängig von Zerlegungssäulen.
+\item Schreibweise: $\iint_B f(x,y)\intd{b}$ … Bereichsintegral
+\end{itemize}
+
+\subparagraph{Diskussion}
+\begin{enumerate}
+\item Einteilung von $B$ durch achsenparallele Geraden\\
+ABB 162\\
+$\Rightarrow \diffd{b}=\diffd{x}\cdot \diffd{y}$\\
+$\Rightarrow$ Schreibweise: $\iint_B f(x,y)\intd{b}=\iint_B f(x,y)\intd{x}\intd{y}$
+\item Unabhängig von der geometrischen Bedeutung wird das Bereichsintegral auch für Funktionen mit negativen Funktionswerten definiert.
+\end{enumerate}
+
+\subsection{Reduktion auf Doppelintegrale}
+Gegeben seien zwei stetige Funktionen $\varphi_1(x)$ und $\varphi_2(x)$ mit $\varphi_1(x) \leq \varphi_2(x)$ für alle $ x \in [a,b]$.\\
+Der Bereich $B=\{(x,y)\;|\; a\leq x \leq b, \; \varphi_1(x)\leq y \leq \varphi_2(xy)\}$ heißt Normalbereich bezüglich der $x$-Achse.\\
+ABB 163\\
+Dann gilt:\\
+$\boxed{\iint_B f(x,y) \intd{b}=\int_a^b\left( \int_{\varphi_1(x)}^{\varphi_2(x)} f(x,y) \intd{y}\right) \intd{x}}$ (Klammern lässt man oft weg)
+
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Normalbereich bezüglich der $x$-Achse wird links und rechts begrenzt durch Koordinatenlinie $x=a, \; x=b$. Diese Begrenzungen können zu Punkten entarten.\\
+ABB 164\\
+Das Intervall $[a,b]$ ergibt sich durch Orthogonalprojektion von $B$ auf die $x$-Achse. Daraus ergeben sich die stets konstanten Grenzen $a$ und $b$ für die äußere Integration. Dagegen läuft $y$ in Abhängigkeit von $x$ nur von $\varphi_1(x)$ bis $\varphi_2(x)$ und nicht von $c$ bis $d$. Grenzen für das innere Integral hängen also im Allgemeinen von der äußeren Integrationsvariablen ab.
+\item Analog: Gegeben $\psi_1(y)\leq \psi_2(y), \; y\in [c,d]$ liefert Normalbereich bezüglich der $y$-Achse $B=\{(x,y)\;|\; c\leq y \leq d, \; \psi_1(y) \leq x  \leq \psi_2(y)\}$.\\
+Dann $\iint_B f(x,y)\intd{b}=\int_c^d\int_{\psi_1(y)}^{\psi_2(y)} f(x,y) \intd{x}\intd{y}$.\\
+ABB 165
+\item Oft sind beide Varianten möglich. Manchmal ist eine Zerlegung nötig.\\
+ABB 166
+\item Spezialfall: außen und innen konstante Grenzen $\Leftrightarrow$ $B$ ist achsenparalleles Rechteck. Hier ist die Integrationsreihenfolge egal. 
+\end{enumerate}
+
+\subparagraph{Bsp. 1:} Zu berechnen ist $I=\iint_B \frac{x}{y} \intd{b}$. $B$ werde begrenzt durch $y=x^2, \; x=2$ und $y=1$.\\
+ABB 167\\
+Variante 1: $B=\{(x,y)\;|\; 1\leq x \leq 2,\; 1\leq y \leq x^2\}$\\
+Variante 2: $B=\{(x,y)\;|\; 1\leq y \leq 4,\; \sqrt{y}\leq x \leq 2\}$\\
+Berechnen mit Variante 2:
+\begin{align*}
+I &= \int_1^4\int_y^2 \frac{x}{y}\intd{x}\intd{y}=\int_1^4\left[ \frac{x^2}{2y}\right]_{\sqrt{y}}^2\intd{y}\\
+&=\int_1^4\frac{2^2}{2y}-\frac{y}{2y}\intd{y}=\int_1^4 \frac{2}{y}-\frac{1}{2}\intd{y}\\
+&=\left[ 2 \ln|y| - \frac{1}{2}y\right]_1^4=2\ln(4)-2-2\ln(1)+\frac{1}{2}\\
+&= 2 \ln 4- \frac{3}{2}=1,2726
+\end{align*}
+
+\subsection{Anwendungen}
+\begin{tabular}{L{0.5} | L{0.4}}
+Volumen $V$ unter $z=f(x,y)\geq 0$ über $B$ & $V=\iint_B f(x,y) \intd{b}$\\
+\hline
+Flächeninhalt $[B]$ von $B$ & $[B]=\iint_B 1 \intd{b} = \iint_b \intd{b}$\\
+\hline
+geometrischer Schwerpunkt $(x_s, y_s)$ von $B$ & $x_s=\frac{1}{[B]}\iint_B x \intd{b}, \; y_s=\frac{1}{[B]}\iint_B y \intd{b}$\\
+\hline 
+Integralmittelwert $m$ von $f$ auf $B$ & $m=\frac{1}{[B]}\iint f(x,y) \intd{b}$
+\end{tabular}
+
+\subsection{Koordinatentransformation}
+\begin{itemize}
+\item Ziel: Durch neue Koordinaten (z.B. $u$ und $v$) möglichst einfache Grenzen erzeugen. Günstig ist es, wenn möglichst viele Begrenzungen von $B$ auf Koordinatenlinien liegen ($u=cost$ oder $v=const$).
+\item Besonders wichtig: Polarkoordinaten $x=r\cos \varphi,\; y=r\sin \varphi$. Koordinatenlinien sind dann $r=const, \; \varphi = const$\\
+ABB 168\\
+Anwendung falls $B$ Kreisbereich, Kreissektor, Kreisring, … mit Mittelpunkt $0$ ist.\\
+Das Bereichselement ist dann ebenfalls durch die neuen Koordinaten auszudrücken:\\
+$\boxed{\diffd{b}=r\intd{r}\intd{\varphi}}$
+\end{itemize}
+
+\subparagraph{Bsp. 2:} Gesucht ist das Volumen $V$ des Körpers begrenzt durch den Rotationsparaboloid $z=4-(x^2+y^2)$ und der x-y-Ebene ($z=0$).\\
+Schnittkurve $(z=0)$: $4=x^2+y^2$ (Kreis in x-y-Ebene)\\
+ABB 169\\
+$B$ in Polarkoordinaten: $x=r\cos \varphi, \; y=r\sin\varphi$ mit $r\in[0,2], \; \varphi \in [0,2\pi)$
+\begin{align*}
+\Rightarrow V &= \iint_B 4-(x^2+y^2)\intd{b}= \int_0^2 \int_0^{2\pi} (4-r^2)\underbrace{r \intd{\varphi} \intd{r}}_{\diffd{b}}\\
+&= \int_0^2 \int_2^{2\pi} (4r-r^3) \intd{\varphi}\intd{r}=\int_0^2(4r-r^2)[\varphi]_0^{2\pi} \intd{r}\\
+&= 2\pi \int_0^2 4r-r^3\intd{r}=2\pi [2r^2-r^4]_0^2\\
+&= 8 \pi
+\end{align*}
+\subsubsection{Allgemeine Koordinatentransformationen}
+geg.: $\boxed{x=x(u,v) ,\; y=y(u,v)}$
+\paragraph{Def.:} $\frac{\partial (x,y)}{\partial (u,v)} := \dtr{x_u & x_v\\ y_u & y_v}$ heißt \emph{Funktionaldeterminante} der gegebenen Transformation.\\
+Es ergibt sich für das Bereichsintegral $\intd{b}=|\dtr{x_u & x_v\\ y_u & y_v}| \intd{u} \intd{v}$. Falls $\frac{\partial (x,y)}{\partial (x,y)}$ erhält man durch das gegebene eine umkehrbare Abbildung $(x,y) \in B \leftrightarrow (u,v) \in B'$. Für das Bereichsintegral gilt in den neuen Koordinaten $\boxed{I=\iint_B f(x,y) \intd{b}= \iint_{B'}f(x(u,v), y(u,v)) \left| \frac{\partial (x,y)}{\partial (u,v)}\right| \intd{u}\intd{v}}$
+
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Funktionaldeterminante bei Polarkoordinaten $x=r\cos \varphi, \; y=r\sin \varphi$:\\
+$\frac{\partial (x,y)}{\partial (x,y)}=\dtr{x_r & x_\varphi \\ y_r & y_\varphi}=\dtr{\cos \varphi & - r \sin \varphi \\ \sin \varphi & r \cos \varphi} = r \cos ^2\varphi + r \sin^2 \varphi = r$\\
+$\intd{b}=r\intd{r}\intd{\varphi}$
+\item Bei Kreisbereichen mit Mittelpunkt $(x_0,y_0)$ verwendet man sogenannte allgemeine Polarkoordinaten mit Pol $(x_0,y_0)$: $x=x_0+r\cos \varphi,\; y=y_0+r\sin\varphi$\\
+Dann gilt: $\intd{b}=r\intd{r}\intd{\varphi}$
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
