@@ -1189,7 +1189,8 @@ SELECT Kunde.*, Kauf.*
 FROM Kunde, Kauf
 WHERE Kunde.Kunr = Kauf.Kunr
 \end{lstlisting}
-\item Natural JOIN
+\item Natural JOIN\\
+(man nimmt \emph{manuell} die Spalten raus, die verglichen werden [also doppelt wären])
 \begin{lstlisting}[language=SQL]
 SELECT Kunde.*, Artnr, Menge, VPreis -- Kauf.*-Kunr oder vergleichbares nicht möglich! Es müssen alle Spalten manuell angegeben werden
 FROM Kunde, Kauf

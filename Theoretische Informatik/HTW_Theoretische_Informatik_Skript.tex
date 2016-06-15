@@ -860,14 +860,56 @@ Dann gilt: $P\in H^* \Leftrightarrow P \text{ hält für jede Eingabe }w \Leftri
 Widerspruch, da $H^*$ unentscheidbar. 
 \end{proof}
 
+\subsubsection{Unentscheidbarkeit der Programmverifikation}
+ABB 170\\
+Aus der Unentscheidbarkeit des Halteproblems folgt:\\
+$\{ (P,S) \; | \; $Das Programm $P$ erfüllt die Spezifikation $S\}$ ist unentscheidbar.\\
+Auch unentscheidbar:
+\begin{itemize}
+\item $\{P\;|\;P$ verursacht keine Division durch $0\}$
+\item $\{P\;|\;P$ verursacht keine Array-out-Bound-Fehler$\}$
+\item $\{P\;|\;P$ dereferenziert keine Nullpointer$\}$
+\end{itemize}
+Möglicher Ausweg:\\
+Verifizierer liefert ja, nein \emph{oder} unbekannt.
 
+\chapter{Komplexität}
+Frage: Gibt es Probleme, die zwar lösbar (entscheidbar) sind, aber dazu einen sehr großen Rechenaufwand erfordern?\medskip\\
+Kostenmaße:
+\begin{itemize}
+\item Uniforme Kostenmaß:\\
+Alle Operationen erfordern konstanten Aufwand (LZ in $O(1)$)
+\item Logarithmisches Kostenmaß:\\
+Alle Operationen erfordern logarithmischen Aufwand (LZ in $O(\log n)$)
+\end{itemize}
+Im folgenden verwenden wir das uniforme Kostenmaß, wo angemessen.
 
+\section{Die Klasse P}
+\paragraph{Def.:} $P=\bigcup_{k>0} \{ L\;|\; L$ ist entscheidbar durch ein Programm LZ in $O(n^k)\}$
+\subparagraph{Bsp.:} Folgende Sprachen bzw. Probleme liegen in $P$:
+\begin{itemize}
+\item $\emptyset$, $\Sigma^*$ (LZ $O(1)$)
+\item $\{a^n\;| \; n\geq 0\}$ (muss maximal $n$ Zeichen überprüfen: LZ $O(n)$)
+\item Jede kontextfreie Sprache $L$, da $L$ duch den CYK-Algorithmus in Zeit $O(n^3)$ entschieden werden kann.
+\end{itemize}
+\subparagraph{Bsp.:} Das Problem $PFAD=\{(G,n_1,n_2)\;|\; G$ ist ein Graph, in dem es einen Pfad von $n_1$ nach $n_2$ gibt $\}$ liegt in $P$.\\
+Veranschaulichung:\\
+ABB 171\\
+Der Graph $G$ sei dabei als Adjazenzliste gegeben.
+\begin{proof}
+Da die Adjazenzliste von $G=(V,E)$ mindestens $|V|+|E|$ Elemente enthält, gilt für die Länge $n$ der Eingabe: $n\geq |V|+|E|$.\\
+Ein Entscheidungsverfahren für $PFAD$ ist eine in $n_1$ gestartete Breitensuche nach $n_2$, die die LZ $O(|V|+|E|)$ besitzt. Folglich ist die LZ des Entscheidungsverfahrens $\leq c \cdot (|V|+|E|) \leq c \cdot n \in O(n)$. 
+\end{proof}
+Das gleiche Ergebnis erhalten wir, wenn die LZ nur in $|V|$ gemessen wird: Denn es gilt $n \geq |V|$. Für die LZ der Breitensuche gilt: LZ$\in O(|V|+|E|)\subseteq O (|V|+|V|^2)=O(|V|^2)\subseteq O(n^2)$.  Auch damit folgt $PFAD \in P$.\medskip\\
+Die Klasse $P$ wird betrachtet als Klasse der effizient lösbaren Probleme.
 
-
-
-
-
-
+\section{Die Klasse NP}
+Die Klasse $NP$ (nicht deterministisch polynomiell) enthält alle Probleme, die in polynomieller Zeit verifizierbar sind.
+\subparagraph{Bsp.:} $PFAD \in NP$, denn mit Hilfe eines Zertifikates lässt sich prüfen, dass es in $G$ einen Pfad von $n_1$ nach $n_2$ gibt und die LZ dafür ist polynomiell:\\
+Das Zertifikat ist der Pfad selbst, die LZ liegt in $O(|V|^2)$.
+\subparagraph{Bsp.:} $SAT=\{F\;|\;F$ ist eine erfüllbare Formel der Aussagenlogik$\}$. Zum Beispiel gilt $x\vee y \in SAT$, $x\wedge \neg x \not \in SAT$.\\
+$SAT$ ist entscheidbar durch die Konstruktion einer Wahrheitstabelle. Wenn $F$ $n$ Variablen enthält, benötigt dies die LZ $O(2^n)$ (liegt also nicht in $P$).\\
+$SAT$ lässt sich jedoch effizient (d.h. in polynomieller Zeit) verifizieren, wenn als Zertifikat eine erfüllende Belegung für $F$ gegeben ist. Die LZ für die Verifikation liegt dann in $O(|F|)$. Deshalb gilt $SAT \in NP$.
 
 \newpage
 \printbibliography

@@ -1,4 +1,8 @@
-﻿-- Aufgabe 1.1-1.2
+﻿DROP Table Zuordnung
+DROP TABLE Mitarbeiter
+DROP TABLE Projekt
+
+-- Aufgabe 1.1-1.2
 CREATE TABLE Mitarbeiter(
 	MitID 		CHAR(3) PRIMARY KEY NOT NULL,
 	Nachname	VARCHAR(20) NOT NULL,
