@@ -2190,15 +2190,129 @@ $\intd{b}=r\intd{r}\intd{\varphi}$
 Dann gilt: $\intd{b}=r\intd{r}\intd{\varphi}$
 \end{enumerate}
 
+\subparagraph{Bsp. 3:} Gesucht: Geometrischer Schwerpunkt $S$ der Kreishalbfläche begrenzt von $x^2+y^2=R^2$ ($y\geq 0$).\\
+ABB 173\\
+Polarkoordinaten:\\
+$x=r\cos \varphi\\
+y=r\sin \varphi\\
+r\in [0,R]\\
+\varphi\in[0,\pi]$
+\begin{itemize}
+\item Flächeninhalt: $[B]=\iint_B \intd{b} = \int_0^R \int_0^{\pi} r \intd{\varphi}\intd{r}= \pi\int_0^R r \intd{r}=\pi\frac{R^2}{2}$
+\item $x_s=0$ (aus Symmetriegründen)
+\item $y_s=\iint_B y \intd{b}=\int_0^R\int_0^\pi \underbrace{r \sin \varphi}_{y}\cdot r \intd{\varphi} \intd{r}=\int_0^R r^2[-\cos \varphi]_0^\pi \intd{r}=2\frac{R^3}{3}$\\
+$\Rightarrow y_s=\frac{\frac{2}{3}R^2}{\frac{\pi}{2}R^2}=\frac{4}{3}\pi R = 0,424 R$
+\end{itemize}
+$\Rightarrow (x_s,y_s)=\left(0,\frac{4}{3\pi}R\right)$ ist der Schwerpunkt.
 
+\subparagraph{Bsp. 4:} Gesucht: Flächeninhalt innerhalb einer Ellipse $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$\\
+ABB 174\\
+Parameterdarstellung:\\
+$x=a\cos v\\
+y=b\sin v\\
+v\in [0,2\pi]$
+\begin{itemize}
+\item elliptische Polarkoordinaten:\\
+$x=x(u,v)=a\cdot u \cdot \cos v\\
+y=y(u,v) = b\cdot u \cdot \sin v$
+$\Rightarrow B=\{(x,y)\;|\; x=a\,u\cos v,\; y = b\, u \sin v,\; u\in[0,1], \; v \in [0,2\pi]\}$
+\item Funktionaldeterminante:\\
+$\frac{\partial (x,y)}{\partial (u,v)}=\dtr{x_u& x_v \\ y_u & y_v}=\dtr{a \cos v & - a\,u \sin v\\ b \sin v & b \, u \cos v}=a\,b\,u$\\
+$\Rightarrow \intd{b}=a\,b\,u\intd{u}\intd{v}\\
+\Rightarrow [B]=\iint_B \intd{b}=\int_0^1\int_0^{2\pi} a \, b \, u \intd{v}\intd{u}=\pi \, a \, b$
+\end{itemize}
 
+\section{Oberflächenintegrale}
+\subsection{Flächen im Raum}
+Erinnerung:
+\begin{itemize}
+\item $x,y,z$ … karthesische Koordinaten
+\item $r, \varphi, z$ … Zylinderkoordinaten ($r$: Abstand von z-Achse, $x=r\cos \varphi$, $y=r\sin \varphi$)
+\item $r, \varphi, \vartheta$ … ($r$: Abstand vom Koordinatenursprung, $x=r\sin \vartheta \cos \varphi, \;y=r\sin\vartheta\sin\varphi, \;z=r\cos\vartheta$)
+\end{itemize}
+Flächendarstellungen:
+\begin{itemize}
+\item $z=f(x,y)$ … explizite karthesische Darstellung
+\item $F(x,y,z)=0$ … implizite karthesische Darstellung
+\item $x=x(u,v), \; y=y(u,v), \; z=z(u,v)$ … Parameterdarstellung
+\item $z=f(r,\varphi)$ … explizite Darstellung in Zylinderkoordinaten\\
+speziell:
+\begin{itemize}
+\item $z=f(r,\varphi)=g(r), \; r\in I\subset [0,\infty], \; \varphi\in[0,2\pi]$\\
+Rotationsfläche um z-Achse
+\item $z=f(r,\varphi)=g(\varphi), \; r \in I_1\subseteq[0,\infty], \; \varphi \in I_2\subseteq \RR$\\
+Wendelflächen
+\end{itemize}
+\end{itemize}
 
-
-
-
-
-
-
+\subsection{Oberflächenelement, Berechnung und Anwendung}
+\begin{itemize}
+\item geg.: Fläche $\vec{r}=\mtr{x(u,v)\\y(u,v)\\z(u,v)}, \; (u,v) \in B$.\\
+Analog zu ebenen Bereichsintegralen ergibt sich $\diffd{F}=|\vec{r}_u\times \vec{r}_v| \intd{u}\intd{v}$ (skalares Oberflächenelement)
+\item Oberflächenintegral (über Skalarfeld):\\
+$\iint_F f(x,y,z)\intd{F}=\iint_B f(x(u,v),y(u,v),z(u,v))\cdot |\vec{r}_u\times \vec{r}_v| \intd{u}\intd{v}$
+\item Anwendung(analog zu Bereichsintegralen)\\
+\begin{tabular}{L{0.5} | L{0.4}}
+Flächeninhalt $[F]$ von $F$ & $[F]=\iint_F \intd{F}$\\
+\hline
+geometrischer Schwerpunkt $(x_s,y_s,z_s)$ & $x_s = \frac{1}{[F]}\iint_F x \intd{F}$\\&$y_s = \frac{1}{[F]}\iint_F y \intd{F}$\\&$z_s=\frac{1}{[F]}\iint_F z \intd{F}$\\
+\hline
+Integralmittelwert $m$ von $f$ auf $F$ & $m=\frac{1}{[F]}\iint_F f(x,y,z) \intd{F}$
+\end{tabular}
+\end{itemize}
+\subsubsection{Berechnung von dF für spezielle Flächenelemente}
+\begin{itemize}
+\item $z=f(\underbrace{x}_u,\underbrace{y}_v) \Rightarrow$ Parameterdarstellung: \\
+$\vec{r}=\mtr{x\\y\\z}=\mtr{u\\v\\f(u,v)}$\\
+$\vec{r}_u=\mtr{1\\0\\f_u}$\\
+$\vec{r}_v=\mtr{0\\1\\f_v}$\\
+$|r_u\times r_v| = | \dtr{\vec{i} & 1 & 0\\\vec{j} & 0 &1\\\vec{k} & f_u & f_v}|=|\mtr{-f_u\\-f_v\\1}|=\sqrt{f_u^2+f_v^2+1}=\sqrt{1+f_x^2+f_y^2}$\\
+wobei $\vec{i}=\mtr{1\\0\\0}, \; \vec{j}=\mtr{0\\1\\0}, \; \vec{k}=\mtr{0\\0\\1}$
+\item $z=f(\underbrace{u}_u, \underbrace{\varphi}_v) \Rightarrow$ Parameterdarstellung:\\
+$\vec{r}=\mtr{x\\y\\z}=\mtr{u \cos v\\u\sin v \\ f(u,v)}$\\
+$\vec{r}_u=\mtr{\cos v\\\sin v\\f_u}$\\
+$\vec{r}_v=\mtr{-u\sin v\\ u \cos v \\ f_v}$\\
+$\Rightarrow |r_u\times r_v| = | \dtr{\vec{i} & \cos v & -u\sin v\\\vec{j} & \sin v &u\cos v\\\vec{k} & f_u & f_v}|=\sqrt{u^2(1+f_u^2)+f_v^2}=\sqrt{r^2(1+f_r^2)+f_\varphi^2}$
+\item Kugel mit MP $0$ und Radius $R$\\
+Kugelkoordinaten: $r=R=const$\\
+Parameterdarstellung: \\
+$x=R \sin \vartheta \cos \varphi$\\
+$y=R \sin \vartheta \sin \varphi$\\
+$z=R \cos \vartheta$\\
+$\varphi \in [0,2\pi], \; \vartheta\in [0,\pi]$\\
+$\Rightarrow \vec{r}=\mtr{x=R \sin \vartheta \cos \varphi\\
+y=R \sin \vartheta \sin \varphi\\
+z=R \cos \vartheta}$\\
+$\vec{r}_\vartheta=\mtr{R \cos \vartheta \cos \varphi\\r\cos\vartheta \sin \varphi\\-R\sin\vartheta}$\\
+$\vec{r}_\varphi = \mtr{-R \sin \vartheta \sin \varphi \\ R \sin\vartheta \cos \varphi\\0}$\\
+$\Rightarrow|r_\vartheta \times r\varphi=\dots = \sqrt{R^4\sin^4\vartheta + R^4\cos^2\vartheta \sin^2 \vartheta}=R^2\sin\vartheta$
+\end{itemize}
+\paragraph{Zusammenfassung:}\parskp
+\begin{tabular}{L{0.5} | L{0.4}}
+Fläche & $\diffd{F}$\\
+$z=f(x,y)$ … expl. karth. Darstellung & $\diffd{F}=\sqrt{1+f_x^2+f_y^2}\intd{x}\intd{y}$\\
+$z=f(r,\varphi)$ … expl. zyl. Darstellung & $\diffd{F}=\sqrt{r^2(1+f_r^2)+f_\varphi^2}$\\
+Speziell für Rotationsflächen $z=f(r,\varphi)=g(r), \; \varphi \in [0,2\pi]$ & $\diffd{F}=r\sqrt{1+(g'(r))^2}\intd{r}\intd{\varphi}$\\
+Kugel MP $0$, Radius $R$ & $\diffd{F}=R^2\sin \vartheta \intd{\varphi}\intd{\vartheta}$
+\end{tabular}
+\subparagraph{Bsp. 1:} Man berechne den Schwerpunkt der Kugelteilfläche $x^2+y^2+z^2=R^2, \; z\geq \frac{R}{2}$ (Kugelkappe)\\
+ABB 175
+$\cos \vartheta_1=\frac{1}{2}\Rightarrow \vartheta_1=60^\circ = \frac{\pi}{3}$
+\\
+$\Rightarrow $ Parameterdarstellung:\\
+$x=R \sin\vartheta \cos \varphi$\\
+$x=R \sin\vartheta \sin \varphi$\\
+$z=R\cos \vartheta$\\
+$0\leq \varphi \leq 2\pi,\; 0 \leq \vartheta \leq \frac{\pi}{3}$
+\begin{itemize}
+\item Inhalt von F: $[F]=\iint_F \intd{F}=\int_0^{\frac{\pi}{3}}\int_0^{2\pi}R^2\sin\vartheta\intd{\varphi}\intd{\vartheta}\\
+=2\pi\int_0^{\frac{\pi}{3}}R^2\sin\vartheta \intd{\vartheta}=2\pi R^2[-\cos\vartheta]_0^{\frac{\pi}{3}}=\pi R^2$
+\item Aus Symmetriegründen gilt $x_s=y_s=0$
+\item $z_s=\frac{1}{[F]}\iint_F z \intd{F}=\frac{1}{[F]}\int_0^{\frac{\pi}{3}}\int_0^{2\pi}\underbrace{R \cos \vartheta}_{z} \underbrace{R^2 \sin \vartheta \intd{\varphi}\intd{\vartheta}}_{\intd{F}}$\\
+$=\frac{1}{\pi R^2}2\pi R^3\int_0^{\frac{\pi}{3}}\sin\vartheta \cos \vartheta\intd{\vartheta}$\\
+$=2R\left[\frac{\sin^2\vartheta}{3}\right]_0^{\frac{\pi}{3}}=\frac{3}{4}R$
+\end{itemize}
+$\Rightarrow (x_s,y_s,z_s)=\left(0,0,\frac{3}{4}R\right)$ ist der Schwerpunkt
 
 
 
