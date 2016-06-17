@@ -655,7 +655,35 @@ public class myPanel extends Component implements WindowListener{
 
 \section{Abstract Windowing Toolkit (AWT)}
 java4\_awt.pdf
+% http://www.informatik.htw-dresden.de/~beck/java/Vorlesung/Beispielprogramme/AWT/Muster.java AUF SPICKER!
+\subsection{BorderLayout}
+Sollen mehrere Buttons in einen Bereich (bspw. NORTH), muss ein extra Panel dort eingefügt werden:
+\begin{lstlisting}[language=Java]
+...
+Panel pTop = new Panel(new FlowLayout());
+poben.add(b1);
+poben.add(b2);
+add(poben,BorderLayout.NORTH);
+...
+\end{lstlisting}
 
+\subsection{CardLayout}
+Mehrere Karten, man sieht immer nur eine. Wechseln mit next, previous oder show.
+
+\paragraph{Mehrere Buttons usw. hinzufügen} $ $
+\begin{lstlisting}[language=Java]
+String[] myLabels = {"Max", "Moritz", "Bolte"};
+...
+Panel p=new Pannel(new FlowLayout());
+for (int i=0; i<myLabels.length; i++){
+	Button b = new Button (myLabels[i]);
+	p.add(b);
+}
+this.add(p.BorderLayout.CENTER);
+\end{lstlisting}
+
+\section{Eventhandling}
+java4\_eventhandlig.pdf
 
 \newpage
 \printbibliography
