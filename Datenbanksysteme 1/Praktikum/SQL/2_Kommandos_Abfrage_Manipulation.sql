@@ -13,7 +13,7 @@ WHERE Ort!='Dresden'
 -- c
 SELECT *
 FROM Projekt
-WHERE Proname LIKE 'R%'
+WHERE Proname LIKE'R%'
 
 -- d
 SELECT *
@@ -32,7 +32,7 @@ FROM Projekt
 WHERE ProLeiter IS NULL
 
 --==================================================--
--- Aufgabe 2,2
+-- Aufgabe 2.2
 
 -- a
 SELECT COUNT(*) AS MitarbeiterAnz
@@ -163,6 +163,13 @@ WHERE Nachname NOT IN (
 	JOIN Projekt p ON m.Nachname = p.ProLeiter
 )
 
+SELECT *
+FROM Mitarbeiter
+WHERE Nachname NOT IN (
+	-- NOT IN kann nicht ausgeführt werden, wenn Prüf-Tabelle NULL-Werte enthält
+	SELECT ProLeiter FROM Projekt -- WHERE ProLeiter IS NOT NULL
+)
+
 -- b
 SELECT *
 FROM Mitarbeiter
@@ -190,6 +197,9 @@ WHERE Plananteil = (
 	FROM Zuordnung u
 	WHERE u.Pronr = z.Pronr)
 ORDER BY Pronr
+
+-- unkorreliert: Unterabfrage lässt sich einzeln ausführen
+-- korreliert: Unterabfrage funktionirt nur in Verbindung mit Oberabfrage
 
 --==================================================--
 -- 2.6
@@ -310,6 +320,6 @@ ORDER BY Mitarbeiter.MitID
 SELECT *, DATEDIFF(yyyy, Gebdat, GETDATE()) AS EZMitAlter, MitAlter= 
 CASE   
 	WHEN ( MONTH(Gebdat) < MONTH(GETDATE()) OR ( MONTH(Gebdat) = MONTH(GETDATE()) AND DAY(Gebdat) <= DAY(GETDATE()) ) )	THEN DATEDIFF(yyyy,Gebdat,GETDATE())
-	WHEN ( MONTH(Gebdat) > MONTH(GETDATE()) OR ( MONTH(Gebdat) = MONTH(GETDATE()) AND DAY(Gebdat) > DAY(GETDATE()) ) )	THEN DATEDIFF(yyyy,Gebdat,GETDATE())-1   
+	ELSE DATEDIFF(yyyy,Gebdat,GETDATE())-1   
 END
 FROM Mitarbeiter
