@@ -909,8 +909,47 @@ Die Klasse $NP$ (nicht deterministisch polynomiell) enthält alle Probleme, die 
 Das Zertifikat ist der Pfad selbst, die LZ liegt in $O(|V|^2)$.
 \subparagraph{Bsp.:} $SAT=\{F\;|\;F$ ist eine erfüllbare Formel der Aussagenlogik$\}$. Zum Beispiel gilt $x\vee y \in SAT$, $x\wedge \neg x \not \in SAT$.\\
 $SAT$ ist entscheidbar durch die Konstruktion einer Wahrheitstabelle. Wenn $F$ $n$ Variablen enthält, benötigt dies die LZ $O(2^n)$ (liegt also nicht in $P$).\\
-$SAT$ lässt sich jedoch effizient (d.h. in polynomieller Zeit) verifizieren, wenn als Zertifikat eine erfüllende Belegung für $F$ gegeben ist. Die LZ für die Verifikation liegt dann in $O(|F|)$. Deshalb gilt $SAT \in NP$.
+$SAT$ lässt sich jedoch effizient (d.h. in polynomieller Zeit) verifizieren, wenn als Zertifikat eine erfüllende Belegung für $F$ gegeben ist. Die LZ für die Verifikation liegt dann in $O(|F|)$. Deshalb gilt $SAT \in NP$.\\
+ABB 176\\
+LZ des Entscheidungsverfahrens polynomiell $\Rightarrow A \in P$ \\
+ABB 177\\
+LZ des Verifizierungsverfahrens polynomiell $\Rightarrow A \in NP$
+\paragraph{Def.:} $NP = \bigcup_{k\geq 1}\{L\;|\; L$ ist verifizierbar in Zeit $O(n^k)\}$, wobei $n$ die Länge der Eingabe ist.
 
+\paragraph{Satz:} $P \subseteq NP$.
+\begin{proof}
+(Skizze) Sei $L \in P$. Dann kann $L$ in polynomieller Zeit entschieden werden. Ein Entscheidungsverfahren ist aber auch ein Verifizierungsverfahren, das kein Zertifikat (oder das Zertifikat $\varepsilon$) verwendet. Folglich gilt $P \in NP$.
+\end{proof}
+Unbekannt ist, ob $P=NP$ gilt.\\
+Weiterhin gibt es Sprachen, von denen nicht bekannt ist, ob sie in $NP$ liegen. Ein Beispiel ist $TAUT=\{F\;|\; F$ ist eine Tautologie$\}$. Es wird $TAUT \not \in NP$ vermutet.
+
+\subsection{NP-Vollständigkeit}
+Die $NP$-vollständigen Probleme sind eine Klasse von Problemen innerhalb von $NP$, für die keine effizienten (polynomielle) Entscheidungsverfahren bekannt sind. Die $NP$-vollständigen Probleme sind mindestens so schwierig wie alle anderen Probleme in $NP$.
+
+„Halbformal“ bedeutet das:\\
+Eine Sprache $L$ ist $NP$-vollständig, wenn gilt:
+\begin{enumerate}
+\item $L \in NP$
+\item Für jede Sprache $A\in NP $ lässt sich das Entscheidungsproblem für $A$ effizient übersetzen in ein Entscheidungsproblem für $L$.
+\end{enumerate}
+ABB 178\\
+Folgerung: Aus $L\in P$ folgt dann auch $A \in P$.\medskip\\
+Weitere Folgerung: Wenn es eine $NP$-vollständige Sprache $L$ gibt mit $L\in P$, dann gilt $P=NP$.\medskip\\
+Trotz jahrzehnte währender Suche wurde bisher kein $NP$-vollständiges Problem $L\in P$ gefunden. Deswegen wird $P\not = NP$ vermutet.\\
+Vermutete Lage der Komplexitätsklassen (Fall $P \not = NP$):\\
+ABB 179
+
+\paragraph{Satz:} Die Sprache $SAT=\{F\;|\; F$ ist eine erfüllbare Formel der Aussagenlogik$\}$ ist $NP$-vollständig.\\
+Dies bedeutet, dass kein effizientes (polynomielles) Entscheidungsverfahren bekannt ist. Alle bekannten Entscheidungsverfahren besitzen exponentielle Laufzeit. Das naive Verfahren besitzt eine Laufzeit in $O(p(n)\cdot 2^n)$. Das beste bekannte Verfahren besitzt eine Laufzeit in $O(1,308^n\cdot p(n))$ für $3 SAT$ (Formel in $KNF$ mit 3 Literalen pro Klausel, z.B. $(x\vee y \vee \neg z ) \wedge (\neg x \vee a \vee z) \wedge (\neg y \vee z \vee b) \wedge \dots$).\\
+Nicht alle Elemente in $SAT$ sind schwierige Instanzen. Z.B. ist $2 SAT=\{F\;|\; F$ ist eine Formel in $KNF$ mit 2 Literalen pro Klausel$\}$ effizient entscheidbar (d.h. $2 SAT \in P$).\\
+ABB 180
+\subparagraph{Anwendungen von SAT} 
+\begin{itemize}
+\item Äquivalenz von Schaltkreisen\\
+Da Schaltkreise durch logische Gatter ($\vee$, $\wedge$, $\neg$) dargestellt werden, lassen sich Schaltkreise durch logische Formeln beschreiben.\\
+ABB 181\\
+Zwei Schaltkreise $S_1$, $S_2$ sind äquivalent genau dann, wenn $S_1\leftrightarrow S_2$ eine Tautologie ist genau dann, wenn $\neg(S_1 \leftrightarrow S_2)$ unerfüllbar genau dann, wenn $\neg (S_1\leftrightarrow S_2) \not \in SAT$.
+\end{itemize}
 \newpage
 \printbibliography
 \end{document}
