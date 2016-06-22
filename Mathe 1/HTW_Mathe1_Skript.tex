@@ -2312,7 +2312,147 @@ $0\leq \varphi \leq 2\pi,\; 0 \leq \vartheta \leq \frac{\pi}{3}$
 $=\frac{1}{\pi R^2}2\pi R^3\int_0^{\frac{\pi}{3}}\sin\vartheta \cos \vartheta\intd{\vartheta}$\\
 $=2R\left[\frac{\sin^2\vartheta}{3}\right]_0^{\frac{\pi}{3}}=\frac{3}{4}R$
 \end{itemize}
-$\Rightarrow (x_s,y_s,z_s)=\left(0,0,\frac{3}{4}R\right)$ ist der Schwerpunkt
+$\Rightarrow (x_s,y_s,z_s)=\left(0,0,\frac{3}{4}R\right)$ ist der Schwerpunkt.
+
+\chapter{Gewöhnliche Differentialgleichungen}
+\section{Grundbegriffe}
+Vorbetrachtung:
+\subparagraph{Bsp. 1:} \parskp
+ABB 182\\
+Lassen wir die Feder los, so kommt es zur Schwingung;\\
+ABB 183\\
+Gesucht ist Zeitverlauf $y=y(t)$ der Bewegung der Punktmasse. Dazu nutzen wir das Grundgesetz der Mechanik:
+\begin{align*}
+\text{Kraft} &= \text{Masse} \cdot \text{Beschleunigung}& \\
+K &= m \cdot \ddot{y}
+\end{align*}
+bspw. freie (d.h. ohne äußere Kraft) und ungedämpfte (d.h. ohne Reibung) Schwingung:\\
+$K=-C_F \cdot y$ (Hooksches Gesetz)\\
+$\Rightarrow m \cdot \ddot{y}=-C_f \cdot y$ ($\leftarrow$ Differentialgleichung)\\
+mit $y(0)=y_0$ (Startpunkt $y_0$) und $\dot{y}(0)=0$ (Startgeschwindigkeit $0$) ($\leftarrow$ Anfangsbedingungen).\\
+Begriffe:\\
+Eine Differentialgleichung (DGL) ist eine Bestimmungsgleichung für eine unbekannte Funktion, die mindestens eine Ableitung der gesuchten Funktion enthält.\\
+2 Grundarten:
+\begin{enumerate}
+\item Gesuchte Funktion $y=y(x)$, d.h. \emph{eine} unabhängige Veränderliche $\Rightarrow$ \emph{gewöhnliche DGL}
+\item Gesuchte Funktion $u=u(x,y)$ bzw. $u=u(x_1, x_2,\dots, x_n)$ d.h. mindestens 2 unabhängige Veränderliche $\Rightarrow$ Ableitungen sind partielle Ableitungen $\Rightarrow$ \emph{Partielle DGL}
+\end{enumerate}
+\subparagraph{Bsp. 2:} $y'=x^2$, gewöhnliche DGL für die Funktion $y=y(x)$.\\
+Lösung: $y=\int x^2 \intd{x}=\frac{1}{3}x^3+C$ d.h. die Lösung ist eine Kurvenschar mit einem freien Parameter $C$.
+\subparagraph{Bsp. 3:} $u_x=x\cdot y$ … partielle DGL\\
+Lösung: $u=\frac{x^2}{2}y+C(y)$\\
+Bemerkung: Im folgenden nur gewöhnliche DGL.\medskip\\
+Allgemeine Form einer gewöhnlichen DGL $n$-ter Ordnung:
+\begin{itemize}
+\item implizit: $F(x,y,y',\dots,y^{(n)}=0$ (höchste vorkommende Ableitung $\Rightarrow$ Ordnung $n$)
+\item explizit: $y^{(n)}=f(x,y,y',\dots,y^{(n-1)})$ (aufgelöst nach der höchsten Ableitung)
+\end{itemize}
+\begin{itemize}
+\item Die \emph{allgemeine Lösung} ist eine Kurvenschar \emph{mit $n$ Paramtern} (Integrationskonstanten)
+\item Anfangswertproblem (AWP): $n$ zusätzliche Bedingungen: \\
+$y(x_0)=a_0, \; y'(x_0)=a_1, \dots, y^{(n-1)}(x_0)=a_{n-1}$ (Anfangsbedingungen: Funktionswert und Ableitung an fester Stelle $x_0$ vorgegeben, siehe Bsp. 1)
+\end{itemize}
+\section{Differentialgleichungen 1. Ordnung}
+Allgemeine Form: $F(x,y,y')=0$ (implizit) bzw. $y'=f(x,y)$ (explizit)
+\subsection{Geometrische Interpretation}
+Gegeben $y'=f(x,y), \; (x,y) \in B$\\
+Richtungsfeld: In jedem Punkt $(x,y)\in B$ wird die Richtung mit dem Anstieg $f(x,y)=\tan \alpha$ markiert.\\
+ABB 184\\
+Gesucht: Kurven $y=y(x)$, die sich diesem Richtungsfeld anpassen, d.h. in jedem Punkt $(x,y)$ den vorgegebenen Anstieg von $f(x,y)$ haben, also $y'=f(x,y)$.\\
+(\emph{Lösungskurven der DGL})
+
+\subsection{DGL mit trennbaren Variablen}
+\begin{tabular}{L{0.49} L{0.49}}
+Typ: $y'=f(x) \cdot g(y)$ & Bsp. 1: $y'=x\cdot y^2$, $y(1)=-2$\\
+\hline
+Lösungsmethode &\\
+1. Gleichung aufstellen & \\
+$\frac{\diffd{y}}{\diffd{x}}=f(x) \cdot g(y)$ & $\frac{\diffd{y}}{\diffd{x}}=x\cdot y^2$\\\hline
+2. Trennung der Veränderlichen & \\
+$\frac{\diffd{y}}{g(y)}= f(x) \intd{x}$ & $\frac{\diffd{y}}{y^2}= x \intd{x}$\\\hline
+3. beide Seiten integrieren:&\\
+$\int\frac{\diffd{y}}{g(y)}=\int f(x) \intd{x}$ & $\int\frac{\diffd{y}}{y^2}=\int x \intd{x}$\\
+$G(y) = F(x)+C$ ($G(y)$: Stammfunktion von $\frac{1}{g(y)}$)& $-\frac{1}{y}=\frac{x^2}{2}+C$\\
+(allgemeine Lösung, implizit)\\\hline
+4. Falls möglich: Auflösen nach $y$&\\
+$y=y(x)=\varphi(x,C)$ & $y=-\frac{1}{\frac{x^2}{2}+C}$\\
+(allgemeine Lösung, explizit)\\\hline
+5. Untersuchen von $g(y)=0$ (Nebenlösungen)&\\
+& $y^2=0 \Leftrightarrow y=0$ (erfüllt ebenfalls die DGL: Nebenlösung)\\
+6. Bei AWP: AB erfüllen & \\
+& $x=1, \; y=-2$ einsetzen in DGL\\
+& $\frac{1}{2}=\frac{1}{2}+C \Rightarrow C=0$\\
+& Lösung des AWP: $y=-\frac{2}{x^2}$
+\end{tabular}
+
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Rechtfertigung des Lösungsschritts 3: \\
+$G(y)=F(x)+C$ nach $x$ Ableiten liefert:\\
+$\frac{\diffd{G}}{\diffd{y}}=\frac{\diffd{y}}{\diffd{x}}=\frac{\diffd{F}}{\diffd{x}}$\\
+$\Rightarrow \frac{1}{g(y)}\cdot y'=f(x)$\\
+$\Rightarrow y'=f(x) \cdot g(y)$\\
+$\Rightarrow G(y)=F(x)+C$ erfüllt die DGL 
+\item Spezialfälle:\\
+\begin{tabular}{l l l}
+$y'=f(x)$ & , d.h. & $g(y)=1$\\
+$y'=g(y)$ & , d.h. & $f(x)=1$\\
+$y'=\frac{f(x)}{h(x)}$ & , d.h. & $g(y)=\frac{1}{h(y)}$
+\end{tabular}
+\end{enumerate}
+\subparagraph{Bsp. 2:} Ein Körper habe zum Zeitpunkt $t=0$ die Temperatur $T_0=100^\circ \mathrm{C}$. Die Temperatur der umgebenen Luft sei $T_L=20^\circ\mathrm{C}$ (=const.). Zur Zeit $t_1=10$ (min) hat sich der Körper auf $T_1=60^\circ\mathrm{C}$ abgekühlt.
+\begin{anumerate}
+\item Man ermittle die Temperatur $T$ als Funktion der Zeit $t$.
+\item Zu welchem Zeitpunkt $t_2$ beträgt die Temperatur des Körpers $25^\circ \mathrm{C}$?
+\end{anumerate}
+Lösung:
+\begin{anumerate}
+\item Newtonsches Abkühlungsgesetz:\\
+\emph{Geschwindigkeit der Abkühlung} ist proportional zur \emph{Temperaturdifferenz zu Medium}\\
+$T=T(t)$ … Temperatur [in $^\circ \mathrm{C}$]\\
+$t$ … Zeit [in min]\\
+$\frac{\diffd{T}}{\diffd{t}}=\alpha\cdot (T-T_L)$ mit $T(t)=T_0$ und $T(10)=T_1$\\
+TdV, integrieren $\Rightarrow  \int \frac{\diffd{T}}{T-T_L}= \int\alpha \intd{t}$\\
+$\Rightarrow \ln|T-T_L| = \alpha t + C^*$\\
+$\Rightarrow |T-T_L| = e^{\alpha t}\cdot e^{C^*}$\\
+$\Rightarrow T-T_L = C \cdot e^{\alpha t}$ mit $C=\pm e^{C^*}$\\
+Beachte: $C$ ist zunächst $\not = 0$, da vorhandene NB $T-T_L=0$ ergibt sich, wenn man $C=0$ zulässt. Sie muss daher nicht extra angegeben werden.\\
+Also ist die allgemeine Lösung: $T=T_L+C\cdot e^{\alpha t}$\\
+AB liefern: $t=0, \; T=100$ $\Rightarrow C=80$\\
+Bestimmen von $\alpha$: $t=10, \; T=60$\\
+$60=20+80\cdot e^{\alpha 10}$\\
+$\Rightarrow \alpha = \frac{1}{10}\ln\frac{1}{2}<0$\\
+$\Rightarrow$ Lösung: $T=20+80e^{-t\frac{1}{10}\ln 2}$
+\item Auflösung nach $t$ liefert:\\
+$t=-10\frac{ln\frac{T-20}{80}}{\ln 2}$\\
+$\overset{T=T_2=25}{=}-10\frac{\ln\frac{5}{80}}{\ln 2}=40 [\mathrm{min}]$\\
+ABB 185
+\end{anumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
 
 
 
