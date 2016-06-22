@@ -1,0 +1,80 @@
+% Header aus der Vorlage
+\input{../LaTeX_master_HTW_en_letter}
+\renewcommand{\workingdir}{../../../}
+
+
+% Definition von Titel, Autor usw.
+\DTitel{\textsc{English C1 Report}}
+\DUntertitel{Object oriented programming}
+\DAutor{Falk-Jonatan Strube}
+\DNotiz{}
+\DNoti{}
+\renewcommand{\Dokumentensignatur}{}
+
+\KOMAoptions{
+foldmarks=false,
+foldmarks=BlmTP,
+%fromurl=true,
+fromemail=true,
+fromphone=false,
+fromalign=right,
+fromrule=aftername,
+fromemail=true,
+footsepline=off,
+backaddress=off
+}
+
+\definecolor{mygray}{gray}{.55}
+
+\setkomavar{fromname}{Falk-Jonatan Strube}
+\setkomafont{fromname}{\bfseries\color{mygray}\LARGE}
+\setkomafont{fromrule}{\color{mygray}}
+%\setkomafont{addressee}{\small}
+
+\setkomavar{fromaddress}{Liebigstr. 30\\ 01187 Dresden}
+\setkomavar{fromemail}[\Letter~]{s74053@htw-dresden.de}
+\setkomafont{fromaddress}{\small\rmfamily\mdseries\slshape}
+
+
+\setkomavar{signature}{
+Falk-Jonatan Strube}
+\renewcommand*{\raggedsignature}{\raggedright}
+
+\begin{document}
+
+\setkomavar{subject}{Written Follow-Up Report}
+\setkomavar{place}{}
+\setkomavar{date}{\today}
+
+% German address
+\begin{letter}{
+Mrs B.Arch. B.Sc. Darlene Kilian\\
+\emph{University of Applied Sciences Dresden\\Office Z 718}\\
+Friedrich-List-Platz 1\\
+01069 Dresden
+}
+
+\opening{Dear Mrs Kilian:}
+
+This is my submission of the written follow-up report on my seminar "Object oriented programming".\smallskip
+%I am submitting the background report, "Cerebral Palsy and Its Treatments," that I agreed to write on February 22, 1998.
+
+The report provides a conspectus of object oriented programming and its uses. By covering the basics of \emph{generic} as well as \emph{object oriented programming}, it gives an adequate foundation for understanding the concept of object orientation.\smallskip
+%The purpose of this report is to provide useful background on cerebral palsy to physical therapy and physical therapy assistant students. It covers a variety of non-physical therapy treatments and then concludes with an in depth look at the role of physical therapists in managing the condition.
+
+The report will be advantageous for students who are studying computer science or are going to work with computer scientists.
+%I hope this report will be helpful for those students that will soon become licensed physical therapists. If you would like to discuss the report with me please let me know.
+
+\closing{Sincerley,}
+%\setkomavar*{enclseparator}{Anlagen}
+\encl{Report on object oriented programming}
+\end{letter}
+
+%\maketitle
+%\newpage
+%\tableofcontents
+%\newpage
+
+
+
+\end{document}

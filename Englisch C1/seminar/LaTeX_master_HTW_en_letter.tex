@@ -1,6 +1,6 @@
 \documentclass[a4paper,12pt, footheight=26pt
 %,twoside
-]{scrreprt}
+]{scrlttr2}
 \usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
 \geometry{a4paper%, top=30mm, bottom=22mm,headsep=10mm, footskip=12mm
 %, left=20mm, right=20mm
@@ -8,10 +8,13 @@
 , bottom=22mm, footskip=12mm
 }
 
+
+\RequirePackage{marvosym}
+
 % Zeile 2 (,twoside) und 7 (inner=...) für eine Druckversion (doppelseitig) ent-kommentieren (Rand für Hefter)
 
-\setcounter{secnumdepth}{3}	% zählt auch subsubsection
-\setcounter{tocdepth}{3}	% Inhaltsverzeichnis bis in subsubsection
+%\setcounter{secnumdepth}{3}	% zählt auch subsubsection
+%\setcounter{tocdepth}{3}	% Inhaltsverzeichnis bis in subsubsection
 
 % Input inkl. Umlaute, Silbentrennung
 \usepackage[T1]{fontenc}
@@ -30,7 +33,7 @@
 %\usepackage{titleref}
 \usepackage[perpage]{footmisc}	% Fußnotenzählung Seitenweit, nicht Dokumentenweit
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}	% Fußnoten-Symbole anstatt Zahlen
-\renewcommand*{\titlepagestyle}{empty} % Keine Seitennummer auf Titelseite
+%\renewcommand*{\titlepagestyle}{empty} % Keine Seitennummer auf Titelseite
 
 % Mathe usw.
 \usepackage{amssymb}
@@ -170,7 +173,7 @@ literate=%
 bookmarksopen=false,% Klappt die Bookmarks in Acrobat aus
 colorlinks=true,%
 linkcolor=black,%
-citecolor=black,%
+citecolor=red,%
 urlcolor=black,%
 ]{hyperref}
 
@@ -190,19 +193,6 @@ urlcolor=black,%
 		pdfauthor={\Dokumentenautor},
 		pdftitle={HTW Dresden | \Dokumententitel - \Dokumentenuntertitel},
 	}
-	\automark[section]{section}
-	\automark*[subsection]{subsection}
-	\pagestyle{scrheadings}
-	\ihead{\includegraphics[height=1.7em]{\workingdir LaTeX_master/HTW-Logo.eps}}
-	\ohead{\Dokumententitel}
-	\cfoot{\pagemark}
-	\ofoot{\Dokumentensignatur}
-	% Titelseite
-	\title{\includegraphics[width=0.35\textwidth]{\workingdir LaTeX_master/HTW-Logo.eps}\\\vspace{0.5em}
-	\Huge\textbf{\Dokumententitel} \\\vspace*{0,5cm}
-	\Large \Dokumentenuntertitel \\\vspace*{1cm}}
-	\author{\Dokumentennoti\\\Autorformat{\Dokumentenautor}\\\Dokumentennotiz}
-	\date{}
 }
 
 %% EINFACHE BEFEHLE

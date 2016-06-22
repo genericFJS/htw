@@ -1,0 +1,230 @@
+% Header aus der Vorlage
+\input{../LaTeX_master_HTW_en}
+\renewcommand{\workingdir}{../../../}
+
+\usepackage{setspace}
+\onehalfspacing
+
+\bibliography{EngC1_Report_Literature.bib}
+
+% Definition von Titel, Autor usw.
+\DTitel{\textsc{English C1 Report}}
+\DUntertitel{Object oriented programming}
+\DAutor{Falk-Jonatan Strube}
+\DNotiz{}
+\DNoti{\normalsize submitted to \medskip\\\normalsize Mrs B.Arch. B.Sc. Darlene Kilian\\\normalsize Teacher \emph{English as a foreign language}\\\normalsize University of Applied Sciences Dresden\vspace*{1cm}}
+\renewcommand{\Dokumentensignatur}{}
+\publishers{%
+\normalfont\normalsize%
+\parbox{0.95\linewidth}{%
+This report provides an overview over \emph{object oriented programming} and introduces the advantages of preparing and implementing an object oriented program over generic programming.
+
+The report is concluded by summarizing the benefits of object orientation.
+}}
+
+
+\begin{document}
+
+%\maketitle
+%\newpage
+%\tableofcontents
+%\newpage
+
+\pagenumbering{gobble}
+\includepdf{EngC1_Report_letter.pdf} %Transmittal Letter
+
+\newpage
+\pagenumbering{arabic}
+
+\maketitle % Title page with descriptive abstract
+\newpage
+
+\tableofcontents
+\listoffigures
+\newpage
+
+
+\chapter*{Abstract}	%Informative
+\addcontentsline{toc}{chapter}{Abstract}
+The process of programming an computer application does not start with the first line of code. It starts by thinking of demands of the desired application and how these demands should be implemented.\medskip
+
+Object oriented programming (OOP) is an advanced way of structuring a computer program before and during development. It therefore aids in the process of finding and implementing good solutions for various demands of an application. 
+
+By modeling dependencies and correlations in classes with the \emph{Unified Modeling Language} (UML), a complex code formation can be made understandable. In addition to helping the programmer with designing his application, it benefits team communication and communication with a client. It also improves scalability since the general overview allows specific changes in the model and the program itself.
+
+The key concepts of object oriented programming are inheritance and polymorphism. With inheritance, similar parts of a program may be reused in \emph{child}- and \emph{parent}-objects. Polymorphism allows the modification of a inherited function. Both features add to comprehensibility and scalability.\medskip
+
+Object oriented programming is used in almost every complex computer program. From operating systems such as \emph{Windows} or \emph{Linux} to word processor applications such as \emph{Microsoft Word} -- object oriented programs are everywhere. Though generic programming is more commonly known, since it is easier to grasp at first, object oriented programming is more common overall.
+
+\chapter{Introduction}
+
+When a computer scientist starts working on a computer application, he has to work out the following questions:
+\begin{itemize}
+\item What should the application be able to achieve?
+\item How should the application be structured to be able to achieve those goals?
+\end{itemize}
+For most applications, the first step towards answering the second question is \emph{object orientation}. By creating an object oriented model, the computer scientists has a solid base for implementing the desired features.
+
+But what is object orientation? What is an object in the context of computer programming? 
+\begin{quote}
+"An object is a software bundle of related state and behavior."
+\cite{Oracle2016ObjectOrientedProgramming}
+\end{quote}
+
+By thinking object oriented, the computer scientist can break a big problem down into smaller ones by assigning different functions to different objects. By doing this, the computer scientist does not only make the code more understandable, the application becomes more versatile, too. The proper separation of functions and properties into different objects aids in making these objects re-usable for similar problems.
+
+The computer scientist who thinks and programs object oriented keeps himself open towards the growth of an application. Objects can be modified with ease and by having a bigger picture in mind, the application can have potential for more and is not crippled by a first model.
+
+\chapter{Overview}
+Object oriented programming stands in contrast to generic programming. While object oriented programs are separated into objects, generic programs are essentially one big object.
+\section{Generic programming}
+Generic programming is the easy way -- at first. The programmer can write whatever he wants without putting some thought into how the application should work in the end. This freedom at the beginning of the development process comes at the expense of the difficulties later on. Unstructured code becomes more and more difficult to maintain and expand.
+
+Imagine programming the behavior of the human being, more precisely the eating behavior. One has to differentiate between different types of humans at first. If one differentiates between age, there are some basic differences. While the adult is more unrestricted in what or how he eats, a toddler is very dependent on the parents and can not eat everything an adult can.
+\begin{figure}[!h]
+\begin{lstlisting}[language=C]
+if ( adult ) {
+	cook_something();
+	eat();
+} else if ( student ) {
+	call_pizza_service();
+	wait();
+	eat();
+} else if ( child ) {
+	tell_mom_youre_hungry();
+	wait();
+	eat_only_dessert();
+} else if ( baby ) {
+	while ( nothing_happens ) {
+		cry();
+	}
+	be_breastfed();
+}
+\end{lstlisting}
+\caption{Pseudo-code of a generic program}
+\label{fig:generic_code}
+\end{figure}
+
+Figure \ref{fig:generic_code} shows a simplified pseudo-code snippet of a generic program. The Code basically says "If you are an adult, cook something and eat. If you are a student, call a pizza service, wait for the pizza to arrive and eat" and so on. While some code is reused by reusing basic functions (such as \emph{eat()}), most of the code seems very redundant and complicated.
+
+Above all, the code has limited scalabilty. Every additional age (i.e. an elderly) would be inserted at the end of the different cases and contribute to clutter the code. Additionally the program may run into problems when shared functions (such as \emph{eat()}) are changed. If the \emph{eat()}-function would be expanded to chew the food more (respecting the weak-jawed elderly), the whole code from figure \ref{fig:generic_code} had to be rewritten. Since code often changes during development \cite{Sweigart2014WhyisObject} this is a major problem with generic programming.
+
+\section{Object oriented programming}
+Object oriented programming splits a problem into smaller pieces. These pieces, called objects, are set into relation to each other. This braid of objects forms the unit of meaning which is the application itself.
+
+To visualize this braid, a \emph{unified modeling language} (UML) is used \cite{Rumbaugh2005unifiedmodelinglanguage}. It basically displays an object (or the abstract version of an object, a class) in one box as seen in figure \ref{fig:uml_basics}. The box includes the properties and the functions of the object. These boxes are connected with lines or arrows to symbolize their relation.
+\begin{figure}[!h]
+\begin{center}
+\begin{tikzpicture}
+\tikzumlset{fill class=white!0, text=gray, draw=gray}
+\umlclass[x=8, y= 1] {Class name}{properties}{functions}
+\end{tikzpicture}
+\end{center}
+\caption{UML basics}
+\label{fig:uml_basics}
+\end{figure}
+
+Using this UML visualization, one can start to display the example from \ref{fig:generic_code}, seen in figure \ref{fig:uml_from_generic}. 
+\begin{figure}[!h]
+\begin{center}
+\begin{tikzpicture}
+\tikzumlset{fill class=white!0}
+\umlclass{Human}{hunger}{satisfy\_hunger()}
+\umlclass[x=-3, y=-4, anchor=north]{Adult}{time\_available}{\textcolor{white}{M}}
+\umlclass[x=3, y=-4, anchor=north]{Student}{motivation}{satisfy\_hunger()}
+\umlVHVinherit{Adult}{Human} 
+\umlVHVinherit{Student}{Human} 
+\end{tikzpicture}
+\end{center}
+\caption{UML visualization of an object oriented program}
+\label{fig:uml_from_generic}
+\end{figure}
+This UML diagram shows, that the problem of how different ages handle their eating habits is split between the objects. While every \emph{human being} has the property \emph{hunger} and a way to \emph{satisfy its hunger}, the objects \emph{adult} and \emph{student} have additional properties. The \emph{student} additionally has the function \emph{satisfy his hunger} -- the same as the \emph{human being}. Although the \emph{student} is connected to the \emph{human being} and thereby already has the function to \emph{satisfy his hunger}, he redefines it. That way, the \emph{student} may include his motivation to cook something into the function to \emph{satisfy his hunger} as a parameter: If he has motivation to cook something, he cooks. Else he may call a pizza service.
+
+The connection between objects and the redefinition of functions of a connected object are the two main advantages and key features of object orientation. They are called \emph{inheritance} and \emph{polymorphism}.
+
+
+\chapter{Object oriented programming}
+As indicated before, the main features of object orientation are \emph{inheritance} and \emph{polymorphism}. The following sections are going to explain the concepts in more detail.
+\section{Inheritance}
+The term \emph{inheritance} describes how two objects are connected. 
+
+In the example from figure  \ref{fig:uml_from_generic}, the objects \emph{adult} and \emph{student} both inherit their functions from their \emph{parent} \emph{human being}. That means, that every property or function written in the \emph{parent} object apply to its \emph{child} objects as well. That advantage is, that the \emph{human} object may be expanded with functions such as \emph{breathing()} or \emph{drinking()} which then apply to its \emph{children} as well. The result is an excellent scalability. 
+
+An other use case is, when the \emph{parent} has to be expanded with more \emph{children}. By taking the example from figure \ref{fig:generic_code}, we can easily add the two \emph{child} objects \emph{child} and \emph{baby}. Both inherit the \emph{hunger} property and the function to \emph{satisfy their hunger}, as seen in figure \ref{fig:uml_inheritance}.
+\begin{figure}[!h]
+\begin{center}
+\resizebox{.9\textwidth}{!}{
+\begin{tikzpicture}
+\tikzumlset{fill class=white!0}
+\umlclass{Human}{hunger}{satisfy\_hunger()}
+\umlclass[x=-3, y=-4, anchor=north]{Adult}{time\_available}{\strut\\\strut}
+\umlclass[x=3, y=-4, anchor=north]{Student}{motivation}{satisfy\_hunger()\\\strut}
+\umlclass[x=7, y=-4, anchor=north]{Child}{defiance}{satisfy\_hunger() \\ bug\_parents()}
+\umlclass[x=11, y=-4, anchor=north]{Baby}{\strut}{satisfy\_hunger()\\\strut}
+\umlVHVinherit{Adult}{Human} 
+\umlVHVinherit{Student}{Human} 
+\umlVHVinherit{Child}{Human} 
+\umlVHVinherit{Baby}{Human} 
+\end{tikzpicture}
+}
+\end{center}
+\caption{Expanded inheritance}
+\label{fig:uml_inheritance}
+\end{figure}
+
+All \emph{children} are guaranteed to have at least all properties and functions of their \emph{parent}. But they may redefine them to their own needs. This redefining is called overwriting and is a key part of \emph{polymorphism}.
+
+\section{Polymorphism}
+
+The word polymorphism consists of the word \emph{poly}, meaning \emph{many}, and \emph{morph}, meaning \emph{form}. It describes when children have many different variations of their parents function. 
+
+In the example from figure \ref{fig:uml_inheritance} \emph{student}, \emph{child} and \emph{baby} have polymorphic functions from their parent, the \emph{human being}. The function of \emph{satisfying their hunger} has different forms: One may depend on \emph{motivation}, the other on \emph{defiance}. The \emph{baby} may even have a totally new implementation of the function, as it is totally different in its behavior.
+
+Figure \ref{fig:uml_inheritance_polymorphism} shows both polymorphism and inheritance in the example of different groups at the university. 
+The inheritance is applied through \emph{childrens children}. This illustrates the advantage of object oriented models: The complexity may rise, but it is still possible to see the connections. A \emph{beginner} is a \emph{person} as well as a \emph{student}, in fact every object is a \emph{person}.
+
+\begin{figure}[!h]
+\begin{center}
+\resizebox{.9\textwidth}{!}{
+\begin{tikzpicture}
+\tikzumlset{fill class=white!0}%, text=white!0}
+\umlclass{Person}{name\textcolor{white}{MMMM}\\}{eat()\\ work() \\ sleep()}
+\umlclass[x=-3, y=-4, anchor=north]{Alumnus}{\strut}{visitUniversity()\\ drinkBeer()}
+\umlclass[x=3, y=-4, anchor=north]{Student}{\strut}{visitLecture()\\ drinkBeer()}
+\umlclass[x=9, y=-4, anchor=north]{Employee}{salary}{\strut\\\strut}
+\umlclass[x=9, y=-9, anchor=north]{Professor}{\strut}{giveLecture()}
+\umlclass[x=0, y=-9, anchor=north]{Beginner}{\strut}{visitEverything()}
+\umlclass[x=5, y=-9, anchor=north]{Long-term student}{salary}{ignoreLecture()}
+\umlVHVinherit{Alumnus}{Person} 
+\umlVHVinherit{Student}{Person} 
+\umlVHVinherit{Employee}{Person} 
+\umlVHVinherit{Beginner}{Student} 
+\umlVHVinherit{Long-term student}{Student} 
+\umlVHVinherit{Professor}{Employee} 
+\end{tikzpicture}
+}
+\end{center}
+\caption{Deeper inheritance and polymorphism}
+\label{fig:uml_inheritance_polymorphism}
+\end{figure}
+
+With both \emph{inheritance} and \emph{polymorphism} these problems have been solved through object orientation. With the aid of UML, an easy to understand diagram can be designed and help to make the application future-proof.
+
+\chapter{Conclusion}
+
+Object oriented programs are everywhere. No major program is written without object orientation \cite{Weisfeld2013ImportanceObjectOriented}. The report shows why this is: A program without object orientation is more difficult to change and to expand -- to develop all together. As software becomes more and more complex throughout development, these aspects become more and more important. When applications become more complex, there are more possibilities for errors. With object orientation these errors can be found and dealt with more easily.
+
+But before a program can become more complex, it has to be coded at first. And before this happens, it has to be designed. Object orientation and its visualization model UML help in this progress unlike generic programming.\medskip
+
+Nowadays software is a huge part of life. Almost every person carries a mobile phone with him everywhere he goes. Most people use personal computers almost every day. Software development is a huge part of the modern society \cite{Demuth2014SoftwaretechnologiefuerEinsteiger}. As a computer scientist it is imperative to learn object oriented programming to be a good software developer. \medskip
+
+Although object oriented programming itself may not be important for many fields of study, the concept of object orientation -- that is, splitting problems into smaller ones and set them in relation to each other -- can be abstractly used in a lot of different ways.\bigskip
+
+Altogether, object orientation is a good concept for computer scientists and people who interact with them.
+
+\chapter*{Bibliography}
+\addcontentsline{toc}{chapter}{Bibliography}
+%\nocite{*}
+\printbibliography[heading=none]
+\end{document}
