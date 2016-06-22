@@ -1563,7 +1563,7 @@ IF (SELECT Kredit FROM Kunde WHERE Kunr=123) < @dKredit
 \Folie{4}{19}
 \paragraph{zu Bsp. 1:} (aus Folie 4.19)
 \begin{lstlisting}[language=SQL]
-CREATE PROCEDURE Erhoehe_Preis (@Prozent in = 5) AS
+CREATE PROCEDURE Erhoehe_Preis (@Prozent int = 5) AS
 	UPDATE Kauf SET vPreis = vPreis + vPreis * @Prozent/100
 \end{lstlisting}
 \paragraph{zu Bsp. 2:} $ $
