@@ -2187,7 +2187,7 @@ Es ergibt sich für das Bereichsintegral $\intd{b}=|\dtr{x_u & x_v\\ y_u & y_v}|
 $\frac{\partial (x,y)}{\partial (x,y)}=\dtr{x_r & x_\varphi \\ y_r & y_\varphi}=\dtr{\cos \varphi & - r \sin \varphi \\ \sin \varphi & r \cos \varphi} = r \cos ^2\varphi + r \sin^2 \varphi = r$\\
 $\intd{b}=r\intd{r}\intd{\varphi}$
 \item Bei Kreisbereichen mit Mittelpunkt $(x_0,y_0)$ verwendet man sogenannte allgemeine Polarkoordinaten mit Pol $(x_0,y_0)$: $x=x_0+r\cos \varphi,\; y=y_0+r\sin\varphi$\\
-Dann gilt: $\intd{b}=r\intd{r}\intd{\varphi}$
+Dann gilt: $\boxed{\intd{b}=r\intd{r}\intd{\varphi}}$
 \end{enumerate}
 
 \subparagraph{Bsp. 3:} Gesucht: Geometrischer Schwerpunkt $S$ der Kreishalbfläche begrenzt von $x^2+y^2=R^2$ ($y\geq 0$).\\
@@ -2285,13 +2285,13 @@ y=R \sin \vartheta \sin \varphi\\
 z=R \cos \vartheta}$\\
 $\vec{r}_\vartheta=\mtr{R \cos \vartheta \cos \varphi\\r\cos\vartheta \sin \varphi\\-R\sin\vartheta}$\\
 $\vec{r}_\varphi = \mtr{-R \sin \vartheta \sin \varphi \\ R \sin\vartheta \cos \varphi\\0}$\\
-$\Rightarrow|r_\vartheta \times r\varphi=\dots = \sqrt{R^4\sin^4\vartheta + R^4\cos^2\vartheta \sin^2 \vartheta}=R^2\sin\vartheta$
+$\Rightarrow|r_\vartheta \times r\varphi|=\dots = \sqrt{R^4\sin^4\vartheta + R^4\cos^2\vartheta \sin^2 \vartheta}=R^2\sin\vartheta$
 \end{itemize}
 \paragraph{Zusammenfassung:}\parskp
 \begin{tabular}{L{0.5} | L{0.4}}
 Fläche & $\diffd{F}$\\
 $z=f(x,y)$ … expl. karth. Darstellung & $\diffd{F}=\sqrt{1+f_x^2+f_y^2}\intd{x}\intd{y}$\\
-$z=f(r,\varphi)$ … expl. zyl. Darstellung & $\diffd{F}=\sqrt{r^2(1+f_r^2)+f_\varphi^2}$\\
+$z=f(r,\varphi)$ … expl. zyl. Darstellung & $\diffd{F}=\sqrt{r^2(1+f_r^2)+f_\varphi^2}\intd{r}\intd{\varphi}$\\
 Speziell für Rotationsflächen $z=f(r,\varphi)=g(r), \; \varphi \in [0,2\pi]$ & $\diffd{F}=r\sqrt{1+(g'(r))^2}\intd{r}\intd{\varphi}$\\
 Kugel MP $0$, Radius $R$ & $\diffd{F}=R^2\sin \vartheta \intd{\varphi}\intd{\vartheta}$
 \end{tabular}
