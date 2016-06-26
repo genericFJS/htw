@@ -2,10 +2,9 @@
 #define DVD_H
 
 
-class DVD : Medium
-{
+class DVD : Medium{
 public:
-    DVD();
+    DVD(QString title);
 };
 
 #endif // DVD_H

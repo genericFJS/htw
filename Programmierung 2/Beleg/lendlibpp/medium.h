@@ -1,15 +1,15 @@
 #ifndef MEDIUM_H
 #define MEDIUM_H
-#include person.h
 
-class Medium
-{
+class Medium{
 public:
-    Medium();
+    Medium(QString title);
+    QString getTitle();
+    QString getID();
 
 private:
     QString title;
-    Person lendee;
+    int ID;
 
 };
 

@@ -1,6 +1,5 @@
 #include "cd.h"
 
-CD::CD()
-{
+CD::CD(QString title) : Medium(title){
 
 }

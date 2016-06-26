@@ -1,6 +1,5 @@
 #include "book.h"
 
-Book::Book()
-{
+Book::Book(QString title) : Medium(title){
 
 }

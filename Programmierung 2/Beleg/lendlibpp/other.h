@@ -2,10 +2,10 @@
 #define OTHER_H
 
 
-class other : Medium
-{
+class other : Medium{
 public:
-    other();
+    other(QString title);
+
 };
 
 #endif // OTHER_H

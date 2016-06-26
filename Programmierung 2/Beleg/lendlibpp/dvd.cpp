@@ -1,6 +1,5 @@
 #include "dvd.h"
 
-DVD::DVD()
-{
+DVD::DVD(QString title) : Medium(title){
 
 }

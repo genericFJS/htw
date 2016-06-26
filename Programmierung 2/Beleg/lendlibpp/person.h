@@ -2,12 +2,14 @@
 #define PERSON_H
 
 
-class Person
-{
+class Person{
 public:
-    Person();
+    Person(QString fullName);
+    QString getFullName();
+    QString getID();
 private:
     QString fullName;
+    int ID;
 };
 
 #endif // PERSON_H
