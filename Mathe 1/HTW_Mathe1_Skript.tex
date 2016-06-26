@@ -2429,17 +2429,90 @@ $\overset{T=T_2=25}{=}-10\frac{\ln\frac{5}{80}}{\ln 2}=40 [\mathrm{min}]$\\
 ABB 185
 \end{anumerate}
 
+\subsection{Lineare DGL 1. Ordnung}
+Normalform: $y'+a(x)y=h(x)$
+\begin{itemize}
+\item Falls $h(x)=0$: homogen
+\item Falls $h(x) \not = 0$: inhomogen
+\end{itemize}
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Linear bezieht sich auf $y$ und $y'$ (1. Potenz: die Faktoren hängen höchstens von $x$ ab. $x$, muss nicht linear sein). Nicht immer liegt die Normalform vor.\\
+Bsp.:
+\begin{itemize}
+\item $y'+x^2y-\sin x = 0$: linear, inhomogen ($h(x)=\sin x$)
+\item $x^2y' = y$: linear, homogen
+\item $y'+e^{xy}y=\cos x$: nicht linear
+\item $y'\cdot y = e^x$: nicht linear (Umstellen würde zu $y'-\tfrac{1}{y}e^x$ führen)
+\end{itemize}
+\item $h(x)$ heißt auch Störfunktion
+\item Lösungsmethode
+\begin{enumerate}
+\item Bestimmung der allgemeinen Lösung $y_h $ der zugehörigen homogenen DGL $y'+a(x)y=0$ mittels Trennung der Variablen.
+\item Bestimmung \emph{einer} partikulären Lösung $y_p$ der inhomogenen Gleichung mittels Variation der Konstanten.
+\item Allgemeine Lösung der inhomogenen DGL: $y=y_h+y_p$
+\item Falls AWP vorliegt: AB einsetzen.
+\end{enumerate}
+\end{enumerate}
+\subparagraph{Bsp. 3:} $y'+\frac{1}{x}y=x$ ist linear und inhomogen
+\begin{anumerate}
+\item zugehörige homogene DGL:\\
+$y'+\frac{1}{x}y=0 \Rightarrow \frac{\diffd{y}}{\diffd{x}}=-\frac{1}{x}y$\\
+$\overset{TdV}{\Rightarrow} \int \frac{\diffd{y}}{y}=\int - \frac{\diffd{x}}{x}$\\
+$\Rightarrow \ln |y| = - \ln | x | + C^*$\\
+$\Rightarrow |y| = e^{-\ln |x|}\cdot e^{C^*}=\frac{1}{|x|}\cdot e^{C^*}$\\
+$\Rightarrow y_h = C\cdot \frac{1}{x}$ mit $C = \pm e^{C^*}$\\
+wie in Bsp. 2 zunächst $C\not = 0$, Nebenlösung $y_h=0$ ergibt sich für $C=0$. Also $C\in \RR$ (beliebig).\\
+$y_h$ hat stets die Gestalt $\boxed{y_h=C\cdot \dots}$
+\item Ansatz: $y_p=C(x) \cdot \frac{1}{x}$ (heißt Variation der Konstanten $C \rightsquigarrow C(x)$)\\
+Damit $y_p'=C'(x)\frac{1}{x}-C(x) \frac{1}{x^2}$.\\
+Einsetzen des Ansatzes (einschließlich $y_p'$) in die inhomogene DGL:\\
+$C'(x)\frac{1}{x}\underbrace{-C(x)\frac{1}{x^2}+\frac{1}{x}C(x)\frac{1}{x}}_{=0}=x$\\
+$\Rightarrow C'(x)=x^2$\\
+$\Rightarrow C(x) = \frac{1}{3}x^3+K$ (setzen aber $K=0$)\\
+$\Rightarrow C(x) = \frac{1}{3}x^3$\\
+$\Rightarrow y_p = \frac{1}{3}x^3\cdot \frac{1}{x}=\frac{1}{3}x^2$
+\item $y=y_h+y_p=\frac{C}{x}+\frac{1}{3}x^2$
+\end{anumerate}
 
+\subsection{Weiter DGLn 1. Ordnung}
+\subsubsection{Ähnlichkeitsdifferentialgleichungen}
+\begin{anumerate}
+\item Typ $\boxed{y'=f\left(\frac{y}{x}\right)}$\\
+Lösung: Substitution $\frac{y}{x}=u=u(x)$, d.h. $y=u\cdot x$.\\
+Also $y'=u'x+u$.\\
+$\Rightarrow $ DGL mit trennbaren Variablen für $u=u(x)$\\
+$\rightsquigarrow$ Lösen $\rightsquigarrow$ Rücksubstitution
+\item Typ $\boxed{y'=y(ax+by+c)}$\\
+Lösung: Substitution $ax+by+c=u(x)$, d.h. $u'=a+by'$.\\
+Also $y'=\frac{1}{b}(u'-a)$.\\
+Dann weiteres vorgehen wie bei a.)
+\end{anumerate}
+\subparagraph{Bsp. 4:} Gesucht sind Kurven $y=y(x)$, die alle vom Ursprung ausgehende Strahlen unter dem gleichen Winkel $\alpha$ schneiden (isogonale Trajektionen).\\
+ABB 186+187\\
+$y'=\tan (\varphi+\alpha)=\frac{\tan \varphi + \tan \alpha}{1-\tan \varphi \tan \alpha}=\frac{\frac{y}{x}+\tan \alpha}{1-\frac{y}{x}\tan \alpha}=:f\left(\frac{y}{x}\right)$\\
+Substitution: $u=\frac{y}{x}$, $y'=u'x+u=\frac{u+\tan \alpha}{1-u\tan \alpha}$\\
+$\Rightarrow u'x=\frac{u+\tan \alpha}{1-u\tan \alpha}-u=\frac{u^2\tan \alpha + \tan \alpha}{1-u\tan \alpha}$\\
+$\Rightarrow \frac{\diffd{u}}{\diffd{x}}\cdot x = \frac{u^2+1}{\cot \alpha -u}$\\
+$\overset{TdV}{\Rightarrow} \int \frac{\cot \alpha -u}{u^2+1}\intd{u}=\int \frac{\diffd{x}}{x}$\\
+$\Rightarrow \cot \alpha \cdot \arctan u - \frac{1}{2}\ln(u^2+1)=\ln|x| + C_1$\\
+Rücksubstitution: $\cot \alpha \cdot \arctan \frac{y}{x}=\frac{1}{2}\ln\left(\left(\frac{y}{x}\right)^2+1\right) + \ln|x| + C_1=\ln \sqrt{x^2+y^2}+C_1$\\
+Polarkoordinaten: $r=\sqrt{x^2+y^2}$\\
+$\tan \alpha = \frac{y}{x}$, d.h. $\varphi = \arctan \left( \frac{y}{x}\right)+k\pi$\\
+$\Rightarrow \cot \alpha \cdot \varphi = \ln r + C_2$\\
+$\Rightarrow r = C\cdot e^{\varphi \cot\alpha}$ mit $C=e^{-C_2}$\\
+… ist die logarithmische Spirale
+\subsubsection{Exakte Differentialgleichungen}
+Die DGL $P(x,y)+Q(x,y)y'=0$ mit $P_x=Q_y$ (in einem einfach zusammenhängenden Gebiet) heißt exakte DGL.\\
+Lösung:\\
+Unter den sogenannten Integrabilitätsbedingungen $P_y=Q_x$ existiert eine Stammfunktion $F(x,y)$ mit $F_x=P$ und $F_y=Q$ ($F$ ist bis auf eine additive Konstante eindeutig bestimmt). Die allgemeine Lösung der exakten DGL ist dann die Kurvenschar $\boxed{F(x,y)=C}$ (Höhenlinien von $F$).
+\subparagraph{Bemerkung:} Ist eine DGL in obiger Gestalt nicht exakt (d.h. $P_y\not = Q_x$), so gibt es oft einen integrierenden Faktor $M=M(x,y)$, so dass die DGL $P\cdot M+Q\cdot M\cdot y'=0$ exakt wird.
 
-
-
-
-
-
-
-
-
-
+\section{Lineare DGLn höherer Ordnung mit konstanten Koeffizienten}
+Allgemeine Form: $L(y):= y^{(n)}+a_{n-1}y^{(n-1)}+\dots + a_1y' + a_0 y = h(x)$
+\begin{anumerate}
+\item Bestimmung einer allgemeinen Lösung $y_h$ der zugehörigen homogenen DGL $L(y)=0$
+\end{anumerate}
 
 
 
