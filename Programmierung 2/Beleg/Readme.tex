@@ -1,0 +1,74 @@
+% Header aus der Vorlage
+\input{../../LaTeX_master/LaTeX_master_HTW}
+
+% Definition von Titel, Autor usw.
+\DTitel{Programmierung II}
+\DUntertitel{Beleg}
+\DAutor{Falk-Jonatan Strube}
+\DNotiz{}
+\renewcommand{\workingdir}{../../}
+\renewcommand{\Dokumentensignatur}{}
+\renewcommand{\Autorformat}[1]{\textcolor{darkgray}{#1}}
+
+\begin{document}
+
+\maketitle
+\newpage
+%\tableofcontents
+%\newpage
+
+\section*{Persönliche Angaben}
+\begin{tabular}{l l l}
+Name: 					&Falk-Jonatan Strube\\
+Matrikelnr.:		&39467\\
+\end{tabular}
+
+\section*{Aufgabenstellung}
+Schreiben Sie ein objektorientiertes Programm in C++ zur Verwaltung verliehener Medien (Bücher, Videos(DVDs,...), CDs (wenigstens zwei Medienarten))
+
+Erarbeiten Sie dazu die Klassen:
+\begin{itemize}
+\item Medium (Basisklasse mit ggf. virtuellen Funktionen)
+\item Book
+\item Video, ...
+\item Person
+\end{itemize}
+Erarbeiten Sie weitere Klassen:
+\begin{itemize}
+\item STRING
+\item LIST, ELEMENT, ggf. ITERATOR jeweils als Template
+\end{itemize}
+Jede Klasse soll in einem separaten Modul implementiert werden (Header- und C++-File).
+
+\paragraph{Funktionsumfang:}
+\begin{itemize}
+\item Verwaltung der Personen (erfassen, anzeigen, auflisten, löschen ...)
+\item Verwaltung der Medien(s.o.)
+\item Ausleihe, Rückgabe
+\item Dateiarbeit(Laden und Speichern von Datenbeständen)
+\end{itemize}
+\subparagraph{Hinweise:}
+Auf hinreichende Kommentierung ist zu achten, so dass bei der Belegvorführung der Quelltext auch wieder verstanden wird.
+
+Jeder Quelltext enthalte den Namen, die Matrikelnummer und die Studiengruppe des Autors.
+
+Für die Note 1 muss das Programm portabel sein und sowohl unter Windows als auch unter Linux/Unix übersetzt und ausgeführt werden können oder über eine graphische Benutzeroberfläche verfügen. Hierfür stehen Qt oder wxwidgets zur Verfügung. In jedem Fall müssen die Programme auf den Rechnern in den Laboren der Fakultät vorgeführt und übersetzt werden können.
+
+Wird das Programm mit wxwidgets oder Qt ausgeführt (Toolkits zur Programmierung portabler Oberflächen), so entfällt die Programmierung der String und Listklassen, es werden dann die der betreffenden Bibliotheken genutzt.
+
+\section*{Anforderungen und Implementation}
+\begin{enumerate}
+\item Klassen: Medium, Book, DVD, CD, Other
+\item Verwaltung Personen/Medien
+\begin{itemize}
+\item Erfassen (Zeile zum Eintragen, Button zum Abschicken)
+\item Anzeigen/Auflisten (Anzeigen der Daten: Personen+Ausgeliehene Medien gruppiert + sortiert)
+\item Löschen (inline Button links)
+\end{itemize}
+\item Ausleihe/Rückgabe (inline Button rechts)
+\item Dateiarbeit: Laden, Speichern, Speichern unter (Dateiname) als .csv (2: für Person und Medien)
+\end{enumerate}
+
+
+
+\end{document}
