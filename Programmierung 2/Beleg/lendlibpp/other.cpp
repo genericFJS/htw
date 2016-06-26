@@ -1,6 +1,5 @@
 #include "other.h"
 
-other::other()
-{
+other::other(QString title) : Medium(title){
 
 }

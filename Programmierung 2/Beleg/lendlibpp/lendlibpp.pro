@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     cd.cpp \
     dvd.cpp \
     person.cpp \
-    other.cpp
+    other.cpp \
+    lendlib.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -29,7 +30,8 @@ HEADERS  += \
     dvd.h \
     person.h \
     mediumtype.h \
-    other.h
+    other.h \
+    lendlib.h
 
 FORMS    += \
     mainwindow.ui

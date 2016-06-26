@@ -1,6 +1,13 @@
 #include "medium.h"
 
-Medium::Medium()
-{
+Medium::Medium(QString title){
+    this->title = title;
+}
 
+QString Medium::getTitle(){
+    return title;
+}
+
+QString Medium::getID(){
+    return ID;
 }
