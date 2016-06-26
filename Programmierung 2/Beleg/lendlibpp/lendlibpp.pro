@@ -18,7 +18,8 @@ SOURCES += main.cpp \
     book.cpp \
     cd.cpp \
     dvd.cpp \
-    person.cpp
+    person.cpp \
+    other.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -26,7 +27,9 @@ HEADERS  += \
     book.h \
     cd.h \
     dvd.h \
-    person.h
+    person.h \
+    mediumtype.h \
+    other.h
 
 FORMS    += \
     mainwindow.ui

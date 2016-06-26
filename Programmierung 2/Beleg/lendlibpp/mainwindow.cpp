@@ -7,6 +7,15 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow){
     ui->setupUi(this);
+
+    ui->addMediaType->addItem("-");
+    ui->addMediaType->addItem("Buch");
+    ui->addMediaType->addItem("CD");
+    ui->addMediaType->addItem("DVD");
+
+
+
+
     int j=0;
     while(j<3){
         QWidget *newMedium = new QWidget;
