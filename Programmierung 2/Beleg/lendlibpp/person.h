@@ -6,6 +6,8 @@ class Person
 {
 public:
     Person();
+private:
+    QString fullName;
 };
 
 #endif // PERSON_H
