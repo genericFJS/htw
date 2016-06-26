@@ -2,10 +2,9 @@
 #define CD_H
 
 
-class CD : Medium
-{
+class CD : Medium{
 public:
-    CD();
+    CD(QString title);
 };
 
 #endif // CD_H
