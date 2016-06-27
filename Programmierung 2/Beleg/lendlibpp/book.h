@@ -2,7 +2,7 @@
 #define BOOK_H
 #include "medium.h"
 
-class Book : Medium{
+class Book : public Medium{
 public:
     Book(QString title);
 };

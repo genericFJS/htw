@@ -8,6 +8,10 @@ QString Person::getFullName(){
     return fullName;
 }
 
-QString Person::getID(){
+int Person::getID(){
     return ID;
+}
+
+void Person::setID(int ID){
+    this->ID = ID;
 }

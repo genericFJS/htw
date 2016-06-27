@@ -984,7 +984,7 @@ s74053@htw-dresden.de</string>
            <widget class="QLineEdit" name="addMediaTitle"/>
           </item>
           <item>
-           <widget class="QPushButton" name="addMediaButton">
+           <widget class="QPushButton" name="addMediumButton">
             <property name="styleSheet">
              <string notr="true">background: #DEE2CF;</string>
             </property>
@@ -1158,10 +1158,10 @@ s74053@htw-dresden.de</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="personLended1">
+                  <widget class="QWidget" name="personLent1" native="true">
                    <property name="minimumSize">
                     <size>
-                     <width>120</width>
+                     <width>116</width>
                      <height>0</height>
                     </size>
                    </property>
@@ -1171,14 +1171,38 @@ s74053@htw-dresden.de</string>
                      <height>16777215</height>
                     </size>
                    </property>
-                   <property name="midLineWidth">
-                    <number>9</number>
-                   </property>
-                   <property name="text">
-                    <string>Ausgeliehene Medien
-weitere
-mehr</string>
-                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_7">
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <layout class="QVBoxLayout" name="personLent1Layout">
+                      <item>
+                       <widget class="QLabel" name="Lent1_2">
+                        <property name="text">
+                         <string>Buch 1</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="Lent1_1">
+                        <property name="text">
+                         <string>CD X</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
                   </widget>
                  </item>
                 </layout>
@@ -1187,7 +1211,7 @@ mehr</string>
              </widget>
             </item>
             <item>
-             <spacer name="verticalSpacer">
+             <spacer name="personSpacer">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>

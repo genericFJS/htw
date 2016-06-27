@@ -16,22 +16,20 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     medium.cpp \
     book.cpp \
+    lendlib.cpp \
     cd.cpp \
     dvd.cpp \
-    person.cpp \
-    other.cpp \
-    lendlib.cpp
+    person.cpp
 
 HEADERS  += \
     mainwindow.h \
     medium.h \
+    lendlib.h \
     book.h \
     cd.h \
     dvd.h \
     person.h \
-    mediumtype.h \
-    other.h \
-    lendlib.h
+    mediumtype.h
 
 FORMS    += \
     mainwindow.ui

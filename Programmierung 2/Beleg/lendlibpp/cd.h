@@ -1,8 +1,8 @@
 #ifndef CD_H
 #define CD_H
+#include "medium.h"
 
-
-class CD : Medium{
+class CD : public Medium{
 public:
     CD(QString title);
 };
