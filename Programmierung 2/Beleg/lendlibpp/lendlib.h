@@ -4,13 +4,21 @@
 #include "medium.h"
 #include "person.h"
 
-class lendlib{
+class LendLib{
 public:
-    lendlib();
+    LendLib();
+    void addMediumToList(Medium *newM);
+    void addPersonToList(Person *newP);
+    void addLendEntry(int mediumID, int personID);
+    void removeLendEntry(int mediumID);
+    Medium* getMediumEntry(int mediumID);
+    Person* getPersonEntry(int personID);
 private:
-    QList<Medium> mList;
-    QList<Person> pList;
-    QHash<Medium,Person> lendList;
+    QHash<int,Medium*> mList;
+    QHash<int,Person*> pList;
+    QHash<int,int> lendList;    // erste int: Medium-ID, zweite: Person-ID
+    int nextID = 0;
+//    MainWindow *mainWindow;
 };
 
 #endif // LENDLIB_H
