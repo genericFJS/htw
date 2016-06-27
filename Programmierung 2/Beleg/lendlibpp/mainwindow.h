@@ -2,7 +2,18 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMessageBox>
+#include <iostream>
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include "book.h"
+#include "lendlib.h"
+#include "cd.h"
+#include "dvd.h"
 #include "mediumtype.h"
+#include "other.h"
+#include "person.h"
+using namespace std;
 
 namespace Ui {
 class MainWindow;
@@ -17,12 +28,16 @@ public:
 
 private slots:
     void deleteItemButton();
-    void lendItemButton();
+    void lendMediumButton();
+    void addMediumButton();
+    void addPersonButton();
 
 private:
     Ui::MainWindow *ui;
+    LendLib *lendlib = new LendLib();
     void initUI();
-    void addMediumUI(MType mType, QString mName);
+    void addMedium(MType mType, QString mName);
+    void addPerson(QString pName);
 };
 
 #endif // MAINWINDOW_H

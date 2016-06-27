@@ -8,6 +8,10 @@ QString Medium::getTitle(){
     return title;
 }
 
-QString Medium::getID(){
+int Medium::getID(){
     return ID;
+}
+
+void Medium::setID(int ID){
+    this->ID = ID;
 }

@@ -1,8 +1,8 @@
 #ifndef DVD_H
 #define DVD_H
+#include "medium.h"
 
-
-class DVD : Medium{
+class DVD : public Medium{
 public:
     DVD(QString title);
 };
