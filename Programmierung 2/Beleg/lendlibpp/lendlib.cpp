@@ -31,3 +31,11 @@ Medium* LendLib::getMediumEntry(int mediumID){
 Person* LendLib::getPersonEntry(int personID){
     return this->pList.value(personID);
 }
+
+QMap<int, Medium *> LendLib::getMList(){
+    return mList;
+}
+
+QMap<int, Person *> LendLib::getPList(){
+    return pList;
+}
