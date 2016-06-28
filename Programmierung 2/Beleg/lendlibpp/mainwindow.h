@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QInputDialog>
 #include <iostream>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -27,8 +28,9 @@ public:
     ~MainWindow();
 
 private slots:
-    void deleteItemButton();
-    void lendMediumButton();
+    void deleteMediumButton();
+    void deletePersonButton();
+    void retlendMediumButton();
     void addMediumButton();
     void addPersonButton();
 
@@ -38,6 +40,8 @@ private:
     void initUI();
     void addMedium(MType mType, QString mName);
     void addPerson(QString pName);
+    void lendMedium(int mediumID, int personID);
+    void returnMedium(int mediumID);
 };
 
 #endif // MAINWINDOW_H

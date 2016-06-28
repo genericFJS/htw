@@ -5,6 +5,8 @@
 class DVD : public Medium{
 public:
     DVD(QString title);
+private:
+    QString director;
 };
 
 #endif // DVD_H

@@ -23,11 +23,11 @@ MainWindow::MainWindow(QWidget *parent) :
     addPerson("Gabi");
     addPerson("Brunhilde");
 
-//    lendlib->addLendEntry(buch1->getID(), person1->getID());
-//    lendlib->addLendEntry(buch2->getID(), person2->getID());
-//    lendlib->addLendEntry(cd1->getID(), person1->getID());
-//    lendlib->addLendEntry(dvd1->getID(), person1->getID());
-//    lendlib->addLendEntry(medium1->getID(), person3->getID());
+    lendMedium(0, 6);
+    lendMedium(1, 7);
+    lendMedium(3, 6);
+    lendMedium(4, 6);
+    lendMedium(5, 8);
 
 }
 
@@ -49,14 +49,37 @@ void MainWindow::initUI(){
     connect(ui->addPersonButton, SIGNAL (released()), this, SLOT (addPersonButton()));
 }
 
-void MainWindow::deleteItemButton(){
-   QPushButton *myB = qobject_cast<QPushButton*>(sender());
+void MainWindow::retlendMediumButton(){
+    QPushButton *myB = qobject_cast<QPushButton*>(sender());
+    if(!myB->text().compare("Ausleihen")){
+        QStringList persons;
+        QMap<int,Person*> allP = lendlib->getPList();
+        for (auto p: allP.keys()){
+            persons.append(allP.value(p)->getFullName());
+        }
+
+        bool ok;
+        QString person = QInputDialog::getItem(this, "Ausleihen", "Ausleihen an:", persons, 0, false, &ok);
+        if (ok && !person.isEmpty())
+            ui->debug->setText(person);
+//        lendMedium();
+    } else {
+        returnMedium(sender()->parent()->objectName().toInt());
+    }
+}
+
+void MainWindow::deleteMediumButton(){
+    QPushButton *myB = qobject_cast<QPushButton*>(sender());
+
     ui->allMediaScroll->layout()->removeWidget(myB->parentWidget());
     delete myB->parentWidget();
 }
 
-void MainWindow::lendMediumButton(){
+void MainWindow::deletePersonButton(){
     QPushButton *myB = qobject_cast<QPushButton*>(sender());
+
+    ui->allMediaScroll->layout()->removeWidget(myB->parentWidget());
+    delete myB->parentWidget();
 }
 
 void MainWindow::addMediumButton(){
@@ -134,23 +157,24 @@ void MainWindow::addMedium(MType mType, QString mName){
     delB->setToolTip("Lösche Medium "+mEntry+": "+mName);
     type->setObjectName("type"+mEntry);
     title->setObjectName("title"+mEntry);
-    lendee->setObjectName("lend"+mEntry);
+    lendee->setObjectName("lendee"+mEntry);
     retlendB->setObjectName("retlend"+mEntry);
     retlendB->setToolTip("Leihe Medium "+mEntry+" aus: "+mName);
 
     newMedium->layout()->setMargin(0);
+    newMedium->setStyleSheet("border-bottom: 1px solid #DEE2CF");
     delB->setStyleSheet("background: #DEE2CF;");
     delB->setMinimumWidth(60);
     delB->setMaximumWidth(60);
     delB->setMinimumHeight(25);
     delB->setMaximumHeight(25);
-    connect(delB, SIGNAL (released()), this, SLOT (deleteItemButton()));
+    connect(delB, SIGNAL (released()), this, SLOT (deleteMediumButton()));
     retlendB->setStyleSheet("background: #DEE2CF;");
     retlendB->setMinimumWidth(80);
     retlendB->setMaximumWidth(80);
     retlendB->setMinimumHeight(25);
     retlendB->setMaximumHeight(25);
-    connect(retlendB, SIGNAL (released()), this, SLOT (lendMediumButton()));
+    connect(retlendB, SIGNAL (released()), this, SLOT (retlendMediumButton()));
     type->setMinimumWidth(60);
     type->setMaximumWidth(60);
     lendee->setMinimumWidth(80);
@@ -176,38 +200,70 @@ void MainWindow::addPerson(QString pName){
     pEntry = QString::number(person->getID());
 
     // UI-Elemente erstellen
-    QWidget *newMedium = new QWidget;
-    QHBoxLayout *newMediumLayout = new QHBoxLayout(newMedium);
+    QWidget *newPerson = new QWidget;
+    QHBoxLayout *newPersonLayout = new QHBoxLayout(newPerson);
     QPushButton *delB = new QPushButton("Löschen");
     QLabel *name = new QLabel(pName);
-    QWidget *rent = new QWidget;
-    QVBoxLayout *rentLayout = new QVBoxLayout(rent);
+    QWidget *lent = new QWidget;
+    QVBoxLayout *rentLayout = new QVBoxLayout(lent);
 
     // UI-Eigenschaften
-    newMedium->setObjectName(pEntry);
+    newPerson->setObjectName(pEntry);   // alle Medien-Widgets haben die Bezeichnung der ID
     delB->setObjectName("del"+pEntry);
     delB->setToolTip("Lösche Person "+pEntry+": "+pName);
     name->setObjectName("name"+pEntry);
-    rent->setObjectName("rent"+pEntry);
+    lent->setObjectName("lent"+pEntry);
 
-    newMedium->layout()->setMargin(0);
-    rent->layout()->setMargin(0);
+    newPerson->layout()->setMargin(0);
+    newPerson->setStyleSheet("border-bottom: 1px solid #DEE2CF");
+    lent->layout()->setMargin(0);
     delB->setStyleSheet("background: #DEE2CF;");
     delB->setMinimumWidth(60);
     delB->setMaximumWidth(60);
     delB->setMinimumHeight(25);
     delB->setMaximumHeight(25);
-    connect(delB, SIGNAL (released()), this, SLOT (deleteItemButton()));
-    rent->setMaximumWidth(120);
+    connect(delB, SIGNAL (released()), this, SLOT (deletePersonButton()));
+    lent->setMaximumWidth(120);
 
-    newMediumLayout->addWidget(delB);
-    newMediumLayout->addWidget(name);
-    newMediumLayout->addWidget(rent);
-    qobject_cast<QVBoxLayout*>(ui->allPersonsScroll->layout())->insertWidget(-1,newMedium);
+    newPersonLayout->addWidget(delB);
+    newPersonLayout->addWidget(name);
+    newPersonLayout->addWidget(lent);
+    qobject_cast<QVBoxLayout*>(ui->allPersonsScroll->layout())->insertWidget(-1,newPerson);
 
     ui->allPersonsScroll->layout()->removeItem(ui->personSpacer);
     ui->allPersonsScroll->layout()->addItem(ui->personSpacer);
 }
+
+void MainWindow::lendMedium(int mediumID, int personID){
+    // Zur Bibliothek hinzufügen
+    lendlib->addLendEntry(mediumID, personID);
+    // ins GUI einfügen
+    QString mediumIDs = QString::number(mediumID);
+    QString personIDs = QString::number(personID);
+    QString mediumS = lendlib->getMediumEntry(mediumID)->getTitle();
+    QString personS = lendlib->getPersonEntry(personID)->getFullName();
+    ui->allMediaScroll->findChild<QLabel*>("lendee"+mediumIDs)->setText(personS);
+    ui->allMediaScroll->findChild<QPushButton*>("retlend"+mediumIDs)->setText("Zurück geben");
+    ui->allMediaScroll->findChild<QPushButton*>("retlend"+mediumIDs)->setToolTip("Gebe Medium "+mediumIDs+" zurück.");
+    QLabel *lentItem = new QLabel(mediumS);
+    lentItem->setObjectName("lentItem"+mediumIDs);
+    ui->allPersonsScroll->findChild<QWidget*>("lent"+personIDs)->layout()->addWidget(lentItem);
+}
+
+void MainWindow::returnMedium(int mediumID){
+    lendlib->removeLendEntry(mediumID);
+
+    QString mediumIDs = QString::number(mediumID);
+    QString mediumS = lendlib->getMediumEntry(mediumID)->getTitle();
+
+    ui->allMediaScroll->findChild<QLabel*>("lendee"+mediumIDs)->setText("");
+    delete ui->allPersonsScroll->findChild<QLabel*>("lentItem"+mediumIDs);
+
+    ui->allMediaScroll->findChild<QPushButton*>("retlend"+mediumIDs)->setText("Ausleihen");
+    ui->allMediaScroll->findChild<QPushButton*>("retlend"+mediumIDs)->setToolTip("Leihe Medium "+mediumIDs+" aus: "+mediumS);
+
+}
+
 
 
 MainWindow::~MainWindow(){
