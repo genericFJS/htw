@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>media/HTWLogo.png</file>
+        <file>media/FJSLogo.png</file>
+    </qresource>
+</RCC>
