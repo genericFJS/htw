@@ -4,31 +4,41 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow){
     ui->setupUi(this);
-//    this->myLib = new MainWindow(this);
     this->initUI();
+    this->fillLibFromFile();
+    checkError();
 
-//    addMedium(cd, "test1");
-//    addMedium(book, "test2");
-//    addMedium(cd, "test3");
+    fillDemoData();
+//    fillDemoData(true);
 
-    addMedium(book,"Die Bibel");
-    addMedium(book,"Eragon");
-    addMedium(book,"Harry Potter");
-    addMedium(cd,"Take That: Best of");
-    addMedium(dvd,"Harry Potter");
-    addMedium(other,"Programmierung I Skript");
+}
 
-    addPerson("Hans");
-    addPerson("Klaus");
-    addPerson("Gabi");
-    addPerson("Brunhilde");
+void MainWindow::fillDemoData(bool more){
+    QString addNo = "";
+    if (more){
+        qsrand( QDateTime::currentDateTime().toTime_t() );
+        addNo = " ("+QString::number(qrand()%100)+")";
+    }
 
-    lendMedium(0, 6);
-    lendMedium(1, 7);
-    lendMedium(3, 6);
-    lendMedium(4, 6);
-    lendMedium(5, 8);
+    if (more || (lendlib->getMList().empty() && lendlib->getPList().empty())){
+        int m1 = addMedium(book,"Die Bibel"+addNo);
+        int m2 = addMedium(book,"Eragon"+addNo);
+        addMedium(book,"Harry Potter"+addNo);
+        int m4 = addMedium(cd,"Take That: Best of"+addNo);
+        int m5 = addMedium(dvd,"Harry Potter"+addNo);
+        int m6 =  addMedium(other,"Programmierung I Skript"+addNo);
 
+        int p1 = addPerson("Hans"+addNo);
+        int p2 = addPerson("Klaus"+addNo);
+        int p3 = addPerson("Gabi"+addNo);
+        addPerson("Brunhilde"+addNo);
+
+        lendMedium(m1, p1);
+        lendMedium(m2, p2);
+        lendMedium(m4, p1);
+        lendMedium(m5, p1);
+        lendMedium(m6, p3);
+    }
 }
 
 void MainWindow::initUI(){
@@ -49,37 +59,178 @@ void MainWindow::initUI(){
     connect(ui->addPersonButton, SIGNAL (released()), this, SLOT (addPersonButton()));
 }
 
+void MainWindow::checkError(){
+    QMessageBox msgBox;
+    if (readErr){
+        msgBox.setText("Es gab einen Fehler beim einlesen der Datenbank:\n"+errString+"\nBitte löschen Sie die .csv Dateien und erstellen Sie eine neue Datei.");
+        msgBox.exec();
+        exit(0);
+    } else if (otherErr) {
+        msgBox.setText("Es gab einen Fehler:\n"+errString);
+        msgBox.exec();
+        exit(0);
+    }
+}
+
+void MainWindow::fillLibFromFile(){
+    QFile lendFile("lendlibLend.csv");
+    QFile mFile("lendlibMedia.csv");
+    QFile pFile("lendlibPerson.csv");
+    QList<int> idList;
+    if (mFile.open(QIODevice::ReadOnly|QFile::Truncate)) {
+        int lineNumber = 1;
+        mFile.readLine();
+        while (!mFile.atEnd()) {
+            QByteArray line = mFile.readLine().replace(QByteArray("\n"),QByteArray(""));
+            lineNumber++;
+            QList<QByteArray> lineElements = line.split('\t');
+            if (lineElements.length() == 3){
+                int newID = lineElements[0].toInt();
+                if(idList.contains(newID)){
+                    errString = "Fehler beim Lesen der Datei 'lendlibMedia.csv' in Zeile "+ QString::number(lineNumber)+" (ID bereits vorhanden).";
+                    readErr = true;
+                    return;
+                }
+                idList.append(newID);
+                MType mType;
+                switch (lineElements[1].toInt()){
+                case 0:
+                    mType = book;
+                    break;
+                case 1:
+                    mType = cd;
+                    break;
+                case 2:
+                    mType = dvd;
+                    break;
+                default:
+                    mType = other;
+                }
+                addMedium(mType,QString::fromStdString(lineElements[2].toStdString()),newID);
+            } else {
+                errString = "Fehler beim Lesen der Datei 'lendlibMedia.csv' in Zeile "+ QString::number(lineNumber)+" (Zeile enthält nicht 3 Elemente).";
+                readErr = true;
+                return;
+            }
+        }
+    }
+    if (pFile.open(QIODevice::ReadOnly|QFile::Truncate)) {
+        int lineNumber = 1;
+        pFile.readLine();
+        while (!pFile.atEnd()) {
+            QByteArray line = pFile.readLine().replace(QByteArray("\n"),QByteArray(""));
+            lineNumber++;
+            QList<QByteArray> lineElements = line.split('\t');
+            if (lineElements.length() == 2){
+                int newID = lineElements[0].toInt();
+                if(idList.contains(newID)){
+                    errString = "Fehler beim Lesen der Datei 'lendlibPerson.csv' in Zeile "+ QString::number(lineNumber)+" (ID bereits vorhanden).";
+                    readErr = true;
+                    return;
+                }
+                idList.append(newID);
+                addPerson(QString::fromStdString(lineElements[1].toStdString()),newID);
+            } else {
+                errString = "Fehler beim Lesen der Datei 'lendlibPerson.csv' in Zeile "+ QString::number(lineNumber)+" (Zeile enthält nicht 2 Elemente).";
+                readErr = true;
+                return;
+            }
+        }
+    }
+    if (lendFile.open(QIODevice::ReadOnly|QFile::Truncate)) {
+        int lineNumber = 1;
+        lendFile.readLine();
+        while (!lendFile.atEnd()) {
+            QByteArray line = lendFile.readLine().replace(QByteArray("\n"),QByteArray(""));
+            lineNumber++;
+            QList<QByteArray> lineElements = line.split('\t');
+            if (lineElements.length() == 2){
+                int mediumID = lineElements[0].toInt();
+                int personID = lineElements[1].toInt();
+                if(!lendlib->isMediumEntry(mediumID)){
+                    errString = "Fehler beim Lesen der Datei 'lendlibLend.csv' in Zeile "+ QString::number(lineNumber)+" (ID ist kein Medium).";
+                    readErr = true;
+                    return;
+                }
+                if(!lendlib->isPersonEntry(personID)){
+                    cerr << lineElements[0].toStdString() << " "<< mediumID << "\n";
+                    cerr << lineElements[1].toStdString() << " "<< personID << "\n";
+                    errString = "Fehler beim Lesen der Datei 'lendlibLend.csv' in Zeile "+ QString::number(lineNumber)+" (ID ist keine Person).";
+                    readErr = true;
+                    return;
+                }
+                lendMedium(mediumID, personID);
+            } else {
+                errString = "Fehler beim Lesen der Datei 'lendlibLend.csv' in Zeile "+ QString::number(lineNumber)+" (Zeile enthält nicht 2 Elemente).";
+                readErr = true;
+                return;
+            }
+        }
+    }
+}
+
+void MainWindow::saveLibToFile(){
+    QFile lendFile("lendlibLend.csv");
+    QFile mFile("lendlibMedia.csv");
+    QFile pFile("lendlibPerson.csv");
+    if (lendFile.open(QFile::WriteOnly|QFile::Truncate)){
+        QTextStream stream(&lendFile);
+        QHash<int,int> lendList = lendlib->getLendList();
+        QHash<int,int>::iterator i;
+        stream << "Medium \t Ausgeliehen an\n";
+        for(i = lendList.begin(); i != lendList.end(); ++i){
+            stream << i.key() << "\t" << i.value() << "\n";
+        }
+        lendFile.close();
+    }
+    if (mFile.open(QFile::WriteOnly|QFile::Truncate)){
+        QTextStream stream(&mFile);
+        QMap<int,Medium*> mList = lendlib->getMList();
+        stream << "ID \t Typ \t Titel\n";
+        for(auto m: mList.keys()){
+            stream << mList.value(m)->getID() << "\t" << mList.value(m)->getType() << "\t" << mList.value(m)->getTitle() << "\n";
+        }
+        mFile.close();
+    }
+    if (pFile.open(QFile::WriteOnly|QFile::Truncate)){
+        QTextStream stream(&pFile);
+        QMap<int,Person*> pList = lendlib->getPList();
+        stream << "ID \t Name\n";
+        for(auto p: pList.keys()){
+            stream << pList.value(p)->getID()<< "\t" << pList.value(p)->getFullName() << "\n";
+        }
+        pFile.close();
+    }
+}
+
 void MainWindow::retlendMediumButton(){
     QPushButton *myB = qobject_cast<QPushButton*>(sender());
+    int mediumID = sender()->parent()->objectName().toInt();
     if(!myB->text().compare("Ausleihen")){
         QStringList persons;
         QMap<int,Person*> allP = lendlib->getPList();
         for (auto p: allP.keys()){
-            persons.append(allP.value(p)->getFullName());
+            persons.append(allP.value(p)->getFullName()+" | ID: "+QString::number(allP.value(p)->getID()));
         }
-
         bool ok;
         QString person = QInputDialog::getItem(this, "Ausleihen", "Ausleihen an:", persons, 0, false, &ok);
-        if (ok && !person.isEmpty())
-            ui->debug->setText(person);
-//        lendMedium();
+        if (ok && !person.isEmpty()){
+            int personID = (person.split(" ID: ").last()).toInt();
+            lendMedium(mediumID, personID);
+        }
     } else {
-        returnMedium(sender()->parent()->objectName().toInt());
+        returnMedium(mediumID);
     }
 }
 
 void MainWindow::deleteMediumButton(){
     QPushButton *myB = qobject_cast<QPushButton*>(sender());
-
-    ui->allMediaScroll->layout()->removeWidget(myB->parentWidget());
-    delete myB->parentWidget();
+    deleteMedium(myB->parentWidget()->objectName().toInt());
 }
 
 void MainWindow::deletePersonButton(){
     QPushButton *myB = qobject_cast<QPushButton*>(sender());
-
-    ui->allMediaScroll->layout()->removeWidget(myB->parentWidget());
-    delete myB->parentWidget();
+    deletePerson(myB->parentWidget()->objectName().toInt());
 }
 
 void MainWindow::addMediumButton(){
@@ -115,7 +266,7 @@ void MainWindow::addPersonButton(){
     }
 }
 
-void MainWindow::addMedium(MType mType, QString mName){
+int MainWindow::addMedium(MType mType, QString mName, int mID){
     QString mTypeString;
     QString mEntry;
     Medium *medium;
@@ -138,7 +289,15 @@ void MainWindow::addMedium(MType mType, QString mName){
         medium = new Medium(mName);
     }
     // Medium in Liste erfassen
-    lendlib->addMediumToList(medium);
+    if (mID == -1){
+        lendlib->addMediumToList(medium);
+    } else {
+        if (!lendlib->addMediumToList(medium, mID)){
+            otherErr = true;
+            errString = "Medium konnte nicht mit vorgegebener ID eingegeben werden.";
+            checkError();
+        }
+    }
 
     mEntry = QString::number(medium->getID());
 
@@ -189,13 +348,22 @@ void MainWindow::addMedium(MType mType, QString mName){
 
     ui->allMediaScroll->layout()->removeItem(ui->mediaSpacer);
     ui->allMediaScroll->layout()->addItem(ui->mediaSpacer);
+    return medium->getID();
 }
 
-void MainWindow::addPerson(QString pName){
+int MainWindow::addPerson(QString pName, int pID){
     QString pEntry;
     Person *person = new Person(pName);
     // Person in Liste erfassen
-    lendlib->addPersonToList(person);
+    if (pID == -1){
+        lendlib->addPersonToList(person);
+    } else {
+        if (!lendlib->addPersonToList(person, pID)){
+            otherErr = true;
+            errString = "Person konnte nicht mit vorgegebener ID eingegeben werden.";
+            checkError();
+        }
+    }
 
     pEntry = QString::number(person->getID());
 
@@ -205,7 +373,7 @@ void MainWindow::addPerson(QString pName){
     QPushButton *delB = new QPushButton("Löschen");
     QLabel *name = new QLabel(pName);
     QWidget *lent = new QWidget;
-    QVBoxLayout *rentLayout = new QVBoxLayout(lent);
+    new QVBoxLayout(lent);
 
     // UI-Eigenschaften
     newPerson->setObjectName(pEntry);   // alle Medien-Widgets haben die Bezeichnung der ID
@@ -223,7 +391,7 @@ void MainWindow::addPerson(QString pName){
     delB->setMinimumHeight(25);
     delB->setMaximumHeight(25);
     connect(delB, SIGNAL (released()), this, SLOT (deletePersonButton()));
-    lent->setMaximumWidth(120);
+    lent->setMaximumWidth(250);
 
     newPersonLayout->addWidget(delB);
     newPersonLayout->addWidget(name);
@@ -232,6 +400,7 @@ void MainWindow::addPerson(QString pName){
 
     ui->allPersonsScroll->layout()->removeItem(ui->personSpacer);
     ui->allPersonsScroll->layout()->addItem(ui->personSpacer);
+    return person->getID();
 }
 
 void MainWindow::lendMedium(int mediumID, int personID){
@@ -245,14 +414,28 @@ void MainWindow::lendMedium(int mediumID, int personID){
     ui->allMediaScroll->findChild<QLabel*>("lendee"+mediumIDs)->setText(personS);
     ui->allMediaScroll->findChild<QPushButton*>("retlend"+mediumIDs)->setText("Zurück geben");
     ui->allMediaScroll->findChild<QPushButton*>("retlend"+mediumIDs)->setToolTip("Gebe Medium "+mediumIDs+" zurück.");
-    QLabel *lentItem = new QLabel(mediumS);
+    QString type = "";
+    MType mType =  lendlib->getMediumEntry(mediumID)->getType();
+    switch (mType){
+    case book:
+        type=" (Buch)";
+        break;
+    case cd:
+        type=" (CD)";
+        break;
+    case dvd:
+        type=" (DVD)";
+        break;
+    }
+    QLabel *lentItem = new QLabel(mediumS+type);
     lentItem->setObjectName("lentItem"+mediumIDs);
     ui->allPersonsScroll->findChild<QWidget*>("lent"+personIDs)->layout()->addWidget(lentItem);
 }
 
 void MainWindow::returnMedium(int mediumID){
+    // aus Bibliothek austragen
     lendlib->removeLendEntry(mediumID);
-
+    // aus GUI austragen
     QString mediumIDs = QString::number(mediumID);
     QString mediumS = lendlib->getMediumEntry(mediumID)->getTitle();
 
@@ -264,9 +447,45 @@ void MainWindow::returnMedium(int mediumID){
 
 }
 
+void MainWindow::deleteMedium(int mediumID){
+    // aus Bibliothek löschen
+    lendlib->removeLendEntry(mediumID);
+    lendlib->deleteMedium(mediumID);
+    // aus GUI löschen
+    QString mediumIDs = QString::number(mediumID);
+    QWidget *mEntry = ui->allMediaScroll->findChild<QWidget*>(mediumIDs);
+    ui->allMediaScroll->layout()->removeWidget(mEntry);
+    delete mEntry;
+    // auch aus der Liste in Personen löschen
+    QWidget *pEntry = ui->allPersonsScroll->findChild<QWidget*>("lentItem"+mediumIDs);
+    if (!pEntry == NULL){
+        ui->allMediaScroll->layout()->removeWidget(pEntry);
+        delete pEntry;
+    }
+
+    ui->allMediaScroll->layout()->removeItem(ui->mediaSpacer);
+    ui->allMediaScroll->layout()->addItem(ui->mediaSpacer);
+}
+
+void MainWindow::deletePerson(int personID){
+    // aus Bibliothek löschen
+    lendlib->deletePerson(personID);
+    // aus GUI löschen
+    QString personIDs = QString::number(personID);
+    QWidget *pEntry = ui->allPersonsScroll->findChild<QWidget*>(personIDs);
+    ui->allPersonsScroll->layout()->removeWidget(pEntry);
+    delete pEntry;
+    // alle Ausleiheinträge löschen:
+    QList<int> mList = lendlib->getLendMedia(personID);
+    for (auto m: mList){
+        returnMedium(m);
+    }
+}
+
 
 
 MainWindow::~MainWindow(){
+    saveLibToFile();
     delete ui;
 }
 
