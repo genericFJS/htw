@@ -1,3 +1,7 @@
+// Name: Falk-Jonatan Strube
+// Matrikelnummer: 39467
+// Studiengruppe: 15/041/61
+
 #ifndef LENDLIB_H
 #define LENDLIB_H
 
@@ -6,6 +10,9 @@
 #include <iostream>
 using namespace std;
 
+/**
+ * @brief The LendLib class verwaltet alle Medien, Personen und Ausleih-Relationen
+ */
 class LendLib{
 public:
     LendLib();
