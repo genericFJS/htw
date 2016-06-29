@@ -1,3 +1,7 @@
+// Name: Falk-Jonatan Strube
+// Matrikelnummer: 39467
+// Studiengruppe: 15/041/61
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -25,6 +29,9 @@ namespace Ui {
 class MainWindow;
 }
 
+/**
+ * @brief The MainWindow class ist für das UI und die Interaktion mit der Datenbank verantwortlich
+ */
 class MainWindow : public QMainWindow{
     Q_OBJECT
 
@@ -38,6 +45,7 @@ private slots:
     void retlendMediumButton();
     void addMediumButton();
     void addPersonButton();
+    void changeMediaInput();
 
 private:
     Ui::MainWindow *ui;
@@ -50,12 +58,13 @@ private:
     void checkError();
     void fillLibFromFile();
     void saveLibToFile();
-    int addMedium(MType mType, QString mName, int mID=-1);
+    int addMedium(MType mType, QString mName, QString detail, int mID=-1);
     int addPerson(QString pName, int pID=-1);
     void lendMedium(int mediumID, int personID);
     void returnMedium(int mediumID);
     void deleteMedium(int mediumID);
     void deletePerson(int personID);
+    int getInsertPosition(QString entry, bool isMedium = true);
 };
 
 #endif // MAINWINDOW_H

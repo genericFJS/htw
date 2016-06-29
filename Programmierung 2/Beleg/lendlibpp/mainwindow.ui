@@ -748,7 +748,7 @@ s74053@htw-dresden.de</string>
           <item>
            <widget class="QLabel" name="mediaTitle">
             <property name="text">
-             <string>Titel</string>
+             <string>Titel &lt;small&gt;(Details im Tooltipp)&lt;/small&gt;</string>
             </property>
            </widget>
           </item>
@@ -756,13 +756,13 @@ s74053@htw-dresden.de</string>
            <widget class="QLabel" name="medialendee">
             <property name="minimumSize">
              <size>
-              <width>80</width>
+              <width>100</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>80</width>
+              <width>100</width>
               <height>16777215</height>
              </size>
             </property>
@@ -775,13 +775,13 @@ s74053@htw-dresden.de</string>
            <widget class="QLabel" name="mediaLendReturn">
             <property name="minimumSize">
              <size>
-              <width>80</width>
+              <width>100</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>80</width>
+              <width>100</width>
               <height>16777215</height>
              </size>
             </property>
@@ -803,7 +803,7 @@ s74053@htw-dresden.de</string>
              <x>0</x>
              <y>0</y>
              <width>728</width>
-             <height>321</height>
+             <height>311</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -876,13 +876,13 @@ s74053@htw-dresden.de</string>
                   <widget class="QLabel" name="mediaLendee1">
                    <property name="minimumSize">
                     <size>
-                     <width>80</width>
+                     <width>100</width>
                      <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>80</width>
+                     <width>100</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -895,13 +895,13 @@ s74053@htw-dresden.de</string>
                   <widget class="QPushButton" name="mediaLendReturn1">
                    <property name="minimumSize">
                     <size>
-                     <width>80</width>
+                     <width>100</width>
                      <height>25</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>80</width>
+                     <width>100</width>
                      <height>25</height>
                     </size>
                    </property>
@@ -941,7 +941,14 @@ s74053@htw-dresden.de</string>
            <widget class="QComboBox" name="addMediaType"/>
           </item>
           <item>
-           <widget class="QLineEdit" name="addMediaTitle"/>
+           <widget class="QLineEdit" name="addMediaTitle">
+            <property name="placeholderText">
+             <string>Titel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="addMediaDetail"/>
           </item>
           <item>
            <widget class="QPushButton" name="addMediumButton">
@@ -1049,7 +1056,7 @@ s74053@htw-dresden.de</string>
              <x>0</x>
              <y>0</y>
              <width>728</width>
-             <height>321</height>
+             <height>311</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -1202,7 +1209,11 @@ s74053@htw-dresden.de</string>
         <item>
          <layout class="QHBoxLayout" name="addPerson">
           <item>
-           <widget class="QLineEdit" name="addPersonName"/>
+           <widget class="QLineEdit" name="addPersonName">
+            <property name="placeholderText">
+             <string>Name</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="addPersonButton">
