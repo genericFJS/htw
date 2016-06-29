@@ -566,46 +566,6 @@ s74053@htw-dresden.de</string>
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="dbloadsave">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QPushButton" name="dbload">
-        <property name="styleSheet">
-         <string notr="true">background: #DEE2CF;</string>
-        </property>
-        <property name="text">
-         <string>Datenbank laden</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="dbsave">
-        <property name="styleSheet">
-         <string notr="true">background: #DEE2CF;</string>
-        </property>
-        <property name="text">
-         <string>Datenbank speichern</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="dbsaveas">
-        <property name="styleSheet">
-         <string notr="true">background: #DEE2CF;</string>
-        </property>
-        <property name="text">
-         <string>Datenbank speichern unter</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
      <widget class="QTabWidget" name="dbtabs">
       <property name="palette">
        <palette>
@@ -843,7 +803,7 @@ s74053@htw-dresden.de</string>
              <x>0</x>
              <y>0</y>
              <width>728</width>
-             <height>290</height>
+             <height>321</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1089,7 +1049,7 @@ s74053@htw-dresden.de</string>
              <x>0</x>
              <y>0</y>
              <width>728</width>
-             <height>290</height>
+             <height>321</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -1152,6 +1112,12 @@ s74053@htw-dresden.de</string>
                  </item>
                  <item>
                   <widget class="QLabel" name="personName1">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="text">
                     <string>Name</string>
                    </property>
@@ -1159,15 +1125,21 @@ s74053@htw-dresden.de</string>
                  </item>
                  <item>
                   <widget class="QWidget" name="personLent1" native="true">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
-                     <width>116</width>
+                     <width>0</width>
                      <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>120</width>
+                     <width>16777215</width>
                      <height>16777215</height>
                     </size>
                    </property>

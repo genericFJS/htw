@@ -15,3 +15,11 @@ int Medium::getID(){
 void Medium::setID(int ID){
     this->ID = ID;
 }
+
+MType Medium::getType(){
+    return type;
+}
+
+void Medium::setType(MType type){
+    this->type = type;
+}
