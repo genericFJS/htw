@@ -2510,12 +2510,90 @@ Unter den sogenannten Integrabilitätsbedingungen $P_y=Q_x$ existiert eine Stamm
 
 \section{Lineare DGLn höherer Ordnung mit konstanten Koeffizienten}
 Allgemeine Form: $L(y):= y^{(n)}+a_{n-1}y^{(n-1)}+\dots + a_1y' + a_0 y = h(x)$
+\subsection*{Bestimmung einer allgemeinen Lösung} … $y_h$ der zugehörigen homogenen DGL $L(y)=0$.
+\paragraph{Satz 1:} Die Gleichung $L(y)=0$ besitzt $n$ linear unabhängige Lösungen $y_1(x),\dots, y_n(x)$. Die allgemeine Lösung der Gleichung ist dann $y_h=C_1y_1(x)+\dots + C_ny_n(x)$
+\subparagraph{Diskussion:} 
+\begin{enumerate}
+\item Die Menge $\{y_1,\dots,y_n\}$ heißt (ein) Fundamentalsystem (FS) von Lösungen der homogenen DGL.
+\item Mit dem Ansatz $y_h=e^{\lambda x}$ erhält man die charakteristische Gleichung $\lambda^n + a_{n-1}\lambda^{n-1}+\dots + a_1\lambda + a_0 = 0$
+\end{enumerate}
+\paragraph{Satz 2:} Jede $f$-fache Nullstelle $\lambda_0$ des charakteristischen Polynoms liefert die folgenden Funktionen des FS:\\
+$\lambda_0$ reell:\medskip\\
+$e^{\lambda_0 x}, x\cdot e^{\lambda_0x},x^2e^{\lambda_0x},\dots,x^{m-1}e^{\lambda_0x}$ ($m$ Funktionen)\\
+$\lambda_0=\alpha + i\beta$ ($\beta \not = 0$) komplex (dann ist auch $\lambda - i\beta$ eine $m$-fache Nullstelle):\medskip\\
+$e^{\lambda x }\cos (\beta x), xe^{\lambda x}\cos (\beta x), \dots, x^{m-1}e^{\lambda x} \cos (\beta x)$\\
+$e^{\lambda x} \sin (\beta x), xe^{\lambda x}\sin (\beta x), \dots, x^{m-1}e^{\lambda x} \sin (\beta x)$ ($2m$ Funktionen)
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Beispiele für die Zuordnung der Lösung der charakteristischen Gleichung $\to$ FS\\
+\begin{tabular}{l | l}
+Lösungen $\lambda_k$ der char. Gl. & FS\\
+$\lambda_1=0,\lambda_2=2, \lambda_3 = -1$ & $\{1, e^{2x},e^{-x}\}$\\
+\hline 
+$\lambda_{1,2}=0, \lambda_{3,4,5}=3$& $\{1, x, e^{3x}, xe^{3x},x^2e^{3x}\}$\\
+\hline
+$\lambda_{1,2}=2\pm 3i$ & $\{e^{2x}\cos (3x), e^{2x} \sin (3x) \}$\\
+\hline
+$\lambda_{1,2}=\pm i, \lambda_{3,4}=\pm i$ & $\{ \cos x, x \cos x, \sin x, x \sin x \}$
+\end{tabular}
+\item $\lambda_{1,2}=\alpha + i \beta$\\
+$\Rightarrow C_1 e^{(\lambda + i \beta)x }+C_2e^{(\alpha - i \beta)x}$\\
+$=C_1 e^{\alpha x} (\cos (\beta x) + i \sin (\beta x) ) + C_2 e^{\alpha x}(\cos (\beta x) - i \sin (\beta x))$\\
+$=\underbrace{(C_1+C_2)}_{C_1^*} e^{\alpha x} \cos (\beta x) + \underbrace{(C_1 - C_2)}_{C_2^*} i e^{\alpha x} \sin (\beta x)$\\
+(Dies erläutert die komplexe Lösung in Satz 2)
+\end{enumerate}
+\subsection*{Bestimmung einer partikulären Lösung} … der inhomogenen DGL\\
+\emph{1. Möglichkeit}: Variation der Konstanten (stets möglich)\\
+\emph{2. Möglichkeit}: Spezieller Ansatz mit unbestimmten Koeffizienten für häufig vorkommende Störfunktionen $\to$ Koeffizientenvergleich
+\paragraph{Satz 3:} 
+\begin{enumerate}
+\item Die Störfunktion $h$ habe die Gestalt $h(x) = e^{\alpha x}(p_1(x) \cos (\beta x) + p_2 (x) \sin (\beta x))$ wobei $p_1$  und $p_2$ Polynome mit maximalem Grad $r$ sind. 
+\item Sei $\varrho \geq 0$ die Vielfachheit von $\alpha + i \beta$ als Nullstelle des charakteristischen Polynoms $P(\lambda)$\\
+\emph{Fall 1:} $\varrho=0$ ($\Leftrightarrow \alpha + i \beta$ ist keine Nullstelle)\\
+$\Rightarrow L(y)=h(x)$ besitzt Partikulärlösung der Form\\
+$\boxed{y_p=e^{\lambda x} (Q_1 (x) \cos (\beta x) + Q_2(x) \sin (\beta x))}$\\
+wobei $Q_1, Q_2$ Polynome vom Grad $r$ mit unbestimmten Koeffizienten sind.\\
+\emph{Fall 2:} $\varrho >0$ (Resonanzfall)\\
+Dann hat $y_p$ die Form\\
+$\boxed{y_p=e^{\alpha x}(Q_1(x) \cos (\beta x) + Q_2(x) \sin (\beta x)) \cdot x^\varrho}$
+\end{enumerate}
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Beispiel für die Zuordnung $h(x) \rightsquigarrow$ Ansatz für $y_p$\\
+\begin{tabular}{l | c | c | c | c | c | c | l }
+Lösung $\lambda_i$ der char. Gl. & $h(x)$ & $\alpha$ & $\beta$ & $\alpha + i\beta$ & $\varrho$  & $r$& Ansatz für $y_p$\\
+\hline
+$\lambda_{1,2,3}=0, \lambda_4=-1$ & $x^2+1$ & $0$ & $0$ & $0$ & $3$ & $2$ & $\underbrace{(Ax^2+Bx+C)}_{Q_1(x)}x^3=Ax^5+Bx^4+Cx^3$ \\
+$\lambda_1, \lambda_2 = 3$ & $4e^{-x}$ & $-1$ & $0$ & $-1$ & $0$ & $0$ & $Ae^{-x}$\\
+$\lambda_{1,2}=\pm 2 i , \lambda_3=3$ & $\sin(3x)$ & $0$ & $3$ & $3i$ & $0$ & $0$ & $A \cos (3x)+B\sin(3x)$\\
+$\lambda_1 = -2, \lambda_{2,3}=0$ & $x^3e^{-2x}$ & $-2$ & $0$ & $-2$ & $1$ & $3$ & $(Ax^3+Bx^2+Cx+D)e^{-2x} x$
+\end{tabular}
+\item Falls die Störfunktion die Form $h(x)=h_1(x) + h_2(x) + \dots $ hat, so wählt man den Ansatz $y_p=y_{p_1}+y_{p_2}+\dots$ mit $y_{p_i}$ ist Partikulärlösung von $L(y)=h_i(x)$, $i=1,2,\dots$
+\end{enumerate}
+\subsection*{Lösung der DGL}
+$\boxed{y=y_h+y_p}$
+
+\subparagraph{Bsp. 1:} $y''-3y'=-\sin (3x)$
 \begin{anumerate}
-\item Bestimmung einer allgemeinen Lösung $y_h$ der zugehörigen homogenen DGL $L(y)=0$
+\item allgemeine Lösung:\\
+char. Gleichung: $\lambda^2-3\lambda = 0$\\
+$\Rightarrow \lambda_1=0, \; \lambda_2=3$\\
+$\Rightarrow$ FS ist $\{1,e^{3x}\}$\\
+$\Rightarrow y_h=C_1+C_2 e^{3x}$
+\item partikuläre Lösung:\\
+$h(x)=-\sin (3x) \Rightarrow \alpha = 0,\; \beta =3 \Rightarrow \alpha + i\beta = 3i \Rightarrow \varrho = 0, \; r=0$ ($3i$ keine Lösung der char. Gl.)\\
+Ansatz:\\
+$y_p=A\cos (3x) + B\sin (3x)$\\
+$y'_p=-3A\sin (3x) + 3B \cos (3x)$\\
+$y''_p=-9A\cos (3x) - 9B \sin (3x)$\\
+Einsetzen in inhomogene DGL:\\
+$-9A\cos (3x) - 9 B\sin (3x) + 9A\sin(3x) - 9 B \cos (3x) = -\sin (3x)$\\
+Koeffizientenvergleich:\\
+$\cos (3x)$: $-9A-9B=0$ $\Rightarrow A = -B$\\
+$\sin (3x)$: $-9B+9A=-1$ $\Rightarrow -18B=-1 \Rightarrow B = \frac{1}{18}, \; A=-\frac{1}{18}$\\
+$\Rightarrow y_p = -\frac{1}{18}\cos(3x) + \frac{1}{18} \sin (3x)$
+\item $y=y_h+y_p=C_1+C_2e^{3x}-\frac{1}{18} \cos (3x) + \frac{1}{18}\sin (3x)$
 \end{anumerate}
-
-
-
 
 
 
