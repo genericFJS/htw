@@ -935,7 +935,7 @@ Eine Sprache $L$ ist $NP$-vollständig, wenn gilt:
 ABB 178\\
 Folgerung: Aus $L\in P$ folgt dann auch $A \in P$.\medskip\\
 Weitere Folgerung: Wenn es eine $NP$-vollständige Sprache $L$ gibt mit $L\in P$, dann gilt $P=NP$.\medskip\\
-Trotz jahrzehnte währender Suche wurde bisher kein $NP$-vollständiges Problem $L\in P$ gefunden. Deswegen wird $P\not = NP$ vermutet.\\
+Trotz jahrzehnte währender Suche wurde bisher kein $NP$-vollständiges Problem $L\in P$ gefunden. Deswegen wird $P\not = NP$ vermutet (nur vermutet, nicht bewiesen).\\
 Vermutete Lage der Komplexitätsklassen (Fall $P \not = NP$):\\
 ABB 179
 
@@ -949,7 +949,63 @@ ABB 180
 Da Schaltkreise durch logische Gatter ($\vee$, $\wedge$, $\neg$) dargestellt werden, lassen sich Schaltkreise durch logische Formeln beschreiben.\\
 ABB 181\\
 Zwei Schaltkreise $S_1$, $S_2$ sind äquivalent genau dann, wenn $S_1\leftrightarrow S_2$ eine Tautologie ist genau dann, wenn $\neg(S_1 \leftrightarrow S_2)$ unerfüllbar genau dann, wenn $\neg (S_1\leftrightarrow S_2) \not \in SAT$.
+\item Software-Paketverwaltung\\
+Installationsproblem (lässt sich ein Paket installieren? Geht bspw. nicht bei Ringabhängigkeiten): Angenommen, ein Paket $A$ benötigt die Pakete $B,C$ sowie eins der Pakete $D,E$ und ist unverträglich mit $F$, dann kann dies dargestellt werden durch $A \to B \wedge C \wedge (D \vee E) \wedge \neg F$ ($\to$ bedeutet „benötigt“).\\
+Jedes der Pakete $B,C,D,E$ besitzt wiederum Abhängigkeiten, die entsprechend durch Formeln dargestellt werden können. Sei $G$ die $\wedge$-Verknüpfung aller dadurch entstehenden Formeln mit $A$ und entsprechenden Atomformeln für die bereits auf dem System installierten Paketen. $A$ ist genau dann installierbar, wenn $G$ erfüllbar ist. Die erfüllende Belegung liefert die zu installierenden Pakete.
+\item Software Model Checking
+\begin{lstlisting}[language=C]
+int a[2];
+if(i== 0) j = 1;
+else j = 2;
+x = a[j];
+\end{lstlisting}
+Es besteht die Gefahr eines Index-out-of-Bounds Fehlers. Dieser muss abgefangen werden.\\
+$\Downarrow$
+\begin{lstlisting}[language=C]
+int a[2];
+if(i==0) j=1;
+else j = 2;
+assert ( 0<=j && j<2);
+x=a[j];
+\end{lstlisting}
+Aus dem Programmcode wird die Formel $C=(i=0 \to j=1)\wedge ( i \not = 0 \to j = 2)$ erzeugt, aus der Spezifikation die Formel $P=0\leq j \wedge j <2$.
 \end{itemize}
+
+
+Hinweis: Travelling-Salesman-Problem (möglichst kurzer Rundweg durch Graph) (vgl. Hammilton Kreis) hat LZ $O(n^2\cdot 2^n)$.
+
+\section{Wiederholung (Klausur)}
+\subsection{CYK}
+$\{a^nb^n|n>0\}$\\
+$S\to aSb \;|\; ab$\\
+Umformen in CNF:
+\begin{enumerate}
+\item $S\to ASB \;|\; AB$\\
+$A\to a$\\
+$B\to b$
+\item $S\to XB \;|\; AB$\\
+$X\to AS$\\
+$A \to a$\\
+$B \to b$
+\end{enumerate}
+Prüfen, ob $aabb$ drin liegt:
+ABB 189
+\subsection{Entscheidbarkeit}
+Die Frage ist, ob es für die Menge ein oder mehrere Entscheidungsverfahren gibt. Die Frage ist nicht, welches das richtige ist, sondern nur, dass es umfassend entscheidbar ist (Vergleich: Frage nach Gott -- es gibt Entscheidungsverfahren, ober wir wissen nicht, welches das richtige ist, weil wir nicht wissen, ob Gott existiert).\\
+NP-Vollständigkeit!
+
+\subsection{Automaten}
+In der Klausur müssen bei bspw. DFA keine Tupel angegeben werden, der vollständig beschriftete Graph reicht.\\
+Reguläre Ausdrücke (Definition!)\\
+DFA Konstruieren!\\
+Kontextfreie Grammatiken (konstruieren)\\
+Pumping-Lemma!
+
+\subsection{Recursive Descent Parser}
+Grammatik zu Problem ausdenken und in rekursive Prozeduren umsetzen.
+
+\subsection{OL-Systeme}
+Voraussichtlich keine Aufgabe dazu.
 \newpage
 \printbibliography
 \end{document}
