@@ -33,8 +33,9 @@
 
 \newpage
 \chapter{Folgen, Reihen, Grenzwerte}
-%\section{Zahlenfolgen}
-%\input{HTW_Mathe1_Skript_sec2_1}
+\section{Zahlenfolgen}
+%\input{HTW_Mathe1_Skript_sec2_1_M1}
+%\input{HTW_Mathe1_Skript_sec2_1_M2}
 
 \section{Grenzwerte und Stetigkeit von Funktionen}
 \subsection{Grenzwerte von Funktionen}
@@ -2595,7 +2596,82 @@ $\Rightarrow y_p = -\frac{1}{18}\cos(3x) + \frac{1}{18} \sin (3x)$
 \item $y=y_h+y_p=C_1+C_2e^{3x}-\frac{1}{18} \cos (3x) + \frac{1}{18}\sin (3x)$
 \end{anumerate}
 
-
+\subparagraph{Bsp. 2:} $y^{(4)}-3y'''=36x^2-5$
+\begin{anumerate}
+\item char. Gleichung: $\lambda^4-3\lambda^3=0$\\
+$\Rightarrow \lambda_{1,2,3} = 0, \lambda_4 = 3$\\
+$\Rightarrow FS=\{1,x,x^2,e^{3x}\}$\\
+$y_h=C_1+C_2x+C_3x^2+C_4e^3x$
+\item $h(x) = 36x^2-5$\\
+$\Rightarrow \alpha = 0, \beta = 0 \Rightarrow \alpha + i \beta = 0 \Rightarrow \varrho = 3$\\
+Ansatz:\\
+$y_p=(Ax^2+Bx+C) \underbrace{x^3}_{x^\varrho}$\\
+$= A x^5 + Bx^4 + Cx^3$\\
+$y'_p=5Ax^4+4Bx^3+3Cx^2$\\
+$y''_p = 20 Ax^3+12Bx^2+6Cx$\\
+$y'''_p = 60Ax^2+24Bx+6C$\\
+$y^{(4)}_p=120Ax+24B$\\
+Einsetzen:\\
+$120Ax + 24B - 180 Ax^2 - 72Bx - 18 C = 36x^2-5$\\
+Koeffizientenvergleich:\\
+$x^2$: $-180A = 36 \Rightarrow A = - \frac{1}{5}$\\
+$x^1$: $120A-72B = 0 \Rightarrow B = - \frac{1}{3}$\\
+$x^0$: $24B-18C = -5 \Rightarrow C = - \frac{1}{6}$\\
+$\Rightarrow y_p = -\frac{1}{5}x^5-\frac{1}{3}x^4-\frac{1}{6}x^3$
+\item $y=y_h+y_p=C_1+C_2x+C_3x^2+C_4e^3x-\frac{1}{5}x^5-\frac{1}{3}x^4-\frac{1}{6}x^3$
+\end{anumerate}
+\subparagraph{Bsp. 3:} Anwendung: Federschwingungsgleichung\\
+vgl. ABB 182 in Bsp. 1 in 7.1\\
+Grundgesetz der Mechanik: $m \ddot{y}=K=K(y, \dot{y}, t)$\\
+$m\ddot{y}=-\underbrace{\alpha \dot{y}}_{\substack{\text{Reibungskraft}\\ \text{proportional}\\\text{zur Geschw. }\dot{y}}}-\underbrace{c_F y}_{\substack{\text{Rückzugskraft}\\\text{proportional}\\\text{zur Auslenkung }y}}+ \underbrace{F(t)}_{\text{äußere Kraft}}$\\
+mit $\gamma:= \frac{\alpha}{2m}>0$ wobei $\omega_0^2:= \frac{c_F}{m}$ und $h(t)=\frac{F(t)}{m}$\\
+$\Rightarrow \boxed{\ddot{y}+2\gamma \dot{y}+\omega_0^2y=h(t)}$ mit AB $y(0)=y_0, \; \dot{y}(0)=v_0$
+\begin{itemize}
+\item \emph{Fall 1:} $h(t) = 0$ (keine äußere Kraft, freie Schwingung)\\
+DGL: $\ddot{y}+2\gamma \dot{y}+\omega_0^2y=0$ (ist homogen, d.h. allgemeine Lösung $y=y_h$)\\
+$\lambda^2+2\gamma \lambda + \omega_0^2=0$\\
+$\Rightarrow \lambda_{1,2}= -\gamma \pm \sqrt{\gamma^2-\omega_0^2}$
+\begin{itemize}
+\item \emph{Fall 1a:} $\gamma = 0$ (keine Reibung, freie und ungedämpfte Schwingung)\\
+$\Rightarrow \lambda_{1,2}=\pm \omega_0 i$\\
+$\Rightarrow FS=\{\cos (\omega_0 t) , \sin (\omega_0t)\}$\\
+$\Rightarrow y= y_h = C_1 \cos (\omega_0 t)+C_2 \sin (\omega_0 t)$ mit\\
+ABB 191 $C_1=A \cos \varphi, \; C_2=A \sin \varphi$ folgt:\\
+$y=A\cos(\omega_0 t - \varphi)$\\
+Mit AB lassen sich $C_1$ und $C_2$ (bzw. $A$ und $\varphi$) berechnen, z.B. $v_0=0 \Rightarrow C_1=y_0, \; C_2=0$\\
+$\Rightarrow y=y_0 \cos (\omega_0 t)$\\
+$T:= \frac{2\pi}{\omega_0}$ … Schwingdauer, $\omega_0$ … Eigenfrequenz\\
+ABB 192
+\item \emph{Fall 1b:} $0 < \gamma < \omega_0$ (kleine Dämpfung, freie gedämpfte Schwingung)\\
+$\lambda_{1,2}=-\gamma \pm \underbrace{\sqrt{\omega_0^2-\gamma^2}}_{\omega_1}i$\\
+$\Rightarrow FS = \{ e^{-\gamma t} \cos {\omega_1 t}, e^{-\gamma t} \sin (\omega_1 t)\}$\\
+$y=y_h = (C_1 \cos (\omega_1 t) + C_2 \sin (\omega_1 t))e^{-\gamma t}$\\
+$\omega_1<\omega 0 \Rightarrow T_1 = \frac{2\pi}{\omega_1}>T_0$:\\
+ABB 193
+\item \emph{Fall 1c:} $\gamma \geq \omega_0$ (starke Dämpfung)\\
+$\lambda_{1,2}$ reell und negativ:\\
+ABB 194\\
+(z. B. möglich, wenn $sgn(v_0y_0)<0$ [Anm.: $sgn(x)$: Vorzeichen von $x$])
+\end{itemize}
+\emph{Fall 2:} äußere Kraft $F(t)$ existiert $\Rightarrow$ erzwungene Schwingung\\
+hier nur Fall $\gamma = 0$, $h(t) = a \sin (\omega_0 t)$:\\
+DGL: $\ddot{y}+\omega_0^2y=a\sin (\omega_0 t)$\\
+keine Dämpfung, periodische Kraft mit Frequenz = Eigenfrequenz $\omega_0$
+\begin{anumerate}
+\item $\lambda_{1,2}=\pm \omega_0 i$\\
+$\Rightarrow y_h = C_1 \cos (\omega_0 t) + C_2 \sin (\omega_0 t)$ (wie in 1a)
+\item $y_p$ ermitteln:\\
+$h(t) = a \sin (\omega_0 t)$\\
+$\Rightarrow \alpha = 0, \beta = \omega_0 \Rightarrow \alpha + i\beta = i\omega_0 \Rightarrow \varrho = 1$ (Resonanzfall)\\
+Ansatz:\\
+$y_p=(A_1\cos (\omega_0 t) + A_2 \sin (\omega_0 t))t$\\
+Setzen wir dies in die inhomogene DGL ein und nutzen den Koeffizientenvergleich, ergibt sich $A_1 = -\frac{a}{2\omega_0}$, $A_2=0$.\\
+$\Rightarrow y_p = -\frac{a t }{2 \omega_0}\cos(\omega_0 t)$
+\item Allgemeine Lösung: $y=y_h+y_p=C_1 \cos (\omega_0 t) + C_2 \sin (\omega_0 t)-\frac{a t }{2 \omega_0}\cos(\omega_0 t)$
+\end{anumerate}
+ABB 195\\
+Resonanz! Wachsende Amplitude mit $\frac{a t }{2 \omega_0}$ $\Rightarrow$ Resonanzkatastrophe!
+\end{itemize}
 
 
  
