@@ -1024,7 +1024,30 @@ Wirtschaftlichkeit = Ertrag / Aufwand (also nicht nur Kosten, sondern die gesamt
 \folie{180}
 \subsection{Aufgabenanalyse und -synthese}
 \folie{181}
-ABB 173
+\resizebox{.9\textwidth}{!}{
+\begin{tikzpicture}[scale=.9]
+\draw  (-2,1) node[above right, green]{braucht Verb!} rectangle (2,-1) node[pos=.5, align=left]{Erbringen von\\ IT-Dienstleistungen};
+\draw  (4,3) rectangle (8,1) node[pos=.5, align=left]{Personal\\managen};
+\draw  (4,0) rectangle (8,-2) node[pos=.5, align=left]{Beschaffung\\verwalten};
+\draw  (4,-3) rectangle (8,-5) node[pos=.5, align=left]{Hard- und Software-\\lösungen erstellen};
+\draw  (10,0) rectangle (14,-2) node[pos=.5, align=left]{Kunden betreuen};
+\draw  (10,-3) rectangle (14,-5) node[pos=.5, align=left]{Hardware-Projekte\\ umsetzen};
+\draw  (10,-6) rectangle (14,-8) node[pos=.5, align=left]{Software-Projekte\\ umsetzen};
+\draw  (16,-1.5) rectangle (20,-3.5) node[pos=.5, align=left]{Kundenbetreuer};
+\draw  (16,-6) rectangle (20,-8) node[pos=.5, align=left]{Software-\\entwickler};
+\draw (2,0) -- (3,0) -- (3,2) -- (4,2);
+\draw (4,-1) -- (3,-1) -- (3,0);
+\draw (4,-4) -- (3,-4) -- (3,-1);
+\draw (8,-4) -- (9,-4) -- (9,-1) -- (10,-1);
+\draw (10,-4) -- (9,-4);
+\draw (10,-7) -- (9,-7) -- (9,-4);
+\draw [-latex] (14,-1) -- (16,-2.3);
+\draw [-latex] (14,-4) -- (16,-2.7);
+\draw [-latex] (14,-7) -- (16,-7);
+\draw (4,-6) node[right]{…} -- (3,-6) -- (3,-4);
+\draw (3,-7) node[below]{$\vdots$} -- (3,-6);
+\end{tikzpicture}
+}
 \subsection{Aufgabenanalyse}
 \folie{182}
 \folie{183}
@@ -1119,7 +1142,134 @@ Organisationssicht (wer's macht) und Datensicht (welche Daten rein gehen/raus ko
 \paragraph{Beispiel: Autovermietung}
 \folie{217}
 Verbale Beschreibung ist Lückenhaft (Entscheidungsfindung beim Telefongespräch? Alternativvorschlag Einigung möglich? Scheitern des Gesamtablaufs?)\\
-ABB 190\\
+\resizebox{.99\textwidth}{!}{
+\begin{tikzpicture}[node distance=7em, align=center, thick]  
+
+\tikzset{
+	fkt/.style={
+		rectangle,
+		rounded corners,
+		draw=black, thick,
+		minimum height=2em,
+		inner sep=8pt,
+		text centered,
+	},    
+	ergn/.style={
+		regular polygon, regular polygon sides=6,
+		xscale=3,
+		draw=black, thick,
+		minimum height=2em,
+		inner sep=2pt,
+		text centered,
+	},
+	ktrfl/.style={
+		dashed,
+		-latex
+	},
+	verkn/.style={
+		circle,
+		draw
+	},
+}
+
+\node [ergn,text width=1cm] (1) {};
+\node at(1){Kundenanfrage\\per Tel. eingetroffen};
+\node [red, right= 0 of 1]{Ereignis immer abgeschlossen formulieren:\\ \underline{nicht} „Telefon klingelt“ bzw „Kundenanfrage trifft rein“\\ sondern „Kundenanfrage \emph{ist} eingetroffen“};
+\node [green, below left= 1 of 1]{Grüne Funktionen/Ereignisse\\/Verknüpfungen stehen so \\nicht explizit im Text};
+
+\node[fkt, below of=1] (2) {Verfügbarkeit \\ Eigenfahrzeug\\prüfen};
+
+\path (1) edge[ktrfl] (2);
+
+\node (3) [verkn, below of = 2]{XOR};
+\coordinate [left=2.5 of 3](31){};\coordinate [right = 2.5 of 3](32){};
+
+\path (2) edge[dashed] (3);
+
+\node [ergn,text width=1cm, below of = 31] (4) {};
+\node at(4){eigenes Fahrzeug\\vorhanden};
+
+\node [ergn,text width=1cm, below of = 32] (5) {};
+\node at(5){kein eigenes Fahrzeug\\ vorhanden};
+
+\path (3) edge[dashed] (31)		(31) edge[ktrfl] (4);
+\path (3) edge[dashed] (32)		(32) edge[ktrfl] (5);
+
+\node (6)[fkt, below of = 4]{Kunde \\ benachrichtigen};
+\path (4) edge[ktrfl] (6);
+
+\node [ergn,text width=1cm, below of = 6] (7) {};
+\node at(7){Kunde ist \\benachrichtigt};
+\path (6) edge[ktrfl] (7);
+
+\node (8)[fkt, below of = 5]{Alternativ-Vorschläge\\ unterbreiten};
+\path (5) edge[ktrfl] (8);
+
+\node (8a) [verkn, below of= 8, green]{XOR}; \coordinate [right = 6 of 8a](8a1){};
+\node [ergn,text width=1cm, below of = 8a1, green] (8b) {};
+\node [green] at(8b){Einigung erzielt};
+\path [green] (8a) edge[dashed] (8a1)		(8a1) edge[ktrfl] (8b);
+\path (8) edge[dashed] (8a);
+
+\node [ergn,text width=1cm, below of = 8a] (9) {};
+\node at(9){Einigung nicht möglich};
+\path (8a) edge[ktrfl] (9);
+
+\node (10)[fkt, below of = 9]{Prüfung auf \\ Fremdfahrzeug};
+\path (9) edge[ktrfl] (10);
+
+\node [ergn,text width=1cm, below of = 10] (11) {};
+\node at(11){Prüfung ist\\ erfolgreich};
+\path (10) edge[ktrfl] (11);
+
+\node (12)[fkt, below of = 11]{Kunde telefonisch\\ benachrichtigen};
+\path (11) edge[ktrfl] node[left, green]{hier wieder keine Entscheidung, \\falls Prüfung nicht erfolgreich} (12);
+
+\node [ergn,text width=1cm, below of = 12] (13) {};
+\node at(13){Kunde ist informiert};
+\path (12) edge[ktrfl] (13);
+
+\node [ergn,text width=1cm, right = 10 of 1] (14) {};
+\node at(14){ausgefülltes\\ Webformuler \\ist eingetroffen};
+
+\node (15)[fkt, below of = 14]{Kunde erhält\\ Vorschlag};
+\node [right= 0 of 15, red]{Nur wieder geben, was im Text steht! \\Auch wenn logischer Weise vorher\\
+die Anfrage bearbeitet werden müsste\\ (wie bei Tel. Anfrage)\\ wenn es nicht im  Text steht: \\nicht ins EPK aufnehmen};
+\path (14) edge[ktrfl] (15);
+
+\node [ergn,text width=1cm, below of = 15] (16) {};
+\node at(16){Kunde hat Vorschlag\\ erhalten};
+\path (15) edge[ktrfl] (16);
+
+\node (17)[fkt, below of = 16]{Kunde schickt\\ Auswahl zurück};
+\path (16) edge[ktrfl] (17);
+
+\node [ergn,text width=1cm, below of = 17] (18) {};
+\node at(18){Auswahl des Kunden\\ ist eingegangen};
+\path (17) edge[ktrfl] (18);
+
+\coordinate [below of=13](19);
+\node (20) [verkn, right of = 19, green]{XOR};
+\node [above right = 0 of 20, green]{das X vom XOR ist interpretiert\\ steht nicht explizit im Text.};
+\coordinate [left=8 of 20](191){};
+\coordinate [below= 0.62 of 13](19m){};
+\coordinate [above = 0.62 of 20](19m2){};
+\coordinate [right = 9.6 of 20](192){};
+
+\node [left= 1.1 of 19m, green]{nicht offensichtlich, \\ob sich der letzte Satz nur \\auf das Webformular oder\\ alles bezieht!};
+\path [green] (7) edge [dashed] (191) (191) edge[ktrfl] (20);
+\path [green] (13) edge [dashed] (19m) (19m) edge [dashed] (19m2) (19m2) edge[ktrfl] (20);
+\path (18) edge [dashed] (192) (192) edge[ktrfl] (20);
+
+\node (21)[fkt, below of = 20]{Vermietungsvertrag\\ ausfertigen};
+\path (20) edge[ktrfl] (21);
+ 
+\node [ergn,text width=1cm, below of = 21] (22) {};
+\node at(22){Vermietungsvertrag \\ ist ausgefertigt};
+\path (21) edge[ktrfl] (22);
+\node [red, left=0 of 22]{muss immer in\\ Ereignis enden!};
+
+\end{tikzpicture}}\\
 Hinweis: auf PC mit Microsoft Visio erstellbar.
 \subsection{Rasterdiagramm}
 \paragraph{Bagatellschaden-Bearbeitung in Versicherung}
