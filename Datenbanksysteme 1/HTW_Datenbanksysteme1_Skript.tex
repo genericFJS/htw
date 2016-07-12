@@ -22,15 +22,15 @@
 \tableofcontents
 \newpage
 
-\chapter*{Prüfungsmodalitäten}
-\paragraph{PVL} unbenoteter Beleg als Voraussetzung zur Prüfung
-\begin{enumerate}
-\item Access-Beleg (in Papier-Form abzugeben bis 27.05.2016)
-\item Abnahme der SQL-Praktikums-Aufgaben (Abnahme während Praktikumszeit)
-\end{enumerate}
+%\chapter*{Prüfungsmodalitäten}
+%\paragraph{PVL} unbenoteter Beleg als Voraussetzung zur Prüfung
+%\begin{enumerate}
+%\item Access-Beleg (in Papier-Form abzugeben bis 27.05.2016)
+%\item Abnahme der SQL-Praktikums-Aufgaben (Abnahme während Praktikumszeit)
+%\end{enumerate}
 
-\paragraph{SP} schriftliche Prüfung, 90min\\
-keine eigenen Unterlagen zugelassen. Nur zuvor ausgegeben Referenzen.
+%\paragraph{SP} schriftliche Prüfung, 90min\\
+%keine eigenen Unterlagen zugelassen. Nur zuvor ausgegeben Referenzen.
 
 \chapter[Datenbank als System und Modell]{Betriebliche Informations- und Kommunikationssysteme - Unternehmensmodell - Datenbank}
 
@@ -380,8 +380,22 @@ Entity-Typ & Objektklasse (-Menge), enthält Elemente mit struktureller Ähnlich
 Merkmale / Attribut / Prädikat & Beschreibungen eines Entity-Typs & Name, Vorname, Gehalt\tabularnewline
 Wert & Ausprägung des Merkmals je Entity, aus einem bestimmten Wertevorrat (Domain) & „Meier“, „Max“, 3800,-\tabularnewline
 Beziehung, Set & Logischer Zusammenhang zwischen Entity-Typen & Mitarbeiter -- \underline{arbeitet an} -- Arbeitsaufgabe \tabularnewline
-Beziehungstyp, Settyp & Art der Beziehung (mögliche Anzahl an Entitäten, die in Beziehung treten) & $n:1$ Mitarbeiter -- \underline{gehört zu} -- Abteilung ABB50\tabularnewline
-\end{tabular}
+Beziehungstyp, Settyp & Art der Beziehung (mögliche Anzahl an Entitäten, die in Beziehung treten) & $n:1$ Mitarbeiter -- \underline{gehört zu} -- Abteilung\tabularnewline
+\end{tabular}\\
+\begin{tikzpicture}[scale=0.5]
+\node [left] at (0,4) {Meier};
+\node [left] at (0,3) {Otto};
+\node [left] at (0,2) {Schulze};
+\node [left] at (0,1) {Johann};
+\node [left] at (0,0) {Karson};
+\node [right] at (5,3) {Entwicklung};
+\node [right] at (5,1) {Vertrieb};
+\draw (0.2,4) -- (4.6,3.2);
+\draw (0.2,3) -- (4.6,3);
+\draw (0.2,2) -- (4.6,2.8);
+\draw (0.2,1) -- (4.6,1);
+\draw (0.2,0) node[below right]{$n$} -- (4.6,0.8) node[below left]{$1$};
+\end{tikzpicture}
 
 \subsection{3-Ebenen-Architektur}
 gemäß ANSI x3/SPARC (1975)
@@ -456,9 +470,34 @@ Gehaltserhöhung darf nicht doppelt erfolgen $\Rightarrow$ Sperren von Gehalt, s
 \end{itemize}
 \paragraph{klassische Datermodelle (logisch)}
 \begin{itemize}
-\item hierarchisch DM (graphisches DM)
-\item Netzwerk DM (graphisches DM)
-\item relationales DM (behandelt in DBS I+II)
+\item hierarchisch DM (graphisches DM)\\
+\begin{tikzpicture}[scale=0.5]
+\draw  (1,1) rectangle (6,-1) node[pos=.5]{Fakultät};
+\draw  (-2,-3) rectangle (3,-5) node[pos=.5, align= center]{Seminar\\gruppe};
+\draw  (5,-3) rectangle (10,-5) node[pos=.5]{Labor};
+\draw  (-4,-7) rectangle (1,-9) node[pos=.5]{Studenten};
+\draw [-latex] (3,-1.2) -- (0.6,-2.8);
+\draw [-latex] (4.6,-1.2) -- (7.6,-2.8);
+\draw [-latex] (-0.2,-5.2) -- (-1.6,-6.8);
+\end{tikzpicture}
+\item Netzwerk DM (graphisches DM)\\
+\begin{tikzpicture}[scale=0.5]
+\draw  (1,1) rectangle (6,-1) node[pos=.5]{Fakultät};
+\draw  (-2,-3) rectangle (3,-5) node[pos=.5, align= center]{Seminar\\gruppe};
+\draw  (5,-3) rectangle (10,-5) node[pos=.5]{Labor};
+\draw  (-4,-7) rectangle (1,-9) node[pos=.5]{Studenten};
+\draw [-latex] (3,-1.2) -- (0.6,-2.8);
+\draw [-latex] (4.6,-1.2) -- (7.6,-2.8);
+\draw [-latex] (-0.2,-5.2) -- (-1.6,-6.8);
+\draw [latex-latex] (4.8,-4) -- (3.2,-4);
+\end{tikzpicture}
+\item relationales DM (behandelt in DBS I+II)\\
+\begin{tikzpicture}[scale=0.5]
+\draw  (-9,-3) rectangle (-4,-5) node[pos=.5]{Fakultät};
+\draw  (-2,-3) rectangle (3,-5) node[pos=.5, align= center]{Seminar\\gruppe};
+\draw  (5,-3) rectangle (10,-5) node[pos=.5]{Labor};
+\draw  (12,-3) rectangle (17,-5) node[pos=.5]{Studenten};
+\end{tikzpicture}
 \end{itemize}
 \paragraph{weitere DM}
 \begin{itemize}
@@ -467,7 +506,6 @@ Gehaltserhöhung darf nicht doppelt erfolgen $\Rightarrow$ Sperren von Gehalt, s
 \item XML-DM / NoSQL DM … (DBS III)
 \end{itemize}
 \folie{2}{14}
-
 \begin{tabular}{
 >{\raggedright} p{\dimexpr0.3\columnwidth-2\tabcolsep-1.5\arrayrulewidth} |
 >{\raggedright} p{\dimexpr0.22\columnwidth-2\tabcolsep-1.5\arrayrulewidth} |
@@ -475,10 +513,9 @@ Gehaltserhöhung darf nicht doppelt erfolgen $\Rightarrow$ Sperren von Gehalt, s
 >{\raggedright} p{\dimexpr0.22\columnwidth-2\tabcolsep-1.5\arrayrulewidth} 
 }
 & Hierarchisches DM & Netzwerk DM & relationales DM\tabularnewline
-& ABB 51 & ABB 52 & ABB 53 \tabularnewline
 \hline
 Einstiegspunkt & ein Entity-Typ & mehrere Entity & beliebig\tabularnewline
-strukturelle Beschräknung & Hierarchie & keine & keine \tabularnewline
+strukturelle Beschränkung & Hierarchie & keine & keine \tabularnewline
 Zeitpunkt des Aufbau der Beziehung & zur Entwicklungszeit & zur Entwicklungszeit & zur Laufzeit \tabularnewline
 Performance & + & + & \Large{\textbf{--}}\tabularnewline
 Flexibilität bzgl. Änderung & -- & -- & \Large{\textbf{+}}
@@ -555,19 +592,49 @@ Operationen auf Relationen\\
 $\Rightarrow$ Ergebnis ist wieder eine \emph{Relation}\\
 D.h. mengenweise Arbeit \emph{nicht} satzweise.
 \subsubsection{Mengenoperationen} $\cup\; \cap\; \setminus\; \times$\\
-ABB57
+\begin{tikzpicture}[scale=0.25]
+\draw  (-9,8) rectangle (-4,1);
+\draw  (-9,2) rectangle (-1,-3);
+\draw  (4,8) rectangle (9,-3);
+\draw [double,-latex] (0,3) -- (3,3) node[pos=.5, above]{Op.};
+\end{tikzpicture} \qquad
+\begin{tikzpicture}[scale=0.25]
+\draw  (-7,6) rectangle (-2,0);
+\draw  (-7,-2) rectangle (-2,-8);
+\draw  (4,6) rectangle (9,-7);
+\draw [double, -latex] (-1,3) -- (1,0) node[left]{Op.} -- (2,0);
+\draw [double](-1,-3) -- (1,0);
+\end{tikzpicture}
 \folie{3_Beispiele}{1, scale=0.8}
 \paragraph{Vereinigung} $\cup$\\
-ABB58 orange\\
+\begin{tikzpicture}[scale=0.5]
+\pattern[pattern=north west lines, pattern color=gray]  (5,4) rectangle (8,-1);
+\pattern[pattern=north east lines, pattern color=gray]  (5,1) rectangle (8,-4);
+\draw (5,4) rectangle (8,-1) node[pos=.4]{$R_1$};
+\draw  (5,1) rectangle (8,-4) node[pos=.6]{$R_2$};
+\draw [orange] (4.8,-4.2) rectangle (8.2,4.2);
+\end{tikzpicture}\\
 UNION
 \folie{3_Beispiele}{2, scale=0.8}
 \paragraph{Durchschnitt} $\cap$\\
-ABB58 grün\\
+\begin{tikzpicture}[scale=0.5]
+\pattern[pattern=north west lines, pattern color=gray]  (5,4) rectangle (8,-1);
+\pattern[pattern=north east lines, pattern color=gray]  (5,1) rectangle (8,-4);
+\draw (5,4) rectangle (8,-1) node[pos=.4]{$R_1$};
+\draw  (5,1) rectangle (8,-4) node[pos=.6]{$R_2$};
+\draw [green] (4.8,1.2) rectangle (8.2,-1.2);
+\end{tikzpicture}\\
 INTERSECTION
 \folie{3_Beispiele}{3, scale=0.8}
 \paragraph{Differenz} $\setminus$\\
 $R_1\setminus R_2$
-ABB 58 lila\\
+\begin{tikzpicture}[scale=0.5]
+\pattern[pattern=north west lines, pattern color=gray]  (5,4) rectangle (8,-1);
+\pattern[pattern=north east lines, pattern color=gray]  (5,1) rectangle (8,-4);
+\draw (5,4) rectangle (8,-1) node[pos=.4]{$R_1$};
+\draw  (5,1) rectangle (8,-4) node[pos=.6]{$R_2$};
+\draw [purple] (4.8,4.2) rectangle (8.2,0.8);
+\end{tikzpicture}\\
 Bedingung für $\cup, \cap, \setminus$ (\emph{Vereinigungsverträglichkeit}):
 \begin{itemize}
 \item Anzahl an Attributen ist gleich
@@ -585,16 +652,44 @@ Ergebnisrelation enthält:
 \item alle Attribute aus $R_1$ und $R_2$.
 \item alle Kombinationen an Tupeln aus $R_1$ und $R_2$.
 \end{itemize}
-ABB 59
+\begin{tikzpicture}[scale=0.5]
+\draw  (-3,0) node[above right]{$R_1$} rectangle (1,-3);
+\node at (-1,-1) {xxxxxxxx};
+\node at (-1,-2) {yyyyyyyy};
+\draw  (2,0) node[above right]{$R_2$} rectangle (10,-4);
+\node at (6,-1) {aaaaaaaaaaaaa};
+\node at (6,-2) {bbbbbbbbbbbbb};
+\node at (6,-3) {cccccccccccccc};
+\draw [double, -latex] (3,-5) -- node [right]{$R_1\times R_2$} (3,-7);
+\draw  (-2,-8) rectangle (9,-15);
+\node at (0,-9) {xxxxxxxx};
+\node at (5,-9) {aaaaaaaaaaaaa};
+\node at (0,-10) {xxxxxxxx};
+\node at (5,-10) {bbbbbbbbbbbbb};
+\node at (0,-11) {xxxxxxxx};
+\node at (5,-11) {cccccccccccccc};
+\node at (0,-12) {yyyyyyyy};
+\node at (5,-12) {aaaaaaaaaaaaa};
+\node at (0,-13) {yyyyyyyy};
+\node at (5,-13) {bbbbbbbbbbbbb};
+\node at (0,-14) {yyyyyyyy};
+\node at (5,-14) {cccccccccccccc};
+\end{tikzpicture}
 \folie{3_Beispiele}{7, scale=0.8}
 \subsubsection{Relationale Operationen}
 \paragraph{Projektion} Spaltenauswahl\\
 PROJ\\
-ABB 60 grün
+\begin{tikzpicture}[scale=0.5]
+\draw  (-4,5) rectangle (4,0);
+\draw [green] (0,5.2) rectangle (2,-0.2);
+\end{tikzpicture}
 \folie{3_Beispiele}{5, scale=0.8}
 \paragraph{Selektion} Tupelauswahl (laut Bedingung)\\
 REST\\
-ABB 60 orange
+\begin{tikzpicture}[scale=0.5]
+\draw  (-4,5) rectangle (4,0);
+\draw [orange] (-4.2,4) rectangle (4.2,2);
+\end{tikzpicture}
 \folie{3_Beispiele}{6, scale=0.8}
 \paragraph{Verbund} Verbindung zwischen zwei Relationen bezüglich der Gleichheit der Attributwerte in einer Verbindungsspalte\\
 JOIN\\
@@ -693,7 +788,25 @@ M.Abtnr $\not \to$ M.Mitnr
 \chapter{Datenbanksprachen für relationale DBMS}
 \section{Benutzergruppen und Datenbanksprachen}
 Benutzergruppen:\\
-ABB 77
+\begin{tikzpicture}[scale=0.5]
+\draw  (-6,7) rectangle (-4,5) node [below left] {1};
+\draw  (-2,7) rectangle (0,5) node [below left] {1};
+\draw  (2,4) rectangle (5,2) node[pos=.5]{AP};
+\draw  (-6,1) rectangle (1,-6) node[pos=.4]{DBMS};
+\draw  (-4,-3) rectangle (-1,-5) node[pos=.5]{DB};
+\draw [decorate, decoration={brace, amplitude=7pt}] (2,1) -- node[right = .5]{DBS} (2,-6);
+
+\draw [-latex] (0,6) -- (3,4);
+\draw [-latex] (0,1) -- (3,2);
+\draw [latex-latex] (-4,1) -- (-5,5);
+\draw [-latex] (-10,3) -- (2,3);
+\draw [-latex] (-10,4) -- (-6,6);
+\draw [-latex] (-10,2) -- (-6,-1);
+\draw [-latex] (-10,-4) -- (-6,-4);
+\node [left] at (-10,6) {1. Endnutzer};
+\node [left] at (-10,3) {2. Anwenderprogramme};
+\node [left] at (-10,-4) {3. DB-Admins};
+\end{tikzpicture}
 \paragraph{Einordnung der Datenbanksprache SQL}
 Einteilung der Programmiersprachen:
 \begin{itemize}
@@ -1315,7 +1428,18 @@ WHERE Kredit < (
 
 \subsubsection{Mengen-Operationen}
 \Folie{4}{13}
-ABB 150\\
+\begin{tikzpicture}[scale=0.5]
+\pattern[pattern=north west lines, pattern color=gray]  (5,4) rectangle (8,-1);
+\pattern[pattern=north east lines, pattern color=gray]  (5,1) rectangle (8,-4);
+\draw (5,4) rectangle (8,-1) node[pos=.4]{};
+\draw  (5,1) rectangle (8,-4) node[pos=.6]{};
+\draw [purple] (4.8,4.2) rectangle (8.2,0.8);
+\draw [green] (4.8,1.2) rectangle (8.2,-1.2);
+\draw [orange] (4.6,-4.4) rectangle (8.4,4.4);
+\node [orange, right] at (9,4) {UNION};
+\node [purple, right] at (9,3) {EXCEPT};
+\node [green, right] at (9,2) {INTERSECT};
+\end{tikzpicture}\\
 Allgemein in SQL:
 \begin{lstlisting}[language=SQL]
 SELECT ...
@@ -1586,15 +1710,96 @@ EXEC LoescheKu 123, @Anz OUTPUT -- OUTPUT muss hier auch noch mal angegeben werd
 PRINT 'Anzahl gelöschter Käufe: ' + CONVERT(CHAR(10), @Anz)
 \end{lstlisting}
 \Folie{4}{19}
+\Folie{4}{20}
 
-…
+\subsection{Cursor}
+\Folie{4}{21}
+Ablauf:
+\begin{lstlisting}[language=SQL]
+-- Cursor vereinbaren:
+DECLARE <cname> FOR <SQL-Statement>
+	SELECT <Spaltenliste>		-- muss gleiche Spalten haben wie die Var-Liste im fetch
+	FROM <table>
+-- Cursor öffnen
+OPEN <cname>
+-- Cursor nutzen
+FETCH <cname> INTO <Var-Liste>
+-- Cursor schließen
+CLOSE <cname>
+-- Cursor freigeben
+DEALLOCATE <cname>
+\end{lstlisting}
 
-VL
+\section{Semantische Datenmodellierung -- Das Entity Relationship Modell}
 
-…
+\subsection{Überblick über Datenmodelle/semantische Datenmodelle}
+\folie{5}{1, scale=0.8}
+\folie{5}{2, scale=0.8}
+\subsection{Entities und Relationships (ERM-Diagramm)}
+\folie{5}{3, scale=0.8}
+\folie{5}{4, scale=0.8}
+\subsection{Kardinalität und Komplexität von Beziehungen}
+\folie{5}{5, scale=0.8}
+\subsection{Semantische Beziehungen am Beispiel}
+\folie{5}{6, scale=0.8}
+\subsection{Konstruktion semantischer Objekte}
+\folie{5}{7, scale=0.8}
+\folie{5}{8, scale=0.8}
+\folie{5}{9, scale=0.8}
+\folie{5}{10, scale=0.8}
+\folie{5}{11, scale=0.8}
+\folie{5}{12, scale=0.8}
+\subsection{Abbildung des Entity-Relationship-Modells auf normalisierte Relationen}
+\folie{5}{13, scale=0.8}
+\folie{5}{14, scale=0.8}
+\folie{5}{15, scale=0.8}
+\folie{5}{16, scale=0.8}
+\folie{5}{17, scale=0.8}
+\subparagraph{Bsp. 1:} Vertrieb
+\folie{5_BspVertrieb}{1, scale=0.8}
+\subparagraph{Bsp. 2:} Rechnung
+\folie{5_BspRechnung}{1, scale=0.5}
 
-\subparagraph{Bsp. 3:} Projekt-Ableitung der Relationen\\
-ABB 188\\
+\subparagraph{Bsp. 3:} Projekt-Ableitung der Relationen
+\folie{5}{18, scale=0.8}
+\begin{tikzpicture}[scale=0.5]
+\node at (-3,-1) {Mitarbeiter ist…};
+\draw  (-8,-4.6) rectangle (-4.2,-6.2) node[pos=.5]{Mitarbeiter};
+\draw  (-1.2,-2.2) rectangle (3.8,-3.8) node[pos=.5]{Programmierer};
+\draw  (-1.2,-4.6) rectangle (3.8,-6.2) node[pos=.5]{DB-Spezialist};
+\draw  (-1.2,-7) rectangle (3.8,-8.6) node[pos=.5]{Sys-Analytiker};
+
+\draw (-2.2,-3) -- (-2.6,-2.6) -- (-3,-3) -- (-2.6,-3.4) -- cycle;
+\draw (-2.2,-5.4) -- (-2.6,-5) -- (-3,-5.4) -- (-2.6,-5.8) -- cycle;
+\draw (-2.2,-7.8) -- (-2.6,-7.4) -- (-3,-7.8) -- (-2.6,-8.2) -- cycle;
+\draw (-1.2,-3) node[above left]{c} -- (-2.2,-3);
+\draw (-3,-3) -- (-5.6,-3) -- (-5.6,-4.6) node[above right]{1};
+\draw (-5.6,-6.2) node[below right]{1} -- (-5.6,-7.8) -- (-3,-7.8);
+\draw (-2.2,-7.8) -- (-1.2,-7.8) node[above left]{c};
+\draw (-1.2,-5.4) node[above left]{c} -- (-2.2,-5.4);
+\draw (-4.2,-5.4)  node[above right]{1}-- (-3,-5.4);
+\end{tikzpicture}\\
+Wird zu:\\
+\begin{tikzpicture}[scale=0.5]
+\draw  (9,3) rectangle (14,2) node[pos=.5]{Mitarbeiter};
+\draw  (9,2) rectangle (14,-2);
+\node [orange] at (11.5,1) {\underline{MitNr}};
+\draw  (9,-3) rectangle (14,-4) node[pos=.5]{Mitarbeiter};
+\draw  (9,-4) rectangle (14,-8);
+\node [orange] at (11.5,-5) {\underline{MitNr}};
+\draw  (9,-9) rectangle (14,-10) node[pos=.5]{Mitarbeiter};
+\draw  (9,-10) rectangle (14,-14);
+\node [orange] at (11.5,-11) {\underline{MitNr}};
+\draw  (1,-3) rectangle (5,-4) node[pos=.5]{Mitarbeiter};
+\draw  (1,-4) rectangle (5,-8);
+\node [orange] at (3,-5) {\underline{MitNr}};
+\node at (11.5,0) {Prog-Sprache};
+\node at (11.5,-6) {DBMS};
+\node at (11.5,-12) {Lehrgang};
+\draw [orange, -latex] (9,1) -- (7,1) -- (7,-4.5) -- (5,-4.5);
+\draw [orange, -latex] (9,-5) -- (5,-5);
+\draw [orange, -latex] (9,-11) -- (7,-11) -- (7,-5.5) -- (5,-5.5);
+\end{tikzpicture}\\
 (Vergleich: Praktikum)
 
 \section*{Prüfungsschwerpunkte}
