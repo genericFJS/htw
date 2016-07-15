@@ -1194,8 +1194,56 @@ Daraus lässt sich abbilden:\\
 \node at (-1,-4) {$y$};
 \end{tikzpicture}\\
 Diese Grammatik ist auch mehrdeutig, wenn man sich auf nur einen Operator beschränkt:\\
-ABB 112\\
-Da $-$ links-assoziativ ist, stellt nur der linke Ableitungsbaum die korrekte Interpretation des Ausdrucks $x-y-z$ dar.\\
+\begin{tikzpicture}[scale=1]
+\node (v3) at (0,0) {$E$};
+\node at (v3) [right=.3, orange] {$x-(y-z)=y-y+z$ \lightning};
+\node (v2) at (-1,-1) {$E$};
+\node (v7) at (0,-1) {$-$};
+\node (v4) at (2,-1) {$E$};
+\node at (v4) [right=.3, orange] {$y-z$};
+\node (v1) at (-1,-2) {$x$};
+\node (v8) at (1,-2) {$E$};
+\node (v10) at (2,-2) {$-$};
+\node (v5) at (3,-2) {$E$};
+\node (v9) at (1,-3) {$y$};
+\node (v6) at (3,-3) {$z$};
+\draw (v1) -- (v2) -- (v3);
+\draw (v3) -- (v4) -- (v5) -- (v6);
+\draw (v3) -- (v7);
+\draw (v4) -- (v8) -- (v9);
+\draw (v4) -- (v10);
+\node at (-1,-4) {$x$};
+\node at (0,-4) {$-$};
+\node at (1,-4) {$y$};
+\node at (2,-4) {$-$};
+\node at (3,-4) {$z$};
+\end{tikzpicture} \quad 
+\begin{tikzpicture}[scale=1]
+\node (v3) at (-1,0) {$E$};
+\node at (v3) [right=.3, orange] {$(x-y)-z\quad\checkmark$};
+\node (v2) at (1,-1) {$E$};
+\node (v7) at (0,-1) {$-$};
+\node (v4) at (-2,-1) {$E$};
+\node at (v4) [left=.3, orange] {$x-y$};
+\node (v1) at (1,-2) {$z$};
+\node (v8) at (-3,-2) {$E$};
+\node (v10) at (-2,-2) {$-$};
+\node (v5) at (-1,-2) {$E$};
+\node (v9) at (-3,-3) {$x$};
+\node (v6) at (-1,-3) {$y$};
+\draw (v1) -- (v2) -- (v3);
+\draw (v3) -- (v4) -- (v5) -- (v6);
+\draw (v3) -- (v7);
+\draw (v4) -- (v8) -- (v9);
+\draw (v4) -- (v10);
+\node at (1,-4) {$z$};
+\node at (0,-4) {$-$};
+\node at (-3,-4) {$x$};
+\node at (-2,-4) {$-$};
+\node at (-1,-4) {$y$};
+\end{tikzpicture}
+\\
+Da $-$ links-assoziativ ist, stellt nur der rechte Ableitungsbaum die korrekte Interpretation des Ausdrucks $x-y-z$ dar.\\
 $\Rightarrow$ Ableitungsbäume dürfen nicht verdreht werden!\\
 Eine Grammatik $G$ heißt \emph{eindeutig}, wenn es für alle Wörter $w \in L(G)$ \emph{genau einen} Ableitungsbaum gibt.\\
 Um eine eindeutige Grammatik zu erhalten, müssen zwei Probleme gelöst werden:
@@ -1217,9 +1265,55 @@ F \to x \,|\, y \,|\, z$
 \end{enumerate}
 Diese Grammatik ist eindeutig.\\
 Der Ableitungsbaum für $x*y+z$ ist:\\
-ABB 113\\
+\begin{tikzpicture}[scale=1]
+\node at (0,-4) {$x$};
+\node at (1,-4) {$*$};
+\node at (2,-4) {$y$};
+\node at (3,-4) {$+$};
+\node at (4,-4) {$z$};
+\node (v9) at (0,-3) {$x$};
+\node (v8) at (0,-2) {$F$};
+\node (v7) at (0,-1) {$T$};
+\node (v10) at (1,-1) {$*$};
+\node (v11) at (2,-2) {$y$};
+\node (v12) at (2,-1) {$F$};
+\node (v6) at (1,0) {$T$};
+\node (v5) at (1,1) {$E$};
+\node (v13) at (3,1) {$+$};
+\node (v3) at (4,1) {$T$};
+\node (v2) at (4,0) {$F$};
+\node (v1) at (4,-1) {$z$};
+\node (v4) at (3,2) {$E$};
+\draw (v1) -- (v2) -- (v3) -- (v4) -- (v5) -- (v6) -- (v7) -- (v8) -- (v9);
+\draw (v10) -- (v6);
+\draw (v11) -- (v12) -- (v6);
+\draw (v13) -- (v4);
+\end{tikzpicture}\\
 Der Ableitungsbaum für $x-y-z$ ist:\\
-ABB 114
+\begin{tikzpicture}[scale=1]
+\node at (0,-4) {$x$};
+\node at (1,-4) {$-$};
+\node at (2,-4) {$y$};
+\node at (3,-4) {$-$};
+\node at (4,-4) {$z$};
+\node (v9) at (0,-3) {$x$};
+\node (v8) at (0,-2) {$F$};
+\node (v7) at (0,-1) {$T$};
+\node (v10) at (1,-1) {$-$};
+\node (v11) at (2,-2) {$y$};
+\node (v12) at (2,-1) {$F$};
+\node (v6) at (1,0) {$T$};
+\node (v5) at (1,1) {$E$};
+\node (v13) at (3,1) {$-$};
+\node (v3) at (4,1) {$T$};
+\node (v2) at (4,0) {$F$};
+\node (v1) at (4,-1) {$z$};
+\node (v4) at (3,2) {$E$};
+\draw (v1) -- (v2) -- (v3) -- (v4) -- (v5) -- (v6) -- (v7) -- (v8) -- (v9);
+\draw (v10) -- (v6);
+\draw (v11) -- (v12) -- (v6);
+\draw (v13) -- (v4);
+\end{tikzpicture}
 
 \subsection{Syntaxanalyse}
 
@@ -1231,7 +1325,20 @@ if ( x<0 || y<0 ) {
 \end{lstlisting}
 $\downarrow$\\
 Lexer\\
-ABB 115\\
+\begin{tikzpicture}[scale=1]
+\draw  (0,-2) rectangle (1,-3) node[pos=.5]{IF};
+\draw  (1,-2) rectangle (2,-3) node[pos=.5]{(};
+\draw  (2,-2) rectangle (3,-3) node[pos=.5]{ID};
+\draw  (3,-2) rectangle (4,-3) node[pos=.5]{<};
+\draw  (4,-2) rectangle (5,-3) node[pos=.5]{NUM};
+\draw  (5,-2) rectangle (6,-3) node[pos=.5]{OR};
+\draw  (6,-2) rectangle (7,-3) node[pos=.5]{ID};
+\draw  (7,-2) rectangle (8,-3) node[pos=.5]{<};
+\draw  (8,-2) rectangle (9,-3) node[pos=.5]{NUM};
+\draw  (9,-2) rectangle (10,-3) node[pos=.5]{)};
+\draw (11,-3) -- (10,-3) -- (10,-2) -- (11,-2);
+\node at (10.5,-2.5) {…};
+\end{tikzpicture}\\
 $\downarrow$\\
 Parser\\
 $\downarrow$\\
@@ -1281,7 +1388,30 @@ public class Parser {
 }
 \end{lstlisting}
 Ablauf des Programms für \emph{aabb}:\\
-ABB 116\\
+\begin{tikzpicture}[scale=.5]
+\node at (-2,1) {$a$};
+\node at (-1,1) {$a$};
+\node at (0,1) {$b$};
+\node at (1,1) {$b$};
+\node at (2,1) {$\#$};
+\node [above, brown] at (-2,1) {$\downarrow$};
+\node [above, green] at (-1,1) {$\downarrow$};
+\node [above, blue] at (0,1) {$\downarrow$};
+\node [above, orange] at (1,1) {$\downarrow$};
+\node [above, brown] at (2,1) {$\downarrow$};
+\node [brown, right] at (5,4) {1.};
+\node [green, right] at (5,3) {2. S() \&\& match('b')};
+\node [blue, right] at (5,2) {3. S() \&\& match('b')};
+\node [orange, right] at (5,1) {4.};
+\node [purple, right] at (5,0) {5.};
+\node [red, right] at (5,-1) {6. parse \checkmark};
+\node [purple] at (10,2.8) {\checkmark};
+\draw [purple, thick] (6,3.4) -- (7,2.6);
+\draw [purple, thick] (7,3.4) -- (6,2.6);
+\node [orange] at (10,1.8) {\checkmark};
+\draw [orange, thick] (6,2.4) -- (7,1.6);
+\draw [orange, thick] (7,2.4) -- (6,1.6);
+\end{tikzpicture}\\
 Achtung: nicht alle Grammatiken lassen sich mit einem rekursiven Abstiegsparser darstellen. Bsp.: $E\to E+T$:
 \begin{lstlisting}[language=java]
 boolean E() {
@@ -1299,7 +1429,47 @@ T \to FT'\\
 T' \to \varepsilon \,|\, *T \,|\, /T\\
 F \to x\,|\,y\,|\,z$\\
 Diese Grammatik erzeugt die gleiche Sprache wie die vorherige Grammatik und ist nicht linksrekursiv. Aber die Ableitungsbäume wachsen nach rechts, d.h. alle Operatoren sind rechts-assoziativ.\\
-ABB 117\\
+\begin{tikzpicture}[scale=1]
+\node (v4) at (5,1) {$E$};
+\node (v3) at (4,0) {$T$};
+\node (v5) at (6,0) {$E'$};
+\node (v2) at (3,-1) {$F$};
+\node (v11) at (4,-1) {$T'$};
+\node (v1) at (3,-2) {$x$};
+\node (v10) at (4,-2) {$\varepsilon$};
+\node (v12) at (5,-1) {$-$};
+\node (v6) at (7,-1) {$E$};
+\node (v13) at (7,-2) {$T$};
+\node (v7) at (8,-2) {$E'$};
+\node (v14) at (6,-3) {$F$};
+\node (v16) at (7,-3) {$T$};
+\node (v15) at (6,-4) {$y$};
+\node (v17) at (7,-4) {$\varepsilon$};
+\node (v18) at (8,-3) {$-$};
+\node (v8) at (9,-3) {$E$};
+\node (v19) at (9,-4) {$T$};
+\node (v9) at (10,-4) {$E'$};
+\node (v22) at (9,-5) {$F$};
+\node (v20) at (10,-5) {$T'$};
+\node at (11,-5) {$\varepsilon$};
+\node (v23) at (9,-6) {$z$};
+\node (v21) at (10,-6) {$\varepsilon$};
+\draw (v1) -- (v2) -- (v3) -- (v4) -- (v5) -- (v6) -- (v7) -- (v8) -- (v9) -- (11,-5);
+\draw (v10) -- (v11) -- (v3);
+\draw (v5) -- (v12);
+\draw (v6) -- (v13) -- (v14) -- (v15);
+\draw (v13) -- (v16) -- (v17);
+\draw (v7) -- (v18);
+\draw (v8) -- (v19) -- (v20) -- (v21);
+\draw (v19) -- (v22) -- (v23);
+\node at (3,-7) {$x$};
+\node at (5,-7) {$-$};
+\node at (6,-7) {$y$};
+\node at (8,-7) {$-$};
+\node at (9,-7) {$z$};
+\node at (v4) [right=.3, orange] {$x-(y-z)$ \lightning};
+\node at (v6) [right=.3, orange] {$y-z$};
+\end{tikzpicture}\\
 Das Problem lässt sich für Recursive Descent Parser nicht befriedigend lösen, Man kann links-assoziative Operatoren durch Schleifen verarbeiten. Dazu: EBNF (Extended Backus-Naur-Form).\\
 Obige Grammatik in EBNF:\\
 $E\to T \{ \{+|-\} T \}$\\
@@ -1373,7 +1543,11 @@ real {integer}("."{integer})?([eE][+-]?{integer})?
 
 \subsection{OL-Systeme}
 Zur Darstellung benötigen wir Turtle-Grafik:\\
-ABB 136\\
+\begin{tikzpicture}[scale=.5]
+\draw (-1,-1) -- (1,1);
+\draw (-1.6,-1.2) -- (-1.2,-1.6) -- (-1,-1) -- cycle;
+\draw (0.8,1.2) -- (1.2,0.8) -- (1.4,1.4) -- cycle;
+\end{tikzpicture}\\
 Befehle:\\
 $forward (l)$ \\
 $left (\alpha)$ bzw. $right(\alpha)$
@@ -1389,7 +1563,25 @@ Graphische Darstellung:\\
 $F= forward$\\
 $+=left(60^\circ)$\\
 $-=right(60^\circ)$\\
-ABB 137
+\begin{tikzpicture}[scale=1]
+\node [left] at (-1,1) {n=0:};
+\node [left] at (-1,-1) {n=1:};
+\node [left] at (-1,-3) {n=2:};
+\draw (0,1) -- (3,1);
+\draw (0,-1) -- (1,-1) -- (1.5,-0.1) -- (2,-1) -- (3,-1);
+\begin{scope}[shift={(0,-2.67)}, scale=0.333]
+\draw (0,-1) -- (1,-1) -- (1.5,-0.1) -- (2,-1) -- (3,-1);
+\end{scope}
+\begin{scope}[shift={(2,-2.67)}, scale=0.333]
+\draw (0,-1) -- (1,-1) -- (1.5,-0.1) -- (2,-1) -- (3,-1);
+\end{scope}
+\begin{scope}[shift={(0.71,-2.83)}, scale=0.333, rotate=60]
+\draw (0,-1) -- (1,-1) -- (1.5,-0.1) -- (2,-1) -- (3,-1);
+\end{scope}
+\begin{scope}[shift={(1.79,-1.97)}, scale=0.333, rotate=-60]
+\draw (0,-1) -- (1,-1) -- (1.5,-0.1) -- (2,-1) -- (3,-1);
+\end{scope}
+\end{tikzpicture}
 \section{Die Chomsky Hierarchie}
 Für Grammatiken:\\
 \begin{tabular}{L{0.3} L{0.5} L{0.2}}
@@ -1409,11 +1601,37 @@ Artikel$_f$ Nomen $\to$ Artikel$_f$ Katze
 \item (ist linear im rechten Teilbaum entartet)
 \end{enumerate}
 Chomsky-Hierarchie mit Beispielsprachen:\\
-ABB 138\\
+\begin{tikzpicture}[scale=.5,rounded corners=15]
+\draw  (-1,2) rectangle (7,-1);
+\draw  (-2,4) rectangle (8,-2);
+\draw  (-3,6) rectangle (9,-3);
+\draw  (-4,8) rectangle (10,-4);
+\draw  (-5,10) rectangle (11,-5);
+\node at (3,1) {Typ-3-Sprachen};
+\node at (3,3) {Typ-2-Sprachen};
+\node at (3,5) {Typ-1-Sprachen};
+\node at (3,7) {Typ-0-Sprachen};
+\node at (3,9) {Alle Sprachen};
+\draw [*-*] (6,1) -- (12,1) node [right]{$\{a^n|n\geq 0\}$};
+\draw [*-*] (6,3) -- (12,3) node [right]{$\{a^nb^n|n\geq 0\}$};
+\draw [*-*] (6,5) -- (12,5) node [right]{$\{a^nb^nc^n|n\geq 0\}$};
+\end{tikzpicture}\\
 Eine Sprache hat mindestens die gleiche Klasse wie seine Grammatik, kann aber auch eine höhere haben. Für eine reguläre Sprache muss ein regulärer Ausdruck konstruierbar sein.
+
 \chapter{Berechenbarkeit und Komplexität}
 Frage: Was können Computer berechnen, was können Computer effizient berechnen?\\
-ABB 139 (Turing Maschine)
+\begin{tikzpicture}
+\draw  (-2,3) rectangle (-1,2);
+\draw  (-3,3) rectangle (-2,2);
+\draw  (-5,3) rectangle (-4,2);
+\draw  (-4,3) rectangle (-3,2);
+\draw  (-1,3) rectangle (0,2);
+\draw  (0,3) rectangle (1,2);
+\draw (-6,3) -- (-5,3) -- (-5,2) -- (-6,2);
+\draw (2,2) -- (1,2) -- (1,3) -- (2,3);
+\draw  (-2.2,3.4) rectangle (-0.8,1.6) node[below left]{Steuerung};
+\draw (-1.6,2.8) -- (-1.6,4.2) node[above right]{S/L Kopf};
+\end{tikzpicture} (Turing Maschine)
 \section{Entscheidbarkeit}
 Entscheidungsproblem: Gegeben eine Sprache $L$ und ein Wort $w\in \Sigma^*$. Gehört $w$ zu $L$ ($w\in L$)?
 
@@ -1470,7 +1688,16 @@ Angenommen, $K$ sei entscheidbar durch ein Entscheidungsverfahren $P_K$. Daraus 
 \item in eine Endlosschleife übergeht, wenn $P_K$ $true$ liefert
 \item hält, wenn $P_K$ $false$ liefert.
 \end{itemize}
-ABB 148\\
+\begin{tikzpicture}
+\draw  (-1.5,2) rectangle (0,-0.5);
+\draw  (-2,2.5) rectangle (2,-1.5);
+\draw [-latex] (0,1.5) node [above right]{true} -- (1,1.5);
+\draw  (1,1) ellipse (0.5 and 0.5);
+\draw [-latex] (0,0)node [above right]{false} -- (3,0);
+\draw [-latex] (-3,1.5) node[above right]{$P$} -- (-1.5,1.5);
+\node at (-1,1.5) {$P_k$};
+\node at (-0.5,-1) {$P_k^*$};
+\end{tikzpicture}\\
 Nach Konstruktion gilt dann:
 \begin{itemize}
 \item Für die Eingabe $P$ hält $P_K^*$ genau dann, wenn $P_k$ false enthält.
@@ -1572,7 +1799,14 @@ Widerspruch, da $H^*$ unentscheidbar.
 \end{proof}
 
 \subsubsection{Unentscheidbarkeit der Programmverifikation}
-ABB 170\\
+\begin{tikzpicture}
+\draw  (-3,4) rectangle (0,3) node[pos=.5]{Programm};
+\draw  (-3,2) rectangle (0,1) node[pos=.5]{Spezifikation};
+\draw  (2,3) rectangle (5,2) node[pos=.5]{Verifizierer};
+\draw [-latex] (0,3.5) -- (1,3.5) -- (1,2.75) -- (2,2.75);
+\draw [-latex] (0,1.5) -- (1,1.5) -- (1,2.25) -- (2,2.25);
+\draw [-latex] (5,2.5) -- (6,2.5) node[right]{ja/nein};
+\end{tikzpicture}\\
 Aus der Unentscheidbarkeit des Halteproblems folgt:\\
 $\{ (P,S) \; | \; $Das Programm $P$ erfüllt die Spezifikation $S\}$ ist unentscheidbar.\\
 Auch unentscheidbar:
@@ -1605,7 +1839,20 @@ Im folgenden verwenden wir das uniforme Kostenmaß, wo angemessen.
 \end{itemize}
 \subparagraph{Bsp.:} Das Problem $PFAD=\{(G,n_1,n_2)\;|\; G$ ist ein Graph, in dem es einen Pfad von $n_1$ nach $n_2$ gibt $\}$ liegt in $P$.\\
 Veranschaulichung:\\
-ABB 171\\
+\begin{tikzpicture}[scale=1.5,shorten >= 3,shorten <= 3, align=right]
+\node[state] (v3) at (-1,1) {1};
+\node[state] (v1) at (0,2) {2};
+\node[state] (v2) at (1,0) {3};
+\node[state] (v5) at (-2,3) {0};
+\node[state] (v4) at (-2,0) {4};
+\draw (v1) -- (v2);
+\draw (v2) -- (v3);
+\draw (v4) -- (v3);
+\draw (v3) -- (v5);
+\draw (v3) -- (v1);
+\node at (2,3) {Array( List(1),\\
+List(0,2,3,4),\\…)};
+\end{tikzpicture}\\
 Der Graph $G$ sei dabei als Adjazenzliste gegeben.
 \begin{proof}
 Da die Adjazenzliste von $G=(V,E)$ mindestens $|V|+|E|$ Elemente enthält, gilt für die Länge $n$ der Eingabe: $n\geq |V|+|E|$.\\
@@ -1621,9 +1868,20 @@ Das Zertifikat ist der Pfad selbst, die LZ liegt in $O(|V|^2)$.
 \subparagraph{Bsp.:} $SAT=\{F\;|\;F$ ist eine erfüllbare Formel der Aussagenlogik$\}$. Zum Beispiel gilt $x\vee y \in SAT$, $x\wedge \neg x \not \in SAT$.\\
 $SAT$ ist entscheidbar durch die Konstruktion einer Wahrheitstabelle. Wenn $F$ $n$ Variablen enthält, benötigt dies die LZ $O(2^n)$ (liegt also nicht in $P$).\\
 $SAT$ lässt sich jedoch effizient (d.h. in polynomieller Zeit) verifizieren, wenn als Zertifikat eine erfüllende Belegung für $F$ gegeben ist. Die LZ für die Verifikation liegt dann in $O(|F|)$. Deshalb gilt $SAT \in NP$.\\
-ABB 176\\
+\begin{tikzpicture}[scale=1, align=center]
+\draw  (-2,1) rectangle (3,0) node[pos=.5]{Entscheidungsverfahren\\für $A$};
+\draw [-latex] (-3.5,0.5) -- node[above]{$w\in \Sigma^*$} (-2,0.5);
+\draw [-latex] (3,0.5) -- node[above]{$w\in A$ ja/nein} (5.5,0.5);
+\node at (8,1) {$A\in P$};
+\end{tikzpicture}\\
 LZ des Entscheidungsverfahrens polynomiell $\Rightarrow A \in P$ \\
-ABB 177\\
+\begin{tikzpicture}[scale=1, align=center]
+\draw  (-2,1) rectangle (3,-0.5) node[pos=.5]{Verifizierer\\für $A$};
+\draw [-latex] (-4.5,0.5) -- node[above]{$w\in \Sigma^*$} (-2,0.5);
+\draw [-latex] (-4.5,0) -- node[below]{Zertifikat $\in w$} (-2,0);
+\draw [-latex] (3,0.25) -- node[above]{$w\in A$ ja/nein} (5.5,0.25);
+\node at (8,1) {$A\in NP$};
+\end{tikzpicture}\\
 LZ des Verifizierungsverfahrens polynomiell $\Rightarrow A \in NP$
 \paragraph{Def.:} $NP = \bigcup_{k\geq 1}\{L\;|\; L$ ist verifizierbar in Zeit $O(n^k)\}$, wobei $n$ die Länge der Eingabe ist.
 
@@ -1643,22 +1901,61 @@ Eine Sprache $L$ ist $NP$-vollständig, wenn gilt:
 \item $L \in NP$
 \item Für jede Sprache $A\in NP $ lässt sich das Entscheidungsproblem für $A$ effizient übersetzen in ein Entscheidungsproblem für $L$.
 \end{enumerate}
-ABB 178\\
+\begin{tikzpicture}[scale=1, align=center]
+\draw  (-2,1) rectangle (3,0) node[pos=.5]{Entscheidungsverfahren\\für $A$};
+\draw [-latex] (-3.5,0.5) -- node[above]{$w$} (-2,0.5);
+\draw [-latex] (3,0.5) -- node[above]{ja/nein} (5.5,0.5);
+\draw  (-2,-1.5) rectangle (3,-2.5) node[pos=.5]{Entscheidungsverfahren\\für $L$};
+\node at (0.5,-3) {$f(w)\in L$?};
+\draw [-latex] (-1.5,0) -- node[left]{$f(w)$} (-1.5,-1.5);
+\draw (2.5,-1.5) node[above right]{ja/nein} -- (2.5,0.5) -- (3,0.5);
+\end{tikzpicture}\\
 Folgerung: Aus $L\in P$ folgt dann auch $A \in P$.\medskip\\
 Weitere Folgerung: Wenn es eine $NP$-vollständige Sprache $L$ gibt mit $L\in P$, dann gilt $P=NP$.\medskip\\
 Trotz jahrzehnte währender Suche wurde bisher kein $NP$-vollständiges Problem $L\in P$ gefunden. Deswegen wird $P\not = NP$ vermutet (nur vermutet, nicht bewiesen).\\
 Vermutete Lage der Komplexitätsklassen (Fall $P \not = NP$):\\
-ABB 179
+\begin{tikzpicture}[scale=1, align=center]
+\draw  (-4,2.5) node{NP-vollständige\\Sprachen} ellipse (2 and 1);
+\draw  (0,2.5) node{P} ellipse (1 and 1);
+\draw  (-2.5,2.5) ellipse (4 and 2);
+\node at (-2.5,1) {NP};
+\draw  (-2.5,2.1) ellipse (5.2 and 2.5);
+\node at (-2.5,0) {Entscheidbare Sprachen};
+\draw  (-8,-1.5) rectangle (3,5);
+\node at (-2.5,-1) {Alle Sprachen};
+\end{tikzpicture}
 
 \paragraph{Satz:} Die Sprache $SAT=\{F\;|\; F$ ist eine erfüllbare Formel der Aussagenlogik$\}$ ist $NP$-vollständig.\\
 Dies bedeutet, dass kein effizientes (polynomielles) Entscheidungsverfahren bekannt ist. Alle bekannten Entscheidungsverfahren besitzen exponentielle Laufzeit. Das naive Verfahren besitzt eine Laufzeit in $O(p(n)\cdot 2^n)$. Das beste bekannte Verfahren besitzt eine Laufzeit in $O(1,308^n\cdot p(n))$ für $3 SAT$ (Formel in $KNF$ mit 3 Literalen pro Klausel, z.B. $(x\vee y \vee \neg z ) \wedge (\neg x \vee a \vee z) \wedge (\neg y \vee z \vee b) \wedge \dots$).\\
 Nicht alle Elemente in $SAT$ sind schwierige Instanzen. Z.B. ist $2 SAT=\{F\;|\; F$ ist eine Formel in $KNF$ mit 2 Literalen pro Klausel$\}$ effizient entscheidbar (d.h. $2 SAT \in P$).\\
-ABB 180
+\begin{tikzpicture}[scale=1, align=center]
+\node at (-3,1) {(…)};
+\node at (-2,1) {$\wedge$};
+\node at (-1,1) {(…)};
+\node at (0,1) {$\wedge$};
+\node at (1,1) {(…)};
+\node at (2,1) {$\wedge$};
+\node at (3,1) {(…)};
+\draw [dashed] (0,2) -- (0,0);
+\node at (-1.5,0) {$2^{\frac{n}{2}}$};
+\node at (1.5,0) {$2^{\frac{n}{2}}$};
+\node [right] at (3.5,0) {$=2^{\frac{n}{2}+1}$};
+\end{tikzpicture}
 \subparagraph{Anwendungen von SAT} 
 \begin{itemize}
 \item Äquivalenz von Schaltkreisen\\
 Da Schaltkreise durch logische Gatter ($\vee$, $\wedge$, $\neg$) dargestellt werden, lassen sich Schaltkreise durch logische Formeln beschreiben.\\
-ABB 181\\
+\begin{tikzpicture}[scale=1, align=center]
+\draw  (-4,3) rectangle (-3,2) node[pos=.5]{$\wedge$};
+\draw  (-1,2.5) rectangle (0,1.5) node[pos=.5]{$\vee$};
+\draw  (1,2.5) rectangle (2,1.5) node[pos=.5]{$\neg$};
+\draw [o-] (-4.75,2.75) node[left]{$x$} -- (-4,2.75);
+\draw [o-] (-4.75,2.25) node[left]{$y$} -- (-4,2.25);
+\draw [o-] (-4.75,1.5) node[left]{$z$} -- (-2,1.5) -- (-2,1.75) -- (-1,1.75);
+\draw (-3,2.5) -- (-2,2.5) -- (-2,2.25) -- (-1,2.25);
+\draw (0,2) -- (1,2);
+\draw [-o] (2,2) -- (3,2);
+\end{tikzpicture}\\
 Zwei Schaltkreise $S_1$, $S_2$ sind äquivalent genau dann, wenn $S_1\leftrightarrow S_2$ eine Tautologie ist genau dann, wenn $\neg(S_1 \leftrightarrow S_2)$ unerfüllbar genau dann, wenn $\neg (S_1\leftrightarrow S_2) \not \in SAT$.
 \item Software-Paketverwaltung\\
 Installationsproblem (lässt sich ein Paket installieren? Geht bspw. nicht bei Ringabhängigkeiten): Angenommen, ein Paket $A$ benötigt die Pakete $B,C$ sowie eins der Pakete $D,E$ und ist unverträglich mit $F$, dann kann dies dargestellt werden durch $A \to B \wedge C \wedge (D \vee E) \wedge \neg F$ ($\to$ bedeutet „benötigt“).\\
@@ -1699,8 +1996,19 @@ $X\to AS$\\
 $A \to a$\\
 $B \to b$
 \end{enumerate}
-Prüfen, ob $aabb$ drin liegt:
-ABB 189
+Prüfen, ob $aabb$ drin liegt:\\
+\begin{tikzpicture}[scale=.7, align=center]
+\draw  (-2,2) rectangle (-1,1) node[pos=.5]{$S$};
+\draw  (-2,1) rectangle (-1,0) node[pos=.5]{$X$};
+\draw  (-2,0) rectangle (-1,-1);
+\draw  (-2,-1) rectangle (-1,-2) node[pos=.5]{$A$} node[below left]{$a$};
+\draw  (-1,1) rectangle (0,0);
+\draw  (-1,0) rectangle (0,-1) node[pos=.5]{$S$};
+\draw  (-1,-1) rectangle (0,-2) node[pos=.5]{$A$} node[below left]{$a$};
+\draw  (0,0) rectangle (1,-1);
+\draw  (0,-1) rectangle (1,-2) node[pos=.5]{$B$} node[below left]{$b$};
+\draw  (1,-1) rectangle (2,-2) node[pos=.5]{$B$} node[below left]{$b$};
+\end{tikzpicture}
 \subsection{Entscheidbarkeit}
 Die Frage ist, ob es für die Menge ein oder mehrere Entscheidungsverfahren gibt. Die Frage ist nicht, welches das richtige ist, sondern nur, dass es umfassend entscheidbar ist (Vergleich: Frage nach Gott -- es gibt Entscheidungsverfahren, ober wir wissen nicht, welches das richtige ist, weil wir nicht wissen, ob Gott existiert).\\
 NP-Vollständigkeit!
@@ -1717,6 +2025,6 @@ Grammatik zu Problem ausdenken und in rekursive Prozeduren umsetzen.
 
 \subsection{OL-Systeme}
 Voraussichtlich keine Aufgabe dazu.
-\newpage
-\printbibliography
+%\newpage
+%\printbibliography
 \end{document}
