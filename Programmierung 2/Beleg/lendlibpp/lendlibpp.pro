@@ -35,3 +35,5 @@ FORMS    += \
     mainwindow.ui
 
 RESOURCES += res.qrc
+
+RC_FILE += lendlibpp.rc
