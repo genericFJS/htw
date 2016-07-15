@@ -426,7 +426,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>LendLib++</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: #F9F7EC;</string>
@@ -525,7 +525,7 @@
             </font>
            </property>
            <property name="text">
-            <string>Lendlib++</string>
+            <string>LendLib++</string>
            </property>
           </widget>
          </item>
@@ -803,7 +803,7 @@ s74053@htw-dresden.de</string>
              <x>0</x>
              <y>0</y>
              <width>728</width>
-             <height>311</height>
+             <height>321</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1056,7 +1056,7 @@ s74053@htw-dresden.de</string>
              <x>0</x>
              <y>0</y>
              <width>728</width>
-             <height>311</height>
+             <height>321</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5">

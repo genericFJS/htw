@@ -561,6 +561,8 @@ void MainWindow::lendMedium(int mediumID, int personID){
     case dvd:
         type=" (DVD)";
         break;
+    default:
+        break;
     }
     QLabel *lentItem = new QLabel(mediumS+type);
     lentItem->setObjectName("lentItem"+mediumIDs);
@@ -602,7 +604,7 @@ void MainWindow::deleteMedium(int mediumID){
     delete mEntry;
     /// auch aus der Personenliste löschen
     QWidget *pEntry = ui->allPersonsScroll->findChild<QWidget*>("lentItem"+mediumIDs);
-    if (!pEntry == NULL){
+    if (pEntry){
         ui->allMediaScroll->layout()->removeWidget(pEntry);
         delete pEntry;
     }
