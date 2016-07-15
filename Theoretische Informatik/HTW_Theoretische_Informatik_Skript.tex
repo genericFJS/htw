@@ -153,12 +153,42 @@ Die erweiterte Überführungsfunktion bestimmt den Zustand nach dem vollständin
 Die von $\mathcal{M}$ \emph{akzeptierte Sprache} ist $L(\mathcal{M})=\{w\in \Sigma^* \;|\; \hat{\delta}(z_0, w) \in E\}$
 
 \subsection{Nichtdeterministischer endliche Automaten (NFA)}
-ABB23\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial, state] (z0) {$z$};
+\node[state] (z1) [right of=z0] {};
+\node[state] (z2) [above right= 1.5 of z0] {};
+\node[state] (z3) [below right= 1.5 of z0] {};
+\node[state] (z4) [below of=z0] {};
+\path (z0) edge node{$a$} (z1);
+\path (z0) edge node{$a$} (z2);
+\path (z0) edge node{$a$} (z3);
+\path (z0) edge node{$c$} (z4);
+\end{tikzpicture}
+\\
 NFA, der alles akzeptiert, was $abc$ enthält:\\
-ABB24\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial, state] (z0) {};
+\node[state] (z1) [right of=z0] {};
+\node[state] (z2) [right of=z1] {};
+\node[state, double, double distance = .5mm] (z3) [right of =z2] {};
+\path (z0) [loop above] edge node{$a,b,c$} (z0);
+\path (z3) [loop above] edge node{$a,b,c$} (z0);
+\path (z0) edge node{$a$} (z1);
+\path (z1) edge node{$b$} (z2);
+\path (z2) edge node{$c$} (z3);
+\end{tikzpicture}\\
 Beispiel: Wort $abaabcab$
 \subparagraph{Beispiel:} NFA, der alle Wörter akzeptiert, die auf $001$ enden:\\
-ABB25\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial, state] (z0) {};
+\node[state] (z1) [right of=z0] {};
+\node[state] (z2) [right of=z1] {};
+\node[state, double, double distance = .5mm] (z3) [right of =z2] {};
+\path (z0) [loop above] edge node{$0,1$} (z0);
+\path (z0) edge node{$0$} (z1);
+\path (z1) edge node{$0$} (z2);
+\path (z2) edge node{$1$} (z3);
+\end{tikzpicture}\\
 Akzeptierte Worte unter anderem: $01011001$, $001001$\\
 Ein Wort wird vom NFA akzeptiert, wenn es einen Weg, ausgehend von einem Startzustand, gibt, mit den ein End-Zustand erreicht wird.\\
 Der NFA „weiß“ nicht, welcher Pfad zu durchlaufen ist; diesen muss der Benutzer ermitteln (wie bei einer Straßenkarte).\\
@@ -170,28 +200,98 @@ Ein NFA lässt sich formalisieren durch ein Tupel $\mathcal{M}=(Z, \Sigma, \delt
 \item $S$: Menge der Startzustände
 \item $E$: Menge der Endzustände
 \end{itemize}
-Dabei bedeutet $\delta(z,a)\ni z'$, dass der NEA im Zustand $z$ für die Eingabe $a$ die Möglichkeit besitzt, in den Zustand $z'$ zu wechseln.
+Dabei bedeutet $\delta(z,a)\ni z'$, dass der NEA im Zustand $z$ für die Eingabe $a$ die Möglichkeit besitzt, in den Zustand $z'$ zu wechseln.\medskip\\
+Folgendes ist auch ein NFA (mit $L(\mathcal{M})=\{0,1\}$):\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial, state] (z0) {};
+\node[state, double, double distance = .5mm] (z1) [right of =z0] {};
+\path (z0) edge node{$0$} (z1);
+
+\node[initial, state, below of=z0] (z5) {};
+\node[state, double, double distance = .5mm] (z6) [right of =z5] {};
+\path (z5) edge node{$1$} (z6);
+\draw [dashed] (-2,1) rectangle (3,-3);
+\end{tikzpicture}
 
 \subsection{Umwandlung eines NFA in einen DFA}\parskp
 Wir wollen den NFA\\
-ABB 27\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial, state] (z0) {$z_0$};
+\node[state] (z1) [right of=z0] {$z_1$};
+\node[state] (z2) [right of=z1] {$z_2$};
+\node[state, double, double distance = .5mm] (z3) [right of =z2] {$z_E$};
+\path (z0) [loop above] edge node{$a,b,c$} (z0);
+\path (z3) [loop above] edge node{$a,b,c$} (z0);
+\path (z0) edge node{$a$} (z1);
+\path (z1) edge node{$b$} (z2);
+\path (z2) edge node{$c$} (z3);
+\end{tikzpicture}\\
 in einen DFA umwandeln. Der Startzustand des DFA besteht aus den Startzuständen des NFA:\\
-ABB 28\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial, state] (z0) {$\{z_0\}$};
+\end{tikzpicture}\\
 Betrachten die Folgezustände für $a \in \Sigma$:\\
-ABB 29\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial, state] (z0) {$\{z_0\}$};
+\node[state] (z1) [right of=z0] {$\{z_0,z_1\}$};
+\path (z0) edge node{$a$} (z1);
+\end{tikzpicture}\\
 nächster Schritt:\\
-ABB 30\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial, state] (z0) {$\{z_0\}$};
+\node[state] (z1) [right of=z0] {$\{z_0,z_1\}$};
+\path (z0) [loop above] edge node{$b,c$} (z0);
+\path (z0) edge node{$a$} (z1);
+\end{tikzpicture}\\
 nächster Schritt:\\
-ABB 31\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial, state] (z0) {$\{z_0\}$};
+\node[state] (z1) [right of=z0] {$\{z_0,z_1\}$};
+\path (z0) [loop above] edge node{$b,c$} (z0);
+\path (z1) [loop above] edge node{$a$} (z1);
+\path (z0) edge node{$a$} (z1);
+\end{tikzpicture}\\
 weitere Schritte:\\
 $z_0,b: \{z_0\}$\\
 $z_1,b: \{z_2\}$\\
-ABB 32\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=8em]
+\node[initial, state] (z0) {$\{z_0\}$};
+\node[state] (z1) [right of=z0] {$\{z_0,z_1\}$};
+\node[state] (z2) [right of=z1] {$\{z_0,z_2\}$};
+\path (z0) [loop above] edge node{$b,c$} (z0);
+\path (z1) [loop above] edge node{$a$} (z1);
+\path (z0) edge node{$a$} (z1);
+\path (z1) edge node{$b$} (z2);
+\end{tikzpicture}\\
 $z_0,c: \{z_0\}$\\
 $z_1,c: \{\}$\\
-ABB 33\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=8em]
+\node[initial, state] (z0) {$\{z_0\}$};
+\node[state] (z1) [right of=z0] {$\{z_0,z_1\}$};
+\node[state] (z2) [right of=z1] {$\{z_0,z_2\}$};
+\path (z0) [loop above] edge node{$b,c$} (z0);
+\path (z1) [loop above] edge node{$a$} (z1);
+\path (z0) edge node{$a$} (z1);
+\path (z1) edge [bend left=20] node{$c$} (z0);
+\path (z1) edge node{$b$} (z2);
+\end{tikzpicture}\\
 usw.:\\
-ABB 34\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=8em]
+\node[initial, state] (z0) {$\{z_0\}$};
+\node[state] (z1) [right of=z0] {$\{z_0,z_1\}$};
+\node[state] (z2) [right of=z1] {$\{z_0,z_2\}$};
+\node[state, double, double distance = .5mm] (z3) [right of =z2] {$\{z_0,z_E\}$};
+\path (z0) [loop above] edge node{$b,c$} (z0);
+\path (z1) [loop above] edge node{$a$} (z1);
+\path (z3) [loop above] edge node{$a,b,c$} (z0);
+\path (z0) edge node{$a$} (z1);
+\path (z1) edge [bend left=20] node{$c$} (z0);
+\path (z2) edge [bend left=20] node{$a$} (z1);
+\path (z1) edge node{$b$} (z2);
+\path (z2) edge [bend left=40] node{$b$} (z0);
+\path (z2) edge node{$c$} (z3);
+\node [align=left] at (10,-2) {Vereinfachung: \\andere Endzustände werden\\ weg gelassen.};
+\end{tikzpicture}\\
 Wenn ein Zustand des DFA einen Endzustand des NFA enthält, so ist es ein Endzustand.\\
 Der auf diese Weise erhaltene DFA kann Zustände enthalten, die sich zu einem Zustand zusammen fassen lassen. Mit dem Algorithmus Minimalautomat lässt sich ein DFA konstruieren, der minimal bezüglich der Anzahl seiner Zustände ist. Der Minimalautomat ist eindeutig, d.h. Minimalautomaten unterscheiden sich höchstens in der Benennung der Zustände.
 
@@ -200,7 +300,11 @@ Der auf diese Weise erhaltene DFA kann Zustände enthalten, die sich zu einem Zu
 \begin{itemize}
 \item $\emptyset$ ist ein regulärer Ausdruck und $L(\emptyset)=\emptyset$.\\
 Bsp.: \\
-ABB35
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial, state] (z0) {};
+\path (z0) [loop above] edge node{$a,b,c$} (z0);
+\end{tikzpicture}\\
+$L(\mathcal{M})=\emptyset$
 \item Für $a \in \Sigma \cup \{\varepsilon\}$ ist $a$ ein regulärer Ausdruck und $L(a)=\{a\}$.
 \item Für reguläre Ausdrücke $E_1, E_2$ sind $(E_1 | E_2), \; (E_1 E_2), \; (E_1^*)$ reguläre Ausdrücke (hier: $|=$„oder“) und $L(E_1|E_2)=L(E_1)\cup L(E_2), \; L(E_1E_2)=L(E_1)L(E_2), \; L(E_1^*)=L(E_1)^*$ die davon erzeugten Sprachen:\\
 \begin{tabular}{l | r l}
@@ -223,26 +327,110 @@ $L((a|b|c)^*abc(a|b|c)^*)=\{a,b,c\}^*\{abc\}\{a,b,c\}^*$
 \paragraph{Satz:} Reguläre Ausdrücke erzeugen genau die regulären Sprachen.
 \subparagraph{Skizze:} Umwandlung eines regulären Ausdrucks in einen endlichen Automaten.
 \begin{itemize}
-\item $\emptyset$: ABB 40
-\item $a \in \Sigma$: ABB 41 1.\\
-$\varepsilon$: ABB 41 2.
+\item $\emptyset$: \\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial, state] (z0) {};
+\end{tikzpicture}
+\item $a \in \Sigma$: \\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial,state] (z0) {};
+\node[state, double, double distance = .5mm] (zE) [right of=z0] {};
+\path (z0) edge node{$a$} (zE);
+\end{tikzpicture}
+\item $\varepsilon$: \\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial,state, double, double distance = .5mm] (zE) {};
+\end{tikzpicture}
 \item Seien $E_1, E_2$ reguläre Ausdrücke und $\mathcal{M}_1, \mathcal{M}_2$ DFAs mit $L(E_1)=L(\mathcal{M}_1), L(E_2)=L(\mathcal{M}_2)$.
 \begin{itemize}
 \item $E_1 | E_2$: $\mathcal{M}_1, \mathcal{M}_2$ sind zusammen ein NFA, der $L(\mathcal{M}_1) \vee L(\mathcal{M}_2)$ erkennt.\\
 Bsp.: $E_1=a, E_2=b$\\
-ABB 42
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial,state] (z0) {};
+\node[state, double, double distance = .5mm] (zE) [right of=z0] {};
+\path (z0) edge node{$a$} (zE);
+
+\node[initial,state] (z2) [right= 2.5 of zE] {};
+\node[state, double, double distance = .5mm] (z3) [right of=z2] {};
+\path (z2) edge node{$b$} (z3);
+\draw [dashed]  (-2,1) rectangle (9,-1) node[above right]{$E_1|E_2$};
+\end{tikzpicture}
 \item $E_1 E_2$: $\mathcal{M}_1, \mathcal{M}_2$ müssen hintereinander geschaltet werden, wobei ggf. neue Kanten eingefügt werden müssen. Dazu betrachtet man die Kante nach der neuen Verbindung und erzeugt dem entsprechend die Übergangskanten.\\
-ABB 43
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial,state] (z0) {};
+\node[state, double, double distance = .5mm] (zE) [right of=z0] {};
+\path (z0) edge node{$a$} (zE);
+
+\node[initial,state] (z2) [right= 2.5 of zE] {};
+\node[state, double, double distance = .5mm] (z3) [right of=z2] {};
+\path (z2) edge node{$b$} (z3);
+\end{tikzpicture}\\
+$\Downarrow$\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial,state] (z0) {};
+\node[state] (zE) [right of=z0] {};
+\path (z0) edge node{$a$} (zE);
+
+\node[state] (z2) [right of= zE] {};
+\node[state, double, double distance = .5mm] (z3) [right of=z2] {};
+\path (z2) edge node{$b$} (z3);
+\path (zE) edge node{?} (z2);
+\end{tikzpicture}\\
+$\Downarrow$\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial,state] (z0) {};
+
+\node[state] (z2) [right of= z0] {};
+\node[state, double, double distance = .5mm] (z3) [right of=z2] {};
+\path (z2) edge node{$b$} (z3);
+\path (z0) edge node{$a$} (z2);
+\draw [dashed] (-2,1) rectangle (5,-1) node[above right]{$E_1\cdot E_2$};
+\end{tikzpicture}
 \item $E_1^*$: Es müssen Kanten zurück zum Startzustand eingefügt werden\\
-ABB 44
+Beispiel:\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial,state] (z0) {};
+\node[state,double, double distance = .5mm] (z1) [right of=z0] {};
+\path (z0) edge node{$a$} (z1);
+\path (z0) [loop above] edge node{$a$} (z0);
+\node[state,initial,double, double distance = .5mm] (z1) [below=.5 of z0] {};
+\end{tikzpicture}\\
+oder:\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial,state] (z0) {};
+\node[state] (z1) [right of=z0] {};
+\node[state] (z2) [right of=z1] {};
+\node[state,double, double distance = .5mm] (z3) [right of=z2] {};
+\path (z0) edge node{$a$} (z1);
+\path (z1) edge node{$b$} (z2);
+\path (z2) edge node{$c$} (z3);
+\path (z3) edge [bend right=30] node[above]{$c$} (z0);
+\node[state,initial,double, double distance = .5mm] (z1) [below=.5 of z0] {};
+\draw [dashed] (-2,1.6) rectangle (7.6,-2) node[above right]{$E_1^*$};
+\end{tikzpicture}
 \end{itemize}
 \end{itemize}
 Der Beweis für die umgekehrte Richtung (DFA $\to$ reg. Ausdruck) ist schwierig.
 \subparagraph{Bsp.:}
 \begin{itemize}
 \item $E=0(0|1)^*$\\
-ABB 45
-\item ABB 46\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial,state] (z0) {};
+\node[state] (z2) [below of=z0] {};
+\node[state,double, double distance = .5mm] (z1) [right of=z0] {};
+\path (z0) edge node{$0$} (z1);
+\path (z0) edge node{$1$} (z2);
+\path (z1) [loop above] edge node{$0,1$} (z1);
+\path (z2) [loop right] edge node{$0,1$} (z2);
+\end{tikzpicture}
+\item \raisebox{-\height}{\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial,state] (z0) {};
+\node[state,double, double distance = .5mm] (z1) [right of=z0] {};
+\path (z0) edge[bend left=20] node{$1$} (z1);
+\path (z1) edge[bend left=20] node{$0$} (z0);
+\path (z0) [loop above] edge node{$0$} (z0);
+\path (z1) [loop right] edge node{$1$} (z1);
+\end{tikzpicture}}\\
 Beobachtungen:
 \begin{itemize}
 \item um zum Endzustand zu kommen, braucht man eine $1$.
@@ -253,8 +441,23 @@ $\Rightarrow E=(0|1)^* 1$
 
 \subsection{Das Pumping-Lemma}
 Wenn ein DFA ein Wort akzeptiert, das mindestens so lang ist wie die Anzahl seiner Zustände, dann muss er einen Zustand zweimal durchlaufen (Schubfachprinzip). Daraus folgt, dass der DFA dabei eine Schleife durchläuft.
-\subparagraph{Bsp.:}\parskp
-ABB 47\\
+\subparagraph{Bsp.:} Gegeben ist der NFA:\\
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=6em]
+\node[initial,state] (z0) {};
+\node[state] (z1) [right of=z0] {};
+\node[state] (z2) [right of=z1] {};
+\node[state] (z3) [right of=z2] {};
+\node[state] (z4) [above left=.75 of z3] {};
+\node[state] (z5) [right of=z3] {};
+\node[state,double, double distance = .5mm] (z6) [right of=z5] {};
+\path (z0) edge node{$a$} (z1);
+\path (z1) edge node{$b$} (z2);
+\path (z2) edge node{$c$} (z3);
+\path (z3) edge node[above right]{$d$} (z4);
+\path (z4) edge node[above left]{$e$} (z2);
+\path (z3) edge node{$f$} (z5);
+\path (z5) edge node{$g$} (z6);
+\end{tikzpicture}\\
 Für $x=abcdecfg$ durchläuft der Automat eine Schleife: $x=ab\,\boxed{cde}\,cfg$. Daher akzeptiert der DFA auch alle Wärter $ab(cde)^k cfg$ für $k \geq 0$.
 \paragraph{Satz:} (Pumping Lemma)\\
 Für jede reguläre Sprache $L$ gibt es ein $n>0$ ($n$: Anzahl Zustände des Minimalautomaten), so dass es für alle Wörter $x \in L$ mit $|x|\geq n$ eine Zerlegung $x=uvw$ gibt (in vorherigem Bsp.: $u=ab, \; v=cde \; w =cfg$), so dass gilt:
@@ -275,7 +478,14 @@ Beweis (Widerspruch):
 \item Sei $x=a^nb^n$. 
 \item Angenommen $v$ enthalte ein $b$, dann wäre $|uv| > n$. \\
 Aus $|uv|\leq n$ folgt aber, dass $v$ kein $b$ enthält. aus $|v|\geq 1$ folgt, dass $v$ mindestens ein $a$ enthält.\\
-ABB 48
+\begin{tikzpicture}[scale=.5]
+\draw  (-3,1) rectangle (1,-1) node[pos=.5]{u\qquad v};
+\draw  (1,1) rectangle (5,-1) node[pos=.5]{w};
+\node at (-1,2) {a … a};
+\node at (3,2) {b … b};
+\draw [decorate, decoration={brace, amplitude=5pt}] (-2.9,3) -- (0.9,3) node[above = .2, pos=.5]{$n$};
+\draw [decorate, decoration={brace, amplitude=5pt}] (1.1,3) -- (4.9,3)node[above = .2, pos=.5]{$n$};
+\end{tikzpicture}
 \item Das Wort $uw$ enthält daher weniger $a$s als $b$s und kann somit nicht in $L$ enthalten sein (denn $w$ enthält $b^n$, da $v$ mindestens ein $a$ enthält, ist durch $uw$ mindestens ein $a$ „verloren gegangen“: $uw=a^{n-|v|}b^n$) und ist deshalb nicht in $L$ enthälten, Widerspruch\,\lightning \; \#
 \end{itemize}
 Vorgehen:
@@ -295,7 +505,17 @@ Beweis:
 \item Nach Pumping-Lemma gibt es ein $n>0$, so dass sich alle $x \in L$ mit $|x|\geq n$ zerlegen lassen gemäß Pumping-Lemma.
 \item Sei $x=a^nb a^nb$.
 \item Wegen $|uv|\leq n$ und $|v|\geq 1$ besteht $v$ aus mindestens einem $a$.\\
-ABB 61
+\begin{tikzpicture}[scale=.5]
+\draw  (-3,1) rectangle (0,-1) node[pos=.5]{u\qquad v};
+\draw  (0,1) rectangle (5,-1) node[pos=.5]{w};
+\node at (-1.5,2) {a … a};
+\node at (0.5,2) {b};
+\draw [decorate, decoration={brace, amplitude=5pt}] (-2.9,3) -- (0,3) node[above = .2, pos=.5]{$n$};
+\node at (2.4,2) {a … a};
+\node at (4.4,2) {b};
+\draw [decorate, decoration={brace, amplitude=5pt}] (1,3) -- (3.9,3) node[above = .2, pos=.5]{$n$};
+\draw [dashed] (0,2) -- (0,1);
+\end{tikzpicture}
 \item Dann enthält $uw=a^{n-|v|}ba^nb$ (für $k=0$) weniger $a$s in der vorderen Hälfte als in der hinteren Hälfte. Da sich $uw$ deshalb nicht in die Form $zz$ mit $z\in \{a,b\}^*$ brigen lässt, ist $uw \not \in L$, Widerspruch!
 \end{itemize}
 
@@ -321,12 +541,76 @@ Ein Kellerautomat (Pushdown Automaton, PDA) besitzt gegenüber einem NFA zwei zu
 \item Er besitzt einen Stack, auf dem Zeichen abgelegt oder von dem Zeichen gelesen werden können.
 \end{itemize}
 Zur graphischen Darstellung von PDAs verwenden wir eine erweiterte Automatennotation:\\
-ABB62\\
+\begin{tikzpicture}[shorten >= .3em,shorten <= .3em,auto,node distance=8em]
+\node[state] (z1){$z$};
+\node[state] (z2) [right of=z1] {$z'$};
+\path (z1) edge [-latex] node{$a,\gamma/\gamma'$} (z2);
+\draw  (-2,0.5) rectangle (-1,-0.5);
+\draw  (-2,-0.5) rectangle (-1,-2);
+\draw  (-2,-2) rectangle (-1,-3);
+\draw (-2,1) node[above]{stack in $z$:}  -- (-2,0.5) -- (-1,0.5) -- (-1,1);
+\node at (-1.5,0) {$\gamma$};
+\node at (-1.5,-1) {$\vdots$};
+\node at (-1.5,-2.5) {$\#$};
+\draw  (4,0.5) rectangle (5,-0.5);
+\draw  (4,-0.5) rectangle (5,-2);
+\draw  (4,-2) rectangle (5,-3);
+\draw (4,1) node[above]{stack in $z'$:} -- (4,0.5) -- (5,0.5) -- (5,1);
+\node at (4.5,0) {$\gamma'$};
+\node at (4.5,-1) {$\vdots$};
+\node at (4.5,-2.5) {$\#$};
+\end{tikzpicture}\\
+$a$: Eingabezeichen\\
+$\gamma$: Top of Stack in $z$\\
+$\gamma'$: Top of Stack in $z'$\\
+(wenn $\gamma$ auf Stack liegt, wird $\gamma$ runter geholt und $\gamma'$ auf den Stack gelegt)\\
+$a,\gamma$: Übergangsvoraussetzung\\
+Stack unverändert lassen:$a,\varepsilon/\varepsilon$\\
+Stack leeren: $a,\gamma/ \varepsilon$\\
+Stack füllen: $a,\varepsilon/\gamma$\\
 Unten auf dem Stack liegt das Symbol \#. Dies ist das einzige Symbol, das sich zu Beginn einer Rechnung auf dem Stack befindet.
 \subparagraph{Bsp.:} PDA, der $\{a^nb^n|n\in \mathbb{N}\}$ akzeptiert.\\
-ABB63\\
+\begin{tikzpicture}[shorten >= .3em,shorten <= .3em,auto,node distance=8em]
+\node[state, initial] (z0){};
+\node[state] (z1)[right of=z0]{};
+\node[state, double, double distance = .5mm] (z2) [right of=z1] {};
+\path (z0) [loop above] edge node{$a,\varepsilon/a$} (z0);
+\path (z0) edge [-latex] node{$b,a/\varepsilon$} (z1);
+\path (z1) [loop above] edge node{$b,a/\varepsilon$} (z1);
+\path (z1) edge [-latex] node{$\varepsilon,\#/\varepsilon$} (z2);
+\end{tikzpicture}\\
 Wir erlauben nun, dass der PDA in einem Schritt auch mehrere Zeichen auf den Stack schreibt. Dazu erweitern wir die graphische Notation wie folgt:\\
-ABB 68
+\begin{tikzpicture}[shorten >= 3,shorten <= 3,auto,node distance=100]
+\node[state] (z1){$z$};
+\node[state] (z2) [right of=z1] {$z'$};
+\path (z1) edge [-latex] node{$a,\gamma/\gamma_1'\dots\gamma_n'$} (z2);
+\draw  (-2,1.5) rectangle (-1,0.5);
+\draw  (-2,0.5) rectangle (-1,-2);
+\draw  (-2,-2) rectangle (-1,-3);
+\draw (-2,2) node[above]{stack in $z$:}  -- (-2,1.5) -- (-1,1.5) -- (-1,2);
+\node at (-1.5,1) {$\gamma$};
+\node at (-1.5,0) {$\vdots$};
+\node at (-1.5,-2.5) {$\#$};
+\draw  (4.5,1.5) rectangle (5.5,0.5);
+\draw  (4.5,0.5) rectangle (5.5,-1);
+\draw  (4.5,-2) rectangle (5.5,-3);
+\draw (4.5,2) node[above]{stack in $z'$:} -- (4.5,1.5) -- (5.5,1.5) -- (5.5,2);
+\node at (5,1) {$\gamma_1'$};
+\node at (5,0) {$\vdots$};
+\node at (5,-2.5) {$\#$};
+\draw  (4.5,-1) rectangle (5.5,-2);
+\node at (5,-1.5) {$\gamma_n'$};
+\node [right] at (-2.5,-3.5) {äquivalent:};
+\coordinate (zx) at (-2.5,-3.5);
+
+\node[state] (z01) [below=.5 of zx]{$z$};
+\node[state] (z02) [right of=z01] {$z'$};
+\path (z01) edge [-latex] node{$a,\gamma/\gamma_n'$} (z02);
+\node (z04) [right of=z02]{…};
+\path (z02) edge [-latex] node{$\varepsilon,\varepsilon/\gamma_{n-1}'$} (z04);
+\node[state] (z05) [right of=z04] {$z'$};
+\path (z04) edge [-latex] node{$\varepsilon,\varepsilon/\gamma_1'$} (z05);
+\end{tikzpicture}
 \subparagraph{Def.:} Ein PDA ist ein Tupel $M=(Z,\Sigma, \Gamma, \delta, z_0, \#, E)$
 \begin{itemize}
 \item $Z$: Zustände
@@ -337,12 +621,30 @@ ABB 68
 \item $\# \in \Gamma$: Unterstes Stackzeichen
 \item $E \in Z$: Endzustände
 \end{itemize}
-ABB 69\\
+\begin{tikzpicture}[shorten >= .3em,shorten <= .3em,auto,node distance=8em]
+\node[state] (z1){$z$};
+\node[state] (z2) [right of=z1] {$z'$};
+\path (z1) edge [-latex] node{$a,\gamma/\gamma'$} (z2);
+\end{tikzpicture}\\
 $a \in \Sigma \cup \{\varepsilon\}$\\
 $\gamma \in \Gamma \cup \{\varepsilon\}$\\
 $\gamma' \in \Gamma \cup \{\varepsilon\}$
 
-\paragraph{Def.:} Die von einem PDA $M$ akzeptierte Sprache $L(M)$ ist die Menge aller $x \in \Sigma^*$, für die gilt: Der PDA $M$ kann, ausgehend vom Startzustand und dem initialen Stackzustand $\#$, durch das Lesen des Wortes $x$ einen Endzustand erreichen.
+\paragraph{Def.:} Die von einem PDA $M$ akzeptierte Sprache $L(M)$ ist die Menge aller $x \in \Sigma^*$, für die gilt: Der PDA $M$ kann, ausgehend vom Startzustand und dem initialen Stackzustand $\#$, durch das Lesen des Wortes $x$ einen Endzustand erreichen.\bigskip\\
+\begin{tikzpicture}[shorten >= 3,shorten <= 3,auto,node distance=100]
+\node[state] (z1){$z$};
+\node[state] (z2) [above of=z1] {$z'$};
+\node[state] (z3) [above right of=z1] {$z'$};
+\node[state] (z4) [right of=z1] {$z'$};
+\node[state] (z5) [below right of=z1] {$z'$};
+\node[state] (z6) [below of=z1] {$z'$};
+\path (z1) edge [-latex] node{$a,\gamma/\gamma''$} (z2);
+\path (z1) edge [-latex] node{$a,\varepsilon/\varepsilon$} (z3);
+\path (z1) edge [-latex] node{$a,\varepsilon/\varepsilon$} (z4);
+\path (z1) edge [-latex] node{$a,\gamma/\gamma'$} (z5);
+\path (z1) edge [-latex] node{$a,\gamma/\gamma'$} (z6);
+\end{tikzpicture}\\
+(nicht deterministischer PDA)
 
 \subsection{Kontextfreie Grammatiken}
 Eine kontextfreie Grammatik beschreibt, wie durch das Ersetzen von variablen Wörter der Sprache erzeugt werden können. Jede Ersetzungsregel hat die Form „linke Seite $\to$ rechte Seite“ (linke Seite der Regel kann ersetzt werden durch die rechte Seite), wobei „linke Seite“ eine Variable ist. 
@@ -361,7 +663,42 @@ Beginnend mit dem Startsymbol werden solange Ersetzungsregeln angewendet, bis al
 \end{itemize}
 Satz $\Rightarrow$ NP VP $\Rightarrow$ Artikel Nomen VP $\Rightarrow$ Artikel Nomen Verb NP $\Rightarrow$ Artikel Nomen Verb Artikel Nomen $\Rightarrow$ … $\Rightarrow$ die Katze jagt die Maus\\
 Syntax dazu:\\
-ABB 71
+\begin{tikzpicture}[shorten >= 3,shorten <= 3,auto,node distance=50]
+\node (s) {Satz};
+\node (s1) [left of= s]{};
+\node (s2) [right of= s]{};
+\node (np) [below of=s1]{NP};
+\node (vp) [below of=s2]{VP};
+\node (np2) [left of= np]{};
+\node (vp2) [right of= vp]{};
+\node (a) [below of=np2]{Artikel};
+\node (n) [below of=np]{Nomen};
+\node (v) [below of=vp]{Verb};
+\node (np3) [right of=vp]{};
+\node (np4) [below of=np3]{NP};
+\node (np5) [right of=np4]{};
+\node (a2) [below of=np4]{Artikel};
+\node (n2) [below of=np5]{Nomen};
+\node (e5) [below of = n2]{Maus};
+\node (e4) [left of = e5]{die};
+\node (e3) [left of = e4]{jagt};
+\node (ex) [left of = e3]{};
+\node (e2) [left of = ex]{Katze};
+\node (e1) [left of = e2]{die};
+\path (s) edge (np);
+\path (np) edge (a);
+\path (np) edge (n);
+\path (a) edge (e1);
+\path (n) edge (e2);
+\path (s) edge (vp);
+\path (vp) edge (v);
+\path (vp) edge (np4);
+\path (v) edge (e3);
+\path (np4) edge (a2);
+\path (np4) edge (n2);
+\path (a2) edge (e4);
+\path (n2) edge (e5);
+\end{tikzpicture}
 
 \paragraph{Def.:} Eine kontextfreie Grammatik ist ein Tupel $\sigma = (V, \Sigma, P, S)$
 \begin{itemize}
@@ -383,23 +720,117 @@ $S\to \varepsilon | 0S1$ für $S\to \varepsilon, \; S \to 0S1$
 
 \subsubsection{Konstruktionsprinzipien für kontextfreie Grammatiken}
 Regeln der Form $X\to aXb$ führen zu:\\
-ABB 83\\
+\begin{tikzpicture}[auto,node distance=50]
+\node (v1) at (-0.5,3) {$X$};
+\node (v2) at (-1.5,2) {$a$};
+\node (v22) at (0.5,2) {$b$};
+\node (v3) at (-0.5,1.5) {$X$};
+\node (v4) at (-1.5,0.5) {$a$};
+\node (v5) at (0.5,0.5) {$b$};
+\node (v6) at (-0.5,0) {$X$};
+\draw (v1) -- (v2);
+\draw (v1) -- (v22);
+\draw (v1);
+\draw (v1) -- (v3);
+\draw (v3) -- (v4);
+\draw (v3) -- (v5);
+\draw (v3) -- (v6);
+\draw [dotted] (v6) -- (-1.5,-1);
+\draw [dotted] (v6) -- (-0.5,-1);
+\draw [dotted] (v6) -- (0.5,-1);
+\end{tikzpicture}\\
 Dies lässt sich für balancierte Strukturen nutzen.\\
 Mit der Regel $X\to XX$ wächst der Syntaxbaum in die Breite.\\
-ABB 84\\
+\begin{tikzpicture}[auto,node distance=50]
+\node (v1) at (0,2.5) {$X$};
+\node (v2) at (-1,1.5) {$X$};
+\node (v3) at (1,1.5) {$X$};
+\node (v6) at (-0.5,0.5) {$X$};
+\node (v7) at (-1.5,0.5) {$X$};
+\node (v5) at (0.5,0.5) {$X$};
+\node (v4) at (1.5,0.5) {$X$};
+\draw (v1) -- (v2);
+\draw (v1) -- (v3);
+\draw (v3) -- (v4);
+\draw (v3) -- (v5);
+\draw (v2) -- (v6);
+\draw (v2) -- (v7);
+\end{tikzpicture}\\
 Beispiel, die beide Prinzipien anwendet: $S\to [S] | SS | \varepsilon$\\
-ABB 85\\
+\begin{tikzpicture}[auto,node distance=50]
+\node (v1) at (0,2.5) {$S$};
+\node (v2) at (-1,1.5) {$S$};
+\node (v3) at (1,1.5) {$S$};
+\node (v6) at (-0.5,0.5) {$S$};
+\node (v7) at (-1.5,0.5) {$S$};
+\node (v5) at (0.5,0.5) {$S$};
+\node (v4) at (1.5,0.5) {$S$};
+\draw (v1) -- (v2);
+\draw (v1) -- (v3);
+\draw (v3) -- (v4);
+\draw (v3) -- (v5);
+\draw (v2) -- (v6);
+\draw (v2) -- (v7);
+\node (v8) at (-2,-0.5) {$S$};
+\node (v9) at (-1,-0.5) {$S$};
+\draw (v7) -- (v8);
+\draw (v7) -- (v9);
+\end{tikzpicture}\\
 Damit lässt sich bspw. auch folgendes als Grammatik darstellen: $(3*(4+5)-1)*2+1$.
 \subparagraph{Bsp.:} Grammatik für arithmetische Ausdrücke.
 \begin{itemize}
 \item Zahlen: Lassen sich darstellen durch die Grammatik mit den Regeln:\\
 $S_N\to 0S_N\,|\,\dots \,|\, 0S_N \,|\, 0 \,|\, ... \,|\, 9$\\
 Beispiel für $123$: \\
-ABB 86
+\begin{tikzpicture}[auto,node distance=50]
+\node (v1) at (0,2.5) {$S_N$};
+\node (v2) at (-0.5,1.5) {$1$};
+\node (v3) at (0.5,1.5) {$S_N$};
+
+\node (v4) at (1,0.5) {$S_N$};
+\node (v5) at (0,0.5) {$2$};
+\node (v6) at (1,-0.5) {$3$};
+\draw (v1) -- (v2);
+\draw (v1) -- (v3);
+\draw (v3) -- (v4);
+\draw (v3) -- (v5);
+\draw (v4) -- (v6);
+\end{tikzpicture}
 \item Zeichen: Diese Grammatik verwenden wir, um Ausdrücke darzustellen mit folgender Grammatik:\\
 $S_E\to S_E+S_E \,|\, S_E - S_E \,|\, S_E*S_E \,|\, S_E/S_E \,|\, (S_E) \,|\, S_N$\\
 Damit lassen sich Ausdrücke erstellen, z.B.:\\
-ABB 87\\
+\begin{tikzpicture}[auto,node distance=50]
+\node (v6) at (-1.5,-3.5) {$1$};
+\node (v14) at (-1,-1.5) {$+$};
+\node (v17) at (-0.5,-3.5) {$2$};
+\node (v19) at (0.5,-2.5) {$3$};
+\node (v10) at (1.5,-2.5) {$4$};
+\node (v20) at (1,-0.5) {$*$};
+\node (v11) at (0,0.5) {$*$};
+\node (v1) at (0,1.5) {$S_E$};
+\node (v2) at (-1,0.5) {$S_E$};
+\node (v7) at (1,0.5) {$S_E$};
+\node at (0.5,-0.5) {$S_E$};
+\node (v8) at (1.5,-0.5) {$S_E$};
+\node (v18) at (0.5,-1.5) {$S_N$};
+\node (v9) at (1.5,-1.5) {$S_N$};
+\node (v12) at (-1.5,-0.5) {$($};
+\node (v3) at (-1,-0.5) {$S_E$};
+\node (v13) at (-0.5,-0.5) {$)$};
+\node (v4) at (-1.5,-1.5) {$S_E$};
+\node (v15) at (-0.5,-1.5) {$S_E$};
+\node (v5) at (-1.5,-2.5) {$S_N$};
+\node (v16) at (-0.5,-2.5) {$S_N$};
+\draw (v1) -- (v2) -- (v3) -- (v4) -- (v5) -- (v6);
+\draw (v1) -- (v7) -- (v8) -- (v9) -- (v10);
+\draw (v1) -- (v11);
+\draw (v2) -- (v12);
+\draw (v2) -- (v13);
+\draw (v3) -- (v14);
+\draw (v3) -- (v15) -- (v16) -- (v17);
+\draw (v7) -- (0.5,-0.5) -- (v18) -- (v19);
+\draw (v7) -- (v20);
+\end{tikzpicture}\\
 $(1+2)*3*4$
 \end{itemize}
 
@@ -408,7 +839,15 @@ $(1+2)*3*4$
 Beweis: Wir zeigen nur: Für jede kontextfreie Grammatik $G$ gibt es einen PDA $\cM$ mit $L(G)=L(\cM)$.\\
 Skizze: \\
 Wir konstruieren einen PDA mit drei Zuständen:\\
-ABB 88\\
+\begin{tikzpicture}[shorten >= .3em,shorten <= .3em,auto,node distance=8em]
+\node[state, initial] (z0){};
+\node[state] (z1)[right of=z0]{};
+\node[state, double, double distance = .5mm] (z2) [right of=z1] {};
+\path (z0) edge [-latex] node{$\varepsilon,\varepsilon/\varepsilon$} (z1);
+\path (z1) [loop above] edge node{$\varepsilon,A/\gamma$} (z1);
+\path (z1) [loop below] edge node{$a,a/\varepsilon$} (z1);
+\path (z1) edge [-latex] node{$\varepsilon,\#/\varepsilon$} (z2);
+\end{tikzpicture}\\
 Im Startzustand wird das Startsymbol $S$ der Grammatik auf den Stack abgelegt und der PDA wechselt in Zustand $Z$.\\
 Wir unterscheiden 3 Fälle: Das oberste Stackzeichen ist…
 \begin{itemize}
@@ -423,9 +862,53 @@ Richtung PDA$\to$kontextfreie Grammatik: Ohne Beweis.
 \subparagraph{Bsp.:} Wir betrachten die Sprache $L=\{a^nb^n|n\geq 0\}$, die erzeugt wird von der Grammatik mit den Regeln:\\
 $S\to aSb \,|\, \varepsilon$\\
 Aus obiger Konstruktion erhalten wir folgenden PDA:\\
-ABB 89\\
+\begin{tikzpicture}[shorten >= .3em,shorten <= .3em,auto,node distance=8em, align=left]
+\node[state, initial] (z0){};
+\node[state] (z1)[right of=z0]{};
+\node[state, double, double distance = .5mm] (z2) [right of=z1] {};
+\path (z0) edge [-latex] node{$\varepsilon,\varepsilon/\varepsilon$} (z1);
+\path (z1) [loop above] edge node{$\varepsilon,S/\varepsilon$\\$\varepsilon, S/aSb$} (z1);
+\path (z1) [loop below] edge node{$a,a/\varepsilon$\\$b,b/\varepsilon$} (z1);
+\path (z1) edge [-latex] node{$\varepsilon,\#/\varepsilon$} (z2);
+\end{tikzpicture}\\
 Verhalten für die Eingabe $aabb$:\\
-ABB 90
+\begin{tikzpicture}[align=left, scale=.8]
+\draw (-5,1) -- (-5,-2) -- (-4,-2) -- (-4,1);
+\node at (-4.5,-1.5) {$\#$};
+\draw (-3,1) -- (-3,-2) -- (-2,-2) -- (-2,1);
+\node at (-2.5,-1) {$S$};
+\node at (-2.5,-1.5) {$\#$};
+\draw (-1,1) -- (-1,-2) -- (0,-2) -- (0,1);
+\node at (-0.5,0) {$a$};
+\node at (-0.5,-0.5) {$S$};
+\node at (-0.5,-1) {$b$};
+\node at (-0.5,-1.5) {$\#$};
+\draw (1,1)-- (1,-2) node[below right]{1. $a$\\verarbeitet}  -- (2,-2) -- (2,1);
+\node at (1.5,-0.5) {$S$};
+\node at (1.5,-1) {$b$};
+\node at (1.5,-1.5) {$\#$};
+\draw (3,1) -- (3,-2) -- (4,-2) -- (4,1);
+\node at (3.5,0.5) {$a$};
+\node at (3.5,0) {$S$};
+\node at (3.5,-0.5) {$b$};
+\node at (3.5,-1) {$b$};
+\node at (3.5,-1.5) {$\#$};
+\draw (5,1) -- (5,-2)node[below right]{2. $a$\\verarb.} -- (6,-2) -- (6,1);
+\node at (5.5,0) {$S$};
+\node at (5.5,-0.5) {$b$};
+\node at (5.5,-1) {$b$};
+\node at (5.5,-1.5) {$\#$};
+\draw (7,1) -- (7,-2) -- (8,-2) -- (8,1);
+\node at (7.5,-0.5) {$b$};
+\node at (7.5,-1) {$b$};
+\node at (7.5,-1.5) {$\#$};
+\draw (9,1) -- (9,-2) node[below right]{1. $b$\\verarb.} -- (10,-2) -- (10,1);
+\node at (9.5,-0.5) {};
+\node at (9.5,-1) {$b$};
+\node at (9.5,-1.5) {$\#$};
+\draw (11,1) -- (11,-2) node[below right]{2. $b$\\verarb.} -- (12,-2) -- (12,1);
+\node at (11.5,-1.5) {$\#$};
+\end{tikzpicture}
 
 \subsubsection{Der CYK-Algorithmus}
 \paragraph{Def.:} Eine Grammatik $G=(V,\Sigma, P, S)$ liegt in \emph{Chomsky-Normalform} (CNF), wenn alle Regeln die Form $A\to BC$ oder $A\to a$ für $A,B,C \in V$, $a \in \Sigma$ haben.\\
@@ -444,11 +927,82 @@ $L\to ($\\
 $R\to )$
 \end{enumerate}
 Der Ableitungsbaum eines Wortes aus einer Grammatik in CNF ist -- bis auf die unterste Ebene -- ein binärer Wurzelbaum.\\
-ABB 91\\
+\begin{tikzpicture}
+\node (v1) at (0.5,2.5) {S};
+\node (v4) at (-2,-1) {};
+\node (v9) at (-1,-1) {};
+\node (v7) at (-0.5,-1) {};
+\node (v11) at (0.5,-1) {};
+\node (v18) at (1,-1) {};
+\node at (2,-1) {};
+\node (v20) at (2.5,-1) {};
+\node (v14) at (3.5,-1) {};
+\node (v13) at (3.5,0) {};
+\node (v19) at (2.5,0) {};
+\node (v16) at (2,0) {};
+\node (v17) at (1,0) {};
+\node (v10) at (0.5,0) {};
+\node (v6) at (-0.5,0) {};
+\node (v8) at (-1,0) {};
+\node (v3) at (-2,0) {};
+\node (v2) at (-1.5,1) {};
+\node (v5) at (0,1) {};
+\node (v15) at (1.5,1) {};
+\node (v12) at (3,1) {};
+\draw (v1) -- (v2) -- (v3) -- (v4);
+\draw (v1) -- (v5) -- (v6) -- (v7);
+\draw (v2) -- (v8) -- (v9);
+\draw (v5) -- (v10) -- (v11);
+\draw (v1) -- (v12) -- (v13) -- (v14);
+\draw (v1) -- (v15) -- (v16) -- (2,-1);
+\draw (v15) -- (v17) -- (v18);
+\draw (v12) -- (v19) -- (v20);
+\end{tikzpicture}\\
 Wenn ein Wort $x=x_1x_2\dots x_n$ aus $S$ ableitbar ist ($S\Rightarrow^*x$), dann gibt es ein $ k $ und $ A,B $, sodass $ S\Rightarrow AB $ und $ A \Rightarrow* x_1\dots x_k , \; B\Rightarrow^*x_{k+1}...x_n $\\
-ABB 92 / 96\\
+\begin{tikzpicture}
+\node (v1) at (0.5,2.5) {S};
+\node (v2) at (-1,1.5) {A};
+\node (v3) at (2,1.5) {B};
+\draw (v1) -- (v2);
+\draw (v1);
+\draw (v1) -- (v3);
+\draw (-1,1) -- (-2,-1) -- (0,-1) -- cycle;
+\draw (2,1) -- (1,-0.5) -- (3,-0.5) -- cycle;
+\node (v4) at (-2,-1.5) {$X_1$};
+\node (v6) at (0,-1.5) {$X_k$};
+\node (v8) at (1,-1) {$X_{k+1}$};
+\node (v10) at (3,-1) {$X_n$};
+\node (v5) at (-2,-2.5) {$x_1$};
+\node (v7) at (0,-2.5) {$x_k$};
+\node (v9) at (1,-2.5) {$x_{k+1}$};
+\node (v11) at (3,-2.5) {$x_n$};
+\draw (v4) -- (v5);
+\draw (v6) -- (v7);
+\draw (v8) -- (v9);
+\draw (v10) -- (v11);
+\end{tikzpicture}\\
 Der CYK-Algorithmus entscheidet das Wortproblem, indem eine Tabelle konstruiert wird. Der Eintrag $T_{ij}$ ist die Menge der Variablen $X$ mit $X\Rightarrow^* x_i \dots x_j$:\\
-ABB 97\\
+\begin{tikzpicture}[scale=1.4]
+\draw  (-2,3) rectangle (-1.5,2.5) node[pos=.5]{$T_{15}$};
+\draw  (-2,2.5) rectangle (-1.5,2)node[pos=.5]{$T_{14}$};
+\draw  (-2,2) rectangle (-1.5,1.5)node[pos=.5]{$T_{13}$};
+\draw  (-2,1.5) rectangle (-1.5,1)node[pos=.5]{$T_{12}$};
+\draw  (-2,1) rectangle (-1.5,0.5)node[pos=.5]{$T_{11}$} node [below left]{$x_1$};
+\draw  (-1.5,2.5) rectangle (-1,2)node[pos=.5]{$T_{25}$};
+\draw  (-1.5,2) rectangle (-1,1.5)node[pos=.5]{$T_{24}$};
+\draw  (-1.5,1.5) rectangle (-1,1)node[pos=.5]{$T_{23}$};
+\draw  (-1.5,1) rectangle (-1,0.5)node[pos=.5]{$T_{22}$} node [below left]{$x_2$};
+\draw  (-1,2) rectangle (-0.5,1.5)node[pos=.5]{$T_{35}$};
+\draw  (-1,1.5) rectangle (-0.5,1)node[pos=.5]{$T_{34}$};
+\draw  (-1,1) rectangle (-0.5,0.5)node[pos=.5]{$T_{33}$} node [below left]{$x_3$};
+\draw  (-0.5,1.5) rectangle (0,1)node[pos=.5]{$T_{45}$};
+\draw  (-0.5,1) rectangle (0,0.5)node[pos=.5]{$T_{44}$} node [below left]{$x_4$};
+\draw  (0,1) rectangle (0.5,0.5)node[pos=.5]{$T_{55}$} node [below left]{$x_5$};
+\node (v1) at (2,2.5) {$T_{ij}$};
+\node (v2) at (2,0.5) {$x_i$};
+\node (v3) at (4,0.5) {$x_j$};
+\draw (v1) -- (v2) -- (v3) -- (v1);
+\end{tikzpicture}\\
 Für $i<j$ wird geprüft, ob sich $x_i\dots x_j$ zerlegen lässt in $x_i\dots x_k,\; x_{k+1} \dots x_j$, so dass gilt:
 \begin{enumerate} [label=(\roman*)]
 \item es gibt eine Regel $X\to AB$
@@ -456,17 +1010,127 @@ Für $i<j$ wird geprüft, ob sich $x_i\dots x_j$ zerlegen lässt in $x_i\dots x_
 \end{enumerate} 
 Die Menge $T_{ij}$ enthält alle Variablen $x$ mit dieser Eigenschaft. Da (ii) nach Definition von $T_{ij}$ äquivalent ist zu $A \in T_{ik}, \; B\in T_{k+1\,j}$, erhalten wir $T_{(ii)}=\{x| \text{ es gibt eine Regel }X\to x_i\}$.\\
 $T_{ij}=\bigcup_{i\leq k<j} \{x | \text{ es gibt eine Regel }X\to AB \wedge A \in T_{ik} \wedge B\in T_{k+1\, j}\}$\\
+\begin{tikzpicture}[scale=1.2, align=left]
+\draw  (-2,3) rectangle (-1.5,2.5) node[pos=.5]{$ $};
+\draw  (-2,2.5) rectangle (-1.5,2)node[pos=.5]{$ $};
+\draw  (-2,2) rectangle (-1.5,1.5)node[pos=.5]{$ $};
+\draw  (-2,1.5) rectangle (-1.5,1)node[pos=.5]{$ $};
+\draw  (-2,1) rectangle (-1.5,0.5)node[pos=.5]{$ $};
+\draw  (-1.5,2.5) rectangle (-1,2)node[pos=.5]{$ $};
+\draw  (-1.5,2) rectangle (-1,1.5)node[pos=.5]{$T_{ij}$};
+\draw  (-1.5,1.5) rectangle (-1,1)node[pos=.5]{$ $};
+\draw  (-1.5,1) rectangle (-1,0.5)node[pos=.5]{$A$};
+\draw  (-1,2) rectangle (-0.5,1.5)node[pos=.5]{$ $};
+\draw  (-1,1.5) rectangle (-0.5,1)node[pos=.5]{$B$};
+\draw  (-1,1) rectangle (-0.5,0.5)node[pos=.5]{$ $};
+\draw  (-0.5,1.5) rectangle (0,1)node[pos=.5]{$ $};
+\draw  (-0.5,1) rectangle (0,0.5)node[pos=.5]{$ $};
+\draw  (0,1) rectangle (0.5,0.5)node[pos=.5]{$ $};
+\draw [thick, green] (-1.5,1) rectangle (-1,0.5);
+\draw [thick, purple] (-1,1.5) rectangle (-0.5,1);
+\draw [thick, orange] (-1.5,2) rectangle (-1,1.5);
+\draw [thick, orange] (-1.5,0.3) -- (0,0.3);
+\draw [thick, purple](-1,0.4) -- (0,0.4);
+\draw [thick, green](-1.5,0.4) -- (-1,0.4);
+\draw [-latex] (-2,0.1) -- (0.5,0.1) node[pos=.5, below]{1.};
+\draw [-latex] (-2.2,0.5) -- (-2.2,3) node[pos=.5, left]{2.};
+\node [below right] at (1,3) {Vorgehensweise beim befüllen:\\1. unterste Zeile\\2. obere Zeilen auf Basis der unteren};
+\end{tikzpicture}\\
 Wenn die Menge $T_{ij}$ in aufsteigender Reihenfolge von $j-i$ berechnet werden, dann können die Einträge der Tabelle aus bereits berechneten Einträgen bestimmt werden (dynamisches Programmieren). Für den Eintrag $T_{ij}$ müssen dabei alle Kombinationen geprüft werden, die den Zerlegungen $x_i \dots x_j=x_i\dots x_k x_{k+1} \dots x_j$ für $i\leq k < j$ entsprechen. Das Wort $x$ liegt genau dann in der Sprache, wenn $S \in T_{1n}$.\\
-ABB 99\\
+\begin{tikzpicture}[scale=1.5, align=left]
+\draw  (-2,3) rectangle (-1.5,2.5) node[pos=.5]{$T_{15}$};
+\draw  (-2,2.5) rectangle (-1.5,2)node[pos=.5]{$T_{14}$};
+\draw  (-2,2) rectangle (-1.5,1.5)node[pos=.5]{$T_{13}$};
+\draw  (-2,1.5) rectangle (-1.5,1)node[pos=.5]{$T_{12}$};
+\draw  (-2,1) rectangle (-1.5,0.5)node[pos=.5]{$T_{11}$} node [below left]{$x_1$};
+\draw  (-1.5,2.5) rectangle (-1,2)node[pos=.5]{$T_{25}$};
+\draw  (-1.5,2) rectangle (-1,1.5)node[pos=.5]{$T_{24}$};
+\draw  (-1.5,1.5) rectangle (-1,1)node[pos=.5]{$T_{23}$};
+\draw  (-1.5,1) rectangle (-1,0.5)node[pos=.5]{$T_{22}$} node [below left]{$x_2$};
+\draw  (-1,2) rectangle (-0.5,1.5)node[pos=.5]{$T_{35}$};
+\draw  (-1,1.5) rectangle (-0.5,1)node[pos=.5]{$T_{34}$};
+\draw  (-1,1) rectangle (-0.5,0.5)node[pos=.5]{$T_{33}$} node [below left]{$x_3$};
+\draw  (-0.5,1.5) rectangle (0,1)node[pos=.5]{$T_{45}$};
+\draw  (-0.5,1) rectangle (0,0.5)node[pos=.5]{$T_{44}$} node [below left]{$x_4$};
+\draw  (0,1) rectangle (0.5,0.5)node[pos=.5]{$T_{55}$} node [below left]{$x_5$};
+\draw  (-2,3.5) rectangle (-1.5,3)node[pos=.5]{$T_{16}$};
+\draw  (-1.5,3) rectangle (-1,2.5)node[pos=.5]{$T_{26}$};
+\draw  (-1,2.5) rectangle (-0.5,2)node[pos=.5]{$T_{36}$};
+\draw  (-0.5,2) rectangle (0,1.5)node[pos=.5]{$T_{46}$};
+\draw  (0,1.5) rectangle (0.5,1)node[pos=.5]{$T_{56}$};
+\draw  (0.5,1) rectangle (1,0.5)node[pos=.5]{$T_{66}$} node [below left]{$x_6$};
+
+\draw [thick, orange, opacity=1] (-1.5,3) node [above right]{zu untersuchen} rectangle (-1,2.5);
+\draw [very thick, green, opacity=.75] (-1.5,2.5) rectangle (-1,2);
+\draw [very thick, green, opacity=.75] (0.5,1) rectangle (1,0.5);
+\draw [very thick, brown, opacity=.75] (-1.5,2) rectangle (-1,1.5);
+\draw [very thick, brown, opacity=.75] (0,1.5) rectangle (0.5,1);
+\draw [very thick, purple, opacity=.75] (-1.5,1.5) rectangle (-1,1);
+\draw [very thick, purple, opacity=.75] (-0.5,2)rectangle (0,1.5);
+\draw [very thick, red, opacity=.75] (-1.5,1) rectangle (-1,0.5);
+\draw [very thick, red, opacity=.75] (-1,2.5) rectangle (-0.5,2);
+\draw [thick,green] (-1.5,0.1) -- (0.48,0.1);
+\draw [thick,green] (0.52,0.1) -- (1,0.1);
+\draw [thick,brown] (-1.5,0) -- (-.02,0);
+\draw [thick,brown] (0.02,0) -- (1,0);
+\draw [thick,purple] (-1.5,-0.1) -- (-0.52,-0.1);
+\draw [thick,purple] (-0.48,-0.1) -- (1,-0.1);
+\draw [thick,red] (-1.5,-0.2) -- (-1.02,-0.2);
+\draw [thick,red] (-0.98,-0.2) -- (1,-0.2);
+\draw [thick,orange] (-1.5,0.2) -- (1,0.2);
+\node [right] at (1.2,0) {$\leftarrow T_{26}$ kann potentiell durch diese Kombinationen gebildet werden};
+\end{tikzpicture}\\
 $T_{26}=\bigcup_{2\leq k<5}\{x| x\to AB \wedge \underbrace{A \Rightarrow^* x_2\dots x_k}_{\Leftrightarrow A \in T_{2k}}, \; \underbrace{B\Rightarrow^* x_{k+1}\dots x_6}_{\Leftrightarrow B \in T_{k+1\, 6}}\}$
 \begin{itemize}
-\item $k=2$: $A\in T_{22},\; B \in T_{36}$ (lila)
-\item $k=3$: $A \in T_{23}, \; B \in T_{46}$ (grün)
+\item $k=2$: $A\in T_{22},\; B \in T_{36}$ (rot)
+\item $k=3$: $A \in T_{23}, \; B \in T_{46}$ (lila)
 \item $k=4$: $A\in T_{24}, \; B \in T_{56}$ (braun)
-\item $k=5$: $A \in T_{25}, \; B \in T_{66}$ (hellgrün)
+\item $k=5$: $A \in T_{25}, \; B \in T_{66}$ (grün)
 \end{itemize}
-\subparagraph{Bsp.:} Wir prüfen $(()()) \in L(G')$ für die Grammatik $G'$ in CNF, die die Sprache der korrekten Klammerung erzeugt.\\
-ABB100 \\
+\subparagraph{Bsp.:} Wir prüfen $(()()) \in L(G')$ für die Grammatik $G'$ in CNF, die die Sprache der korrekten Klammerung erzeugt (siehe Übung: $S\to SS,\; S \to LA,\; A\to SR$).\\
+\begin{tikzpicture}[scale=1.5]
+\draw  (-2,3) rectangle (-1.5,2.5);
+\draw  (-2,2.5) rectangle (-1.5,2);
+\draw  (-2,2) rectangle (-1.5,1.5);
+\draw  (-2,1.5) rectangle (-1.5,1);
+\draw  (-2,1) rectangle (-1.5,0.5) node [below left]{$($};
+\draw  (-1.5,2.5) rectangle (-1,2);
+\draw  (-1.5,2) rectangle (-1,1.5);
+\draw  (-1.5,1.5) rectangle (-1,1);
+\draw  (-1.5,1) rectangle (-1,0.5) node [below left]{$($};
+\draw  (-1,2) rectangle (-0.5,1.5);
+\draw  (-1,1.5) rectangle (-0.5,1);
+\draw  (-1,1) rectangle (-0.5,0.5) node [below left]{$)$};
+\draw  (-0.5,1.5) rectangle (0,1);
+\draw  (-0.5,1) rectangle (0,0.5) node [below left]{$($};
+\draw  (0,1) rectangle (0.5,0.5) node [below left]{$)$};
+\draw  (-2,3.5) rectangle (-1.5,3);
+\draw  (-1.5,3) rectangle (-1,2.5);
+\draw  (-1,2.5) rectangle (-0.5,2);
+\draw  (-0.5,2) rectangle (0,1.5);
+\draw  (0,1.5) rectangle (0.5,1);
+\draw  (0.5,1) rectangle (1,0.5) node [below left]{$)$};
+\node (v1) at (-1.75,3.25) {$S$};
+\node (v2) at (-1.75,0.75) {$L$};
+\node (v3) at (-1.25,2.75) {$A$};
+\node (v4) at (-1.25,2.25) {$S$};
+\node (v6) at (-1.25,1.25) {$S$};
+\node (v8) at (-1.25,0.75) {$L$};
+\node (v9) at (-0.75,0.75) {$R$};
+\node (v12) at (-0.25,1.75) {$R$};
+\node (v7) at (-0.25,1.25) {$S$};
+\node (v10) at (-0.25,0.75) {$L$};
+\node (v11) at (0.25,0.75) {$R$};
+\node (v5) at (0.75,0.75) {$R$};
+\draw [green] (v2) -- (v1) -- (v3);
+\draw [orange] (v6) -- (v4) -- (v7);
+\draw [brown] (v8) -- (v6) -- (v9);
+\draw [purple] (v10) -- (v7) -- (v11);
+\draw [red] (v7) -- (v12) -- (v5);
+\draw [blue] (v4) -- (v3) -- (-0.125,1.875) -- (v5);
+\draw [-latex] (-2,0) -- (1,0) node[pos=.5, below, align=center]{1. Wort nach Zeichen\\ aufschreiben};
+\draw [-latex] (-2.5,0.5) -- (-2.5,3.5) node[pos=.5, left, align=right]{2. Regeln \\suchen};
+\end{tikzpicture}\\
 Die Laufzeit des CYK-Algorithmus ergibt sich aus\\
 (Größe der Tabelle)$\cdot$(Aufwand pro Tabelleneintrag)$=O(n^2) \cdot O(n)=O(n^3)$.
 \begin{lstlisting}[language=C]
@@ -481,7 +1145,54 @@ for (k=i; k<j; k++) {
 Grammatik für arithmetische Ausdrücke:\\
 $E\to E+E \,|\, E - E \,|\, E*E \,|\, E/E \,|\, x \,|\, y \,|\, z$\\
 Daraus lässt sich abbilden:\\
-ABB 111\\
+\begin{tikzpicture}[scale=1]
+\node (v3) at (0,0) {$E$};
+\node at (v3) [right=.3, orange] {$x*(y+z)$ \lightning};
+\node (v2) at (-1,-1) {$E$};
+\node (v7) at (0,-1) {$*$};
+\node (v4) at (2,-1) {$E$};
+\node at (v4) [right=.3, orange] {$y+z$};
+\node (v1) at (-1,-2) {$x$};
+\node (v8) at (1,-2) {$E$};
+\node (v10) at (2,-2) {$+$};
+\node (v5) at (3,-2) {$E$};
+\node (v9) at (1,-3) {$y$};
+\node (v6) at (3,-3) {$z$};
+\draw (v1) -- (v2) -- (v3);
+\draw (v3) -- (v4) -- (v5) -- (v6);
+\draw (v3) -- (v7);
+\draw (v4) -- (v8) -- (v9);
+\draw (v4) -- (v10);
+\node at (-1,-4) {$x$};
+\node at (0,-4) {$*$};
+\node at (1,-4) {$y$};
+\node at (2,-4) {$+$};
+\node at (3,-4) {$z$};
+\end{tikzpicture} \quad
+\begin{tikzpicture}[scale=1]
+\node (v3) at (0,0) {$E$};
+\node at (v3) [right=.3, orange] {$(x*y)+z$ \checkmark};
+\node (v2) at (1,-1) {$E$};
+\node (v7) at (0,-1) {$+$};
+\node (v4) at (-2,-1) {$E$};
+\node at (v4) [left=.3, orange] {$x*y$};
+\node (v1) at (1,-2) {$z$};
+\node (v8) at (-3,-2) {$E$};
+\node (v10) at (-2,-2) {$*$};
+\node (v5) at (-1,-2) {$E$};
+\node (v9) at (-3,-3) {$x$};
+\node (v6) at (-1,-3) {$y$};
+\draw (v1) -- (v2) -- (v3);
+\draw (v3) -- (v4) -- (v5) -- (v6);
+\draw (v3) -- (v7);
+\draw (v4) -- (v8) -- (v9);
+\draw (v4) -- (v10);
+\node at (1,-4) {$z$};
+\node at (0,-4) {$+$};
+\node at (-3,-4) {$x$};
+\node at (-2,-4) {$*$};
+\node at (-1,-4) {$y$};
+\end{tikzpicture}\\
 Diese Grammatik ist auch mehrdeutig, wenn man sich auf nur einen Operator beschränkt:\\
 ABB 112\\
 Da $-$ links-assoziativ ist, stellt nur der linke Ableitungsbaum die korrekte Interpretation des Ausdrucks $x-y-z$ dar.\\
