@@ -306,7 +306,14 @@ Sei $f: Db(f) \to \mathbb{R}, \; Db(f)\subseteq \mathbb{R}$ stetig auf $[a,b]  D
 \subparagraph{Diskussion:}
 \begin{enumerate}[label=\alph*.)]
 \item $f(x) = \tan x$ nimmt auf $\left( - \frac{\pi}{2}, \frac{\pi}{2}\right)$ kein Maximum an.\\
-ABB21
+\begin{tikzpicture}[scale = 0.5]
+\draw plot [domain=(-1.3):(1.3)] (\x, {tan(\x r)} );
+\draw (1.56, 0.2) -- (1.56, -0.2) node [below]{$\frac{\pi}{2}$};
+\draw (-1.56, 0.2) -- (-1.56, -0.2) node [below]{$-\frac{\pi}{2}$};
+
+\draw [-latex] (-3.2*2,0) -- (3.2*2,0) node [below right] {$x$};
+\draw [-latex] (0,-2.2*2) -- (0,2.2*2) node [above right] {$y$};
+\end{tikzpicture}
 \item $f(x) = \begin{cases}
 \arctan \frac{1}{x} & x \in [-1,1]\setminus \{0\}\\
 0 & x = 0
@@ -337,7 +344,16 @@ Wie $r$ bestimmt wird liefert:
 Dann ist $\sum_{n=0}^\infty a_n (x-x_0)^n\begin{cases}
 \text{absolut konvergent} & \text{für }x\in \mathbb{R} \text{ mit }|x-x_0|<r\\
 \text{divergent} & \text{für }x\in \mathbb{R} \text{ mit }|x-x_0|>r
-\end{cases}$.
+\end{cases}$.\\
+\begin{tikzpicture}[scale = 0.7]
+\draw (0,0.25) -- (0,-0.25) node[below]{$x_0$};
+\draw (3,0.25) -- (3,-0.25) node[below]{$x_0+r$};
+\draw (-3,0.25) -- (-3,-0.25) node[below]{$x_0-r$};
+\draw [(-), green, thick](-3,0.1) -- (3,0.1) node [above, pos=0.5]{absolut konvergent};
+\draw [-), orange, thick](-6,0.1) -- (-3,0.1) node [above, pos=0.5]{divergent};
+\draw [(-, orange, thick](3,0.1) -- (6,0.1) node [above, pos=0.5]{divergent};
+\draw [-latex] (-6.4,0) -- (6.4,0) node [below right] {$x$};
+\end{tikzpicture}
 
 \subparagraph{Diskussion:} 
 \begin{itemize}
@@ -385,7 +401,23 @@ Im Konvergenzbereich $K$ wird dadurch eine Potenzreihe eine Funktion dargestellt
 \chapter{Differentialrechnung für Funktionen einer reellen Variablen}
 \section{Grundbegriffe}
 \emph{Tangentenproblem}\\
-ABB38\\
+\begin{tikzpicture}[scale = 1]
+\draw [-latex] (-2.4,0) -- (6.4,0) node [below right] {$x$};
+\draw [-latex] (0,-0.4) -- (0,4.4) node [above right] {$y$};
+\draw [dashed] (2,0) node[below]{$x_0$} -- (2,0.82) -- (0,0.82) node[left]{$f(x_0)$};
+\draw [dashed] (4.5,0) node[below]{$x_1$} -- (4.5,3.14) -- (0,3.14) node[left]{$f(x_1)$};
+
+\draw [domain=-0.1:5] plot[smooth] (\x,{\x*\x/7+0.25});
+\draw [green] [domain=-0.1:5] plot[smooth] (\x,{\x*4/7-.34}) node[right]{Tangente};
+\draw [orange] [domain=-0.1:5] plot[smooth] (\x,{\x*0.93-1.04}) node[right]{Sekante};
+
+\fill [orange] (2,0.82) circle (0.05);
+\fill [orange] (4.5,3.14) circle (0.05);
+\draw [orange] (1.95,0) arc (0:42:.85);
+\draw [green] (3,0) arc (0:30:2.38);
+\node [orange] at (1.6,0.2) {$\varphi$};
+\node [green] at (2.4,0.5) {$\alpha$};
+\end{tikzpicture}\\
 Gegeben: $y=f(x)$\\
 Gesucht: Tangente im Punkt $(x_0, f(x_0))$
 \begin{itemize}
@@ -406,7 +438,12 @@ $f'(x_0)$ heißt dann \emph{1. Ableitung} von $f$ an der Stelle $x_0$.
 Anstieg der Tangente ist als $m=\tan \alpha = f'(x_0)$
 \item $f$ in $x_0$ differenzierbar bedeutet es existiert eine eindeutige Tangente an die Kurve in dieser Stelle.\\
 z.B. ist $f: \mathbb{R}\to \mathbb{R}, \; f(x) = |x|$ in $x_0=0$ nicht differenzierbar:\\
-ABB39
+\begin{tikzpicture}[scale = 0.5]
+\draw [-latex] (-6.4,0) -- (6.4,0) node [below right] {$x$};
+\draw [-latex] (0,-0.4) -- (0,4.4) node [above right] {$y$};
+\draw (-4,4) -- (0,0) -- (4,4);
+\draw[dashed] (2,0) node[below]{$1$} -- (2,2) -- (0,2) node[left]{$1$};
+\end{tikzpicture}
 \end{itemize}
 
 \paragraph{Satz 1:} Ist $f: \mathbb{R}\to \mathbb{R}$ in $x_0$ differenzierbar, so ist $f$ in $x_0$ stetig.\\
@@ -453,7 +490,26 @@ Also $f'(x)=\cos x$.\\
 Zur Ableitung zusammengesetzter Funktionen lernen wir im später weitere Ableitungsregeln kennen.
 
 \subsection{Das Differential} \parskp
-ABB 49\\
+\begin{tikzpicture}[scale = 1]
+\draw [-latex] (-2.4,0) -- (6.4,0) node [below right] {$x$};
+\draw [-latex] (0,-0.4) -- (0,4.4) node [above right] {$y$};
+\draw [dashed] (2,0) node[below]{$x_0$} -- (2,0.82) -- (0,0.82) node[left]{$f(x_0)$};
+\draw [dashed] (4.5,0) node[below]{$x+h$} -- (4.5,3.14) -- (0,3.14) node[left]{$f(x+h)$};
+
+\draw [domain=-0.1:5] plot[smooth] (\x,{\x*\x/7+0.25});
+\draw [green] [domain=-0.1:5] plot[smooth] (\x,{\x*4/7-.34}) node[below right]{Tangente};
+
+\draw [green] (3.5,.82) arc (0:30:1.46);
+\node [green] at (3,1.1) {$\alpha$};
+\node [right] at (5,3.8) {$y=f(x)$};
+\draw [dashed] (2,0.82) -- (4.5,0.82);
+\draw [orange,|-|] (2,0.65) node[below right]{$\mathrm{d}x=\Delta x=x$} -- (4.5,0.65);
+\draw [brown,|-|](4.65,2.23) -- (4.65,0.82) node[pos=.5, right]{$\mathrm{d}y$};
+
+\draw [purple, |-|] (4.8,0.82) -- (4.8,3.14) node[below right]{$\Delta y$};
+\node [right] at (7,2.5) {$\mathrm{d}y$: Veränderung der Funktion};
+\node [right] at (7,1.5) {$\Delta y$: Veränderung der Tangente};
+\end{tikzpicture}\\
 $\mathrm{d}y=h\cdot \tan \alpha = f \cdot f'(x_0)$
 \paragraph{Def. 4:} 
 \begin{enumerate}[label=\alph*.)]
