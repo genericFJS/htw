@@ -11,7 +11,7 @@
 %-- Für Spicker einiges anders:
 \ifthenelse{\equal{\customDocumentClass}{cheatsheet}}{
 	\documentclass[a4paper,10pt,landscape]{scrartcl}
-	\RequirePackage{geometry}
+	\usepackage{geometry}
 	\geometry{a4paper, top=2mm, bottom=2mm, headsep=0mm, footskip=0mm, left=2mm, right=2mm}
 	
 	% Für Spicker \spsection für Section, zur Strukturierung \HRule oder \HDRule Linie einsetzen
@@ -30,20 +30,19 @@
 	  \noindent\hdashrule[0.2ex]{\linewidth}{0.2mm}{1mm} \par
 	  \vspace*{\dimexpr-\parskip-.5\baselineskip+#1}}
 }{	%-- Ende Spicker-Unterscheidung-if
-	
-	\RequirePackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
-	
 	%-- Unterscheidung Doppelseitig
 	\ifthenelse{\boolean{twosided}}{
 		\documentclass[a4paper,11pt, footheight=26pt,twoside]{scrreprt}
+		\usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
 		\geometry{top=30mm, bottom=22mm, headsep=10mm, footskip=12mm, left=20mm, right=20mm}
 	}{
 		\documentclass[a4paper,11pt, footheight=26pt]{scrreprt}
+		\usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
 		\geometry{top=30mm, bottom=22mm, headsep=10mm, footskip=12mm, inner=27mm, outer=13mm}
 	}
 	
 	%-- Nummerierung bis Subsubsection für Report
-	\ifthenelse{\equals{\customDocumentClass}{report} \OR \equals{\customDocumentClass}{scrreprt}}{
+	\ifthenelse{\equal{\customDocumentClass}{report} \OR \equal{\customDocumentClass}{scrreprt}}{
 		\setcounter{secnumdepth}{3}	% zählt auch subsubsection
 		\setcounter{tocdepth}{3}	% Inhaltsverzeichnis bis in subsubsection
 	}{}
