@@ -5,6 +5,8 @@
 \setboolean{twosided}{false}
 % Eigene Dokument-Klasse (alle KOMA möglich; cheatsheet für Spicker [3 Spalten pro Seite, alles kleiner])
 \newcommand{\customDocumentClass}{scrreprt}
+% Unterscheidung verschiedener Designs: htw, fjs
+\newcommand{\customDesign}{htw}
 
 %-- Für Spicker einiges anders:
 \ifthenelse{\equal{\customDocumentClass}{cheatsheet}}{
@@ -207,6 +209,13 @@ linkcolor=black,%
 citecolor=red,%
 urlcolor=green,%
 ]{hyperref}
+
+%-- Unterscheidung des Stils
+\ifthenelse{\equal{\customDesign}{htw}}{
+	% HTW Corporate Design: Arial (Helvetica)
+	\usepackage{helvet}
+	\renewcommand{\familydefault}{\sfdefault}
+}{}
 
 % Titel, Autor usw. werden vor dem Anfang des Dokuments in einem Rutsch definiert…
 \newcommand{\DTitel}[1]{\newcommand{\Dokumententitel}{#1}}
