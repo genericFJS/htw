@@ -1,3 +1,6 @@
+\documentclass[a4paper,11pt, footheight=26pt
+%,twoside
+]{scrreprt}
 \usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
 \geometry{a4paper, top=30mm, bottom=22mm,headsep=10mm, footskip=12mm
 , left=20mm, right=20mm
@@ -24,8 +27,8 @@
 % Style-Aufhübschung
 \usepackage{soul, color}	% Kapitälchen, Unterstrichen, Durchgestrichen usw. im Text
 \usepackage{scrlayer-scrpage}	% Kopf-/Fußzeile
-%\usepackage{titleref}
 \usepackage[perpage]{footmisc}	% Fußnotenzählung Seitenweit, nicht Dokumentenweit
+%\usepackage{titleref}
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}	% Fußnoten-Symbole anstatt Zahlen
 \renewcommand*{\titlepagestyle}{empty} % Keine Seitennummer auf Titelseite
 
@@ -190,13 +193,13 @@ urlcolor=green,%
 	\automark[section]{section}
 	\automark*[subsection]{subsection}
 	\pagestyle{scrheadings}
-	\ihead{\includegraphics[height=1.7em]{\workingdir LaTeX_master/HTW-Logo.eps}}
+	\ihead{\includegraphics[height=1.7em]{\workingdir .LaTeX_master/HTW-Logo.eps}}
 	%\ohead{\truncate{5cm}{\Dokumententitel}}
 	\ohead{\Dokumententitel}
 	\cfoot{\pagemark}
 	\ofoot{\Dokumentensignatur}
 	% Titelseite
-	\title{\includegraphics[width=0.35\textwidth]{\workingdir LaTeX_master/HTW-Logo.eps}\\\vspace{0.5em}
+	\title{\includegraphics[width=0.35\textwidth]{\workingdir .LaTeX_master/HTW-Logo.eps}\\\vspace{0.5em}
 	\Huge\textbf{\Dokumententitel} \\\vspace*{0,5cm}
 	\Large \Dokumentenuntertitel \\\vspace*{4cm}}
 	\author{\Autorformat{\Dokumentenautor} \vspace*{1cm}\\\Dokumentennotiz}
