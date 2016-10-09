@@ -1,0 +1,213 @@
+\newcommand{\customDir}{../}
+\input{\customDir .LaTeX_master/LaTeX_master_setup.sty}
+
+%\setboolean{twosided}{true}
+\setCustomDocumentClass{beamer}
+%\setCustomDesign{htw}
+%\setCustomSlidePath{Folien}
+
+%\setCustomTitle{DocumentTitle}
+%\setCustomSubtitle{DocumentSubtitle}
+%\setCustomAuthor{DocumentAuthor}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+%\setCustomNoteB{TitlepageNoteAfterAuthor}
+\setCustomTitle{Object oriented programming / modeling}
+\setCustomAuthor{Falk-Jonatan Strube}
+
+%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
+%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir .LaTeX_master/LaTeX_master.sty}
+\input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir .Literatur/HTW_Literatur.bib}
+
+% Definition von Titel, Autor usw.
+\date{May 4, 2016} 
+
+\begin{document}
+
+\begin{frame}[plain]
+\begin{center}
+\includegraphics[width=.3\textwidth]{\customDir .LaTeX_master/HTW-Logo.eps}
+\end{center}
+\maketitle
+\end{frame}
+\section*{Seminar outline}
+\begin{frame}
+\begin{itemize}
+\setlength\itemsep{1em}
+\item Selected glossary
+\item Presentation of the topic
+\begin{itemize}
+\item Generic programming
+\item Object oriented programming and modeling
+\begin{itemize}
+\item Inheritance
+\item Polymorphism
+\end{itemize}
+\item Relevance of the topic
+\item Sources
+\end{itemize}
+\item (Language) practice
+\item Discussion
+\end{itemize}
+\end{frame}
+
+\section*{Selected glossary}
+\begin{frame}
+\begin{itemize}
+\setlength\itemsep{1em}
+\item Generic
+\item Redundant
+\item Class
+\item Object
+\item Implementation
+\item Inheritance
+\item Polymorphism
+\end{itemize}
+\end{frame}
+
+%\section*{Presentation of the topic}
+%
+%\begin{frame}
+%\begin{center}
+%\LARGE Object oriented\\programming / modeling
+%\end{center}
+%\end{frame}
+%
+%\section*{Generic programming}
+%
+%\begin{frame}
+%\begin{itemize}
+%\setlength\itemsep{3em}
+%\item easy to use % you write what you want to have, without a concept
+%\item limited scalability % you have limited concepts to describe complex programms
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}
+%(Exaggerated) example:\bigskip\\
+%Programming a Human being:\medskip\\
+%Eating as …
+%\begin{itemize}
+%\setlength\itemsep{1em}
+%\item … an adult
+%\item … a student
+%\item … a child
+%\item … a baby
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%
+%\end{frame}
+%
+%\begin{frame}
+%\begin{itemize}
+%\setlength\itemsep{3em}
+%\item some redundancy
+%\item code can become unclear with more complex functions
+%\end{itemize}
+%\end{frame}
+%
+%\section*{Object oriented programming and modeling}
+%\begin{frame}
+%Model:
+%\begin{center}
+%
+%\end{center}
+%\end{frame}
+%
+%\section*{Inheritance}
+%
+%\begin{frame}
+%\begin{center}
+%
+%\end{center}
+%\begin{itemize}
+%\setlength\itemsep{1em}
+%\item Adult uses unchanged function \\(or may implement a new based on \emph{time\_available})
+%\item Student implements new function \\(and may use \emph{parent}-function)
+%\end{itemize}
+%\end{frame}
+%
+%\section*{Polymorphism}
+%\begin{frame}
+%\begin{itemize}
+%\setlength\itemsep{1em}
+%\item easy to expand upon
+%\item \emph{child}-classes use
+%\begin{itemize}
+%\item parent properties
+%\item parent functions
+%\end{itemize}
+%$\Rightarrow$ \textbf{Inheritance}
+%\item \emph{child}-classes can change behavior of
+%\begin{itemize}
+%\item parent properties
+%\item parent functions
+%\end{itemize}
+%$\Rightarrow$ \textbf{Polymorphism}
+%\end{itemize}
+%\end{frame}
+%\begin{frame}
+%\section*{Inheritance + Polymorphism}
+%Putting \emph{inheritance} and \emph{polymorphism} to use:
+%\begin{center}
+%
+%\end{center}
+%\end{frame}
+%
+%\section*{Relevance of the topic}
+%\begin{frame}
+%\begin{itemize}
+%\item Unified Modeling Language (UML) $\Rightarrow$ Team coordination even for not computer science students
+%
+%\item Good coding practice for computer science students
+%\end{itemize}
+%\end{frame}
+%
+%\section*{Sources}
+%\begin{frame}
+%Sources and tips for further reading:
+%\nocite{*}
+%\renewcommand*{\bibfont}{\scriptsize}
+%\printbibliography[heading=none]
+%\end{frame}
+%
+%\section*{(Language) practice}
+%\begin{frame}
+%\begin{center}
+%
+%\end{center}
+%\end{frame}
+%
+%\begin{frame}
+%\begin{center}
+%
+%\end{center}
+%\end{frame}
+%
+%\section*{Discussion}
+%
+%\begin{frame}
+%\begin{itemize}
+%\setlength\itemsep{1em}
+%\item Comprehensibility:\\
+%Generic > Object oriented ?
+%\item Own experiences?
+%\item Used in everyday applications?
+%\end{itemize}
+%\end{frame}
+%
+%\section*{The End}
+%
+%\begin{frame}
+%\begin{center}
+%\LARGE Thank you for listening\\
+%and your collaboration!
+%\end{center}
+%\end{frame}
+
+\end{document}
