@@ -1,57 +1,98 @@
-%-- Für Spicker einiges anders:
-\ifthenelse{\equal{\customDocumentClass}{cheatsheet}}{
-	\documentclass[a4paper,10pt,landscape]{scrartcl}
-	\usepackage{geometry}
-	\geometry{a4paper, top=2mm, bottom=2mm, headsep=0mm, footskip=0mm, left=2mm, right=2mm}
+%-- Prüfen, ob Beamer
+\ifthenelse{\equal{\customDocumentClass}{beamer}}{
+%%% TODO: andere Layouts für Beamer außer HTW
+	\documentclass[ignorenonframetext, 11pt, table]{beamer}
 	
-	% Für Spicker \spsection für Section, zur Strukturierung \HRule oder \HDRule Linie einsetzen
-	\usepackage{multicol}
-	\newcommand{\spsection}[1]{\textbf{#1}}	% Platzsparende "section" für Spicker
-	\setlist{nolistsep}
-	\usepackage{parskip}	% Aufzählung Abstand
-	\setlength{\parskip}{0em}
-	\pagestyle{empty}
-}{	%-- Ende Spicker-Unterscheidung-if
-	%-- Unterscheidung Doppelseitig
-	\ifthenelse{\boolean{twosided}}{
-		\documentclass[a4paper,11pt, footheight=26pt,twoside]{\customDocumentClass}
-		\usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
-		\geometry{top=30mm, bottom=22mm, headsep=10mm, footskip=12mm, inner=27mm, outer=13mm}
-	}{
-		\documentclass[a4paper,11pt, footheight=26pt]{\customDocumentClass}
-		\usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
-		\geometry{top=30mm, bottom=22mm, headsep=10mm, footskip=12mm, left=20mm, right=20mm}
+	\usenavigationsymbolstemplate{}
+	\setbeamercolor{author in head/foot}{fg=black}
+	\setbeamercolor{title}{fg=black}
+	\setbeamercolor{bibliography entry author}{fg=htworange!70}
+	%\setbeamercolor{bibliography entry title}{fg=blue} 
+	\setbeamercolor{bibliography entry location}{fg=htworange!60} 
+	\setbeamercolor{bibliography entry note}{fg=htworange!60}  
+	
+	\setbeamertemplate{itemize item}{\color{black}$\bullet$}
+	\setbeamertemplate{itemize subitem}{\color{black}--}
+	\setbeamertemplate{itemize subsubitem}{\color{black}$\bullet$}
+	\makeatother
+	\setbeamertemplate{footline}
+	{
+	\leavevmode
+	\def\arraystretch{1.2}
+	\arrayrulecolor{gray}
+	\begin{tabular}{ p{0.167\textwidth} | p{0.491\textwidth} | p{0.089\textwidth} | p{0.103\textwidth}}
+	\hline
+	\strut\insertshortauthor & \insertshorttitle & Slide \insertframenumber{}% / \inserttotalframenumber{}
+	 & May 4, 2016\\
+	\end{tabular}
 	}
-	
-	%-- Nummerierung bis Subsubsection für Report
-	\ifthenelse{\equal{\customDocumentClass}{report} \OR \equal{\customDocumentClass}{scrreprt}}{
-		\setcounter{secnumdepth}{3}	% zählt auch subsubsection
-		\setcounter{tocdepth}{3}	% Inhaltsverzeichnis bis in subsubsection
-	}{}
+	\setbeamertemplate{headline}
+	{
+	\leavevmode
+	\setlength{\arrayrulewidth}{1pt}
+	\hspace*{2em}	
+	\begin{tabular}{p{0.63\textwidth}}
+	\rule{0pt}{3em}\normalsize{\textbf{\insertsection\strut}}\\
+	\arrayrulecolor{htworange}
+	\hline
+	\end{tabular}
+	\begin{tabular}{l}
+	\rule{0pt}{4em}\includegraphics[width=3.25cm]{\customDir .LaTeX_master/HTW_GESAMTLOGO_CMYK.eps}\\
+	\end{tabular}
+	}
+	\makeatletter	
+}{	
+	%-- Für Spicker einiges anders:
+	\ifthenelse{\equal{\customDocumentClass}{cheatsheet}}{
+		\documentclass[a4paper,10pt,landscape]{scrartcl}
+		\usepackage{geometry}
+		\geometry{top=2mm, bottom=2mm, headsep=0mm, footskip=0mm, left=2mm, right=2mm}
+		
+		% Für Spicker \spsection für Section, zur Strukturierung \HRule oder \HDRule Linie einsetzen
+		\usepackage{multicol}
+		\newcommand{\spsection}[1]{\textbf{#1}}	% Platzsparende "section" für Spicker
+	}{	%-- Ende Spicker-Unterscheidung-if
+		%-- Unterscheidung Doppelseitig
+		\ifthenelse{\boolean{twosided}}{
+			\documentclass[a4paper,11pt, footheight=26pt,twoside]{\customDocumentClass}
+			\usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
+			\geometry{top=30mm, bottom=22mm, headsep=10mm, footskip=12mm, inner=27mm, outer=13mm}
+		}{
+			\documentclass[a4paper,11pt, footheight=26pt]{\customDocumentClass}
+			\usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
+			\geometry{top=30mm, bottom=22mm, headsep=10mm, footskip=12mm, left=20mm, right=20mm}
+		}
+		%-- Nummerierung bis Subsubsection für Report
+		\ifthenelse{\equal{\customDocumentClass}{report} \OR \equal{\customDocumentClass}{scrreprt}}{
+			\setcounter{secnumdepth}{3}	% zählt auch subsubsection
+			\setcounter{tocdepth}{3}	% Inhaltsverzeichnis bis in subsubsection
+		}{}
+	}%-- Ende Spicker-Unterscheidung-else
 	
 	\usepackage[perpage]{footmisc}	% Fußnotenzählung Seitenweit, nicht Dokumentenweit
 	\usepackage{scrlayer-scrpage}	% Kopf-/Fußzeile
-
-} %-- Ende Spicker-Unterscheidung-else
+	\renewcommand*{\thefootnote}{\fnsymbol{footnote}}	% Fußnoten-Symbole anstatt Zahlen
+	\renewcommand*{\titlepagestyle}{empty} % Keine Seitennummer auf Titelseite
+}
 
 % Input inkl. Umlaute, Silbentrennung
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-%%% if standard-sprache
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
 \usepackage[english,ngerman]{babel}
 \usepackage{csquotes}	% Anführungszeichen
+\RequirePackage{marvosym}
 \usepackage{eurosym}
 
 % Style-Aufhübschung
 \usepackage{soul, color}	% Kapitälchen, Unterstrichen, Durchgestrichen usw. im Text
 %\usepackage{titleref}
-\renewcommand*{\thefootnote}{\fnsymbol{footnote}}	% Fußnoten-Symbole anstatt Zahlen
-\renewcommand*{\titlepagestyle}{empty} % Keine Seitennummer auf Titelseite
 
 % Mathe usw.
 \usepackage{amssymb}
 \usepackage{amsthm}
+\ifthenelse{\equal{\customDocumentClass}{beamer}}{}{
 \usepackage[fleqn,intlimits]{amsmath}	% fleqn: align-Umgebung rechtsbündig; intlimits: Integralgrenzen immer ober-/unterhalb
+}
 %\usepackage{mathtools} % u.a. schönere underbraces
 \usepackage{xcolor}
 \usepackage{esint}	% Schönere Integrale, \oiint vorhanden
@@ -76,6 +117,7 @@
 \usetikzlibrary{automata,positioning} % Zeilenumbruch im Node node[align=center] {Text\\nächste Zeile} automata für Graphen
 \usetikzlibrary{matrix}
 \usetikzlibrary{patterns}	% Schraffierte Füllung
+\usetikzlibrary{shapes.geometric}	% Polygon usw.
 \tikzstyle{reverseclip}=[insert path={	% Inverser Clip \clip
 	(current page.north east) --
 	(current page.south east) --
@@ -115,21 +157,23 @@
 \NumTabs{6}	% Anzahl von Tabs pro Zeile zum springen
 \usepackage{listings} % Source-Code mit Tabs
 \usepackage{lstautogobble} 
+\ifthenelse{\equal{\customDocumentClass}{beamer}}{}{
 \usepackage{enumitem}	% Anpassung der enumerates
 \setlist[enumerate,1]{label=\arabic*.)}	% global andere Enum-Items
-\newenvironment{anumerate}{\begin{enumerate}[label=\alph*.)]}{\end{enumerate}} % Alphabetische Aufzählung
 \renewcommand{\labelitemiii}{$\scriptscriptstyle ^\blacklozenge$} % global andere 3. Item-Aufzählungszeichen
+}
+\newenvironment{anumerate}{\begin{enumerate}[label=\alph*.)]}{\end{enumerate}} % Alphabetische Aufzählung
 \usepackage{letltxmacro} % neue Definiton von Grundbefehlen
 % Nutzen:
 %\LetLtxMacro{\oldemph}{\emph}
 %\renewcommand{\emph}[1]{\oldemph{#1}}
-\usepackage{xpatch}	% ua. Konkatenieren von Strings/Variablen (etoolbox)
+\RequirePackage{xpatch}	% ua. Konkatenieren von Strings/Variablen (etoolbox)
 
 
 % Einrichtung von lst
 \lstset{
 basicstyle=\ttfamily, 
-mathescape=true, 
+%mathescape=true, 
 %escapeinside=^^, 
 autogobble, 
 tabsize=2,
@@ -162,7 +206,7 @@ literate=%
 \let\numberLineAt\StartLineAt
 
 % BibTeX
-\usepackage[backend=bibtex, bibencoding=ascii,
+\usepackage[backend=bibtex8, bibencoding=ascii,
 %style=authortitle, citestyle=authortitle-ibid,
 %doi=false,
 %isbn=false,
@@ -179,6 +223,7 @@ literate=%
 
 % pdf-Setup
 \usepackage{pdfpages}
+\ifthenelse{\equal{\customDocumentClass}{beamer}}{}{
 \usepackage[bookmarks,%
 bookmarksopen=false,% Klappt die Bookmarks in Acrobat aus
 colorlinks=true,%
@@ -186,6 +231,7 @@ linkcolor=black,%
 citecolor=red,%
 urlcolor=green,%
 ]{hyperref}
+}
 
 %-- Unterscheidung des Stils
 \newcommand{\customLogo}{}
@@ -204,15 +250,15 @@ urlcolor=green,%
 \AtBeginDocument{
 	% Autor und Titel für pdf-Eigenschaften festlegen, falls noch nicht geschehen
 	\providecommand{\pdfAuthor}{John Doe}
-	\ifthenelse{\equal{\customAuthor}{}} {} {\renewcommand{\pdfAuthor}{\customAuthor}}
+	\ifdefempty{\customAuthor} {} {\renewcommand{\pdfAuthor}{\customAuthor}}
 	\providecommand{\pdfTitle}{}
 	\providecommand{\pdfTitleA}{}
 	\providecommand{\pdfTitleB}{}
 	\providecommand{\pdfTitleC}{}	
-	\ifthenelse{\equal{\pdfTitle}{}}{
-		\ifthenelse{\equal{\customPreamble}{}} {} {\renewcommand{\pdfTitleA}{\customPreamble{} | }}
-		\ifthenelse{\equal{\customTitle}{}} {\renewcommand{\pdfTitleB}{No Title}} {\renewcommand{\pdfTitleB}{\customTitle}}
-		\ifthenelse{\equal{\customSubtitle}{}} {} {\renewcommand{\pdfTitleC}{ - \customSubtitle}}
+	\ifdefempty{\pdfTitle}{
+		\ifdefempty{\customPreamble} {} {\renewcommand{\pdfTitleA}{\customPreamble{} | }}
+		\ifdefempty{\customTitle} {\renewcommand{\pdfTitleB}{No Title}} {\renewcommand{\pdfTitleB}{\customTitle}}
+		\ifdefempty{\customSubtitle} {} {\renewcommand{\pdfTitleC}{ - \customSubtitle}}
 	}{}
 	
 	\newcommand{\customLogoLocation}{\customDir .LaTeX_master/\customLogo}
@@ -220,24 +266,51 @@ urlcolor=green,%
 		pdfauthor={\pdfAuthor},
 		pdftitle={\pdfTitleA\pdfTitleB\pdfTitleC},
 	}
-	\automark[section]{section}
-	\automark*[subsection]{subsection}
-	\pagestyle{scrheadings}
-	\ihead{\includegraphics[height=1.7em]{\customLogoLocation}}
-	%\ohead{\truncate{5cm}{\customTitle}}
-	\ohead{\customTitle}
-	\cfoot{\pagemark}
-	\ofoot{\customSignature}
-	% Titelseite
-	\title{
-	\includegraphics[width=0.35\textwidth]{\customDir .LaTeX_master/\customLogo}\\\vspace{0.5em}
-	\Huge\textbf{\customTitle}
-	\ifthenelse{\equal{\customSubtitle}{}} {} {\\\vspace*{0.7em}\Large \customSubtitle}
-	\\\vspace*{5em}}
-	\author{
-	\ifthenelse{\equal{\customNoteA}{}} {} {\customNoteA \vspace*{1em}}\\ 
-	\ifthenelse{\equal{\customAuthor}{}} {} {\customTitleAuthor{\customAuthor}}
-	\ifthenelse{\equal{\customNoteB}{}} {} {\vspace*{1em}\\\customNoteB}
+	\ifthenelse{\equal{\customDocumentClass}{beamer}}{
+		\title{\customTitle}
+		\author{\customAuthor}
+	}{
+		\automark[section]{section}
+		\automark*[subsection]{subsection}
+		\pagestyle{scrheadings}
+		\ifthenelse{\equal{\customDocumentClass}{report} \OR \equal{\customDocumentClass}{scrreprt}}{
+		\renewcommand*{\chapterpagestyle}{scrheadings}
+		}{}
+		%\renewcommand*{\titlepagestyle}{scrheadings}
+		\ihead{\includegraphics[height=1.7em]{\customLogoLocation}}
+		%\ohead{\truncate{5cm}{\customTitle}}
+		\ohead{\customTitle}
+		\cfoot{\pagemark}
+		\ofoot{\customSignature}
+		% Titelseite
+		\title{
+		\includegraphics[width=0.35\textwidth]{\customDir .LaTeX_master/\customLogo}\\\vspace{0.5em}
+		\Huge\textbf{\customTitle}
+		\ifdefempty{\customSubtitle} {} {\\\vspace*{0.7em}\Large \customSubtitle}
+		\\\vspace*{5em}}
+		\author{
+		\ifdefempty{\customNoteA} {} {\customNoteA \vspace*{1em}}\\ 
+		\ifdefempty{\customAuthor} {} {\customTitleAuthor{\customAuthor}}
+		\ifdefempty{\customNoteB}{}{\vspace*{1em}\\\customNoteB}
+		}
+		
+		\ifthenelse{\equal{\customDocumentClass}{cheatsheet}}{
+			\pagestyle{empty}
+			\setlist{nolistsep}
+	%		\usepackage{parskip}	% Aufzählung Abstand
+	%		\setlength{\parskip}{0em}
+			\lstset{
+	    belowcaptionskip=0pt,
+	    belowskip=0pt,
+	    aboveskip=0pt,
+			tabsize=2,
+			frame=none,
+			numbers=none,
+			showspaces=false,
+			showstringspaces=false,
+			breaklines=true,
+			}
+		}{}
 	}
 }
 
