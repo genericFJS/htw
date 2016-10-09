@@ -1,14 +1,26 @@
-% Header aus der Vorlage
-\input{../LaTeX_master/LaTeX_master_HTW}
+\newcommand{\customDir}{../}
+\input{\customDir .LaTeX_master/LaTeX_master_setup.sty}
 
-% Definition von Titel, Autor usw.
-\DTitel{Betriebssysteme I}
-\DUntertitel{Vorlesungs- und Praktikumsnotizen}
-\DAutor{Falk-Jonatan Strube}
-\DNotiz{Vorlesung und Praktikum von \\Prof. Dr.-Ing. Baumgartl}
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+\setCustomTitle{Betriebssysteme I}
+\setCustomSubtitle{Vorlesungs- und Praktikumsnotizen}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{Titlepage Note before Author}
+\setCustomNoteB{Vorlesung und Praktikum von \\Prof. Dr.-Ing. Baumgartl}
+
+%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
+%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir .LaTeX_master/LaTeX_master.sty}
+\input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir .Literatur/HTW_Literatur.bib}
 
 \begin{document}
 
+%\selectlanguage{english}
 \maketitle
 \newpage
 \tableofcontents

@@ -1,14 +1,24 @@
-% Header aus der Vorlage
-\input{../LaTeX_master/LaTeX_master_HTW_Spicker}
+\newcommand{\customDir}{../}
+\input{\customDir .LaTeX_master/LaTeX_master_setup.sty}
 
-\bibliography{../Literatur/HTW_Literatur.bib}
+%\setboolean{twosided}{true}
+\setCustomDocumentClass{cheatsheet}
+%\setCustomDesign{htw}
+%\setCustomSlidePath{Folien}
 
-% Definition von Titel, Autor usw.
-\DTitel{Programmieren II}
-\DUntertitel{Spicker (Bauteile)}
-\DAutor{Falk-Jonatan Strube}
-\DNotiz{Prüfung von Prof. Dr.-Ing. Beck}
-\pagestyle{empty}
+\setCustomTitle{Programmierung II}
+\setCustomSubtitle{Spicker}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+\setCustomNoteB{Vorlesung von Prof. Dr.-Ing. Beck}
+
+%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
+%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir .LaTeX_master/LaTeX_master.sty}
+\input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir .Literatur/HTW_Literatur.bib}
 
 \begin{document}
 \begin{multicols*}{3}
