@@ -1,21 +1,28 @@
-% Header aus der Vorlage
-\input{../LaTeX_master/LaTeX_master_HTW}
+\newcommand{\customDir}{../}
+\input{\customDir .LaTeX_master/LaTeX_master_setup.sty}
 
-\bibliography{../Literatur/HTW_Literatur.bib}
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+\setCustomSlidePath{Vorlesung/I370_SS2016_crop}
 
-% Definition von Titel, Autor usw.
-\DTitel{Betriebswirtschaftslehre}
-\DUntertitel{Vorlesungsskript}
-\DAutor{Falk-Jonatan Strube}
-\DNotiz{Vorlesung von Dr. Wolf-Eckart Grüning}
+\setCustomTitle{Betriebswirtschaftslehre}
+\setCustomSubtitle{Vorlesungsskript}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{Titlepage Note before Author}
+\setCustomNoteB{Vorlesung von Dr. Wolf-Eckart Grüning}
 
-\newcommand{\folie}[1]{\begin{center}
-\includegraphics[page=#1, scale=.5]{Vorlesung/I370_SS2016_crop.pdf}
-%\includegraphics[page=#1, width=.7\columnwidth, trim={2.5cm 1.8cm 2.5cm 4.35cm},clip]{Vorlesung/I370_SS2016_EineFolieProSeite.pdf}
-\end{center}}
+%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
+%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir .LaTeX_master/LaTeX_master.sty}
+\input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir .Literatur/HTW_Literatur.bib}
 
 \begin{document}
 
+%\selectlanguage{english}
 \maketitle
 \newpage
 \tableofcontents
@@ -24,17 +31,17 @@
 %\chapter*{Vorbemerkung}
 
 \chapter{BWL als Wissenschaft}
-%\folie{8}
-\folie{9}
+%\slideScale{8}
+\slideScale{9}
 \section{Angewandte- vs Grundwissenschaften}
-\folie{10}
+\slideScale{10}
 \begin{itemize}
 \item BWL ist Anwendungswissenschaft
 \item Praxis verändert sich stets (bspw. durch Internet)
 \end{itemize}
 \section{Gliederung der BWL}
 \subsection{Funktionale Gliederung}
-\folie{11}
+\slideScale{11}
 Einteilung nach Funktion im Betrieb
 \begin{itemize}
 \item Grundfunktionen
@@ -44,18 +51,18 @@ Einteilung nach Funktion im Betrieb
 \end{itemize}
 Wertschöpfung: es soll wenig Wert in die „Beschaffung“ einfließen, der Absatz soll maximiert werden.
 \subsection{Institutionelle Gliederung}
-\folie{12}
+\slideScale{12}
 Einteilung nach Zweck des Betriebs
 
 \subsection{Genetische Gliederung}
-\folie{13}
+\slideScale{13}
 Einteilung nach Lebenszeit des Betriebs\\
 Liquidation muss nicht „Bankrott“ heißen, kann auch bewusste entscheidung sein.
 
 \chapter{Management}
-%\folie{15}
+%\slideScale{15}
 \section{Managementzyklus}
-\folie{16}
+\slideScale{16}
 Manegment deswegen so gut bezahlt, wegen: Entscheidungen\\
 Entscheidungen sind die Herausforderungen des Managers im Vergleich zum Ausführenden, der weniger signifikant entscheiden muss.
 \begin{itemize}
@@ -74,7 +81,7 @@ Realisierung der Maßnahmen und eingreifen, damit sie entsprechend des Ziels umg
 \item Kontrolle\\
 Ist-Stand prüfen und mit Ziel abgleichen.
 \end{itemize}
-\folie{17}
+\slideScale{17}
 Problem mit einfachem Zyklus: Teilweise sind nicht alle Probleme nicht von Anfang an bekannt, wodurch die Planung fehlerhaft sein kann (Bsp.: Prüfungsplanung am Anfang vom Semester, obwohl die Modul-Inhalte noch gar nicht abzuschätzen sind).
 \begin{itemize}
 \item Planung:
@@ -85,7 +92,7 @@ Problem mit einfachem Zyklus: Teilweise sind nicht alle Probleme nicht von Anfan
 \end{itemize}
 
 \section{Managementkritik}
-\folie{18}
+\slideScale{18}
 \begin{itemize}
 \item Kontrollillusion
 \begin{itemize}
@@ -97,7 +104,7 @@ Problem mit einfachem Zyklus: Teilweise sind nicht alle Probleme nicht von Anfan
 Problem ist nicht zwangsläufig universell
 \end{itemize}
 \section{Merkmale eines Managers} \label{sec:merkmale_eines_managers}
-\folie{19}
+\slideScale{19}
 \begin{itemize}
 \item technische Kompetenzen\\
 Beherrschung des Fachgebiets (für Management oft nicht so entscheidend). Aber auch mentales Problem: Auswahl des Werkzeugs, was das Beste für den Zweck ist - nicht, was am einfachsten bzw. bekannt ist.
@@ -114,13 +121,13 @@ Im Zweifelsfall gegen das Unternehmen.
 Beispielsweise Sponsoring bei Fußballklubs, wo die Verantwortung gegenüber des Sponsors besteht.\\
 Im Zweifelsfall gegen den Manager.
 \end{itemize}
-\folie{20}
+\slideScale{20}
 
 \chapter{Grundlagen der Wirtschaft}
-\folie{22}
+\slideScale{22}
 \section{Bedürfnisse, Bedarf, Markt, Wirtschaft}
-\folie{23}
-\folie{24}
+\slideScale{23}
+\slideScale{24}
 Grundfrage: Was ist Wirtschaft?
 \begin{itemize}
 \item Beginnend bei: Bedürfniss\\
@@ -158,10 +165,10 @@ Dieses Prinzip gilt, seit Menschen sich spezialisiert haben und dadurch jeweils 
 \item Dienstleistungen
 \end{itemize}
 \end{itemize}
-\folie{25}
+\slideScale{25}
 
 \section{Markt- und Wettbewerbsformen}
-\folie{26}
+\slideScale{26}
 \paragraph{Übung} Beispiele:\\
 \begin{tabular}{l l}
 Begriff & Beispiel\\
@@ -173,7 +180,7 @@ bilaterales Oligopol & Kriegswaffen, Großschiffbau, Spezialausrüstung
 Ein bileterales Monopol darf es eigentlich nicht geben.
 
 \section{Rechtsrahmen}
-\folie{27}
+\slideScale{27}
 Rechtsnormen:
 \begin{itemize}
 \item Normgeber (setzen der Standards)\\
@@ -211,7 +218,7 @@ usw.
 \item UStG: Umsatzsteuer
 \end{itemize}
 Gesetze brauchen Kontrolle und Sanktionierungen.
-\folie{28}
+\slideScale{28}
 Unterschied:\\
 \begin{tabular}{p{0.2\columnwidth} p{0.7\columnwidth}}
 Privatrecht & ist einvernehmlich zwischen zwei gleichberechtigten Parteien. Ohne Einvernehmlichkeit, kein Vertrag\\
@@ -220,7 +227,7 @@ Privatrecht & ist einvernehmlich zwischen zwei gleichberechtigten Parteien. Ohne
 Arbeitsrecht und Wettbewerbsrecht sind sich nicht eindeutig einen dieser Kategorien zuzuordnen.
 
 \section{Produktionsfaktoren}
-\folie{29}
+\slideScale{29}
 \begin{itemize}
 \item Elementarfunktionen
 \begin{itemize}
@@ -244,14 +251,14 @@ Substitionen:
 \end{itemize}
 
 \section{Betriebliche Funktionen: Wertschöpfungskette}
-\folie{30}
+\slideScale{30}
 Vgl. Wertschöpfungskette $\Leftrightarrow$ Güterkreislauf\\
 Wertschöpfung hauptsächlich durch roten Bereich, gelber Bereich unterstützend.
 
 \chapter{Das Unternehmen}
-\folie{32}
+\slideScale{32}
 \section{Was ist ein Unternehmen?}
-\folie{33}
+\slideScale{33}
 \begin{itemize}
 \item Soziales System: nicht rein rationales System (Entscheidungen), nicht alle haben gleiche Voraussetzungen
 \item Planvoll organisiert: Zielvorstellung mit Maßnahmen für Erfüllung der Ziele
@@ -268,7 +275,7 @@ geregelte Abläufe (in künstlichen Systemen)
 
 \section{Rechtsformen}
 \subsection{Überblick der Rechtsformen}
-\folie{34}
+\slideScale{34}
 \begin{itemize}
 \item privatrechliche Unternehmen
 \begin{itemize}
@@ -282,7 +289,7 @@ geregelte Abläufe (in künstlichen Systemen)
 \item öffentlich-rechtliche Unternehmen: Rechtsnormen(Gesetz, Verordnung, Satzung) regeln Tätigkeit
 \end{itemize}
 \subsection{Entscheidungskriterien einer Rechtsform}
-\folie{35}
+\slideScale{35}
 \begin{itemize}
 \item Haftung
 \begin{itemize}
@@ -307,8 +314,8 @@ geregelte Abläufe (in künstlichen Systemen)
 \item Publizitätspflicht
 \end{itemize}
 \subsection{Einzelunternehmen}
-\folie{36}
-\folie{37}
+\slideScale{36}
+\slideScale{37}
 Aufnahme Gewerbebetrieb braucht:
 \begin{itemize}
 \item Gewerbeerlaubnis
@@ -316,13 +323,13 @@ Aufnahme Gewerbebetrieb braucht:
 \end{itemize}
 \subsection{Gesellschaft bürgerlichen Rechts (GbR)}
 auch ARGE: Arbeitsgemeinschaft (Zusammenschluss von Bauunternehmen zum erreichten eines größen Bauwerks)
-\folie{38}
+\slideScale{38}
 Klage besteht aus:
 \begin{itemize}
 \item wen beklagt man?
 \item was will man haben?
 \end{itemize}
-\folie{39}
+\slideScale{39}
 \subsection{Offene Handelsgesellschaft (OHG)}
 Bsp.: 
 \begin{itemize}
@@ -332,7 +339,7 @@ Bsp.:
 Firma: der Name\\
 Unternehmen: Unternehmen, dass sich an Wirtschaftsbetrieb beteiligt.\\
 $ \Rightarrow $ Zwei Firmen können ein Unternehmen bilden.
-\folie{41}
+\slideScale{41}
 
 \subsection{Kommanditgesellschaft (KG)}
 OHG mit zwei Gesellschaftern:
@@ -346,8 +353,8 @@ Bsp.:
 \item Bauer Vertriebs KG
 \item SchwörerHaus KG
 \end{itemize}
-\folie{42}
-\folie{43}
+\slideScale{42}
+\slideScale{43}
 
 \subsection{Aktiengesellschaft (AG)}
 Bsp.:
@@ -355,53 +362,53 @@ Bsp.:
 \item Daimler, BMW usw.
 \end{itemize}
 $\Rightarrow$ die meisten großen Unternehmen sind AGs.
-\folie{44}
-\folie{45}
-\folie{46}
+\slideScale{44}
+\slideScale{45}
+\slideScale{46}
 DAX: 30 größten AGs in Deutschland (Deutsche Aktien Index)\\
 Unterschied: AG an der Börse oder auf privatem Markt.\\
 Anhang AG \emph{iL}: in Liquidation (in der Auflösung: Begleichung aller Schulden usw.)\\
 AG: Kapitalbeschaffung relativ einfach (hat breite Basis an potentiellen Gesellschaftern)\\
 Anzeigen von 25\% Grundkapital: Sperrminorität (ab 25\% könnte man Veto bei Beschlüssen in Aktionärversammlungen einlegen)
-\folie{47}
+\slideScale{47}
 \subsubsection{Kleine Aktiengesellschaft}
-\folie{48}
+\slideScale{48}
 \subsubsection{Europäische Aktiengesellschaft (SE)}
-\folie{49}
+\slideScale{49}
 Bsp.:\\
 MAN SE, Conrad SE
 
 \subsection{Gesellschaft mit beschränkter Haftung (GmbH)}
-\folie{50}
-\folie{51}
-\folie{52}
-\folie{53}
+\slideScale{50}
+\slideScale{51}
+\slideScale{52}
+\slideScale{53}
 
 \subsection{GmbH \& Co. KG}
 Wirkt als KG, Komplementär ist aber GmbH.
-\folie{54}
-\folie{55}
+\slideScale{54}
+\slideScale{55}
 
 \subsection{Kommanditgesellschaft auf Aktion (KGaA)}
 Grundstruktur KG, aber in Aktien zerlegt.
-\folie{56}
-\folie{57}
+\slideScale{56}
+\slideScale{57}
 Warum eine GmbH \& Co. KG in Co. KGaA anstatt in AG übergehen wollen würde: in KGaA bleibt (alleiniges) Bestimmungsrecht durch Komplementär (im Gegensatz zu AG).
-\folie{58}
-\folie{59}
+\slideScale{58}
+\slideScale{59}
 
 \subsection{Genossenschaft (eG)}
-\folie{60}
-\folie{61}
-\folie{62}
+\slideScale{60}
+\slideScale{61}
+\slideScale{62}
 
 \subsection{Unternehmensverfassung}
 \subsubsection{Selbstorganschaft vs Fremdorganschaft}
-\folie{63}
+\slideScale{63}
 
 \section{Unternehmenszusammenschlüsse}
 \subsection{Gliederung nach Leitungszusammenhang}
-\folie{64}
+\slideScale{64}
 \begin{itemize}
 \item horizontal
 \begin{itemize}
@@ -420,7 +427,7 @@ Warum eine GmbH \& Co. KG in Co. KGaA anstatt in AG übergehen wollen würde: in
 \end{itemize}
 
 \subsection{Gliederung nach Rechtsstatus}
-\folie{65}
+\slideScale{65}
 \begin{itemize}
 \item Kartell
 \begin{itemize}
@@ -444,7 +451,7 @@ Warum eine GmbH \& Co. KG in Co. KGaA anstatt in AG übergehen wollen würde: in
 \item Hardware-Hersteller (Mobiltelefone) $\to$ Kartell (strategische Allianz) $\to$ einheitliches OS (Android)
 \end{itemize}
 Derartige zusammenschlüsse können rechtmäßig und nicht-rechtmäßig sein.
-\folie{66}
+\slideScale{66}
 Mögliche Probleme bei Zusammenschlüssen:
 \begin{itemize}
 \item Gesetze, die Monopolbildung verbieten, damit kein Zusammenschluss von Unternehmen eine Marktbeherrschung erlangt
@@ -452,21 +459,21 @@ Mögliche Probleme bei Zusammenschlüssen:
 \end{itemize}
 
 \section{Unternehmensziele}
-\folie{67}
+\slideScale{67}
 Hauptziel: Gewinnmaximierung\\
 $\text{Gewinn} = \text{Ertrag} - \text{Aufwand}$
 \paragraph{Übung} CSR (siehe \ref{sec:merkmale_eines_managers}). \\
 Beispiel: Unternehmesziel „maximale Gewinne“, CSR „Arbeitnehmer gut behandeln“ (vgl. Lohn).\\
 Weiteres Bsp.: Bettler vor Bockwurst-Stand: Bockwurst geben oder nicht? Wenn ja, dann ggf. nach Feierabend, falls etwas übrig bleibt. Oder während des Dienstes mit möglichst viel Zuschauern (als Werbung).
 
-\folie{68}
+\slideScale{68}
 $\text{Rentabilität} = \frac{\text{Gewinn}}{\text{Einsatz}}$\\
 $\text{Eigenkapital-Rentabilität} = \frac{\text{Gewinn}}{\text{Eigenkapital}}$ (in \%)
-\folie{69}
+\slideScale{69}
 $\text{Produktivität} = \frac{\text{Ergebnis}}{\text{Faktoreinsatz}}$
-\folie{70}
-\folie{71}
-\folie{72}
+\slideScale{70}
+\slideScale{71}
+\slideScale{72}
 \paragraph{Übung}\parskp
 \begin{tabular}{L{0.3} L{0.7}}
 Humanziele & Messgröße\tabularnewline
@@ -480,12 +487,12 @@ Erhöhung Kundenzufriedenheit & $\Delta$ Anzahl Wiederkäufe \tabularnewline
 \end{tabular}
 
 \chapter{Beschaffung}
-%\folie{74}
+%\slideScale{74}
 Hinweis: Themengebiet nicht primär Klausurrelevant.
 \section{Grundlagen und Ziele}
-\folie{75}
+\slideScale{75}
 \subsection{Teilbereiche der Beschaffung}
-\folie{76}
+\slideScale{76}
 Logistik: Bewegen von …
 \begin{itemize}
 \item Gütern
@@ -493,14 +500,14 @@ Logistik: Bewegen von …
 \item Informationen
 \end{itemize}
 \subsection{Ziele der Marktwirtschaft}
-\folie{77}
+\slideScale{77}
 \paragraph{Übung} Zielkonflikte:\\
 \begin{tabular}{L{0.5} L{0.5}}
 geringe Kapitalbindung (wenig Material im Lager) & hohe Flexibilität (mit wenig im Lager, kann nicht schnell auf geänderte Kundenwünsche eingegangen werden)\tabularnewline
 Umweltverträglichkeit & Wirtschaftlichkeit
 \end{tabular}
 \section{Beschaffungsgüter}
-\folie{78}
+\slideScale{78}
 \paragraph{Übung} \parskp
 \begin{tabular}{l l l }
 A & Komplettgeräte (PC, Smartphone, …) & hoher Einzelwert, geringe Stückzahlen\\
@@ -508,15 +515,15 @@ B & Kleinesatzteile, Kabel, Leitungen \\
 C & Verbrauchsmaterial (Tintenpatronen, Toner)
 \end{tabular}
 \subsection{ABC-Analyse}
-\folie{79}
-\folie{80}
-\folie{81}
-\folie{82}
-\folie{83}
-\folie{84}
-\folie{85}
+\slideScale{79}
+\slideScale{80}
+\slideScale{81}
+\slideScale{82}
+\slideScale{83}
+\slideScale{84}
+\slideScale{85}
 \subsection{XYZ-Analyse}
-\folie{86}
+\slideScale{86}
 \paragraph{Übung} \parskp
 \begin{tabular}{L{0.1} L{0.9}}
 X & Virenschutz-Software (Jahreslizenzen, werden jährlich erneuert) $\Rightarrow$ Zeitverträge (Mobilfunk, Internet usw.)\\
@@ -524,25 +531,25 @@ Y & Bereitstellung Serverkapazität (vgl. Amazon zur Weihnachtszeit)\\
 Z & Privatkunden-Aufträge
 \end{tabular}
 \section{Make or Buy}
-\folie{87}
+\slideScale{87}
 Vorteil Outsourcen:
 \begin{itemize}
 \item Leistungsauslastung nur bei Bedarf -- nicht ganzjährig
 \end{itemize}
-\folie{88}
-\folie{89}
+\slideScale{88}
+\slideScale{89}
 Transaktion: mehrere Vorgänge, die als ein Vorgang betrachtet werden (entweder es laufen alle Vorgänge ab oder keiner [vgl. Datenbank-Schreibtransaktion])
-\folie{90}
-\folie{91}
+\slideScale{90}
+\slideScale{91}
 \section{Beschaffungsarten}
-\folie{92}
+\slideScale{92}
 \section{Lagerkenngrößen}
-\folie{93}
+\slideScale{93}
 \begin{align*}
 \text{durschnitllicher Lagerbestand} &=\frac{\text{Anfangsbestand}+\text{Endbestand}}{2}\\
 &= \frac{\text{Anfangsbesand}+12 \cdot \text{Monatsbestand}}{13}
 \end{align*}
-\folie{94}
+\slideScale{94}
 \begin{tikzpicture}
 \draw [-latex] (0,0) -- (5,0) node[below right]{$t$};
 \draw [-latex] (0,0) -- (0,2) node[above]{Bestand};
@@ -554,9 +561,9 @@ Transaktion: mehrere Vorgänge, die als ein Vorgang betrachtet werden (entweder 
 \fill (2,1.5) circle (.1);
 \draw [dashed, -latex] (2,0) -- (2,1.5);
 \end{tikzpicture}
-\folie{95}
+\slideScale{95}
 \section{Lieferantenauswahl}
-\folie{96}
+\slideScale{96}
 \paragraph{Übungsaufgabe 1} Berechnen Sie den Meldebestand für Lagerartikel $T$:\\
 Sicherheitsabstand: $10ME$\\
 aktueller Buchbestand: $75ME$\\
@@ -578,10 +585,10 @@ Schlechte Werte. Verweildauer deutlich zu groß und Servicegrad zu gering.
 \end{anumerate}
 
 \chapter{Rechnungswesen}
-\folie{98}
+\slideScale{98}
 \section{Gliederung des betrieblichen Rechnungswesens}
 \subsection{Rechnungswesen des Unternehmens}
-\folie{99}
+\slideScale{99}
 \paragraph{Übung}
 \begin{itemize}
 \item Buchführung (Aufzeichnung Einnahmen, Ausgaben (Fibu, Controlling), Abschreibung …)
@@ -590,7 +597,7 @@ Schlechte Werte. Verweildauer deutlich zu groß und Servicegrad zu gering.
 \item GUV = Gewinn und Verlustrechnung
 \item Finannzamt (USt, ESt, KöSt)
 \end{itemize}
-\folie{100}
+\slideScale{100}
 \begin{itemize}
 \item Internes Rechnungswesen: \\
 Adressat ist Eigentümer usw.\\
@@ -600,7 +607,7 @@ Adressat ist Staat\\
 Sehr genau festgelegt wie die Regeln sind 
 \end{itemize}
 \section{Grundbegriffe}
-\folie{101}
+\slideScale{101}
 Achtung: Man unterscheide Ein-/Auszahlung (Zufluss/Abfluss echter liquider Mittel) und Einnahmen/Ausgaben (beinhalten Ein- und Auszahlung, aber auch Forderungen von Kunden und Verbindlichkeiten von mir zu dem Kunden)!\medskip\\
 Einkauf/Verkauf als Ziel $\to$ Zahlungsziel = Frist von Rechnungsstellung bis zur Bezahlung\\
 Zahlungsziel in der Regel 4 Wochen (bspw. bei Lieferanten usw.)
@@ -613,9 +620,9 @@ Leistung/Kosten: \\
 Bsp. für kalkulatorische Kosten: Kfz-Versicherung: Einnahme vom Jahresbeitrag an Jahresanfang. Dort hätte man einen Monat mit hohen Einnahmen, aber 11 Monate ohne. Diese Leistung von einem Monat werden für das interne Rechnungswesen dann auf alle Monate kalkuliert aufgeteilt.
 \section{Grundsätze und Pflicht der Finanzbuchhaltung}
 Fibu: Finanz Buchhaltung
-\folie{102}
+\slideScale{102}
 \subsection{Buchführungsgrundsätze}
-\folie{103}
+\slideScale{103}
 DATEV SKR03\\
 \begin{tabular}{l l}
 8100 & Erlöse USt-frei\\
@@ -629,11 +636,11 @@ Aufbewahrungspflicht: gilt auch für Emails ($\to$ Vertrags-Anbahnender Verkehr:
 
 \section{Inventur -- Inventar -- Bilanz}
 \subsection{Inventur}
-\folie{104}
+\slideScale{104}
 Bilanzstichtag: in der Regel 31.12. $\to$ Inventur daher meist im Januar\\
 Geschäftsjahr: in der Regel vom 01.01. - 31.12.
 \subsection{Inventar}
-\folie{105}
+\slideScale{105}
 \begin{itemize}
 \item Anlagevermögen\\
 langfristig (länger als ein Jahr): PKW, LKW, Immobilien (un-, bebaute Grundstücke), Arbeitsplatzausstattung der Mitarbeiter, Maschinen, Patente/Lizenzen, …
@@ -646,15 +653,15 @@ Verbindlichkeiten aus Lieferungen und Leistungen (auf auf Ziel $\to$ Forderung),
 \item Reinvermögen\\
 Eigenkapital = Vermögen - Schulden
 \end{itemize}
-\folie{106}
+\slideScale{106}
 \subsection{Bilanz}
-\folie{107}
+\slideScale{107}
 Bilanz-Schema: Wichtig!\\
 Aktiva und Passiva halten sich \emph{immer} die Waage: Sind immer gleich.
 
 \section{Bilanz}
 \subsection{Bilanzierungsgrundsätze}
-\folie{108}
+\slideScale{108}
 \begin{itemize}
 \item Vollständigkeit
 \item Periodenabgrenzung\\
@@ -692,7 +699,7 @@ Gesamt	& $25.225,00$	& Anschaffungskosten\\
 Aufteilung würde Aufwand kosten, da der Betrag der Betriebskosten im Verhältnis zur Gesamtsumme nicht wesentlich ist, darf der Gesamtbetrag als Anschaffung verbucht werden.
 \end{itemize}
 \subsection{Bilanzgliederung}
-\folie{109}
+\slideScale{109}
 Reihenfolge: Fristigkeit der Liquidationsmittel, von am schwierigsten zu am einfachsten: 
 \begin{enumerate}
 \item Was ist am schwersten sofort in Geld umzuwandeln (bspw. immaterielle Vermögensgegenstände)
@@ -709,21 +716,21 @@ Banküberweisung zur Begleichung der Materialrechnung & &$\downarrow$ & $\downar
 Materialentnahme für Fertigung & & $\downarrow$ & & & $\uparrow$\\
 Verkauf der gefertigten Erzeugnisse in bar & &$\uparrow\uparrow$ & & $\uparrow\uparrow$ & \\
 \end{tabular}
-\folie{110}
+\slideScale{110}
 In diesem Beispiel ist der Gewinn sehr gut! Im Vergleich zum Kapital wurde sehr viel Gewinn geschaffen (ca. 20\%). Die Frage ist dabei: Wie sah der Gewinn im Vorjahr aus, wie in zukünftigen Jahren?\\
 Bilanzsumme sagt eigentlich relativ wenig über das Unternehmen aus, nichts über die Wirtschaftlichkeit.
 
 \subsection{Doppelte Buchführung}
-\folie{111}
-\folie{112}
+\slideScale{111}
+\slideScale{112}
 \section{Gewinn- und Verlustrechnung}
 (GuV)
-\folie{113}
-\folie{114}
+\slideScale{113}
+\slideScale{114}
 Steuern (von Ertrag und Leistung) kommen noch hinzu ($\to$ Gewinn vor/nach Steuer).\\
 GuV = Erträge - Aufwendungen
 \subsection{Erfolgsspaltung}
-\folie{115}
+\slideScale{115}
 \subparagraph{Beispiel} Erfolgsspaltung\\
 Betrieb eines Imbissstandes\\
 \begin{tabular}{l l l L{0.45}}
@@ -732,7 +739,7 @@ Betrieb eines Imbissstandes\\
 & $100.000,-$ & Ertrag aus Aktienspekulation\\
 & $155.000,-$ & Gesamtgewinn & scheinbar hoch, Gewinn durch Unternehmen aber geringer
 \end{tabular}
-\folie{116}
+\slideScale{116}
 Bilanz:\\
 \begin{tabular}{l | l}
 Aktiva & Passiva\\
@@ -749,12 +756,12 @@ Abschreibungen: bspw. Wertverfall von Betriebsfahrzeugen usw.
 \chapter{Kapitalwirtschaft}
 \section{Grundlagen}
 \subsection{Wirtschaftskreislauf}
-\folie{119}
+\slideScale{119}
 Zahlungsmittel-Fluss ist natürlich nicht gleich stark. Gewinne fließen nicht direkt weiter in den Markt. 
 \subsection{Die zwei Seiten einer Medaille}
-\folie{120}
+\slideScale{120}
 \subsection{Vermögen und Kapital}
-\folie{121}
+\slideScale{121}
 \paragraph{Übung}
 \begin{itemize}
 \item Vermögen
@@ -784,9 +791,9 @@ Zahlungsmittel-Fluss ist natürlich nicht gleich stark. Gewinne fließen nicht d
 \end{itemize}
 \section{Finanzierungsarten}
 \subsection{Beteiligungsfinanzierung}
-\folie{122}
+\slideScale{122}
 \subsection{Langfristige Fremdfinanzierung}
-\folie{123}
+\slideScale{123}
 \begin{itemize}
 \item Festdarlehen\\
 Ein Unternehmen leiht dem anderen Geld (gesetzlich kein Zinseszins erlaubt außer bei Banken)
@@ -806,7 +813,7 @@ bei $5000,-$:\\
 \end{itemize}
 
 \subsection{Kurzfristige Fremdfinanzierung}
-\folie{124}
+\slideScale{124}
 \begin{itemize}
 \item Kontokorrentkredit\\
 Zinsen usw.
@@ -820,7 +827,7 @@ Anzahlung bei Möbeln usw.
 Liquidität ist nötig für unternehmerische Handlungsfreiheit (Materialbeschaffung usw.).
 
 \subsection{Factoring}
-\folie{125}
+\slideScale{125}
 Vorteil:
 \begin{itemize}
 \item Man bekommt Geld sofort.
@@ -829,7 +836,7 @@ Vorteil:
 (vgl. zu Wechsel: im Wechsel wird die Zahlungsforderung gehandelt, beim Factoring das erstellen und eintreiben von Zahlungsforderungen)
 
 \subsection{Leasing}
-\folie{126}
+\slideScale{126}
 Vorteil:
 \begin{itemize}
 \item planbare Ausgabe
@@ -840,52 +847,52 @@ Nachteile:
 \end{itemize}
 
 \subsection{Offene Selbstfinanzierung}
-\folie{127}
+\slideScale{127}
 
 \section{Grundsätze der Finanzierung}
 \subsection{Stabilität}
-\folie{128}
+\slideScale{128}
 \subsection{Liquidität}
-\folie{129}
+\slideScale{129}
 
 \section{Finanzkennzahlen}
-\folie{130}
+\slideScale{130}
 Kennzahlen bilden Entscheidungsgrundlage (was tun, wenn Liquidität nicht innerhalb der Schranken sind?).
 \begin{itemize}
 \item Liquidität 1. Grades unter 100\% weil: Zu den Zahlungsmitteln kommen die Einnahmen der folgenden Zeit noch hinzu. Zu hohe Liquidität 1. Grades würde bedeuten, dass viel Geld nur „rum liegt“.
 \end{itemize}
 kurzfristiges Umlaufvermögen: Vermögen, das innerhalb eines Jahres liquiditiert werden kann (Zahlungsmittel + monetäres Umlaufvermögen + anderes, bspw. gelagerte Materialien).
-\folie{131}
+\slideScale{131}
 
 \section{Investitionsarten}
-\folie{132}
-\folie{133}
+\slideScale{132}
+\slideScale{133}
 Unterschied:
 \begin{itemize}
 \item Wertpapier: kurzfristiges Weiterverkaufen
 \item Beteiligung: langfristige Rendite
 \end{itemize}
-\folie{134}
+\slideScale{134}
 
 \section{Investitionsrechnung}
-\folie{135}
-\folie{136}
+\slideScale{135}
+\slideScale{136}
 \subsection{Kostenvergleichsrechnung}
-\folie{137}
-\folie{138}
+\slideScale{137}
+\slideScale{138}
 \subsection{Gewinnvergleichsrechnung}
-\folie{139}
-\folie{140}
+\slideScale{139}
+\slideScale{140}
 
 \subsection{Rentabilitätsvergleichrechnung}
-\folie{141}
-\folie{142}
+\slideScale{141}
+\slideScale{142}
 
 \subsection{Amortisationsrechnung}
-\folie{143}
+\slideScale{143}
 
 \subsection{Kapitalwertmethode}
-\folie{144}
+\slideScale{144}
 $E_x$ muss keine Einnahme, kann auch Ausgabe sein (vgl. erste Anschaffungskosten eines Geräts, Einnahmen durch Gerät, Ausgaben durch Wartung)
 \paragraph{Bsp.:}\parskp
 $K_C=1000 \text{ \euro{}}, \; \underset{\text{Zinssatz}}{i}=0,1\corr \underset{\text{Zinsfuß}}{p}=10\%$\\
@@ -894,14 +901,14 @@ $K_2=K_1+i\cdot K_1=K_1\cdot (1+i)=\underbrace{K_0\cdot (1+i)}_{K_1}(1+i)$\\
 $\vdots$\\
 $K_n=K_0(1+i)^n$\\
 $\Rightarrow K_0 = \frac{K_n}{(1+i)^n}$
-\folie{145}
-\folie{146}
+\slideScale{145}
+\slideScale{146}
 
 \chapter{Personalmanagement}
 Personalwesen/Personalwirtschaft/Personalverwaltung
 \section{Grundlagen, Begriffe}
 \subsection{Aspekte des Personalbegriffs}
-\folie{149}
+\slideScale{149}
 Unterschied:
 \begin{itemize}
 \item Gehalt: monatlicher Festbetrag
@@ -915,23 +922,23 @@ Laune (aus privatem bedingt) usw.
 Betriebsklima, soziale Konstrukte
 \end{itemize}
 \subsection{Kernfragen des Personalmanagements}
-\folie{150}
+\slideScale{150}
 Vergütungsgerechtigkeit: Man weiß, dass man genau so viel bekommt, wie Mitarbeiter, die genau so viel leisten. Oder: Man weiß, dass man mehr bekommt als jemand, der weniger leistet.
 
 \section{Personalbedarfsplanung}
-\folie{151}
+\slideScale{151}
 Leistungsprogramm: Welche Leistungen soll das Unternehmen anbieten?\\
 Fluktuation (intern): Das Kommen und vor allem Gehen von Mitarbeiter\\
 Unternehmenspolitik (intern): Erst neues Personal, wenn's „zu spät“ ist oder vorsorglich für Lücken (bei bspw. Fehlzeiten)?
-\folie{152}
-\folie{153}
+\slideScale{152}
+\slideScale{153}
 Fragestellung: Wie muss ich (zum Zeitpunkt $t_0$) den Personalbedarf planen?
 
 \section{Personalbeschaffung}
 \subsection{Grundprozess}
-\folie{154}
+\slideScale{154}
 \subsection{Beschaffungswege}
-\folie{155}
+\slideScale{155}
 \begin{itemize}
 \item Intern:\\
 „Habe ich in meinem Unternehmen schon Mitarbeiter, die ich für eine andere Stelle einsetzen kann?“
@@ -948,19 +955,19 @@ Fragestellung: Wie muss ich (zum Zeitpunkt $t_0$) den Personalbedarf planen?
 \item Presse, Rundfunk, Fernsehen
 \end{itemize}
 \subsection{Personalwerbung}
-\folie{156}
-\folie{157}
+\slideScale{156}
+\slideScale{157}
 Aussage: hier macht die Arbeit Spaß (aber auch bspw.: hier arbeiten auch viele Frauen)
-\folie{158}
+\slideScale{158}
 Information+Motivation
 \subsection{Personalauswahl}
-\folie{159}
+\slideScale{159}
 Erster Blick: Bild
 \subsection{Attraktivität des Arbeitgebers}
-\folie{160}
-\folie{161}
+\slideScale{160}
+\slideScale{161}
 \subsection{Personalabbau}
-\folie{162}
+\slideScale{162}
 \begin{itemize}
 \item Einstellungssperre: Die Alten bleiben, es kommen keine Neue.
 \item Arbeitnehmer-Überlassung: Gefahr, dass Firmengeheimnisse weitergegeben werden.
@@ -971,35 +978,35 @@ Aufhebungsvertrag: Beidseitige Aufhebungserklärung.
 \end{itemize}
 \section{Personalvergütung}
 \subsection{Vergütung als Motivationsfaktor}
-\folie{163}
+\slideScale{163}
 \subsection{Vergütungskriterien}
-\folie{164}
+\slideScale{164}
 Grundgehalt mit Leistungszulage Problem: Irgendwer muss die Leistung bewerten.
 \section{Personalführung}
 \subsection{Bedürfnispyramide}
-\folie{165}
+\slideScale{165}
 Problem: Da wir in der westlichen Welt uns schon in „der Mitte“ der Pyramide zu finden sind, hat man weniger Spielraum.
 \subsection{Zweifaktorentheorie}
-\folie{166}
-\folie{167}
+\slideScale{166}
+\slideScale{167}
 \begin{itemize}
 \item Arbeitsklima: Klima im Arbeitsumfeld der einzelnen Arbeiter (Kollegen)
 \item Betriebsklima: Klima im gesamten Unternehmen
 \end{itemize}
 \subsection{Führungsstil-Kontinuum}
-\folie{168}
+\slideScale{168}
 Führungsstil sind nicht grundsätzlich gut oder schlecht, sondern hängen vom Betrieb ab. Bpsw. autoritär für Arbeitnehmer mit geringer Qualifikation oder solche, die einen solchen Stil brauchen. Bspw. demokratisch für kreative Unternehmen.
 \subsection{Management by-Konzepte}
-\folie{169}
+\slideScale{169}
 \subsection{Personalcontrolling}
 \subsubsection{Funktionen}
-\folie{170}
+\slideScale{170}
 \subsubsection{Kennzahlen}
-\folie{171}
+\slideScale{171}
 \chapter{Organisation}
-\folie{173}
+\slideScale{173}
 \section{Grundlagen und Begriffe}
-\folie{174}
+\slideScale{174}
 \begin{itemize}
 \item Konstruktion
 \item Arbeitsvorbereitung
@@ -1007,23 +1014,23 @@ Führungsstil sind nicht grundsätzlich gut oder schlecht, sondern hängen vom B
 \item Montage
 \end{itemize}
 \subsection{Ziele der betrieblichen Organisation}
-\folie{175}
+\slideScale{175}
 \subsubsection{Unternehmensziele}
-\folie{176}
+\slideScale{176}
 Achtung Fehler: Wirtschaftlichkeit:\\
 Wirtschaftlichkeit = Ertrag / Aufwand (also nicht nur Kosten, sondern die gesamten Erträge
 \subsubsection{Kundenziele}
-\folie{177}
+\slideScale{177}
 \subsubsection{Mitarbeiterziele}
-\folie{178}
+\slideScale{178}
 \subsubsection{Fazit}
-\folie{179}
+\slideScale{179}
 
 \section{Aufbauorganisation}
 \subsection{Vorgehensweise}
-\folie{180}
+\slideScale{180}
 \subsection{Aufgabenanalyse und -synthese}
-\folie{181}
+\slideScale{181}
 \resizebox{.9\textwidth}{!}{
 \begin{tikzpicture}[scale=.9]
 \draw  (-2,1) node[above right, green]{braucht Verb!} rectangle (2,-1) node[pos=.5, align=left]{Erbringen von\\ IT-Dienstleistungen};
@@ -1049,14 +1056,14 @@ Wirtschaftlichkeit = Ertrag / Aufwand (also nicht nur Kosten, sondern die gesamt
 \end{tikzpicture}
 }
 \subsection{Aufgabenanalyse}
-\folie{182}
-\folie{183}
+\slideScale{182}
+\slideScale{183}
 \subsection{Aufgabensynthese}
-\folie{184}
+\slideScale{184}
 \subsection{Merkmale einer organisatorischen Einheit}
-\folie{185}
+\slideScale{185}
 \subsection{Gruppenbildung}
-\folie{186}
+\slideScale{186}
 \paragraph{Übung:}
 \begin{itemize}
 \item Produktentwicklung
@@ -1068,51 +1075,51 @@ Wirtschaftlichkeit = Ertrag / Aufwand (also nicht nur Kosten, sondern die gesamt
 \item Technische Dienstleistung (intern: Betreibung der Infrastruktur)
 \end{itemize}
 \subsection{Leitungsbildung (Top-Management)}
-\folie{187}
-\folie{188}
-\folie{189}
+\slideScale{187}
+\slideScale{188}
+\slideScale{189}
 \subsection{Vertikale Unternehmensstruktur}
-\folie{190}
+\slideScale{190}
 \subsection{Organisationssysteme}
 Menge von Organisationseinheiten, die über Informationswege miteinander verbunden sind.
 \subsubsection{Liniensystem}
-\folie{191}
+\slideScale{191}
 (Einliniensystem, Linienorganisation)
-\folie{192}
+\slideScale{192}
 \subsubsection{Stabliniensystem}
-\folie{193}
-\folie{194}
+\slideScale{193}
+\slideScale{194}
 \subsubsection{Mehrliniensystem}
-\folie{195}
-\folie{196}
+\slideScale{195}
+\slideScale{196}
 
 \subsection{Organisationsformen}
 Entscheidung der Unternehmensleitung über \emph{Bereichs}organisation.
 \subsubsection{Sektalorganisation}
-\folie{197}
+\slideScale{197}
 \subsubsection{Spartenorganisation}
-\folie{198}
+\slideScale{198}
 \subsubsection{Matrixorganisation}
-\folie{199}
-\folie{200}
+\slideScale{199}
+\slideScale{200}
 \subsubsection{Holdingorganisation}
 Holding: Tritt nicht auf dem Markt auf (erzeugt keine Güter), sondern ist nur übergeordnetes Unternehmen, das den Tochterunternehmen Vorgaben macht oder sie verwaltet (bspw. Personalmanagement, Rechnungswesen, Marketing, …). 
 \paragraph{Managementholding} Zweck: Breit aufgestellt auf dem Markt agieren. Tochter-AGs sollen nicht untereinander konkurrieren.
-\folie{201}
+\slideScale{201}
 \paragraph{Finanzholding}
 Zweck: Aufkauf und Entwicklung von Unternehmen um sie dann gewinnbringend zu verkaufen.
-\folie{202}
+\slideScale{202}
 \subsubsection{Organisationsdokumentation (Stellenbeschreibung)}
-\folie{203}
+\slideScale{203}
 
 \section{Prozessorganisation}
-\folie{204}
+\slideScale{204}
 \subsection{Zusammenhang Aufbauorganisation, Prozessorganisation}
-\folie{205}
+\slideScale{205}
 \subsection{Ziele der Prozessorganisation}
-\folie{206}
+\slideScale{206}
 \subsection{Betrieblicher Prozess, Geschäftsprozess, Business Process}
-\folie{207}
+\slideScale{207}
 \paragraph{Übung:}
 Startzustand $\to$ Endzustand
 \begin{itemize}
@@ -1125,22 +1132,22 @@ Kundenwunsch $\to$ SW ist fertiggestellt
 \end{itemize}
 
 \section{Modellierung betrieblicher Prozesse}
-\folie{208}
-\folie{209}
+\slideScale{208}
+\slideScale{209}
 \paragraph{Beispiel: Wareneingangsprüfung}
-\folie{210}
+\slideScale{210}
 Organisationssicht (wer's macht) und Datensicht (welche Daten rein gehen/raus kommen) kommen im EPK nicht zum Ausdruck (nur Funktions- und Steuersicht).
 \subsection{Grundlagen der EPK}
-\folie{211}
-\folie{212}
-\folie{213}
-\folie{214}
+\slideScale{211}
+\slideScale{212}
+\slideScale{213}
+\slideScale{214}
 \subsection{Erweiterte EPK (eEPK)}
-\folie{215}
+\slideScale{215}
 \subsubsection{Elemente der eEPK}
-\folie{216}
+\slideScale{216}
 \paragraph{Beispiel: Autovermietung}
-\folie{217}
+\slideScale{217}
 Verbale Beschreibung ist Lückenhaft (Entscheidungsfindung beim Telefongespräch? Alternativvorschlag Einigung möglich? Scheitern des Gesamtablaufs?)\\
 \resizebox{.99\textwidth}{!}{
 \begin{tikzpicture}[node distance=7em, align=center, thick]  
@@ -1273,15 +1280,15 @@ die Anfrage bearbeitet werden müsste\\ (wie bei Tel. Anfrage)\\ wenn es nicht i
 Hinweis: auf PC mit Microsoft Visio erstellbar.
 \subsection{Rasterdiagramm}
 \paragraph{Bagatellschaden-Bearbeitung in Versicherung}
-\folie{218}
+\slideScale{218}
 Schlecht: Mitarbeiter bekommt Aufgaben zurück (hin und her: Zahlungsbetrag ermitteln -- genehmigen -- Mitteilung erstellen). Nicht gut (doppelte Einarbeitungszeit)!
 
 \subsection{Entscheidungstabelle}
-\folie{219}
-\folie{220}
+\slideScale{219}
+\slideScale{220}
 
 \subsection{Datenflussplan}
-\folie{221}
+\slideScale{221}
 Es fehlt bspw. wie Daten strukturiert sind (Kundendatei, …). Sollte erweitert werden mit EBNF
 
 
