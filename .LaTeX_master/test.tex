@@ -1,18 +1,44 @@
-\input{LaTeX_master.sty}
-\input{LaTeX_master_macros.sty}
+\newcommand{\customDir}{../}
+\input{\customDir .LaTeX_master/LaTeX_master_setup.sty}
 
-%\bibliography{../Literatur/HTW_Literatur.bib}
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+%\setCustomTitle{Document Title}
+%\setCustomSubtitle{Document Subtitle}
+%\setCustomAuthor{Document Author}
+%\setCustomNoteA{Titlepage Note before Author}
+%\setCustomNoteB{Titlepage Note after Author}
 
-\title{test}
-\author{testA}
+%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
+%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
 
-\DTitel{}
-\DUntertitel{Vorlesungsskript}
-\DAutor{Falk-Jonatan Strube}
-\DNotiz{Vorlesung von }
+\input{\customDir .LaTeX_master/LaTeX_master.sty}
+\input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir .Literatur/HTW_Literatur.bib}
 
 \begin{document}
 
-\section{au}
+%\selectlanguage{english}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+%\chapter{Kap 1}
+CONTENT
+\HRule
+TEST
+\HDRule
+
+\section{Sec 1}
+
+\newpage
+
+MORE CONTENT
+
+%\newpage
+%\printbibliography
 
 \end{document}

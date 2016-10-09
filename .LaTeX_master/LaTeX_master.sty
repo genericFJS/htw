@@ -1,13 +1,3 @@
-\RequirePackage{ifthen,xifthen}
-%%% alle Optionen:
-% Doppelseitig (mit Rand an der Innenseite)
-\newboolean{twosided}
-\setboolean{twosided}{false}
-% Eigene Dokument-Klasse (alle KOMA möglich; cheatsheet für Spicker [3 Spalten pro Seite, alles kleiner])
-\newcommand{\customDocumentClass}{scrreprt}
-% Unterscheidung verschiedener Designs: htw, fjs
-\newcommand{\customDesign}{htw}
-
 %-- Für Spicker einiges anders:
 \ifthenelse{\equal{\customDocumentClass}{cheatsheet}}{
 	\documentclass[a4paper,10pt,landscape]{scrartcl}
@@ -16,29 +6,21 @@
 	
 	% Für Spicker \spsection für Section, zur Strukturierung \HRule oder \HDRule Linie einsetzen
 	\usepackage{multicol}
-	\newcommand{\spsection}[1]{\textbf{#1}}
+	\newcommand{\spsection}[1]{\textbf{#1}}	% Platzsparende "section" für Spicker
 	\setlist{nolistsep}
-	\usepackage{parskip}
+	\usepackage{parskip}	% Aufzählung Abstand
 	\setlength{\parskip}{0em}
-	\newcommand{\HRule}[1][\medskipamount]{\par
-	  \vspace*{\dimexpr-\parskip-\baselineskip+#1}
-	  \noindent\rule[0.2ex]{\linewidth}{0.2mm}\par
-	  \vspace*{\dimexpr-\parskip-.5\baselineskip+#1}}
-	\usepackage{dashrule}
-	\newcommand{\HDRule}[1][\medskipamount]{\par
-	  \vspace*{\dimexpr-\parskip-\baselineskip+#1}
-	  \noindent\hdashrule[0.2ex]{\linewidth}{0.2mm}{1mm} \par
-	  \vspace*{\dimexpr-\parskip-.5\baselineskip+#1}}
+	\pagestyle{empty}
 }{	%-- Ende Spicker-Unterscheidung-if
 	%-- Unterscheidung Doppelseitig
 	\ifthenelse{\boolean{twosided}}{
-		\documentclass[a4paper,11pt, footheight=26pt,twoside]{scrreprt}
-		\usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
-		\geometry{top=30mm, bottom=22mm, headsep=10mm, footskip=12mm, left=20mm, right=20mm}
-	}{
-		\documentclass[a4paper,11pt, footheight=26pt]{scrreprt}
+		\documentclass[a4paper,11pt, footheight=26pt,twoside]{\customDocumentClass}
 		\usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
 		\geometry{top=30mm, bottom=22mm, headsep=10mm, footskip=12mm, inner=27mm, outer=13mm}
+	}{
+		\documentclass[a4paper,11pt, footheight=26pt]{\customDocumentClass}
+		\usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
+		\geometry{top=30mm, bottom=22mm, headsep=10mm, footskip=12mm, left=20mm, right=20mm}
 	}
 	
 	%-- Nummerierung bis Subsubsection für Report
@@ -81,15 +63,6 @@
 \DeclareMathOperator{\arcsinh}{arcsinh}
 \DeclareMathOperator{\arctanh}{arctanh}
 \DeclareMathOperator{\arccoth}{arccoth} 
-% Mathe in Anführungszeichen:
-\newsavebox{\mathbox}\newsavebox{\mathquote}
-\makeatletter
-\newcommand{\mq}[1]{% \mathquotes{<stuff>}
-  \savebox{\mathquote}{\text{"}}% Save quotes
-  \savebox{\mathbox}{$\displaystyle #1$}% Save <stuff>
-  \raisebox{\dimexpr\ht\mathbox-\ht\mathquote\relax}{"}#1\raisebox{\dimexpr\ht\mathbox-\ht\mathquote\relax}{''}
-}
-\makeatother
 %\renewcommand{\int}{\int\limits}
 
 % tikz usw.
@@ -121,6 +94,8 @@
 ]	% Achtung: dafür muss doppelt kompliert werden!
 \usepackage{graphpap}	% Grid für Graphen
 \tikzset{every state/.style={inner sep=2pt, minimum size=2em}}
+\usetikzlibrary{mindmap, backgrounds}
+%\usepackage{tikz-uml}	% braucht Dateien: http://perso.ensta-paristech.fr/~kielbasi/tikzuml/
 
 % Tabular
 \usepackage{longtable}	% Große Tabellen über mehrere Seiten
@@ -148,6 +123,8 @@
 % Nutzen:
 %\LetLtxMacro{\oldemph}{\emph}
 %\renewcommand{\emph}[1]{\oldemph{#1}}
+\usepackage{xpatch}	% ua. Konkatenieren von Strings/Variablen (etoolbox)
+
 
 % Einrichtung von lst
 \lstset{
@@ -198,6 +175,7 @@ literate=%
 % Grafiken
 \usepackage{graphicx}
 \usepackage{epstopdf}	% eps-Vektorgrafiken einfügen
+%\epstopdfsetup{outdir=\customDir}
 
 % pdf-Setup
 \usepackage{pdfpages}
@@ -210,40 +188,57 @@ urlcolor=green,%
 ]{hyperref}
 
 %-- Unterscheidung des Stils
+\newcommand{\customLogo}{}
+\newcommand{\customPreamble}{}
 \ifthenelse{\equal{\customDesign}{htw}}{
 	% HTW Corporate Design: Arial (Helvetica)
 	\usepackage{helvet}
 	\renewcommand{\familydefault}{\sfdefault}
-}{}
+	\renewcommand{\customLogo}{HTW-Logo}
+	\renewcommand{\customPreamble}{HTW Dresden}
+}{
+% \renewcommand{\customLogo}{HTW-Logo.eps}
+}
 
-% Titel, Autor usw. werden vor dem Anfang des Dokuments in einem Rutsch definiert…
-\newcommand{\DTitel}[1]{\newcommand{\Dokumententitel}{#1}}
-\newcommand{\DUntertitel}[1]{\newcommand{\Dokumentenuntertitel}{#1}}
-\newcommand{\DAutor}[1]{\newcommand{\Dokumentenautor}{#1}}
-\newcommand{\DNotiz}[1]{\newcommand{\Dokumentennotiz}{#1}}
-\newcommand{\DSign}[1]{\newcommand{\Dokumentensignatur}{#1}}
-\DSign{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \Dokumentenautor}}}
-\newcommand{\Autorformat}[1]{\textcolor{darkgray}{Mitschrift von #1}}
-\newcommand{\workingdir}{../}	% Arbeitsordner (in Abhängigkeit vom Master) Standard: LateX_master Ordner liegt im Eltern-Ordner
-% … Deswegen folgendes erst Nach Dokumentenbeginn ausführen:
+% Nach Dokumentenbeginn ausführen:
 \AtBeginDocument{
+	% Autor und Titel für pdf-Eigenschaften festlegen, falls noch nicht geschehen
+	\providecommand{\pdfAuthor}{John Doe}
+	\ifthenelse{\equal{\customAuthor}{}} {} {\renewcommand{\pdfAuthor}{\customAuthor}}
+	\providecommand{\pdfTitle}{}
+	\providecommand{\pdfTitleA}{}
+	\providecommand{\pdfTitleB}{}
+	\providecommand{\pdfTitleC}{}	
+	\ifthenelse{\equal{\pdfTitle}{}}{
+		\ifthenelse{\equal{\customPreamble}{}} {} {\renewcommand{\pdfTitleA}{\customPreamble{} | }}
+		\ifthenelse{\equal{\customTitle}{}} {\renewcommand{\pdfTitleB}{No Title}} {\renewcommand{\pdfTitleB}{\customTitle}}
+		\ifthenelse{\equal{\customSubtitle}{}} {} {\renewcommand{\pdfTitleC}{ - \customSubtitle}}
+	}{}
+	
+	\newcommand{\customLogoLocation}{\customDir .LaTeX_master/\customLogo}
 	\hypersetup{
-		pdfauthor={\Dokumentenautor},
-		pdftitle={HTW Dresden | \Dokumententitel - \Dokumentenuntertitel},
+		pdfauthor={\pdfAuthor},
+		pdftitle={\pdfTitleA\pdfTitleB\pdfTitleC},
 	}
 	\automark[section]{section}
 	\automark*[subsection]{subsection}
 	\pagestyle{scrheadings}
-	\ihead{\includegraphics[height=1.7em]{\workingdir .LaTeX_master/HTW-Logo.eps}}
-	%\ohead{\truncate{5cm}{\Dokumententitel}}
-	\ohead{\Dokumententitel}
+	\ihead{\includegraphics[height=1.7em]{\customLogoLocation}}
+	%\ohead{\truncate{5cm}{\customTitle}}
+	\ohead{\customTitle}
 	\cfoot{\pagemark}
-	\ofoot{\Dokumentensignatur}
+	\ofoot{\customSignature}
 	% Titelseite
-	\title{\includegraphics[width=0.35\textwidth]{\workingdir .LaTeX_master/HTW-Logo.eps}\\\vspace{0.5em}
-	\Huge\textbf{\Dokumententitel} \\\vspace*{0,5cm}
-	\Large \Dokumentenuntertitel \\\vspace*{4cm}}
-	\author{\Autorformat{\Dokumentenautor} \vspace*{1cm}\\\Dokumentennotiz}
+	\title{
+	\includegraphics[width=0.35\textwidth]{\customDir .LaTeX_master/\customLogo}\\\vspace{0.5em}
+	\Huge\textbf{\customTitle}
+	\ifthenelse{\equal{\customSubtitle}{}} {} {\\\vspace*{0.7em}\Large \customSubtitle}
+	\\\vspace*{5em}}
+	\author{
+	\ifthenelse{\equal{\customNoteA}{}} {} {\customNoteA \vspace*{1em}}\\ 
+	\ifthenelse{\equal{\customAuthor}{}} {} {\customTitleAuthor{\customAuthor}}
+	\ifthenelse{\equal{\customNoteB}{}} {} {\vspace*{1em}\\\customNoteB}
+	}
 }
 
 % Unterabschnitte
