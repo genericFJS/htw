@@ -1,4 +1,54 @@
 \RequirePackage{xcolor}
+
+% Horizontale Linie:
+\newcommand{\HRule}[1][\medskipamount]{\par
+  \vspace*{\dimexpr-\parskip-\baselineskip+#1}
+  \noindent\rule[0.2ex]{\linewidth}{0.2mm}\par
+  \vspace*{\dimexpr-\parskip-.5\baselineskip+#1}}
+% Gestrichelte horizontale Linie:
+\RequirePackage{dashrule}
+\newcommand{\HDRule}[1][\medskipamount]{\par
+  \vspace*{\dimexpr-\parskip-\baselineskip+#1}
+  \noindent\hdashrule[0.2ex]{\linewidth}{0.2mm}{1mm} \par
+  \vspace*{\dimexpr-\parskip-.5\baselineskip+#1}}
+% Mathe in Anführungszeichen:
+\newsavebox{\mathbox}\newsavebox{\mathquote}
+\makeatletter
+\newcommand{\mq}[1]{% \mathquotes{<stuff>}
+  \savebox{\mathquote}{\text{"}}% Save quotes
+  \savebox{\mathbox}{$\displaystyle #1$}% Save <stuff>
+  \raisebox{\dimexpr\ht\mathbox-\ht\mathquote\relax}{"}#1\raisebox{\dimexpr\ht\mathbox-\ht\mathquote\relax}{''}
+}
+\makeatother
+% (Vorlesungs-)Folien einbinden:
+\newcommand{\customSlidePath}{}
+\newcommand{\setCustomSlidePath}[1]{\renewcommand{\customSlidePath}{#1}}
+% Folien von einer Datei skaliert
+\newcommand{\slideScale}[2][0.5]{\begin{center}
+\includegraphics[page=#2, scale=#1]{\customSlidePath .pdf}
+\end{center}}
+% Folien von einer Datei mit fester Höhe
+\newcommand{\slideHeight}[2][9.63cm]{\begin{center}
+\includegraphics[page=#2, height=#1]{\customSlidePath .pdf}
+\end{center}}
+% Folien von einer Datei mit fester Breite
+\newcommand{\slideWidth}[2][12.8cm]{\begin{center}
+\includegraphics[page=#2, width=#1]{\customSlidePath .pdf}
+\end{center}}
+% Folien von mehreren nummerierten Dateien skaliert
+\newcommand{\slidesScale}[3][0.5]{\begin{center}
+\includegraphics[page=#3, scale=#1]{\customSlidePath #2.pdf}
+\end{center}}
+% Folien von mehreren nummerierten Dateien mit fester Höhe
+\newcommand{\slidesHeight}[3][9.63cm]{\begin{center}
+\includegraphics[page=#3, height=#1]{\customSlidePath #2.pdf}
+\end{center}}
+% Folien von mehreren nummerierten Dateien mit fester Breite
+\newcommand{\slidesWidth}[3][12.8cm]{\begin{center}
+\includegraphics[page=#3, width=#1]{\customSlidePath #3.pdf}
+\end{center}}
+
+
 %% EINFACHE BEFEHLE
 
 % Abkürzungen Mathe
