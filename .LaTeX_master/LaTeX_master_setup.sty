@@ -1,4 +1,9 @@
 \RequirePackage{ifthen,xifthen}
+
+% Input inkl. Umlaute, Silbentrennung
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+
 % Arbeitsordner (in Abhängigkeit vom Master) Standard: .LateX_master Ordner liegt im Eltern-Ordner
 \providecommand{\customDir}{../}
 \newcommand{\setCustomDir}[1]{\renewcommand{\customDir}{#1}}
@@ -33,3 +38,6 @@
 % Standard Sprache
 \newcommand{\customDefaultLanguage}[1]{}
 \newcommand{\setCustomDefaultLanguage}[1]{\renewcommand{\customDefaultLanguage}{#1}}
+% Folien-Pfad (inkl. Dateiname ohne Endung und ggf. ohne Nummerierung)
+\newcommand{\customSlidePath}{}
+\newcommand{\setCustomSlidePath}[1]{\renewcommand{\customSlidePath}{#1}}
