@@ -20,9 +20,8 @@
   \raisebox{\dimexpr\ht\mathbox-\ht\mathquote\relax}{"}#1\raisebox{\dimexpr\ht\mathbox-\ht\mathquote\relax}{''}
 }
 \makeatother
+
 % (Vorlesungs-)Folien einbinden:
-\newcommand{\customSlidePath}{}
-\newcommand{\setCustomSlidePath}[1]{\renewcommand{\customSlidePath}{#1}}
 % Folien von einer Datei skaliert
 \newcommand{\slideScale}[2][0.5]{\begin{center}
 \includegraphics[page=#2, scale=#1]{\customSlidePath .pdf}
@@ -105,6 +104,8 @@
 \definecolor{ittenbg}{RGB}{6,150,187}
 \definecolor{itteng}{RGB}{0,142,91}
 \definecolor{ittengy}{RGB}{140,187,38}
+
+\definecolor{htworange}{RGB}{249,155,28}
 
 % Textfarbe ändern
 \newcommand{\tred}[1]{\textcolor{red}{#1}}
