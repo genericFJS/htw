@@ -1,22 +1,28 @@
-% Header aus der Vorlage
-\input{../LaTeX_master/LaTeX_master_HTW}
+\newcommand{\customDir}{../}
+\input{\customDir .LaTeX_master/LaTeX_master_setup.sty}
 
-%\bibliography{../Literatur/HTW_Literatur.bib}
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+\setCustomSlidePath{Vorlesung/oneperpage/Kap}
 
-% Definition von Titel, Autor usw.
-\DTitel{Datenbanksysteme I}
-\DUntertitel{Vorlesungsskript}
-\DAutor{Falk-Jonatan Strube}
-\DNotiz{Vorlesung von Dr. Axel Toll}
+\setCustomTitle{Datenbanksysteme I}
+\setCustomSubtitle{Vorlesungsskript}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{Titlepage Note before Author}
+\setCustomNoteB{Vorlesung von Dr. Axel Toll}
 
-\newcommand{\folie}[2]{\begin{center}
-\includegraphics[page=#2]{Vorlesung/oneperpage/Kap#1.pdf}
-\end{center}}
-\newcommand{\Folie}[2]{\begin{center}
-\includegraphics[page=#2, height=9.63cm]{Vorlesung/oneperpage/Kap#1.pdf}
-\end{center}}
+%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
+%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir .LaTeX_master/LaTeX_master.sty}
+\input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir .Literatur/HTW_Literatur.bib}
 
 \begin{document}
+
+%\selectlanguage{english}
 \maketitle
 \newpage
 \tableofcontents
@@ -44,7 +50,7 @@ Redundante Daten bergen Gefahr von Inkonsistenz $\Rightarrow$ Ziel: Schaffen von
 \item Backup-Möglichkeiten (mit Widerspruchsfreier Wiederherstellung)
 \end{itemize}
 
-\folie{1}{1}
+\slidesScale[1]{1}{1}
 \begin{tabular}{r | c c}
 & Daten & Informationen\\
 \hline
@@ -63,7 +69,7 @@ Speicherform & vergegenständlicht & an Menschen gebunden\\
 \item Daten + Informationen
 \end{itemize}
 
-\folie{1}{2}
+\slidesScale[1]{1}{2}
 Große Datenbestände $\Rightarrow$ Maßnahmen zur Datenorganisation\bigskip\\
 Eine mögliche Organisationsform (logisches Konzept): Ablage in Relationen (=Tabelle)\bigskip\\
 Eine Zeile in dieser Tabelle nennt man \emph{Datensatz} (Tupel, Record, …).\\
@@ -114,7 +120,7 @@ Vormerkdaten & Daten, die solange existieren, bis ein genau definiertes Ereignis
 
 \subsection{Datenverschlüsselung}
 Gemeint ist nicht die Codierung und Decodierung von Daten, sondern das Zuweisen von Schlüsseln zu Datensätzen.
-\folie{1}{3}
+\slidesScale[1]{1}{3}
 \paragraph{Identifizierender Schlüssel} \parskp
 kennzeichnet Objekteindeutig\\
 Bsp.:
@@ -152,7 +158,7 @@ Bsp.: Mitglieds-ID in Tabelle mit Datenfelder-Primärschlüssel kommt aus der er
 \item \emph{Referentielle Integrität}: Jeder Wert eines FK muss gleich dem Wert des PK sein, auf den der FK zeigt.\\
 Bsp.: Neuer Eintrag in Beitragstabelle kann nur neue Einträge bekommen, die Mitglieder aus Mitgliedertabelle enthält. Anders herum kann aus der Mitgliedertabelle kein Mitglied gelöscht werden, das noch in der Beitragstabelle genutzt wird.
 \end{itemize}
-\folie{1}{4}
+\slidesScale[1]{1}{4}
 
 \subsection{Speicher- und Zugriffsformen}
 \begin{itemize}
@@ -174,7 +180,7 @@ Trennung: Datenspeicherung und „Weg“ zu den Daten
 \end{itemize}
 \item Hauptdatei
 \end{itemize}
-\folie{1}{5}
+\slidesScale[1]{1}{5}
 \end{itemize}
 Unterschied Primärschlüssel-Primärindex:
 \begin{itemize}
@@ -183,7 +189,7 @@ Unterschied Primärschlüssel-Primärindex:
 \end{itemize}
 
 \section[Datenmodelle als Abbild]{Datenmodelle als informationelles Abbild der Unternehmensrealität}
-\folie{1}{6}
+\slidesScale[1]{1}{6}
 Informationssystem
 \begin{itemize}
 \item \emph{Funktionsmodell} (was soll das System leisten: Produktion, Lager, Beschaffung, …) $\Rightarrow$ Kernfrage: „Was will ich machen“\\
@@ -193,9 +199,9 @@ Technik: Programm-Ablauf-Plan (PAP), Ereignisorientierte Prozessketten (EPK), �
 Daten und deren logische Struktur\\
 Technik: Entity-Relationship-Modell (ERM)
 \end{itemize}
-\folie{1}{7}
-\folie{1}{8}
-\folie{1}{9}
+\slidesScale[1]{1}{7}
+\slidesScale[1]{1}{8}
+\slidesScale[1]{1}{9}
 \subparagraph{Bsp.:} \parskp
 \emph{Reale Welt:}\\
 \begin{tikzpicture}[scale=.4, thick]
@@ -280,7 +286,7 @@ Technik: Entity-Relationship-Modell (ERM)
 \end{tikzpicture}
 
 \section[Datenbanksysteme als Grundlage]{Datenbanksysteme als technologische Grundlage der Datenverwaltung}
-\folie{1}{10}
+\slidesScale[1]{1}{10}
 \begin{tikzpicture}[scale=.4, thick]
 \begin{scope}[shift={(3,0)}]
 \draw  (-4.1,3.6) ellipse (0.4 and 0.4);
@@ -350,11 +356,11 @@ Datenbankbetriebssystem (DBMS): Software, die mit Datenbasis kommuniziert
 \item mangelnde Flexibilität
 \item Daten-Programm-Abhängigkeit (kurz: Datenabhängigkeit)
 \end{itemize}
-\folie{2}{1}
-\folie{2}{2}
-\folie{2}{3}
+\slidesScale[1]{2}{1}
+\slidesScale[1]{2}{2}
+\slidesScale[1]{2}{3}
 \paragraph{Zielsetzung des Datenbankeinsatzes}
-\folie{2}{4}
+\slidesScale[1]{2}{4}
 \begin{enumerate}
 \item Bsp. für gewollte Redundanz: Sekundärindex
 \item Datensicherheit:
@@ -432,29 +438,29 @@ gemäß ANSI x3/SPARC (1975)
 \end{itemize}
 \subsubsection{Externe Ebene}
 \paragraph{Gegenstand:} Beschreibung \emph{ausgewählter} Elemente der konzeptionellen Ebene aus Sicht des jeweiligen Endbenutzers
-\folie{2}{5}
+\slidesScale[1]{2}{5}
 \paragraph{Element:} Sicht (View)
 \subsubsection{Interne Ebene}
 \paragraph{Gegenstand:} Form/Art der Ablage der Elemente der konzeptionellen Ebene im physischen Speicher
 \paragraph{Element:} Index
-\folie{2}{7}
+\slidesScale[1]{2}{7}
 
 \section{Aufgbau und Arbeitsweise von DBMS}
 5 Grundfunktionen eines DBMS
-\folie{2}{8}
+\slidesScale[1]{2}{8}
 \subsection{Zugriffsvermittlung}
-\folie{2}{9}
+\slidesScale[1]{2}{9}
 \subsection{Unterstützung Datenbeschreibung-Entwicklung}
-\folie{2}{10}
+\slidesScale[1]{2}{10}
 \subsection{Integritätssicherung}
-\folie{2}{11}
+\slidesScale[1]{2}{11}
 Bsp. operationale Integrität:\\
 Gehaltserhöhungen sowohl für Organisatoren (O) und Programmierer (P) um \euro{50,-}.\\
 Gehaltserhöhung darf nicht doppelt erfolgen $\Rightarrow$ Sperren von Gehalt, solange ein Nutzer das Gehalt ändert (bei Gefahr bezgl. Deadlock, muss das System das Problem erkennen und entsprechend auflösen).
 \subsection{Zugriffsschutz}
-\folie{2}{12}
+\slidesScale[1]{2}{12}
 \subsection{Dienstprogrammfunktionen}
-\folie{2}{13}
+\slidesScale[1]{2}{13}
 
 \section{Datenorganisation}
 \begin{itemize}
@@ -505,7 +511,7 @@ Gehaltserhöhung darf nicht doppelt erfolgen $\Rightarrow$ Sperren von Gehalt, s
 \item objektrelationales DM (DBS II)
 \item XML-DM / NoSQL DM … (DBS III)
 \end{itemize}
-\folie{2}{14}
+\slidesScale[1]{2}{14}
 \begin{tabular}{
 >{\raggedright} p{\dimexpr0.3\columnwidth-2\tabcolsep-1.5\arrayrulewidth} |
 >{\raggedright} p{\dimexpr0.22\columnwidth-2\tabcolsep-1.5\arrayrulewidth} |
@@ -522,7 +528,7 @@ Flexibilität bzgl. Änderung & -- & -- & \Large{\textbf{+}}
 \end{tabular}
 \chapter{Relationales Datenmodell}
 \section{Terminologie im Relationenmodell}
-\folie{3}{1}
+\slidesScale[1]{3}{1}
 
 \paragraph{Bsp.:} \parskp
 Entitytyp: 
@@ -570,7 +576,7 @@ Ma & 1\\
 Ph & 1\\
 Ph & 4\\
 \end{tabular} \tgreen{gültige Relation} (unabhängig von der semantischen Sinnhaftigkeit)
-\folie{3}{2}
+\slidesScale[1]{3}{2}
 \paragraph{Weitere Kernaussagen zum relationalen Modell:}
 \begin{itemize}
 \item Darstellung der Relation als Tabelle
@@ -583,8 +589,8 @@ Ph & 4\\
 \section{Definition und Manipulation im relationalen Datenmodell}
 \subsection{Datendefinition}
 $\Rightarrow$ Definition von Relationen
-\folie{3}{3}
-\folie{3}{4}
+\slidesScale[1]{3}{3}
+\slidesScale[1]{3}{4}
 \subsection{Datenmanipulation / Relationenalgebra}
 Relationenalgebra nach: Codd\\
 Grundidee:\\
@@ -605,7 +611,7 @@ D.h. mengenweise Arbeit \emph{nicht} satzweise.
 \draw [double, -latex] (-1,3) -- (1,0) node[left]{Op.} -- (2,0);
 \draw [double](-1,-3) -- (1,0);
 \end{tikzpicture}
-\folie{3_Beispiele}{1, scale=0.8}
+\slidesScale[1]{3_Beispiele}{1, scale=0.8}
 \paragraph{Vereinigung} $\cup$\\
 \begin{tikzpicture}[scale=0.5]
 \pattern[pattern=north west lines, pattern color=gray]  (5,4) rectangle (8,-1);
@@ -615,7 +621,7 @@ D.h. mengenweise Arbeit \emph{nicht} satzweise.
 \draw [orange] (4.8,-4.2) rectangle (8.2,4.2);
 \end{tikzpicture}\\
 UNION
-\folie{3_Beispiele}{2, scale=0.8}
+\slidesScale[1]{3_Beispiele}{2, scale=0.8}
 \paragraph{Durchschnitt} $\cap$\\
 \begin{tikzpicture}[scale=0.5]
 \pattern[pattern=north west lines, pattern color=gray]  (5,4) rectangle (8,-1);
@@ -625,7 +631,7 @@ UNION
 \draw [green] (4.8,1.2) rectangle (8.2,-1.2);
 \end{tikzpicture}\\
 INTERSECTION
-\folie{3_Beispiele}{3, scale=0.8}
+\slidesScale[1]{3_Beispiele}{3, scale=0.8}
 \paragraph{Differenz} $\setminus$\\
 $R_1\setminus R_2$
 \begin{tikzpicture}[scale=0.5]
@@ -644,7 +650,7 @@ $R_1\cup R_2 = R_2 \cup R_1$\\
 $R_1 \cap R_2 = R_2 \cap R_1$\\
 $R_1 \setminus R_2 \not = R_2 \setminus R_1$\\
 DIFFERENCE
-\folie{3_Beispiele}{4, scale=0.8}
+\slidesScale[1]{3_Beispiele}{4, scale=0.8}
 \paragraph{Kartesissches Produkt} $\times$\\
 $R_1\times R_2$\\
 Ergebnisrelation enthält: 
@@ -675,7 +681,7 @@ Ergebnisrelation enthält:
 \node at (0,-14) {yyyyyyyy};
 \node at (5,-14) {cccccccccccccc};
 \end{tikzpicture}
-\folie{3_Beispiele}{7, scale=0.8}
+\slidesScale[1]{3_Beispiele}{7, scale=0.8}
 \subsubsection{Relationale Operationen}
 \paragraph{Projektion} Spaltenauswahl\\
 PROJ\\
@@ -683,14 +689,14 @@ PROJ\\
 \draw  (-4,5) rectangle (4,0);
 \draw [green] (0,5.2) rectangle (2,-0.2);
 \end{tikzpicture}
-\folie{3_Beispiele}{5, scale=0.8}
+\slidesScale[1]{3_Beispiele}{5, scale=0.8}
 \paragraph{Selektion} Tupelauswahl (laut Bedingung)\\
 REST\\
 \begin{tikzpicture}[scale=0.5]
 \draw  (-4,5) rectangle (4,0);
 \draw [orange] (-4.2,4) rectangle (4.2,2);
 \end{tikzpicture}
-\folie{3_Beispiele}{6, scale=0.8}
+\slidesScale[1]{3_Beispiele}{6, scale=0.8}
 \paragraph{Verbund} Verbindung zwischen zwei Relationen bezüglich der Gleichheit der Attributwerte in einer Verbindungsspalte\\
 JOIN\\
 intern:
@@ -708,7 +714,7 @@ Merkmale des JOIN:
 \end{itemize}
 Jede Relation ist mit jeder Relation via JOIN verbindbar (auch mit sich selbst).
 \end{itemize}
-\folie{3_Beispiele}{8, scale=0.8}
+\slidesScale[1]{3_Beispiele}{8, scale=0.8}
 
 \section{Normalformenlehre}
 Ziele der Normalisierung:
@@ -733,7 +739,7 @@ Nachteile:
 Normalform (NF):
 $\underbrace{\text{1. NF} \Rightarrow \text{2. NF} \Rightarrow \text{3. NF}}_{\text{praktisch relevant}}\Rightarrow\text{4. NF}\Rightarrow\text{5. NF}$
 \subsection{1. Normalform}
-\folie{3}{5}
+\slidesScale[1]{3}{5}
 \begin{itemize}[label=$\Rightarrow$]
 \item Relation
 \begin{itemize}
@@ -742,7 +748,7 @@ $\underbrace{\text{1. NF} \Rightarrow \text{2. NF} \Rightarrow \text{3. NF}}_{\t
 \end{itemize}
 \end{itemize}
 \subsection{2. Normalform}
-\folie{3}{6}
+\slidesScale[1]{3}{6}
 Abhängigkeiten:\\
 \begin{tabular}{r | l | l}
 PS & Nichtschlüssel-Attribute & 2. NF\\
@@ -758,7 +764,7 @@ PS & Nichtschlüssel-Attribute & 2. NF\\
 \end{itemize}
 \end{itemize}
 \subsection{3. Normalform}
-\folie{3}{7}
+\slidesScale[1]{3}{7}
 für Mitarbeiter (M): (x$\to$y: von x kann man auf y schließen)\\
 M.Mitnr $\to$ M.Abtnr\\
 M.Abtnr $\not \to$ M.Mitnr\\
@@ -771,19 +777,19 @@ M.Abtnr $\not \to$ M.Mitnr
 \item weitere Zerlegung
 \end{itemize}
 \underline{Abtnr} $\to$ weitere Tabelle Abteilung mit PS=\underline{Abtnr}.
-\folie{3}{8}
-\folie{3_Beispiele}{9, scale=0.8}
-\folie{3_Beispiele}{10, scale=0.8}
+\slidesScale[1]{3}{8}
+\slidesScale[1]{3_Beispiele}{9, scale=0.8}
+\slidesScale[1]{3_Beispiele}{10, scale=0.8}
 
 \section{Vergleich relationaler DBMS}
-\folie{3}{9}
+\slidesScale[1]{3}{9}
 \begin{align*}
 \text{NULL} &= \text{missing value (kein Wert)}\\
 &\not = \text{' '}\\
 &\not = \emptyset
 \end{align*}
-\folie{3}{10}
-\folie{3}{11}
+\slidesScale[1]{3}{10}
+\slidesScale[1]{3}{11}
 
 \chapter{Datenbanksprachen für relationale DBMS}
 \section{Benutzergruppen und Datenbanksprachen}
@@ -813,8 +819,8 @@ Einteilung der Programmiersprachen:
 \item klassisch nach Gen. 1-4
 \item weitere Einteilung
 \end{itemize}
-\Folie{4}{1}
-\Folie{4}{2}
+\slidesHeight{4}{1}
+\slidesHeight{4}{2}
 \subparagraph{3. Generation of Language (GL)}
 (prozedural)
 \begin{lstlisting}[language=C]
@@ -835,7 +841,7 @@ FROM buecher
 WHERE leihfrist > 21
 \end{lstlisting}
 $\Rightarrow$ WAS
-\Folie{4}{3}
+\slidesHeight{4}{3}
 
 \section{SQL als Standardsprache für relationale DBMS}
 \subsection{Überblick}
@@ -845,8 +851,8 @@ SQL - Structured Query Language
 \item Query -- „bescheiden“
 \item Language -- „unanfechtbar“
 \end{itemize}
-\Folie{4}{4}
-\Folie{4}{5}
+\slidesHeight{4}{4}
+\slidesHeight{4}{5}
 Klassen an SQL-Befehlen:
 \begin{itemize}
 \item DDL -- Data Definition Language
@@ -908,7 +914,7 @@ $::=$ & Definitionssymbol
 \subsection{Anweisungen zur Definiton (DDL-Befehle)}
 \subsubsection{Tabellendefinition}
 \paragraph{Anlegen einer Tabelle}
-\Folie{4}{6}
+\slidesHeight{4}{6}
 \begin{lstlisting}[language=SQL]
 CREATE TABLE Kunde(
 	KuNr	 			INT PRIMARY KEY,
@@ -958,7 +964,7 @@ CREATE TABLE Artikel (
 )
 \end{lstlisting}
 \paragraph{Ändern der Tabellendefinition}
-\Folie{4}{7}
+\slidesHeight{4}{7}
 \subparagraph{Bsp.:} Spalte Email an Tabelle Kunde anfügen.
 \begin{lstlisting}[language=SQL]
 ALTER TABLE Kunde ADD email CHAR(20) NULL
@@ -991,7 +997,7 @@ DROP INDEX tab_name.index_name
 DROP INDEX Kunde.iOrtName
 \end{lstlisting}
 \subsubsection{View-Definition}
-\Folie{4}{8}
+\slidesHeight{4}{8}
 Eine View kann auch Daten aus mehreren Tabellen nehmen.
 \paragraph{Anlegen einer View} $ $
 \begin{lstlisting}[language=SQL]
@@ -1023,7 +1029,7 @@ FROM Beruf_Inf -- (View Name)
 
 \subsection{Anweisungen zur Abfrage (DML-Befehle)}
 \subsubsection{Standardabfrage}
-\Folie{4}{9}
+\slidesHeight{4}{9}
 \begin{lstlisting}[language=SQL]
 SELECT	Bilbereich					<Attributliste>		Was?
 FROM		Definitionsbereich	<Relation>				Wovon?
@@ -1147,7 +1153,7 @@ DATEADD ( dd, 50, GETDATE() )
 \end{enumerate}
 
 \subsubsection{Sortierung / Gruppenbildung}
-\Folie{4}{10}
+\slidesHeight{4}{10}
 \paragraph{Sortierung} $ $
 \begin{lstlisting}[language=SQL]
 SELECT * FROM Kunde
@@ -1250,7 +1256,7 @@ WHERE Kunr IN (
 
 \subsubsection{Abfrage über mehrere Relationen}
 $\Rightarrow$ JOIN
-\Folie{4}{11}
+\slidesHeight{4}{11}
 \subparagraph{Bsp.:} Anzeige der Artikeldaten und deren Käufe
 Mehrere Varianten:
 \begin{enumerate}
@@ -1294,7 +1300,7 @@ WHERE Ort='Dresden'								-- WHERE: explizite Bedingung(en)
 $\Rightarrow$ JOIN ist der ersten Variante zu bevorzugen, da die impliziten und expliziten Bedingungen klar und auf den ersten Blicks erkennbar sind.
 \end{enumerate}
 \subsubsection{Weitere Abfragemöglichkeiten}
-\Folie{4}{12}
+\slidesHeight{4}{12}
 \begin{itemize}
 \item Equi-JOIN
 \begin{lstlisting}[language=SQL]
@@ -1427,7 +1433,7 @@ WHERE Kredit < (
 \end{lstlisting}
 
 \subsubsection{Mengen-Operationen}
-\Folie{4}{13}
+\slidesHeight{4}{13}
 \begin{tikzpicture}[scale=0.5]
 \pattern[pattern=north west lines, pattern color=gray]  (5,4) rectangle (8,-1);
 \pattern[pattern=north east lines, pattern color=gray]  (5,1) rectangle (8,-4);
@@ -1462,7 +1468,7 @@ WHERE Ort='Dresden'
 \end{lstlisting}
 
 \subsubsection{EXISTS / NOT EXISTS-Operator}
-\Folie{4}{14}
+\slidesHeight{4}{14}
 \paragraph{Bsp.:} $ $
 \begin{lstlisting}[language=SQL]
 SELECT Name, Ort
@@ -1589,7 +1595,7 @@ Bsp.: Access
 
 \section{DBMS-spezifische Erweiterungen vom Standard-SQL (T-SQL)}
 \subsection{Statements zur Ablaufkontrolle}
-\Folie{4}{15}
+\slidesHeight{4}{15}
 \subsubsection{IF}
 \begin{lstlisting}[language=SQL]
 IF SELECT AVERAGE(vPreis) FROM Kauf < 40
@@ -1610,7 +1616,7 @@ WHILE 2>1	-- Endlosschleife
 	END
 \end{lstlisting}
 \subsection{Benutzung von Variablen}
-\Folie{4}{16}
+\slidesHeight{4}{16}
 \begin{tabular}{l l l}
 & \textbf{global} & \textbf{lokal} \\
 Deklaration: & System & im Programmcode\\
@@ -1681,10 +1687,10 @@ IF (SELECT Kredit FROM Kunde WHERE Kunr=123) < @dKredit
 \end{lstlisting}
 
 \subsection{Arbeiten mit Batch}
-\Folie{4}{17}
+\slidesHeight{4}{17}
 \subsection{Arbeiten mit Stored Procedure}
-\Folie{4}{18}
-\Folie{4}{19}
+\slidesHeight{4}{18}
+\slidesHeight{4}{19}
 \paragraph{zu Bsp. 1:} (aus Folie 4.19)
 \begin{lstlisting}[language=SQL]
 CREATE PROCEDURE Erhoehe_Preis (@Prozent int = 5) AS
@@ -1709,11 +1715,11 @@ DECLARE @Anz int
 EXEC LoescheKu 123, @Anz OUTPUT -- OUTPUT muss hier auch noch mal angegeben werden!
 PRINT 'Anzahl gelöschter Käufe: ' + CONVERT(CHAR(10), @Anz)
 \end{lstlisting}
-\Folie{4}{19}
-\Folie{4}{20}
+\slidesHeight{4}{19}
+\slidesHeight{4}{20}
 
 \subsection{Cursor}
-\Folie{4}{21}
+\slidesHeight{4}{21}
 Ablauf:
 \begin{lstlisting}[language=SQL]
 -- Cursor vereinbaren:
@@ -1733,35 +1739,35 @@ DEALLOCATE <cname>
 \section{Semantische Datenmodellierung -- Das Entity Relationship Modell}
 
 \subsection{Überblick über Datenmodelle/semantische Datenmodelle}
-\folie{5}{1, scale=0.8}
-\folie{5}{2, scale=0.8}
+\slidesScale[1]{5}{1, scale=0.8}
+\slidesScale[1]{5}{2, scale=0.8}
 \subsection{Entities und Relationships (ERM-Diagramm)}
-\folie{5}{3, scale=0.8}
-\folie{5}{4, scale=0.8}
+\slidesScale[1]{5}{3, scale=0.8}
+\slidesScale[1]{5}{4, scale=0.8}
 \subsection{Kardinalität und Komplexität von Beziehungen}
-\folie{5}{5, scale=0.8}
+\slidesScale[1]{5}{5, scale=0.8}
 \subsection{Semantische Beziehungen am Beispiel}
-\folie{5}{6, scale=0.8}
+\slidesScale[1]{5}{6, scale=0.8}
 \subsection{Konstruktion semantischer Objekte}
-\folie{5}{7, scale=0.8}
-\folie{5}{8, scale=0.8}
-\folie{5}{9, scale=0.8}
-\folie{5}{10, scale=0.8}
-\folie{5}{11, scale=0.8}
-\folie{5}{12, scale=0.8}
+\slidesScale[1]{5}{7, scale=0.8}
+\slidesScale[1]{5}{8, scale=0.8}
+\slidesScale[1]{5}{9, scale=0.8}
+\slidesScale[1]{5}{10, scale=0.8}
+\slidesScale[1]{5}{11, scale=0.8}
+\slidesScale[1]{5}{12, scale=0.8}
 \subsection{Abbildung des Entity-Relationship-Modells auf normalisierte Relationen}
-\folie{5}{13, scale=0.8}
-\folie{5}{14, scale=0.8}
-\folie{5}{15, scale=0.8}
-\folie{5}{16, scale=0.8}
-\folie{5}{17, scale=0.8}
+\slidesScale[1]{5}{13, scale=0.8}
+\slidesScale[1]{5}{14, scale=0.8}
+\slidesScale[1]{5}{15, scale=0.8}
+\slidesScale[1]{5}{16, scale=0.8}
+\slidesScale[1]{5}{17, scale=0.8}
 \subparagraph{Bsp. 1:} Vertrieb
-\folie{5_BspVertrieb}{1, scale=0.8}
+\slidesScale[1]{5_BspVertrieb}{1, scale=0.8}
 \subparagraph{Bsp. 2:} Rechnung
-\folie{5_BspRechnung}{1, scale=0.5}
+\slidesScale[1]{5_BspRechnung}{1, scale=0.5}
 
 \subparagraph{Bsp. 3:} Projekt-Ableitung der Relationen
-\folie{5}{18, scale=0.8}
+\slidesScale[1]{5}{18, scale=0.8}
 \begin{tikzpicture}[scale=0.5]
 \node at (-3,-1) {Mitarbeiter ist…};
 \draw  (-8,-4.6) rectangle (-4.2,-6.2) node[pos=.5]{Mitarbeiter};
