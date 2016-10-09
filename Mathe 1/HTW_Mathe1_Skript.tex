@@ -1,41 +1,53 @@
-% Header aus der Vorlage
-\input{../LaTeX_master/LaTeX_master_HTW}
+\newcommand{\customDir}{../}
+\input{\customDir .LaTeX_master/LaTeX_master_setup.sty}
 
-% Definition von Titel, Autor usw.
-\DTitel{Mathematik I}
-\DUntertitel{Vorlesungsskript}
-\DAutor{Falk-Jonatan Strube}
-\DNotiz{Vorlesung von Herrn Michael Meinhold\\ \& Prof. Dr. Fabian Schwarzenberger}
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+%\setCustomSlidePath{Folien}
+
+\setCustomTitle{Mathematik I}
+\setCustomSubtitle{Vorlesungsskript}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+\setCustomNoteB{Vorlesung von Herrn Michael Meinhold\\ \& Prof. Dr. Fabian Schwarzenberger}
+
+%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
+%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir .LaTeX_master/LaTeX_master.sty}
+\input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir .Literatur/HTW_Literatur.bib}
 
 \begin{document}
 
-%\maketitle
-%\newpage
+%\selectlanguage{english}
+\maketitle
+\newpage
 \tableofcontents
 \newpage
 
-%\chapter{Elementare Grundlagen}
+\chapter{Elementare Grundlagen}
 
-%\section{Aussagen und Grundzüge der Logik}
-%\input{HTW_Mathe1_Skript_sec1_1}
+\section{Aussagen und Grundzüge der Logik}
+\input{HTW_Mathe1_Skript_sec1_1}
 
-%\section{Mengen}\label{sec:Mengen}
-%\input{HTW_Mathe1_Skript_sec1_2}
+\section{Mengen}\label{sec:Mengen}
+\input{HTW_Mathe1_Skript_sec1_2}
 
-%\section{Zahlen}
-%\input{HTW_Mathe1_Skript_sec1_3}
+\section{Zahlen}
+\input{HTW_Mathe1_Skript_sec1_3}
 
-%\section{Reellwertige Funktionen einer reellen Veränderlichen}
-%\input{HTW_Mathe1_Skript_sec1_4}
+\section{Reellwertige Funktionen einer reellen Veränderlichen}
+\input{HTW_Mathe1_Skript_sec1_4}
 
-%\section{Lineare Algebra}
-%\input{HTW_Mathe1_Skript_sec1_5}
+\section{Lineare Algebra}
+\input{HTW_Mathe1_Skript_sec1_5}
 
-%\newpage
-\setcounter{chapter}{1}
 \chapter{Folgen, Reihen, Grenzwerte}
 \section{Zahlenfolgen}
-%\input{HTW_Mathe1_Skript_sec2_1_M1}
+\input{HTW_Mathe1_Skript_sec2_1_M1}
 \setcounter{subsection}{2}
 \input{HTW_Mathe1_Skript_sec2_1_M2}
 

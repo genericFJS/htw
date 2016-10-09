@@ -1,17 +1,33 @@
-% Header aus der Vorlage
-\input{../LaTeX_master/LaTeX_master_HTW}
+\newcommand{\customDir}{../}
+\input{\customDir .LaTeX_master/LaTeX_master_setup.sty}
 
-% Definition von Titel, Autor usw.
-\DTitel{Mathematik II}
-\DUntertitel{Vorlesungsskript}
-\DAutor{Falk-Jonatan Strube}
-\DNotiz{Vorlesung von Prof. Dr. Fabian Schwarzenberger}
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+%\setCustomSlidePath{Folien}
+
+\setCustomTitle{Mathematik II}
+\setCustomSubtitle{Vorlesungsskript}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+\setCustomNoteB{Vorlesung von Herrn Michael Meinhold\\ \& Prof. Dr. Fabian Schwarzenberger}
+
+%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
+%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir .LaTeX_master/LaTeX_master.sty}
+\input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir .Literatur/HTW_Literatur.bib}
 
 \begin{document}
 
+%\selectlanguage{english}
 \maketitle
 \newpage
+%\tableofcontents
+%\newpage
 
-Siehe Skript Mathe 1…
+Siehe Skript Mathe 1 (ab Kapitel 2)…
 
 \end{document} 
