@@ -1,0 +1,8 @@
+
+
+Informationen zu OpenGl inkl. vollständiger Dokumentation
+sind zu finden unter den Adressen:
+
+  www.opengl.org
+  www.opengl-tutorial.org
+  learnopengl.com
