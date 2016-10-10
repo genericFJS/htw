@@ -1,0 +1,39 @@
+
+
+Internet:
+
+www.opengl.org
+
+Programmstruktur:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <glm.hpp>
+#include <gtx/transform.hpp>
+#include <glew.h>
+#include <freeglut.h>
+#include <FreeImage.h>
+
+(Reihenfolge beachten)
+
+PATH Variable:
+
+P:\OpenGL\bin
+P:\OpenGL\OpenGL\glew-1.13.0\bin\Release\Win32;P:\OpenGL\OpenGL\FreeImage3170Win32Win64\FreeImage\Dist\x32;P:\OpenGL\OpenGL\freeglut-3.0.0\bin\Debug
+(P:\OpenGL\OpenGL\freeglut-3.0.0\bin\Release)
+
+Include Path:
+
+P:\OpenGL\OpenGL\glew-1.13.0\include\GL;P:\OpenGL\OpenGL\freeglut-3.0.0\include\GL;P:\OpenGL\OpenGL\glm-0.9.7.1\glm\glm;P:\OpenGL\OpenGL\FreeImage3170Win32Win64\FreeImage\Dist\x32
+
+Library Path:
+
+P:\OpenGL\OpenGL\glew-1.13.0\lib\Release\Win32;P:\OpenGL\OpenGL\freeglut-3.0.0\lib\Debug;P:\OpenGL\OpenGL\FreeImage3170Win32Win64\FreeImage\Dist\x32
+(P:\OpenGL\OpenGL\freeglut-3.0.0\lib\Release)
+
+Additional Libraries:
+
+opengl32.lib;freeglutd.lib;glew32.lib;FreeImage.lib
+(freeglut.lib)
+
