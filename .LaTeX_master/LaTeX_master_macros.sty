@@ -21,6 +21,19 @@
 }
 \makeatother
 
+% Paragraph mit Zähler (Section-Weise)
+\newcounter{cparagraphC}
+\newcommand{\cparagraph}[1]{
+\stepcounter{cparagraphC}
+\paragraph{\thesection{}-\Roman{cparagraphC} #1}
+%\addcontentsline{toc}{subsubsection}{\thecparagraphC{} #1}
+\label{\thesection-\thecparagraphC}
+}
+\makeatletter
+\@addtoreset{cparagraphC}{section}
+\makeatother
+
+
 % (Vorlesungs-)Folien einbinden:
 % Folien von einer Datei skaliert
 \newcommand{\slideScale}[2][0.5]{\begin{center}
@@ -126,10 +139,11 @@
 \newcommand{\corr}{\;\widehat{=}\;}
 \newcommand{\mdeg}{^{\circ}}
 
-\newcommand{\nok}[2]{\begin{pmatrix}#1\\#2\end{pmatrix}}	% n über k BESSER: \binom{n}{k}
+\newcommand{\nok}[2]{\binom{#1}{#2}}	% n über k BESSER: \binom{n}{k}
 \newcommand{\mtr}[1]{\begin{pmatrix}#1\end{pmatrix}}	% Matrix
 \newcommand{\dtr}[1]{\begin{vmatrix}#1\end{vmatrix}}	% Determinante (Betragsmatrix)
 \renewcommand{\vec}[1]{\underline{#1}}	% Vektorschreibweise
 \newcommand{\imptnt}[1]{\colorbox{red!30}{#1}}	% Wichtiges
 \newcommand{\intd}[1]{\,\mathrm{d}#1}
 \newcommand{\diffd}[1]{\mathrm{d}#1}
+% für Module-Rechnung: \pmod{}
