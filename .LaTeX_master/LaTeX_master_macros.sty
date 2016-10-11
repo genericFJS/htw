@@ -25,8 +25,8 @@
 \newcounter{cparagraphC}
 \newcommand{\cparagraph}[1]{
 \stepcounter{cparagraphC}
-\paragraph{\thesection{}-\Roman{cparagraphC} #1}
-%\addcontentsline{toc}{subsubsection}{\thecparagraphC{} #1}
+\paragraph{\thesection{}-\thecparagraphC{} #1}
+%\addcontentsline{toc}{subsubsection}{\thesection{}-\thecparagraphC{} #1}
 \label{\thesection-\thecparagraphC}
 }
 \makeatletter
