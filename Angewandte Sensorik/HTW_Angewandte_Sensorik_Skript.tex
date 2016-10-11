@@ -1,0 +1,133 @@
+\newcommand{\customDir}{../}
+\input{\customDir .LaTeX_master/LaTeX_master_setup.sty}
+
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+%\setCustomSlidePath{Folien}
+
+\setCustomTitle{Angewandte Sensorik}
+\setCustomSubtitle{Vorlesungsskript}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+\setCustomNoteB{Vorlesung von Prof. Dr.-Ing. habil. Gorbunoff}
+
+%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
+%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir .LaTeX_master/LaTeX_master.sty}
+\input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir .Literatur/HTW_Literatur.bib}
+
+\begin{document}
+
+%\selectlanguage{english}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\chapter*{Verbemerkung}
+Prüfung: Keine Rechnung, kein Programmieren. Reine Wissensabfrage (Welche Sensoren für diesen Zweck, Vergleich, Vorteil/Nachteil, …)\\
+Hilfsmittel: alles handschrichtliche zugelassen.
+
+\setcounter{chapter}{-1}
+\chapter{Einführung}
+
+Elektronische Geräte (PC usw.) sind blind, brauchen Sensoren.
+
+\section{Eingabegeräte}
+Eingabegeräte: alle Geräte, über die einem Computer Informationen zugeführt werden können.
+\begin{itemize}
+\item \emph{Umfeldsensoren}: führen die Informationen über die Umgebung unmittelbar dem Computer zu (ohne menschliches einwirken): Temperatur, Druck, Schall, … $\Rightarrow$ Hauptthema der VL
+\item \emph{User Interface Devices}: Informationseingabe durch Benutzer: Tastaturen, Touchscreens (kapazitiv, induktiv, …) usw.
+\end{itemize}
+
+\section{Ziel des Kurses}
+\begin{itemize}
+\item \emph{Sensorik} (Sensortechnik): Teilgebiet der Messtechnik, das sich mit Entwicklung und Einsatz von Sensoren befasst.
+\item wichtigste physikalischen Prinzipien zur Erfassung nichtelektrischer Messgrößen
+\item Funktionsweise ausgewählter Sensoren
+\item Vor- und Nachteile jedes Typs
+\item Anwendungshinweise für den zuverlässigen Sensorenbetrieb
+\end{itemize}
+
+Kapitel:
+\begin{itemize}
+\item Grundlagen der Messtechnik
+\item Einführung in die Sensorik
+\item Temperatursensoren
+\item Drucksensoren
+\item Durchflusssensoren
+\item Binäre Positionssensoren
+\end{itemize}
+
+\chapter{Grundlagen der Messtechnik}
+
+\section{Messgröße und Messwert}
+
+\begin{itemize}
+\item \imptnt{\emph{Messgröße}} ist ein messbares \imptnt{Merkmal} eines Objektes oder Prozess:
+\begin{itemize}
+\item Eigenschaft 
+\item Vorgang
+\item Zustand
+\end{itemize}
+$\Rightarrow$ Temperatur, Druck, Durchfluss, Position
+\item \imptnt{\emph{Maßeinheit}}: eine durch Vereinbarung festgelegte \imptnt{Vergleichsgröße}
+\item \emph{SI-System:} m, kg, s, A, K, mol, cd
+\item \imptnt{\emph{Messwert}}: der gemessene Wert einer Messgröße $=ZW \cdot \mathrm{Einheit}$ (also Messgröße kombiniert mit Maßeinheit)
+\item Messung: (Ablauf)
+\begin{itemize}
+\item Quelle (Träger eine Messgröße)
+\item Erfassung der Größe \& Vergleich der Größe mit einer Einheit
+\item Anzeige (des Messwerts)
+\end{itemize}
+\end{itemize}
+
+\subsection{Normal}
+\emph{Normal} (DIN 1390): Maßverkörperung, Messgerät, Referenzmaterial oder Messeinrichtung zum \linebreak Zweck eine Einheit festzulegen, zu verkörpern, zu bewahren oder zu reproduzieren.
+\begin{itemize}
+\item Internationale (nationale) Normale (Kopie der Ursprungs-Normale: bspw. Kopie Ur-Kilo)
+\item Bezugsnormale (PTB) (für Betriebe usw.)
+\item Gebrauchs-, Prüfnormale (für die konkrete Messung)
+\item Lehren
+\item …
+\end{itemize}
+
+\subsection{Messen}
+\emph{Messen} ist der Vorgang, durch den ein Wert einer physikalischen Größe als Vielfaches eines Bezugswertes (Maßeinheit) ermittelt wird (Messen = Vergleichen).
+
+\subsection{Messprinzipien}
+\emph{Messprinzip}: eine charakteristische naturwissenschaftliche Erscheinung oder ein gesetzmäßiger Zusammenhang, der einer Messung zugrunde gelegt wird.
+
+Physikalische Grundlage der Messung: über 100 physikalisch-chemisch-biologische Effekte.
+
+\section{Messmethoden}
+\emph{Messmethode}: „spezielle, vom Messprinzip unabhängige Art des Vorgehens bei der Messung.“ (DIN 1319-1)
+\begin{itemize}
+\item allgemeine Vorgehensweise bei der Durchführung von Messungen
+\item nicht an eine physikalische Realisierung gebunden
+\end{itemize}
+
+\subsection{Methoden nach Art der Messgröße}
+Bsp. Messung der Temperatur (die sich nicht ändert)
+\begin{itemize}
+\item \emph{statisch}: bestimmt wird eine zeitlich unveränderliche Messgröße nach einem Messprinzip, das nicht auf der zeitlichen Änderung anderer Größen beruht (Bsp.: Ablesen der Flüssigkeits-Säule im Thermometer)
+\item \emph{dynamisch}: Messgröße ist entweder selbst zeitlich veränderlich oder ihr Wert ergibt sich aus zeitlichen Änderungen anderer Größen (Messung durch Einwirkung anderer Kräfte um die Reaktion heraus zu finden [und so zu messen]. Bsp. Halbwertszeit von Materialien lässt Rückschlüsse auf Temperatur zu)
+\end{itemize}
+
+\subsection{Methoden nach Art der Vergleichsgröße}
+\begin{itemize}
+\item \emph{direkte Messmethode}: der Wert der Messgröße wird durch quantitative Vergleich mit einer physikalischen gleichartigen Einheit ermittelt (Metermaß).
+\item \emph{indirekte Messmethode}: der Messwert wird aus den Messdaten einer oder mehrerer anderer (direkt messbaren) Größen ermittelt, die mit der gesuchten Messgröße in einem definierten Zusammenhang steht (stehen) (Messung der Temperatur durch Messung der Ausdehnung der Flüssigkeit im Thermometer)
+\item \emph{inkrementale Messmethode}: der Messwert wird von einem Bezugspunkt aus durch Addition/Subtraktion von kleinen Wertzuwachsen (Inkrementen) ermittelt (Geld zählen: Münzen (als Inkrement) in Säule stapeln, diese messen und damit den Wert bestimmen; vgl. auch Kugelmaus: gerasterte, inkrementale Messung der Veränderung der Kugelbewegung)
+\end{itemize}
+
+
+
+%\newpage
+%\printbibliography
+
+\end{document}
