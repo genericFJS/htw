@@ -16,19 +16,17 @@ GLuint VAOs[NumVAOs];
 GLuint Buffers[NumBuffers];
 const GLuint NumVertices = 50;
 GLuint program;
+float maxCoord = 42;
+float border = 3;
 
 float centerHTWx(float c){
-	float border = 3;
-	float maxCoord = 30;
 	float coordSize = (2 * border + maxCoord) /2;
 	printf("%f ",(c + border) / coordSize - 1);
 	return (c + border) / coordSize - 1;
 }
 
 float centerHTWy(float c){
-	float border = 3;
-	float moveY = 15/2;
-	float maxCoord = 30;
+	float moveY = 42-30;
 	float coordSize = (2 * border + maxCoord) / 2;
 	printf("%f ", (c + border) / coordSize - 1);
 	return (c + border + moveY) / coordSize - 1;
@@ -42,24 +40,35 @@ void init(void)
 	program = loadShaders("OpenGL-01/Dreiecke.vs", "OpenGL-01/Dreiecke.fs", "");
 	glUseProgram(program);
 	GLfloat vertices[NumVertices][2] = {
-		{ centerHTWx(0), centerHTWy(0) },	// 1
-		{ centerHTWx(3), centerHTWy(0) },	// 2
-		{ centerHTWx(0), centerHTWy(15) }, // 3
+		{ centerHTWx(0), centerHTWy(0) },	// H balken 0
+		{ centerHTWx(3), centerHTWy(0) },	// H balken 1 
+		{ centerHTWx(0), centerHTWy(15) },  
 		{ centerHTWx(3), centerHTWy(15) },
-		{ centerHTWx(3), centerHTWy(7.5) },
-		{ centerHTWx(10), centerHTWy(7.5) }, // 4
-		{ centerHTWx(10), centerHTWy(0) },
-		{ centerHTWx(10), centerHTWy(15) },
+		{ centerHTWx(3), centerHTWy(7.5) },	// H Strich 4
+		{ centerHTWx(10), centerHTWy(7.5) }, 
+		{ centerHTWx(10), centerHTWy(0) },	// H Seite 6
+		{ centerHTWx(10), centerHTWy(15) }, // T Strich1 7
 		{ centerHTWx(15), centerHTWy(15) },
-		{ centerHTWx(15), centerHTWy(0) }, // 5
-		{ centerHTWx(18), centerHTWy(0) },
+		{ centerHTWx(18), centerHTWy(0) }, // T Balken 9
+		{ centerHTWx(15), centerHTWy(0) },	// T Balken 10
 		{ centerHTWx(18), centerHTWy(15) },
 		{ centerHTWx(15), centerHTWy(15) },
-		{ centerHTWx(22), centerHTWy(0) }, // 6
-		{ centerHTWx(25), centerHTWy(0) }, // 7
-		{ centerHTWx(31), centerHTWy(15) }, // 8
-		{ centerHTWx(26), centerHTWy(15) }, // 9
-		{ centerHTWx(30), centerHTWy(0) } }; // 10
+		{ centerHTWx(22), centerHTWy(0) }, // T-W Strich 13
+		{ centerHTWx(22), centerHTWy(15) }, // T-W Strich 14
+		{ centerHTWx(26), centerHTWy(15) },
+		{ centerHTWx(25), centerHTWy(0) }, // W Balken 16
+		{ centerHTWx(22), centerHTWy(0) },	// W Balken 17
+		{ centerHTWx(34), centerHTWy(15) },
+		{ centerHTWx(31), centerHTWy(15) },
+		{ centerHTWx(33), centerHTWy(0) }, // W Balken2 20
+		{ centerHTWx(30), centerHTWy(0) },	// W Balken2 21
+		{ centerHTWx(42), centerHTWy(15) },
+		{ centerHTWx(39), centerHTWy(15) },
+		{ centerHTWx(30), centerHTWy(0) }, // W Balken2-Rand 24
+		{ centerHTWx(33), centerHTWy(0) },	
+		{ centerHTWx(42), centerHTWy(15) },
+		{ centerHTWx(39), centerHTWy(15) }
+		}; 
 	glGenBuffers(NumBuffers, Buffers);
 	glBindBuffer(GL_ARRAY_BUFFER, Buffers[ArrayBuffer]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -71,7 +80,7 @@ void init(void)
 
 void display(void)
 {
-	glClearColor(1,1,1,1);
+	glClearColor(0.9,0.9,0.9,1);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glBindVertexArray(VAOs[Triangles]);
 	glVertexAttrib3f(vColor, 0, 0, 0);
@@ -82,8 +91,15 @@ void display(void)
 	glDrawArrays(GL_LINES, 7, 2);
 	glDrawArrays(GL_TRIANGLES, 9, 3);
 	glDrawArrays(GL_TRIANGLES, 10, 3);
-	//glVertexAttrib3f(vColor, 0, 1, 0);
-	//glDrawArrays(GL_LINE_LOOP, 3, NumVertices / 2);
+	glDrawArrays(GL_LINES, 13, 2);
+	glDrawArrays(GL_LINES, 14, 2);
+	glDrawArrays(GL_TRIANGLES, 16, 3);
+	glDrawArrays(GL_TRIANGLES, 17, 3);
+	glVertexAttrib3f(vColor, 249/255.0, 155/255.0, 28/255.0);
+	glDrawArrays(GL_TRIANGLES, 20, 3);
+	glDrawArrays(GL_TRIANGLES, 21, 3);
+	glVertexAttrib3f(vColor, 0, 0, 0);
+	glDrawArrays(GL_LINE_LOOP, 24, 4);
 	glFlush();
 }
 
