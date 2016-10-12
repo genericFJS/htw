@@ -1,0 +1,29 @@
+﻿Visual Studio CG Projekt
+datei-neu-projekt
+visual c++, win32, console
+alle Häckchen weg nehmen (Projektmappenverzeichnis)
+
+weiter
+alle Häckchen weg nehmen (bis auf leeres Projekt)
+fertig stellen
+
+quelldateien: cpp
+ressourcendateien: shader
+
+
+zu bearbeitendes vom Praktikum (OpenGL-01 usw.) in den Projektordner einfügen (bei Vorlagen die Pfade im Code anpassen OpenGL-01->Programme)
+dann zum projekt hinzufügen in vs: rechtsklick auf quelldateien-hinzufügen-vorhandenes element das gleiche mit den shadern
+
+---------------------
+Bibliotheken einbinden:
+
+Ordner (bspw Quelldateien) anwählen
+
+Projekt->Projekt-Eigenschaften->C/C++->Allgemein->Zusätzliche Includeverzeichnisse 	dort die Include-Zeile aus Readme einfügen
+
+Projekt->Projekt-Eigenschaften->Linker->Allgemein->Zusätzliche Bibliotheksverzeichnisse 	dort die Library-Zeile aus Readme einfügen (bei Debug die erste, bei Release die in Klammern)
+
+Projekt->Projekt-Eigenschaften->Linker->Eingabe->Zusätzliche Abhängigkeiten 	dort die Library-Zeile aus Readme ANfügen (vor %(additionalDependencies), davor/danach Semikolon) (bei Debug die erste, bei Release die in Klammern)
+
+
+Wenn mehrere Dateien mit Main-Datei: Rechtsklick-> vom Build ausschließen
