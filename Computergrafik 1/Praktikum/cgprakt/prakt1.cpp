@@ -39,7 +39,7 @@ void init(void)
 	printf("\n%s", (char*)glGetString(GL_RENDERER));
 	printf("\n%s", (char*)glGetString(GL_VERSION));
 	printf("\n%s\n", (char*)glGetString(GL_SHADING_LANGUAGE_VERSION));
-	program = loadShaders("programme/Dreiecke.vs", "programme/Dreiecke.fs", "");
+	program = loadShaders("OpenGL-01/Dreiecke.vs", "OpenGL-01/Dreiecke.fs", "");
 	glUseProgram(program);
 	GLfloat vertices[NumVertices][2] = {
 		{ centerHTWx(0), centerHTWy(0) },	// 1
