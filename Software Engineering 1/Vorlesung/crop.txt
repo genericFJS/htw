@@ -1,0 +1,15 @@
+1. Folie (top/bottom)
+3,65
+20,1
+
+2. Folie
+11,9
+11,9
+
+3. Folie
+3,65
+20,1
+
+Alle (left/right)
+2,1
+11
