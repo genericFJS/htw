@@ -1,0 +1,124 @@
+\newcommand{\customDir}{../}
+\input{\customDir .LaTeX_master/LaTeX_master_setup.sty}
+
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+\setCustomSlidePath{Vorlesung/VO}
+\setCustomSlideScale{1.5}
+
+\setCustomTitle{Software Engineering 1}
+\setCustomSubtitle{Vorlesungsskript}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+\setCustomNoteB{Vorlesung von Prof. Dr. Hauptmann}
+
+%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
+%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir .LaTeX_master/LaTeX_master.sty}
+\input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir .Literatur/HTW_Literatur.bib}
+
+\begin{document}
+
+%\selectlanguage{english}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\chapter{Einführung}
+\slidesScale{1}{3}
+
+\section{Gliederung}
+\slidesScale{1}{5}
+\slidesScale{1}{6}
+
+\section{Die ersten Phasen}
+\slidesScale{1}{14}
+\begin{itemize}
+\item Wie werden Softwaresysteme entwickelt?
+\item Was ist Software-Engineering?
+\item Warum haben Analyse und Definition von Anforderungen an das SW-System große Bedeutung im Entwicklungsprozess?
+\end{itemize}
+
+\section{Vergleich Bauingenieur und Softwareentwicklung}
+\slidesScale[2]{1}{16}
+Begleitend:
+\begin{itemize}
+\item Projektleiter
+\item technischer Autor
+\item Qualitäts-Beauftragter
+\end{itemize}
+Zertifizierung für Software: IREB
+\slidesScale{1}{17}
+
+\section{Erfolgsquote von Software-Projekten gestern und heute}
+\slidesScale{1}{19}
+Also: Analyse ist Grundvoraussetzung für erfolgreiche Softwareentwicklung.
+
+Veranschaulichung:
+\slidesScale{1}{20}
+Warum haben Analyse und Definition von Anforderungen an das SW‐System große Bedeutung
+im Entwicklungsprozess?
+\begin{itemize}
+\item Auch heute noch werden nur die Hälfte aller SW‐Projekte wie geplant realisiert.
+\item 60\% der Fehler im SW‐System resultieren aus Fehlern in der Analysephase, d.h. aus Fehlern bei der Definition der Anforderungen.
+\item Die Behebung von Fehlern aus der Analysephase sind vergleichsweise sehr teuer.
+\end{itemize}
+
+\section{Definitionen Software Engineering}
+
+\slidesScale{1}{22}
+\slidesScale{1}{23}
+\slidesScale{1}{24}
+Also:
+
+\paragraph{Software-Engineering ist}
+\begin{itemize}
+\item die effektive und effiziente Entwicklung und Weiterentwicklung komplexer SW-Systeme
+\item sowie begleitender Dokumente
+\item in einem bewusst arbeitsteilig gestalteten Prozess
+\item unter Anwendung bewährter Prinzipien, Methoden und Modellen.
+\end{itemize}
+oder Vergleich:
+\slidesScale{1}{25}
+\begin{itemize}
+\item $\Rightarrow$ nützt nichts, sondern verhindert vielmehr Schäden $\to$ sollte generell beachtet werden
+\item „Software Engineering ist -- wie die Hygiene in der Medizin -- langweilig und frustrierend für Leute, die die Abwehr von Fehlschlägen und Katastrophen nicht als positive Leistung betrachten.“
+\end{itemize}
+\begin{itemize}
+\item sauberes Arbeiten (vgl. Chirurg: kann auch so operieren, wenn er aber ohne Hygiene operiert, ist der Ausgang ungewiss)
+\item „Wenn's nicht funktioniert, ist man immer wieder damit beschäftigt die gleichen Fehler zu bearbeiten.“
+\end{itemize}
+
+
+\paragraph{Wie werden Software-Systeme entwickelt?}
+\begin{itemize}
+\item Bevor mit der Implementierung begonnen wird, werden die Anforderungen ermittelt und beschrieben.
+\item Danach wird ausgehend von der Beschreibung der Anforderungen eine Struktur festgelegt, nach der SW-System gebaut wird.
+\item Erst dann beginnt die Implementierung.
+\item Dabei begleiten ständig Tests und Dokumentation die Arbeit.
+\end{itemize}
+\paragraph{Was ist „Software‐Engineering“?} (siehe weitere Definitionen)\\
+Software‐Engineering ist:
+\begin{itemize}
+\item die effektive und effiziente Entwicklung und Weiterentwicklung \emph{komplexer} SW-Systeme
+\item sowie \emph{begleitender Dokumente}
+\item in einem bewusst arbeitsteilig gestalteten \emph{Prozess}
+\item unter Anwendung bewährter \emph{Prinzipien, Methoden und Modellen}.
+\end{itemize}
+\paragraph{Warum haben Analyse und Definition von Anforderungen an das SW‐System große Bedeutung
+im Entwicklungsprozess?}
+\begin{itemize}
+\item Auch heute noch werden nur die Hälfte aller SW‐Projekte wie geplant realisiert.
+\item 60\% der Fehler im SW‐system resultieren aus Fehlern in der Analysephase, d.h. aus Fehlern in der Definition der Anforderungen.
+\item Die Behebung von Fehlern aus der Analysephase sind vergleichsweise sehr teuer.
+\end{itemize}
+
+%\newpage
+%\printbibliography
+
+\end{document}

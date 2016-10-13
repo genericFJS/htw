@@ -18,6 +18,10 @@
 \input{\customDir .LaTeX_master/LaTeX_master.sty}
 \input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
 
+\setlist[enumerate,1]{label=(\arabic*)}
+\renewenvironment{anumerate}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}} % Alphabetische Aufzählung
+
+
 %\bibliography{\customDir .Literatur/HTW_Literatur.bib}
 \begin{document}
 
@@ -66,8 +70,8 @@ $\Omega:=$ Ergebnismenge (oder Ergebnisraum) ist die Menge aller möglichen Erge
 
 \cparagraph{Bemerkung} Drei wichtige Fälle
 \begin{itemize}
-\item $\Omega$ endlich, d.h. $\Omega=\{w_1,w_2,\dots,w_n\}$
-\item $\Omega$ abzählbar unendlich, d.h. $\Omega=\{w_1,w_2,\dots\}$ (Ereignisse lassen sich mit den natürlichen Zahlen aufzählen)\footnote{zu natürlichen Zahlen (in dieser VL): $\NN=\{1,2,3,\dots\}, \; \NN_0=\{0,1,2,3,\dots\}$}
+\item $\Omega$ endlich, d.h. $\Omega=\{\omega_1,\omega_2,\dots,\omega_n\}$
+\item $\Omega$ abzählbar unendlich, d.h. $\Omega=\{\omega_1,\omega_2,\dots\}$ (Ereignisse lassen sich mit den natürlichen Zahlen aufzählen)\footnote{zu natürlichen Zahlen (in dieser VL): $\NN=\{1,2,3,\dots\}, \; \NN_0=\{0,1,2,3,\dots\}$}
 \item $\Omega$ überabzählbar unendlich, d.h. $\Omega=\RR$ oder $\Omega [0,1)$
 \end{itemize}
 
@@ -78,7 +82,7 @@ $\Omega:=$ Ergebnismenge (oder Ergebnisraum) ist die Menge aller möglichen Erge
 \item Anzahl der Anrufe im Call-Center zwischen 8:00 und 9:00
 \begin{enumerate}
 \item Möglichkeit 1: $\Omega = \{0,1,2,\dots\}=\NN_0$
-\item Möglichkeit 2: $\Omega = \{w_1,w_2,\dots, w_{100}\}$ mit $w_i =\begin{cases}
+\item Möglichkeit 2: $\Omega = \{\omega_1,\omega_2,\dots, \omega_{100}\}$ mit $w_i =\begin{cases}
 i \text{ Anrufe, falls }i\leq 99\\
 100 \text{ oder mehr Anrufe, falls }i=100
 \end{cases}$
@@ -90,12 +94,12 @@ Wir interessieren uns oft nicht allein für das Eintreten von einem $w\in \Omega
 
 Spezielle Ereignisse:
 \begin{itemize}
-\item $A = \emptyset$ \tab … das unmögliche Ereignis ($w\in \emptyset$ tritt nie ein)
-\item $A=\Omega$ \tab … das sichere Ereignis ($w \in \Omega$ tritt immer ein)
-\item $A=\{w\}$ \tab … Elementarereignis (für ein $w \in \Omega$)
+\item $A = \emptyset$ \tab … das unmögliche Ereignis ($\omega\in \emptyset$ tritt nie ein)
+\item $A=\Omega$ \tab … das sichere Ereignis ($\omega \in \Omega$ tritt immer ein)
+\item $A=\{\omega\}$ \tab … Elementarereignis (für ein $\omega \in \Omega$)
 \item $\bar A = \Omega \setminus A$ \tab … Gegenereignis zu $A$
 \end{itemize}
-Sprechweise: „Das Ereignis $A$ tritt ein“, falls ein $w \in A$ beobachtet wird.
+Sprechweise: „Das Ereignis $A$ tritt ein“, falls ein $\omega \in A$ beobachtet wird.
 
 \cparagraph{Beispiel} (Würfel)\\
 $A=\{\text{„gerade Zahl fällt“}\}$\\
@@ -156,6 +160,118 @@ $\overline{A \cup B} = \bar A \cap \bar B$ \tab\tab (De Morgansche Regeln)
 \end{itemize}
 
 \cparagraph{Bemerkung} Besteht $\Omega$ aus $n$ Elementen, so enthält $\cP(\Omega)$ genau $2^n$ Elemente.
+
+\subsection{Definition der Wahrscheinlichkeit}
+
+Ziel: Ordne zufälligem Ereignis $A$ eine Wahrscheinlichkeit $\PP(A)$ zu, die die Chance beurteilt, dass $A$ eintritt.
+
+\cparagraph{Definition} (Kolmogorov 1933)\\
+Gegeben sei eine Ereignismenge $\Omega$ und eine $\sigma$-Algebra $\cA$. Eine Funktion $\PP : \cA \to [0,1]$ heißt \emph{Wahrscheinlichkeitsmaß auf $(\Omega,\cA)$}, falls
+\begin{enumerate}
+\item $\PP (\Omega) =1$
+\item für paarweise disjunkte $A_i \in \cA, \; i=1,2,\dots$ (d.h. $A_i \cap A_J = \emptyset$ falls $i \not = j$) gilt $\PP(A_1 \cup A_2 \cup \dots ) = \PP(A_1)+\PP(A_2)+\dots$.
+\end{enumerate}
+Weitere Bezeichnungen:
+\begin{itemize}
+\item $\PP(A)$ … Wahrscheinlichkeit des Ereignisses $A$
+\item $(\Omega,\cA, \PP)$ … Wahrscheinlichkeitsraum / Wahrscheinlichkeitsmodell
+\end{itemize}
+
+\cparagraph{Bemerkung} (Allgemeines Vorgehen, Vereinfacht Darstellung)
+\begin{enumerate}
+\item Theoretische Untersuchungen (Kombinatorik, physikalische Gesetze); Beobachtung der relativen Häufigkeit (deskriptive Statistik)
+\item Schritt (1) liefert für gewisse Grundereignisse die Wahrscheinlichkeiten (exakt oder zumindest näherungsweise)
+\item Bestimmen der Wahrscheinlichkeiten für alle interessierenden Ereignisse (mittels Rechenregeln, siehe später)
+\end{enumerate}
+
+\cparagraph{Satz} Seien $A,B,C$ sowie $A_1, A_2, \dots ,A_n$ zufällige Ereignisse. Dann gilt:
+\begin{anumerate}
+\item $\PP(\emptyset)=0$
+\item $\PP(\bar A) = 1 - \PP (A)$
+\item $A \subseteq B \Rightarrow \PP(A) \subseteq \PP (B)$
+\item $\PP(A \cup B)=\PP(A)+\PP(B)-\PP(A \cap B)$\\
+$\PP ( A \cup B \cup C) = \PP(A) + \PP(B) + \PP(C)-\PP(A \cap B) - \PP(A\cap C) - \PP(B\cap C ) + \PP(A \cap B \cap C)$\\
+(Gut zu veranschaulichen durch Venn-Diagramme)
+\end{anumerate}
+Es gilt sogar der Additionssatz:
+\cparagraph{Satz} Seien $A_1, \dots, A_n$ zufällige Ereignisse. Dann gilt: \\
+$\PP(A_1 \cup \dots \cup A_n)=\sum_{i=1}^n \PP(A_i)-\sum_{i<j} \PP(A_i \cap A_j) + \sum_{i<j<k}\PP(A_i \cap A_j \cap A_k) - \dots + (-1)^{n+1} \PP(A_1\cap A_1 \cap \dots \cap A_n)$
+
+\subsection{Laplacesches Madell}
+Nun wollen wir ein spezielles, einfaches, aber oft sehr nützliches WK-Maß einführen.
+\cparagraph{Definition} Ein WK-Modell $(\Omega, \cA, \PP)$ heißt \emph{Laplacesches Modell}, falls $\Omega = \{\omega_1, \omega_2, \dots , \omega_n\}$ endlich ist, $\cA = \cP ( \Omega)$ und $\PP(\{\omega_1\})=P(\{\omega_2\})=\dots = \PP(\{\omega_n\})=\frac{1}{n}$ gilt.
+
+\cparagraph{Bemerkung} für beliebiges $A \in \cA$ gilt im Laplaceschen Modell:\\
+$\PP(A) = \frac{|A|}{|\Omega|}=\frac{m}{n}$, wobei $m=|A|$ die Anzahl der Elemente in $A$ ist (und $|\Omega|=n$).\\
+Also $\PP(A)=\frac{\text{Anzahl der günstigen Elementarereignisse}}{\text{Anzahl der möglichen Elementarereignisse}}$.\\
+Man sagt auch: $\PP$ ist dann die diskrete Gleichverteilung auf $\Omega$.
+
+\cparagraph{Beispiel}
+\begin{anumerate}
+\item (fairer Würfel) Wie groß ist die WK eine Zahl größer $4$ zu würfeln?\\
+$\Omega = \{1,2,3,4,5,6\}$, $A=\{5,6\}$ und es gilt $\PP(\{1\})=\PP(\{2\})=\dots=\PP(\{6\})=\frac{1}{6}$\\
+Daher: $\PP(A) = \frac{|A|}{|\Omega|}=\frac{2}{6}=\frac{1}{3}$
+\item (2 faire Würfel) Wie groß ist die WK mit 2 Würfeln mindestens eine 11 zu würfeln?
+\begin{align*}
+\Omega=\{ & (1,1), (1,2), \dots , (1,6)\\
+&\vdots\\
+&(6,1), (6,2), \dots , (6,6)\}
+\end{align*}
+$A=\{(6,5), (5,6), (6,6)\}$ und es gilt $\PP(\{(i,j)\})=\frac{1}{36}$ für beliebiges $i,j \in \{1,\dots,6\}$. Also liegt Laplace Modell vor.\\
+Daher gilt: $\PP(A) = \frac{3}{36}= \frac{1}{12}$.
+\end{anumerate}
+Um in Laplace-Modellen die Größe (Mächtigkeit) von Ereignissen zu bestimmen, sind oft spezielle „Abzähltricks“ sinnvoll. Diese liefert die Kombinatorik.
+
+\subsection{Kombinatorik}
+Fragestellung: Wie viele Möglichkeiten gibt es aus einer $n$-elementigen Menge $k$ Elemente auszuwählen? Dabei sind die Spielregeln zu klären:
+\begin{itemize}
+\item Spielt die Reihenfolge eine Rolle?
+\item Dürfen Elemente mehrfach ausgewählt werden (mit Zurücklegen oder ohne)?
+\end{itemize}
+
+\cparagraph{Satz} In einer Urne befinden sich $n$ (voneinander unterscheidbare) Elemente. Wir ziehen $k$ davon…
+\begin{anumerate}
+\item … mit Zurücklegen, unter Berücksichtigung der Reihenfolge, dann gibt es
+\[\bar v_n^k = n^k\]
+viele Möglichkeiten (Variation von $n$ Elementen zur $k$-ten Klasse mit Wiederholungen).
+\item … ohne Zurücklegen, unter Berücksichtigung der Reihenfolge, dann gibt es
+\[v_n^k=n\cdot (n-1) \cdot (n-2) \cdot \dots \cdot (n-(k-1))=\frac{n!}{(n-k)!}\]
+viele Möglichkeiten (Variation von $n$ Elementen zur $k$-ten Klasse ohne Wiederholungen).
+\item … mit Zurücklegen, ohne Berücksichtigung der Reihenfolge, dann gibt es
+\[\bar c_n^k=\binom{n+k-1}{k}=\frac{(n+k-1)!}{k!(n-1)!}\]
+viele Möglichkeiten (Kombination von $n$ Elementen zur $k$-ten Klasse mit Wiederholungen).
+\item … ohne Zurücklegen, ohne Berücksichtigung der Reihenfolge, dann gibt es
+\[c_n^k=\binom{n}{k}=\frac{n!}{k!(n-k)!}\]
+viele Möglichkeiten (Kombination von $n$ Elementen zur $k$-ten Klasse ohne Wiederholungen).
+\end{anumerate}
+
+\cparagraph{Bemerkungen}
+\begin{itemize}
+\item $n!=n\cdot (n-1) \cdot \dots \cdot 2\cdot 1$ mit $0!=1$
+\item Spezialfall in (b): $n=k$, dann $v_n^k=n!$. Dies beschreibt die Anzahl der möglichen Anordnungen von $n$ Elementen (Permutationen).
+\item Spezialfälle in (d): 
+\begin{itemize}
+\item $n=k$, dann $c_n^k=1=\binom{n}{n}$
+\item $k=0$, dann $c_n^0=\binom{n}{0}=1$
+\item $k=1$, dann $c_n^1=\binom{n}{1}=n$
+\end{itemize}
+\end{itemize}
+
+\cparagraph{Beispiel}
+\begin{anumerate}
+\item Wie viele mögliche Zieleinläufe gibt es beim 100m-Lauf mit 8 Teilnehmern?\\
+$8!=40320$
+\item Wie viele Möglichkeiten gibt es beim Lotto (6 aus 49)\\
+$\binom{49}{6}=13\;983\;816$
+\item Wie viele Möglichkeiten gibt es ein Nummernschild der Art „DD-Buchstabe Buchstabe Ziffer Ziffer Ziffer“ zu konstruieren?\\
+$26^2\cdot 10^3=676 \; 000$
+\item Wie viele Möglichkeiten gibt es 5 (nicht unterscheidbare) Äpfel auf 3 Kinder aufzuteilen?\\
+$\binom{3+5-1}{5}=\binom{7}{1}=21$
+\end{anumerate}
+
+
+
+
 
 %\newpage
 %\printbibliography

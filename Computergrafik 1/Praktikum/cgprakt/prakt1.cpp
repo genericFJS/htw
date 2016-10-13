@@ -8,7 +8,7 @@
 #include <FreeImage.h>
 
 GLuint loadShaders(const char* vertexFilePath, const char* fragmentFilePath, const char* geometryFilePath);
-GLint height = 100, width = 100;
+GLint height = 150, width = 150;
 enum VAO_IDs { Triangles, NumVAOs };
 enum Buffer_IDs { ArrayBuffer, NumBuffers };
 enum Attrib_IDs { vPosition, vColor };
@@ -18,17 +18,16 @@ const GLuint NumVertices = 50;
 GLuint program;
 float maxCoord = 42;
 float border = 3;
+float eCorrect = 0.5;
 
 float centerHTWx(float c){
-	float coordSize = (2 * border + maxCoord) /2;
-	printf("%f ",(c + border) / coordSize - 1);
+	float coordSize = (2 * border + maxCoord - eCorrect) /2;
 	return (c + border) / coordSize - 1;
 }
 
 float centerHTWy(float c){
-	float moveY = 42-30;
-	float coordSize = (2 * border + maxCoord) / 2;
-	printf("%f ", (c + border) / coordSize - 1);
+	float moveY = 42-30+border/2;
+	float coordSize = (2 * border + maxCoord - eCorrect) / 2;
 	return (c + border + moveY) / coordSize - 1;
 }
 
@@ -112,7 +111,7 @@ int main(int argc, char** argv)
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA);
-	glutInitWindowSize(512, 512);
+	glutInitWindowSize(500, 500);
 	glutInitContextVersion(4, 2);  // (4,5) (3,3);
 	glutInitContextProfile(GLUT_CORE_PROFILE);  //GLUT_COMPATIBILITY_PROFILE
 	glutCreateWindow(argv[0]);
