@@ -1,0 +1,116 @@
+\newcommand{\customDir}{../}
+\input{\customDir .LaTeX_master/LaTeX_master_setup.sty}
+
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+\setCustomSlidePath{Vorlesung/RA_043_}
+\setCustomSlideScale{0.7}
+
+\setCustomTitle{Rechnerarchitektur}
+\setCustomSubtitle{Vorlesungsskript}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+\setCustomNoteB{Vorlesung von Prof. Dr.-Ing. Schönthier}
+
+%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
+%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir .LaTeX_master/LaTeX_master.sty}
+\input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir .Literatur/HTW_Literatur.bib}
+
+\begin{document}
+
+%\selectlanguage{english}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+%\chapter*{Vorbemerkung}
+%Passwort Folien: \\%mi043##
+
+\chapter{Architektur nach von Neumann}
+\slidesScale{01}{2}
+\section*{Streiflicht: Konrad Zuse}
+\slidesScale{01}{3}
+\slidesScale{01}{4}
+\section*{Streiflicht: John von Neumann}
+\slidesScale{01}{5}
+
+\section{Grundidee von von Neumann}
+\slidesScale{01}{6}
+\section{Grundarchitekturen von Rechnern/Computern}
+\slidesScale{01}{7}
+Havard-Architektur: Hardware-Aufwand größer durch mehr Busse
+
+\section{Von-Neumann-Architektur}
+\slidesScale{01}{8}
+Im Speicher sind auf den ersten Blick von außen Daten und Befehle nicht voneinander zu unterschieden.
+\slidesScale{01}{9}
+
+\subsection{Kurzfassung Von-Neumann-Rechner Prinzip}
+\slidesScale{01}{10}
+\paragraph{Blockschaltbild}
+\slidesScale{01}{11}
+% Folie 12: Bild Wikipedia
+
+\section{Befehlssequenz}
+\slidesScale{01}{13}
+Für Sprungbefehle werden für performante Ausführung Sprungvorhersagen benötigt.
+
+\section{Operandenadressierung}
+\slidesScale{01}{14}
+
+\section{Architekturverfeinerung 1: Befehlszähler}
+\slidesScale{01}{15}
+$\Rightarrow$ Von-Neumann Rechner mit Befehlszähler
+\slidesScale{01}{16}
+
+\section{Klassischer Universalspeicher}
+\subsection{Speicherwerk}
+\slidesScale{01}{17}
+\subsection{Rechenwerk}
+\slidesScale{01}{18}
+\subsubsection{Blockschaltbild einer ALU}
+\slidesScale{01}{19}
+\subsubsection{Flags/Bits des Statusregisters}
+\slidesScale{01}{20}
+$\mu P$: Mikroprozessor
+\paragraph{Bsp.: Erzeugung des Bedingungsbits}
+\slidesScale{01}{21}
+\subsection{Steuerwerk}
+\slidesScale{01}{22}
+\subsection{CPU}
+\slidesScale{01}{23}
+\subsection{E/A-Werk und Bus}
+\slidesScale{01}{24}
+
+\section{Architekturverfeinerung 2: Einführung von Registern}
+\slidesScale{01}{25}
+
+\chapter{Zusammenspiel von Operations- und Steuerwerk}
+
+\chapter{Speicher: Speicherhierarchie, Cachehierarchie}
+
+\chapter{Sekundärspeicher}
+
+\chapter{Pipelining}
+
+\chapter{Sprungvorhersage}
+
+\chapter{Superskalare Architekturen, Parallelisierung}
+
+\chapter{Leistungsbewertung}
+
+\chapter{Informationstransport: Bus, Protokolle}
+
+\chapter{E/A und Interrupts}
+
+
+%\newpage
+%\printbibliography
+
+\end{document}

@@ -1,0 +1,202 @@
+\newcommand{\customDir}{../}
+\input{\customDir .LaTeX_master/LaTeX_master_setup.sty}
+
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+\setCustomSlidePath{Vorlesung/oneperpage/DBII_Kap}
+\setCustomSlideScale{1}
+
+\setCustomTitle{Datenbanksysteme II}
+\setCustomSubtitle{Vorlesungsskript}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+\setCustomNoteB{Vorlesung von Prof. Dr.-Ing. Toll}
+
+%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
+%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir .LaTeX_master/LaTeX_master.sty}
+\input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir .Literatur/HTW_Literatur.bib}
+
+\begin{document}
+
+%\selectlanguage{english}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+\chapter*{Vorbemerkungen}
+\section*{Prüfung}
+SP: 90 min
+
+\section*{PVL}
+Beleg (Abnahme im Praktikum)
+\begin{itemize}
+\item MS SQL
+\item Oracle
+\end{itemize}
+
+\chapter{Erweiterung von Datenbanksprachen}
+
+\section{Übersicht der Datenbank-Schnittstellen}
+Bsp.: Abfrage aller Namen von Kunden des Ortes Dresden\\
+\begin{tabular}{ l | l l}
+& Programm (3. Gl) z.B. C & SQL\\
+\hline
+Pseudocode & \mpb[0.4]
+\begin{lstlisting}[language=C]
+open (Kunden)
+while (not end of file) {
+	read (Kunde)
+	if (Kunde.Ort == 'Dresden')
+		print('Name ='+Kunde.Name)
+}
+close (Kunden)
+\end{lstlisting}
+\mpe& \mpb[0.34]
+\begin{lstlisting}[language=SQL]
+SELECT Name
+FROM Kunde
+WHERE Ort='Dresden'
+\end{lstlisting}
+\mpe\\
+& prozedural (WIE?) & deskriptiv (WAS?)\\
+\hline
+Vorteile& \mpb[0.4]
+\begin{itemize}[leftmargin=*]
+\item math. Operationen gut möglich
+\item Eingabe/Ausgabe gut möglich
+\item Steuerung des Programmablaufs (Algorithmus)
+\end{itemize}
+\mpe & \mpb[0.34]
+\begin{itemize}[leftmargin=*]
+\item Zugriff über Datenmengen
+\item Fkt. des DBMS:
+\begin{itemize}[leftmargin=*]
+\item Zugriffsschutz
+\item Integritätssicherung
+\item …
+\end{itemize}
+\end{itemize}
+\mpe\\
+\hline
+Nachteil & \mpb[0.4]
+\begin{itemize}[leftmargin=*]
+\item Zugriff nur satzorientiert
+\item Vorteile des DBMS kaum möglich
+\end{itemize} 
+\mpe & \mpb[0.34]
+\begin{itemize}[leftmargin=*]
+\item Vorteile des Programms kaum möglich
+\end{itemize}
+\mpe
+\end{tabular}
+\subsection{Probleme von Datenbank-Schnittstellen}
+\slidesScale{1}{1}
+\subsection{Zielstellung der Erweiterungen}
+\begin{itemize}
+\item Verbindung der Möglichkeiten einer prozeduralen Sprache mit den Möglichkeiten von SQL
+\item satzorientierte Arbeit mit Ergebnismengen aus SQL („liefert“ Menge)
+\item Nutzung der Verarbeitungslogik
+\end{itemize}
+Lösung der Probleme…
+\begin{itemize}
+\item der Datenübertragung
+\item der Anpassung der unterschiedlichen Verarbeitungslogiken (Wie $\Leftrightarrow$ Was)
+\end{itemize}
+über:
+\subsection{Aufgaben von Schnittstellen zwischen Datenbank-Server und Client-Anwendung}
+\slidesScale{1}{2}
+\paragraph{Bsp.:}
+\begin{itemize}
+\item Variablendeklaration in C
+\item $\vdots$
+\item SQLCHAR myName[21];
+\item $\vdots$
+\item // Abfrage: SELECT Name FROM Kunde
+\item $\vdots$
+\item // Binden: Spalte1 an Variable myName
+\item SQLBindCol(…,1,SQL\_ C\_ CHAR,myName,…);
+\end{itemize}
+Die SQL-Verarbeitung geschieht über ODBC
+\subsection{Auswahl an Schnittstellen zwischen Datenbank-Server und Client-Anwendung}
+\slidesScale{1}{3}
+\subsection{Arten an Verbindungen zur Datenbank}
+\begin{itemize}
+\item \emph{eigenständig} (Client des DBMS):\\
+MS SQL Management Studio, Oracle Developer, …
+\item eingebundene
+\begin{itemize}
+\item eingebettet in Wirtssprache (HLI: host level interface) \\
+(Erweiterung des Sprachumfangs um SQL-Befehle + Precompiler):\\
+eSQL in C, eSQL in Java, …
+\item CLI (call level interface)\\
+(Erweiterung der Sprache um Funktionen zum Zugriff auf DBMS):\\
+ODBC, JDBC, …
+\item objektorientiert\\
+(Sprachumfang um Klassen erweitern, OR-Mapping):\\
+ASP.NET, …
+\end{itemize}
+\end{itemize}
+
+Bsp. Ablauf eSQL:
+\begin{itemize}
+\item Editor:\\
+bsp.cpp	(eSQL-Befehle)
+\item Precompiler:\\
+bsp.c (Funktionsaufrufe an das DBMS)
+\item C-Compiler (lib/obj/…)\\
+bsp.out\\
+$\Rightarrow$ ausführbar
+\end{itemize}
+
+\subsection{Architekturverfahren für Datenbank-Schnittstellen}
+\slidesScale{1}{4}
+
+\section{Anweisungen von SQL in anderen Sprachen (ODBC)}
+\subsection{Call-Level Interface (CLI)}
+\slidesScale{1}{5}
+\subsection{Call-Level Interface Dialekte}
+\slidesScale{1}{6}
+\subsection{Architektur der ODBC-Schnittstelle}
+\slidesScale{1}{7}
+\subsection{Merkmale von ODBC}
+\slidesScale{1}{8}
+\subsection{Aufbau einer Datenbank-Verbindung über ODBC}
+\slidesScale{1}{9}
+
+\chapter{Datensicherheit/Zugriffsschutz}
+\section{Übersicht Datensicherheit/Transaktionen}
+\section{Sicherung der semantischen Integrität}
+\section{Sicherung der operationalen Integrität}
+\section{Sicherung der physischen Integrität}
+\section{Zugriffsschutz/Datenschutz}
+
+\chapter{Logische Datenmodelle}
+\section{Logische und physische Datenorganisation / Überblick über Datenmodelle}
+\section{Klassische logische Datenmodelle}
+\section{Objektorientiertes Datenmodell}
+\section{DBML-spezifische Erweiterungen vom Standard-SQL (Oracle)}
+\section{Objektrelationale Erweiterungen im RDM (Oracle)}
+
+\chapter{Physische Datenorganisation}
+\section{Übersicht/Abgrenzung}
+\section{Zugriffspfade außerhalb der Datensätze/Indexierung}
+\section{Zugriffspfade außerhalb der Datensätze/Verkettung}
+
+\chapter{Projektierung von relationalen Datenbanksystemen (Betriebliche Datenmodellierung und Datenbankanwendungen)}
+\section{Lebenszyklus von Datenbankanwendungen}
+\section{Überblick über den Entwurfsprozess von DBS}
+\section{Phasen des Entwurfsprozesses}
+\subsection{Anforderungsanalyse}
+\subsection{Konzeptueller Entwurf}
+\subsection{Logischer Entwurf}
+%\subsection{•}
+
+%\newpage
+%\printbibliography
+
+\end{document}
