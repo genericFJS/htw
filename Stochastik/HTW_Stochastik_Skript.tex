@@ -269,6 +269,124 @@ $26^2\cdot 10^3=676 \; 000$
 $\binom{3+5-1}{5}=\binom{7}{1}=21$
 \end{anumerate}
 
+\subsection{Bedingte Wahrscheinlichkeit}
+Frage: Wie verändert sich die Wahrscheinlichkeit eines Ereignisses, falls ich Zusatzwissen mit einfließen lasse? 
+
+\cparagraph{Beispiel} HIV Prävalenz liegt weltweit bei $0,8\%$, also:\\
+$\PP_1 (\{\text{zufällig ausgewählte Person ist HIV-positiv\}})=0,008$\\
+Modell 1: $\Omega =\{0,1\},\; \PP_1 ( \{1\}) = 0,008, \; \PP_1(\{0\})=0,992$\\
+Zusatzwissen: ausgewählte Person ist Europäer und Prävalenz in Europa: $=0,2\%$, also:\\
+$\PP_2 (\{\text{zufällig ausgewählte Person ist HIV-positiv\}})=0,002$\\
+Modell 2: $\Omega = \{0,1\}, \; \PP_2(\{1\})=0,002=1-\PP(\{0\})$\\
+Problem/Frage:
+\begin{itemize}
+\item Wie kombiniert man beide Modelle?
+\item Wir wollen nicht mit 2 verschiedenen $\PP$s rechnen.
+\item WK für HIV positiv unter Nicht-Europäern?
+\end{itemize}
+
+\cparagraph{Beispiel}
+\begin{itemize}
+\item Von insgesamt $800$ Schülern besitzen $440$ ein Smartphone.
+\item Unter den Smartphone-Besitzern sind $60\%$ männlich.
+\item Unter den Nicht-Smartphone-Besitzern sind $35\%$ männlich.
+\item Unter allen $800$ Schülern wird ein Smartphone verlost.
+\end{itemize}
+Fragen:
+\begin{anumerate}
+\item Wie groß ist die Wahrscheinlichkeit, dass der Gewinner bereits ein Smartphone besitzt?
+\item Wie groß ist die WK, dass der Gewinner bereits ein Smartphone besitzt, wenn man schon weiß, dass ein Mädchen gewonnen hat?
+\end{anumerate}
+
+\cparagraph{Definition} Sei $(\Omega, \cA, \PP)$ ein Wk-Raum und seien $A, B \subset \Omega$ Ereignisse mit $\PP(B)>0$. Dann definieren wir $$\PP(A|B):=\frac{\PP(A \cup B)}{\PP(B)}$$ und nennen $\PP (A|B)$ die Wahrscheinlichkeit von $A$ bedingt auf $B$.\\
+Interpretation: „Wie groß ist die Wk,von $A$, wenn ich schon weiß, dass $B$ eingetreten ist?“
+
+\cparagraph{Beispiel} (Smartphone, s.o.)\\
+$\Omega = \{ (S,M), (\bar S, M), (S, W), (\bar S, W)\}$\\
+$S$ … Gewinnende Person besitzt Smartphone\\
+$\bar S$ … Gewinnende Person besitzt kein Smartphone\\
+$M$ … Gewinnende Person ist männlich\\
+$W$ … Gewinnende Person ist weiblich\\
+\begin{tikzpicture}[scale=2]
+\node (v1) at (5,1) {$M/W$ / $S/\bar S$};
+\node (v2) at (3.5,0) {$S$};
+\node (v3) at (6.5,0) {$\bar S$};
+\node (v4) at (3,-1) {$M$};
+\node (v5) at (4,-1) {$W$};
+\node (v6) at (6,-1) {$M$};
+\node (v7) at (7,-1) {$W$};
+\node at (v4) [below = 1em, align=center]{$0,33$\\$(=0,55\cdot0,6)$};
+\node at (v5) [below = 1em]{$0,22$};
+\node at (v6) [below = 1em]{$0,1575$};
+\node at (v7) [below = 1em]{$0,2925$};
+\draw (v1) -- node[left, pos =.5]{$0,55\left(=\frac{440}{800}\right)$} (v2);
+\draw (v1) -- node[right, pos =.5]{$0,45$}(v3);
+\draw (v2) -- node[left, pos =.5]{$0,6$}(v4);
+\draw (v2) -- node[right, pos =.5]{$0,0,4$}(v5);
+\draw (v3) -- node[left, pos =.5]{$0,35$}(v6);
+\draw (v3) -- node[right, pos =.5]{$0,65$}(v7);
+\end{tikzpicture}% ABB S1
+\\
+gegeben: \\
+$\PP(\{(S,M)\})=0,33$\\
+$\PP(\{(S,W)\})=0,22$\\
+$\PP(\{ (\bar S, M )\})=0,1575$\\
+$\PP(\{ (\bar S, W )\})=0,2925$\\
+Antwort auf Fragen:
+\begin{anumerate}
+\item $0,55$ (klar)
+\item Intuition: Wir wissen, dass nur noch die Stränge mit „W“ interessieren. Die Stränge ohne „W“ sollten wir „streichen“. Wie groß ist die WK der Kombination (S,W) im Vergleich zu allen, wo W vorkommt? Also:$$\frac{\PP(\{(S,W)\})}{\PP(\{(S,W),(\bar S,W)\})}=\frac{0,22}{0,22+0,2925}=0,4293$$
+Was hat das mit der bedingten WK aus Def. 1.1.25 zu tun? \\
+$A:=\{\text{Person besitzt Smartphone}\}=\{(S,M),(S,W)\}$\\
+$B:=\{\text{Person ist weiblich}\} = \{(S,W), (\bar S ,W)\}$ \\
+$\PP(A|B)=\frac{\PP(\{(S,W)\})}{\PP(\{(S,W), (\bar S, W)\})}=\dots =0,4293$
+\end{anumerate}
+
+\cparagraph{Satz} (Rechnen mit bedingten WK)\\
+Sei $(\Omega, \cA, \PP)$ ein WK-Raum und $A, A_1, A_2, B \in \cA$ Ereignisse mit $\PP(B)>0$. Dann gilt:
+\begin{itemize}
+\item $\PP(B|B)=1$, $\PP(\emptyset|B)=0$
+\item Falls $A$ und $B$ disjunkt, gilt $\PP(A|B)=0$
+\item $\PP(\bar A | B) = 1-\PP(A|B)$
+\item $\PP(A_1 \cup A_2 | B ) =\PP(A_1 | B ) + \PP (A_2|B) - \PP (A_1 \cap A_2 | B)$
+\item Falls $B\subseteq A$, so gilt $\PP(A|B)=1$
+\item Falls $A \subseteq B$, so gilt $\PP(A|B)=\PP(A)$
+\end{itemize}
+
+\cparagraph{Beispiel} Auf einer E-Mail Adresse kommen im Schnitt $80\%$ Spam-Mails und $20\%$ gute Mails.\\
+Eine „gute“ Mail enthalte mit $2\%$ WK das Wort „Viagra“. In einer Spam-Mail liegt dieser Anteil bei $60\%$. Berechnen Sie die WK, dass eine Spam-Mail vorliegt, falls man weiß, dass das Wort „Viagra“ enthalten ist.\\
+Lösung:\\
+$A=\{\text{Mail enthält „Viagra“}\}$\\
+$\bar A=\{\text{Mail enthält kein „Viagra“}\}$\\
+$B=\{\text{Mail ist Spam}\}$\\
+$\bar B=\{\text{Mail ist kein Spam}\}$\\
+4-Felder-Tafel:\\
+\begin{tabular}{l | c | c | l}
+& $B$: Spam & $\bar B$ kein Spam & \\
+\hline
+$A$, mit Viagra & $0,8\cdot 0,6=0,48$ & $0,2 \cdot 0,002=0,004$ & $0,484$\\
+$\bar A$, ohne Viagra & $0,32$ & $0,196$ & $0,516$\\
+\hline 
+& $0,8$ & $0,2$ & $1$
+\end{tabular}\\
+Gesucht ist $\PP(B|A)=\frac{\PP(B\cup A)}{\PP(A)}=\frac{0,48}{0,484}=0,9917$
+Auch interessant ist die WK, dass die Mail kein Spam ist, wenn man schon weiß, dass „Viagra“ nicht enthalten ist. $\PP(\bar B | \bar A)=\frac{0,196}{0,516}=0,3798$
+
+\cparagraph{Satz} (Multiplikationssatz)\\
+Seien $A$ und $B$ Ereignisse mit $\PP(A)>0,\; \PP(B)>0$. Dann gilt:
+$$\PP(A\cup B ) = \PP(A ) \cdot \PP(B|A) = \PP(B) \cdot \PP(A|B)$$
+Sind $A_1,\dots,A_n$ Ereignisse mit $\PP\left( \bigcap_{i=1}^{n-1} A_i\right) >0$, dann gilt sogar:
+$$\PP(A_1\cap A_2 \cap \dots \cap A_n)=\PP(A_1)\cdot \PP(A_2|A_1) \cdot \PP (A_3|A_1 \cap A_2)\cdot \dots \cdot \PP(A_n|A_1 \cap \dots \cap A_{n-1})$$
+
+\cparagraph{Beispiel} In einer Los-Trommel befinden sich $20$ Lose. Jemand zieht $3$ nacheinander. Es gibt insgesamt $5$ Gewinnlose. Wie groß ist die WK, dass alle $3$ gezogenen Lose Gewinnlose sind?\\
+$A_k=\{\text{Gewinn beim $k$-ten Los}\}, \; k=1,2,3$\\
+Gesucht: $\PP(A_1\cap A_2 \cap A_3)$\\
+Satz 1.1.29 liefert: \\
+$\PP(A_1 \cap A_2 \cap A_3)=\PP(A_1) \cdot \PP(A_2 | A_1) \cdot \PP(A_3 | A_1 \cap A_2)$\\
+$\PP(A_1) = \frac{5}{20}= \frac{1}{4}$ (5 Günstige in 20 Losen)\\
+$\PP(A_2 | A_1) = \frac{4}{19}$\\
+$\PP(A_3 | A_1 \cap A_2) = \frac{3}{18}$\\
+$\Rightarrow \PP(A_1 \cap A_2 \cap A_3)=\frac{1}{4}\cdot \frac{4}{19}\cdot \frac{3}{18}=\frac{1}{114}=0,0087$
 
 
 
