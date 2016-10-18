@@ -9,7 +9,6 @@
 \input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
 
 %\input{\customDir .LaTeX_master/LuaLaTeX_master.sty}
-%\providecommand{\imptnt}[1]{#1}
 
 \begin{document}
 
@@ -67,7 +66,10 @@ Kapitel:
 $\Rightarrow$ Temperatur, Druck, Durchfluss, Position
 \item \imptnt{\emph{Maßeinheit}}: eine durch Vereinbarung festgelegte \imptnt{Vergleichsgröße}
 \item \emph{SI-System:} m, kg, s, A, K, mol, cd
-\item \imptnt{\emph{Messwert}}: der gemessene Wert einer Messgröße $=ZW \cdot \mathrm{Einheit}$ (also Messgröße kombiniert mit Maßeinheit)
+\item \imptnt{\emph{Messwert}}: der gemessene Wert einer Messgröße 
+%$=ZW \cdot \mathrm{Einheit}$ 
+$=ZW * \mathrm{Einheit}$ 
+(also Messgröße kombiniert mit Maßeinheit)
 \item Messung: (Ablauf)
 \begin{itemize}
 \item Quelle (Träger eine Messgröße)
@@ -77,7 +79,8 @@ $\Rightarrow$ Temperatur, Druck, Durchfluss, Position
 \end{itemize}
 
 \subsection{Normal}
-\emph{Normal} (DIN 1390): Maßverkörperung, Messgerät, Referenzmaterial oder Messeinrichtung zum \linebreak Zweck eine Einheit festzulegen, zu verkörpern, zu bewahren oder zu reproduzieren.
+\emph{Normal} (DIN 1390): Maßverkörperung, Messgerät, Referenzmaterial oder Messeinrichtung zum \linebreak 
+Zweck eine Einheit festzulegen, zu verkörpern, zu bewahren oder zu reproduzieren.
 \begin{itemize}
 \item Internationale (nationale) Normale (Kopie der Ursprungs-Normale: bspw. Kopie Ur-Kilo)
 \item Bezugsnormale (PTB) (für Betriebe usw.)
@@ -115,7 +118,179 @@ Bsp. Messung der Temperatur (die sich nicht ändert)
 \item \emph{inkrementale Messmethode}: der Messwert wird von einem Bezugspunkt aus durch Addition/Subtraktion von kleinen Wertzuwachsen (Inkrementen) ermittelt (Geld zählen: Münzen (als Inkrement) in Säule stapeln, diese messen und damit den Wert bestimmen; vgl. auch Kugelmaus: gerasterte, inkrementale Messung der Veränderung der Kugelbewegung)
 \end{itemize}
 
+\subsection{Methoden nach Art der Vergleichsvorgehensweise}
+\begin{itemize}
+\item \emph{Ausschlagmethode}: Messgröße wird direkt oder über eine Zwischengröße in eine möglichst proportionale Ausgangsgröße umgewandelt (vglw. Küchenwaage mit Feder)\\
+Messgröße $M$ $\to$ Übertragungsfunktion $f$ $\to$ Ausgangsgröße $A$\\
+$\Rightarrow \boxed{M = f^{-1}(A)}$
+\begin{itemize}[label=$+$]
+\item keine Hilfsenergie benötigt
+\item einfacher Aufbau
+\item schnell
+\end{itemize}
+\begin{itemize}[label=-]
+\item Energieentzug aus Messobjekt $\to$ Rückwirkung
+\item Kennlinie (Übertragungsfunktion) des Messgerätes muss bekannt sein
+\item starker Einfluss von Störgrößen
+\end{itemize}
+\item \emph{Kompensationsmethode}: Messgerät erzeugt eine bekannte variable Vergleichsgröße, um die Differenz zwischen beiden Größen gegen Null streben zu lassen.\\
+ABB AS1\\
+$M=S$\\
+(Vergleich: alte Küchenwaage mit Schieberegler/Ausgleichsgewichten)
+\begin{itemize}[label=$+$]
+\item Variable Art der Kompensationsgröße
+\item Reduzierung der Rückwirkung und Störeinflüsse
+\item Nichtlinearität unkritisch
+\item keine Kalibrierung notwendig
+\item leichte Realisierung großer Messbereiche
+\item hohe Genauigkeit möglich
+\end{itemize}
+\begin{itemize}[label=-]
+\item größerer gerätetechnischer Aufwand
+\item mehrstufig: in der Regel langsam
+\item Hilfsenergie notwendig
+\item Viele bekannte Vergleichsgrößen nötig
+\end{itemize}
+\end{itemize}
+\paragraph{Beispiel Spannungsmessung}
+\begin{itemize}
+\item Ausschlagmethode\\
+ABB AS2\\
+Problem: braucht unendlich großen Widerstand, sonst verfälscht es die Messung
+\item Kompensationsmethode\\
+ABB AS3\\
+Mit bekannter Spannung $U_{ref}$.\\
+Strommessgerät: Ist Strom gleich 0? Dann sind beide Spannungen gleich.
+\end{itemize}
+weitere Methoden:
+\begin{itemize}
+\item Differenzierungsmethode
+\item Substitutionsmethode
+\end{itemize}
 
+\subsection{Methoden nach Zeitablauf}
+\begin{itemize}
+\item \emph{kontinuierliche Messmethode}: die Größe wird ohne zeitliche Unterbrechung erfasst und auch angezeigt. (Vgl. Thermometer mit Flüssigkeit verändert sich stets/kontinuierlich)\\
+ABB AS4
+\item \emph{diskontinuierliche Messmethode}: die Messgröße wird nur zu bestimmten (diskreten) Zeitpunkten erfasst (abgetastet) und/oder angezeigt.\\
+ABB AS5\\
+Informationen werden begrenzt (aufs wesentliche), Zeit muss diskretisiert werden (in vernünftigen Maß: Nyquist-Shannon-Abtasttheorem $f_{Abtast}\geq f_{max}$)
+\end{itemize}
+
+\subsection{Methoden nach Wertebereich der Ausgangsgröße}
+\begin{itemize}
+\item \emph{analoge Messmethode}: die Messgröße wird durch eine eindeutige und stetige Anzeigegröße (Messwert) abgebildet.
+\begin{itemize}[label=\textbullet]
+\item kontinuierlicher Wertebereich
+\end{itemize}
+(Spannungsmesser mit Zeiger, Analoge Küchenwaage)
+\item \emph{digitale Messmethode}: die Messgröße wird in Form einer in festgelegten Schritten quantisierten Anzeigegröße abgebildet.
+\begin{itemize}[label=\textbullet]
+\item diskreter Wertebereich
+\end{itemize}
+(digital Multimeter)
+\end{itemize}
+
+\section{Signale}
+\begin{itemize}
+\item \emph{Signal} in der Messtechnik: wenn man einer speziell ausgewählten \emph{zeitlich veränderlichen} physikalischen Größe (Signalträger, Informationsträger) eine Information zuordnet. \\
+Hat 3 Elemente: Erzeuger, Träger, Empfänger (Kommunikation: Nachricht wird generiert (im Kopf) und Schall wird erzeugt (Sprechen) $\to$ Schall wird übertragen $\to$ Schall wird gehört (Ohr) und Schall-Information wird entschlüsselt (im Kopf))
+\item \emph{Messsignal}: Signal mit einem (oder mehreren) zeitvariablen informationstragenden Parameter (Informationsparameter), der die Werte der Messgröße in eindeutiger und reproduzierbarer Weise abgebildet.
+\item \emph{Rauschen}: zufällige zeitlich veränderliche Größe ohne nützliche Information.
+\end{itemize}
+
+\subsection{Informationsparameter}
+Kontinuierlich:
+\begin{itemize}
+\item Signalträgerwert („Wert auf x-Achse“)
+\item Amplitude
+\item Frequenz
+\item Phase
+\end{itemize}
+Diskret:
+\begin{itemize}
+\item Impulshöhe
+\item Pulsbreite (Pulsbreite/-länge als Indikator für Wert)
+\item Pulsfolge (Digitaltechnik: 001 hat andere Folge als 010)
+\end{itemize}
+
+\subsection{Signaltypen}
+\begin{itemize}
+\item \emph{Determiniertes Singal}\\
+Der Signalwert ist zu jedem Zeitpunkt verfügbar
+\begin{itemize}[label=$+$]
+\item Information mit einmaliger Messung gewinnbar
+\item[$-$] zu viel Information. Sie kann auch durch Störung unbrauchbar werden
+\end{itemize}
+\item Stochastisches Signal\\
+regellos, zufällig schwankender Signalverlauf
+\begin{itemize}[label=$+$]
+\item Störungen machen sich nur stark reduziert bemerkbar, sie werden über die Messzeit integriert
+\item[$-$] Information ist erst mit mehrmaligen Messungen zu gewinnen, das erfordert einen großen Zeitbedarf
+\end{itemize}
+\item \emph{Signalgemisch}\\
+deterministisches Signal mit einem stochastischen Anteil (Rauschen)
+\begin{itemize}
+\item[$-$] Das Rauschen ist unerwünscht und muss unterdrückt oder ausgefiltert werden
+\end{itemize}
+\end{itemize}
+
+\subsubsection{Nach Wertebereich}
+\begin{itemize}
+\item \emph{Wertkontinuierliches Signal}: kontinuierlicher Wertebereich
+\begin{itemize}[label=$+$]
+\item der Informationsparameter bildet adäquat die Messgröße ab
+\item kann theoretisch beliebig viele Werte innerhalb seines Wertebereichs annehmen
+\item[$-$] einfach zu stören
+\end{itemize}
+\item \emph{Wertdiskretes Signal}: diskontinuierlicher Wertebereich aus einer endlichen Anzahl von vordefinierten Werten
+\begin{itemize}
+\item[$+$] Störeinflüsse machen sich erst nach Überschreiten von Grenzwerten bemerkbar
+\item[$-$] möglicher Informationsverlust (wenn Inkrement falsch gewählt wird)
+\end{itemize}
+\item \emph{binäres Signal}: der Wertebereich hat nur zwei Werte
+\end{itemize}
+\subsubsection{Nach zeitlichen Verlauf}
+\begin{itemize}
+\item \emph{kontinuierliches Signal}: IP kann zu jedem beliebigen Zeitpunkt seinen Wert ändern
+\begin{itemize}[label=$+$]
+\item jederzeit vorhanden: jederzeit ist der zeitliche Verlauf der Messwerten verfolgbar
+\item[$-$] Störungen können jederzeit wirken
+\item[$-$] Informationsmenge ist oft unnötig groß
+\end{itemize}
+\item \emph{diskontinuierliches Signal}: IP kann nur zu diskreten Zeitpunkten seinen wert ändern.
+\begin{itemize}[label=$+$]
+\item Störungen zwischen den Zeitpunkten der Parameterveränderungen können sich nicht auswirken
+\item[$-$] Informationen stehen nur zu diskreten Zeitpunkten zur Verfügung (Informationsverlust)
+\end{itemize}
+\end{itemize}
+\subsubsection{Kombinationen}
+\begin{itemize}
+\item Analogsignal
+\item Digitalsignal (Zeit- und Wert-diskret)
+\begin{itemize}[label=$+$]
+\item hohe Störsicherheit
+\item einfache Datenspeicherung
+\item flexible Weiterverarbeitung
+\item vielfältige Übertragungsmöglichkeiten
+\end{itemize}
+\item diskret-kontinuierlich ($\Delta A$: Amplituden-Quantisierungsintervall)
+\item analog-diskontinuierlich ($\Delta t$: Zeit-Quantisierungsintervall)
+\end{itemize}
+
+\subsection{Normsignale}
+Strom als Informationsträger ist störungssicher $\to$ Spannung ist leichter zu manipulieren als Stromstärke!
+\begin{itemize}
+\item \emph{Strom analog}:\\
+$0\dots 20\; \mathrm{mA}$ (dead zero)\\
+$4 \dots 20 \;\mathrm{mA}$ (live zero)
+\item \emph{Spannung analog}:\\
+$0\dots 10 \;\mathrm{mA}$ (dead zero)\\
+$2 \dots 10 \;\mathrm{mA}$ (live zero)
+\item \emph{Spannung digital}:\\
+Spannungsbereiche an Transistoren für Definition von 1/0-Signalen (TTL, LVTTL, CMOS)
+\end{itemize}
+Unterscheidung dead/live zero um einen Kabelbruch von einem Null-Signal unterscheiden zu können. Bei normaler Temperatur Unterscheidung bspw. $0\;\mathrm{mA}$ dead zero und $4 \;\mathrm{mA}$ live zero.
 
 %\newpage
 %\printbibliography
