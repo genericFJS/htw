@@ -21,6 +21,10 @@
 
 %\bibliography{\customDir .Literatur/HTW_Literatur.bib}
 
+\makeatletter
+\@addtoreset{chapter}{part}
+\makeatother  
+
 \begin{document}
 
 %\selectlanguage{english}
@@ -30,7 +34,8 @@
 \newpage
 
 %\chapter*{Vorbemerkung}
-%Passwort Folien: \\%mi043##
+%Passwort Folien: \\% mi043##
+\part{Vorlesung}
 
 \chapter{Architektur nach von Neumann}
 \slidesScale{01}{2}
@@ -109,6 +114,33 @@ $\mu P$: Mikroprozessor
 
 \chapter{E/A und Interrupts}
 
+\part{Praktikum}
+\setCustomSlidePath{Praktikum/RA_043_P00D}
+
+\chapter{Einführung}
+
+\section{Computerklassen/-typen}
+\begin{itemize}
+\item Wegwerfcomputer
+\item Microcontroller, embedded Computer
+\item Mobile Computer
+\item Personalcomputer
+\item Server
+\item Großrechner
+\end{itemize}
+
+% Folien bis 
+
+Folie 39: \\
+uint8\_t für 8-Bit unsigned Integer - gut, da AVR 8-Bit ist.
+
+wichtig: Folie 42 -> Bit-Tricks\\
+1<<3 : 3. Bit wird auf 1 gesetzt; |= (bitweises Oder) belässt alle Bits gleich, bis auf das 3. (in dem Bsp.), das wird 1.\\
+\textasciitilde() (bitweise Negation); \&= belässt alle Bits gleich, bis auf das 3., das wird 1.\\
+\^{}= (exklusives Oder) fürs Invertieren
+
+%\chapter{Mikrocontroller und C}
+%\slideScale{1}
 
 %\newpage
 %\printbibliography
