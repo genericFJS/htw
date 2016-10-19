@@ -24,6 +24,9 @@
     <ClCompile Include="prakt1.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="prakt2.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="OpenGL-01\Dreiecke.fs">
