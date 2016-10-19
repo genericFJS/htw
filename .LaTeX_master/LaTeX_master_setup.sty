@@ -33,7 +33,7 @@
 \newcommand{\customSignature}{\ifthenelse{\equal{\customAuthor}{}} {} {\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}}}
 \newcommand{\setCustomSignature}[1]{\renewcommand{\customSignature}{#1}}
 % Format des Autors auf dem Titelblatt:
-\newcommand{\customTitleAuthor}[1]{\textcolor{darkgray}{Mitschrift von #1}}
+\newcommand{\customTitleAuthor}{\textcolor{darkgray}{Mitschrift von \customAuthor}}
 \newcommand{\setCustomTitleAuthor}[1]{\renewcommand{\customTitleAuthor}{#1}}
 % Standard Sprache
 \newcommand{\customDefaultLanguage}[1]{}

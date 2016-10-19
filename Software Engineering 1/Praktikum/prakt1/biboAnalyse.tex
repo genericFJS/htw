@@ -1,0 +1,125 @@
+\newcommand{\customDir}{../../../}
+\input{\customDir .LaTeX_master/LaTeX_master_setup.sty}
+
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+%\setCustomSlidePath{Folien}
+
+\setCustomTitle{Software Engineering I}
+\setCustomSubtitle{Bibliotheks-SW Anforderungen}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+%\setCustomNoteB{Vorlesung von}
+
+\setCustomSignature{\footnotesize{\textcolor{darkgray}{Verfasst von\\ \customAuthor}}}	% Formatierung der Signatur in der Fußzeile
+\setCustomTitleAuthor{\textcolor{darkgray}{Verfasst von \customAuthor}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir .LaTeX_master/LaTeX_master.sty}
+\input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir .Literatur/HTW_Literatur.bib}
+
+\begin{document}
+
+%\selectlanguage{english}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\chapter{Funktionsumfang}
+
+\section{Nutzerverwaltung}
+Hauptsächlich digitales Abbild von Nutzern und deren Verwaltung
+\begin{itemize}
+\item Nutzer hinzufügen (Anmeldung, Bedingungen beachten!)
+\item Nutzereigenschaften:
+\begin{itemize}
+\item Statistikgruppe: HTW Mitglieder / Externer Nutzer / Bibo-Angestellte (Verwaltung)
+\item Name, Vorname, Geschlecht
+\item Geburtsdatum
+\item Anschrift (bei Student zusätzl. Heimatanschrift)
+\item Staatsangehörigkeit
+\end{itemize}
+\item Nutzer ändern (Adresse)
+\item Nutzer löschen (Abmeldung)
+\item Nutzer Selbstverwaltung 
+\begin{itemize}
+\item Einsicht Ausleihmedien und Katalog
+\item Verlängerung Leihen
+\item Vormerkung
+\item Daten ändern: Kennwort, Adresse
+\end{itemize}
+\item Gebühren (Überziehung usw.)
+\item Druckkarte $\to$ Kopieren
+\item Entlastungsvermerk
+\item Einreichung Erwerbungsvorschläge
+\item Nutzer-/Leihkarte
+\item Beschränkung max. geliehener Medien
+\end{itemize}
+
+\section{Medienverwaltung}
+Hauptsächlich digitales Abbild von Medien und deren Verwaltung.
+
+\begin{itemize}
+\item Medientypen
+\begin{itemize}
+\item Abschlussarbeiten\\
+Besonderheit: limitierte Aufbewahrung
+\item Belletristik
+\item CDs
+\item Datenbanken (Recherchesystem)
+\item E-Books
+\item E-Journals
+\item Kinderbücher
+\item Lehrbücher
+\item Zeitschriften
+\end{itemize}
+\item Medieneigenschaften:
+\begin{itemize}
+\item Sortierung (Aufstellungssystematik)
+\item Ausleiheigenschaft (Ausleihe Beschilderung: Präsenzexemplar, Einzelwerke, …)
+\item Lizenzierung
+\item Pflichtexemplar Kennzeichnung
+\end{itemize}
+\item Hinzufügen neuer Medien
+\item Löschen von Medien
+\end{itemize}
+
+\section{Nutzer-Medien-Interaktion}
+\begin{itemize}
+\item Fernleihe
+\item Jahresleihen
+\item Ausleihe (Reservierung)
+\item Katalog-Anzeige
+\item Medienrückgabe (automatisch, manuell)
+\item Medien ausleihen, Selbstverbuchung
+\end{itemize}
+
+\section{Hausverwaltung}
+Hauptsächlich Hausverwaltung, d.h. alles was nicht Medien und Nutzer ist.
+\begin{itemize}
+\item Vermietung Carrels, Gruppenarbeitsräume usw.
+\item Sicherheitssystem (Zugriff DB nur über VPN)
+\item Geldverwaltung (Gebühren usw.)
+\item Internetarbeitsplätze verwalten
+\item Korporativnutzer
+\item Scannen
+\item Virtueller Rundgang
+\item WLAN
+\item Zentral-/Zweigbibo Verwaltung
+\end{itemize}
+
+\chapter{Lösung}
+Strukturierung nach
+\begin{itemize}
+\item Hierarchisierung
+\item Funktionen
+\item Daten
+\end{itemize}
+Achtung: bei der Analyse auf die grundlegenden Funktionen beschränken und nicht schon an die Umsetzung denken.
+%\newpage
+%\printbibliography
+
+\end{document}
