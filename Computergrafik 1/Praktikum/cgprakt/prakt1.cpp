@@ -86,12 +86,12 @@ void display(void)
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 	glDrawArrays(GL_TRIANGLES, 1, 3);
 	glDrawArrays(GL_LINE_LOOP, 4, 2);
-	glDrawArrays(GL_LINES, 6, 2);
-	glDrawArrays(GL_LINES, 7, 2);
+	glDrawArrays(GL_LINE_STRIP, 6, 3);
+	//glDrawArrays(GL_LINES, 7, 2);
 	glDrawArrays(GL_TRIANGLES, 9, 3);
 	glDrawArrays(GL_TRIANGLES, 10, 3);
-	glDrawArrays(GL_LINES, 13, 2);
-	glDrawArrays(GL_LINES, 14, 2);
+	glDrawArrays(GL_LINE_STRIP, 13, 3);
+	//glDrawArrays(GL_LINES, 14, 2);
 	glDrawArrays(GL_TRIANGLES, 16, 3);
 	glDrawArrays(GL_TRIANGLES, 17, 3);
 	glVertexAttrib3f(vColor, 249/255.0, 155/255.0, 28/255.0);
@@ -114,7 +114,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(500, 500);
 	glutInitContextVersion(4, 2);  // (4,5) (3,3);
 	glutInitContextProfile(GLUT_CORE_PROFILE);  //GLUT_COMPATIBILITY_PROFILE
-	glutCreateWindow(argv[0]);
+	glutCreateWindow("HTW Logo");
 	glewExperimental = GL_TRUE;
 	if (glewInit()) printf("Error");
 	init();
