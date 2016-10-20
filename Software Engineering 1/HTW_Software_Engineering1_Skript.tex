@@ -85,14 +85,17 @@ Also:
 \end{itemize}
 oder Vergleich:
 \slidesScale{1}{25}
-\begin{itemize}
-\item $\Rightarrow$ nützt nichts, sondern verhindert vielmehr Schäden $\to$ sollte generell beachtet werden
-\item „Software Engineering ist -- wie die Hygiene in der Medizin -- langweilig und frustrierend für Leute, die die Abwehr von Fehlschlägen und Katastrophen nicht als positive Leistung betrachten.“
-\end{itemize}
+%\begin{itemize}
+%\item $\Rightarrow$ nützt nichts, sondern verhindert vielmehr Schäden $\to$ sollte generell beachtet werden
+%\item „Software Engineering ist -- wie die Hygiene in der Medizin -- langweilig und frustrierend für Leute, die die Abwehr von Fehlschlägen und Katastrophen nicht als positive Leistung betrachten.“
+%\end{itemize}
 \begin{itemize}
 \item sauberes Arbeiten (vgl. Chirurg: kann auch so operieren, wenn er aber ohne Hygiene operiert, ist der Ausgang ungewiss)
 \item „Wenn's nicht funktioniert, ist man immer wieder damit beschäftigt die gleichen Fehler zu bearbeiten.“
 \end{itemize}
+
+\setCustomSlideScale{.95}
+\slidesScale{1}{26}
 
 
 \paragraph{Wie werden Software-Systeme entwickelt?}
@@ -118,6 +121,133 @@ im Entwicklungsprozess?}
 \item Die Behebung von Fehlern aus der Analysephase sind vergleichsweise sehr teuer.
 \end{itemize}
 
+% Vorlesung 20.10.2016
+\setCustomSlideScale{.5}
+% \slidesScale{2}{1}
+
+\section{Entwicklung von SW-Entwicklungsstrategien}
+Problem der SW-Entwicklung am Ende der 60‐ziger Jahre:\\
+veränderte Rahmenbedingungen beim Einsatz und der Entwicklung von Software-Systemen\\
+Also: Strategien bei der SW-Entwicklung ändern
+
+\subsection{Definition Softwaresystem}
+\subsubsection{Was kennzeichnet ein System?}
+\begin{itemize}
+\item Gesetzmäßigkeiten (Regeln, …) im Inneren, damit es funktioniert [Wenn es ein Innen gibt, muss es auch ein Außen geben]
+\item $\Rightarrow$ Ein System besteht aus Komponenten, die Beziehung zueinander haben.
+\end{itemize}
+\begin{center}
+\begin{tikzpicture}[thick, scale=0.6]
+\draw  (-11,7) rectangle (11,-11);
+\draw  (0,-2) ellipse (8 and 8);
+\begin{scope} [xshift=-90, yshift=90,rotate=45]
+\fill [white] (-2,2) ellipse (1 and 0.5);
+\draw  (-2,2) ellipse (1 and 0.5);
+\draw [-latex] (-2.5,1) -- (-2.5,3);
+\draw [latex-] (-1.5,1) -- (-1.5,3);
+\end{scope}
+\begin{scope} [xshift=170, yshift=10,rotate=-45]
+\fill [white] (-2,2) ellipse (1 and 0.5);
+\draw  (-2,2) ellipse (1 and 0.5);
+\draw [-latex] (-2.5,1) -- (-2.5,3);
+\draw [latex-] (-1.5,1) -- (-1.5,3);
+\end{scope}
+\begin{scope} [xshift=250, yshift=-210,rotate=45]
+\fill [white] (-2,2) ellipse (1 and 0.5);
+\draw  (-2,2) ellipse (1 and 0.5);
+\draw [-latex] (-2.5,1) -- (-2.5,3);
+\draw [latex-] (-1.5,1) -- (-1.5,3);
+\end{scope}
+\begin{scope} [xshift=-170, yshift=-290,rotate=-45]
+\fill [white] (-2,2) ellipse (1 and 0.5);
+\draw  (-2,2) ellipse (1 and 0.5);
+\draw [-latex] (-2.5,1) -- (-2.5,3);
+\draw [latex-] (-1.5,1) -- (-1.5,3);
+\end{scope}
+\node at (-9,5) {Person A};
+\node at (-8,-9) {anderes System};
+\node at (8,-9) {Person B};
+\node at (8,5) {…};
+\draw  (-5,2) rectangle (-1,0) node[pos=.5]{Kompenente};
+\draw  (2,1) rectangle (4,-1);
+\draw  (-5,-4) rectangle (-2,-6);
+\draw  (2,-5) rectangle (4,-7);
+\draw  (-2,-7) rectangle (0,-9);
+\draw (-4,0) -- (-4,-4);
+\draw (-1,1) -- (2,0);
+\draw (-2,0) -- (3,-5);
+\draw (0,-8) -- (2,-6);
+\draw (-3,-6) -- (-2,-8);
+%\draw (-3,0) -- (-1,-4) -- (-1,-7);
+\draw plot[smooth, tension=0.5] coordinates {(-3,0) (-1.5,-3.5) (-1,-7)};
+\end{tikzpicture} % ABB SE2
+\end{center}
+\subparagraph{VDI 3633 Blatt 1: System} ( VDI = Verein Deutscher Ingenieure)
+\slidesScale{2}{6}
+\slidesScale{2}{7}
+
+Also:
+\begin{itemize}
+\item Ein System besteht aus Komponenten, die miteinander in Beziehung stehen.
+\item Eine Grenze trennt das System von seiner Umgebung (auch Kontext genannt).
+\item Schnittstellen (Verbindungsstellen) verbinden das System mit seiner Umwelt.
+\item Ein System kann Subsysteme enthalten. Ein System befindet sich zum Zeitpunkt t in einem def. Zustand.
+\end{itemize}
+
+
+\subsubsection{Warum sind Software-Systeme ganz spezielle Systeme?}
+\begin{itemize}
+\item SW-Systeme sind „immateriell“ und komplex; sie haben keine natürliche Lokalität.
+\item SW-Systeme sind aus einem Werkstoff hergestellt, der von sich aus keine Strukturierung im „Großen“ erfordert (Sprich: niemand wird „gezwungen“ die Software zu strukturieren, es ist aber wohl hilfreich).
+\end{itemize}
+
+\subsubsection{Welchen Unterschied gibt es zwischen Modellen und Prototypen bei der Software-Entwicklung?}
+\subparagraph{VDI 3633 Blatt 1: Modell}
+\slidesScale{2}{10}
+\slidesScale{2}{11}
+Softwareprojekte können aufgrund ihrer Komplexität niemals nur durch ein Modell abgebildet werden, sondern brauchen mehrere!
+\begin{itemize}
+\item Modelle bilden ab.
+\item Prototypen sind lauffähig.
+\end{itemize}
+
+\subsubsection{Welche Grundprinzipien finden in der SW-Entwicklung Anwendung?}
+\begin{itemize}
+\item Abstraktion
+\slidesScale{2}{15}
+\item Strukturierung
+\item Zerlegung
+\slidesScale{2}{17}
+Entwicklerdokumentation braucht auch ein grobe Übersicht (nicht nur Doxygen generiertes)
+\item Kapselung
+\slidesScale{2}{18}
+\item Hierarchisierung
+\slidesScale{2}{16}
+\item Standardisierung
+\item (integrierte) Dokumentation\\
+$\Rightarrow$ Weitergabe von Wissen
+\slidesScale{2}{22}
+\end{itemize}
+weitere:
+\begin{itemize}
+\item Typisierung
+\slidesScale{2}{19}
+\item Nebenläufigkeit
+\slidesScale{2}{20}
+\item Persistenz
+\slidesScale{2}{21}
+\end{itemize}
+Also: 
+\begin{itemize}
+\item Abstraktion 
+\item Strukturierung
+\item Zerlegung
+\item Kapselung
+\item Hierarchisierung
+\item Standardisierung
+\item integrierte Dokumentation
+\end{itemize}
+$\Rightarrow$ Mittel um Komplexität zu beherrschen
 %\newpage
 %\printbibliography
 
