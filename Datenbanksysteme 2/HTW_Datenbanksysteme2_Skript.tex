@@ -167,9 +167,166 @@ $\Rightarrow$ ausführbar
 \slidesScale{1}{8}
 \subsection{Aufbau einer Datenbank-Verbindung über ODBC}
 \slidesScale{1}{9}
+Bsp. Aufbau:
+\begin{lstlisting}[language=C]
+// Headerdatei sqltypes.h
+// ...
+typedef void* SQLHANDLE;
+typedef SQLHANDLE SQLHENN;
+typedef SQLHANDLE SQLHDBC;
+typedef SQLHANDLE SQLHSTMC;
+// ...
+\end{lstlisting}
+$\Rightarrow$ Aufbau des C-Programms (Ablauf):
+\begin{itemize}
+\item Handle anlegen: (ODBC: SQLAllocHandle)
+\begin{itemize}
+\item Umgebung
+\item DB-Verbindung
+\item Abfrage
+\end{itemize}
+\item Umgebungsattribute setzen (ODBC: SQLSetEnvAttr)
+\item Verbindungsattribute setzen (ODBC: SQLSetCommentAttr)
+\item Vererbung zur DB aufbauen (ODBC: SQLDriverConnect / SQLConnect)
+\item SQL-Abfrage an DB senden (ODBC: SQLExecDirect)
+\item Spalten der Abfrage binden (ODBC: SQLBindCol)\\
+(je Spalte im Abfrageergebnis eine Bindung)
+\item Im Zyklus Datensatzweise lesen und ausgeben/verarbeiten (ODBC: SQLFetch)
+\item Verbindung zur DB beenden (ODBC: SQLDisconnect)
+\item Handle freigeben: (ODBC: SQLFreeHandle)
+\begin{itemize}
+\item Umgebung
+\item DB-Verbindung
+\item Abfrage
+\end{itemize}
+\end{itemize}
+\subsection{Beschreibung der wichtigsten CLI-Funktionen in ODBC}
+\setCustomSlideScale{0.8}
+\slidesScale{1B}{1}
+\slidesScale{1B}{2}
+\setCustomSlideScale{1}
+Achtung: mit konstanten Bezeichnungen anstatt mit numerischen Werten arbeiten:
+\begin{lstlisting}[language=C]
+// Headerdatei sql.h
+// ...
+#define SQL_HANDLE_ENV 1
+#define SQL_HANDLE_DBC 2
+#define SQL_HANDLE_STMT 3
+\end{lstlisting}
+
+\subsection{Minimalbeispiel ODBC}
+\setCustomSlideScale{0.7}
+\slidesScale{1B}{3}
+\slidesScale{1B}{4}
+\setCustomSlideScale{1}
+Achtung: Variable muss ein Zeichen größer sein als SQL-Eintrag ($\to$ Nullterminiert)
+\subsection{Programmausschnitt ODBC}
+\slidesScale{1}{10}
+
+\subsection{Ergebnistypen ODBC}
+\slidesScale{1}{11}
+\newpage\paragraph{Beispiel Datentypen}
+\setCustomSlideScale{0.7}
+\slidesScale{1C}{1}
+$\Rightarrow$ FETCH liest immer einen Datensatz (Zeilenweise)\\
+Achtung: Zeilen retcode braucht als 4. Argument ein @…
 
 \chapter{Datensicherheit/Zugriffsschutz}
 \section{Übersicht Datensicherheit/Transaktionen}
+\setCustomSlideScale{0.4}
+\slidesScale{2}{1}
+\paragraph{Datensicherheit in Datenbanksystemen}
+\begin{itemize}
+\item \emph{höhere Gewalt}
+\begin{itemize}
+\item Gefahrenbereiche:
+\begin{itemize}
+\item Brand, Wasser
+\item Stromausfall
+\item Blitzschlag
+\item Staub
+\end{itemize}
+\item Maßnahmen
+\begin{itemize}
+\item Backup / Spiegelung
+\item Brandschutzmaßnahmen
+\item Maßnahmen nach BDSG (Bundes Datenschutzgesetz)
+\end{itemize}
+\end{itemize}
+\item \emph{Ausfall technischer Mittel}
+\begin{itemize}
+\item Gefahrenbereiche:
+\begin{itemize}
+\item HDD defekt
+\item SW gelöscht
+\end{itemize}
+\item Maßnahmen
+\begin{itemize}
+\item Backup / Spiegelung
+\item sichere HW/SW
+\end{itemize}
+\end{itemize}
+\item \emph{unbewusste menschliche Fehler}
+\begin{itemize}
+\item Gefahrenbereiche:
+\begin{itemize}
+\item vergessen Handlung (Eintrag nicht komplett ausgefüllt)
+\item versehentliches Löschen
+\end{itemize}
+\item Maßnahmen
+\begin{itemize}
+\item ReadOnly-Felder
+\item Pflichfelder
+\item Abhängigkeiten
+\end{itemize}
+\end{itemize}
+\item \emph{parallele Datennutzung}
+\begin{itemize}
+\item Gefahrenbereiche:
+\begin{itemize}
+\item gleichzeitiges schreiben von Daten
+\end{itemize}
+\item Maßnahmen
+\begin{itemize}
+\item interne Serialisierung (Warteschlange)
+\end{itemize}
+\end{itemize}
+\item \emph{Computerkriminalität}
+\begin{itemize}
+\item Gefahrenbereiche:
+\begin{itemize}
+\item Spam, Hacker
+\item Viren, Trojaner
+\end{itemize}
+\item Maßnahmen
+\begin{itemize}
+\item Maßnahmen Datenschutz
+\item Kryptographie
+\item sichere Passwörter
+\item Zertifikate
+\end{itemize}
+\end{itemize}
+\end{itemize}
+Diese lassen sich in Kategorien einteilen:
+\begin{itemize}
+\item physische Integrität
+\begin{itemize}
+\item höhere Gewalt
+\item Ausfall technischer Mittel
+\end{itemize}
+\item semantische Integrität
+\begin{itemize}
+\item unbewusste menschliche Fehler
+\end{itemize}
+\item operationale Integrität
+\begin{itemize}
+\item parallele Datennutzung
+\end{itemize}
+\item Zugriffsschutz
+\begin{itemize}
+\item Computerkriminalität
+\end{itemize}
+\end{itemize}
 \section{Sicherung der semantischen Integrität}
 \section{Sicherung der operationalen Integrität}
 \section{Sicherung der physischen Integrität}
@@ -194,7 +351,11 @@ $\Rightarrow$ ausführbar
 \subsection{Anforderungsanalyse}
 \subsection{Konzeptueller Entwurf}
 \subsection{Logischer Entwurf}
-%\subsection{•}
+\subsection{Implementierungsentwurf}
+\subsection{Physischer Entwurf}
+\subsection{Nutzung/Wartung}
+
+\chapter{Überblick zu aktuellen Entwicklungen auf dem Gebiet DBS}
 
 %\newpage
 %\printbibliography
