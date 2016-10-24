@@ -45,11 +45,11 @@ Folien mit +: wichtige Folien
 \slideScale{5}
 \section{Systemarchitektur}
 \slideScale{6}
-\section{Interaktive generative grafische Systeme}
+\subsection{Interaktive generative grafische Systeme}
 \slideScale{7}
-\section{Grafische Datenstrukturen}
+\subsection{Grafische Datenstrukturen}
 \slideScale{8}
-\section{Weg und Ziel}
+\subsection{Weg und Ziel}
 \slideScale{9}
 3. Bild: Schattierung (keine Schattenbildung, sondern „Einfärbung“ von Seiten)
 
@@ -81,6 +81,8 @@ Eckpunkte -> Vertex Shader -> Fragment Shader -> Framebuffer
 \section{Hauptprogramm}
 \subsection{Sprachsyntax}
 \slideScale{21}
+
+\section{Funktionsreferenz}
 \subsection{Funktionen GL}
 \slideScale{22}
 \slideScale{25}
@@ -96,7 +98,7 @@ Fragment-Shader als Rasterisierung eines Bildes (bspw. Vektor-Strich von A nach 
 Vertex-Shader guckt sich dem entgegen Eckpunkte an.
 \section{Shader-Einbindung}
 \slideScale{30}
-\section{Programmbeispiele}
+\subsection{Programmbeispiele}
 \slideScale{32}
 \subsection{Funktionen}
 \slideScale{31}
@@ -122,15 +124,15 @@ Vertex-Shader guckt sich dem entgegen Eckpunkte an.
 \slideScale{41}
 \slideScale{42}
 
-\section{Vordefinierte Funktionen}
+\subsection{Vordefinierte Funktionen}
 \slideScale{43}
 \slideScale{44}
 
-\section{Vordefinierte Variablen}
+\subsection{Vordefinierte Variablen}
 \slideScale{45}
 \slideScale{46}
 
-\section{Programmbeispiele}
+\subsection{Programmbeispiele}
 \slideScale{47}
 \slideScale{48}
 
@@ -143,9 +145,60 @@ Vertex-Shader guckt sich dem entgegen Eckpunkte an.
 \slideScale{51}
 \slideScale{52}
 
+\chapter{OpenGL: Zeichnung und Daten}
+\slideScale{54}
 
+\section{Vorgehensweise}
+\slideScale{55}
 
+\section{Zeichenprimitive}
+\slideScale{56}
 
+2,5\,D Geometrie: die 3. Dimension nur senkrecht zu einer Fläche (bspw. Bildschirm)
+
+\subsection{Punkte, Linien}
+\slideScale{57}
+
+\subsection{Dreiecke}
+\slideScale{58}
+
+\subsection{Darstellungsattribute}
+\slideScale{59}
+
+\subsection{Programmeinbindung der Zeichenprimitive}
+\subsubsection*{Befehlsfolge:}
+\slideScale{60}
+
+\section{Zeichenfarben}
+\slideScale{61}
+zeigt NUR im Fragmentshader Wirkung
+\subsection{Farbe als Attribut}
+\slideScale{62}
+\subsection{Programmeinbindung der Vordergrundfarbe}
+\subsubsection*{Befehlsfolge:}
+\slideScale{63}
+
+\section{Pufferobjekte}
+\slideScale{64}
+\slideScale{65}
+\slideScale{66}
+\subsection{Programmbeispiele}
+\subsubsection*{Interpolation von Eckpunkten und Farben zweier Dreiecke}
+\slideScale{67}
+\slideScale{68}
+\subsubsection*{Zeichenvarianten eines Dreiecks}
+\slideScale{69}
+\subsubsection*{Indexierte Zeichnung eines Würfels}
+\slideScale{70}
+\slideScale{71}
+
+\section{Polygone und Netze}
+\subsection{Quadriken}
+\slideScale{72}
+\subsection{Evaluatoren}
+\slideScale{73}
+
+\section{Funktionsreferenz}
 
 
 
