@@ -17,13 +17,13 @@ GLuint VAOs[NumVAOs];
 GLuint Buffers[NumBuffers];
 GLuint program;
 // meins:
-const GLuint wheelVert = 40;
-const GLuint wheelRadiusMult = 5;
+const GLuint wheelVert = 42;
+const GLuint wheelRadiusMult = 1;
 const GLuint allWheelVert = wheelVert * wheelRadiusMult;
 GLfloat vertices[allWheelVert+1+wheelVert][2];
 float wheelRadius = 0.8;
 float pi = 3.1415;
-int moveWait = 15;	// 
+int moveWait = 30;	// 
 float move = 0.0;	// Position x-Richtung
 float vel = 0.01;	// Geschwindigkeit
 float velSp = 0.0;	// Geschwindigkeit der Speichen
@@ -33,8 +33,8 @@ int windowX = 800;
 void calcWheelVert() {
 	// Radius zeichnen:
 	for (int i = 0; i < allWheelVert;i++) {
-		vertices[i][0] = wheelRadius * cos(i * 2 * pi / allWheelVert) + move;
-		vertices[i][1] = wheelRadius * sin(i * 2 * pi / allWheelVert);
+		vertices[i][0] = wheelRadius * cos((i - velSp) * 2 * pi / allWheelVert) + move;
+		vertices[i][1] = wheelRadius * sin((i - velSp) * 2 * pi / allWheelVert);
 	}
 	// Mittelpunkt:
 	vertices[allWheelVert][0] = 0 + move;
@@ -119,7 +119,7 @@ int main(int argc, char** argv)
 	if (glewInit()) printf("Error");
 	init();
 
-	glutTimerFunc(10, timer, 10);
+	glutTimerFunc(moveWait, timer, 10);
 	//glutIdleFunc(idle);
 	//timer(0);
 

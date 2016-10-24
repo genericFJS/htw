@@ -69,10 +69,10 @@
 		}{}
 	}%-- Ende Spicker-Unterscheidung-else
 	
-	\usepackage[perpage]{footmisc}	% Fußnotenzählung Seitenweit, nicht Dokumentenweit
 	\usepackage{scrlayer-scrpage}	% Kopf-/Fußzeile
 	\renewcommand*{\thefootnote}{\fnsymbol{footnote}}	% Fußnoten-Symbole anstatt Zahlen
 	\renewcommand*{\titlepagestyle}{empty} % Keine Seitennummer auf Titelseite
+	\usepackage[perpage]{footmisc}	% Fußnotenzählung Seitenweit, nicht Dokumentenweit
 }
 
 % Input inkl. Umlaute, Silbentrennung
@@ -105,6 +105,7 @@
 \DeclareMathOperator{\arctanh}{arctanh}
 \DeclareMathOperator{\arccoth}{arccoth} 
 %\renewcommand{\int}{\int\limits}
+%\usepackage{xfrac}	% mehr fracs: sfrac{}{}
 
 % tikz usw.
 \usepackage{tikz}
