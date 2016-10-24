@@ -322,7 +322,7 @@ $W$ … Gewinnende Person ist weiblich\\
 \draw (v1) -- node[left, pos =.5]{$0,55\left(=\frac{440}{800}\right)$} (v2);
 \draw (v1) -- node[right, pos =.5]{$0,45$}(v3);
 \draw (v2) -- node[left, pos =.5]{$0,6$}(v4);
-\draw (v2) -- node[right, pos =.5]{$0,0,4$}(v5);
+\draw (v2) -- node[right, pos =.5]{$0,4$}(v5);
 \draw (v3) -- node[left, pos =.5]{$0,35$}(v6);
 \draw (v3) -- node[right, pos =.5]{$0,65$}(v7);
 \end{tikzpicture}% ABB S1
@@ -388,8 +388,108 @@ $\PP(A_2 | A_1) = \frac{4}{19}$\\
 $\PP(A_3 | A_1 \cap A_2) = \frac{3}{18}$\\
 $\Rightarrow \PP(A_1 \cap A_2 \cap A_3)=\frac{1}{4}\cdot \frac{4}{19}\cdot \frac{3}{18}=\frac{1}{114}=0,0087$
 
+\cparagraph{Satz} (Formel der totalen WK)\\
+Sei $(\Omega, \cA, \PP)$ ein WK-Raum und seien $B_1,\dots,B_n \in \cA$ mit 
+\begin{itemize}
+\item $\bigcup_{i=1}^n B_i = \Omega$
+\item $B_i \cap B_j = \emptyset $ für $i \not= j$
+\item $\PP (B_i) >0$ für alle $i=1,\dots,n$
+\end{itemize}
+Dann gilt:
+$$\PP(A) = \sum_{i=1}^n \PP(A|B_i) \cdot \PP (B_i)$$\\
+ABB S2
 
+\cparagraph{Beispiel} (Prävalenz von HIV)
+\begin{itemize}
+\item HIV-Prävalenz weltweit: $0,8\%$
+\item HIV-Prävalenz in Europa: $0,2\%$
+\item es gibt $7$ Mrd. Menschen auf der Erde
+\item es gibt $740$ Mio Menschen in Europa
+\end{itemize}
+Gesucht:
+\begin{itemize}
+\item WK, dass zufällig ausgewählter Europäer HIV-positiv ist.
+\item WK, dass zufällig ausgewählter Nicht-Europäer HIV-positiv ist.
+\end{itemize}
+Lösung:\\
+$E:=\{\text{ausgewählte Person ist Europäer}\}$\\
+$P:=\{\text{ausgewählte Person ist HIV positiv}\}$\\
+Wir wissen: \\
+$\PP(P)=0,008$, $\PP(E)=\frac{74}{700}\approx 0,1057$\\
+$\PP(P|E)=0,002$.\\
+Wir wollen wissen:
+\begin{itemize}
+\item $\PP(\bar P | E)=1-\PP(P|E)=1-002=0,998$
+\item $\PP(P | \bar E)=\PP(B|\bar E) \cdot \PP(E)+\PP(P|E) \cdot \PP(E)$ (mit $B_1=\bar E$ und $B_2=E$)\\
+Umstellen liefert:\\
+$\PP(P|\bar E) = \frac{\PP(B)-\PP(P|E)\cdot\PP(E)}{\PP(\bar E)}=\frac{0,008-0,002\cdot 0,1057}{1-0,1057}=0,008709$
+\end{itemize}
 
+\cparagraph{Satz} (Formel von Bayes)\\
+Sei $(\Omega, \cA, \PP)$ WK-Räume und seien $B_1,\dots,B_n \in \cA$ mit 
+\begin{itemize}
+\item $\bigcup_{i=1}^n B_i = \Omega$
+\item $B_i \cap B_j = \emptyset $ für $i \not= j$
+\item $\PP (B_i) >0$ für alle $i=1,\dots,n$
+\end{itemize}
+Dann gilt für beliebige $A \in \cA$ mit $\PP(A) >0$ und beliebiges $j\in \{1,\dots,n\}$:
+$$\PP(B_j|A)=\frac{\PP(A|B_j)\cdot \PP(B_j)}{\PP(A)}=\frac{\PP(A|B_j)\cdot \PP(B_j)}{\sum_{i=1}^n \PP(A|B_j) \cdot \PP(B_j)}$$
+Formel von Bayes dreht also die Bedingung um.
+
+\cparagraph{Beispiel} (Ziegenproblem)\\
+In einer Spielshow steht der Kandidat vor $3$ verschlossenen Türen. Eine Türe verbirgt den Hauptgewinn, ein Auto. Hinter den beiden anderen Türen sind Ziegen. Der Kandidat zeigt auf eine der Türen, der Spielleiter (der weiß, wo das Auto steht) öffnet gemäß der Spielregeln eine der beiden anderen Türen um eine Ziege zu präsentieren. \\
+Der Kandidat darf nun seine Wahl ändern. Sollte er das tun?\\
+ABB S3\\
+Lösung: \\
+Wir legen uns fest, dass der Kandidat Tor 1 gewählt hat und Moderator Tor 3 öffnet(ohne Beschränkung der Allgemeinheit(oBdA): sonst Umnummerieren).\\
+Ergebnismenge: $\Omega = \{(i,j)\;|\; i,j=1,2,3\}$ mit $(i,j)$ … Gewinn ist hinter Tor $i$, Moderator öffnet Tor $j$.\\
+Definiere die Ereignisse \\
+$G_i:= \{ \text{Gewinn hinter Tor }i\}=\{(i,1), (i,2), (i,3)\}$ und\\
+$M_j:=\{\text{Moderator öffnet Tor }j\}=\{(1,j), (2,q), (3,q)\}$\\
+Wir wissen:\\
+$\PP(G_i)=\frac{1}{3}$ für alle $i=1,2,3$\\
+$\PP(M_3|G_1)=\tfrac{1}{2}$\\
+$\PP(M_3|G_2)=1$\\
+$\PP(M_3|G_3)=0$\\
+Gesucht: $\PP(G_2|M_3)$
+\begin{align*}
+\PP(G_2|M_3)&=\frac{\PP(M_3|G_2)\cdot \PP(G_2)}{\PP(M_3|G_1)\cdot \PP(G_1)+\PP(M_3|G_2)\cdot \PP(G_2)+\PP(M_3|G_3)\cdot \PP(G_3)}\\
+&=\frac{1\cdot \frac{1}{3}}{\frac{1}{2}\cdot \frac{1}{3}+1\cdot \frac{1}{3}+0\cdot \frac{1}{3}}\\
+&=\frac{2}{3}
+\end{align*}
+Dieses scheinbare Paradoxon ist gut zu veranschaulichen, wenn man sich nicht 3 sondern 100 Tore vorstellt. Wenn man eines der 100 auswählt und der Moderator von den restlichen 99 Toren 98 öffnet, ist offensichtlich, dass die Wahrscheinlichkeit zu gewinne höher ist, wenn man das Tor wechselt. Die gesamte Wahrscheinlichkeiten der geöffneten Tore „sammeln“ sich hinter dem nicht geöffneten, nicht ausgewählten Tor.
+
+\cparagraph{Beispiel} (Zuverlässigkeit diagnostischer Tests)\\
+Betrachten eines Test zum diagnostizieren einer Krankheit. Dieser kann entweder „positiv“ oder „negativ“ sein.\\
+Gegebene Ereignisse:\\
+$P:=\{\text{Test positiv}\}$ … Test tippt darauf, dass Krankheit vorliegt.\\
+$\bar P:=\{\text{Test negativ}\}$ … Test tippt darauf, dass Krankheit nicht vorliegt.\\
+$K:= \{\text{Person ist krank}\}$\\
+$\bar K:= \{\text{Person ist nicht krank}\}$
+\begin{itemize}
+\item $\text{Sensitivität}:=\PP(P|K)$ (WK, dass Test „positiv“ anzeigt, wenn man tatsächlich auch krank ist. D.h. richtig-positiver Test)
+\item $\text{Spezifität}:=\PP(\bar P|\bar K)$ (WK, dass Test „negativ“ anzeigt, wenn man tatsächlich gesund ist. D.h. richtig-negativer Test)
+\end{itemize}
+\begin{tabular}{r | c c}
+& krank & gesund\\
+\hline
+Test positiv & richtig-positiv & falsch-positiv\\
+Test negativ & falsch-negativ & richtig-negativ
+\end{tabular}
+
+Problem: Typischerweise sind Sensitivität und Spezifität gegeben, aber eigentlich interessieren uns $\PP(K|P)$ oder $\PP(K|\bar P)$.
+
+\subsection{Unabhängigkeit}
+Wir untersuchen die Frage, ob sich Ereignisse gegenseitig beeinflussen.
+
+\cparagraph{Definition} Zwei Ereignisse $A,B \in \cA$ heißen (stochastisch) unabhängig, wenn 
+$$\PP(A\cup B)=\PP(A) \cdot \PP(B)\text{.}$$
+Die Ereignisse $A_1,\dots, A_n$ heißen paarweise (stochastisch) unabhängig, wenn 
+$$\PP(A_i\cup A_j) = \PP(A_i)\cdot \PP(A_j)$$
+für alle $i\not=j$.\\
+Die Ereignisse $A_1,\dots,A_n$ heißen (stochastisch) unabhängig (in ihrer Gesamtheit), wenn 
+$$\PP(A_{i_1}\cap A_{i_2}\cap \dots \cap A_{i_k}=\PP(A_{i_1})\cdot \dots \cdot \PP(A_{i_k})$$
+für jede beliebige Auswahl von $k \;(2\leq k \leq n)$ der $n$ Ereignisse.
 
 %\newpage
 %\printbibliography
