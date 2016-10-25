@@ -292,6 +292,184 @@ Spannungsbereiche an Transistoren für Definition von 1/0-Signalen (TTL, LVTTL, 
 \end{itemize}
 Unterscheidung dead/live zero um einen Kabelbruch von einem Null-Signal unterscheiden zu können. Bei normaler Temperatur Unterscheidung bspw. $0\;\mathrm{mA}$ dead zero und $4 \;\mathrm{mA}$ live zero.
 
+\section{Messeinrichtung}
+Gesamtheit aller zusammenhängender Funktionseinheiten (Glieder), die zum Zweck der Messung, Messdatenverarbeitung, Anzeige von einer oder mehreren Messgrößen benutzt werden [In Anlehnung an die Norm DIN 1319].
+
+besteht aus:
+\begin{itemize}
+\item Messgeräte
+\item Hilfsgeräte
+\item Maßverkörperungen
+\item chemische Reagenzien
+\item …
+\end{itemize}
+Messanlage: dauerhaft installierte Messeinrichtung
+
+\paragraph{Beispiel: Fieberthermometer}
+\begin{itemize}
+\item Eingangsgröße: Temperatur $\vartheta$
+\item Eingang: Sensor Thermoelement PT100. Temperatur erzeugt Änderung des darin liegenden Widerstands 
+\item Anpassung: Element erzeugt durch Spanngs-/Stromquelle vom Widerstand abhängige Signale
+\item Verstärkung
+\item AD-Wandler
+\item $\mu$Controller (verarbeitet Signale; piepst, wenn Messung fertig)
+\item Anzeige der Temperatur
+\end{itemize}
+\subsection{Messkette}
+$\underbrace{\overset{\substack{\text{Mess-}\\\text{größe}}}{\longrightarrow} \text{ Aufnehmer (Sensor)}}_{\text{Prozess}}$ 
+$\overset{\substack{\text{Mess-}\\\text{signal}}}{\longrightarrow}$ Messumformer 
+$\overset{\substack{\text{Norm-}\\\text{signal}}}{\longrightarrow}$ Messgerät / Anzeige 
+$\overset{\text{Ausgabe}}{\longrightarrow}$\\
+offene Wirkungskette: Messkette
+
+\section{Steuern}
+Ein Vorgang in einem System, bei dem eine oder mehrere Größen als Eingangsgrößen (Führungsgrößen) andere Größen als Ausgangsgrößen aufgrund der dem System eigentümlichen Gesetzmäßigkeiten beeinflussen [DIN 19226].\\
+Steuerung ist also ein Plan, wie eine veränderliche Größe beeinflusst werden soll.\\
+Beispiel Steuerung: Wecker klingelt jeden Tag um 7 Uhr. In dem Fall steuert der Wecker die Person.\medskip
+
+Stellglied (beeinflusst unmittelbar die Steuergröße) kann verstellt werden (Steuerglied+Steller erzeugen aus der Führungsgröße die \emph{Stellgröße}), um \emph{Steuergröße} (output) zu ändern. Der Sollwert (\emph{Führungsgröße}) für die Steuergröße wird vom \emph{Führungsglied} (als starrer Befehlsgröße) diktiert. Es gibt allerdings keine Rückmeldung der Steuergröße, \emph{Störgrößen} könnten also nicht bedacht werden.\\
+$\underbrace{\text{Stellglied (Aktor)}}_{\substack{\text{Prozess}\\\text{(Steuergröße)}\\\text{über Steuerstrecke}}}$
+$\overset{\substack{\text{Stell-}\\\text{größe}}}{\longleftarrow}$ Steller
+$\underset{\substack{\text{(Norm-}\\\text{signal)}}}{\overset{\substack{\text{Stell-}\\\text{signal}}}{\longleftarrow}}$ Steuerglied 
+$\overset{\substack{\text{Führungs-}\\\text{größe}}}{\longleftarrow}$ Führungsglied\\
+offene Steuerkette\\
+Nachteile:
+\begin{itemize}
+\item keine Rückmeldung
+\item dynamische Eigenschaften des Prozesses müssen genau bekannt sein.
+\end{itemize}
+
+\section{Regeln}
+Ein Vorgang, bei dem fortlaufend eine Größe (die zu regelnde Größe, die Regelgröße) erfasst, mit einer anderen Größe (der Führungsgröße) verglichen, und im Sinne einer Angleichung an die Führungsgröße beeinflusst wird [DIN 19226].
+\begin{enumerate}
+\item Messen: die Regelgröße wird direkt gemessen oder aus anderen Messgrößen berechnet.
+\item Vergleichen: die Regelgröße wird mit der Führungsgröße verglichen und die Regelabweichung berechnet.
+\item Regelglied + Steller erzeugt die Stellgröße aus der Regelabweichung
+\item[\textbullet] mit der Stellgröße wird somit die Regelgröße wieder beeinflusst.
+\item[\textbullet] eine Störgröße kann durch das Messen der Regelgröße wieder an den Steller zurück geführt werden.
+\end{enumerate}
+Aus dem Prozess (Regelgröße) führt somit eine offene Messkette als Ausgabe heraus und führt eine offene Steuerkette als Regelabweichung herein. So wird zwischen dem Ein- und Ausgang ein Vergleichsglied gesteckt, die aus der Rückführgröße (Ist-Wert) und der Führungsgröße (Soll-Wert, von Außen bestimmt) diese Regelabweichung berechnet. Im Prozess führt die Regelstrecke vom Eingang zum Ausgang.
+
+So entsteht ein geschlossener \emph{Regelkreis}.
+
+\section{Steuern oder Regeln?}
+\paragraph{Steuerung}
+\begin{itemize}
+\item offene Wirkungskette
+\item Prozesseigenschaften (statisch + dynamisch) müssen genau bekannt sein)
+\item kann auf Störungen nicht reagieren
+\item kein Soll-Ist-Vergleich
+\item keine Messung notwending
+\item Prozessstabilität wird nicht beeinflusst
+\end{itemize}
+ist sinnvoll, wenn:
+\begin{itemize}
+\item die Auswirkungen von Störgrößen vernachlässigbar klein sind
+\item nur eine Störgröße auftritt, die nach Art und Verlauf bekannt ist
+\item Störgrößenänderungen selten sind
+\end{itemize}
+\paragraph{Regelung}
+\begin{itemize}
+\item geschlossener Regelkreis
+\item Prozesseigenschaften müssen nicht genau bekannt sein (Robustheit gegenüber Parameteränderungen)
+\item kann Störungen ausregeln (Störkompensation)
+\item Soll-Ist-Vergleich
+\item Messung ist notwending
+\item Der geschlossene Regelkreis kann instabil werden (bsp.: Mikrofon neben Lautsprecher $\to$ Pfeifen)
+\end{itemize}
+ist sinnvoll, wenn:
+\begin{itemize}
+\item veränderliche, unbekannte, nach Art und Größe verschiedene, nicht messbare Störgrößen auftreten können
+\end{itemize}
+
+\chapter{Sensorik}
+\section{Sensor}
+Der Sensor ist das primäre Element einer Messkette\\
+Sensor = Aufnehmer, Messwertaufnehmer, Messwertgeber, Signalgeber, Fühler, Geber, Initiator, Detektor, Zelle, Wandler, Transducer\\
+$\overset{\text{Messgröße}}{\longrightarrow} \underbrace{\underbrace{\underbrace{
+\text{Aufnehmer}}_{\text{Sensorelement}}\overset{\text{Messsignal}}{\longrightarrow}
+\text{Signalaufbereitung} \overset{\text{Normsignal}}{\longrightarrow}}_{\text{integrierter Sensor}}
+\substack{\text{Signalverarbeitung}\\\text{und -auswertung}}\underset{\text{Steuersignal}}{\overset{\text{Ausgabe}}{\rightrightarrows}}}_{\text{intelligenter Sensor}}$
+\section{Einteilung von Sensoren}
+\begin{anumerate}
+\item Funktionsweise
+\begin{itemize}
+\item selbstgenerierende Sensoren (keine externe Energiequelle)
+\begin{itemize}
+\item Spannungsausgang
+\item Stromausgang
+\item Ladungsausgang
+\end{itemize}
+\item modulierende Sensoren (externe Energiequelle nötig)
+\begin{itemize}
+\item Widerstand
+\item Induktivität
+\item Kapazität
+\end{itemize}
+\end{itemize}
+\item Aktive und passive Sensoren
+\begin{itemize}
+\item Selbstgenerierende Sensoren\\
+= aktive Sensoren (in dt. Literatur, in engl.: passive)
+\item Modulierende Sensoren\\
+= passive Sensoren (in dt. Literatur, in engl.: aktive)
+\end{itemize}
+Alternativ:
+\begin{itemize}
+\item passive: Aufnehmen vorhandener Signale\\
+bspw. Kamera, Mikrofon, IR-Sensor
+\item aktive: Stimulieren der Umwelt und Aufnehmen der Antwort\\
+bspw. Ultraschallsensor, Laserscanner, Radar
+\end{itemize}
+\item Messprinzipien / Energieformen
+\begin{itemize}
+\item elektrisch
+\item magnetisch
+\item mechanisch
+\item thermisch
+\item Strahlung
+\item chemisch/biologisch
+\end{itemize}
+\item Einzelne Messgrößen
+\item Grad der Erfassung
+\begin{itemize}
+\item erfassende Sensoren (Binärsensoren)
+\item messende Sensoren (Analog- und Digitalsensoren)
+\end{itemize}
+\item Kontaktierende und kontaktlose Sensoren
+\item Absolute und relative Sensoren
+\item Interne, externe Sensoren\\
+typisch interner Sensor: Schmerz\\
+typisch externer Sensor: Augen
+\item Einsatzgebiet
+\item Sensormaterialien
+\item Betriebseigenschaften
+\item Sondermerkmale
+\item[] …
+\end{anumerate}
+
+\section{Statische Eigenschaften von Sensoren}
+(keine Funktion der Zeit)\\
+$\overset{x}{\longrightarrow}$Sensor$\overset{y}{\longrightarrow}$
+\paragraph{(statische) Transferfunktion} (Empfindlichkeitskennlinie, Kennlinie):\\
+Beziehung zwischen Eingangssignal $x$ und Ausgangssignal $y$.
+$$\boxed{y=f(x)}$$
+\subparagraph{Ideale Kennlinie} soll möglichst
+\begin{itemize}
+\item monoton
+\item eindeutig
+\item linear
+\end{itemize}
+sein (bspw. $f(x)=x$).\\
+Reale Transferfunktionen weisen in der Regel nicht alle dieser Eigenschaften auf.\\
+Weiterhin ist der Messbereich (FSI: full scale input) und der Ausgabebereich (FSO) in der Regel begrenzt.
+\subparagraph{Dezibel} $G[dB]=20 \log \frac{s}{s_0}$ (Einheit von FSI und FSO)\\
+für $s_0$ wird dann die Normgröße für Kraft, Strom oder Spannung eingesetzt (Spannung: $1 \mu V$, Leistung: $1mV$, Schallpegel: $1\cdot 10^{-12}W/m^2$)
+
+
+
+
+
 %\newpage
 %\printbibliography
 
