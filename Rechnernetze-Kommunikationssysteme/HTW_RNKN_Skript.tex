@@ -4,7 +4,8 @@
 %\setboolean{twosided}{true}
 %\setCustomDocumentClass{scrartcl}
 %\setCustomDesign{htw}
-%\setCustomSlidePath{Folien}
+\setCustomSlidePath{Vorlesung/rn-}
+\setCustomSlideScale{1}
 
 \setCustomTitle{\texorpdfstring{Rechnernetze /\\ Kommunikationssysteme}{Rechnernetze / Kommunikationssysteme}}
 \setCustomSubtitle{Vorlesungsskript}
@@ -42,7 +43,75 @@ Zur Prüfung: alles erlaubt (Taschenrechner, Unterlagen, …)
 Bandbreite: zur Zeit noch beschränkt, denkbar auch, dass jeder auf allen Bandbreiten. WLAN und Bluetooth sind schon auf einer Bandbreite und bekommen es auch hin.\\
 Sendeleistung: Nicht „zu laut reden“, damit sich andere auch noch verstehen.
 
-\chapter{XY}
+\chapter{Sockets}
+
+\section{Einführung}
+\subsection{Schnittstelle auf einem Host zur Datenübertragung an andere Prozesse}
+\slidesScale{10-sockets_print}{3}
+\subsection{Socketschnittstelle: Abgrenzung}
+\slidesScale{10-sockets_print}{4}
+\subsection{IP-Adressen und Ports}
+\slidesScale{10-sockets_print}{5}
+\section{Demultiplexing}
+\slidesScale{10-sockets_print}{6}
+\subsection{Verbindungsloses Demultiplexing (UDP)}
+\slidesScale{10-sockets_print}{7}
+\paragraph{Testfrage:} Benötigte UDP-Sockets: 2 Sockets (beliebig viele Partner können auf einen Port/Socket kommen, dafür muss darauf geachtet werden, dass das Paket an den richtigen Absender zurück geschickt wird)
+\subsection{Verbindungsorientiertes Demultiplexing (TCP)}
+\slidesScale{10-sockets_print}{8}
+\paragraph{Testfrage:} Benötigte TCP-Sockets: 3 Sockets (jeder Verbindung ist eigenständig und vom Rechner verwaltet, es muss sich nicht drum gekümmert werden, dass es auch an den richtigen Partner zurück geschickt wird)
+\slidesScale{10-sockets_print}{9}
+\section{Socket-Programmierung}
+\slidesScale{10-sockets_print}{10}
+\subsection{UDP-Sockets}
+\slidesScale{10-sockets_print}{11}
+\slidesScale{10-sockets_print}{12}
+\subsubsection{UDP-Demo Datenströme}
+Datenströme müssen explizit in Pakete gewandelt werden:\\
+UDP ist kein Stream $\to$ Konvertierung IO-Stream $\Leftrightarrow$ UDP.
+\slidesScale{10-sockets_print}{13}
+\subsubsection{UDP-Demo Client}
+\slidesScale{10-sockets_print}{14}
+\slidesScale{10-sockets_print}{15}
+Achtung: Wenn Paket verloren geht, würde Programm stehen bleiben! Dafür gibt es in der Funktion \emph{.recieve()} auch die Option eines Timeouts.\\
+Hinweis nebenbei: sendData-Array hätte gar nicht initialisiert werden müssen, weil er in der Zuweisung später sowieso einen neuen Zeiger bekommt.
+\subsubsection{UDP-Demo Server}
+\slidesScale{10-sockets_print}{16}
+\slidesScale{10-sockets_print}{17}
+\slidesScale{10-sockets_print}{18}
+UDP vor allem bei Anfragen sinnvoll, die in ein Paket passen. Nicht so sinnvoll für mehrere Pakete/Streams.
+
+\subsection{TCP-Sockets}
+\slidesScale{10-sockets_print}{19}
+\slidesScale{10-sockets_print}{20}
+\slidesScale{10-sockets_print}{21}
+\subsubsection*{Dreiwege-Handshake}
+\slidesScale{10-sockets_print}{22}
+\slidesScale{10-sockets_print}{23}
+\subsubsection{TCP-Demo Datenströme}
+Eingabestrom: Quelle - Tastatur\\
+Ausgabestrom: Senke - Socket
+\slidesScale{10-sockets_print}{24}
+\slidesScale{10-sockets_print}{25}
+\subsubsection{TCP-Demo Client}
+\slidesScale{10-sockets_print}{26}
+\slidesScale{10-sockets_print}{27}
+\subsubsection{TCP-Demo Server}
+\slidesScale{10-sockets_print}{28}
+\slidesScale{10-sockets_print}{29}
+
+\section{Werkzeug Netcat}
+\slidesScale{10-sockets_print}{30}
+
+\section*{Zusammenfassung}
+\slidesScale{10-sockets_print}{31}
+
+
+
+
+
+
+
 
 
 
