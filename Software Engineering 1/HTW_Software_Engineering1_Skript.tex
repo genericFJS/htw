@@ -97,6 +97,7 @@ oder Vergleich:
 \setCustomSlideScale{.95}
 \slidesScale{1}{26}
 
+\chapter{System}
 
 \paragraph{Wie werden Software-Systeme entwickelt?}
 \begin{itemize}
@@ -130,8 +131,8 @@ Problem der SW-Entwicklung am Ende der 60‐ziger Jahre:\\
 veränderte Rahmenbedingungen beim Einsatz und der Entwicklung von Software-Systemen\\
 Also: Strategien bei der SW-Entwicklung ändern
 
-\subsection{Definition Softwaresystem}
-\subsubsection{Was kennzeichnet ein System?}
+\section{Definition Softwaresystem}
+\subsection{Was kennzeichnet ein System?}
 \begin{itemize}
 \item Gesetzmäßigkeiten (Regeln, …) im Inneren, damit es funktioniert [Wenn es ein Innen gibt, muss es auch ein Außen geben]
 \item $\Rightarrow$ Ein System besteht aus Komponenten, die Beziehung zueinander haben.
@@ -195,13 +196,13 @@ Also:
 \end{itemize}
 
 
-\subsubsection{Warum sind Software-Systeme ganz spezielle Systeme?}
+\subsection{Warum sind Software-Systeme ganz spezielle Systeme?}
 \begin{itemize}
 \item SW-Systeme sind „immateriell“ und komplex; sie haben keine natürliche Lokalität.
 \item SW-Systeme sind aus einem Werkstoff hergestellt, der von sich aus keine Strukturierung im „Großen“ erfordert (Sprich: niemand wird „gezwungen“ die Software zu strukturieren, es ist aber wohl hilfreich).
 \end{itemize}
 
-\subsubsection{Welchen Unterschied gibt es zwischen Modellen und Prototypen bei der Software-Entwicklung?}
+\subsection{Welchen Unterschied gibt es zwischen Modellen und Prototypen bei der Software-Entwicklung?}
 \subparagraph{VDI 3633 Blatt 1: Modell}
 \slidesScale{2}{10}
 \slidesScale{2}{11}
@@ -211,7 +212,7 @@ Softwareprojekte können aufgrund ihrer Komplexität niemals nur durch ein Model
 \item Prototypen sind lauffähig.
 \end{itemize}
 
-\subsubsection{Welche Grundprinzipien finden in der SW-Entwicklung Anwendung?}
+\subsection{Welche Grundprinzipien finden in der SW-Entwicklung Anwendung?}
 \begin{itemize}
 \item Abstraktion
 \slidesScale{2}{15}
@@ -248,6 +249,160 @@ Also:
 \item integrierte Dokumentation
 \end{itemize}
 $\Rightarrow$ Mittel um Komplexität zu beherrschen
+
+\section{Qualität von Software-Systemen}
+\subsection{Was kennzeichnet qualitativ hochwertige Software-Systeme?}
+\paragraph{Gedanken:}
+\begin{itemize}
+\item stabil laufen
+\item wenig Fehler
+\item erfüllt seine Funktion
+\item intuitiv und einfach benutzbar
+\item kompatibel
+\item wenig Ressourcenverbrauch (effizient)
+\item schöne Oberfläche (Achtung, hier wird klar: Qualität kann auch subjektiv sein)
+\item transparenter Systemzustand (z.B. aussagefähige Statusmeldungen)
+\item …
+\end{itemize}
+\paragraph{Lösung:}
+\begin{itemize}
+\item Funktionserfüllung
+\item Benutzerfreundlichkeit
+\item Wirtschaftlichkeit
+\item Je nach gesetzten Prioritäten:
+\begin{itemize}
+\item Zuverlässigkeit
+\item Sicherheit
+\item Flexibilität (Änderbarkeit, Erweiterbarkeit, Portabilität, Kompatibilität)
+Wiederverwendbarkeit
+\end{itemize}
+\end{itemize}
+
+\slidesScale{3}{2}
+Qualität hat mehrere Sichten:
+\begin{itemize}
+\item Benutzersicht (Außen)
+\item Entwicklersicht (Innen)
+\end{itemize}
+\slidesScale{3}{3}
+\slidesScale{3}{4}
+\paragraph{Wann weiß man, ob das SW-System seine Funktion gut erfüllt?}
+Übereinstimmung von \emph{geplanter} (spezifiziert z.B. im Pflichtenheft) und realisierter Funktionalität.
+
+\subsection{Qualitätsmerkmale}
+
+\subsubsection{Benutzungsschnittstelle} (DIN EN ISO 9241-110)\\
+„Alle Bestandteile eines interaktiven Systems (Software oder Hardware), 
+die Informationen und Steuerelemente zur Verfügung stellen,
+die für den Benutzer notwendig sind,
+um eine bestimmte Arbeitsaufgabe mit dem interaktiven System zu erledigen.“
+
+\subsubsection{Usability} (DIN EN ISO 9241-110)\\
+„Ausmaß, in dem ein System, ein Produkt oder eine Dienstleistung
+durch bestimmte Benutzer in einem bestimmten Nutzungskontext genutzt werden kann,
+um festgelegte Ziele effektiv, effizient und zufriedenstellend zu erreichen.“
+
+\subsubsection{User Centered Design} (DIN EN ISO 9241-210)
+\slidesScale{3}{6}
+\begin{itemize}
+\item Erreichbar gut über Prototypen, schon vor Beta-Tests
+\end{itemize}
+\paragraph{Benutzbarkeit} \parskp
+Achtung: Subjektiv (es gibt auch objektive Regeln); gestützt durch Oberflächenprototyp (Check-Dummy)
+
+\subsubsection{Effizienz} 
+\begin{itemize}
+\item Speicherausnutzung
+\item Transport
+\item Antwortzeit (durch bessere Algorithmen (bspw. Sortierung))
+\end{itemize}
+
+\subsubsection{Zuverlässigkeit}
+\begin{itemize}
+\item Fehlerfrei $\to$ Vermeidung von Ausfällen
+\end{itemize}
+
+\begin{tikzpicture}[scale=.5]
+\draw [-latex] (0,0) -- (0,10) node[left]{$\lambda$ (Ausfallrate)};
+\draw [-latex] (0,0) -- (10,0) node[below]{$t$};
+
+\draw (1,7) -- (3,1) -- (8,1) -- (10,7);
+\node at (3,0) [below] {$t_1$};
+\node at (8,0) [below] {$t_2$};
+\end{tikzpicture}
+\begin{itemize}
+\item Frühausfälle durch Produktionsfehler $t_1$
+\item Spätausfälle durch physischen Verschleiß $t_2$
+\end{itemize}
+
+\begin{tikzpicture}[scale=.5]
+\draw [-latex] (0,0) -- (0,10) node[left]{$\lambda$ (Ausfallrate)};
+\draw [-latex] (0,0) -- (10,0) node[below]{$t$};
+
+\draw (1,7) -- (3,1) -- (8,1) -- (10,7);
+\node at (3,0) [below] {$t_1$};
+\node at (8,0) [below] {$t_2$};
+\draw (11,8) -- (12,8)  node[right]{Hardware $\to$ Badewannenkurve};
+\draw [blue] (11,6) -- (12,6)  node[right]{Software (ideal)};
+\draw [orange] (11,4) -- (12,4)  node[right, align=left]{Software (real möglich: \\ Fehler behoben oder „zu Tode gepflegt“)};
+\draw [blue] plot[smooth, tension=0.5] coordinates { (1,7) (4,2) (7,1) (10,0.75)};
+\draw [orange] (1,7) -- (3,5) -- (5,6);
+\draw [orange] (3,5) -- (5,4);
+\end{tikzpicture}
+
+\subsubsection{Sicherheit}
+\begin{itemize}
+\item Vermeidung von gefährlichen Zuständen
+\end{itemize}
+
+Mögliche Lösung/Herangehensweise für Zuverlässigkeit und Sicherheit:\\
+Redundanz!
+
+\subsubsection{Erweiterbarkeit}
+\begin{itemize}
+\item neue Funktionalität kommt hinzu $\to$ welcher Aufwand resultiert daraus?
+\end{itemize}
+
+\subsubsection{Anwendbarkeit}
+\begin{itemize}
+\item gleiche Funktionalität mit anderen Eigenschaften z.B. kürzere Antwortzeit
+\end{itemize}
+
+\subsubsection{Kompatibilität}
+Kompatibel $\to$ anschließbar
+\begin{itemize}
+\item Das SW-System A muss zusammen mit dem SW-System B arbeiten.
+\end{itemize}
+
+\subsubsection{Portabilität}
+Portabel $\to$ „fortschleppbar“
+\begin{itemize}
+\item Das SW-System A läuft in der Umgebung von 1 bzw. 2 (Plattform) [Linux bzw. Windows]
+\end{itemize}
+
+
+\subsection{Wie kann hohe Software-Qualität erreicht werden?}
+\slidesScale{3}{7}
+Analyse: man hat schon etwas und schaut nach (Test: analytische Fehlersuche).\\
+Konstruktion: es wird erst gebaut (im Vornherein gut Programmieren).
+\slidesScale{3}{9}
+SW-Qualität -- erfordert Kosten und Zeit
+\slidesScale{3}{10}
+\paragraph{Lösung:}
+Durch gezielte Qualitätssicherung im 
+\begin{itemize}
+\item organisatorischen Bereich\\
+(Vorgehen bei der Software-Entwicklung $\to$ Vorgehensmodelle)
+\item im Rahmen der Anforderungsmodellierung
+\item im konstruktiven Bereich\\
+(Analyse, Entwurf, Implementierung $\to$ Muster, Schnittstellen, Werkzeuge…)
+\item im analytischen Bereich (Test)
+\end{itemize}
+
+
+
+
+
 %\newpage
 %\printbibliography
 
