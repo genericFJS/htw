@@ -491,6 +491,111 @@ Die Ereignisse $A_1,\dots,A_n$ heißen (stochastisch) unabhängig (in ihrer Gesa
 $$\PP(A_{i_1}\cap A_{i_2}\cap \dots \cap A_{i_k}=\PP(A_{i_1})\cdot \dots \cdot \PP(A_{i_k})$$
 für jede beliebige Auswahl von $k \;(2\leq k \leq n)$ der $n$ Ereignisse.
 
+\cparagraph{Bemerkung}
+\begin{enumerate}
+\item $A_1, \dots , A_n$ (in ihrer Gesamtheit) unabhängig $\Rightarrow A_1, \dots , A_n$ paarweise unabhängig. Rückrichtung gilt im Allgemeinen nicht (siehe Übung).
+\item Ist $\PP(B) >0$ so gilt $A$ und $B$ unabhängig $\Leftrightarrow P(A|B) = \PP(A)$\\
+Beweis:
+\begin{itemize}
+\item[„$\Rightarrow$“]
+$\PP(A|B) \overset{\text{Def.}}{=}\frac{\PP(A\cap B)}{\PP(B)}=\frac{\PP(A) \cdot \PP(B)}{\PP(B)}=\PP(A)$
+\item[„$\Leftarrow$“]
+$\PP(A\cap B) = \frac{\PP(A \cap B)}{\PP(B)}\cdot \PP(B) = \PP(A|B) \cdot \PP(B) = \PP(A) \cdot \PP(B)$
+\end{itemize}
+$A$ und $B$ unabhängig: Die WK für das Eintreten von $A$ hängt nicht von dem Wissen, ob $B$ bereits eingetreten ist, ab.
+\item $A$ und $B$ disjunkt und $\PP(A) > 0, \; \PP(B) >0$.\\
+$\Rightarrow A$ und $B$ sind stochastisch \emph{abhängig}.\\
+\fbox{Sind $A$ und $B$ disjunkt, so sind sie abhängig!}\\
+denn: $\PP(A\cap B) = 0 \not = \PP(A) \cdot \PP(B)$
+\item Sind $A$ und $B$ stochastisch unabhängig, so sind:
+\begin{itemize}
+\item $A$ und $\bar B$ stochastisch unabhängig
+\item $\bar A$ und $B$ stochastisch unabhängig
+\item $\bar A$ und $\bar B$ stochastisch unabhängig
+\end{itemize}
+Analog für mehr als zwei Ereignisse.
+\item $\emptyset$ und $\Omega$ sind zu jedem $A \in \cA$ unabhängig.
+\end{enumerate}
+
+\cparagraph{Beispiel} (Münze und Würfel)\\
+Werfen faire Münze (Werte $0/1$) und fairen Würfel (Werte $1,\dots,6$). Untersuche auf Unabhängigkeit:
+\begin{enumerate}
+\item $A=\{\text{Wer der Münze ist }1\}$, $B=\{\text{Würfel }>4\}$
+\item $A=\{\text{Wer der Münze ist }1\}$, $C=\{\text{(Würfel + Münze)} >4 \}$
+\item $A=\{\text{Wer der Münze ist }1\}$, $D=\{\text{(Würfel + Münze)}\in\{2,3,4\}\}$
+\end{enumerate}
+Lösung:\\
+$\Omega = \{ (0,1), (0,2), (0,3),\dots , (1,6)\}$\\
+\begin{enumerate}
+\item $\PP(A) =\frac{|A|}{|\Omega|}=\frac{6}{12}=\frac{1}{2}$,\quad $\PP(B) = \frac{|B|}{|\Omega|}=\frac{4}{12}=\frac{1}{3}$\\
+$\PP(A \cap B)=\frac{|A\cap B|}{|\Omega|}=\frac{2}{12}=\frac{1}{6}$\\
+$\Rightarrow \PP(A\cap B) = \frac{1}{6}=\frac{1}{2}\cdot \frac{1}{3}= \PP(A)\cdot \PP(B) \checkmark$\\
+$\Rightarrow A$ und $B$ unabhängig.
+\item $\PP(C) = \frac{5}{12}$\\
+$\PP(A \cap C) = \frac{3}{12} \not = \frac{1}{2}\cdot \frac{5}{12} = \frac{5}{24} = \PP(A) \cdot \PP(C)$\\
+$\Rightarrow A$ und $B$ nicht unabhängig, also abhängig.
+\item $\PP(D)=\frac{1}{2}$\\
+$\PP(A \cap D ) = \frac{1}{4} = \frac{1}{2} \cdot \frac{1}{2} = \PP(A) \cdot \PP(D) \checkmark$\\
+$\Rightarrow A$ und $B$ unabhängig.
+\end{enumerate}
+
+\cparagraph{Beispiel} Eine Maschine besteht aus $2$ Bauteilen. Bauteil 1 ist mit WK $0,05$ defekt, Bauteil 2 mit WK $0,02$.\\
+Wir nehmen, dass sie unabhängig voneinander ausfallen.\\
+Frage: Wie groß ist die WK, dass mindestens 1 defekt ist?\\
+Lösung: $\Omega = \{(0,0), (0,1), (1,0), (1,1)\}$\\
+$A=\{\text{Bauteil 1 defekt}\}=\{(0,1),(0,0)\}$\\
+$B=\{\text{Bauteil 2 defekt}\}=\{(0,0), (1,0)\}$\\
+$\PP(A) = 0,05$ \quad $\PP(B) = 0,02$\\
+Gesucht: $\PP(A \cup B)$\\
+1. Variante: $\PP(A \cup B) = 1 - \PP(\overline{A \cup B}) = 1 - \PP(\bar A \cap \bar B) = 1 - \PP(\bar A) \cdot \PP(\bar B) = 1-0,95\cdot 0,98 = 0,069$\\
+2. Variante: $\PP(A \cup B) = \PP(A) + \PP(B) - \PP(A \cap B) = 0,05 + 0,02 - 0,05\cdot 0,02 = 0,069$
+
+\cparagraph{Satz} Seien $A_1, \dots, A_n$ unabhängige Ereignisse. Dann gilt:
+$$\PP(A_1 \cup A_2 \cup \dots \cup A_n) = 1 - \PP(\bar A_1) \cdot \dots \cdot \PP(\bar A_n)$$
+Beweis: 
+\begin{align*}
+\PP(A_1 \cup \dots \cup A_n) &= 1 - \PP(\overline{A_1 \cup \dots \cup A_n})\\
+&= 1 - \PP(\bar A_1 \cup \dots \cup \bar A_n)\\
+&= 1- \PP(\bar A_1) \cdot \dots \cdot \PP(\bar A_2)
+\end{align*}
+
+\cparagraph{Beispiel} Drei Jäger schießen gleichzeitig und unabhängig voneinander auf Bambi.\\
+Jäger 1 trifft mit WK $0,85$, Jäger 2 mit $0,75$ und Jäger 3 mit $0,2$.\\
+Mit welcher WK wird Bambi getroffen?\\
+Lösung: $A=\{\text{Jäger }i\text{ trifft}\;|\; i =1,2,3\}$\\
+Gesucht: WK von $A_1 \cup A_2 \cup A_3$ 
+\begin{align*}
+\PP(A_1 \cup A_2 \cup A_3) &= 1 - \PP(\bar A_1) \cdot \PP(\bar A_2) \cdot \PP(\bar A_3)\\
+&= 1 - 0,15\cdot 0,25 \cdot 0,8\\
+&= 0,97
+\end{align*}
+
+\cparagraph{Beispiel} Parallel- und Reihenschaltung\\
+Ein System besteht aus mehreren Elementen.
+\begin{itemize}
+\item Die Zuverlässigkeit (WK in einem bestimmten Zeitintervall nicht auszufallen) sei für jedes Element bekannt.
+\item Die Elemente heißen \emph{in Reihe geschaltet}, wenn das System genau dann funktioniert, wenn alle Elemente funktionieren.
+\item Die Elemente heißen \emph{parallel geschaltet}, wenn das System genau dann funktioniert, wenn wenigstens eins der Elemente funktioniert.
+\end{itemize}
+$F:=\{\text{System funktioniert in betrachtetem Zeitintervall}\}$\\
+$F_i= \{\text{Element } i\text{ funktioniert in betrachtetem Zeitintervall}\}$\\
+Wir betrachten eine Sicherungsanlage mit 2 Teilsystemen, die beide funktionieren müssen. Zur Erhöhung der Zuverlässigkeit sind bei Teilsystem 1 ein Element und bei Teilsystem 2 zwei Elemente zu den Hauptelementen als Reserve parallel geschaltet. Die Zuverlässigkeit der Elemente in TS 1 beträgt je $0,9$ und die der Elemente in TS 2 je $0,8$. Die Elemente arbeiten unabhängig voneinander.\\
+Teilsystem 1 (mit parallelen Elementen $E_1$[Hauptelement] und $E_3$) liegt in Reihe zu Teilsystem 2 (mit parallelen Elementen $E_2$[Hauptelement], $E_4$ und $E_5$).\\
+$F_k:= \{ \text{Element }E_k\text{ funktioniert in betrachtetem Zeitintervall}\}$
+
+Lösung:\\
+$F=\underbrace{(F_1 \cup F_3)}_{=:F_{13}} \cap \underbrace{(F_2\cup F_4 \cup F_5)}_{=:F_{245}}$\\
+$\PP(F) = \PP(F_{13} \cap F_{245} ) = \PP(F_{13} \cdot \PP(F_{245})$\\
+$\PP(F_{13})=1-\PP(\bar F_1) \cdot \PP(\bar F_3) = 1- 0,1^2 = 0,99$\\
+$\PP(F_{245})=1-\PP(\bar F_2) \cdot \PP(\bar F_4) \cdot \PP(\bar F_5) = 1-0,2^3=0,992$\\
+$\Rightarrow \PP(F) = 0,99\cdot 0,992 = 0,98208$
+
+
+
+
+
+
+
 %\newpage
 %\printbibliography
 
