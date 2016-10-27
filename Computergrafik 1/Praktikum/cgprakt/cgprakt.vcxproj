@@ -153,12 +153,15 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="prakt2.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="prakt3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OpenGL-01\Dreiecke.fs" />
     <None Include="OpenGL-01\Dreiecke.vs" />
+    <None Include="OpenGL-03\Dreiecke_prakt3.fs" />
+    <None Include="OpenGL-03\Dreiecke_prakt3.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

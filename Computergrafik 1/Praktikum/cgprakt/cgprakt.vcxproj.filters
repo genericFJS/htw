@@ -27,12 +27,21 @@
     <ClCompile Include="prakt2.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="prakt3.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="OpenGL-01\Dreiecke.fs">
       <Filter>Source Files</Filter>
     </None>
     <None Include="OpenGL-01\Dreiecke.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="OpenGL-03\Dreiecke_prakt3.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="OpenGL-03\Dreiecke_prakt3.vs">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
