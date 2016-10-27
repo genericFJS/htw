@@ -1,0 +1,4 @@
+Hinweise S311:
+Anmelden ubuntu: Strg+Shift+F1 mit s-Nummer anmelden, dann Strg+Shift+F7 nochmal mit s-Nummer anmelden
+Proxy für ausgehenden Verkehr (Firefox): www-cache.htw-dresden.de:3128 (Häckchen: alle Protokolle)
+Eclipse-Installationsort: /opt/eclipse
