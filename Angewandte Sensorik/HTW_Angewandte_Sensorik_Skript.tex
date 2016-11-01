@@ -461,14 +461,138 @@ $$\boxed{y=f(x)}$$
 \item linear
 \end{itemize}
 sein (bspw. $f(x)=x$).\\
-Reale Transferfunktionen weisen in der Regel nicht alle dieser Eigenschaften auf.\\
+Reale Transferfunktionen weisen in der Regel nicht alle dieser Eigenschaften auf (ggf. quantisierung nötig).\\
 Weiterhin ist der Messbereich (FSI: full scale input) und der Ausgabebereich (FSO) in der Regel begrenzt.
 \subparagraph{Dezibel} $G[dB]=20 \log \frac{s}{s_0}$ (Einheit von FSI und FSO)\\
 für $s_0$ wird dann die Normgröße für Kraft, Strom oder Spannung eingesetzt (Spannung: $1 \mu V$, Leistung: $1mV$, Schallpegel: $1\cdot 10^{-12}W/m^2$)
 
+\subsection{Auflösung}
+$\Delta x_{\text{min}} \Rightarrow$ fassbares $\Delta y$\\
+Sprich: „der kleinste Schritt der Eingangsgröße liefert auch noch eine fassbare Ausgangsgröße“
 
+\subsection{Sensitivität} (Empfindlichkeit)
+$$S(x)=\frac{\diffd{y}(x)}{\diffd{x}}$$
+Sensitivität abhängig von Steigung der Funktion:
+\begin{itemize}
+\item hohe Steigung: hohe Sensitivität
+\item mittlere Steigung: mittlere Sensitivität
+\item niedrige Steigung: niedrige Sensitivität
+\end{itemize}
+\subsection{Linearität} (Nichtlinearität)\\
+Betrachtet wird die maximale Abweichung zwischen einer linearen Näherung einer nicht-linearen Funktion ($\Delta y_{\text{max}}$).\\
+$\epsilon_{\text{max}}=\frac{\Delta y_{\text{max}}}{FSO}\cdot 100 \%$\\
+ABB AS9
 
+\subsection{Ansprechschwelle}
+$x_{\text{min}}$\\
+ABB AS6
+\subsection{Totband}
+ABB AS7
+\subsection{Sättigung}
+ABB AS8
 
+\subsection{Wiederholgenauigkeit}
+\subsubsection{Reproduzierbarkeit}
+Maximales Intervall des Stimulus, bei welchem sich unter gleichen Laborbedingungen das Ausgangssignal nicht gleich ist.\\
+ABB AS10\\
+$\delta_R = \frac{\Delta x_{\text{max}}}{FSI}$
+
+\subsubsection{Hysterese}
+(Wenn man die Messung zwei mal von unterschiedlichen Richtungen ausführt $\to$ Abweichung in $y$-Wert abhängig von der Richtung)\\
+ABB AS11
+
+\subsection{Selektivität}
+(Querempfindlichkeit)\\
+Empfindlichkeit des Messwertes auf andere Größen
+\begin{itemize}
+\item Empfindlichkeitsänderung\\
+ABB AS12
+\item Nullpunktdrift\\
+ABB AS13
+\end{itemize}
+Behebung: Kompensationssensor einsetzen.
+
+\subsection{Rauschen}
+ABB AS14
+
+\subsection{Weitere}
+\begin{itemize}
+\item Langzeitstabilität
+\item Lebensdauer
+\item Exemplarstreuung
+\item …
+\end{itemize}
+
+\section{Dynamische Eigenschaften von Sensoren}
+\begin{itemize}
+\item zeitlich veränderliche Messgrößen
+\item diese seien adäquat (entsprechend der statischen Transferfunktion) und verzögerungsfrei weiterzugeben
+\end{itemize}
+Beispiel:\\
+Energiespeicher
+\begin{itemize}
+\item Massen
+\item elektrische Kapazitäten
+\item Induktivitäten
+\item Wärmekapazitäten
+\item dissipative Energieverluste
+\end{itemize}
+
+\paragraph{Ansprechverhalten} Antwort eines Sensors auf ein zeitlich veränderliches Eingangssignal
+
+\paragraph{Ordnung des Sensors} Anzahl vorhandener Energiespeicher (Ordnung der Differentialgleichung)
+\begin{itemize}
+\item 0. Ordnung: keine Zeitabhängigkeit $I(t) = U_0 \cdot \sigma (t)$
+\item 1., 2.,… Ordnung: zeit- und frequenzabhängiges Ansprechverhalten
+\end{itemize}
+
+\subsection{Sprungantwort und Zeitkenngrößen}
+Sprunganregung: $x(t) =\begin{cases}
+0 &(t>0)\\
+x_0 & (t \geq 0)
+\end{cases}$\\
+ABB AS15
+\begin{itemize}
+\item 0. Ordnung: $y(t\geq 0) = S(x_0)$
+\item 1. Ordnung: (bspw. Kapazität, die auf-/entladen wird) $U_C(t) = U_0 \cdot \left\lbrace 1- \exp \left(-\frac{t}{\tau}\right)\right\rbrace$\\
+$\tau = R \cdot C$ (Zeitkonstante)\\
+ABB AS16\\
+Halbwertszeit: $t_{0,5}$\\
+Anstiegszeit (rise time): $t_r = t_{0,9}$ (also $t_{90\%}$, wann $y_{st}$ zu $90\%$ erreicht ist)\\
+Einstellzeit: $t_E = 3 \tau$
+\end{itemize}
+\subsubsection{Dämpfung}
+\begin{itemize}
+\item $\delta$ Dämpfungskonstante
+\item $\omega_0$ Eigenkreisfrequenz
+\end{itemize}
+Dämpfungsgrade:
+\begin{itemize}
+\item $\delta = 0$: ungedämpfte Schwingung%
+\item $\frac{\delta}{\omega_0}<1$: Schwingfall
+\item $\frac{\delta}{\omega_0}\geq 1$: Kriechfall (stationärer Wert wird ohne Überschwingung erreicht)
+\end{itemize}
+ABB AS18
+\begin{itemize}
+\item Totzeit $t_T$
+\item Verzögerungszeit $t_V$
+\item Ausgleichszeit $t_A = \tau$
+\item Einstellzeit $t_E$ 
+\end{itemize}
+Das Toleranzband ist vorher zu bestimmen!
+\begin{itemize}
+\item $\delta_{opt}=0,7 \dots 0,8 \cdot \omega_0$
+\item $\frac{\Delta y}{y_{st}}=\pm 4,5 \%$
+\end{itemize}
+\subsection{Frequenzkenngrößen}
+Antwort auf ein sinusförmiges Eingangssignal: $x(t) = x_0 \cos (\omega t)$ \quad ($\omega$: Erregerfrequenz)
+\begin{itemize}
+\item stationärer (eingeschwungener) Zustand: $\lim_{t\to \infty} y(t) = \hat{y}_{st}(\omega) \cdot \cos (\omega t + \varphi)$\\
+Nicht alle spektralen Komponenten (Frequenzen) können amplituden- und phasentreu übertragen werden.\\
+\emph{stationärer Amplitudengang} (magnitude ratio): $M=\frac{\hat{y}_{st}(\omega)}{\hat{y}_{st} (\omega \to 0)}$\\
+\emph{stationärer Phasengang}: $\varphi$\\
+Sensoren 0. Ordnung: amplitudentreu bei $M=1$, phasentreu bei $\varphi = 0$
+\end{itemize}
 
 %\newpage
 %\printbibliography
