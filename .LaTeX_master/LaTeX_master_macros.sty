@@ -60,6 +60,13 @@
 \includegraphics[page=#3, width=#1]{\customSlidePath #3.pdf}
 \end{center}}
 
+% \emph{} anders definieren
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \scshape \fi}
+\makeatother
+
 
 %% EINFACHE BEFEHLE
 
