@@ -250,8 +250,8 @@ Also:
 \end{itemize}
 $\Rightarrow$ Mittel um Komplexität zu beherrschen
 
-\section{Qualität von Software-Systemen}
-\subsection{Was kennzeichnet qualitativ hochwertige Software-Systeme?}
+\chapter{Qualität von Software-Systemen}
+\section{Was kennzeichnet qualitativ hochwertige Software-Systeme?}
 \paragraph{Gedanken:}
 \begin{itemize}
 \item stabil laufen
@@ -289,20 +289,20 @@ Qualität hat mehrere Sichten:
 \paragraph{Wann weiß man, ob das SW-System seine Funktion gut erfüllt?}
 Übereinstimmung von \emph{geplanter} (spezifiziert z.B. im Pflichtenheft) und realisierter Funktionalität.
 
-\subsection{Qualitätsmerkmale}
+\section{Qualitätsmerkmale}
 
-\subsubsection{Benutzungsschnittstelle} (DIN EN ISO 9241-110)\\
+\subsection{Benutzungsschnittstelle} (DIN EN ISO 9241-110)\\
 „Alle Bestandteile eines interaktiven Systems (Software oder Hardware), 
 die Informationen und Steuerelemente zur Verfügung stellen,
 die für den Benutzer notwendig sind,
 um eine bestimmte Arbeitsaufgabe mit dem interaktiven System zu erledigen.“
 
-\subsubsection{Usability} (DIN EN ISO 9241-110)\\
+\subsection{Usability} (DIN EN ISO 9241-110)\\
 „Ausmaß, in dem ein System, ein Produkt oder eine Dienstleistung
 durch bestimmte Benutzer in einem bestimmten Nutzungskontext genutzt werden kann,
 um festgelegte Ziele effektiv, effizient und zufriedenstellend zu erreichen.“
 
-\subsubsection{User Centered Design} (DIN EN ISO 9241-210)
+\subsection{User Centered Design} (DIN EN ISO 9241-210)
 \slidesScale{3}{6}
 \begin{itemize}
 \item Erreichbar gut über Prototypen, schon vor Beta-Tests
@@ -310,14 +310,14 @@ um festgelegte Ziele effektiv, effizient und zufriedenstellend zu erreichen.“
 \paragraph{Benutzbarkeit} \parskp
 Achtung: Subjektiv (es gibt auch objektive Regeln); gestützt durch Oberflächenprototyp (Check-Dummy)
 
-\subsubsection{Effizienz} 
+\subsection{Effizienz} 
 \begin{itemize}
 \item Speicherausnutzung
 \item Transport
 \item Antwortzeit (durch bessere Algorithmen (bspw. Sortierung))
 \end{itemize}
 
-\subsubsection{Zuverlässigkeit}
+\subsection{Zuverlässigkeit}
 \begin{itemize}
 \item Fehlerfrei $\to$ Vermeidung von Ausfällen
 \end{itemize}
@@ -350,7 +350,7 @@ Achtung: Subjektiv (es gibt auch objektive Regeln); gestützt durch Oberflächen
 \draw [orange] (3,5) -- (5,4);
 \end{tikzpicture}
 
-\subsubsection{Sicherheit}
+\subsection{Sicherheit}
 \begin{itemize}
 \item Vermeidung von gefährlichen Zuständen
 \end{itemize}
@@ -358,30 +358,30 @@ Achtung: Subjektiv (es gibt auch objektive Regeln); gestützt durch Oberflächen
 Mögliche Lösung/Herangehensweise für Zuverlässigkeit und Sicherheit:\\
 Redundanz!
 
-\subsubsection{Erweiterbarkeit}
+\subsection{Erweiterbarkeit}
 \begin{itemize}
 \item neue Funktionalität kommt hinzu $\to$ welcher Aufwand resultiert daraus?
 \end{itemize}
 
-\subsubsection{Anwendbarkeit}
+\subsection{Anwendbarkeit}
 \begin{itemize}
 \item gleiche Funktionalität mit anderen Eigenschaften z.B. kürzere Antwortzeit
 \end{itemize}
 
-\subsubsection{Kompatibilität}
+\subsection{Kompatibilität}
 Kompatibel $\to$ anschließbar
 \begin{itemize}
 \item Das SW-System A muss zusammen mit dem SW-System B arbeiten.
 \end{itemize}
 
-\subsubsection{Portabilität}
+\subsection{Portabilität}
 Portabel $\to$ „fortschleppbar“
 \begin{itemize}
 \item Das SW-System A läuft in der Umgebung von 1 bzw. 2 (Plattform) [Linux bzw. Windows]
 \end{itemize}
 
 
-\subsection{Wie kann hohe Software-Qualität erreicht werden?}
+\section{Wie kann hohe Software-Qualität erreicht werden?}
 \slidesScale{3}{7}
 Analyse: man hat schon etwas und schaut nach (Test: analytische Fehlersuche).\\
 Konstruktion: es wird erst gebaut (im Vornherein gut Programmieren).
@@ -399,11 +399,94 @@ Durch gezielte Qualitätssicherung im
 \item im analytischen Bereich (Test)
 \end{itemize}
 
+\chapter{Anforderungen}
 
+\section{Die Rolle der Anforderungen des Kunden im Rahmen der Softwareentwicklung}
+\begin{itemize}
+\item Anforderungen sind Ausgangspunkt der Entwicklung, daraus resultiert ihre große Bedeutung (sowohl inhaltlich als auch zeitlich).
+\item Die Anforderungen verbinden Kunden und Entwickler.
+\item Die Anforderungen sind Maß der Dinge bei der Übergabe des Produktes.
+\end{itemize}
 
+\section{Was sind Anforderungen?}
+\paragraph{Beispiel für Anforderungen}
+Das SW-System „xy“ soll…
+\begin{itemize}
+\item auf verschiedenen Plattformen laufen (Achtung: was sind die konkreten Platformen?).
+\item im Web-Browser laufen.
+\item in verschiedenen Sprachen den Benutzer führen.
+\item immer verfügbar sein (7/24).
+\item Die Zeit zur Fehlerbehebung soll minimal sein.
+\item eine grafische Benutzeroberfläche haben.
+\end{itemize}
+(sprich: soll etwas \emph{haben})\bigskip\\
+MS-Word soll…
+\begin{itemize}
+\item es erlauben, die Zeichen zu formatieren (fett, kursiv, …).
+\item es erlauben Text zu drucken.
+\end{itemize}
+(sprich: soll etwas \emph{tun})
+\slidesScale{4}{4}
+\subsection{Funktionelle und nicht-funktionelle Anforderungen}
+\slidesScale{4}{5}
+\slidesScale{4}{6}
+\begin{itemize}
+\item funktionale Anforderungen:\\
+Funktionserfüllung
+\item nicht-funktionale Anforderungen
+\begin{itemize}
+\item Qualitätseigenschaften:\\
+Benutzerfreundlichkeit\\
+Effizienz\\
+Zuverlässigkeit/Sicherheit\\
+Portabilität\\
+Kompatibilität\\
+Erweiterbarkeit\\
+Änderbarkeit
+\item einschränkende Rahmenbedingung
+\begin{itemize}
+\item organisatorische Rahmenbedingungen
+\item technisch/technologische Rahmenbedingungen
+\item rechtliche Rahmenbedingungen
+\end{itemize}
+\end{itemize}
+\end{itemize}
+Also vielmehr:
+\slidesScale{4}{7}
+Unterschied technologisch vs technisch (Bsp Datenbank)
+\begin{itemize}
+\item technologisch:\\
+relationale, hierarchisch, …
+\item technisch:\\
+MySQL, Oracle, …
+\end{itemize}
+\subsubsection{Unterscheidung der Anfordernugstypen am Beispiel Bibliothek}
+\slidesScale{4}{9}
+funktionale Anforderungen brauchen in jedem Fall ein \emph{Verb}.\\
+Auslöser-Reaktions-Tabelle (ART) für (unabhängige) funktionale Anforderungen (Bsp. Bibliothek).
+\begin{tabular}{L{.2} | L{.2} | L{.15} | L{.15} | L{.2}}
+Ereignis & funktionale Anforderungen & Eingabe-Daten & Ausgabe-Daten &Bemerkung (Q,R)\\
+\hline 
+Person will sich in der Bibo anmelden & Benutzer anmelden & Anmeldewunsch & Benutzerausweis, alternativ: Absage & darf noch nicht angemeldet sein, Alter $\geq$ 18, Wohnort $\to$ Sachsen, …\\
+\hline 
+Person will im Katalog suchen & Buch suchen & Suchanfrage & Suchantwort & Antwortzeit $\leq $ 3 Sek, …\\
+\hline 
+… &&&&
+\end{tabular}
+
+\subsection{Definition Anforderung}\parskp
+Eine Anforderung ist eine Beschaffenheit oder Fähigkeit, die von einem Benutzer zur Lösung eines Problems oder zur Erreichung eines Zieles benötigt wird.\\
+Es gibt funktionale und nicht-funktionale Anforderungen.\\
+Diese nicht-funktionalen Anforderungen sind genau genommen
+\begin{itemize}
+\item Qualitätsanforderungen oder
+\item einschränkende Rahmenbedingungen\\
+(technisch/technologische, organisatorische, rechtliche Rahmenbedingungen).
+\end{itemize}
+Problematische Synonyme sind: Leistungsmerkmale, feature
 
 
 %\newpage
 %\printbibliography
-
+ 
 \end{document}
