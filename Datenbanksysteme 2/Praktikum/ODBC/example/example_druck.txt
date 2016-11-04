@@ -1,0 +1,170 @@
+#include <windows.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "helper.h"
+
+#define VBUFSIZE 128
+#define ORTSIZE 20
+#define KUNRSIZE 10
+#define NAMESIZE 20
+
+int getOrte(SQLHENV *henv, SQLHDBC *hdbc, SQLHSTMT *hstmt, char *ort);
+int getKunden(SQLHENV *henv, SQLHDBC *hdbc, SQLHSTMT *hstmt, char *ort);
+
+int main(int argc, char *argv[]) {
+	// sql vars
+	SQLHENV henv = SQL_NULL_HENV; // environment
+	SQLHDBC hdbc = SQL_NULL_HDBC; // connection
+	SQLHSTMT hstmt = SQL_NULL_HSTMT; // statement
+
+	// input vars
+	char ort[ORTSIZE + 1];
+
+	// sql connect
+	sqlConnect(&henv, &hdbc, &hstmt);
+
+	// program logic
+	while (getOrte(&henv, &hdbc, &hstmt, ort)) {
+		getKunden(&henv, &hdbc, &hstmt, ort);
+	}
+
+	puts("");
+
+	// sql disconnect
+	sqlDisconnect(&henv, &hdbc, &hstmt);
+
+	return 0;
+}
+
+int getOrte(SQLHENV *henv, SQLHDBC *hdbc, SQLHSTMT *hstmt, char *ort) {
+	// sql vars
+	SQLCHAR kOrt[ORTSIZE + 1];
+	SQLLEN bindLen;
+	SQLRETURN rc;
+
+	// input buffer
+	char vBuf[VBUFSIZE];
+
+	// SQL statement
+	char *sqlStatement = "SELECT DISTINCT(Ort) FROM Kunde";
+	if (DEBUGINFO) printf("sqlStatement: \"%s\"\n", sqlStatement);
+
+	// perform the SQL statement
+	rc = SQLExecDirect(*hstmt, (SQLCHAR *)sqlStatement, SQL_NTS);
+	if (!checkReturnCode("SQLExecDirect [hstmt, sqlStatement]", rc, *hstmt, SQL_HANDLE_STMT)) {
+		freeSQLHandles(henv, hdbc, hstmt); exit(0);
+	}
+
+	// bind columns
+	rc = SQLBindCol(*hstmt, 1, SQL_C_CHAR, kOrt, ORTSIZE + 1, &bindLen);
+	checkReturnCode("SQLBindCol [hstmt, 1, kOrt]", rc, *hstmt, SQL_HANDLE_STMT);
+
+	puts("");
+
+	// fetch and print each row of data
+	int i = 0;
+	while ((rc = SQLFetch(*hstmt)) != SQL_NO_DATA) {
+		// check error and warning
+		if (rc == SQL_ERROR) {
+			printf("SQLFetch [hstmt]: SQL_ERROR\n");
+			break;
+		}
+		if (rc == SQL_SUCCESS_WITH_INFO) {
+			printf("SQLFetch [hstmt]: SQL_SUCCESS_WITH_INFO\n");
+		}
+
+		// process data
+		printf("  %-*s\n", ORTSIZE, kOrt);
+
+		i++;
+	}
+
+	// cancel statement handle
+	rc = SQLCancel(*hstmt);
+	if (!checkReturnCode("SQLCancel [hstmt]", rc, *hstmt, SQL_HANDLE_STMT)) {
+		freeSQLHandles(henv, hdbc, hstmt); exit(0);
+	}
+
+	if (i == 0) {
+		printf("  Keine Orte vorhanden.\n");
+	}
+
+	// get input
+	printf("\n Ort ? ");
+	fgets(vBuf, VBUFSIZE, stdin);
+	vBuf[strlen(vBuf) - 1] = 0;
+	//strncpy(ort, vBuf, ORTSIZE); // linux
+	strncpy_s(ort, ORTSIZE, vBuf, VBUFSIZE); // windows
+
+	return strlen(ort);
+}
+
+int getKunden(SQLHENV *henv, SQLHDBC *hdbc, SQLHSTMT *hstmt, char *ort) {
+	// sql vars
+	SQLINTEGER kKunr;
+	SQLCHAR kName[NAMESIZE + 1];
+	SQLLEN bindLen;
+	SQLRETURN rc = 0;
+
+	// input buffer
+	char vBuf[VBUFSIZE];
+
+	// SQL statement
+	char *part1 = "SELECT Kunr, Name FROM Kunde WHERE Ort = '";
+	char *part2 = "'";
+	int size = strlen(part1) + strlen(ort) + strlen(part2) + 1;
+	char *sqlStatement = malloc(sizeof(char)* size);
+	//sprintf(sqlStatement, "%s%s%s", part1, ort, part2); // linux
+	sprintf_s(sqlStatement, sizeof(char) * size, "%s%s%s", part1, ort, part2); // windows
+	if (DEBUGINFO) printf("sqlStatement: \"%s\"\n", sqlStatement);
+
+	// perform the SQL statement
+	rc = SQLExecDirect(*hstmt, (SQLCHAR *)sqlStatement, SQL_NTS);
+	if (!checkReturnCode("SQLExecDirect [hstmt, sqlStatement]", rc, *hstmt, SQL_HANDLE_STMT)) {
+		freeSQLHandles(henv, hdbc, hstmt); exit(0);
+	}
+
+	// bind columns
+	rc = SQLBindCol(*hstmt, 1, SQL_C_LONG, &kKunr, 0, &bindLen);
+	checkReturnCode("SQLBindCol [hstmt, 1, kKunr]", rc, *hstmt, SQL_HANDLE_STMT);
+	rc = SQLBindCol(*hstmt, 2, SQL_C_CHAR, kName, NAMESIZE + 1, &bindLen);
+	checkReturnCode("SQLBindCol [hstmt, 2, kName]", rc, *hstmt, SQL_HANDLE_STMT);
+
+	puts("");
+
+	// fetch and print each row of data
+	int i = 0;
+	while ((rc = SQLFetch(*hstmt)) != SQL_NO_DATA) {
+		// check error and warning
+		if (rc == SQL_ERROR) {
+			printf("SQLFetch [hstmt]: SQL_ERROR\n");
+			break;
+		}
+		if (rc == SQL_SUCCESS_WITH_INFO) {
+			printf("SQLFetch [hstmt]: SQL_SUCCESS_WITH_INFO\n");
+		}
+
+		// process data
+		printf("  %ld %-*s\n", kKunr, NAMESIZE, kName);
+
+		i++;
+	}
+
+	// cancel statement handle
+	rc = SQLCancel(*hstmt);
+	if (!checkReturnCode("SQLCancel [hstmt]", rc, *hstmt, SQL_HANDLE_STMT)) {
+		freeSQLHandles(henv, hdbc, hstmt); exit(0);
+	}
+
+	if (i == 0) {
+		printf("  Ort '%s' ist nicht vorhanden.\n", ort);
+		return 0;
+	}
+
+	// wait
+	printf("\n ? ");
+	fgets(vBuf, sizeof(vBuf), stdin);
+
+	return 0;
+}

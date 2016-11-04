@@ -10,7 +10,7 @@
 \setCustomTitle{Rechnerarchitektur}
 \setCustomSubtitle{Vorlesungsskript}
 \setCustomAuthor{Falk-Jonatan Strube}
-%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+\setCustomNoteA{oder: „…aber das ist eine andere Geschichte“\vspace*{2em}}
 \setCustomNoteB{Vorlesung von Prof. Dr.-Ing. Schönthier}
 
 %\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
@@ -217,12 +217,82 @@ Zustände laut Algorithmus:
 \slidesScale{03}{5}
 
 \section{Cache}
-\subsection{Motivation und Grundidee}
+\subsection{Einführung}
+\subsubsection{Motivation und Grundidee}
 \slidesScale{03}{6}
 
-\subsection{Umsetzung der Idee}
+\subsubsection{Umsetzung der Idee}
 \slidesScale{03}{7}
 \slidesScale{03}{8}
+
+\subsubsection{Hierarchie, Übertragungsmodi}
+\slidesScale{03}{9}
+
+\subsection{Lokalität}
+\subsubsection{Prinzip}
+\slidesScale{03}{10}
+Beispiel Lokalität: Wenn man bei C Arrays multipliziert, kann je nach Schachtelung der Schleifen die Laufzeit leiden. In C werden Arrays zeilenweise gespeichert, multipliziert man die Arrays allerdings spaltenweise, so muss viel gesprungen werden, da die Speicherblöcke weiter auseinander liegen.
+
+\subsubsection{Zeitliche Lokalität}
+(Temporal Locality)
+\slidesScale{03}{11}
+
+\subsubsection{Räumliche Lokalität}
+(Spatial Locality)
+\slidesScale{03}{12}
+
+\subsubsection{Bedeutung der Lokalität}
+\slidesScale{03}{13}
+
+\subsubsection{Umsetzung des Lokalitätsprinzips}
+\slidesScale{03}{14}
+
+\subsection{Zugriff}
+\subsubsection{Anordnung bezüglich CPU und Hauptspeicher}
+\slidesScale{03}{15}
+\subsubsection{Fehlzugriffe}
+\slidesScale{03}{16}
+weiterhin:
+\slidesScale{03}{17}
+\subsubsection*{Compulsory-Miss}
+\slidesScale{03}{18}
+
+\subsubsection{Lesezugriffe}
+\slidesScale{03}{19}
+
+\subsubsection{Schreibzugriffe}
+\subsubsection*{Rückschreibestrategien}
+\slidesScale{03}{20}
+\subsubsection*{Durchschreibverfahren}
+\slidesScale{03}{21}
+\subsubsection*{Rückschreibeverfahren}
+\slidesScale{03}{22}
+\subsubsection*{Write Hit und Write Miss}
+\slidesScale{03}{23}
+
+\subsection{Kohärenz und Konsistenz}
+\subsubsection{Kohärenz}
+\subsubsection*{Kohärenz Beispiel mit Write-Through-Caches}
+\slidesScale{03}{24}
+\subsubsection*{Kohärenz Beispiel mit Write-Back-Caches}
+\slidesScale{03}{25}
+
+\subsubsection*{Speicherkohärenz}
+\slidesScale{03}{26}
+
+\subsubsection*{Definition Kohärenz}
+\slidesScale{03}{27}
+\slidesScale{03}{28}
+
+\subsubsection{Konsistenz}
+\slidesScale{03}{29}
+
+\subsubsection*{Speicher-Konsistenz}
+\slidesScale{03}{30}
+
+\subsubsection{Kohärenz-Protokolle}
+\slidesScale{03}{31}
+
 
 \chapter{Sekundärspeicher}
 
