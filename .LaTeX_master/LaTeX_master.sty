@@ -86,6 +86,8 @@
 % Style-Aufhübschung
 \usepackage{soul, color}	% Kapitälchen, Unterstrichen, Durchgestrichen usw. im Text
 %\usepackage{titleref}
+\usepackage[breakwords, fit]{truncate}	% Abschneiden von Sätzen
+\renewcommand{\TruncateMarker}{\,…}
 
 % Mathe usw.
 \usepackage{amssymb}
@@ -283,7 +285,8 @@ urlcolor=green,%
 		}{}
 		%\renewcommand*{\titlepagestyle}{scrheadings}
 		\ihead{\includegraphics[height=1.7em]{\customLogoLocation}}
-		%\ohead{\truncate{5cm}{\customTitle}}
+		%\ohead{\truncate{4cm}{\customTitle}}
+		\chead{\truncate{.5\textwidth}{\headmark}}
 		\ohead{\customTitle}
 		\cfoot{\pagemark}
 		\ofoot{\customSignature}

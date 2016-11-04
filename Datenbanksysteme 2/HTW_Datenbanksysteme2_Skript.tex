@@ -399,6 +399,128 @@ z.B. für Insert/Update/Delete (sodass dieser Trigger immer dann ausgeführt wir
 
 
 \section{Sicherung der operationalen Integrität}
+
+\subsection{Spalten- und Tabellen-bezogene Integrität}
+\slidesScale{2}{12}
+
+Integritätsbedingungen (=constraints)
+\begin{itemize}
+\item Spalten-bezogen (column-constraint)
+\item Tabellen-bezogen (table-constraint)
+\end{itemize}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE Kunde(
+	Kunr INT,
+	Name CHAR(10) NOT NULL,
+	...,
+	CONSTRAINT PK_Kunde PRIMARY KEY (Kunr) -- wobei "CONSTRAINT PK_Kunde" optional ist
+	CONSTRAINT DF_Kunde_Ort DEFAULT 'Dresden' FOR Ort -- Default
+	CONSTRAINT CH_Kunde_GebDat CHECK (GebDat < GETDATE()) -- Check
+)
+
+CREATE TABLE Artikel ( ... )
+
+CREATE TABLE Kauf (
+	Kunr INT,
+	Artnr SMALLINT,
+	Menge INT NOT NULL,
+	vPreis DECIMAL(8,2) NOT NULL,
+	CONSTRAINT PK_Kauf PRIMARY KEY (Kunr, Artnr), -- table constraint
+	CONSTRAINT FK_Kauf_Kunde FOREIGN KEY (Kunr) REFERENCES Kunde(Kunr),
+	CONSTRAINT FK_Kauf_Artikel FOREIGN KEY (Artnr) REFERENCES Artikel (Artnr)
+)
+\end{lstlisting}
+\subsection{DEFAULTS und CHECK-Einschränkungen}
+\slidesScale{2}{13}
+Bsp.: siehe oberhalb
+\subsection{DOMAINS / Nutzerdefinierte Datentypen und ASSERTIONS}
+\slidesScale{2}{14}
+Bsp. 1:
+\begin{lstlisting}[language=SQL]
+CREATE DOMAIN Note INT 
+	CHECK (Note BETWEEN 1 AND 5)
+
+CREATE TABLE Zeugnis (
+	...
+	Fach CHAR(20),
+	Zensur Note,	-- definierter Datentyp kann bspw. so wieder verwendet werden.
+	...
+)
+
+CREATE TABLE Pruefung (
+	...
+	Matnr CHAR(5),
+	Modul CHAR(10),
+	Zensur Note,
+	...
+)
+\end{lstlisting}
+Bsp. 2:
+\begin{lstlisting}[language=SQL]
+CREATE DOMAIN PLZ AS CHAR(5)
+	CONSTRAINT DO_PLZ CHECK (CONVERT(INT,PLZ) > 1000 AND CONVERT (INT,PLZ)>10000) 
+	DEFAULT '01069'
+\end{lstlisting}
+Löschen:
+\begin{lstlisting}[language=SQL]
+DROP DOMAIN <domainname> {RESTRICT|CASCADE} -- bspw. DROP DOMAIN PLZ
+	-- RESTRICT: kann nicht weg gelöscht werden, wenn der Constraint noch in einer Tabelle in Verwendung ist
+	-- CASCADE: ersetzt an der Stelle, in der Constraint in Verwendung ist, durch Datentyp um Constraint löschen zu können	
+\end{lstlisting}
+Bsp. Bibliothek-Datenbank:\\
+Tabellen: Vorgemerkte\_Buecher, Ausleihbare\_Buecher\\
+Bedingung: nicht mehr als $10\%$ der ausleihbaren Bücher vormerken.
+\begin{lstlisting}[language=SQL]
+CREATE ASSERTION AS_Vormerkungen
+	CHECK ((SELECT COUNT(*) FROM Vorgemerkte_Buecher) / (SELECT COUNT(*) FROM Ausleihbare_Buecher) < 0.1) DEFERRED
+	-- DEFERRED: am Ende der Transaktion
+\end{lstlisting}
+Anmerkung: Assertion nicht allzu relevant.
+
+\subsection{Referentielles Integritätsproblem}
+\slidesScale{2}{15}
+
+\subsection{Foreign key Klausel}
+\slidesScale{2}{16}
+
+\subsection{Beachtung zyklischer Abhängigkeit}
+\slidesScale{2}{17}
+Bsp.:
+
+\begin{tabular}{l l}
+Abteilung &Mitarbeiter\\
+Abtnr& Abtltr \\
+\hline
+1001 & 13\\
+1002 & 15
+\end{tabular}
+\begin{tabular}{l l}
+Mitnr & Abtnr\\
+12 & 1001\\
+13 & 1002\\
+14 & 1002\\
+15 & 1001\\
+\end{tabular}\\
+Problem: Tabelle 1 referenziert die 2. (Abtltr) und die 1. die 2. (Abtnr)\\
+Vorgehen: Erste Referenz im erstellen der Tabelle normal definieren, die zweite Referenz erst im Nachhinein mit ALTER TABLE einfügen
+
+\subsection{Benutzerdefinierte Funktionen}
+\slidesScale{2}{18}
+\begin{lstlisting}[language=SQL]
+SELECT <Spaltenliste>	-- Skalarwertfunktion
+FROM <Tabellenliste>	-- Tabellenwertfunktion
+WHERE ...
+\end{lstlisting}
+\subsubsection{Skalarwertfunktion}
+\slidesScale{2}{19}
+Anwendung für diese Funktion:
+\begin{lstlisting}[language=SQL]
+SELECT Kunr, Name, Kredit,
+	db.Gebuehrensatz(Kredit) AS Gebuehrensatz,
+	Kredit*dbo.Gebuehrensatz(Kredit)/100 AS Kreditgebuehr
+FROM Kunde
+\end{lstlisting}
+
 \section{Sicherung der physischen Integrität}
 \section{Zugriffsschutz/Datenschutz}
 
