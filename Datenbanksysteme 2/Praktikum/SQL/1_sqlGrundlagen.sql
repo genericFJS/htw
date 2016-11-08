@@ -152,3 +152,14 @@ WHERE p.ProNr NOT IN(
 SELECT m.MitID, m.Nachname, m.Vorname, 1-SUM(z.Plananteil) AS Reserve
 FROM Mitarbeiter m LEFT JOIN Zuordnung z ON m.MitID = z.MitID
 GROUP BY m.MitID, m.Nachname, m.Vorname
+
+
+
+-- für ODBC
+SELECT p.ProNr, p.ProName, z.Istanteil, z.Plananteil
+FROM Zuordnung z JOIN Projekt p ON p.ProNr = z.ProNr
+WHERE z.MitID = 106
+
+UPDATE Mitarbeiter
+SET Telnr = 'niemals'
+WHERE MitID = '200' OR MitID = '201' OR MitID = '210'

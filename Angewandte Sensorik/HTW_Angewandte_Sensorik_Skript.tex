@@ -67,8 +67,8 @@ $\Rightarrow$ Temperatur, Druck, Durchfluss, Position
 \item \imptnt{\emph{Maßeinheit}}: eine durch Vereinbarung festgelegte \imptnt{Vergleichsgröße}
 \item \emph{SI-System:} m, kg, s, A, K, mol, cd
 \item \imptnt{\emph{Messwert}}: der gemessene Wert einer Messgröße 
-%$=ZW \cdot \mathrm{Einheit}$ 
-$=ZW * \mathrm{Einheit}$ 
+$=ZW \cdot \mathrm{Einheit}$ 
+%$=ZW * \mathrm{Einheit}$ 
 (also Messgröße kombiniert mit Maßeinheit)
 \item Messung: (Ablauf)
 \begin{itemize}
@@ -593,7 +593,183 @@ Nicht alle spektralen Komponenten (Frequenzen) können amplituden- und phasentre
 \emph{stationärer Phasengang}: $\varphi$\\
 Sensoren 0. Ordnung: amplitudentreu bei $M=1$, phasentreu bei $\varphi = 0$
 \end{itemize}
+\subsubsection{Frequenzkenngrößen von Sensoren 1. Ordnung}
+ABB AS19\\
+Grenzfrequenz: $\omega_G$\\
+$M=0,707$ \quad $\varphi=45^\circ$\\
+Grenzfrequenz wird so angelegt, dass $\omega/\omega_G=1$
+\begin{itemize}
+\item $\omega/\omega_G \ll 1$:\\
+$M \approx 1$\\
+$\varphi \approx 0$
+\item $\omega / \omega_G \gg 1$:\\
+$M \to 0$\\
+$\varphi \to 90^\circ$
+\end{itemize}
+Bandbreite: Frequenzbereich mit $M$ zwischen $0,707\dots 1,414 (\pm 3dB)$
 
+\subsubsection{Frequenzkenngrößen von Sensoren 2. Ordnung}
+ABB 20\\
+$\zeta = \frac{\delta}{\omega_0}$
+\begin{itemize}
+\item quasistatische Anregung:\\
+$\omega \ll \omega_0$: $M\approx 1$, $\varphi \approx 0$
+\item Resonanz (bis $\delta = 0,71 \omega_0$):\\
+\emph{Resonanzfrequenz}: $\omega = \sqrt{\omega_0^2-2\delta^2}$\\
+$\varphi = -90^\circ$, $M\to M_{max}$\\
+Ab Dämpfung $\zeta = 0,7$ verschwindet die Resonanz beinahe vollständig.
+\item hohe Anregerfrequenz $\omega \gg \omega_0$\\
+$\varphi \to -180^\circ$, $M\to 0$
+\item Bandbreite: Frequenzbereich mit $M$ zwischen $0,707\dots 1,414 (\pm 3dB)$
+\end{itemize}
+
+\chapter{Temperatursensoren}
+Drucksensoren
+Durchflusssensoren
+Binäre Positionssensoren
+Flüssigkeits-Chemosensoren
+…
+\section{Temperaturmessverfahren}
+Alle physikalischen Eigenschaften sind mehr oder weniger stark temperaturabhängig:
+\begin{itemize}
+\item Gasthermometer (73-543 K)
+\item Flüssigkeitstherm. (203-360 K)
+\item Farbstofftherm. (303-1873 K)
+\item Pt100 (53-1123 K)
+\item Keramik NTC, PTC (193-523 K)
+\item Thermoelemente (53-2773 K)
+\item Si-Halbleiter (208-573 K)
+\item IR-Sensoren (223-3473 K)
+\end{itemize}
+Hauptsächlich 2 Methodentypen:
+\begin{itemize}
+\item Kontaktthermometrie (misst im Prinzip allerdings nicht die Temperatur des Mediums, sondern seine eigene $\Rightarrow$ braucht Zeit um die Temperatur bei Kontakt anzugleichen $\to$ Zeitaufwändig)
+\item Pyrometrie (Analysiert Wärmestrahlung)
+\end{itemize}
+Die für uns wichtigsten Kontaktthermometer sind:
+\begin{itemize}
+\item Thermoresistive Sensoren
+\item Thermoelemente
+\item Halbleiterfühler verschiedener Art (Sperrstrom oder Schwellspannung)
+\end{itemize}
+\section{Zeitverhalten eines Widerstandsensors}
+ABB AS21\\
+(Verhalten wie Sensor 1. Ordnung)
+\begin{itemize}
+\item Verzögerungszeit $t_V$
+\item Ausgleichszeit $t_A = \tau$
+\item Halbwertszeit $t_{50}$
+\item Anstiegszeit $t_{90}$
+\item Einstellzeit $t_E=3 \tau$
+\end{itemize}
+Luft: sehr langsame Anpassung der Temperatur am Sensor\\
+Flüssigkeit: schnellere Anpassung (ca. 10 mal schneller als Luft)\\
+Festkörper: etwas langsamere Anpassung
+
+\section{Thermoresistive Sensoren}
+ABB AS 22\\
+Temperaturkoeffizient des Widerstands:
+$$TK_R=\frac{1}{R}\cdot \frac{\diffd{R}}{\diffd{T}}$$
+Unterscheidung der Sensoren:
+\begin{itemize}
+\item Kaltleiter $TK>0$ (PTC: positive temperature coefficient)\\
+bspw. Metallwiderstände ($Ni$ und $Pt$)\\
+Vorteil: in kleinen Temperaturbereichen ist Anstieg linear
+\item Heißleiter $TK<0$ (NTC: negative temperature coefficient)
+\end{itemize}
+
+\subsection{Metallwiderstände}
+Je nach Metall (Platin, Kupfer, Nickel) ist die Auslenkung unterschiedlich. Platin hat eine optimale Auslenkung, ist aber teuer. Etwas schlechter, aber billiger ist Kupfer. Nickel als alternative hat ab der Curie-Temperatur ($352 ^\circ C$) eine sehr schlechte Auslenkung.\\
+Die Metalle sollten folgende Eigenschaften haben:
+\begin{itemize}
+\item korrosionsfest
+\item alterungsfest
+\item hohe $T_S$ (Schmelztemperatur)
+\item hoher $\varrho$ (elektrischer Widerstand)\\
+(da kleine Änderungen einer kleinen Größe gemessen werden soll)
+\item duktil
+\end{itemize}
+\begin{tabular}{l l l}
+Metall & $\varrho $ & TK\\
+&$ 10^{-8}\Omega \mathrm{m}$&$10^{-3}K^{-1}$\\
+\hline
+Platin (Pt) & $10,6$ & $3,92$\\
+Kupfer (Cu) & $1,67$ & $4,33$\\
+Nickel (Ni) & $6,84$ & $6,75$
+\end{tabular}\\
+Man sieht: bei Metallen ist der Temperaturkoeffizient sehr klein.\\
+Sensoren:
+\begin{itemize}
+\item Keramikkörper, in den Platinwendel (Drähte) lose in Löcher eingelegt werden
+\item Keramikdorn, um den Platinwendel (Drähte) umgewickelt werden (abgedeckt mit Glasrohr)
+\item alternative (zu den Draht-Lösungen): im Sensor wird eine Platindünnschicht auf Keramikträger aufgetragen (sehr wenig Platin $\to$ deutlich günstiger; Nachteil: dünne Platinschicht liegt dicht auf Keramik. Bei Temperaturänderungen dehnt sich Keramik und Platin unterschiedlich schnell, das führt zu mechanischen Spannung)
+\end{itemize}
+
+\subsubsection{Pt100}
+gebräuchlichster Temperatursensor
+\begin{itemize}
+\item Spezifikation: DIN EN 60571
+\item Temperaturbereich (Dauerbetrieb): $-7^\circ C$ bis $+550^\circ C$
+\item Temperaturkoeffizient: $Tk=3850 \;\mathrm{ppm/K}$
+\item Langzeitstabilität: Max. $R_0$-Drift: $0,04\%$ nach $1000h$ bei $500^\circ C$
+\item Erschütterungsfestigkeit: Min. $40g$ Beschleunigung bei $10$ bis $2000\;\mathrm{Hz}$
+\item Umgebungsbedingungen: Ungeschützt nur im trockener Umgebung einsetzbar
+\item Isolationswiderstand: $>10 M\Omega$ bei $20^\circ C$, $>1 M\Omega$ bei $500^\circ C$
+\item Selbsterwärumng: $0,2K/mW$ bei $0^\circ C$
+\item Ansprechzeit: \\
+Bewegtes Wasser ($v=0,4m/s$): $t_{0,5}=0,3s; t_{0,9}=0,8s$\\
+Lufstrom ($v=1m/s$): $t_{0,5}=3,0s;t_{0,9}=9,0s$
+\item Messstrom: $100 \Omega$: $0,1$ bis $0,4 mA$
+\end{itemize}
+Vorteile:
+\begin{itemize}[label=$+$]
+\item für Präzisionsmessungen geeignet ($\pm 0,3\%$)
+\item sehr gute Langzeitstabilität
+\item gute Linearität (bis $150^\circ C$)
+\item PT-Sensoren: $-270^\circ C$ bis $+850^\circ C$\\
+mech. sehr stabil, Dünnfilmsensoren
+\item Ni-Sensoren: kostengünstige Dickschichtsensoren
+\end{itemize}
+Nachteile:
+\begin{itemize}[label=$-$]
+\item kostenaufwendig
+\item wegen Gehäuse meist langsam
+\item Spannungsversorgung erforderlich
+\item Ni-Sensoren: $-60^\circ C$ bis $+180^\circ C$
+\item keine punktförmige Messung
+\item Selbsterwärmung
+\end{itemize}
+\subsubsection*{Schalttechniken}
+\begin{itemize}
+\item Zweileitertechnik:
+Auslesen des Spannungsabfalls über Pt100-Sensor direkt\\
+Problem: Widerstände der Drähte von/zum Pt100-Sensor können Signal verfälschen.
+\item Vierleitertechnik:\\
+Auslesen des Spannungsabfalls mit einer parallelen Leitung zusätzlich zur Versorgungsleitung des Pt100. Damit ist die Messung Stromfrei. \\
+Nachteil: 4 Leiter mit Widerständen, die verfälchen können.\\
+Lösung: Dreileitertechnik: nicht komplett parallele Spannungsmessung, sodass ein Widerstand weg fällt.
+\end{itemize}
+\subsection{Kalteiter (PTC)}
+\subsubsection{Thermositoren} (temperaturabhängige Widerstände)
+\begin{itemize}[label=$+$]
+\item preiswert
+\item großer Messwiderstand
+\item $-30^\circ C$ bis $+350^\circ C$ ($\pm 5^\circ C$)
+\item große Empfindlichkeit
+\item ohne Gehäuse realisierbar $\Rightarrow$ kurze Ansprechzeit
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item stark nichtlineare Kennlinie
+\item ohne Gehäuse mechanisch anfällig
+\item Spannungsversorgung erforderlich
+\item keine punktförmige Messung
+\end{itemize}
+\subsubsection{schaltende Sensoren}
+\begin{itemize}
+\item Überstrom-Überwachung
+\item Übertemperatur-Überwachung
+\item Niveaufühler für Flüssigkeiten
+\end{itemize}
 %\newpage
 %\printbibliography
 
