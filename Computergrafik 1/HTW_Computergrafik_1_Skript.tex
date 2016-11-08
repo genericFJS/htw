@@ -199,7 +199,83 @@ zeigt NUR im Fragmentshader Wirkung
 \slideScale{73}
 
 \section{Funktionsreferenz}
+\slideScale{74}
+\slideScale{75}
+\slideScale{76}
+\slideScale{77}
 
+\chapter{OpenGL: Pixel und Puffer}
+\slideScale{78}
+\section{Pufferstrukturen}
+\slideScale{79}
+\section{Pufferoperationen}
+\slideScale{80}
+\begin{itemize}
+\item glClearColor(): Hintergrundfarbe, zu Beginn der display() Funktion, es sei denn für Effekte
+\item glClearDepth(): Tiefenpuffer , zu Beginn der display() Funktion, es sei denn für Effekte
+\end{itemize}
+Maskieren wird nach dem Fragmentshader verwendet.
+\begin{itemize}
+\item Scissor-Test: In der Regel Rechtecke (Schnittrechteck)
+\item Multi-Sample-Operations: Subpixel
+\item Stencil-test: Maske/Schablone
+\item Depht Buffer Test: verdeckte pixel werden nicht gerendert
+\item Blending: später
+\item Logic Operations: z.B. Transparenz
+\item Dithering: Räumliche/Farbliche Auflösung
+\end{itemize}
+\subsection{Tests und Operationen für Fragmente}
+\subsubsection{Scissor-Test, Multisampling-Fragment-Operationen, Stencil-Test}
+\slideScale{81}
+glScissor(x,y,w,h) (Ursprung, Länge, Höhe: Nur alles was in diesem Feld enthalten ist wird angezeigt
+\subsubsection{Depth-Test, Dithering, Logic}
+\slideScale{82}
+GL\_ LESS Objekte die kleiner sind als der eingestellte wert werden nicht gerendert
+\begin{lstlisting}[language=C++]
+init(){
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(func);
+	glPolygonOffset(factor units);
+}
+
+display()
+{
+	glClear(GL_DEPTH_BIT);
+	...
+}
+\end{lstlisting}
+mit glPolygonOffset() kann sichergestellt werden das eine Kante um ein Objekt sichtbar wird.
+\subsubsection{Blending}
+\slideScale{83}
+Transparenz: GL\_SRC\_ALPHA, GL\_ONE\_MINUS\_SRC\_ALPHA\\
+Beispiel:$\alpha_q = 0.7 \Rightarrow 0.5*0.7+0.2*0.3 = 0.$
+\subsubsection*{Funktionen für Blending}
+\slideScale{84}
+\subsubsection{Verdeckungsabfrangen, bedingtes Rendern}
+\slideScale{85}
+\subsection{Antialiasing}
+\slideScale{86}
+\subsubsection{Multisampling}
+\slideScale{87}
+\subsubsection*{Programmbeispiel}
+Räumlich beschränkte / tiefengerechte / transparente Ausgabe:
+\slideScale{88}
+\section{Framebuffer Objekte}
+\slideScale{89}
+\section{Multiple Renderbuffer}
+\slideScale{90}
+\section{Lesen und Kopieren von Pixeldaten}
+\slideScale{91}
+\subsection*{Beispiel}
+Zugriff auf Renderbuffer:
+\slideScale{92}
+
+\section{Funktionsreferenz}
+\slideScale{93}
+\slideScale{94}
+\slideScale{95}
+
+% bis folie 93
 
 
 %\newpage

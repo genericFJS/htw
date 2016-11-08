@@ -525,7 +525,7 @@ Werfen faire Münze (Werte $0/1$) und fairen Würfel (Werte $1,\dots,6$). Unters
 \item $A=\{\text{Wer der Münze ist }1\}$, $D=\{\text{(Würfel + Münze)}\in\{2,3,4\}\}$
 \end{enumerate}
 Lösung:\\
-$\Omega = \{ (0,1), (0,2), (0,3),\dots , (1,6)\}$\\
+$\Omega = \{ (0,1), (0,2), (0,3),\dots , (1,6)\}$
 \begin{enumerate}
 \item $\PP(A) =\frac{|A|}{|\Omega|}=\frac{6}{12}=\frac{1}{2}$,\quad $\PP(B) = \frac{|B|}{|\Omega|}=\frac{4}{12}=\frac{1}{3}$\\
 $\PP(A \cap B)=\frac{|A\cap B|}{|\Omega|}=\frac{2}{12}=\frac{1}{6}$\\
@@ -590,11 +590,96 @@ $\PP(F_{13})=1-\PP(\bar F_1) \cdot \PP(\bar F_3) = 1- 0,1^2 = 0,99$\\
 $\PP(F_{245})=1-\PP(\bar F_2) \cdot \PP(\bar F_4) \cdot \PP(\bar F_5) = 1-0,2^3=0,992$\\
 $\Rightarrow \PP(F) = 0,99\cdot 0,992 = 0,98208$
 
+\section{Zufallsvariablen}
 
+\cparagraph{Definition} Sei $(\Omega,  \cA, \PP)$ ein WK-Raum. Eine Zufallsvariable (ZV) oder Zufallsgröße ist eine Funktion $X$, die jedem Elementarereignis eine reelle Zahl zuordnet (d.h. $X: \Omega \to \RR$) und die Zusatzeigenschaft
+$$\text{für jedes Intervall gilt: }\{\omega \in \Omega \;|\;  X(\omega) \in I\} \in \cA$$
+erfüllt.
 
+\cparagraph{Bemerkung} Manchmal benötigt man noch allgemeinere Definitionen von ZVen. Auch wenn $X$ nicht zwingend Werte aus $\RR$ annimmt (und eine ähnliche Bedingung wie in Definition 1.2-1 erfüllt) spricht man von ZVen.\\
+Bsp.: $X$ nimmt komplexe Zahlen, Farben, Geschlechter usw an.
 
+\cparagraph{Bemerkung}
+\begin{itemize}
+\item Oft interessiert man sich für WKen:
+$$\PP(\omega \in \Omega \;|\; X(\omega) \in I\})$$
+bzw. in Kurzschreibweise:
+$$\PP(X\in I) \quad \text{für }I \subseteq \RR$$
+\item Die Bedingung aus Definition 1.2-1 stellt sicher, dass solche WKen berechnet werden können.
+\item Zur effektiven Beschreibung solcher WKen dient die Verteilungnsfunktion.
+\end{itemize}
 
+\cparagraph{Beispiel} Gegeben: (idealer) Würfel mit gefärbten Seiten (ohne Zahlen). \\
+Ergebnisraum $\Omega = \{$blau, grün, gelb, rot, schwarz, magenta$\}$\\
+Um mit den zufälligen Ergebnissen „rechnen“ zu können, führen wir eine ZV $X: \Omega \to \RR$ ein. Wir setzen $X(\text{blau}):=1$, $X(\text{grün}):=2$, $X(\text{gelb}):=3$, $X(\text{rot})=4$, $X(\text{schwarz}):=5$, $X(\text{magenta}):=6$\\
+Es gilt dann z.B.:
+$$\PP(X=3) = \PP(\underbrace{\{ \omega \in \Omega \;|\; X(\omega) = 3}_{\{\text{gelb}\}} = \frac{1}{6}$$
+$$\PP(X \leq 2) = \PP(\underbrace{\{\omega \in \Omega \;|\; X(\omega) = 1 \vee X(\omega) = 2\}}_{\{\text{blau, grün}\}}=\PP(\{\text{blau}\}) + \PP(\{\text{grün}\}) = \frac{2}{6}=\frac{1}{3}$$
 
+\cparagraph{Beispiel} Alfons (A) und Britta (B) spielen ein Würfelspiel. Gewürfelt wird gleichzeitig. Das Ergebnis von Alfons' Würfel sagt, wie viel Euro Alfons von Britta bekommt. Das Ergebnis von Brittas Würfel sagt, wie viel Euro Britta von Alfons bekommt.\\
+Gesucht:
+\begin{anumerate}
+\item Passendes WK-Modell um die ZV, die den Nettogewinn von Alfons beschreibt.
+\item WK, dass Alfons (netto) mehr als $3$\euro{} Verlust hat.
+\end{anumerate}
+Lösung:
+\begin{anumerate}
+\item Gesucht: $(\Omega, \cA, \PP)$:\\
+$\Omega = \{(i,j) \;|\; i,j \in \{1,\dots,6\}\}=\{1,\dots,6\}^2$ (mit $i=$ Brittas Würfel und $j=$Alfons Würfel)\\
+$\cA = \cP (\Omega)$\\
+$\PP$ … Gleichverteilung auf $\Omega$ (da Laplace-Experiment)\\
+Alfons Gewinn ist für $(1,4)$ gerade $4-1$\euro{}. Also definieren wir $X: \Omega \to \RR$ mittels $X((i,j)):=j-i$.
+\item Gesucht ist $\PP(X<-3)$:
+\begin{align*}
+\PP(X < -3) &= \PP(\{(i,j) \;|\; X((i,j)) < -3\}\\
+&= \PP(\underbrace{\{(i,j)\;|\; j-i < -3\}}_{(1,5), (1,6), (2,6)})\\
+&= \frac{3}{36}=\frac{1}{12}
+\end{align*}
+\end{anumerate}
+
+\cparagraph{Beispiel} In einer Firma werden auf 3 verschiedenen Anlagen Sandwiches produziert. Wir modellieren die Anzahl der Sandwiches pro Tag mit $\Omega = \{ \underbrace{(x,y,z)}_{\omega} \;|\; x,y,z \in \NN_0\}$ mit $x,y,z$ jeweils Produktionsmenge Anlage 1, 2 und 3 ($(200,45,120)$ heißt also $300$ Sandwiches wurden in Anlage 1 produziert, $200$ in Anlage 2 und $120$ in Anlage 3).\\
+Wir interessieren uns für die Gesamtproduktion. Definiere daher: $X:\Omega \to \RR$ mittels $X((x,y,z)) = x+ y+z$.
+
+Frage: Mit welcher WK überschreitet die Gesamtproduktion eine gewisse Mindestanzahl $m$ nicht?\\
+Gesucht ist also $\PP(X\leq m)=\PP(\{\omega \in \Omega \;|\; X(\omega) \leq m\})$.
+
+\cparagraph{Definition} Sei $(\Omega, \cA, \PP)$ ein WK-Raum und $X$ eine ZV. Die Funktion
+$$F_X: \RR\to [0,1], \quad F_X(x):=\PP(X \leq x)$$
+heißt Verteilungsfunktion (VF) von $X$.\\
+$F_X(x)$ ist also die WK, dass $X$ einen Wert kleiner oder gleich der Zahl $x$ annimmt.
+
+\cparagraph{Beispiel} A und B spielen immer noch mit den gleichen Regeln wie in Bsp 1.2-6.\\
+Wie sieht $F_X$ aus? Dazu die Wertetabelle:\\
+\begin{tabular}{L{0.13}|L{0.13}|L{0.13}|L{0.13}|L{0.13}|L{0.13}|L{0.13}}
+$x\in$ & $(-\infty,-5)$ & $[-5,4)$ & $[-4,3)$& $[-3,-2)$ & $[-2,-1)$ & $[-1,0)$\\
+\hline
+$F_X(x)$ & $0$ & $\tfrac{1}{36}$ & $\tfrac{3}{36}$ & $\tfrac{6}{36}$ & $\tfrac{10}{36}$ & $\tfrac{15}{36}$ 
+\end{tabular}\smallskip\\
+\begin{tabular}{L{0.13}|L{0.13}|L{0.13}|L{0.13}|L{0.13}|L{0.13}|L{0.13}}
+$x\in$ & $[0,1)$ & $[1,2)$ & $[2,3)$ & $[3,4)$ & $[4,5)$ & $[5,\infty)$\\
+\hline
+$F_X(x)$ & $\tfrac{21}{36}$ & $\tfrac{26}{36}$ & $\tfrac{30}{36}$ & $\tfrac{33}{36}$ & $\tfrac{35}{36}$ & $\tfrac{36}{36}$
+\end{tabular}\smallskip\\
+Denn z.B. gilt:\\
+$F_X(-4) = \PP(X \leq -4) = \PP(\{(5,1),(6,1), (6,2)\}) = \frac{3}{36}$\\
+$F_X(3) = \PP(X \leq 3 ) = 1- \PP(X>3) = 1 - \PP(\{(1,5),(1,6),(2,6)\})=1-\frac{3}{36}=\frac{33}{36}$\\
+Beachte: In $F_X$ können alle rellen Zahlen eingesetzt werden (Gezeichnete Funktion geht also von $-\infty$ mit $0$ bis $-5$ und macht dann unstetige Sprünge bis $5$, wo es bis $\infty$ mit $1$ weiter geht).
+
+\cparagraph{Lemma} Sei $X$ eine ZV und $F_X$ die zugehörige VF. Dann gilt:
+\begin{itemize}
+\item $0\leq F_X (x) \leq 1$
+\item $x_1 \leq x_2 \Rightarrow F_X(x_1) \leq F_X(x_2)$ \tab(Monotonie)
+\item $\lim_{x\to -\infty} F_X(x) =0$, $\lim_{x\to\infty} F_X(x) = 1$
+\item $\lim_{x \searrow x_0} F_X(x)=F_X(x_0)$ \tab\tab(rechts-stetig)
+\item $\PP(a <X\leq b)=F_X(b)-F_X(a)$
+\item $\PP(X>a) = 1 - F_X(a)$
+\item $\PP(X=a)=F_X(a)-\lim_{x\nearrow a}F_X(x)$ \tab (Sprunghöhe bei $x=a$)
+\end{itemize}
+
+\subsection{Diskrete und stetige Zufallsvariable}
+Wir betrachten 2 Klassen von ZVen: diskrete und stetige.
+
+\cparagraph{Definition} Eine ZV heißt \emph{diskrete ZV}, falls $X$ nur endlich viele oder abzählbar viele oder abzählbar unendlich viele Werte annehmen kann ($M$ abzählbar unendlich $\Leftrightarrow$ $\exists$ eine bijektive Abbildung $\varphi: M \to \NN$. Sprich: „man kann alle Elemente durchnummerieren“, bspw. rationale Zahlen usw.).
 
 %\newpage
 %\printbibliography
