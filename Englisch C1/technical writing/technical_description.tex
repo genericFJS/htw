@@ -36,8 +36,8 @@
 \setbox0=\hbox{\includegraphics[width=4em]{src/logo.jpg}}%
 \parbox{\wd0}{\box0}\endgroup%\includegraphics[height=1em]{src/logo_small.jpg}
 }{Pokémon}}
-%\newcommand{\poke}{Pokémon }
-\newcommand{\pokeT}{Pokémon }
+%\newcommand{\poke}{Pokémon}
+\newcommand{\pokeT}{Pokémon}
 
 \usepackage{wrapfig}
 \usepackage{multicol}
@@ -63,6 +63,13 @@ This time, for the first time ever, you may choose on which regions you want to 
 
 So what are you waiting for? Start getting to know your new favorite \poke{} game with the best gear available!
 
+\section{Glossary}
+New to \poke{} or virtual reality? Here are some words you might not know:\\
+\begin{tabular}{L{.3}L{.7}}
+Pokémon\newline & pocket monster (animal-like monsters which live in the wild and are caught and trained by Pokémon trainers)\\
+NPC & non-player-characters (computer controlled characters)\\
+HP & health points
+\end{tabular}
 %Glossary?!
 
 \chapter{The Gear}
@@ -135,75 +142,65 @@ You want the full experience? Just keep the settings unchanged and get to know t
 You may choose among the following sets of \poke{}, together over 800 \poke{}:
 \begin{multicols}{2}
 \begin{itemize}
-\item 1. Generation: 151 \emph{Kanto}-\poke{}
-\item 2. Generation: 100 \emph{Johto}-\poke{}
-\item 3. Generation: 135 \emph{Hoenn}-\poke{}
-\item 4. Generation: 107 \emph{Sinnoh}-\poke{}
-\item 5. Generation: 156 \emph{Einall}-\poke{}
-\item 6. Generation: 72 \emph{Kalos}-\poke{}
-\item 7. Generation: 79 \emph{Alola}-\poke{}
+\item 1. Generation: 151 \emph{Kanto-\pokeT}
+\item 2. Generation: 100 \emph{Johto-\pokeT}
+\item 3. Generation: 135 \emph{Hoenn-\pokeT}
+\item 4. Generation: 107 \emph{Sinnoh-\pokeT}
+\item 5. Generation: 156 \emph{Einall-\pokeT}
+\item 6. Generation: 72 \emph{Kalos-\pokeT}
+\item 7. Generation: 79 \emph{Alola-\pokeT}
 \item[]
 \end{itemize}
 \end{multicols}
 
 \section{Gameplay}
 
-Follow-up Introduction
+The gameplay consists mainly of three parts:
+\begin{itemize}
+\item exploring the world
+\item fighting and catching new \poke{}
+\item battling \poke{}-trainers
+\end{itemize}
 
-What is the process?
-What is its function?
-Where and when does the process take place?
-Who or what performs it?   
-How does the process work?
-What are its principal steps? 
-Did you include a graphic identifying all the principal steps? 
+The final goal in the game is to catch as many \poke{} as you can, become the best \poke{}-trainer and find all the secrets hidden in the world.
 
+\subsection{Exploration}
 
- 
-The Main Components of the Body  
- 
-Have you discussed the steps in chronological order?
-Are the causal relationships clear among the steps?  
-Have you used the present tense?  
-Did you include graphics for each of the principal steps? 
+As you will playing the game with your \emph{\poke{} reality gear}, the exploring itself is pretty much how you explore the real world, too: Walk and wonder (Figure \ref{exploration}).
 
+\begin{figure}[!ht]
+\begin{center}
+{%
+\setlength{\fboxsep}{2pt}%
+\setlength{\fboxrule}{1pt}%
+\fbox{\includegraphics[width=0.7\linewidth]{src/pokeworld}}%
+}%
+\end{center}
+\caption[Exploring the \pokeT{} world]{Exploring the \poke{} world}
+\label{exploration}
+\end{figure}
 
- 
-Conclusion
+By keeping an eye open for details, you may discover hidden paths which lead to secret areas. There you may find rare \poke{} and unique items (Figure \ref{secrets}).
 
-Have you summarized the major points in the step-by-step description?   
- Does your reader understand the importance or implications of the process?
-Have you motivated the reader to take action?
+\begin{figure}[!ht]
+\begin{center}
+{%
+\setlength{\fboxsep}{2pt}%
+\setlength{\fboxrule}{1pt}%
+\fbox{\includegraphics[width=0.7\linewidth]{src/pokeworld2}}%
+}%
+\end{center}
+\caption[Discovering secrets in the \pokeT{} world]{Discovering secrets in the \poke{} world}
+\label{secrets}
+\end{figure}
 
-
-How the Game looks and feels.
-
-\section{Interface}
-
-Follow-up Introduction
-
-What is the process?
-What is its function?
-Where and when does the process take place?
-Who or what performs it?   
-How does the process work?
-What are its principal steps? 
-Did you include a graphic identifying all the principal steps? 
-
- 
-The Main Components of the Body  
- 
-Have you discussed the steps in chronological order?
-Are the causal relationships clear among the steps?  
-Have you used the present tense?  
-Did you include graphics for each of the principal steps? 
-
- 
-Conclusion
-
-Have you summarized the major points in the step-by-step description?   
- Does your reader understand the importance or implications of the process?
-Have you motivated the reader to take action?
+You can manage the following in the game menu:
+\begin{itemize}
+\item caught \poke{}
+\item found secrets
+\item your game progress
+\end{itemize}
+This menu is used intuitively with your \emph{\poke{} reality gear} (Figure \ref{menu}).
 
 \begin{figure}[!ht]
 \begin{center}
@@ -214,18 +211,32 @@ Have you motivated the reader to take action?
 }%
 \end{center}
 \caption[The \emph{\pokeT{} reality game} menu]{The \emph{\poke{} reality game} menu}
+\label{menu}
 \end{figure}
 
-\begin{figure}[!ht]
-\begin{center}
-{%
-\setlength{\fboxsep}{2pt}%
-\setlength{\fboxrule}{1pt}%
-\fbox{\includegraphics[width=0.7\linewidth]{src/interface2}}%
-}%
-\end{center}
-\caption[A \emph{\pokeT{} reality game} submenu]{A \emph{\poke{} reality game} submenu}
-\end{figure}
+%\newpage
+\subsection[\pokeT{}-battles]{\poke{}\,-battles}
+During your exploration of the \poke{} world, you will encounter random \poke{} in the wild. In populated areas you may find other \poke{}-trainers (NPC). Both lead to \poke{} battles between you and your opponent.
+
+A battle has the following sequence of events:
+\begin{enumerate}
+\item You choose a \poke{} to battle the opponent.
+\item The battle proceeds turn-based. In one turn each you may take one of the following actions:
+\begin{itemize}
+\item choose an offensive or defensive action for your \poke{} to execute
+\item use a special item from the inventory to buff the fighting \poke{}
+\item exchange the fighting \poke{} for a different \poke{} from your team
+\item retreat from the battle
+\end{itemize}
+\item These turns are repeated until the fight is over. If you lose you will be teleported back to the nearest town. By winning your \poke{} gain experience and you may get some item-rewards.
+\end{enumerate}
+
+%\newpage
+In Figure \ref{battle} you can see the layout of a battle:
+\begin{itemize}
+\item Your \poke{} is at the bottom left with the corresponding name and its HP on the right.
+\item Your opponent is at the top: the name and HP at the top left and the \poke{} on the right.
+\end{itemize}
 
 \begin{figure}[!ht]
 \begin{center}
@@ -235,15 +246,49 @@ Have you motivated the reader to take action?
 \fbox{\includegraphics[width=0.7\linewidth]{src/interface3}}%
 }%
 \end{center}
-\caption[A \emph{\pokeT{} reality game} battle scene]{A \emph{\poke{} reality game} battle scene}
+\caption[A \pokeT{} battle]{A \poke{} battle}
+\label{battle}
 \end{figure}
 
-How the Interface looks like.
+\newpage
+
+\subsection[Catching \pokeT{}]{Catching \poke{}}
+During battles with wild \poke{} you have the chance to catch them to add to your team. This takes place during one of your turns: Instead of attacking the opponent, you select a Pokéball from your inventory (Figure \ref{catching}). With some luck, this results in the \poke{} being caught by you. To increase your chances, it is recommended to weaken the \poke{} you are trying to catch before using a Pokéball by attacking it and thus reducing its HP.
+
+\begin{figure}[!ht]
+\begin{center}
+{%
+\setlength{\fboxsep}{2pt}%
+\setlength{\fboxrule}{1pt}%
+\fbox{\includegraphics[width=0.7\linewidth]{src/interface2}}%
+}%
+\end{center}
+\caption[Catching a \pokeT{} with Pokéballs using the game menu]{Catching a \poke{} with Pokéballs using the game menu}
+\label{catching}
+\end{figure}
 
 \chapter{Conclusion}
 
-Thanks + Contact Information
+Thank you for reading this technical description of the \emph{\poke{} reality game and gear}. We hope you enjoy our new revolutionary way of experiencing the \poke{} wold.
 
+\bigskip
+
+If you have any feedback and suggestions regarding the \emph{\poke{} reality game and gear} you may contact us over email or send us a letter:\bigskip\\
+\begin{tabular}{l L{.5}}
+&Merko\& Strube Inc.\\
+\Letter & Charmanderstreet 5\newline
+D-04359 Squirtle Town\\
+\Email & MandS.inc@pokereality.com\\
+\end{tabular}
+
+\chapter{Questions}
+[not present in final release]
+\begin{itemize}
+\item Is the level of detail of process description of the game enough or too much? Is something missing?
+\end{itemize}
+
+\newpage
+\listoffigures
 %\newpage
 %\printbibliography
 
