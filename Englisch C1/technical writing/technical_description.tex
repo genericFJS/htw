@@ -1,24 +1,46 @@
-\newcommand{\customDir}{../../}
-\input{\customDir .LaTeX_master/LaTeX_master_setup.sty}
+\newcommand{\customDir}{}
+\input{.LaTeX_master/LaTeX_master_setup.sty}
 
 %\setboolean{twosided}{true}
 %\setCustomDocumentClass{scrartcl}
 %\setCustomDesign{htw}
 %\setCustomSlidePath{Folien}
+\newcommand{\chapterHead}{1}
 
-\setCustomTitle{Pokémon: Reality}
-\setCustomSubtitle{\textsc{Technical Description}}
-\setCustomAuthor{Falk-Jonatan Strube \\and Anxhela Merko}
+\setCustomTitle{\textsc{Technical Description}}
+\setCustomSubtitle{Pokémon reality gear and game}
+\setCustomAuthor{Falk-Jonatan Strube}
 %\setCustomNoteA{TitlepageNoteBeforeAuthor}
 %\setCustomNoteB{Vorlesung von}
 
-\setCustomSignature{\footnotesize{\customAuthor}}	% Formatierung der Signatur in der Fußzeile
-\setCustomTitleAuthor{\customAuthor}	% Formatierung des Autors auf dem Titelblatt
+\setCustomSignature{}	% Formatierung der Signatur in der Fußzeile
+\setCustomTitleAuthor{\customAuthor\\and Anxhela Merko}	% Formatierung des Autors auf dem Titelblatt
 
-\input{\customDir .LaTeX_master/LaTeX_master.sty}
-\input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
+\input{.LaTeX_master/LaTeX_master.sty}
+\input{.LaTeX_master/LaTeX_master_macros.sty}
 
 %\bibliography{\customDir .Literatur/HTW_Literatur.bib}
+
+% Run texcount on tex-file and write results to a sum-file
+\immediate\write18{texcount \jobname.tex -1 -sum -out=\jobname.sum}
+\newcommand\wordcount{\input{\jobname.sum}}
+
+\newcommand{\customLogoLocation}{src/logo.jpg}
+\newcommand{\customLogoHeadHeight}{3em}
+\newcommand{\customLogoWidth}{0.8\linewidth}
+\newcommand{\poke}{\,\!\texorpdfstring{\begingroup
+\setbox0=\hbox{\includegraphics[width=3.5em]{src/logo_small.jpg}}%
+\parbox{\wd0}{\box0}\endgroup%\includegraphics[height=1em]{src/logo_small.jpg}
+}{Pokémon}}
+\newcommand{\pokeR}{\,\!\texorpdfstring{\begingroup
+\setbox0=\hbox{\includegraphics[width=4em]{src/logo.jpg}}%
+\parbox{\wd0}{\box0}\endgroup%\includegraphics[height=1em]{src/logo_small.jpg}
+}{Pokémon}}
+%\newcommand{\poke}{Pokémon }
+\newcommand{\pokeT}{Pokémon }
+
+\usepackage{wrapfig}
+\usepackage{multicol}
 
 \begin{document}
 
@@ -26,39 +48,197 @@
 \maketitle
 \newpage
 \tableofcontents
+\vfill
+Word Count: \wordcount
 \newpage
-
 \chapter{Introduction}
 
-Short description of Game + Hardware (how it is special)
+\emph{\poke{} reality game and gear} is an innovative new Soft- and Hardware-Bundle which lets you dive into the Pokémon world. Introducing the \emph{\poke{} reality gear} for an all new leap into immersion in gaming, enabling you to be as close to your favorite \poke{} as never before.\medskip
 
-Glossary?!
+Description Gear \medskip
 
-\chapter{Hardware: Virtual Reality Headset}
+The game offers the choice on how exactly you want to experience the \poke{} world. The world and its inhabitants have grown over the years, with each generation adding new regions to explore and hundreds new \poke{} to catch.
 
-Warnings (next to parts which need warnings)?
+This time, for the first time ever, you may choose on which regions you want to explore -- or not -- and which  \poke{} you want to encounter -- or not. In the section \textit{\nameref{software}} you can get an in detail description on what to expect.
 
-Warning 
+So what are you waiting for? Start getting to know your new favorite \poke{} game with the best gear available!
+
+%Glossary?!
+
+\chapter{The Gear}
+
+%Warnings (next to parts which need warnings)?
 
 \section{Hardware Layout}
 
-How the whole headset looks like (what it is made of)
+%How the whole headset looks like (what it is made of)
 
 \section{Important Parts}
 
-How the most important parts look like (and work)
+%How the most important parts look like (and work)
 
-\chapter{Software}
+\chapter{The Game}
 
-audience limitations?
+\section{Consumer Awareness}
+\label{software}
+\begin{wrapfigure}{R}{60pt}
+\vspace{-18pt}
+\includegraphics[scale =1]{src/ratingsymbol_e10}
+\vspace{-30pt}
+\end{wrapfigure}
+\emph{\poke{} reality: the game} is generally suitable for all ages. It contains minimal mild cartoon violence and some mild language.
 
-\section{Interface}
+It is recommended to pause playing the game every hour for at least five minutes. This ensures minimal disorientation after long game sessions.
 
-How the Interface looks like.
+\section{Scope Of The Game}
+
+The main focus of \emph{\poke{} reality: the game} is the exploration of the game world and the encounters with all kinds of \poke{}. In contrast to previous installments of \poke{} games, \emph{\poke{} reality: the game} lets you chose what regions you want to explore and what \poke{} you want to encounter.
+
+\begin{figure}[!ht]
+\begin{center}
+{%
+\setlength{\fboxsep}{2pt}%
+\setlength{\fboxrule}{1pt}%
+\fbox{\includegraphics[width=0.7\linewidth]{src/pokemap}}%
+}%
+\end{center}
+\caption[The \emph{\pokeT{} reality game} map with all available 'regions']{The \emph{\poke{} reality game} map with all available 'regions'}
+\label{pokemap}
+\end{figure}
+
+The \poke{} world is composed of all your favorite regions of the previous games. The following regions are open for you to explore (see Figure \ref{pokemap}):
+\begin{multicols}{2}
+\begin{itemize}
+\item Kanto
+\item Johto
+\item Hoenn
+\item Sinnoh
+\item Unova
+\item Kalos
+\item Alma
+\item Orre
+\item Oblivia
+\item Fiore
+\item Orange Islands
+\item Sevii Islands
+\end{itemize} 
+\end{multicols}
+
+All these regions carry unique bioms and moods. There are different kinds of towns and landscapes to explore: From the windy \emph{Orange Islands} with their gusting sea to the steep mountains in the west of \emph{Kanto}.
+
+One of the most important feature of \emph{\poke{} reality: the game} is the fact, that you may pick what \poke{} you want to encounter. 
+
+You want a more retrospective experience? No problem: just deactivate all \poke{} except the first generation and you will only encounter \emph{Kanto-\poke{}}.
+
+You want the full experience? Just keep the settings unchanged and get to know the whole range of \poke{}.
+
+You may choose among the following sets of \poke{}, together over 800 \poke{}:
+\begin{multicols}{2}
+\begin{itemize}
+\item 1. Generation: 151 \emph{Kanto}-\poke{}
+\item 2. Generation: 100 \emph{Johto}-\poke{}
+\item 3. Generation: 135 \emph{Hoenn}-\poke{}
+\item 4. Generation: 107 \emph{Sinnoh}-\poke{}
+\item 5. Generation: 156 \emph{Einall}-\poke{}
+\item 6. Generation: 72 \emph{Kalos}-\poke{}
+\item 7. Generation: 79 \emph{Alola}-\poke{}
+\item[]
+\end{itemize}
+\end{multicols}
 
 \section{Gameplay}
 
+Follow-up Introduction
+
+What is the process?
+What is its function?
+Where and when does the process take place?
+Who or what performs it?   
+How does the process work?
+What are its principal steps? 
+Did you include a graphic identifying all the principal steps? 
+
+
+ 
+The Main Components of the Body  
+ 
+Have you discussed the steps in chronological order?
+Are the causal relationships clear among the steps?  
+Have you used the present tense?  
+Did you include graphics for each of the principal steps? 
+
+
+ 
+Conclusion
+
+Have you summarized the major points in the step-by-step description?   
+ Does your reader understand the importance or implications of the process?
+Have you motivated the reader to take action?
+
+
 How the Game looks and feels.
+
+\section{Interface}
+
+Follow-up Introduction
+
+What is the process?
+What is its function?
+Where and when does the process take place?
+Who or what performs it?   
+How does the process work?
+What are its principal steps? 
+Did you include a graphic identifying all the principal steps? 
+
+ 
+The Main Components of the Body  
+ 
+Have you discussed the steps in chronological order?
+Are the causal relationships clear among the steps?  
+Have you used the present tense?  
+Did you include graphics for each of the principal steps? 
+
+ 
+Conclusion
+
+Have you summarized the major points in the step-by-step description?   
+ Does your reader understand the importance or implications of the process?
+Have you motivated the reader to take action?
+
+\begin{figure}[!ht]
+\begin{center}
+{%
+\setlength{\fboxsep}{2pt}%
+\setlength{\fboxrule}{1pt}%
+\fbox{\includegraphics[width=0.7\linewidth]{src/interface}}%
+}%
+\end{center}
+\caption[The \emph{\pokeT{} reality game} menu]{The \emph{\poke{} reality game} menu}
+\end{figure}
+
+\begin{figure}[!ht]
+\begin{center}
+{%
+\setlength{\fboxsep}{2pt}%
+\setlength{\fboxrule}{1pt}%
+\fbox{\includegraphics[width=0.7\linewidth]{src/interface2}}%
+}%
+\end{center}
+\caption[A \emph{\pokeT{} reality game} submenu]{A \emph{\poke{} reality game} submenu}
+\end{figure}
+
+\begin{figure}[!ht]
+\begin{center}
+{%
+\setlength{\fboxsep}{2pt}%
+\setlength{\fboxrule}{1pt}%
+\fbox{\includegraphics[width=0.7\linewidth]{src/interface3}}%
+}%
+\end{center}
+\caption[A \emph{\pokeT{} reality game} battle scene]{A \emph{\poke{} reality game} battle scene}
+\end{figure}
+
+How the Interface looks like.
 
 \chapter{Conclusion}
 
