@@ -485,6 +485,98 @@ Diese nicht-funktionalen Anforderungen sind genau genommen
 \end{itemize}
 Problematische Synonyme sind: Leistungsmerkmale, feature
 
+\subsection{Begriff feature}
+\slidesScale{5}{1}
+
+\chapter{Risiken der Anforderungsanalyse}
+Am Beispiel:
+\slidesScale{5}{4}
+\begin{tabular}{L{.2} | L{.58} | L{0.22}}
+Risiko & Vermeidung & Qualitätsmerkmal\\\hline
+Missverständlichkeit\newline (Uneindeutigkeit) & Regeln einhalten\medskip\newline
+Schaubild:\newline DKB AG $\overset{\text{Geld}}{\longrightarrow}$ Baustelle\medskip\newline
+Rückfragen beim Kunden $\to$ Kommunikation (Validierung)\medskip\newline
+Prototyp& eindeutig\\\hline
+Anforderung ist nicht realisierbar & experimenteller Prototyp (bspw. Überprüfung der geforderten Antwortzeit) \medskip\newline
+Abschätzung & realisierbar\\\hline
+Anforderungen sind unvollständig & Validierung ($\to$ Kommunikation mit Kunden) \medskip\newline grafische Darstellung \medskip\newline Prototyp (Click Dummy) & vollständig\\\hline
+falsch & Rückfragen $\to $ Validierung $\to$ Kommunikation mit Kunden \medskip\newline (grafische Darstellung) [möchte Kunde mit Grafiken umgehen?]& korrekt\\\hline
+falsch priorisiert / zu viel Aufwand & Kommunikation mit Kunden & angemessen \\\hline
+widersprüchlich & offenlegen von Abhängigkeiten $\to$ (direkte) Kommunikation mit dem Kunden & widerspruchsfrei\\\hline
+zu umfangreich beschrieben & grafische Darstellungen & minimal
+\end{tabular}\bigskip
+
+Unterschied Verifizierung/Validierung (am Beispiel):\\
+Verifizierung: „Baue ich das Haus richtig?“\\
+Validierung: „Baue ich das richtige Haus?“
+
+Also:
+\section{Die Risiken}
+Verletzung der Qualitätsmerkmale:
+\begin{itemize}
+\item Eindeutigkeit
+\item Realisierbarkeit
+\item Vollständigkeit
+\item Korrektheit
+\item Angemessenheit
+\item Widerspruchsfreiheit
+\item Minimal
+\end{itemize}
+
+\section{Die Vermeidung}
+\begin{itemize}
+\item bewusste Diskussion mit dem Kunden ($\to$ soziale Kompetenz)
+\item klare, eindeutige Formulierung,
+\item Verwendung eines Glossars
+\item Ergänzung der Dokumente in natürlicher Sprache durch geeignete Modelle ($\to$ Dokumente mit grafischen Darstellungen)
+\item Verwendung von Werkzeugen, die die Konsistenz unterstützen
+\item  Einbeziehung von Prototypen (experimentelle Prototypen, funktionale Prototypen)
+\end{itemize}
+Wichtig: Die Kommunikation
+\slidesScale{5}{6}
+
+\section{Die Analyse}
+\slidesScale{5}{8}
+\begin{itemize}
+\item Ziele:\\
+Klare Formulierung des Problems, das durch Einsatz des SW-Systems gelöst werden soll.\\
+„Auf welche Frage ist das zu entwickelnde SW-System die Antwort?“
+\item Stakeholder:\\
+Anwender,
+Wissensträger,
+Interessenvertreter,
+Lobby, …
+\item Kontext:\\
+Wer/was aus dem Kontext interagiert über die Schnittstellen (Verbindungsstellen) mit dem System?\\
+Anwender, Administrator, andere Systeme, …
+\end{itemize}
+
+\slidesScale{5}{13}
+\slidesScale{5}{14}
+\slidesScale{5}{15}
+
+\subsection{Der Anfang der Anforderungsanalyse}
+
+Systemziele und Systemkontext sind die Basis für alle Anforderungen und damit auch für
+das gesamte Projekt. Wichtig ist ein wertungsfreier Umgang mit Systemzielen und
+Systemkontext. Ebenso wichtig ist es, zu Beginn alle am Projekt Beteiligten Personen mit
+ihren Rollen und Interessen zu kennen.
+
+\subsection{Ermittlung der Anforderung}
+
+\begin{itemize}
+\item Kreavitätstechniken (Brainstorming, Wechsel der Perspektive, …)
+\item Befragungstechniken (Fragebogen, Interview, …)
+\item artefaktbasierte Techniken (Eingabe-, Ausgabedokumente, $\to$ Wiederverwendung)
+\item Audio‐, Videoaufzeichnungen
+\item Anwendungsfallmodellierung, Essenzbildung (das wichtige heraus filtern)
+\end{itemize}
+
+\subsection{Zu berücksichtigende Informationsquellen}
+
+Alle Stakeholder, also alle Beteiligten. 
+
+Wichtig: Zu Beginn definieren, wer Stakeholder ist, damit klar ist, wer was zu sagen hat und wer nicht.
 
 %\newpage
 %\printbibliography
