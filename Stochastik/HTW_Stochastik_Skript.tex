@@ -681,6 +681,126 @@ Wir betrachten 2 Klassen von ZVen: diskrete und stetige.
 
 \cparagraph{Definition} Eine ZV heißt \emph{diskrete ZV}, falls $X$ nur endlich viele oder abzählbar viele oder abzählbar unendlich viele Werte annehmen kann ($M$ abzählbar unendlich $\Leftrightarrow$ $\exists$ eine bijektive Abbildung $\varphi: M \to \NN$. Sprich: „man kann alle Elemente durchnummerieren“, bspw. rationale Zahlen usw.).
 
+%\addtocounter{cparagraphC}{1}
+%\cparagraph{-} nicht relevant
+
+\cparagraph{Bemerkung} Sei $X$ eine diskrete ZV welche nur die Werte $x_1, x_2 , \dots$ annehmen kann.
+\begin{anumerate}
+\item Wir nenne die Funktion
+$$f: x_i\mapsto f(x_i):=p_i:= \PP(X=x_i)$$
+Wahrscheinlichkeitsfunktion.
+\item $\sum_i f(x_i)=\sum_i p_i =1$
+\item $\PP(a < X \leq b) = \sum_{i:\; a<x_i \leq b} f(x_i)$
+\item Darstellung mit Verteilungstabelle:\\
+\begin{tabular}{r | c | c | c | c | c}
+Werte & $x_1$ & $x_2$ & $x_3$& …\\
+\hline
+WK $f(x_i)$ & $p_1$ & $p_2$ & $p_3$ & …
+\end{tabular}
+\item Darstellung als Stabdiagramm:\\
+ABB S4
+\end{anumerate}
+
+\cparagraph{Beispiel} Betrachte unfaire Münze, die mit WK $0,6$ auf Zahl fällt. Dann
+\begin{itemize}
+\item $\Omega = \{ K, Z\}$
+\item $X(K):=0$, $X(Z):=1$
+\item $\PP(X=0)=0,4=1-\PP(X=1)$
+\end{itemize}
+\begin{tabular}{r | c | c}
+Wert $x_i$ & 0 & 1\\
+\hline 
+WK $f(x_i)$ & 0,4 & 0,6
+\end{tabular}\\
+ABB S5
+
+\cparagraph{Beispiel} Betrachten Wurf mit 2 Würfeln: $\Omega=\{(i,j)\;|\; i,j=1,\dots,6\}$. Augensumme soll als ZV dargestellt werden: $X((i,j)):=i+j$ für $i,j=1,\dots,6$\\
+Verteilungstabelle:\\
+\begin{tabular}{r | c | c| c| c| c| c| c| c| c| c| c}
+$x_i$ & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9  & 10 & 11 & 12\\
+\hline
+$f(x_i)$ & 1/36 & 2/36 & 3/36 & 4/36 & 5/36 & 6/36 & 5/36 & 4/36 & 3/36 & 2/36 & 1/36
+\end{tabular}
+\begin{anumerate}
+\item $\PP(X>9) = \PP(X=10) + \PP(X=11) + \PP(X=12) = \frac{6}{36}$
+\item $\PP(6\leq X \leq 8) = \frac{16}{36}$
+\item $F_X(3) = \PP(X\leq 3) = \frac{3}{36}$
+\end{anumerate}
+
+\cparagraph{Definition} Eine ZV heißt \emph{stetige ZV}, falls ihre Verteilungnsfunktion $F_X$ stetig ist.
+
+In dieser Vorlesung betrachten wir nur stetige ZV, bei denen $F_X$ differenzierbar ist.
+
+\cparagraph{Definition} Sei $X$ eine ZV mit differenzierbarer Verteilungsfunktion $F_X$. Dann wird die Ableitung $f:= F'_X$ \emph{(Wahrscheinlichkeits-)Dichte(funktion)} genannt.
+
+\cparagraph{Bemerkung}
+\begin{itemize}
+\item Ist $f$ die Dichtefunktion zur VF $F_X$, so gilt
+$$F_X(x) = \int_{-a}^x f(t) \intd{t} \qquad \text{(Hauptsatz der Differential und Integralrechnung)}$$
+\item Nicht jede stetige Funktion $F$ kann als Integral einer Dichtefunktion geschrieben werden.
+\item Bilder:\\
+ABB S6
+\begin{align*}
+\PP(X\leq 1)&=F_X(1)\\
+&=\PP(\{\omega \in \Omega \;|\; X(\omega)\leq 1 \}) \\
+&= \{\text{WK, dass $X$ einen Wert $\leq 1$ annimt}\}\\
+&=\{\text{Funktionswert von $F_X$ bei $X=1$}\}\\
+&=\int_{-\infty}^1 f(t)\intd{t}\\
+&=\{\text{Flächeninhalt des markierten Bereichs der Dichtefunktion}\}
+\end{align*}
+\end{itemize}
+
+\cparagraph{Satz} Sei $X$ eine stetige ZV mit Dichtefunktion $f$. Dann gilt:
+\begin{itemize}
+\item $f$ ist auf ganz $\RR$ definiert.
+\item $f(x)\geq 0 \quad \forall x \in \RR$
+\item $\int_{-\infty}^{\infty}f(x)\intd{x}=1$ (Dichtefunktion ist normiert)
+\end{itemize}
+Umkehrung des Satzes gilt auch:
+\cparagraph{Satz} Sei $f$ eine integrierbare reelwertige Funktion. Dann gilt: 
+\begin{itemize}
+\item $f$ ist auf ganz $\RR$ definiert.
+\item $f(x)\geq 0 \quad \forall x \in \RR$
+\item $\int_{-\infty}^{\infty}f(x)\intd{x}=1$ 
+\end{itemize}
+Dann ist $f$ die Dichte einer Zufallsvariablen $X$. Die zugehörige VF $F_X:\RR\to [0,1]$ ist dann
+$$F_X(x):=\int_{-\infty}^{\infty} f(t) \intd{t}$$
+
+\cparagraph{Beispiel} Wir kommen zu einer zufälligen Zeit an der Bushaltestelle an. Der Bus fährt alle 10 Minuten. Die ZV $X$ beschreibe die Wartezeit auf den nächsten Bus, d.h. $X$ kann alle Wert zwischen 0 und 10 annehmen wobei jede Wartezeit gleich-wahrscheinlich sein soll.\\
+Die zugehörige Dichtefunktion ist daher:\\
+ABB S7\\
+$f(x):=\begin{cases}
+h & 0 < x < 10\\
+0 & \text{sonst}
+\end{cases}$
+\begin{anumerate}
+\item Wie ist $h$ zu wählen?\\
+Es muss gelten $1\overset{!}{=}\int_{-\infty}^{\infty}f(x)\intd{x}=\int_0^{10}h\intd{x}=\left[ h\cdot x\right]_0^{10}=10\cdot h \Rightarrow h = \frac{1}{10}$
+\item Wie sieht $F_X$ aus?\\
+ABB S8\\
+$F_X(x)=\int_{-\infty}^x f(t) \intd{t}=\begin{cases}
+0 & x\leq 0\\
+\tfrac{1}{10} x & 0 < x < 10\\
+1 & x \geq 10
+\end{cases}$\\
+Fall $x\leq 0$: $F_X(x)=\int_{-\infty}^x 0 \intd{t} = 0$\\
+Fall $0<x<10$: $F_X(x)= \int_{-\infty}^0 0 \intd{t} + \int_0^x \frac{1}{10} \intd{t} = \frac{1}{10}x$\\
+Fall $x \geq 10$: $F_X(x) = \underbrace{\int_{-\infty}^0 0 \intd{t}}_{0}+ \underbrace{\int_0^{10} \frac{1}{10} \intd{t}}_1 + \underbrace{\int_{10}^x 0 \intd{t}}_0 = 1$
+\end{anumerate}
+
+\cparagraph{Satz} Sei $X$ eine stetige ZV mit Dichte $f$ und VF $F$. Die WK, dass $X$ einen Wert im Intervall $(a,b)$ (oder $[a,b], [a,b), (a,b]$) annimt ist:
+\begin{align*}
+\PP(a < X<b) &= \PP(\leq X \leq b)
+= \PP(a \leq X <b) 
+= \PP(a < X \leq b)\\
+&=F(b)-F(a) \\
+&= \int_a^b f(x) \intd{x}
+\end{align*}
+
+Das entspricht den Flächeninhalt unter $f$ zwischen $a$ und $b$.
+
+
+
 %\newpage
 %\printbibliography
 
