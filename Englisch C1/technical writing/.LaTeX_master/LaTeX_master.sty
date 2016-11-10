@@ -316,7 +316,7 @@ urlcolor=green,%
 		}{}
 		%\renewcommand*{\titlepagestyle}{scrheadings}
 		\providecommand{\customLogoHeadHeight}{1.7em}
-		\ihead{\includegraphics[height=\customLogoHeadHeight]{\customLogoLocation}}
+		\ihead{\includegraphics[height=\customLogoHeadHeight]{src/logo.jpg}}
 		%\ohead{\truncate{4cm}{\customTitle}}
 		\ohead{\MakeLowercase{\headmark}}
 		\providecommand{\customOhead}{0}
@@ -329,11 +329,11 @@ urlcolor=green,%
 		\includegraphics[width=\customLogoWidth]{\customLogoLocation}\\\vspace{0.5em}
 		\Huge\textbf{\customTitle}
 		\ifdefempty{\customSubtitle} {} {\\\vspace*{0.7em}\Large \customSubtitle}
-		\\\vspace*{5em}}
+		\\\vspace*{0em}}
 		\author{
-		\ifdefempty{\customNoteA} {} {\customNoteA \vspace*{1em}}\\ 
+		%\ifdefempty{\customNoteA} {} {\customNoteA \vspace*{1em}}\\ 
 		\ifdefempty{\customAuthor} {} {\customTitleAuthor}
-		\ifdefempty{\customNoteB}{}{\vspace*{1em}\\\customNoteB}
+		%\ifdefempty{\customNoteB}{}{\vspace*{1em}\\\customNoteB}
 		}
 		
 		\ifthenelse{\equal{\customDocumentClass}{cheatsheet}}{

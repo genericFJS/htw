@@ -25,17 +25,14 @@
 \immediate\write18{texcount \jobname.tex -1 -sum -out=\jobname.sum}
 \newcommand\wordcount{\input{\jobname.sum}}
 
-\newcommand{\customLogoLocation}{src/logo.jpg}
+\newcommand{\customLogoLocation}{src/logo_big.jpg}
 \newcommand{\customLogoHeadHeight}{3em}
 \newcommand{\customLogoWidth}{0.8\linewidth}
+
 \newcommand{\poke}{\,\!\texorpdfstring{\begingroup
 \setbox0=\hbox{\includegraphics[width=3.5em]{src/logo_small.jpg}}%
 \parbox{\wd0}{\box0}\endgroup%\includegraphics[height=1em]{src/logo_small.jpg}
-}{Pokémon}}
-\newcommand{\pokeR}{\,\!\texorpdfstring{\begingroup
-\setbox0=\hbox{\includegraphics[width=4em]{src/logo.jpg}}%
-\parbox{\wd0}{\box0}\endgroup%\includegraphics[height=1em]{src/logo_small.jpg}
-}{Pokémon}}
+}{Pokémon}\,}
 %\newcommand{\poke}{Pokémon}
 \newcommand{\pokeT}{Pokémon}
 
@@ -49,13 +46,13 @@
 \newpage
 \tableofcontents
 \vfill
-Word Count: \wordcount
+Word Count: \wordcount words
 \newpage
 \chapter{Introduction}
 
 \emph{\poke{} reality game and gear} is an innovative new Soft- and Hardware-Bundle which lets you dive into the Pokémon world. Introducing the \emph{\poke{} reality gear} for an all new leap into immersion in gaming, enabling you to be as close to your favorite \poke{} as never before.\medskip
 
-Description Gear \medskip
+The \emph{\poke{} reality gear} isn't just a visual virtual reality device. This new product has been launched with an innovative new technique: the neuro-stimulator. Signals can be transmitted to the brain and cause specific sensory inputs. This provides a very accurate visual recreation of the game and comes with physical sensation options. In combination with the head motion and eye tracking sensors it creates the perfect virtual reality to experience your \poke{} adventure. \medskip
 
 The game offers the choice on how exactly you want to experience the \poke{} world. The world and its inhabitants have grown over the years, with each generation adding new regions to explore and hundreds new \poke{} to catch.
 
@@ -66,48 +63,155 @@ So what are you waiting for? Start getting to know your new favorite \poke{} gam
 \section{Glossary}
 New to \poke{} or virtual reality? Here are some words you might not know:\\
 \begin{tabular}{L{.3}L{.7}}
+% Eye tracking sensors & is a device for measuring eye positions and eye movement\\
+% Head tracking & the picture displayed in front of the user shifts as one looks up, down and side to side or angles his head\\
+Stereoscopic image & 2 warped images on each half of the screen\\
+% Pixel resolution & the capability of the sensor to observe or measure the smallest object clearly with distinct boundaries\\
+Neuron \newline & cell that transmits information in the brain through electrical and chemical signals\\
+Gyroscope & a device that senses angular velocity\\
+Accelerometer \newline & a device used to measure the acceleration of a moving or vibrating body\\
+% Optogenetics & is a biological technique which involves the use of light to control cells in living tissue, typically neurons\\
+% LED-Arrays & assemblies of LED packages or dies that can be built using several methods. Each method hinges on the manner and extent to which the chips themselves are packaged by the LED semiconductor manufacturer \\
 Pokémon\newline & pocket monster (animal-like monsters which live in the wild and are caught and trained by Pokémon trainers)\\
 NPC & non-player-characters (computer controlled characters)\\
-HP & health points
+HP & health points\\
 \end{tabular}
 %Glossary?!
 
 \chapter{The Gear}
 
-%Warnings (next to parts which need warnings)?
+The \emph{\poke{} reality gear} is a virtual reality headset that uses different technologies in order to allow you to dive into the \poke{} wold (Figure \ref{headset}). The headset creates a virtual environment in front of the user's eyes, while the attached sensors and neuro-stimulator launch you into the your \emph{\poke{} reality}.
 
-\section{Hardware Layout}
+The headset is manufactured in collaboration with \emph{Oculus VR, LCC.}
 
-%How the whole headset looks like (what it is made of)
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=0.7\linewidth]{src/vrheadset}
+\end{center}
+\caption[The \emph{\pokeT{} reality gear}]{The \emph{\poke{} reality gear}}
+\label{headset}
+\end{figure}
 
-\section{Important Parts}
+The \emph{\poke{} reality gear} is going to sit perfectly on your head and is very light with a weight of only 318 grams. In addition it is designed so that you do not feeling any pressure anywhere as the weight is evenly distributed towards your head. As the tapes, which keep the device in place, are made of a very elastic and adjustable material, the headset is suitable for you regardless of your age and size. Furthermore, the built-in earphones are  intended to fit your ears without causing any pressure, contributing to optimal comfort. Since the the gear is easily connected to any device via plug-and-play, you should be ready to experience your \poke{} world out of the box.
 
-%How the most important parts look like (and work)
+\section{Customer Awareness}
+
+Using the \emph{\poke{} reality gear} for more than three hours without interruption can cause a nausea feeling in certain sensitive individuals. It is advised to use the device for a maximum of two hours at a time without brakes. 
+
+The visual feedback combined with the neuro-stimulators could make the user lose himself in the virtual world. Children under the age of 12 and psychologically unstable users are advised to disable the neuro-stimulators, as it can easily affect their senses and the perception of the real world. 
+
+If you notice any discomfort during the use of the \emph{\poke{} reality gear} your first step should be to disable the neuro-stimulators.
+
+\newpage
+\section{The Headset In Detail}
+
+The \emph{\poke{} reality gear} has six main parts:
+\begin{enumerate}
+\setlength\itemsep{.05em}
+\setstretch{1}
+\item Lenses
+\item Display
+\item Eye and head motion tracking technology
+\item Audio
+\item Neuro-stimulators 
+\item Microphone [not visible]
+\end{enumerate}
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{src/vrcomponents}
+\end{center}
+\caption[The \emph{\pokeT{} reality gear} in detail]{The \emph{\poke{} reality gear} in detail}
+\end{figure}
+
+\subsection{Lenses} 
+The lenses (Figure \ref{vrlens}) are made up of concentric prisms of uniform thickness. Thus, a crystal clear, stable vision is guaranteed. They were made to establish a focal point, so that you can perceive the depth of the image, which essentially means that you can gaze beyond the virtual environment of the \emph{\poke{} reality game} and live the world while playing.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=0.4\linewidth]{src/vrlensa}
+\includegraphics[width=0.4\linewidth]{src/vrlensb}
+\end{center}
+\caption[The lenses of the \emph{\pokeT{} reality gear}]{The lenses of the \emph{\poke{} reality gear}}
+\label{vrlens}
+\end{figure}
+
+\subsection{Display}
+The \emph{\poke{} reality gear} display (Figure \ref{vrdisplay}) features 1080$\times$1200 pixels for each eye with 90 Hz dual split screens. The screen is positioned a few centimeters in front of your eyes and projects a stereoscopic image. When these images are viewed through the lenses, you will be able feel like you stand inside the \emph{\poke{} reality}.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=0.7\linewidth]{src/vrdispl}
+\end{center}
+\caption[The display of the \emph{\pokeT{} reality gear}]{The display of the \emph{\poke{} reality gear}}
+\label{vrdisplay}
+\end{figure}
+
+\subsection{Tracking technology (eye and head motion tracking)}
+The \emph{\poke{} reality gear} is built with multiple sensor inputs. The device is able to track your head movement due to a gyroscope, an accelerometer and a compass. This enables the adaption of the images of the virtual \poke{} world to the position of the head. The headset collects eye data by using a internal eye tracker. The eye tracker includes two common components: a light source and a camera. The camera tracks the reflection of the light source along with visible ocular features such as the pupil. This data is used to extrapolate the orientation of the eye and ultimately the focus points on the display.
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=0.7\linewidth]{src/vrtrack}
+\end{center}
+\caption[Usage of the \emph{\pokeT{} reality gear} tracking technology]{Usage of the \emph{\poke{} reality gear} tracking technology}
+\label{vrtrack}
+\end{figure}
+
+\subsection{Audio}
+The \emph{\poke{} reality gear} headphones (Figure \ref{vraudio}) are equipped with \emph{Head Transfer Function Technology} which, combined with the head tracking sensors, offer a 3D audio 'spatialisation'. This method interpolates your head movement and alters the sounds of the game world accordingly to make them sound like they come from the real world.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=0.5\linewidth]{src/vraudio}
+\end{center}
+\caption[The \emph{\pokeT{} reality gear} headphones]{The \emph{\poke{} reality gear} headphones}
+\label{vraudio}
+\end{figure}
+
+\subsection{Neuro-Stimulators}
+There are two stimulators, located on each side of the \emph{\poke{} reality gear}, touching the temples when the headset has been put on. These stimulators work based on the \emph{neuron-manipulating wave interference} technique: Both devices send precisely timed pulses of high frequency photons at designated regions in your brain. These pulses manipulate your neurons and cause you to get a variety of sensations such as touch and smell. 
+
+This method is widely tested and completely save for usage. It is a key feature for making the final step into your \poke{} world.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=0.7\linewidth]{src/vrneuro}
+\end{center}
+\caption[The neuro-stimulators are almost invisible to the naked eye]{The neuro-stimulators are almost invisible to the naked eye}
+\label{vrneuro}
+\end{figure}
+
+\subsection{Microphone}
+The microphone is enclosed within the \emph{\poke{} reality gear}. With this microphone you are able to talk to NPCs and give commands to your \poke{}. Additionally it offers the ambient noise volume adjustment feature, enabling you to emerge into the \poke{} world even in noisier environments.
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=0.2\linewidth]{src/vrmic}
+\end{center}
+\caption[The integrated microphone]{The integrated microphone}
+\label{vrmic}
+\end{figure}
 
 \chapter{The Game}
+\label{software}
 
 \section{Consumer Awareness}
-\label{software}
 \begin{wrapfigure}{R}{60pt}
 \vspace{-18pt}
 \includegraphics[scale =1]{src/ratingsymbol_e10}
 \vspace{-30pt}
 \end{wrapfigure}
-\emph{\poke{} reality: the game} is generally suitable for all ages. It contains minimal mild cartoon violence and some mild language.
+The \emph{\poke{} reality game} is generally suitable for all ages. It contains minimal mild cartoon violence and some mild language.
 
-It is recommended to pause playing the game every hour for at least five minutes. This ensures minimal disorientation after long game sessions.
+To reiterate the warnings concerning \emph{\poke{} reality headset}: It is recommended to pause playing the game every couple of hours for at least five minutes. This ensures minimal disorientation after long game sessions.
 
 \section{Scope Of The Game}
 
-The main focus of \emph{\poke{} reality: the game} is the exploration of the game world and the encounters with all kinds of \poke{}. In contrast to previous installments of \poke{} games, \emph{\poke{} reality: the game} lets you chose what regions you want to explore and what \poke{} you want to encounter.
+The main focus of the \emph{\poke{} reality game} is the exploration of the game world and the encounters with all kinds of \poke{}. In contrast to previous installments of \poke{} games, the \emph{\poke{} reality game} lets you chose what regions you want to explore and what \poke{} you want to encounter.
 
 \begin{figure}[!ht]
 \begin{center}
-{%
-\setlength{\fboxsep}{2pt}%
-\setlength{\fboxrule}{1pt}%
-\fbox{\includegraphics[width=0.7\linewidth]{src/pokemap}}%
-}%
+\includegraphics[width=0.7\linewidth]{src/pokemap}
 \end{center}
 \caption[The \emph{\pokeT{} reality game} map with all available 'regions']{The \emph{\poke{} reality game} map with all available 'regions'}
 \label{pokemap}
@@ -133,7 +237,7 @@ The \poke{} world is composed of all your favorite regions of the previous games
 
 All these regions carry unique bioms and moods. There are different kinds of towns and landscapes to explore: From the windy \emph{Orange Islands} with their gusting sea to the steep mountains in the west of \emph{Kanto}.
 
-One of the most important feature of \emph{\poke{} reality: the game} is the fact, that you may pick what \poke{} you want to encounter. 
+One of the most important feature of the \emph{\poke{} reality game} is the fact, that you may pick what \poke{} you want to encounter. 
 
 You want a more retrospective experience? No problem: just deactivate all \poke{} except the first generation and you will only encounter \emph{Kanto-\poke{}}.
 
@@ -142,6 +246,8 @@ You want the full experience? Just keep the settings unchanged and get to know t
 You may choose among the following sets of \poke{}, together over 800 \poke{}:
 \begin{multicols}{2}
 \begin{itemize}
+\setlength\itemsep{.05em}
+\setstretch{1}
 \item 1. Generation: 151 \emph{Kanto-\pokeT}
 \item 2. Generation: 100 \emph{Johto-\pokeT}
 \item 3. Generation: 135 \emph{Hoenn-\pokeT}
@@ -162,19 +268,13 @@ The gameplay consists mainly of three parts:
 \item battling \poke{}-trainers
 \end{itemize}
 
-The final goal in the game is to catch as many \poke{} as you can, become the best \poke{}-trainer and find all the secrets hidden in the world.
-
 \subsection{Exploration}
 
-As you will playing the game with your \emph{\poke{} reality gear}, the exploring itself is pretty much how you explore the real world, too: Walk and wonder (Figure \ref{exploration}).
+As you will be playing the game with your \emph{\poke{} reality gear}, the exploring itself is pretty much how you explore the real world, too: Walk and wonder (Figure \ref{exploration}).
 
 \begin{figure}[!ht]
 \begin{center}
-{%
-\setlength{\fboxsep}{2pt}%
-\setlength{\fboxrule}{1pt}%
-\fbox{\includegraphics[width=0.7\linewidth]{src/pokeworld}}%
-}%
+\includegraphics[width=0.7\linewidth]{src/pokeworld}
 \end{center}
 \caption[Exploring the \pokeT{} world]{Exploring the \poke{} world}
 \label{exploration}
@@ -184,11 +284,7 @@ By keeping an eye open for details, you may discover hidden paths which lead to 
 
 \begin{figure}[!ht]
 \begin{center}
-{%
-\setlength{\fboxsep}{2pt}%
-\setlength{\fboxrule}{1pt}%
-\fbox{\includegraphics[width=0.7\linewidth]{src/pokeworld2}}%
-}%
+\includegraphics[width=0.7\linewidth]{src/pokeworld2}
 \end{center}
 \caption[Discovering secrets in the \pokeT{} world]{Discovering secrets in the \poke{} world}
 \label{secrets}
@@ -204,11 +300,7 @@ This menu is used intuitively with your \emph{\poke{} reality gear} (Figure \ref
 
 \begin{figure}[!ht]
 \begin{center}
-{%
-\setlength{\fboxsep}{2pt}%
-\setlength{\fboxrule}{1pt}%
-\fbox{\includegraphics[width=0.7\linewidth]{src/interface}}%
-}%
+\includegraphics[width=0.7\linewidth]{src/interface}
 \end{center}
 \caption[The \emph{\pokeT{} reality game} menu]{The \emph{\poke{} reality game} menu}
 \label{menu}
@@ -228,7 +320,7 @@ A battle has the following sequence of events:
 \item exchange the fighting \poke{} for a different \poke{} from your team
 \item retreat from the battle
 \end{itemize}
-\item These turns are repeated until the fight is over. If you lose you will be teleported back to the nearest town. By winning your \poke{} gain experience and you may get some item-rewards.
+\item These turns are repeated until the fight is over. If you lose, you will be teleported back to the nearest town. By winning, your \poke{} gain experience and you may get some item-rewards.
 \end{enumerate}
 
 %\newpage
@@ -240,11 +332,7 @@ In Figure \ref{battle} you can see the layout of a battle:
 
 \begin{figure}[!ht]
 \begin{center}
-{%
-\setlength{\fboxsep}{2pt}%
-\setlength{\fboxrule}{1pt}%
-\fbox{\includegraphics[width=0.7\linewidth]{src/interface3}}%
-}%
+\includegraphics[width=0.7\linewidth]{src/interface3}
 \end{center}
 \caption[A \pokeT{} battle]{A \poke{} battle}
 \label{battle}
@@ -253,23 +341,25 @@ In Figure \ref{battle} you can see the layout of a battle:
 \newpage
 
 \subsection[Catching \pokeT{}]{Catching \poke{}}
-During battles with wild \poke{} you have the chance to catch them to add to your team. This takes place during one of your turns: Instead of attacking the opponent, you select a Pokéball from your inventory (Figure \ref{catching}). With some luck, this results in the \poke{} being caught by you. To increase your chances, it is recommended to weaken the \poke{} you are trying to catch before using a Pokéball by attacking it and thus reducing its HP.
+During battles with wild \poke{} you have the option to add them to your team by catching them. This takes place during one of your turns during the battle: Instead of attacking the opponent, you select a Pokéball from your inventory (Figure \ref{catching}). With some luck, this results in the \poke{} being caught by you. To increase your chances, it is recommended to weaken the \poke{} you are trying to catch before using a Pokéball by attacking it and thus reducing its HP.
 
 \begin{figure}[!ht]
 \begin{center}
-{%
-\setlength{\fboxsep}{2pt}%
-\setlength{\fboxrule}{1pt}%
-\fbox{\includegraphics[width=0.7\linewidth]{src/interface2}}%
-}%
+\includegraphics[width=0.7\linewidth]{src/interface2}
 \end{center}
 \caption[Catching a \pokeT{} with Pokéballs using the game menu]{Catching a \poke{} with Pokéballs using the game menu}
 \label{catching}
 \end{figure}
 
-\chapter{Conclusion}
+\section{Conclusion}
 
-Thank you for reading this technical description of the \emph{\poke{} reality game and gear}. We hope you enjoy our new revolutionary way of experiencing the \poke{} wold.
+Your final goal in the game is become the ultimate \poke{}-master by catching as many \poke{} as you can and finding all the secrets hidden in the world.
+
+By exploring the \poke{} world, catching \poke{} and battling trainers, you will get closer to this dream…
+
+\chapter{Final Notes}
+
+Thank you for reading this technical description of the \emph{\poke{} reality game and gear}. We hope you enjoy our new revolutionary way of experiencing the \poke{} world.
 
 \bigskip
 
@@ -281,14 +371,8 @@ D-04359 Squirtle Town\\
 \Email & MandS.inc@pokereality.com\\
 \end{tabular}
 
-\chapter{Questions}
-[not present in final release]
-\begin{itemize}
-\item Is the level of detail of process description of the game enough or too much? Is something missing?
-\end{itemize}
-
-\newpage
-\listoffigures
+%\newpage
+%\listoffigures
 %\newpage
 %\printbibliography
 
