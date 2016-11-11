@@ -520,7 +520,110 @@ SELECT Kunr, Name, Kredit,
 	Kredit*dbo.Gebuehrensatz(Kredit)/100 AS Kreditgebuehr
 FROM Kunde
 \end{lstlisting}
+\subsubsection*{Details zum Beispiel}
+\slidesScale{2B}{1}
 
+\subsubsection{Tabellenwertfunktion}
+\slidesScale{2}{20}
+wichtiger Unterschied zwischen „View“ und „Tabellenwertfunktion“: View können keine Parameter übergeben werden.
+\subsubsection*{Details zum Beispiel}
+\slidesScale{2B}{2}
+\subsubsection*{Weiteres Beispiel}
+\begin{lstlisting}[language=SQL]
+declare @ort char(20)
+set @ort = 'Dresden'
+
+SELECT a.*, b.Artnr, b.Menge, b.VPreis
+FROM ErmittleKundenImOrt(@ort) a
+	JOIN Kauf b ON a.Kunr = b.Kunr
+\end{lstlisting}
+
+\subsection{Trigger}
+\slidesScale{2}{21}
+Trigger ist mit Tabelle verknüpft (für Aktionen wie Insert, Update, Delete, …).\\
+Wenn nun ein Insert, Update, Delete, … auf die Tabelle ausgeführt wird, wird der entsprechende Trigger ausgeführt.
+
+Trigger können nur vom Besitzer der Tabelle erstellt werden.
+
+Beispiel für einfachen Trigger:
+\begin{lstlisting}[language=SQL]
+CREATE TRIGGER delKunde
+ ON Kunde
+ FOR DELETE
+ AS 
+ 	print 'Sie haben Kunden gelöscht'
+RETURN
+\end{lstlisting}
+Zugriff auf das Transaktionlog:\\
+t-sql: virtuelle Tabellen (deleted, inserted)
+\subsubsection*{Ablauf der Datenmanipulation}
+Tabelle liegt auf der Festplatte. Tabelle wird zum Bearbeiten in den Hauptspeicher des Rechners kopiert. Transaktion ist auf separater Festplatte mit Transaktionlog (Protokolldatei) abgelegt.
+
+Beispiel DELETE:\\
+\begin{tabular}{l L{.25} c L{.3} c L{.3}}
+&DB && Speicher && Log\\\hline
+1.&DELETE Kunde & $\searrow$ &\\
+2.&&&Kunden-Seite anlegen & $\searrow$ & \\
+3.&&&&$\swarrow$&deleted = before image = Undo Information\\
+4.&&$\swarrow$&Kunden-Seite löschen, dann bekannt geben nach außen, dass gelöscht &&\\
+5.&Löschung schreiben (verzögert) &&
+\end{tabular}
+
+Beispiel INSERT:\\
+\begin{tabular}{l L{.25} c L{.3} c L{.3}}
+&DB && Speicher && Log\\\hline
+1.&INSERT INTO Kauf & $\searrow$ &\\
+2.&&&Kauf-Seite anlegen & $\searrow$ & \\
+3.&&$\swarrow$&&$\leftarrow$&inserted=after image= Redo Information, dann bekannt geben nach außen, dass angelegt\\
+4.&Löschung schreiben (verzögert) &&
+\end{tabular}\\
+Fall UPDATE: ist bloß Kombination aus DELETE+INSERT\\
+Mit dem Trigger erhält man Zugriff auf das letzte Stück des Transaktionlog (inserted/deleted), welches die Transaktion betrifft, die gerade bearbeitet wird.
+\subsubsection{Zusammenhang zwischen Programm und DBMS}
+\slidesScale{2}{22}
+\subsubsection*{Trigger zur Abbildung der ref. Integrität}
+Löschweitergabe: kaskadierendes Löschen\\
+Kunde löschen in Tabelle Kunde $\Rightarrow$ Löschen seiner Einkäufe in Tabelle Kauf
+\begin{lstlisting}[language=SQL]
+CREATE TRIGGER Kund_loesch
+	ON Kunde
+	FOR DELETE
+	AS
+		DELETE Kauf
+		WHERE Kunr IN (SELECT Kunr FROM deleted)
+RETURN
+\end{lstlisting}
+Achtung: Trigger sollten für mehrere Datensätze funktionieren, nicht nur für einen (Deswegen Kunr IN … und nicht Kunr = … -- im Fall von mehreren und nicht nur einem Datensatz). Trigger sollte möglichst performant sein!
+
+\subsubsection*{Zeitpunkt des Triggeraufrufs}
+Bsp.:
+\begin{lstlisting}[language=SQL]
+DELETE FROM Kunde
+WHERE Ort = 'Dresden'
+\end{lstlisting}
+Server arbeitet mit AUTOCOMMIT:\\
+\begin{tabular}{l | l}
+ohne Trigger & mit Trigger\\\hline
+Beginn der Transaktion & Beginn der Transaktion\\
+deleted schreiben (Tabelle) & deleted schreiben (Tabelle)\\
+& DELETE-Trigger aufrufen\\
+Transaktion beendet & Transaktion beendet ODER Trigger setzt zurück $\uparrow$ (Rollback)
+\end{tabular}
+
+\subsubsection*{Beispiel}
+Löschen in Kunde unterbinden, wenn in Kauf noch Datensätze für den Kunden vorhanden sind (RESTRICT):
+\begin{lstlisting}[language=SQL]
+CREATE TRIGGER delKund1
+	ON Kunde FOR DELETE
+	AS
+		IF (SELECT COUNT(*) FROM Kauf k JOIN delete d ON k.Kunr = d.Kunr) > 0
+		BEGIN
+			print 'Abbruch, da noch Daten in Kauf'
+			SELECT ... -- Datensätze, die referenziellen Integrität widersprechen auch mit print ausgeben
+			ROLLBACK TRANSACTION -- Trigger steckt mitten in Transaktion, deswegen kann hier ein Rollback der Transaktion veranlasst werden, obwohl sie hier nicht explizit begonnen wurde
+		END
+RETURN
+\end{lstlisting}
 \section{Sicherung der physischen Integrität}
 \section{Zugriffsschutz/Datenschutz}
 
