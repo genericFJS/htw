@@ -272,6 +272,7 @@ weiterhin:
 
 \subsection{Kohärenz und Konsistenz}
 \subsubsection{Kohärenz}
+„Alle Speicherzugreifenden bekommen den richtigen Wert, wenn sie auf den Speicher zugreifen“
 \subsubsection*{Kohärenz Beispiel mit Write-Through-Caches}
 \slidesScale{03}{24}
 \subsubsection*{Kohärenz Beispiel mit Write-Back-Caches}
@@ -293,6 +294,86 @@ weiterhin:
 \subsubsection{Kohärenz-Protokolle}
 \slidesScale{03}{31}
 
+\subsubsection*{Vereichnisbasiert}
+\slidesScale{03}{32}
+
+\subsubsection*{Bus-Snooping}
+\slidesScale{03}{33}
+
+Möglichkeiten:
+\slidesScale{03}{34}
+
+\subsubsection*{MESI-Kohärenzprotokoll}
+\slidesScale{03}{35}
+Verbesserungen:
+\slidesScale{03}{36}
+
+\subsubsection*{Update-basierte Protokolle}
+\slidesScale{03}{37}
+
+\section{Cache}
+
+\subsection{Realisierung}
+\slidesScale{03}{38}
+
+\subsection{Aufbau eines Cache-Speichers}
+\slidesScale{03}{39}
+
+\subsection{Begriffe}
+\slidesScale{03}{40}
+
+\subsection{Direktabbildender Cache}
+(Direct Mapped Cache)
+\slidesScale{03}{41}
+Beispiel: Direkt abgebildeter Cache mit 8 Einträgen, Speicher mit $2^5$ Adressen: Die letzten Bits der Speicheradressen bestimmen die Position im Cache: $00001$, $01001$, $10001$ und $11001$ landen im Cache-Block $001$.
+\slidesScale{03}{42}
+
+\subsection{vollassoziativer Cache}
+(Fully Associative Cache)
+\slidesScale{03}{43}
+
+\subsection{p-fach satzassoziativer Cache}
+\slidesScale{03}{44}
+\slidesScale{03}{45}
+
+\subsection{Cache-Mapping: zusammenfassendes Beispiel}
+\slidesScale{03}{46}
+
+Die 2. und 3. Caches geben dem Cache also eine Struktur vor, die die Nachteile des voll-assoziativer Caches versuchen abzumildern.
+
+\section{Leistungssteigerung durch Cache}
+
+\slidesScale{03}{47}
+\slidesScale{03}{48}
+\slidesScale{03}{49}
+
+\subsection{Gesamtgröße und Block(rahmen)größe}
+\slidesScale{03}{50}
+\subsubsection{Einfluss der Blockrahmengröße}
+\slidesScale{03}{51}
+
+\section{Nachladestrategien}
+\subsection{Demand Fetching}
+\slidesScale{03}{52}
+\subsection{Prefetching}
+\subsubsection*{Was}
+\slidesScale{03}{53}
+\subsubsection*{Wann}
+\slidesScale{03}{54}
+\slidesScale{03}{55}
+Tagged Prefetch: Es wird nur weiter nachgeladen, wenn es sich zuvor „gelohnt“ hat ($\to$ ein Hit vorhanden war)
+
+\section{Verdrängungsstrategien}
+(Replacement Policy)
+\slidesScale{03}{56}
+\subsection{Random, FIFO, Round Robin}
+\slidesScale{03}{57}
+\subsection{LFU}
+\slidesScale{03}{58}
+\subsection{LRU}
+\slidesScale{03}{59}
+\subsubsection{Algorithmus}
+\slidesScale{03}{60}
 
 \chapter{Sekundärspeicher}
 
@@ -323,7 +404,7 @@ weiterhin:
 \item Großrechner
 \end{itemize}
 
-% Folien bis 
+% Folien bis 51?
 
 Folie 39: \\
 uint8\_t für 8-Bit unsigned Integer - gut, da AVR 8-Bit ist.
@@ -332,6 +413,16 @@ wichtig: Folie 42 -> Bit-Tricks\\
 1<<3 : 3. Bit wird auf 1 gesetzt; |= (bitweises Oder) belässt alle Bits gleich, bis auf das 3. (in dem Bsp.), das wird 1.\\
 \textasciitilde() (bitweise Negation); \&= belässt alle Bits gleich, bis auf das 3., das wird 1.\\
 \^{}= (exklusives Oder) fürs Invertieren
+
+% Folie 52
+
+Interrupt in C: mit globalen Variablen
+
+Hinweis Atmel-Board: 0 ist "1" und 1 ist "0" (im Sinne, dass bei 0 die Lampe leuchtet)
+
+Service Routine abfragen bei Timer: von Folien 56/57
+
+%Folie 71
 
 %\chapter{Mikrocontroller und C}
 %\slideScale{1}
