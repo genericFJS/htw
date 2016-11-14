@@ -8,6 +8,7 @@ ISR(TIMER0_OVF_vect){
 }
 
 int main (void){
+	DDRB = 0xFF; // B komplett als Ausgabe definieren
 	
 	// Timer: (alle 262ms)
 	TCCR0 = (1 << CS02) | (1 << CS01) |(1 << CS00);
