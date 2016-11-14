@@ -592,6 +592,8 @@ $\Rightarrow \PP(F) = 0,99\cdot 0,992 = 0,98208$
 
 \section{Zufallsvariablen}
 
+\subsection{Grundlagen}
+
 \cparagraph{Definition} Sei $(\Omega,  \cA, \PP)$ ein WK-Raum. Eine Zufallsvariable (ZV) oder Zufallsgröße ist eine Funktion $X$, die jedem Elementarereignis eine reelle Zahl zuordnet (d.h. $X: \Omega \to \RR$) und die Zusatzeigenschaft
 $$\text{für jedes Intervall gilt: }\{\omega \in \Omega \;|\;  X(\omega) \in I\} \in \cA$$
 erfüllt.
@@ -745,7 +747,7 @@ ABB S6
 &=\PP(\{\omega \in \Omega \;|\; X(\omega)\leq 1 \}) \\
 &= \{\text{WK, dass $X$ einen Wert $\leq 1$ annimt}\}\\
 &=\{\text{Funktionswert von $F_X$ bei $X=1$}\}\\
-&=\int_{-\infty}^1 f(t)\intd{t}\\
+&=\int\limits_{-\infty}^1 f(t)\intd{t}\\
 &=\{\text{Flächeninhalt des markierten Bereichs der Dichtefunktion}\}
 \end{align*}
 \end{itemize}
@@ -754,17 +756,17 @@ ABB S6
 \begin{itemize}
 \item $f$ ist auf ganz $\RR$ definiert.
 \item $f(x)\geq 0 \quad \forall x \in \RR$
-\item $\int_{-\infty}^{\infty}f(x)\intd{x}=1$ (Dichtefunktion ist normiert)
+\item $\int\limits_{-\infty}^{\infty}f(x)\intd{x}=1$ (Dichtefunktion ist normiert)
 \end{itemize}
 Umkehrung des Satzes gilt auch:
 \cparagraph{Satz} Sei $f$ eine integrierbare reelwertige Funktion. Dann gilt: 
 \begin{itemize}
 \item $f$ ist auf ganz $\RR$ definiert.
 \item $f(x)\geq 0 \quad \forall x \in \RR$
-\item $\int_{-\infty}^{\infty}f(x)\intd{x}=1$ 
+\item $\int\limits_{-\infty}^{\infty}f(x)\intd{x}=1$ 
 \end{itemize}
 Dann ist $f$ die Dichte einer Zufallsvariablen $X$. Die zugehörige VF $F_X:\RR\to [0,1]$ ist dann
-$$F_X(x):=\int_{-\infty}^{\infty} f(t) \intd{t}$$
+$$F_X(x):=\int\limits_{-\infty}^{\infty} f(t) \intd{t}$$
 
 \cparagraph{Beispiel} Wir kommen zu einer zufälligen Zeit an der Bushaltestelle an. Der Bus fährt alle 10 Minuten. Die ZV $X$ beschreibe die Wartezeit auf den nächsten Bus, d.h. $X$ kann alle Wert zwischen 0 und 10 annehmen wobei jede Wartezeit gleich-wahrscheinlich sein soll.\\
 Die zugehörige Dichtefunktion ist daher:\\
@@ -775,17 +777,17 @@ h & 0 < x < 10\\
 \end{cases}$
 \begin{anumerate}
 \item Wie ist $h$ zu wählen?\\
-Es muss gelten $1\overset{!}{=}\int_{-\infty}^{\infty}f(x)\intd{x}=\int_0^{10}h\intd{x}=\left[ h\cdot x\right]_0^{10}=10\cdot h \Rightarrow h = \frac{1}{10}$
+Es muss gelten $1\overset{!}{=}\int\limits_{-\infty}^{\infty}f(x)\intd{x}=\int\limits_0^{10}h\intd{x}=\left[ h\cdot x\right]_0^{10}=10\cdot h \Rightarrow h = \frac{1}{10}$
 \item Wie sieht $F_X$ aus?\\
 ABB S8\\
-$F_X(x)=\int_{-\infty}^x f(t) \intd{t}=\begin{cases}
+$F_X(x)=\int\limits_{-\infty}^x f(t) \intd{t}=\begin{cases}
 0 & x\leq 0\\
 \tfrac{1}{10} x & 0 < x < 10\\
 1 & x \geq 10
 \end{cases}$\\
-Fall $x\leq 0$: $F_X(x)=\int_{-\infty}^x 0 \intd{t} = 0$\\
-Fall $0<x<10$: $F_X(x)= \int_{-\infty}^0 0 \intd{t} + \int_0^x \frac{1}{10} \intd{t} = \frac{1}{10}x$\\
-Fall $x \geq 10$: $F_X(x) = \underbrace{\int_{-\infty}^0 0 \intd{t}}_{0}+ \underbrace{\int_0^{10} \frac{1}{10} \intd{t}}_1 + \underbrace{\int_{10}^x 0 \intd{t}}_0 = 1$
+Fall $x\leq 0$: $F_X(x)=\int\limits_{-\infty}^x 0 \intd{t} = 0$\\
+Fall $0<x<10$: $F_X(x)= \int\limits_{-\infty}^0 0 \intd{t} + \int\limits_0^x \frac{1}{10} \intd{t} = \frac{1}{10}x$\\
+Fall $x \geq 10$: $F_X(x) = \underbrace{\int\limits_{-\infty}^0 0 \intd{t}}_{0}+ \underbrace{\int\limits_0^{10} \frac{1}{10} \intd{t}}_1 + \underbrace{\int\limits_{10}^x 0 \intd{t}}_0 = 1$
 \end{anumerate}
 
 \cparagraph{Satz} Sei $X$ eine stetige ZV mit Dichte $f$ und VF $F$. Die WK, dass $X$ einen Wert im Intervall $(a,b)$ (oder $[a,b], [a,b), (a,b]$) annimt ist:
@@ -794,11 +796,123 @@ Fall $x \geq 10$: $F_X(x) = \underbrace{\int_{-\infty}^0 0 \intd{t}}_{0}+ \under
 = \PP(a \leq X <b) 
 = \PP(a < X \leq b)\\
 &=F(b)-F(a) \\
-&= \int_a^b f(x) \intd{x}
+&= \int\limits_a^b f(x) \intd{x}
 \end{align*}
 
 Das entspricht den Flächeninhalt unter $f$ zwischen $a$ und $b$.
 
+\cparagraph{Bemerkung}
+\begin{itemize}
+\item Für $a=b$ zeigt der Satz: Ist $X$ stetig, so gilt 
+$$\PP(X=a) = 0$$
+für alle $a \in \RR$
+\item Im Satz ist auch $a = - \infty$ und/oder $b=+ \infty$ erlaubt, wobei 
+$$F(-\infty) := \lim_{x \to -\infty} F(x) = 0$$
+$$F(\infty) := \lim_{x \to \infty} F(x) = 1$$
+\end{itemize}
+
+\cparagraph{Beispiel} (Fortsetzung von Beispiel 1.2.19)
+\begin{itemize}
+\item Wie groß ist die WK maximal 3 Minuten zu warten? Gesucht: $\PP(X \leq 3)$\\
+$\PP(X \leq 3) = F(3) = 0,1 \cdot 3 = 0,3$
+\item Wie groß ist die WK mindestens 2 Minuten zu warten? Gesucht: $\PP(X \geq 2)$\\
+$\PP(X \geq 2 ) = \PP(2 \leq X < \infty) = F(\infty)-F(2) = 1-2\cdot 0,1 = 0,8$
+\item Wie groß ist die WK zwischen 5 und 9 Minuten zu warten?\\
+$\PP( 5 \leq X \leq 9 ) = F(9) - F(5) = 9 \cdot 0,1 - 5 \cdot 0,1 = 0,4$
+\end{itemize}
+
+\subsection{Erwartungswert und Varianz}
+\cparagraph{Beispiel} (Würfelspiel) A und B würfeln wieder: 2 Würfel. ZV $X$ beschreibt die Augensumme. Spielregeln:\\
+\begin{tabular}{c | c | c}
+Ergebnis & WK & Bewertung\\
+\hline 
+$\{X\leq 3\}$ & 1/12 & A zahlt B 20,10\euro{}\\
+$\{4 \leq X \leq 6\}$ & 1/3 & A zahlt B 1,20\euro{}\\
+$\{X=7\}$ & 1/6 & niemand zahlt etwas\\
+$\{8 \leq X \leq 9\}$ & 1/4 & B zahlt A 3,10\euro{}\\
+$\{ 10 \leq X \leq 12\}$ & 1/6 & B zahlt A 7,80\euro{}
+\end{tabular}
+
+$Y$… Gewinn von A\\
+Verteilungstabelle von $Y$:\\
+\begin{tabular}{r | c | c | c | c | c}
+Werte $y_i$ & -20,1 & -1,2 & 3,1 & 7,8 & 0\\\hline 
+WK $p_i$ & 1/12 & 1/3 & 1/4 & 1/6 & 1/6
+\end{tabular}
+
+Frage: Ist das Spiel gerecht?\\
+Mittlerer Gewinn: $-20,1 \cdot \frac{1}{12} + (-1,2) \cdot \frac{1}{3}+ 0\cdot \frac{1}{6} + 3,1 \cdot \frac{1}{4} + 7,8 \cdot \frac{1}{6} = 0$\\
+Dies motiviert die folgende Definition:
+\cparagraph{Definition} Sie $X$ eine ZV. Der Erwartungswert $\EE(X)$ und die Varianz $\var(X)$ sind wie folgt definiert:
+\begin{anumerate}
+\item Falls $X$ diskret ist, mit Verteilungstabelle:\\
+\begin{tabular}{r | c c c c}
+Werte & $x_1$ & $x_2$ & $x_3$ & …\\\hline
+WK & $p_1$ & $p_2$ & $p_3$ & …
+\end{tabular}\\
+(bzw. mit WK-Funktion $f$), dann 
+$$\EE(X) = \sum_i x_i \cdot p_i = \sum_i x_i \cdot f(x_i)$$
+und
+$$\var(X)=\sum_i (x_i - \EE(X))^2 \cdot p_i = \sum_i (x_i - \EE(X))^2 f(x_i)$$
+\item Falls $X$ stetig ist mit Dicht $f$, dann
+$$\EE(X) = \int\limits_{-\infty}^{\infty} x\cdot f(x) \intd{x}$$
+und 
+$$\var (X) = \int\limits_{-\infty}^{\infty} (x-\EE(X))^2 f(x) \intd{x}$$
+\end{anumerate}
+
+\cparagraph{Satz} Sei $X$ eine ZV und $a, b \in \RR$. Dann:
+\begin{itemize}
+\item $\EE(a+bX)=a+b\EE(X)$ \tab (Linearität des Erwartungswertes)
+\item $\var(a+bX) = b^2 \var X$
+\item $\var(X)=0 \;\Leftrightarrow\; \exists a \in \RR: \PP(X=a) =1$
+\end{itemize}
+
+\cparagraph{Bemerkung} 
+\begin{itemize}
+\item $\sigma_X=\sqrt{\var X}$ wird \emph{Standardabweichung} genannt.
+\item $\var (X)$ ist die mittlere quadratische Abweichung vom Erwartungswert und es gilt:
+$$\var (X) = \EE(X^2) - (\EE(X))^2$$
+\item Sei $g: \RR \to \RR$ eine beliebige Funktion, dann gilt: \\
+(im diskreten) \tab\tab $\EE(g(X))=\sum_i g(x_i) \cdot f(x_i)$\bigskip\\
+(im stetigen) \tab\tab $\EE(g(X))=\int\limits_{-\infty}^{\infty} g(x) \cdot f(x) \intd{x}$\\
+z.B. für $g(x):=x^2$:\\
+$\EE(X^2) = \sum_i x_i^2 f(x_i)$ bzw. $\EE(X^2) = \int\limits_{-\infty}^{\infty}x^2 f(x) \intd{x}$
+\end{itemize}
+
+\cparagraph{Beispiel} $X$… Zahl der Einsätze eines Havariedienstes an einem Tag. Erfahrung liefert: \\
+\begin{tabular}{r | c c c}
+$x_i$ & $0$ & $1$ & $2$\\\hline
+$p_i=f(x_i)$ & $0,6$ & $0,3$ & $0,1$
+\end{tabular}\medskip\\
+$\EE(X)=0\cdot 0,6 + 1 \cdot 0,3 + 2 \cdot 0,1 = 0,5$\\
+$\EE(X^2) = 0^2 \cdot 0,6  + 1^2 \cdot 0,3^2 + 2^2 \cdot 0,1 = 0,7$\\
+$\var(X)=\EE(X^2) - (\EE(X))^2 = 0,7-0,5^2 = 0,45$\\
+$\sigma_X= \sqrt{0,45}=0,671$\bigskip\\
+Wir betrachten nun eine ZV $X$ und fragen uns: Welchen Wert $m\in \RR$ muss man wählen, damit $\PP(X\leq m)\geq \frac{1}{2}$ und $\PP(X\geq m) \geq \frac{1}{2}$ gilt?\\
+Problem: Antwort nicht eindeutig!\\
+ABB S9\\
+Hier erfüllt jedes $m\in [1,3)$ diese Bedingung! Welchen dieser Werte wählen wir? Den kleinsten (und nennen ihn \emph{Median})!
+
+\cparagraph{Definition} Ist $F_X$ die Verteilungsfunktion einer ZV $X$, so heißt
+$$F_X^{-1}: [0,1]\to \RR, \quad F_X^{-1}(\alpha):= \min\{x\in\RR\;|\; F_X(x) \geq \alpha \}$$
+die \emph{verallgemeinerte inverse Verteilungsfunktion}. Der Median $m_X$ der Verteilungsfunktion $F_X$ ist definiert als
+$$m_X = F_X^{-1}(0,5)\text{.}$$
+Für gegebenes $\alpha \in (0,1)$ heißt
+$$q_\alpha = F_X^{-1}(\alpha)$$
+das $\alpha$-Quantil zur Verteilung $F_X$.
+
+\cparagraph{Bemerkung} 
+\begin{itemize}
+\item Daher ist der Median das $0,5$-Quantil der Verteilung: $m_X=q_{0,5}$
+\item Im Allgemeinen gilt: Erwartungswert $\not =$ Median.\\
+Beispiel:\\
+\begin{tabular}{r | l l l l}
+$x_1$ & $1$ & $3$ & $6$ & $7$\\\hline
+$\PP(X=x_i)$ & $0,2$ & $0,3$ & $0,1$ & $0,4$
+\end{tabular}\\
+$\EE(X)=4,5$\\
+$m_X=\min\{x\in \RR \;|\; F_X(x) \geq 0,5\}= \min[3,\infty) = 3$
+\end{itemize}
 
 
 %\newpage
