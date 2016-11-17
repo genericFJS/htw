@@ -578,7 +578,160 @@ Alle Stakeholder, also alle Beteiligten.
 
 Wichtig: Zu Beginn definieren, wer Stakeholder ist, damit klar ist, wer was zu sagen hat und wer nicht.
 
+\chapter{Anforderungensanalyse}
+
+\section*{Beschreibung ermittelter Anforderungen}
+\begin{itemize}
+\item textuelle $\to$ natürlich-sprachlich\\
+\begin{itemize}
+\item[$+$] Sprache allgemein bekannt
+\item[$-$] Missverständlichkeit / Interpretierbarkeit
+\item[$-$] Redundanz
+\end{itemize}
+\item graphisch $\to$ Modellierungs-Sprache
+\begin{itemize}
+\item[$+$] 
+\item[$-$] „Sprache“ muss bekannt sein (UML, …)
+\end{itemize}
+\end{itemize}
+Neutral für beide Seiten:
+\begin{itemize}
+\item[$\circ$] kann übersichtlicher/unübersichtlicher sein (je nach Strukturierung und was der Person mehr liegt: subjektiv)
+\end{itemize}
+\begin{itemize}
+\item Satzschablonen (Chris Rupp)
+\end{itemize}
+
+\section{Graphische Beschreibung von funktionalen Anforderungen}
+\begin{itemize}
+\item strukturierte (prozedurale) Programmierung (SP)\\
+$\to$ strukturierter Entwurf (SD)\\
+$\to$ strukturierte Analyse (SA)\\
+$\Rightarrow$ SA$\to$SD$\to$SP
+\begin{itemize}
+\item Funktionsdiagramm
+\item Datenstrukturdiagramm
+\item Datenflussdiagramm
+\item ERM
+\item Zustandsdiagramm
+\end{itemize}
+\item objektorientierte Programmierung (OOP)\\
+$\to$ objektorientierter Entwurf (OOD)\\
+$\to$ objektorientierte Analyse (OOA)\\
+$\Rightarrow$ UML (OOA$\to$OOD$\to$OOP)
+\begin{itemize}
+\item Klassendiagramm
+\item Aktivitätsdiagramm
+\item Zustandsdiagramm
+\item Anwendungsfalldiagramm
+\item[] $\vdots$
+\end{itemize}
+\end{itemize}
+UML $\to$ offener Standard
+\begin{itemize}[label=$\to$]
+\item in Entwicklung
+\item Stereotypen können vom Entwickler definiert und benutzt werden
+\end{itemize}
+
+\section{Struktur-Diagramm / UML}
+Ein Strukturdiagramm hat:
+\begin{itemize}
+\item Knoten
+\item Kanten
+\item Topologie (Netz, Baum, Hierarchie, …)
+\item Semantik (je nach Diagrammtyp)
+\end{itemize}
+UML kennt:
+\begin{itemize}
+\item Strukturdiagramme (Aufbaustruktur $\to$ statische Eigenschaften)
+\begin{itemize}
+\item Klassendiagramm
+\item Paketdiagramm
+\item Verteilungsdiagramm
+\item Objektdiagramm
+\item Komponentendiagramm
+\item Kompositionsstrukturdiagramm
+\end{itemize}
+\item Verhaltensdiagramme (Ablaufstruktur $\to$ dynamische Eigenschaften)
+\begin{itemize}
+\item Anwendungsfalldiagramm
+\item Aktivitätsdiagramm
+\item Zustandsdiagramm
+\item Sequenzdiagramm
+\item Kommunkationsdiagramm
+\item Interaktionsübersichtsdiagramm
+\item Zeitverlaufsdiagramm
+\end{itemize}
+\end{itemize}
+
+\subsection{Das Anwendungsfalldiagramm}
+\subsubsection*{Semantik}
+Das AWF-Diagramm stellt die funktionalen Anforderungen aus der Sicht der Anwender dar.\\
+Die funktionalen Anforderungen werden zu den Beteiligten aus dem Kontext in Beziehung gesetzt.\\
+Die Beziehung zwischen dem (externen) Anwender und dem AWF ist eine Kommunikationsbeziehung.
+\subsubsection*{Knoten}
+\begin{itemize}
+\item \begin{tikzpicture} [scale=.3]
+\draw  (0,0) ellipse (2 and 1);
+\end{tikzpicture} Anwendungsfälle
+\item \begin{tikzpicture} [scale =.15]
+\draw  (-3,4) ellipse (1 and 1);
+\draw (-3,3) -- (-3,0) -- (-4,-3);
+\draw (-2,-3) -- (-3,0);
+\draw (-3,2) -- (-5,1);
+\draw (-3,2) -- (-1,1);
+\end{tikzpicture} Akteur
+\end{itemize}
+\subsubsection*{Kanten}
+\begin{itemize}
+\item $\longleftrightarrow$ Kommunikationsbeziehung zwischen AWF und Akteur
+\item \begin{tikzpicture} [scale=.2]
+\fill (-2,-1) -- (-1,-2) -- (0,-1) -- cycle;
+\draw (-1,0) -- (-1,-1);
+\end{tikzpicture} Generalisierung / Spezialisierung zwischen Akteuren
+\item $\longrightarrow$ <<enthält>> (include), <<erweitert>> (extend) $\to$ zwischen AWF\\
+Tipp Pfeilrichtung: Durch aktiven Satz verdeutlichen (ausleihen enthält prüfen wird zu: prüfen $\overset{\text{<<enthält>>}}{\longleftarrow}$ ausleihen)
+\end{itemize}
+\subsubsection*{Topologie}
+Netzförmig
+
+\subsubsection*{Begriffe}
+AWF $\corr$ Prozess, Szenario, d.h.: Ein AWF kapselt eine Menge von Aktionen, die sequentiell nacheinander ablaufen oder zyklisch oder bedingungsabhängig gesteuert werden.
+\begin{itemize}
+\item Der AWF wird ausgelöst durch Ereignis:
+\begin{itemize}[label=$\to$]
+\item datengetriebenes Ereignis (bspw. Anmeldewunsch $\to$ Benutzer anmelden)
+\item zeitgesteuertes Ereignis
+\end{itemize}
+\item Der AWF führt in der Regel zu einem von außen sichtbaren Ereignis für den Anwender (bspw. Benutzerausweis als Ergebnis von „Benutzer anmelden“).
+\end{itemize}
+Konzept: $\overset{\text{E}}{\longrightarrow}\boxed{V}\overset{\text{A}}{\longrightarrow}$ (Eingabe, Verarbeitung, Ausgabe) \bigskip\\
+Akteur $\corr$ Ein \emph{außerhalb des Softwaresystems} existierendes Objekt, das mit dem SW-System \emph{interagiert}.
+\begin{itemize}
+\item ist rollenorientiert.
+\item ist aktiv oder passiv.\\
+Aktive Rollen:
+\begin{itemize}
+\item Anwender
+\item zeitliches Ereignis
+\item externes System
+\end{itemize}
+Passive Rolle:
+\begin{itemize}
+\item tut nichts, wird aber zur Abarbeitung des AWF'es benötigt (bspw.: Kurstabelle für eine Wechselstube / Aktien, Fahrplan, …) $\Rightarrow$ vorhandene Daten
+\end{itemize}
+\end{itemize}
+
+
+
+
+
+
+
+
+
 %\newpage
+
 %\printbibliography
  
 \end{document}
