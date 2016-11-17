@@ -338,7 +338,6 @@ Beispiel: Direkt abgebildeter Cache mit 8 Einträgen, Speicher mit $2^5$ Adresse
 
 \subsection{Cache-Mapping: zusammenfassendes Beispiel}
 \slidesScale{03}{46}
-
 Die 2. und 3. Caches geben dem Cache also eine Struktur vor, die die Nachteile des voll-assoziativer Caches versuchen abzumildern.
 
 \section{Leistungssteigerung durch Cache}
@@ -393,8 +392,20 @@ Tagged Prefetch: Es wird nur weiter nachgeladen, wenn es sich zuvor „gelohnt�
 \setCustomSlidePath{Praktikum/RA_043_P00D}
 
 \chapter{Einführung}
+\section{Mikrocontroller}
+\slideScale{2}
+\subsection{Unterscheidung und Architektur}
+\slideScale{3}
 
-\section{Computerklassen/-typen}
+\unimptnt{
+\subsection{Taktung}
+\slideScale{4}
+\subsection{Typische Peripherie}
+\slideScale{5}
+}
+\subsection{Einsatzbeispiele}
+\slideScale{6}
+\subsection*{Computerklassen/-typen}
 \begin{itemize}
 \item Wegwerfcomputer
 \item Microcontroller, embedded Computer
@@ -404,28 +415,123 @@ Tagged Prefetch: Es wird nur weiter nachgeladen, wenn es sich zuvor „gelohnt�
 \item Großrechner
 \end{itemize}
 
-% Folien bis 51?
+\subsection{Speicherbedarf}
+\slideScale{7}
+\slideScale{8}
 
-Folie 39: \\
+\unimptnt{
+\chapter{Fallbeispiel Atmel AVR}
+\section{AVR und AVR-Architektur im Überblick}
+\subsection{Allgemeines}
+\slideScale{9}
+\subsection{CPU und Archtitektur}
+\slideScale{10}
+\slideScale{11}
+\slideScale{12}
+\subsection{CPU zu Statusregister SREG}
+\slideScale{13}
+\subsection{Interne Perepherie}
+\slideScale{14}
+
+\section{Speichertypen}
+\subsection{Speicher}
+\slideScale{15}
+\slideScale{16}
+\subsection{Stack}
+\slideScale{17}
+
+\section{Beispielcontroller}
+\subsection{Typenbeispiele}
+\slideScale{18}
+\subsection{Blockschaltbild und Besonderheiten}
+\slideScale{19}
+\subsection{Gehäuse und Anschlüsse}
+\slideScale{20}
+
+\section{Entwicklungswerkzeuge}
+\subsection{Demoplattform AVR Butterfly}
+\slideScale{21}
+\subsection{Hardware}
+\slideScale{22}
+\subsubsection{Experimentalplattform STK500/501}
+\slideScale{23}
+\slideScale{24}
+\subsection{Software}
+\slideScale{25}
+
+\section{Baugruppen und deren Nutzung und Programmierung}
+\subsection{System- und Takt-Anschlüsse}
+\slideScale{26}
+\subsection{Bidirektionale Ports}
+\slideScale{27}
+\slideScale{28}
+\slideScale{29}
+\slideScale{30}
 uint8\_t für 8-Bit unsigned Integer - gut, da AVR 8-Bit ist.
-
-wichtig: Folie 42 -> Bit-Tricks\\
+\slideScale{31}
+\slideScale{32}
+\slideScale{33}
+}
+Wichtig: Bit-Tricks !!\\
 1<<3 : 3. Bit wird auf 1 gesetzt; |= (bitweises Oder) belässt alle Bits gleich, bis auf das 3. (in dem Bsp.), das wird 1.\\
 \textasciitilde() (bitweise Negation); \&= belässt alle Bits gleich, bis auf das 3., das wird 1.\\
 \^{}= (exklusives Oder) fürs Invertieren
+\unimptnt{
+\slideScale{34}
+\slideScale{35}
+\slideScale{36}
+\slideScale{37}
+\slideScale{38}
 
-% Folie 52
+\subsection{Alternative Nutzung der Universalports}
+\slideScale{39}
+\slideScale{40}
+\slideScale{41}
+\slideScale{42}
 
+\subsection{Interrupts}
+\subsubsection{Grundprinzip}
+\slideScale{43}
+
+\subsubsection{Interruptquellen}
+\slideScale{44}
+\subsubsection*{Beispiel ATmega128}
+\slideScale{45}
+\slideScale{46}
+\subsubsection{Anforderungen an Interrupt-Routinen}
+\slideScale{47}
 Interrupt in C: mit globalen Variablen
-
+\subsubsection{Beispiel für Interruptnutzung}
+\slideScale{48}
 Hinweis Atmel-Board: 0 ist "1" und 1 ist "0" (im Sinne, dass bei 0 die Lampe leuchtet)
+\slideScale{49}
+\slideScale{50}
+\slideScale{51}
 
-Service Routine abfragen bei Timer: von Folien 56/57
+\subsection{Timer/Counter}
+\slideScale{52}
+\subsubsection{Prescaler (Vorteiler)}
+\slideScale{53}
+\subsubsection{Betriebsmodi}
+\slideScale{54}
 
-%Folie 71
+\subsubsection{Normal Mode}
+\slideScale{55}
+\subsubsection{CTC-Mode}
+\slideScale{56}
+\subsubsection{PWM-Modus}
+\slideScale{57}
+\subsubsection{Beispiel 1 für Timer/Counter-Nutzung}
+\slideScale{58}
+\subsubsection{Beispiel 2 für Timer/Counter-Nutzung}
+\slideScale{59}
+\slideScale{60}
+\slideScale{61}
+\slideScale{62}
+\slideScale{63}
 
-%\chapter{Mikrocontroller und C}
-%\slideScale{1}
+
+}
 
 %\newpage
 %\printbibliography

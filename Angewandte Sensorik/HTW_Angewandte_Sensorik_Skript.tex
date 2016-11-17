@@ -770,6 +770,81 @@ Lösung: Dreileitertechnik: nicht komplett parallele Spannungsmessung, sodass ei
 \item Übertemperatur-Überwachung
 \item Niveaufühler für Flüssigkeiten
 \end{itemize}
+\subsubsection{Si-Temperatursensoren}
+Widerstand steigt mit Temperatur $\to$ Kaltleiter.
+\begin{itemize}[label=$+$]
+\item preiswert
+\item großer Messwiderstand
+\item große Empfindlichkeit
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item keine lineare Kennlinie
+\item DMS-Effekt (Dehnungs-Mess-Streifen)
+\item Spannung erforderlich
+\item Gehäuse $\Rightarrow$ langsam
+\item keine punktförmige Messung
+\end{itemize}
+
+\subsubsection{Spreading-Resistance-Sensor}
+$R=\frac{\varrho(T)}{\pi \cdot d}$\\
+ABB AS23 (Ersatzschaldbild)
+
+\subsubsection{Temperatur IC}
+Diodengleichung: $I=I_0\cdot \left[ \exp\left(\frac{e \cdot U}{k \cdot T}\right) -1 \right]$ mit $I_0$: Sperrstrom
+
+\subsection{Heißleiter (NTC)}
+\begin{itemize}[label=$+$]
+\item breites Spektrum an $R$
+\item großer TK ($3 \dots 6 \% /K$)
+\item[$-$] $-50^\circ C \dots +100^\circ C (\pm 5^\circ C)$
+\end{itemize}
+\begin{itemize}
+\item Thermistoren: Bestehen aus Keramiken (oxyde).
+\item Temperaturfühler
+\item Zeitverzögerungsglied
+\item Spannungsstabilisierung
+\end{itemize}
+
+\subsubsection{Thermoelemente}
+ABB AS24\\
+Beispiel: Draht führt durch zu Eis/Kerze (Kupfer), dazwischen ist dann Konstantan. Der Spannungsunterschied wird gemessen.\\
+Seebeck-Effekt: $U_{th}=\alpha_{th} \cdot \Delta T$ mit $U_{th}$: Thermospannung und $\alpha_{th}$: Thermokraft
+
+\subsubsection{Genormte Thermoelemente}
+\begin{tabular}{L{0.2} | l L{0.1} | l | L{0.3}}
+Thermopaar & Kurzzeichen & lin. Thermosp., $\mu V/K$ & T-Bereich ($^\circ C$) & Eigenschaften\\ \hline 
+Eisen-Konstantan (Fe-CuNi) & Typ J (Typ L) & 53 & -250 bis 700 (900) & billig, rostet, empfindlich gegen schwefel- und kohlenwasserstoffhaltige Luft\\\hline
+Kupfer-Konstantan (Cu-CuNi) & Typ T (Typ U) & 443 & -250 bis 300 & rostet nicht, Cu-CuNi verzundert\\\hline
+Nichkelchrom-Nickel (NiCr-Ni) & Typ K (Typ N) & 41 & -200 bis 1000 (1300) & hohe Thermokraft, recht linear, empfindlich gegen S-haltiges Gas\\\hline
+Platinrhodium-Platinum (PtRh-Pt; Pt/Rh=87/13) & Typ R & 6,5 & -50 bis 1500 & bei Rotglut einsetzbar, teuer, oxidationsbeständig\\\hline
+Platinrhodium-Platinum (PtRh-Pt; Pt/Rh=90/10) & Typ S & 6,5 & -50 bis 1500 & wie Typ R (angesächsisch), aber mehr im dt. Raum\\\hline
+PtRh-Schenkel mit verschiedenem Rh-Gehalt (70/30 - 94/6) & Typ B & 6,3 & 0 bis 1600 (1800) & unempfindlich gegen Verunreinigungen, T der Vergleichsstelle muss nicht konstant sein\\\hline
+WRh-Schenkel mit verschiedenem Rh-Gehalt (75/25 - 97/3) & Typ G & 15 & 0 bis 2200 & T der Vergleichsstelle muss nicht konstant sein, nur in neutraler und reduzierender Atmosphäre
+\end{tabular}
+
+\subsubsection{Aufbau von Thermoelementen}
+\begin{itemize}
+\item Kabelthermoelemente
+\begin{itemize}[label=$+$]
+\item sehr schnell
+\item[$-$] ungeschützt
+\end{itemize}
+\item Mantelthermoelemente (im Prinzip Kabel inkl. Mantel) $\to$ etwas langsamer, aber geschützter
+\item Isolierte Messstelle (TI)
+\begin{itemize}
+\item[$+$] elektrische und galvanische Trennung
+\item[$-$] lange Zeitkonstante
+\end{itemize}
+\item mit Mantel verbundene Messstelle (TM) [an Messstelle liegt Thermoelement „blank“]
+\begin{itemize}
+\item[$+$] kurze Zeitkonstante
+\item[$-$] galvanische Verbindung
+\end{itemize}
+\end{itemize}
+
+
+
+
 %\newpage
 %\printbibliography
 
