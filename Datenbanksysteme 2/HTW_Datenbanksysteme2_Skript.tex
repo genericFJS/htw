@@ -512,7 +512,7 @@ WHERE ...
 Anwendung für diese Funktion:
 \begin{lstlisting}[language=SQL]
 SELECT Kunr, Name, Kredit,
-	db.Gebuehrensatz(Kredit) AS Gebuehrensatz,
+	dbo.Gebuehrensatz(Kredit) AS Gebuehrensatz,
 	Kredit*dbo.Gebuehrensatz(Kredit)/100 AS Kreditgebuehr
 FROM Kunde
 \end{lstlisting}

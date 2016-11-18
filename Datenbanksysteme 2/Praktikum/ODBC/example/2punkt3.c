@@ -38,9 +38,10 @@ int main(int argc, char *argv[]) {
 
 	// program logic
 	while (getBerufe(&henv, &hdbc, &hstmt, beruf)) {
-		getMitarbeiter(&henv, &hdbc, &hstmt, beruf, mitID);
-		if (getMitDetails(&henv, &hdbc, &hstmt, beruf, mitID)) {
-			getProjektDetails(&henv, &hdbc, &hstmt, beruf, mitID);
+		if (getMitarbeiter(&henv, &hdbc, &hstmt, beruf, mitID)) {
+			if (getMitDetails(&henv, &hdbc, &hstmt, beruf, mitID)) {
+				getProjektDetails(&henv, &hdbc, &hstmt, beruf, mitID);
+			}
 		}
 	}
 
@@ -174,6 +175,9 @@ int getMitarbeiter(SQLHENV *henv, SQLHDBC *hdbc, SQLHSTMT *hstmt, char *beruf, c
 
 	if (i == 0) {
 		printf("  Beruf '%s' ist nicht vorhanden.\n", beruf);
+		printf("\n ? ");
+		fgets(vBuf, sizeof(vBuf), stdin);
+		printf("----------------------------------------------------------------------------\n");
 		return 0;
 	}
 
@@ -181,9 +185,10 @@ int getMitarbeiter(SQLHENV *henv, SQLHDBC *hdbc, SQLHSTMT *hstmt, char *beruf, c
 	printf("\n Mitarbeiter-ID ? ");
 	fgets(vBuf, VBUFSIZE, stdin);
 	vBuf[strlen(vBuf) - 1] = 0;
-	strncpy_s(mitID, MITIDSIZE + 1 , vBuf, VBUFSIZE);
+	//strncpy_s(mitID, MITIDSIZE + 1 , vBuf, VBUFSIZE);
+	strncpy_s(mitID, MITIDSIZE + 1, vBuf, MITIDSIZE);
 
-	return 0;
+	return 1;
 }
 
 int getMitDetails(SQLHENV *henv, SQLHDBC *hdbc, SQLHSTMT *hstmt, char *beruf, char *mitID) {
@@ -256,6 +261,9 @@ int getMitDetails(SQLHENV *henv, SQLHDBC *hdbc, SQLHSTMT *hstmt, char *beruf, ch
 
 	if (i == 0) {
 		printf("  '%s' ist in dem Kontext keine gueltige Mitarbeiter-ID.\n", mitID);
+		printf("\n ? ");
+		fgets(vBuf, sizeof(vBuf), stdin);
+		printf("----------------------------------------------------------------------------\n");
 		return 0;
 	}
 
@@ -266,8 +274,8 @@ int getProjektDetails(SQLHENV *henv, SQLHDBC *hdbc, SQLHSTMT *hstmt, char *beruf
 	// sql vars
 	SQLINTEGER proNr;
 	SQLCHAR proName[PRONAMESIZE + 1];
-	SQLFLOAT istAnt;
-	SQLFLOAT planAnt;
+	SQLDOUBLE istAnt;
+	SQLDOUBLE planAnt;
 	SQLCHAR istAnt2[4];
 	SQLCHAR planAnt2[4];
 	SQLLEN bindLen;
@@ -295,9 +303,9 @@ int getProjektDetails(SQLHENV *henv, SQLHDBC *hdbc, SQLHSTMT *hstmt, char *beruf
 	checkReturnCode("SQLBindCol [hstmt, 1, proNr]", rc, *hstmt, SQL_HANDLE_STMT);
 	rc = SQLBindCol(*hstmt, 2, SQL_C_CHAR, proName, PRONAMESIZE + 1, &bindLen);
 	checkReturnCode("SQLBindCol [hstmt, 2, proName]", rc, *hstmt, SQL_HANDLE_STMT);
-	rc = SQLBindCol(*hstmt, 3, SQL_C_CHAR, istAnt2, 4, &bindLen);
+	rc = SQLBindCol(*hstmt, 3, SQL_C_DOUBLE, &istAnt, 1024, &bindLen);
 	checkReturnCode("SQLBindCol [hstmt, 3, &istAnt]", rc, *hstmt, SQL_HANDLE_STMT);
-	rc = SQLBindCol(*hstmt, 4, SQL_C_CHAR, planAnt2, 4, &bindLen);
+	rc = SQLBindCol(*hstmt, 4, SQL_C_DOUBLE, &planAnt, 1024, &bindLen);
 	checkReturnCode("SQLBindCol [hstmt, 4, &planAnt]", rc, *hstmt, SQL_HANDLE_STMT);
 	//rc = SQLBindCol(*hstmt, 3, SQL_C_FLOAT, &istAnt, 0, &bindLen);
 	//checkReturnCode("SQLBindCol [hstmt, 3, &istAnt]", rc, *hstmt, SQL_HANDLE_STMT);
@@ -317,7 +325,7 @@ int getProjektDetails(SQLHENV *henv, SQLHDBC *hdbc, SQLHSTMT *hstmt, char *beruf
 		}
 
 		// process data
-		printf("  %ld %-*s %s %s \n", proNr, PRONAMESIZE, proName, istAnt2, planAnt2);
+		printf("  %ld %-*s %.2f %.2f \n", proNr, PRONAMESIZE, proName, istAnt, planAnt);
 
 		i++;
 	}
@@ -330,6 +338,8 @@ int getProjektDetails(SQLHENV *henv, SQLHDBC *hdbc, SQLHSTMT *hstmt, char *beruf
 
 	if (i == 0) {
 		printf("  '%s' hat keine Projekte.\n", mitID);
+		printf("\n ? ");
+		fgets(vBuf, sizeof(vBuf), stdin);
 		printf("----------------------------------------------------------------------------\n");
 		return 0;
 	}
