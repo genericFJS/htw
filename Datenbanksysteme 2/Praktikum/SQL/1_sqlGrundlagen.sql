@@ -143,9 +143,8 @@ UNION
 SELECT p.ProNr, p.ProName, 9000.1
 FROM Projekt p
 WHERE p.ProNr NOT IN(
-	SELECT p.ProNr
-	FROM Projekt p JOIN Zuordnung z ON p.ProNr = z.ProNr
-	GROUP BY p.ProNr, p.ProName
+	SELECT ProNr
+	FROM Zuordnung
 	)
 
 -- 5
