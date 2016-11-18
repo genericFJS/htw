@@ -28,10 +28,16 @@
 \setsansfont{FJS} 
 \setmonofont{FJS}
 
-\setmathfont{FJS}
-\setmathfont[range=\mathup]  {FJS}
-\setmathfont[range=\mathbfup]{FJS}
-\setmathfont[range=\mathbfit]{FJS}
-\setmathfont[range=\mathit]  {FJS}
+%\setmathfont{FJS}
+%\setmathfont[range=\mathup]  {FJS}
+%\setmathfont[range=\mathbfup]{FJS}
+%\setmathfont[range=\mathbfit]{FJS}
+%\setmathfont[range=\mathit]  {FJS}
 
-\renewcommand{\cdot}{*}
+\usepackage{enumitem}	% Anpassung der enumerates
+
+\usepackage{array}	% für folgende 3 Zeilen (für Spalten fester breite mit entsprechender Ausrichtung):
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{\dimexpr#1\columnwidth-2\tabcolsep-1.5\arrayrulewidth}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{\dimexpr#1\columnwidth-2\tabcolsep-1.5\arrayrulewidth}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{\dimexpr#1\columnwidth-2\tabcolsep-1.5\arrayrulewidth}}
+\usepackage{caption}	% Um auch unbeschriftete Captions mit \caption* zu machen

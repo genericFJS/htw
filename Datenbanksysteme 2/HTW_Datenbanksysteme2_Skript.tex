@@ -388,7 +388,7 @@ BEGIN TRANSACTION
 \item Aufrufe von stored proc können \emph{nicht} rückgängig gemacht werden.
 \end{itemize}
 
-\section{Sicherung der semantischen Integrität}
+\section{Semantische Integrität}
 \slidesScale{2}{8}
 \slidesScale{2}{9}
 \subsection{Möglichkeiten zur Sicherung der semantischen Integrität}
@@ -396,10 +396,6 @@ BEGIN TRANSACTION
 Trigger:\\
 z.B. für Insert/Update/Delete (sodass dieser Trigger immer dann ausgeführt wird, wenn eine der Aktionen ausgeführt wird)
 \slidesScale{2}{11}
-
-
-\section{Sicherung der operationalen Integrität}
-
 \subsection{Spalten- und Tabellen-bezogene Integrität}
 \slidesScale{2}{12}
 
@@ -624,14 +620,128 @@ CREATE TRIGGER delKund1
 		END
 RETURN
 \end{lstlisting}
-\section{Sicherung der physischen Integrität}
+\subsubsection*{Beispiel}
+Umsatzsumme je Kunde in Kauf max $10.000,-$\euro{}.
+\begin{lstlisting}[language=SQL]
+CREATE TRIGGER itr_Kauf ON Kauf
+FOR insert, update
+	AS
+		IF EXISTS (
+			SELECT SUM(Menge*vPreis)
+			FROM Kauf
+			GROUP BY Kunr
+			HAVING SUM(Menge*vPreis) > 10000)
+		BEGIN
+			print 'Kundenumsatz größer 10.000 unzulässig.'
+			ROLLBACK TRANSACTION
+			-- wenn hier RETURN steht, dann können nach dem END weitere Bedingungen (IF...) angehängt werden.
+		END
+RETURN
+\end{lstlisting}
+\subsubsection*{Weiter Beispiele}
+\slidesScale{2}{23}
+\begin{lstlisting}[language=SQL]
+CREATE TRIGGER MittelAenderung
+ON Projekt
+FOR UPDATE AS IF UPDATE (Mittel) -- aus Performancegründen nur triggern, wenn Mittel geändert
+BEGIN
+	INSERT INTO Mittel_protokoll
+		SELECT i.Pronr, user_name(), GETDATE(), d.Mittel, i.Mittel
+		FROM inserted i JOIN deleted d ON i.Kunr = d.Kunr AND i.Artnr = d.Artnr
+END
+\end{lstlisting}
+\slidesScale{2}{24}
+
+\section{Operationale Integrität}
+„Gefahrenbereich“ Mehrbenutzerbetrieb.
+\subsection{Anomalien im Mehrbenutzerbetrieb}
+\subsubsection{Lost Update}
+\slidesScale{2}{25}
+\subsubsection{Dirty Read}
+\slidesScale{2}{26}
+\subsubsection{Non repeatable Read}
+\slidesScale{2}{27}
+\subsubsection{Phantomproblem}
+\slidesScale{2}{28}
+\subsection{Sicherung der operationalen Integrität}
+\slidesScale{2}{29}
+\subsubsection{Sperrverfahren}
+\slidesScale{2}{30}
+BOT… begin of transaction\\
+EOT… end of transaction\\
+\begin{tikzpicture}
+\node [red] at (2,3) {$\bigcirc$: gefährdete Bereiche};
+\end{tikzpicture}
+\subsubsection*{Einfaches Zweiphasen-Sperrprotokoll}
+\begin{tikzpicture}[scale=.7]
+\draw[-latex] (-4,0) -- (2,0) node[below right]{Zeit};
+\draw[-latex] (-4,0) -- (-4,3) node[left, align= right]{Anzahl\\Sperren};
+\draw (-3,0) node[below]{BOT} -- (-2,2) -- (0,2) -- (1,0) node[below]{EOT};
+\node [red] at (-2.5,1) {$\bigcirc$};
+\node [red] at (.5,1) {$\bigcirc$};
+\end{tikzpicture}
+\subsubsection*{Zweiphasen-Sperrprotokoll mit Preclaiming}
+\begin{tikzpicture}[scale=.7]
+\draw[-latex] (-4,0) -- (2,0) node[below right]{Zeit};
+\draw[-latex] (-4,0) -- (-4,3) node[left, align= right]{Anzahl\\Sperren};
+\draw (-3,0) node[below]{BOT} -- (-3,2) -- (0,2) -- (1,0) node[below]{EOT};
+\node [red] at (.5,1) {$\bigcirc$};
+\end{tikzpicture}
+\subsubsection*{Striktes Zweiphasen-Protokoll}
+\begin{tikzpicture}[scale=.7]
+\draw[-latex] (-4,0) -- (2,0) node[below right]{Zeit};
+\draw[-latex] (-4,0) -- (-4,3) node[left, align= right]{Anzahl\\Sperren};
+\draw (-3,0) node[below]{BOT} -- (-2,2) -- (1,2) -- (1,0) node[below]{EOT};
+\node [red] at (-2.5,1) {$\bigcirc$};
+\end{tikzpicture}
+\subsubsection*{Striktes Zweiphasen-Protokoll mit Preclaiming}
+\begin{tikzpicture}[scale=.7]
+\draw[-latex] (-4,0) -- (2,0) node[below right]{Zeit};
+\draw[-latex] (-4,0) -- (-4,3) node[left, align= right]{Anzahl\\Sperren};
+\draw (-3,0) node[below]{BOT} -- (-3,2) -- (1,2) -- (1,0) node[below]{EOT};
+\end{tikzpicture}
+\subsubsection{Statische und dynamische Sperrverfahren}
+\slidesScale{2}{31}
+\subsubsection{Anforderungen an Sperrmodi}
+\slidesScale{2}{32}
+Sperrgranulate:
+\begin{itemize}
+\item logische Objekte:\\
+Tupel, Tabelle
+\item physische Objekte:\\
+Seite (Block auf Festplatte), Segmente 
+\end{itemize}
+Sperrverwaltung über Lockmanager.\\
+$+$ … erlauben, $-$ … ablehnen (Warteschlange)\\
+\begin{tabular}{c | c | c | c}
+Sperrwunsch & aktuell keine Sperre & aktuell S-Sperre & aktuell X-Sperre\\\hline
+S & $+$ & $+$ & $-$\\
+X & $+$ & $-$ & $-$
+\end{tabular}
+\subsubsection{Stufen der Isolation paralleler Transaktionen}
+\slidesScale{2}{33}
+SQL:
+\begin{lstlisting}[language=SQL]
+SET TRANSACTION ISOLATION LEVEL ...
+\end{lstlisting}
+Mögliche Anomalien nach Ebene:\\
+\begin{tabular}{c | c | c | c | c}
+Ebene & Lost Update & Dirty Read & Non repeat. Read & Phantom\\\hline
+0 & X & X & X  & X\\
+1 & & & X & X\\
+2 & & & & X\\
+3 &&&&\\
+\end{tabular}\\
+Also: Nur mit Ebene-3 können alle Anomalien abgedeckt sein. Aber: tiefere Ebenen kosten mehr Leistung!
+
 \section{Zugriffsschutz/Datenschutz}
+\section{Physische Integrität}
 
 \chapter{Logische Datenmodelle}
 \section{Logische und physische Datenorganisation / Überblick über Datenmodelle}
 \section{Klassische logische Datenmodelle}
 \section{Objektorientiertes Datenmodell}
-\section{DBML-spezifische Erweiterungen vom Standard-SQL (Oracle)}
+\section{DBMS-spezifische Erweiterungen vom Standard-SQL (Oracle)}
 \section{Objektrelationale Erweiterungen im RDM (Oracle)}
 
 \chapter{Physische Datenorganisation}
