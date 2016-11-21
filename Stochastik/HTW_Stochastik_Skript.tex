@@ -914,6 +914,132 @@ $\EE(X)=4,5$\\
 $m_X=\min\{x\in \RR \;|\; F_X(x) \geq 0,5\}= \min[3,\infty) = 3$
 \end{itemize}
 
+\subsection{Kovarianz und Unabhängigkeit}
+
+Betrachten nun mehrere ZV'en gleichzeitig.\\
+Fragen:
+\begin{itemize}
+\item Haben ZV'en „Einfluss aufeinander“?\\
+$\rightsquigarrow$ Unabhängigkeit, Unkorreliertheit
+\item Kann man das Verhalten mehrerer ZVn gleichzeitig beschreiben?\\
+$\rightsquigarrow$ gemeinsame Verteilung
+\end{itemize}
+
+\cparagraph{Definition} Sind $X$ und $Y$ ZV'en, so heißt 
+$$F: \RR^2 \to [0,1], \; F(a,b) = \PP(X \leq a, Y \leq b)$$
+gemeinsame Verteilungsfunktion von $X$ und $Y$.
+\begin{itemize}
+\item Sind beide ZV'en diskret, wobei $X$ die Werte $x_1, x_2, \dots$ und $Y$ die Werte $y_1, y_2, \dots$ annehmen kann, dann heißt die Funktion $f$ gegeben durch 
+$$f(x_i, y_j):= \PP(X=x_i, Y=y_j)$$
+\emph{gemeinsame Verteilungsfunktion}.
+\item Sind beide ZV'en stetig und existiert eine Funktion $f: \RR^2 \to [0,\infty)$ mit 
+$$F(x,y) = \int\limits_{-\infty}^x\int\limits_{-\infty}^x f(s,t) \intd{t} \intd{s}$$
+so heißt $f$ \emph{gemeinsame (Wahrscheinlichkeits-)Dichte(-funktion)} von $X$ und $Y$.
+\end{itemize}
+
+\cparagraph{Bemerkung} Im diskreten Fall gilt:
+$$F_(x,y) = \sum_{i:\; x_i\leq x} \sum_{j:\; y_j \leq y}f(x_i, y_j)$$
+\begin{itemize}
+\item Die Definition 1.2.30 lässt sich auf beliebig viele ZV'en erweitern.
+\item ZV'en lassen sich zu einem (zufälligen) Vektor zusammenfassen:
+\end{itemize}
+
+\cparagraph{Definition} Sind $X_1, \dots, X_n$ ZV'en so heißt
+$$\mtr{X_1\\X_2\\\vdots\\X_n}$$
+\emph{n-dimensionaler Zufallsvektor}.
+
+\cparagraph{Beispiel} (Zufallsvektor mit $n=2$)\\
+Seien $X,Y$ diskrete ZV'en gegeben durch\\
+$X$… Anzahl der technischen Durchsichten eines PKW eines bestimmten Typs zwischen $0$ und $15.000\;\mathrm{km}$.\\
+$Y$… Anzahl der Motorpannen dieses PKW zwischen $0$ und $15.000\;\mathrm{km}$.\\
+Setzen $Z=\mtr{X\\Y}$
+\begin{itemize}
+\item Verteilungstabelle:\\
+\begin{tabular}{c | c c c c c c c c c c}
+$\mtr{X\\Y}$ & $\mtr{0\\0}$ & $\mtr{0\\1}$& $\mtr{0\\2}$& $\mtr{0\\3}$& $\mtr{1\\0}$& $\mtr{1\\1}$& $\mtr{1\\2}$& $\mtr{2\\0}$& $\mtr{2\\1}$\\\hline
+$\PP(X=x,Y=y)$ & $0,02$ & $0,04$ & $0,03$ & $0,01$ & $0,05$ & $0,01$ & $0,05$ & $0,53$ & $0,17$
+\end{tabular}
+\item gemeinsame Wahrscheinlichkeitsfunktion (in Matrixschreibweise):\\
+$P=(p_{ij})$ \qquad $p_{ij}:=f(x_i,y_i)=\PP(X=x_i, Y=y_i)$\\
+\begin{tabular}{c | c c c c | c}
+x$\setminus$y & 0 & 1 & 2 & 3 &\\\hline
+0 & 0,02 & 0,04 & 0,04 & 0,01 & 0,1 \\
+1 & 0,05 & 0,1 & 0,05 & 0 & 0,2\\
+2 & 0,53 & 0,17 & 0 & 0 & 0,7\\\hline
+&0,6 & 0,31 & 0,08 & 0,01 & 1
+\end{tabular}\\
+z.B. $f(0,2)=0,03$
+\item gemeinsame Verteilungsfunktion: Es gilt z.B. $F(2,1)=\PP(X\leq 2, Y\leq 1)=0,02+0,04+0,05+0,1+0,53+0,17=0,91$ (entspricht dem „Rechteck“ der WK-Funktion in Matrixschreibweise, wo $x\leq 2$ und $y\leq 1$)
+\item Randverteilungen:\\
+\begin{tabular}{l | l}
+\mpb[.4]
+Verteilung von $X$\\
+$\PP(X=x_i)=\sum_j p_{i,j}=:p_{i,\cdot}$\\
+\begin{tabular}{c | c c c}
+$x_i$ & 0 & 1 & 2\\\hline
+$p_{i,\cdot}$ & 0,1 & 0,2 & 0,7
+\end{tabular}
+\mpe &
+\mpb[.4]
+Verteilung von $Y$\\
+$\PP(Y=y_i)=\sum_i p_{i,j}=:p_{\cdot,j}$\\
+\begin{tabular}{c | c c c c}
+$y_i$ & 0 & 1 & 2 & 3\\\hline
+$p_{\cdot,j}$ & 0,6 & 0,31 & 0,08 & 0,01
+\end{tabular}
+\mpe
+\end{tabular}
+\end{itemize}
+
+\cparagraph{Bemerkung} Mit der gemeinsamen Verteilung (Dicht, WK-Funktion) lassen sich z.B.
+\begin{enumerate}
+\item WKen berechnen und
+\item Funktionen von ZVen untersuchen.
+\end{enumerate}
+Seien $X$ und $Y$ ZVen mit gemeinsamer Dichte $f$, dann gilt z.B.:
+\begin{enumerate}
+\item $\PP(X\in [x_1, x_2], Y\in [y_1, y_2]) = \PP(x_1\leq X \leq x_2, y_i \leq Y \leq y_2)$\\
+$\int\limits_{x_1}^{x_2}\int\limits_{y_1}^{y_2} f(s,t) \intd{t}\intd{s}$
+\item und für beliebige $g: \RR^2 \to \RR$:\\
+$E(g(X,Y)) = \int\limits_\RR\int\limits_\RR g(x,y) f(x,y) \intd{y}\intd{x}$\\
+(sofern die Integrale existieren)\\
+Insbesondere:\\
+$E(X\cdot Y) = \int\limits_{-\infty}^{\infty}\int\limits_{-\infty}^{\infty}x\cdot y f(x,y) \intd{y}\intd{x}$
+\end{enumerate}
+Analoge Formeln gelten für diskrete ZVen mit der WK-Funktion $f$, z.B. 
+$$E(X\cdot Y)=\sum_i \sum_j x_i y_j f(x_i, y_j)$$
+falls $X$ die Werte $x_1, x_2, \dots$ annimmt und $Y$ die Werte $y_1, y_2, \dots$.
+
+\cparagraph{Definition} Seien $X$ und $Y$ zwei ZVen. Dann heißen
+\begin{anumerate}
+\item $\cov(X,Y) = \EE((X-\EE X) ( Y - \EE Y)) = \EE (XY) - \EE X \cdot \EE Y$ die \emph{Kovarianz} von $X$ und $Y$.
+\item $\varrho_{X,Y}:=\frac{\cov(X,Y)}{\sqrt{\var(X)}\sqrt{\var(Y)}}$ der \emph{Korrelationskoeffizient}.
+\item $X$ und $Y$ \emph{unkorreliert}, wenn $\varrho_{X,Y}=0$ (also wenn $\cov(X,Y) = 0$)
+\end{anumerate}
+
+\cparagraph{Definition} Zwei ZVen $X$ und $Y$ heißen (stochastisch) unabhängig, falls für beliebige Intervalle $I_1, I_2 \subseteq \RR$ gilt:
+$$\PP(X\in I_1, Y\in I_2)=\PP(X\in I_1) \cdot \PP(Y \in I_2)$$
+Mehrere ZVen $X_1, X_2, \dots$ heißen (stochastisch) unabhängig, falls für jede Auswahl $X_{k_1}, \dots , X_{k_m}$ und beliebige Intervalle $I_1, \dots, I_m$ gilt:
+$$\PP(X_{k_1}\in I_1 , \dots , X_{k_m}\in I_m)=\prod_{i=1}^m \PP(X_{k_i}\in I_i)$$
+
+\cparagraph{Bemerkung}
+\begin{itemize}
+\item $X$ und $Y$ stochastisch unabhängig $\Leftrightarrow$ für beliebige Intervalle $I_1$ und $I_2$ sind $\{x\in I_1\}$ und $\{ Y \in I_2\}$ stochastisch unabhängig.
+\item $X$ und $Y$ unabhängig $\Rightarrow \EE(XY)=\EE X \cdot \EE Y$
+\item $X$ und $Y$ unabhängig $\Rightarrow X$ und $Y$ unkorreliert
+\item ABER: $X$ und $Y$ unkorreliert $\not\Rightarrow X$ und $Y$ unabhängig
+\item $\cov(X,X) = \var(X)$
+\end{itemize}
+
+\cparagraph{Beispiel} (Tetraeder-Würfel)\\
+Ein Tetraeder ist mit den Zahlenpaaren $\Omega=\{(1,2),(0,2),(2,1),(0,0)\}$ beschriftet. Jede Seite ist gleich-wahrscheinlich. Die ZV $X$ beschreibt die erste Zahl, $Y$ die Zweite (im Zahlenpaar).\\
+Dann \tab $\PP(X=0)=\frac{1}{2}$ \tab $\PP(X=1)=\frac{1}{4}$\\
+$ $\tab $\PP(X=2) = \frac{1}{4}$ \tab $\PP(X=0) = \frac{1}{4}$\\
+$ $\tab $\PP(Y=1) = \frac{1}{4}$ \tab $\PP(Y=2) = \frac{1}{2}$\\
+$ $\tab $\PP(X\cdot Y=0) = \frac{1}{2}$ \tab $\PP(X\cdot Y = 2) = \frac{1}{2}$
+
+
+
 
 %\newpage
 %\printbibliography
