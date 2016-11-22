@@ -263,6 +263,91 @@ Verbindungsaufbau zu Dienstelementen
 \slidesScale{15-transportschicht_print}{25}
 \subsubsection{Beispiel zu knapper Timeout}
 \slidesScale{15-transportschicht_print}{26}
+\subsubsection{Beispiel Kumulative ACKs}
+\slidesScale{15-transportschicht_print}{27}
+
+\subsubsection{Test TCP-Segmenterzeugung}
+\slidesScale{15-transportschicht_print}{28}
+(potentielle Prüfungsaufgabe)
+
+\subsection{TCP-ACK-Erzeugung}
+(RFC 1122, RFC 2581)
+\slidesScale{15-transportschicht_print}{29}
+\subsubsection{Beispiel TCP Fast Retransmit}
+\slidesScale{15-transportschicht_print}{30}
+
+\subsection{TCP Flusskontrolle}
+Angleichen der Sende-/Empfangsgeschwindigkeit
+\slidesScale{15-transportschicht_print}{31}
+\subsubsection{TCP-RcvWindow}
+\slidesScale{15-transportschicht_print}{32}
+\subsubsection{Beispiel TCP Verbindungsaufbau}
+Paketsniffer Wireshark
+\slidesScale{15-transportschicht_print}{33}
+\slidesScale{15-transportschicht_print}{34}
+\subsubsection{Retransmission-Timer}
+\slidesScale{15-transportschicht_print}{35}
+\subsubsection*{RTT Bestimmung}
+\slidesScale{15-transportschicht_print}{36}
+\subsubsection*{RTO Bestimmung}
+\slidesScale{15-transportschicht_print}{37}
+Achtung: Startwerte und Minimum RTO sind hier sehr konservativ angegeben!\\
+Hinweis: RTO Formel nützlich für Beleg. Startwerte kürzer setzen und Minimum nicht nötig.
+
+\subsection{TCP Überlastkontrolle}
+\slidesScale{15-transportschicht_print}{38}
+1. Bild: Flusskontrolle, 2. Bild: Überlastkontrolle\\
+Daran stellt man Überlast fest:
+\begin{itemize}
+\item Paketverlust
+\end{itemize}
+\subsubsection{Ansätze zur Überlastkontrolle}
+\slidesScale{15-transportschicht_print}{39}
+\subsubsection{Überlastkontrolle bei TCP}
+\slidesScale{15-transportschicht_print}{40}
+\subsubsection{TCP Überlastkontrolle durch variable Fenstergröße}
+Erhöhung der Fenstergröße bis Verlust eintritt
+\slidesScale{15-transportschicht_print}{41}
+\subsubsection{TCP Slow Start}
+\slidesScale{15-transportschicht_print}{42}
+\slidesScale{15-transportschicht_print}{43}
+\subsubsection{Fast Recovery}
+\slidesScale{15-transportschicht_print}{44}
+\subsubsection{Optimale TCP Buffergröße}
+Sende- und Empfangspuffer des Sockets
+\slidesScale{15-transportschicht_print}{45}
+\subsubsection{Zusammenfassung TCP Überlastkontrolle}
+\slidesScale{15-transportschicht_print}{46}
+\subsubsection{Verfahren zur Verstopfungsvermeidung}
+Forschungsthema
+\slidesScale{15-transportschicht_print}{47}
+
+\subsection{TCP Reset}
+\slidesScale{15-transportschicht_print}{48}
+Verfahren beim Empfang in Abhängigkeit vom Zustand:
+\slidesScale{15-transportschicht_print}{49}
+
+\subsection{Keepalive}
+\slidesScale{15-transportschicht_print}{50}
+
+\section{Zusammenfassung Transportschicht}
+\slidesScale{15-transportschicht_print}{51}
+
+\section{Ergänzungen}
+\subsection{Erweiterung Zeitstempel}
+\slidesScale{15-transportschicht_print}{52}
+\subsection{Wireshark}
+Erkenntnisgewinn durch Paketanalyse
+\slidesScale{15-transportschicht_print}{53}
+\subsection{TCP-Fairness}
+\slidesScale{15-transportschicht_print}{54}
+\subsection{TCP offload engine (TOE)}
+\slidesScale{15-transportschicht_print}{55}
+\subsection{TCP Zustandsmaschine}
+\slidesScale{15-transportschicht_print}{56}
+
+
+
 %\newpage
 %\printbibliography
 
