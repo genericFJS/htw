@@ -841,8 +841,155 @@ WRh-Schenkel mit verschiedenem Rh-Gehalt (75/25 - 97/3) & Typ G & 15 & 0 bis 220
 \item[$-$] galvanische Verbindung
 \end{itemize}
 \end{itemize}
+\subsubsection{Ansprechzeiten, Vorteile, Nachteile der Thermoelemente}
+\begin{itemize}[label=$+$]
+\item sehr großer T-Bereich
+\item kleine Gesamtabmessungen
+\item große Flexibilität
+\item einfacher, sehr robuster Aufbau
+\item unempfindlicher gegen Hitze, Druck und Vibration
+\item kleinste Ansprechzeiten
+\item praktisch punktförmige Messstellen
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item reduzierte Genauigkeit
+\item sehr kleine Thermospannung
+\item Temperatur der Anschlussstelle muss bekannt sein
+\end{itemize}
 
+\subsection{Bimetallthermometer}
+Zwei unterschiedliche Metalle sind in einem Streifen miteinander verbunden. Dadurch, dass sie sich bei Temperatur unterschiedlich verformen, kann durch die Auslenkung die Temperatur berechnet werden.\\
+$f$: Auslenkung der Spitze des Streifens,\\
+$s$: Dicke des Streifens (beider Metalle),\\
+$L$: Länge des Streifens\\
+$\delta$: spezifische Ausbiegung
+$$f=\frac{L^2}{s}\cdot \delta \cdot \Delta T$$
+Einsatzbeispiel: Schalter wird durch den Bimetallstreifen betätigt, wenn die Temperatur bewirkt, dass er sich verformt: schaltende Sensoren (Überlastungsschutz, Temperaturregelung).
 
+\section{Leitlinien für die Temperaturmessung}
+\begin{itemize}
+\item Messort
+\item Gehäuseeinfluss
+\item Ansprechzeit
+\item Eigenerwärmung
+\item Absolute Genauigkeit
+\end{itemize}
+Für hohe Ansprüche an die Auflösung und Genauigkeit: \fbox{Pt-Fühler}\\
+Für kleinste Messstellen und schnelles Ansprechen: \fbox{Thermoelemente}
+\paragraph{Messprobleme bei:}
+\begin{itemize}
+\item Dickem Gehäuse
+\item Große Entfernung zwischen Objekt und Messstelle
+\item Objekte geringer Masse (mit massiven Fühlern $\to$ Verfälschung der Messung durch Angleichung der zu messenden Temperatur an die Fühlertemperatur)
+\item T-Messung bei Luftströmungen
+\end{itemize}
+
+\chapter{Druckmessung}
+\section{Druck als Messgröße}
+Normaldruck: $1013\;\mathrm{hPa}$\\
+$\text{Druck}=\frac{\text{Kraft}}{\text{Fläche}} \quad [p]=1\;\mathrm{Pa}=\frac{1 \;\mathrm{N}}{1 \;\mathrm{m^2}} \quad 1 \;\mathrm{bar} = 10^5 \;\mathrm{Pa}$\\
+\begin{tabular}{l | l}
+Druckbereich & Anwendung\\\hline
+$<40 \unit{mbar}$ & Füllstand in Waschmaschine, Geschirrspüler\\
+$100\unit{mbar}$ & Staubsauger, Filterüberwachung, Durchflussmessung\\
+$200\unit{mbar}$ & Blutdruckmessung\\
+$1\unit{bar}$ & Barometer, Korrektur für Zündung und Einspritzung\\
+$0\dots 1 \unit{bar}$ & Ansaugunterdruckmessung\\
+$10\unit{bar}$ & Öldruck und Luftdruck für Bremsen, Kühlmaschinen\\
+$50 \unit{bar}$ & Pneumatik, Industrieroboter\\
+$500 \unit{bar}$ & Hydraulik, Baumaschinen\\
+$3000 \unit{bar}$ & Hochdruckschneiden mit Wasser
+\end{tabular}
+\section{Arten der Druckmessung}
+Absolutdruck: Ausgehend von keinem Druck ($0$)\\
+Unterdruck/Überdruck: Ausgehend vom Relativdruck (festgelegt: $p_{atm}$, bspw. Atmosphärendruck)\\
+Differenzdruck: Druck zwischen zwei Messungen $p_{diff}=p_1-p_2$
+\begin{itemize}
+\item Absolut-Drucksensor:\\
+zu messender Druck auf einer Membran gegenüber dem Vakuum
+\item Relativ-Drucksensor:\\
+zu messender Druck auf eine Membran gegenüber dem Umgebungsdruck
+\item Differenz-Drucksensor:\\
+die beiden Drücke auf beiden Seiten der Membran
+\end{itemize}
+\section{Prinzipien der Druckmessung}
+\begin{itemize}
+\item Verformung unter Druck: magnetoelastische und Membransensoren
+\item Druckabhängigkeit physikalischer Eigenschaften: piezoelektrische Kristallsensoren
+\end{itemize}
+Störeinflüsse:
+\begin{itemize}
+\item mechanische Spannungen
+\item Temperatureffekte
+\end{itemize}
+\subsection{Membransensoren}
+Membran biegt sich unter Druck $p$ (mit einer Durchbiegung $\Delta x$)
+
+\subsubsection{Druckschalter}
+unter Druck wird Schalter betätigt. Abhängig von den eingebauten Membranen und Druckfedern.
+\begin{itemize}
+\item[$+$] Messbereich: $\unit{mbar}\dots\unit{kbar}$
+\item[$-$] relativ große Hysterese (Einschalt- und Ausschaltdruck unterscheiden sich)
+\end{itemize}
+\subsubsection{Kapazitiver Drucksensor}
+Auf Membran ist Messelektrode angebracht. Durch die Verformung der Membran variiert der Abstand zwischen der Messelektrode und der Referenzelektrode. Dadurch verändert sich die Spannung.\\
+$C=\varepsilon\varepsilon_0\frac{A}{d}$\\
+Typische Abmessungen:
+\begin{itemize}
+\item Äußerer Druckmesser: $32,4\unit{mm}$
+\item Dicke des Grundkörpers: $5\unit{mm}$
+\item Dicke der Membran (je nach Messbereich): $0,2\dots 2,8 \unit{mm}$
+\item Abstand zwischen Membran und Grundkörper: $40\unit{\mu m}$
+\item Durchbiegung bei Nenndruck: max. $8 \unit{\mu m}$
+\end{itemize}
+Eigenschaften:
+\begin{itemize}[label=$+$]
+\item sehr empfindlich
+\item geringer Energieverbrauch (da nicht generierender, sondern modulierender Sensor)
+\item geringe T-Abhängigkeit
+\item sehr einfach, robust
+\item nicht empfindlich für Überdruck
+\item besonders für niedrige $\unit{P}$: $10^{-7}\dots 1 \unit{bar}$
+\item gasartunabhängig
+\item Genauigkeit: $0,2\%\text{ (Ker)}\dots2\%\text{ (Me)}$ vom Messwert
+\item lineare Kennlinie
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item Kapazitätsänderung: Bruchteile von $\unit{pF}$
+\item Streukapazitäten-, staub- und feuchteempfindlich
+\item relativ komplexe Elektronik
+\end{itemize}
+
+\subsubsection{Kapazitive MEMS-Sensoren}
+Mikro-Elektro-Mechanische Systeme: Ähnlich wie kapazitive Drucksensoren, bloß deutlich kleiner.
+\begin{itemize}
+\item Drucksensor
+\item Beschleunigungssensor
+\end{itemize}
+
+\subsubsection{Dehnungsmessstreifen (DMS)}
+Messstreifen mit einer Länge $l$ und Durchschnitt $A$:\\
+$R=\rho \frac{l}{A}$\\
+Da sich der Durchschnitt kaum ändert: $\frac{\Delta R}{R}=\tred{k}\cdot \frac{\Delta l}{l}$\\
+Der \tred{k}-Faktor:\\
+\begin{tabular}{l | c}
+Werkstoff & K-Faktor\\\hline
+Konstantan & 2,0\\
+Nichrom & 2,2\\
+FeNi & 2,5\\
+„Iso-Elastic“ & 3,6\\
+PtW & 4,0
+\end{tabular}\\
+Der k-Faktor ist sehr stark von der Temperatur abhängig!
+
+\subsubsection*{Membran-DMS-Sensorelement}
+Widerstand-Anordnung an der Membran ist zu vergleichen mit einer Wheatstone-Brücke (mit $R_1$ und $R_2$ parallel zu $R_3$ und $R_4$), wobei $R_1=R_2=R_3=R_4$.\\
+$R$: $120\dots5000\unit{\Omega}$\\
+$\Delta R \sim 0,5\dots 5\%$
+\begin{itemize}
+\item Metall-Dünnfilm-DMS
+\item polySi-Membran-DMS
+\end{itemize}
 
 
 %\newpage
