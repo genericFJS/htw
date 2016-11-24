@@ -722,10 +722,86 @@ Passive Rolle:
 \end{itemize}
 \end{itemize}
 
+\chapter{Konfigurationsverwaltung}
+\section{Der Sinn von Konfigurationsverwaltung}
 
+\section{Beziehung zwischen Konfigurations-, Varianten- und Versionsverwaltung}
 
+\section{Begriffe}
+\begin{itemize}
+\item \emph{Software-Einheit}:\\
+atomar im Sinne ihrer Verwaltung, d.h. sie kann unabhängig von anderen SW-Einheiten bearbeitet/gespeichert/ausgetauscht werden.\\
+Änderung einer SW-Einheit führt zu einer neuen \emph{Version}.
+\begin{itemize}[label=$\rightarrow$]
+\item d.h. eine Version hat (in der Regel) einen Vorgänger und einen Nachfolger.
+\item d.h. Versionen stehen in zeitlicher Ordnung (Chronik).
+\end{itemize}
+Beachte Unterschied zwischen \emph{Revision}: SW-Einheit wird \emph{komplett} ersetzt (nicht nur zu Teilen
+\item \emph{Variante}:\\
+existiert nicht zeitlich hintereinander, sondern nebeneinander (d.h. zeitgleich)
+\item \emph{Konfiguration}:\\
+eine Menge von SW-Einheiten, die für einen definierten Zweck zusammengestellt ist und diese SW-Einheiten passen auch zueinander (= Auswahlverfahren).
+\item \emph{Baseline}:\\
+Konfiguration, die stabil ist (zusammengestellt und geprüft).
+\end{itemize}
 
+\section{Aufgaben der Konfigurationsverwaltung}
+\begin{itemize}
+\item SW-Einheiten identifizieren
+\item SW-Einheiten bereit stellen:
+\begin{itemize}
+\item zum Verändern
+\item zum Integrieren
+\end{itemize}
+\item Änderungen von SW-Einheiten überwachen und verwalten
+\item Rekonstruktion älterer SW-Einheiten
+\end{itemize}
+$\Rightarrow$ d.h. Versions- und Variantenverwaltung ist Bestandteil der Konfigurationsverwaltung.\\
+Wie werden dies Aufgaben realisiert?
+\begin{itemize}
+\item Welche Arbeitsorganisation?
+\item Wie wird diese Arbeitsorganisation technisch unterstützt (Subversion, Git, …)? $\to$ Repository mit geeigneter Speichertechnik
+\end{itemize}
 
+\subsection{Arbeitsorganisation}
+$\to$ Regeln
+\begin{enumerate}
+\item Die Entwickler \emph{teilen} sich den Quellcode.
+\item Alle Entwickler arbeiten in der gleichen \emph{Entwicklerumgebung}.
+\item Die Konnfigurationsverwaltung hat das Monopol bei der Bereitstellung von SW-Systemen.\\
+Damit wird vermieden, dass 
+\begin{itemize}
+\item unbemerkt Varianten entstehen
+\item unbemerkt Änderungen vorgenommen werden
+\item jemand direkten Zugriff auf die Dateien hat
+\end{itemize}
+\item SW-Einheit wird (als Arbeits-zwischen-Ergebnis) zyklisch verwaltet:
+\begin{itemize}
+\item abholen
+\item ändern
+\item abliefern und bekanntmachen $\to$ Commit
+\end{itemize}
+\item Veraltete Versionen werden archiviert
+\item Verzweigungen werden als Varianten verwaltet
+\item SW-Systeme, die an Kunden ausgeliefert werden, werden mit dem Konfigurationsmanagementsystem zusammengestellt und präzise dokumentiert. Verwendet werden dabei nur geprüfte und freigegebene SW-Einheiten.
+\end{enumerate}
+Werkzeug mit Repository
+\begin{itemize}
+\item zentrale Versionsverwaltung
+\item dezentrale Versionsverwaltung
+\end{itemize}
+\subsubsection{Zentrale Versionsverwaltung}
+\begin{itemize}
+\item Entwickler und Reposiory-Umgebung (in der Regel auf einem Server) sind getrennt.
+\item Jeder Entwickler arbeitet auf einer Kopie.
+\item[$\to$] Subversion
+\end{itemize}
+\subsubsection{Dezentrale Versionsverwaltung}
+\begin{itemize}
+\item Entwickler- und Repository-Umgebung sind nicht getrennt.
+\item Jeder Entwickler verfügt über ein eigenes Repository (Klon). Aus diesem Repository arbeitet er.
+\item[$\to$] Git
+\end{itemize}
 
 
 
