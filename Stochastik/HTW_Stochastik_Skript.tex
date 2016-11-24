@@ -916,23 +916,23 @@ $m_X=\min\{x\in \RR \;|\; F_X(x) \geq 0,5\}= \min[3,\infty) = 3$
 
 \subsection{Kovarianz und Unabhängigkeit}
 
-Betrachten nun mehrere ZV'en gleichzeitig.\\
+Betrachten nun mehrere ZVen gleichzeitig.\\
 Fragen:
 \begin{itemize}
-\item Haben ZV'en „Einfluss aufeinander“?\\
+\item Haben ZVen „Einfluss aufeinander“?\\
 $\rightsquigarrow$ Unabhängigkeit, Unkorreliertheit
 \item Kann man das Verhalten mehrerer ZVn gleichzeitig beschreiben?\\
 $\rightsquigarrow$ gemeinsame Verteilung
 \end{itemize}
 
-\cparagraph{Definition} Sind $X$ und $Y$ ZV'en, so heißt 
+\cparagraph{Definition} Sind $X$ und $Y$ ZVen, so heißt 
 $$F: \RR^2 \to [0,1], \; F(a,b) = \PP(X \leq a, Y \leq b)$$
 gemeinsame Verteilungsfunktion von $X$ und $Y$.
 \begin{itemize}
-\item Sind beide ZV'en diskret, wobei $X$ die Werte $x_1, x_2, \dots$ und $Y$ die Werte $y_1, y_2, \dots$ annehmen kann, dann heißt die Funktion $f$ gegeben durch 
+\item Sind beide ZVen diskret, wobei $X$ die Werte $x_1, x_2, \dots$ und $Y$ die Werte $y_1, y_2, \dots$ annehmen kann, dann heißt die Funktion $f$ gegeben durch 
 $$f(x_i, y_j):= \PP(X=x_i, Y=y_j)$$
 \emph{gemeinsame Verteilungsfunktion}.
-\item Sind beide ZV'en stetig und existiert eine Funktion $f: \RR^2 \to [0,\infty)$ mit 
+\item Sind beide ZVen stetig und existiert eine Funktion $f: \RR^2 \to [0,\infty)$ mit 
 $$F(x,y) = \int\limits_{-\infty}^x\int\limits_{-\infty}^x f(s,t) \intd{t} \intd{s}$$
 so heißt $f$ \emph{gemeinsame (Wahrscheinlichkeits-)Dichte(-funktion)} von $X$ und $Y$.
 \end{itemize}
@@ -940,16 +940,16 @@ so heißt $f$ \emph{gemeinsame (Wahrscheinlichkeits-)Dichte(-funktion)} von $X$ 
 \cparagraph{Bemerkung} Im diskreten Fall gilt:
 $$F_(x,y) = \sum_{i:\; x_i\leq x} \sum_{j:\; y_j \leq y}f(x_i, y_j)$$
 \begin{itemize}
-\item Die Definition 1.2.30 lässt sich auf beliebig viele ZV'en erweitern.
-\item ZV'en lassen sich zu einem (zufälligen) Vektor zusammenfassen:
+\item Die Definition 1.2.30 lässt sich auf beliebig viele ZVen erweitern.
+\item ZVen lassen sich zu einem (zufälligen) Vektor zusammenfassen:
 \end{itemize}
 
-\cparagraph{Definition} Sind $X_1, \dots, X_n$ ZV'en so heißt
+\cparagraph{Definition} Sind $X_1, \dots, X_n$ ZVen so heißt
 $$\mtr{X_1\\X_2\\\vdots\\X_n}$$
 \emph{n-dimensionaler Zufallsvektor}.
 
 \cparagraph{Beispiel} (Zufallsvektor mit $n=2$)\\
-Seien $X,Y$ diskrete ZV'en gegeben durch\\
+Seien $X,Y$ diskrete ZVen gegeben durch\\
 $X$… Anzahl der technischen Durchsichten eines PKW eines bestimmten Typs zwischen $0$ und $15.000\;\mathrm{km}$.\\
 $Y$… Anzahl der Motorpannen dieses PKW zwischen $0$ und $15.000\;\mathrm{km}$.\\
 Setzen $Z=\mtr{X\\Y}$
@@ -1033,11 +1033,170 @@ $$\PP(X_{k_1}\in I_1 , \dots , X_{k_m}\in I_m)=\prod_{i=1}^m \PP(X_{k_i}\in I_i)
 
 \cparagraph{Beispiel} (Tetraeder-Würfel)\\
 Ein Tetraeder ist mit den Zahlenpaaren $\Omega=\{(1,2),(0,2),(2,1),(0,0)\}$ beschriftet. Jede Seite ist gleich-wahrscheinlich. Die ZV $X$ beschreibt die erste Zahl, $Y$ die Zweite (im Zahlenpaar).\\
-Dann $\PP(X=0)=\tfrac{1}{2}$, $\PP(X=1)=\tfrac{1}{4}$, $\PP(X=2) = \tfrac{1}{4}$, $\PP(X=0) = \tfrac{1}{4}$,\\
-$\PP(Y=1) = \tfrac{1}{4}$, $\PP(Y=2) = \tfrac{1}{2}$, $\PP(X\cdot Y=0) = \tfrac{1}{2}$, $\PP(X\cdot Y = 2) = \tfrac{1}{2}$
+Dann:\\
+$\PP(X=0)=\tfrac{1}{2}$, $\PP(X=1)=\tfrac{1}{4}$, $\PP(X=2) = \tfrac{1}{4}$,\\ $\PP(Y=0) = \tfrac{1}{4}$,
+$\PP(Y=1) = \tfrac{1}{4}$, $\PP(Y=2) = \tfrac{1}{2}$, \\$\PP(X\cdot Y=0) = \tfrac{1}{2}$, $\PP(X\cdot Y = 2) = \tfrac{1}{2}$\\
+Und damit:\\
+$\EE(X)=0\cdot \frac{1}{2}+1 \cdot \frac{1}{4}+2\cdot \frac{1}{4}=\frac{3}{4}$\\
+$\EE(Y)=\frac{5}{4}$\\
+$\EE(XY)=1$\\
+$\cov(X,Y)=\EE(XY)-\EE(X)\cdot \EE(Y)=1-\frac{3}{4}\cdot\frac{5}{4}=\frac{1}{16}$\\
+$\Rightarrow X$und $Y$ nicht unkorreliert\\
+$\Rightarrow$ nicht unabhängig\\
+z.B. $\underbrace{\PP(X=1)}_{\tfrac{1}{4}}\cdot \underbrace{\PP(Y=0)}_{\tfrac{1}{4}} \not = \underbrace{\PP(X=1,Y=0)}_{0}$
+\cparagraph{Satz} Seien $X$ und $Y$ ZVen und $a,b\in \RR$. Dann gilt:
+\begin{itemize}
+\item $\EE(aX+bY)=a\EE(X)+b\EE(Y)$
+\item $\var(X\pm Y) = \var(X)+\var(Y)\pm \cov(X,Y)$
+\item $\cov(aX+bY,Z)=a\cov(X,Z)+b\cov(Y,Z)$
+\item $\cov(X,Y)=\cov(Y,X)$
+\end{itemize}
 
+\cparagraph{Bemerkung} (zu $\varrho_{X,Y}$)
+\begin{itemize}
+\item $\varrho_{X,Y} \in [-1,1]$
+\item $\varrho_{X,Y}$ ist ein Maß für den linearen Zusammenhang zwischen $X$ und $Y$
+\item Extremfälle:\\
+$\varrho_{X,Y}=\begin{cases}
++1\\
+-1
+\end{cases} \Leftrightarrow Y=aX+b$ mit $\begin{cases}
+a > 0\\
+a < 0
+\end{cases}$\\
+Hier gilt also jeweils ein streng linearer Zusammenhang.
+\item Die Gerade $y=a_0+a_1 x$ mit $a_1 = \frac{\sigma_X}{\sigma_Y}\varrho_{X,Y}$, $a_0=\EE Y - a_1 \EE  X$ heißt Regressionsgerade $Y$ bezüglich $X$ (beste lineare Näherung).
+\end{itemize} 
 
+\section{Spezielle Verteilungen}
+Wir werden folgende diskrete Verteilungen diskutieren:
+\begin{enumerate}[label=(D\arabic*)]
+\item Bernoulli-Verteilung
+\item Binominal-Verteilung
+\item Diskrete Gleichverteilung
+\item Hypergeometrische Verteilung
+\item Poisson Verteilung
+\item Geometrische Verteilung
+\end{enumerate}
+\subsection{Bernoulli Verteilung}
+Die Vorstellung einer (un-)fairen Münze liefert eine sehr einfache Zufallsvariable:
+\cparagraph{Definition} Eine ZV $X$ welche genau 2 Werte annehmen kann heißt Beroulli-verteilt.
+\cparagraph{Bemerkung}
+\begin{itemize}
+\item Die möglichen Werte von $X$ werden typischerweise $\{0,1\}$ genannt.
+\item Schreibweise: $\PP(X=1)=p, \; \PP(X=0)=1-p=q$ und $X \sim \mathrm{Ber}(p)$
+\item Erwartungswert: $\EE(X)=0\cdot q + 1 \cdot p = p$
+\item Varianz: $\var (X) = \EE(X^2) - (\EE(X))^2 = 0^2 \cdot q + 1^2 \cdot p - p^2 = pq$
+\item Standardabweichung: $\sigma_X=\sqrt{pq}$
+\end{itemize}
+ABB Skript
+\cparagraph{Beispiel} Seien $X,Y \sim \mathrm{Ber}(p)$. Setze $Z_1:= X+Y$, $Z_2=X-Y$ unabhängig.
+\begin{anumerate}
+\item Wie sind $Z_1$ und $Z_2$ verteilt?
+\item Sind $Z_1$ und $Z_2$ unkorreliert?
+\item Sind $Z_1$ und $Z_2$ unabhängig?
+\end{anumerate}
+Lösung:
+\begin{anumerate}
+\item Mögliche Werte:\\
+\begin{tabular}{c c | c c | l}
+$X$ & $Y$ & $Z_1$ & $Z_2$ & mit WK\\\hline
+0 & 0 & 0 & 0 & $\PP(X=0,Y=0)=\PP(X=0\cdot \PP(Y0=) = q^2$\\
+0 & 1 & 1 & -1 & $qp$\\
+1 & 0 & 1 & 1 & $pq$\\
+1 & 1 & 2 & 0 & $p^2$
+\end{tabular}\\
+$\Rightarrow$ \begin{tabular}{r | c c c}
+$z$ & 0 & 1 & 2\\\hline
+$\PP(Z_1=z)$ & $q^2$ & $2pq$ & $p^2$
+\end{tabular} \quad \begin{tabular}{r | c c c}
+$z$ & -1 & 0 & 1\\\hline
+$\PP(Z_2=z)$ & $pq$ & $p^2+q^2$ & $pq$
+\end{tabular}\\
+\begin{tabular}{l | c c c }
+$z$ & -1 &  0 & 1\\
+$\PP(Z_1Z_2=z)$ & $pq$ & $p^2+q^2$ & $pq$
+\end{tabular}\\
+\item $\cov (Z_1,Z_2)=\EE(Z_1Z_2)-\EE(Z_1) \EE(Z_2) = 0$, denn: \\
+$\EE(Z_1)=0\cdot q^2 + 1 \cdot 2 pq + 2 p^2 = 2p(q+p) = 2p$\\
+$\EE(Z_2)=-pq+pq = 0 =\EE(Z_1Z_2)$\\
+$\Rightarrow Z_1$ und $Z_2$ sind unkorreliert
+\item Es müsste bspw. gelten $\underbrace{\PP(Z_1=0, Z_2=1)}_{0}=\underbrace{\PP(Z_1=0)}_{q^2} \underbrace{\PP(Z_2=1)}_{pq}$, ist aber falsch.\\
+$\Rightarrow Z_1$ und $Z_2$ nicht unabhängig.
+\end{anumerate}
+\subsection{Binomialverteilung}
+\cparagraph{Definition} Die ZV $X$ heißt binomialverteilt mit den Parametern $n$ und $p$ (wobei $n \in \NN, p\in [0,1]$), wenn sie die Werte $0,\dots, n$ mit den WKen
+$$p_i=\PP(X=i)=\binom{n}{i}p^i (1-p)^{n-i}, \quad i=0,\dots ,n$$
+annimmt.
+\cparagraph{Bemerkung} 
+\begin{itemize}
+\item Kurschreibweise: $X \sim \mathrm{Bin}(n,p)$
+\item Erwartungswert: $\EE(X)=np$
+\item Varianz: $\var (X) = np (1-p)$
+\end{itemize}
+ABB Skript
+\cparagraph{Satz} Sind $X_1, \dots , X_n$ unabhängige Bernoulliverteilte ZVen (alle mit Parameter $p$), dann 
+$$X_1+X_2+\dots + X_n \sim \mathrm{Bin}(n,p)$$
 
+\cparagraph{Beispiel} (Massenproduktion mit Ausschuss)\\
+Ein Massenprodukt (Schokoriegel) mit einem Ausschussanteil von $3\%$ wird in 20er Packungen verkauft. Wie groß ist die WK, dass eine Packung maximal 2 Ausschussstücke enthält?\\
+Lösung:\\
+$X_i$ … ZV mit:\\
+$X_i=1 $ … Schokoriegel $i$ in der Packung ist Ausschuss,\\
+$X_i = 0 $ … Schokoriegel $i$ ist keine Ausschuss.\\
+$Y=\sum_{i=1}^{20}X_i$\\
+Wir wissen $X_i \sim \mathrm{Ber}(0,03)$\\
+Annahme $X_i$ sind unabhängig.\\
+$\overset{\text{Satz 1.3.6}}{\Longrightarrow} Y \sim \mathrm{Bin}(20,\; 0,03)$\\
+Gesucht: $\PP(Y \leq 2)$\\
+\begin{align*}
+\PP(\leq 2)&= \PP(Y=0)+\PP(Y=1) + \PP(Y=2)\\
+&= \binom{20}{0}\cdot 0,03^0 \cdot 0,97^0 + \binom{20}{1} 0,03^1 \cdot 0,97^{19} + \binom{20}{2} 0,03^2 \cdot 0,97^{18}\\
+&= 0,979
+\end{align*}
+
+\subsection{Diskrete Gleichverteilung}
+
+\cparagraph{Definition} Eine ZV $X$ genügt der diskreten Gleichverteilung auf der Menge $T=\{x_1,\dots,x_n\}$, falls sie nur Werte aus $T$ annehmen kann und 
+$$\PP(X=x_1) = \dots = \PP(X=x_n) = \frac{1}{n}$$
+gilt.
+
+\cparagraph{Bemerkung}
+\begin{itemize}
+\item Kurzschreibweise: $X\sim U(T)$
+\item Erwartungswert: $\EE(X)=\frac{1}{n}\sum_{i=1}^n x_i$
+\item Varianz: $\var(X)=\EE(X^2)-(\EE(X))^2 = \frac{1}{n} \sum_{i=1}^n x_i^2+\left(\frac{1}{n}\sum_{i=1}^n x_i\right)^2$
+\item Beispiel: faire Münze, fairer Würfel, …
+\end{itemize}
+ABB Skript
+
+\cparagraph{Bemerkung} (Beziehung zum Laplace-Experiment)
+\begin{itemize}
+\item Wir betrachten ein Laplace-Experiment mit 
+$$\Omega = \{\omega_1, \dots, \omega_n\}$$ 
+und dem WK-Maß $\PP$, d.h. 
+$$\PP(\{\omega_1\})=\dots= \PP(\{\omega_n\})=\frac{1}{n}$$
+\item Die ZV $X:\Omega \to \RR, \; X(\omega) = \omega$ ist damit gleichverteilt. Denn: 
+$$\PP(X=\omega_i)=\PP(\{\omega\in \Omega | X(\omega) = \omega_i\})=\PP(\omega_i)=\frac{1}{n}$$
+\end{itemize}
+
+\subsection{Hypergeometrische Verteilung}
+\cparagraph{Definition} Eine ZV $X$ heißt Hypergeometrisch verteilt, mit ganzzahligen Parametern $N$, $M$ und $n$ ($0<M\leq N, 0 < n \leq N$), wenn sie nur die Werte $T=\{\max\{0,n+M-N\}, \dots, \min\{n,M\}\}$ annehmen kann und für jedes $m \in T$ gilt:
+$$p_m:=\PP(X=m)=\frac{\binom{M}{n}\binom{N-M}{n-m}}{\binom{N}{m}}$$
+
+\cparagraph{Bemerkung}
+\begin{itemize}
+\item Kurzschreibweise: $X\sim \mathrm{Hyp}(N,M,n)$
+\item Erwartungswert und Varianz: $\EE(X)=n\frac{M}{N}$ und $\var (X)=n\frac{M}{N}\left(1-\frac{M}{N}\right) \frac{N-n}{N-1}$
+\item Anwendung: Stichprobe ohne Zurücklegen (bspw. Qualitätskontrolle, Lotto)
+\begin{itemize}
+\item $N$ Objekte, davon $M$ mit bestimmten Merkmal (bspw. Ausschuss, Gewinnzahl)
+\item $n$ Objekte werden entnommen
+\item $X$ … Anzahl der Objekte unter den $n$ entnommenen, die das Merkmal besitzen
+$$\Rightarrow X\sim \mathrm{Hyp}(N,M,n)$$
+\end{itemize}
+\end{itemize}
+ABB Skript
 
 %\newpage
 %\printbibliography
