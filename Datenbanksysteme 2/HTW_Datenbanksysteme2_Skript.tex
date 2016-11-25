@@ -734,8 +734,104 @@ Ebene & Lost Update & Dirty Read & Non repeat. Read & Phantom\\\hline
 \end{tabular}\\
 Also: Nur mit Ebene-3 können alle Anomalien abgedeckt sein. Aber: tiefere Ebenen kosten mehr Leistung!
 
-\section{Zugriffsschutz/Datenschutz}
+\subsubsection{Optimistische Verfahren}
+\slidesScale{2}{34}
+Grundgedanke:
+\begin{itemize}
+\item Transaktionen nutzen oft verschiedene Daten
+\item Konflikte selten
+\item kein Overhead für Sperrverwaltung
+\end{itemize}
+
+\subsubsection{Zeitstempelverfahren}
+\slidesScale{2}{35}
+
+Letzten Endes werden Kombinationen verschiedener Verfahren verwendet:\\
+Jeder Nutzer bekommt einen Zeitstempel, im Backend läuft allerdings ein pessimistisches Verfahren.
 \section{Physische Integrität}
+\slidesScale{2}{36}
+\begin{itemize}
+\item abgeschlossene Transaktion $\Rightarrow$ Ergebnis herstellen\\
+nicht abgeschlossene Transaktion $\Rightarrow$ Rücksetzen
+\item Verfahren des Sicherns $=$ Logging, Backup\\
+Verfahren des Wiederherstellens $=$ Recovering
+\end{itemize}
+\subsection{Protokollierung}
+\begin{itemize}
+\item Abspeicherzeitpunkt (Beginn/Ende der Transaktion)
+\item Protokollgranulat (Tupel/Befehle)
+\item Niveau (logisch: Tupel/Befehl oder physisch: Seite)
+\end{itemize}
+\subsubsection*{Eintragungen in der Protokolldatei}
+\slidesScale{2}{37}
+\subsection{Einbringstrategien}
+\slidesScale{2}{38}
+\subsection{Prinzip der physischen Protokollierung}
+\slidesScale{2}{39}
+\slidesScale{2}{40}
+\subsection{Datensicherung und Wiederherstellung am Beispiel MS SQL-Server}
+Log (*.ldf Datei)\\
+$\uparrow$\\
+Daten- und Log-Seiten im Hauptspeicher \\
+$\updownarrow$ \\
+Datenbank (*.mdf Datei)
+\subsubsection*{Archivsicherung}
+\begin{itemize}
+\item Datenbank: Vertrieb.bak
+\begin{lstlisting}[language=SQL]
+BACKUP DATABASE Vetrieb TO DISK = 'E:\Backups\Vertrieb.bak'
+\end{lstlisting}
+\item Log: V\_log1.bak
+\begin{lstlisting}[language=SQL]
+BACKUP LOG Vertrieb TO DISK = 'E:\Backups\V_log1.bak'
+\end{lstlisting}
+Sobald Log gesichert wird, wird *.ldf Datei geleert!
+\end{itemize}
+\subsection{Wiederherstellungsmodi}
+\slidesScale{2}{41}
+\begin{itemize}
+\item vollständig (Standard)
+\begin{lstlisting}[language=SQL]
+ALTER DATABASE SET RECOVERY FULL
+\end{lstlisting}
+Nachteil: \\
+$-$ Log-File erst mit Log-Sicherung abgeschnitten\\
+Vorteil:\\
+$+$ Wiederherstellung bis letzte Log-Sicherung möglich (bei Festplatten-Fehler)
+\begin{lstlisting}[language=SQL]
+RESTOR DATABASE Vertrieb FROM DISK = 'E:\Backups\Vertrieb.bak'
+\end{lstlisting}
+Zum Wiederherstellen bei einem Ausfall (bspw. um 9:30) wird die gesicherte Datenbank hergestellt (die bspw. um 6:00 erstellt wurde) und alle danach vorhandenen Logs (die bspw. um 7:00, 8:00 und 9:00 erstellt wurden) angewandt, um wieder zum verlorenen Zustand zurück zu kommen. Achtung: Logs sind inkrementell! Ist ein Log kaputt, können folgende Logs nicht mehr zur Wiederherstellung genutzt werden.\\
+Anhand der Logs kann auch bei falscher Manipulation bis zu einem bestimmten Zeitpunkt wiederhergestellt werden (mit dem Backup von 9:00 Zustand von genau 8:20 herstellbar).
+\item einfach
+\begin{lstlisting}[language=SQL]
+ALTER DATABASE SET RECOVERY SIMPLE
+\end{lstlisting}
+Nachteil:\\
+$-$ Wiederherstellung nur bis letztem DB-Backup
+Vorteil:\\
+$+$ Log-Datei „wächst nicht“ (Wird nur für Transaktionen benutzt)\\
+Zum Wiederherstellen bei einem Ausfall (bspw. um 9:30) kann nur die gesicherte Datenbank (von bspw. 6:00) wieder hergestellt werden, es gibt keine Logs dazwischen, die einen neueren Zustand wiederherstellen können!
+\end{itemize}
+\subsubsection{Zusammenhang zwischen Protokoll- und Recoveryverfahren}
+\slidesScale{2}{42}
+\subsubsection{Weitere Recoveryverfahren}
+\slidesScale{2}{43}
+\subsubsection{Übertragung Datenbankpuffer-Platte}
+\slidesScale{2}{44}
+\subsection{Hochverfügbarkeit}
+\slidesScale{2}{45}
+\slidesScale{2}{46}
+\subsubsection{Spiegelung}
+\begin{enumerate}
+\item Eintragung in Datenbank 1
+\item REDO ins Log der DB 1
+\item Spiegelung der Eintragung in Datenbank 2
+\item REDO der Spiegelung ins Log der DB 2
+\item Bestätigung an DB 1
+\end{enumerate}
+
+\section{Zugriffsschutz/Datenschutz}
 
 \chapter{Logische Datenmodelle}
 \section{Logische und physische Datenorganisation / Überblick über Datenmodelle}
