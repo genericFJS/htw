@@ -489,7 +489,100 @@ $\Rightarrow$ Dieser Aufwand wird \emph{Table Superfluity} genannt.
 \subsubsection{Zweistufige Adressumsetzung}
 \slidesScale{04}{19}
 
+\subsubsection{Inverted Page Table}
+\slidesScale{04}{20}
+\unimptnt{
+\slidesScale{04}{21}
+\subsubsection*{Adressumsetzung}
+\slidesScale{04}{22}
+\slidesScale{04}{23}
+}
+\subsection{Segmentation}
+\subsubsection{Methode}
+\slidesScale{04}{24}
+\unimptnt{
+\subsubsection{Adressierung / Adressumsetzung}
+\slidesScale{04}{25}
+}
+\subsubsection{Externe Fragmentierung}
+\slidesScale{04}{26}
+\unimptnt{
+\subsubsection{Kompaktierung}
+\slidesScale{04}{27}
+}
+
+\subsection{Paged Segmentation}
+\slidesScale{04}{28}
+\unimptnt{
+\slidesScale{04}{29}
+}
+
+\section{Speicherverwaltungsverfahren}
+\subsection{Überblick}
+\slidesScale{04}{30}
+\subsection{Fetch / Placement}
+\slidesScale{04}{31}
+
+\section{Translation Lookaside Buffer}
+\slidesScale{04}{32}
+
+\unimptnt{
+\subsection{Adressumsetzung}
+\slidesScale{04}{33}
+}
+
+\subsection{Ansatz}
+\slidesScale{04}{34}
+
+\subsection{Probleme}
+\slidesScale{04}{35}
+\unimptnt{
+\slidesScale{04}{36}
+}
+$\Rightarrow$ In modernen Systemen mit stets wechselnden Prozessen lohnt sich kein zu großer TLB, da er mit jedem Prozess neu beschrieben wird. Wird also der Prozess gewechselt, was regelmäßig geschieht, ist der gesamte TLB ungültig… obwohl der vorhergehende Prozess ihn wahrscheinlich gar nicht komplett füllen konnte.
+
 \chapter{Pipelining}
+
+\unimptnt{
+\section{Einführendes Beispiel}
+\slidesScale{05}{1}
+}
+
+\section{Prinzip des Pipelining}
+
+\unimptnt{
+\subsection{idealisiertes Prozessor-/Speichersystem}
+\slidesScale{05}{2}
+}
+\subsubsection{Typischer Befehlszyklus}
+\slidesScale{05}{3}
+
+\subsection{Einführung}
+\slidesScale{05}{4}
+\slidesScale{05}{5}
+
+\subsection{Grundidee}
+\slidesScale{05}{6}
+
+\subsection{Fließband-, Pipeline-, Ablaufdiagramm}
+\slidesScale{05}{7}
+
+\section{Leistungsfähigkeit und -parameter}
+\subsection{Steigerung der Leistungsfähigkeit}
+\unimptnt{
+\slidesScale{05}{8}
+}
+\slidesScale{05}{9}
+\slidesScale{05}{10}
+\subsection{Pipeling-Paradoxon}
+\slidesScale{05}{11}
+Loop-Unrolling: anstatt bspw. eine 10-fach Schleife als solche zu notieren (while/for), diese in 10 Schritte sequentiell hin schreiben.
+
+\section{Konflikte beim Pipelining}
+\subsection{Überblick}
+\slidesScale{05}{12}
+\slidesScale{05}{13}
+
 
 \chapter{Sprungvorhersage}
 
