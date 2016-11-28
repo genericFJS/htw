@@ -48,7 +48,7 @@ int main (void){
 
 	
 	// das Muster setzen
-	PORTB |= muster;
+	PORTB |= ~muster;
 
 	sei();	// Interrupts aktivieren
 
