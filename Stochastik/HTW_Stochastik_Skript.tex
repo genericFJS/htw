@@ -1078,6 +1078,16 @@ Wir werden folgende diskrete Verteilungen diskutieren:
 \item Poisson Verteilung
 \item Geometrische Verteilung
 \end{enumerate}
+Und folgende stetige Verteilungen:
+\begin{enumerate}[label=(D\arabic*)]
+\item stetige Gleichverteilung (Bus-Beispiel)
+\item Normalverteilung (Zentraler Grenzwertsatz $\to$ wichtig!)
+\item Exponentialverteilung
+\item $\chi^2$-Verteilung (Chi-Quadradt-Verteilung)
+\item $t$-Verteilung
+\item $F$-Verteilung
+\end{enumerate}
+S4-S5 vor allem für Statistik relevant
 \subsection{Bernoulli Verteilung}
 Die Vorstellung einer (un-)fairen Münze liefert eine sehr einfache Zufallsvariable:
 \cparagraph{Definition} Eine ZV $X$ welche genau 2 Werte annehmen kann heißt Beroulli-verteilt.
@@ -1114,7 +1124,7 @@ $z$ & -1 & 0 & 1\\\hline
 $\PP(Z_2=z)$ & $pq$ & $p^2+q^2$ & $pq$
 \end{tabular}\\
 \begin{tabular}{l | c c c }
-$z$ & -1 &  0 & 1\\
+$z$ & -1 &  0 & 1\\\hline
 $\PP(Z_1Z_2=z)$ & $pq$ & $p^2+q^2$ & $pq$
 \end{tabular}\\
 \item $\cov (Z_1,Z_2)=\EE(Z_1Z_2)-\EE(Z_1) \EE(Z_2) = 0$, denn: \\
@@ -1148,7 +1158,7 @@ $Y=\sum_{i=1}^{20}X_i$\\
 Wir wissen $X_i \sim \mathrm{Ber}(0,03)$\\
 Annahme $X_i$ sind unabhängig.\\
 $\overset{\text{Satz 1.3.6}}{\Longrightarrow} Y \sim \mathrm{Bin}(20,\; 0,03)$\\
-Gesucht: $\PP(Y \leq 2)$\\
+Gesucht: $\PP(Y \leq 2)$
 \begin{align*}
 \PP(\leq 2)&= \PP(Y=0)+\PP(Y=1) + \PP(Y=2)\\
 &= \binom{20}{0}\cdot 0,03^0 \cdot 0,97^0 + \binom{20}{1} 0,03^1 \cdot 0,97^{19} + \binom{20}{2} 0,03^2 \cdot 0,97^{18}\\
@@ -1197,6 +1207,100 @@ $$\Rightarrow X\sim \mathrm{Hyp}(N,M,n)$$
 \end{itemize}
 \end{itemize}
 ABB Skript
+
+\cparagraph{Beispiel} In einer Lostrommel befinden sich $20$ Lose, davon $5$ Gewinnlose. Jemand zieht $3$ Lose (ohne Zurücklegen). Wie groß ist die WK, dass sich darunter genau 2 Gewinnlose befinden?\\
+Lösung:\\
+$X$ … Anzahl der Gewinnlose unter den $3$ gezogenen.\\
+Es gilt $X \sim \mathrm{Hy}(20,5,3)$. Daher 
+$\PP(X=2)=\frac{\binom{5}{2}\binom{15}{1}}{\binom{20}{3}}=\frac{10 \cdot 15}{1140}=0,1316$
+
+\cparagraph{Bemerkung} Wie kommt man darauf gerade diese Formel zu verwenden?\\
+Idee: Modellierung als Laplace-Experiment.\\
+$\Omega=\{\{a_1,a_2,a_3\}\;|\; a_i \not = a_j \text{ fals } i \not = j \text{ und }a_1, a_2, a_3 \in \{\underbrace{g_1, \dots, g_5}_{\text{Gewinnlose}}, \underbrace{n_1, \dots, n_{15}}_{\text{Nieten}}\}\}$ $\rightsquigarrow $ Elementarereignisse gleich-wahrscheinlich. Es gilt: $|\Omega|=\binom{20}{3}$.\\
+Das Ereignis, das uns interessiert ist: \\
+$A=\{\{a_1, a_2, a_3\}\in \Omega \;|\; \{a_1, a_2, a_3\} \text{ enthält genau 2 der }\{g_1, \dots,g_5\}\text{ und genau 1 der }\{n_1,\dots,n_{15}\}\}$\\
+Es gilt nun $A=\{X=2\}$ und $|A| = \binom{5}{2}\cdot \binom{15}{1} \Rightarrow \PP(X=2) = \frac{\binom{5}{2}\binom{15}{1}}{\binom{20}{3}}$
+
+\subsection{Geometrische Verteilung}
+\cparagraph{Definition} Eine ZV $X$ heißt geometrisch verteilt mit dem Parameter $p\in (0,1)$, falls sie nur die Werte $1,2,\dots$ annehmen kann und 
+$$p_m:=\PP(X=m)=p(1-p)^{m-1} \quad m=1,2,\dots$$
+gilt.
+\cparagraph{Bemerkung}
+\begin{itemize}
+\item Kurzschreibweise: $X\sim \mathrm{Geo}(p)$
+\item Varianz: $\var(X)=\frac{1-p}{p^2}$
+\item Anwendung: Anzahl der Versuche bis der erste Erfolg eintritt, bei hintereinander ausführen von unabhängigen identischen Bernoulli Zufallsexperimenten.
+\end{itemize}
+ABB Skript
+
+\cparagraph{Beispiel} Der Postbote hat ein Paket für Petra bei ihrem Nachbarn abgegeben. Petra klopft jeden Nachmittag an seine Tür. Leider ist er nur mit WK $0,3$ zu Hause. Annahme: Anwesenheiten des Nachbarn an verschiedenen Tagen sind unabhängig voneinander. 
+\begin{anumerate}
+\item Wie groß ist die WK, dass Petra ihr Paket erst beim 5. Klingeln bekommt?
+\item Wie groß ist die WK, dass Petra ihr Paket spätestens beim 5. Klingeln bekommt?
+\item Wie viele Tage muss sie im Mittel warten, bis sie ihren Nachbarn antrifft?
+\end{anumerate} 
+Lösung:\\
+$Y$ sei die ZV, die beschreibt, ob Petra ihren Nachbarn am $i$-ten Tag antrifft:\\
+$\{Y_i=1\}$ … sie trifft ihn am $i$-ten Tag an\\
+$\{Y_i=0\}$ … sie trifft ihn am $i$-ten Tag nicht an\\
+laut Voraussetzung: $Y_i \quad i=1,2, \dots$ sind unabhängig und $\PP(Y_i=1) = 0,3 = 1-\PP(Y_i=0)$\\
+Wir führen also unabhängige, identische Bernoulli-Zufallsexperimente aus und fragen uns nach dem ersten Erfolg.
+
+\begin{anumerate}
+\item gesucht: \begin{align*}
+\PP(Y_1=0, \ldots, Y_4=0, Y_5=1) &= \PP(Y_1=0) \cdot \ldots \cdot \PP(Y_4=0) \cdot \PP(Y_5=1) \\
+&= 0,7 ^4 \cdot 0,3 \\
+&= 0,07203
+\end{align*}
+Setzen wir $X$ … Tag an dem der erste „Erfolg“ eintritt, so gilt $\PP(X=5)=0,7^4\cdot 0,3$\\
+Allgemein gilt $P(X=m)=0,7^{m-1}\cdot 0,3 \Rightarrow X$ ist geometrisch verteilt mit Parameter $p=0,3$.
+\item Gesucht:
+\begin{align*}
+\PP(X\leq 5)&=\PP(\{X=1\}\cup \{X=2\} \cup \{X=3\} \cup \{X=4\} \cup \{X=5\}) \\
+&= \PP(X=1) + \ldots + \PP(X=5) \\
+&= 0,7^0\cdot 0.3 + 0,7^1 \cdot 0.1 + \ldots + 0,7^4 \cdot 0,3 \\
+&= (0,7^0+\ldots+0,7^4)\cdot 0,3 ) \\
+&= 0,8919
+\end{align*}
+Diese Rechnung funktioniert für beliebiges $m$. Daher gilt: 
+$$F_X(m)=\PP(X\leq m) = 0,3 \sum_{i=0}^{m-1}0,7^i=0,3 \frac{1-0,7^m}{1-0,7}=1-0,7^m$$
+\item Gesucht: $\EE(X)=\frac{1}{0,3}=\frac{10}{3}$\\
+$\Rightarrow$ erwartete Wartezeit ist $3,\bar{3}$ Tage.
+\end{anumerate}
+
+\cparagraph{Bemerkung} Für eine geometrisch verteilte ZV $X$ mit Parameter $p$ gilt 
+$$F_X(m)=\PP(X\leq m) = 1-(1-p)^m$$
+für $n \in \NN_0$. Dazwischen ist $F_X$ konstant.
+
+\subsection{Poisson-Verteilung}
+\cparagraph{Definition} Eine ZV $X$ heißt Poisson-verteilt mit dem Parameter $\lambda >0$, falls sie nur die Werte $0,1,2,\dots$ annehmen kann und 
+$$p_m:=\PP(X=m)=\frac{\lambda^m}{m!}e^{-\lambda} \quad m=0,1,2,\dots$$
+\cparagraph{Bemerkung} 
+\begin{itemize}
+\item Kurzschreibweise: $X\sim \mathrm{Poi}(\lambda)$
+\item Erwartungswert: $\EE(X)=\lambda$
+\item Varianz: $\var(X)=\lambda$
+\item Anwendung: Bedientheorie, Zuverlässigkeitstheorie
+\begin{itemize}
+\item Anzahl der Kunden pro Zeiteinheit
+\item Anzahl der Störungen im Produktionsprozess eines Betriebs pro Zeiteinheit
+\end{itemize}
+\end{itemize}
+
+\cparagraph{Beispiel} In einer Fließbandanlage tritt im Durchschnitt alle $5$ Stunden eine Störung auf (d.h. im Mittel $0,2$ Störungen pro Stunde). Die Zahl der Störungen in einer bestimmten Zeiteinheit kann als Poissonverteilt angenommen werden.\\
+Wie groß ist die WK, dass in einer 8-Stunden-Schicht mehr also 2 Störungen auftreten?\\
+Lösung:\\
+$X$… Anzahl der Störungen in 8 Stunden
+\begin{itemize}
+\item $X\sim \mathrm{Poi}(\lambda)$ mit $\EE X = 8 \cdot 0,2 = 1,6 = \lambda$
+\begin{align*}
+\Rightarrow \PP(X >2) &= 1- \PP(X\leq 2) \\
+&= 1- \PP(X=0) - \PP(X=1) - \PP(X=2)\\
+&= 1-e^{-1,6}\left(\frac{1,6^0}{0!}+\frac{1,6^1}{1!}+\frac{1,6^2}{2!}\right)\\
+&= 0,2166
+\end{align*}
+\end{itemize}
+
 
 %\newpage
 %\printbibliography
