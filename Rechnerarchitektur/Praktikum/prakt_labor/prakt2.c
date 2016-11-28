@@ -35,7 +35,7 @@ ISR(INT2_vect){
 
 int main (void){
 	DDRB = 0xFF;	// B komplett als Ausgabe definieren
-	DDRD = 0x00;	// D komplett als Eingang definieren
+	// mit PIND/PORTD usw. nichts machen, der macht sich als Interrupt "selbständig"
 	
 	// Timer: (alle 262ms)
 	TCCR0 = (1 << CS02) | (1 << CS01) |(1 << CS00);
