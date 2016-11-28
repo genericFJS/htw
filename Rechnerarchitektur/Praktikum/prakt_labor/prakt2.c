@@ -11,13 +11,13 @@ ISR(TIMER0_OVF_vect){
 	//PORTB = ~PORTB;
 	temp = PORTB;
 	if (right){	
-		PORTB >>= 1;
-		if (temp & (1<<0)){
+		PORTB >>= 1;	// nach links shiften
+		if (temp & (1<<0)){	// wenn 0. Bit (das weggeshiftet ist) gesetzt ist, das 7. Bit setzen
 			PORTB |= (1<< 7);
 		}
-	} else {
+	} else {	// nach rechts shiften
 		PORTB <<= 1;
-		if (temp & (1<<7)){
+		if (temp & (1<<7)){	// wenn 7. Bit gesetzt, 0. setzen
 			PORTB |= 1;
 		}
 	}
@@ -25,6 +25,7 @@ ISR(TIMER0_OVF_vect){
 
 // Interrupt Anweisung für Schalter 1
 ISR(INT2_vect){
+	// Richtung wechseln
 	if (right){
 		right = 0;
 	} else {
@@ -46,6 +47,7 @@ int main (void){
 	EIMSK = (1 << INT2);
 
 	
+	// das Muster setzen
 	PORTB |= muster;
 
 	sei();	// Interrupts aktivieren
