@@ -4,6 +4,7 @@
 \setCustomTitle{Angewandte Sensorik}
 \setCustomSubtitle{Vorlesungsskript}
 \setCustomAuthor{Falk-Jonatan Strube}
+\setCustomNoteA{oder: „Vodka Gorbunoff: Der Sensorik reinster Seele“}
 \setCustomNoteB{Vorlesung von Prof. Dr.-Ing. habil. Gorbunoff}
 \input{\customDir .LaTeX_master/LaTeX_master.sty}
 \input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
@@ -990,6 +991,173 @@ $\Delta R \sim 0,5\dots 5\%$
 \item Metall-Dünnfilm-DMS
 \item polySi-Membran-DMS
 \end{itemize}
+\begin{itemize}[label=$+$]
+\item kleine Abmessungen möglich
+\item für statische und dynamische Messungen geeignet
+\end{itemize}
+
+\subsubsection{Piezoresistive Metall-Mebran-Drucksensoren}
+\begin{itemize}[label=$+$]
+\item höchste Genauigkeit: $0,2 \ldots 0,3\%$, sehr kleine Hysterese $<0,05\%\mathrm{FSO}$
+\item hervorragende Temperaturstabilität
+\item überdrucksicher
+\item sehr hohe Medienverträglichkeit
+\item robuste Gehäuseausführungen möglich
+\item direkter Kontakt mit Druckmedium
+\item gute Langzeitstabilität
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item für Drücke $<5\mathrm{bar}$ nicht geeignet
+\item für $T > 140^\circ C$ nicht geeignet
+\item aufwendige Fertigung
+\item sehr teuer (hoher Fertigungsaufwand)
+\item geringe elektrische Durchschlagsfestigkeit
+\item anfällig für elektro-magnetische Störeinkopplung
+\item Miniaturisierung eingeschränkt
+\end{itemize}
+Anwendung für Präzisions-Druckmessungen insbesondere in Hochdruckbereichen:
+\begin{itemize}
+\item Pneumatik und Hydraulik
+\item Mess- und Regeltechnik
+\item Verfahrenstechnik der Chemie, Pharmaindustrie, …
+\end{itemize}
+
+\subsubsection{Silizium-Membran-Drucksensoren}
+Si-Messmembran mit poly-Si-Dünnfilm DMS
+\begin{itemize}[label=$+$]
+\item Ideal für niedrige Nenndruckbereiche
+\item gutes Preis/Leistungsverhältnis
+\item vergleichsweise kleine Abmessungen
+\item Integration mit der Signalverarbeitungselektronik
+\item hoher k-Faktor
+\item keine Kriecheffekte
+\item keine Isolierschicht
+\item hohe Ausgangssignale
+\item hohe Eigenfrequenz
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item hohe Temperatur-Abhängigkeit
+\item hoher Aufwand für Linearisierung und Temperatur-Kompensation
+\item empfindlich gegen äußere Einflüsse
+\item geringere Genauigkeit als Metall-DMS
+\item Einsatz nur bis max. $125^\circ C$
+\item Hysterese $0,15\% \mathrm{FSO}$
+\end{itemize}
+Anwendungsbereiche:
+\begin{itemize}
+\item keine hohen Genauigkeitsansprüche
+\item insbesondere im Niedrigdruckbereich
+\item Haushalt (keine Temperatur-Schwankungen)
+\end{itemize}
+
+\subsection{Piezoelektrische Effekte}
+$q=d\cdot F$ mit $d$ … piezoelektrischer Koeffizient\\
+Prinzip: Atom-Anordnung ist anders bei unterschiedlichem Druck
+\begin{itemize}
+\item normal: sehr symmetrische Anordnung
+\item Longitudinal-Effekt (Druck von oben und unten, dort wo Ladung angelegt wird): Atome werden zusammengedrückt, so sind teilweise oberhalb unterschiedliche Ladungen (positiv/negativ)
+\item Transversal-Effekt (Druck von oben und unten, Ladung liegt seitlich an): Atome werden zusammengedrückt und gedreht, dadurch entstehen wieder unterschiedliche Ladungen
+\item Schub-Effekt (Ladungsplatten (oben/unten) werden seitlich verschoben): Atome verschieben sich
+\end{itemize}
+Spannung über dem Sensorelement: $U=\frac{d}{\varepsilon_r}\cdot \frac{F \cdot l}{\varepsilon_0 \cdot A}$
+
+\subsubsection*{Piezoelektrische Materialien}
+\begin{tabular}{L{0.3} | L{0.2} | L{0.15} | L{0.15} | L{0.2}}
+Material & Dielektrizitätskonstante $\varepsilon_{33}$ & Piezoelktrische Dehnungskonstante $d_{31}[\unit{pC/N}]$ & Curie-Temperatur $[\unit{^\circ C}]$ & typische Einsatz-Temperatur\\\hline
+Quarz & $4$ & $2,3$ & $560$ & $-200\ldots 300\unit{^\circ C}$\\
+\multicolumn{5}{l}{$\to$ exzellente Linearität und Langzeitstabilität, keine Hysterese, keine Pyroelektrizität.}\\ \multicolumn{5}{l}{Aber: quarz ist polymorph und stärker temperaturabhängig}\\\hline
+Blei-Zirkonat-Titanat Keramik (PZT) P8 & $1600$ & $300$ & $370$ &\\\hline
+Bleimetaniobat & $200$ & $75$ & $540$&\\\hline
+Turmalin & $7$ & $1,8$ & $T_m\geq 900$ & bis $650\unit{^\circ C}$\\\hline
+Keramik P14 & $160$ & $20$ & $680$ &\\\hline
+Lithiumniobat & $85$ & $80$ & $1200$ & bis $700\unit{^\circ C}$\\\hline
+$BaTiO_3$-Keramik & $2000-5000$ & $190$ & $120$ &
+\end{tabular}
+
+\subsubsection*{Piezoelektrische Drucksensoren}
+\begin{itemize}[label=$+$]
+\item nahezu weglose Kraftaufnehmer (nur wenige $\unit{\mu m}$)
+\item hoher Wirkungsgrad (mechanische in elektrische Energie)
+\item einfacher mechanischer Aufbau: flach, klein, leicht
+\item sehr großer Messbereich ( $0 \ldots 100 \unit{MPa}$
+\item hohe Linearität des piezoelektrischen Effekts
+\item Auflösung: $< 10^{-7} \unit{FSI}$, Genauigkeit: $1\%$
+\item großer Frequenzbereich $f > 100 \unit{kHz}$
+\item kleine Bauweise
+\item Betriebstemperaturbereich: $-196 \ldots + 240 \unit{^\circ C}$
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item Kriechströme
+\item statische Messungen nur beschränkt möglich
+\end{itemize}
+Anwendungsbereich:
+\begin{itemize}
+\item insbesondere Messung hoher Drücke bei erhöhter Temperatur
+\item Werkzeugmaschinen
+\item Kunststoffverarbeitende Industrie
+\item KFZ (Brennkammerdrucksensoren)
+\item Sport (zur mehrdimensionalen Messungen)
+\item Ballistik
+\item Beschleunigungsmessung
+\end{itemize}
+
+\subsection{Beschleunigungssensoren}
+Prinzip: Trägheitskraft auf seismische Masse\\
+Wirkungsweise:
+\begin{itemize}
+\item kapazitive Änderung (durch Verschiebung) oder
+\item piezoelektrisch:
+\begin{itemize}
+\item Aufnehmer vom Kompressionstyp
+\item Aufnehmer nach dem Scherkonstruktionsprinzip
+\item Aufnehmerelement unter Biegebeanspruchung
+\end{itemize}
+\end{itemize}
+\subsubsection{Airbag-Beschleunigungssensor}
+(auf Basis der Scherkonstruktion)
+\begin{itemize}
+\item Hohe Empfindlichkeit: bis $1 \unit{nC/g}$
+\item Betriebstemperaturbereich: $-55 \dots 120\unit{^\circ C}$
+\item Empfindlichkeitsbereich: bis $\pm 500\unit{g}$
+\item Frequenzbereich: ab $1 \unit{Hz}$ bis $0,3 f_R$
+\end{itemize}
+\subsubsection{Bimorphe Beschleunigungssensoren}
+(auf Basis der Biegebeanspruchung) Die seismische Masse ist das Piezoelement selbst.
+\begin{itemize}
+\item Masse: $4,5 \unit{g}$
+\item Empfindlichkeit: $1\unit{V/g}$
+\item leicht, klein, hochauflösend, kostengünstig
+\end{itemize}
+
+\subsubsection{Anwendungen}
+\begin{itemize}
+\item Generelle Maschinenschwingungen
+\item Verpackungsindustrie
+\item Radialbeschleunigungssensoren (Eisenbahn)
+\item Crashtests
+\item Airbags im Auto
+\item Karosserieanalyse
+\item Sport (Aktivitätssensor)
+\item Lagesensor
+\end{itemize}
+
+\subsection{Magnetoelastische Sensoren (Induktivitätssensoren)}
+Prinzip: Spuleninduktivität (Villari-Effekt, Differentialtransformator)\\
+$L=\mu_0 \mu_r \frac{N^2 A}{l}$
+
+\begin{itemize}
+\item statische und quasi-statische Messungen
+\item Messeffekte sind sehr groß (keine große Verstärkung nötig)
+\item keine Rückwirkung auf Messobjekte
+\item Einsatzbereich: $1 \unit{kN}\ldots 2,5 \unit{MN}$
+\item Messfehler: $1\%$
+\end{itemize}
+
+
+
+
+
+
 
 
 %\newpage
