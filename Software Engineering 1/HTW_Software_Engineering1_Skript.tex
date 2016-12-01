@@ -582,7 +582,7 @@ Wichtig: Zu Beginn definieren, wer Stakeholder ist, damit klar ist, wer was zu s
 
 \section*{Beschreibung ermittelter Anforderungen}
 \begin{itemize}
-\item textuelle $\to$ natürlich-sprachlich\\
+\item textuelle $\to$ natürlich-sprachlich
 \begin{itemize}
 \item[$+$] Sprache allgemein bekannt
 \item[$-$] Missverständlichkeit / Interpretierbarkeit
@@ -665,11 +665,11 @@ UML kennt:
 \end{itemize}
 
 \subsection{Das Anwendungsfalldiagramm}
-\subsubsection*{Semantik}
+\subsubsection{Semantik}
 Das AWF-Diagramm stellt die funktionalen Anforderungen aus der Sicht der Anwender dar.\\
 Die funktionalen Anforderungen werden zu den Beteiligten aus dem Kontext in Beziehung gesetzt.\\
 Die Beziehung zwischen dem (externen) Anwender und dem AWF ist eine Kommunikationsbeziehung.
-\subsubsection*{Knoten}
+\subsubsection{Knoten}
 \begin{itemize}
 \item \begin{tikzpicture} [scale=.3]
 \draw  (0,0) ellipse (2 and 1);
@@ -682,7 +682,7 @@ Die Beziehung zwischen dem (externen) Anwender und dem AWF ist eine Kommunikatio
 \draw (-3,2) -- (-1,1);
 \end{tikzpicture} Akteur
 \end{itemize}
-\subsubsection*{Kanten}
+\subsubsection{Kanten}
 \begin{itemize}
 \item $\longleftrightarrow$ Kommunikationsbeziehung zwischen AWF und Akteur
 \item \begin{tikzpicture} [scale=.2]
@@ -692,10 +692,10 @@ Die Beziehung zwischen dem (externen) Anwender und dem AWF ist eine Kommunikatio
 \item $\longrightarrow$ <<enthält>> (include), <<erweitert>> (extend) $\to$ zwischen AWF\\
 Tipp Pfeilrichtung: Durch aktiven Satz verdeutlichen (ausleihen enthält prüfen wird zu: prüfen $\overset{\text{<<enthält>>}}{\longleftarrow}$ ausleihen)
 \end{itemize}
-\subsubsection*{Topologie}
+\subsubsection{Topologie}
 Netzförmig
 
-\subsubsection*{Begriffe}
+\subsubsection{Begriffe}
 AWF $\corr$ Prozess, Szenario, d.h.: Ein AWF kapselt eine Menge von Aktionen, die sequentiell nacheinander ablaufen oder zyklisch oder bedingungsabhängig gesteuert werden.
 \begin{itemize}
 \item Der AWF wird ausgelöst durch Ereignis:
@@ -721,6 +721,84 @@ Passive Rolle:
 \item tut nichts, wird aber zur Abarbeitung des AWF'es benötigt (bspw.: Kurstabelle für eine Wechselstube / Aktien, Fahrplan, …) $\Rightarrow$ vorhandene Daten
 \end{itemize}
 \end{itemize}
+
+\subsection{Aktivitätsdiagramm}
+Für Anwendungsfälle, die Abhängigkeiten erschaffen (voneinander):
+\begin{itemize}
+\item Bibliothek nutzen und verwalten (Gesamtfunktion)
+\begin{itemize}
+\item Literatur suchen
+\item Benutzerdaten verwalten
+\begin{itemize}
+\item Benutzer anmelden
+\item Benutzer abmelden
+\item Benutzerdaten ändern
+\item Benutzerausweis verlängern
+\end{itemize}
+\item Ausleihdaten verwalten (intern)
+\item Mahnungen verwalten
+\item[] $\vdots$
+\end{itemize}
+\end{itemize}
+$\Rightarrow$ diese Anwendungsfälle sind alle unabhängig voneinander!\\
+Abhängigkeiten entstehen, wenn man Anwendungsfälle weiter verfeinert. Beispielsweise beim Verfeinerung von „Benutzer anmelden“: 
+
+Der Fall „Anmeldewunsch prüfen“ wäre abhängig von „Anmeldewunsch annehmen“ usw.\\
+Ein Anwendungsfall ist dann nicht mehr abstrakt, wenn es sich nicht mehr verfeinern lässt, ohne Abhängigkeiten zu erzeugen!
+
+\subsubsection{Semantik}
+Ein Aktivitätsdiagramm beschreibt einen Algorithmus (einen Algoritmus, den der Anwendungsfall kapselt). D.h. das Aktivitätsdiagramm stellt dar, welche Aktionen aufeinander folgen, zyklisch oder bedingungsabhängig gesteuert sind Sequenz, Iteration, Alternative).\\
+Besonderheit: \\
+Aktionen \emph{können} definierten Verantwortungsbereichen zugeordnet werden ($\to$ Swimlane)\\
+entwickelt aus:\\
+PAP, Petrinetze, Datenflussdiagramme
+
+\subsubsection{Knoten}
+\begin{itemize}
+\item 1 Anfangs-, eventuell mehrere Endknoten
+\item Aktionen \begin{tikzpicture} [scale=.3]
+\draw  (0,0) ellipse (2 and 1);
+\end{tikzpicture}
+\item Entscheidungsknoten \begin{tikzpicture}[scale=0.2]
+\draw (-1,2) -- (-2,1) -- (-1,0) -- (0,1) -- cycle;
+\draw [-latex] (-1,4) -- (-1,2);
+\draw [-latex] (0,1) -- (2,1);
+\draw [-latex] (-2,1) -- (-4,1);
+\end{tikzpicture}
+\item Synchronisationsknoten \begin{tikzpicture}[scale=0.2]
+\draw (-7,-2) -- (-1,-2);
+\draw [-latex] (-4,-2) -- (-4,-4);
+\draw [-latex] (-6,0) -- (-6,-2);
+\draw [-latex] (-2,0) -- (-2,-2);
+\draw (1,-2) -- (7,-2);
+\draw [-latex] (4,0) -- (4,-2);
+\draw [-latex] (2,-2) -- (2,-4);
+\draw [-latex] (6,-2) -- (6,-4);
+\end{tikzpicture}
+(AND, OR, XOR)
+\end{itemize}
+
+\subsubsection{Kanten}
+\begin{itemize}
+\item Transition
+\item Objektfluss \begin{tikzpicture}[scale=0.2]
+\draw  (-7,3) rectangle (-3,2);
+\draw [-latex] (-5,5) -- (-5,3);
+\draw  [-latex] (-5,2) -- (-5,0);
+\end{tikzpicture}
+\end{itemize}
+
+\subsubsection{Topologie}
+netzförmig
+
+
+
+
+
+
+
+
+
 
 \chapter{Konfigurationsverwaltung}
 \section{Der Sinn von Konfigurationsverwaltung}
@@ -802,6 +880,8 @@ Werkzeug mit Repository
 \item Jeder Entwickler verfügt über ein eigenes Repository (Klon). Aus diesem Repository arbeitet er.
 \item[$\to$] Git
 \end{itemize}
+
+
 
 
 
