@@ -1,0 +1,250 @@
+\newcommand{\customDir}{}
+\input{.LaTeX_master/LaTeX_master_setup.sty}
+
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+%\setCustomSlidePath{Folien}
+\newcommand{\chapterHead}{1}
+
+\setCustomTitle{\textsc{Technical Instruction}}
+\setCustomSubtitle{Pokémon reality gear and game}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+%\setCustomNoteB{Vorlesung von}
+
+\setCustomSignature{}	% Formatierung der Signatur in der Fußzeile
+\setCustomTitleAuthor{\customAuthor\\and Anxhela Merko}	% Formatierung des Autors auf dem Titelblatt
+
+\input{.LaTeX_master/LaTeX_master.sty}
+\input{.LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir .Literatur/HTW_Literatur.bib}
+
+% Run texcount on tex-file and write results to a sum-file
+\immediate\write18{texcount \jobname.tex -1 -sum -out=\jobname.sum}
+\newcommand\wordcount{\input{\jobname.sum}}
+
+\newcommand{\customLogoLocation}{src/logo_big.jpg}
+\newcommand{\customLogoHeadHeight}{3em}
+\newcommand{\customLogoWidth}{0.8\linewidth}
+
+\newcommand{\poke}{\,\!\texorpdfstring{\begingroup
+\setbox0=\hbox{\includegraphics[width=3.5em]{src/logo_small.jpg}}%
+\parbox{\wd0}{\box0}\endgroup%\includegraphics[height=1em]{src/logo_small.jpg}
+}{Pokémon}\,}
+%\newcommand{\poke}{Pokémon}
+\newcommand{\pokeT}{Pokémon}
+
+\usepackage{wrapfig}
+\usepackage{multicol}
+\begin{document}
+
+\selectlanguage{english}
+\maketitle
+\newpage
+\tableofcontents
+\vfill
+%Word Count: \wordcount words
+\newpage
+\chapter{Introduction}
+
+The Pokémon Reality Gear is a virtual reality device that enables you to look and move around a virtual environment providing an immersive experience for all users. Once connected to a compatible device you can start playing Pokémon right away.  
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[scale=3]{src/inst_gear}
+\end{center}
+\caption[The \emph{\pokeT{} reality gear}]{The \emph{\poke{} reality gear}}
+\label{gear}
+\end{figure}
+
+\chapter{The Gear}
+
+\section{Before using the Pokémon Reality Gear}
+\begin{itemize}
+\item Carefully read and follow all the instructions provided with the Pokémon Gear before using the product.
+\item Please read the warnings below before using the headset to reduce risk of injury or damage of the device.
+\item It is recommended to see a doctor if you are pregnant, elderly, or suffer from a mental illness or another medical condition.
+\end{itemize}
+
+
+\section{Warnings}
+\begin{itemize}
+\item The headset together with the game produce an immersive virtual reality, which is at times hard to differentiate from reality. To avoid possible accidents while playing Pokémon stay away from stairs, balconies, windows etc.
+\item Do not use the device for longer than 2 hours without breaks. 
+\item Children under the age of 12 and psychologically unstable users must disable the Neuro-Stimulators.
+\item You can wear glasses inside the Gear, they should however be removed in case of discomfort. Keeping the glasses on while experiencing discomfort may cause facial injuries. Users with poor eyesight are recommended to wear contact lenses while wearing the Pokémon Gear.
+\item The Pokémon Gear can be affected by magnetic interference created by devices, such as computers or televisions. Avoid using the Gear in areas affected by magnetic interference.
+\item Direct sunlight pointed to the lenses of the headset may cause damage to the display. When not using the headset, make sure to store it with the lenses pointed away from direct sunlight.
+\end{itemize}
+
+\section{What’s inside the box?}
+
+\begin{center}
+\begin{tabular}{l | l}
+Main Component & Accessories\\\hline
+Pokémon Headset & \mpb[0.4]\begin{itemize}
+\item	Cable (attached)
+\item Earphones (Attached)
+\item Lenses (2) and cleaning cloth
+\end{itemize}\mpe\\\hline
+Link Box & \mpb\begin{itemize}
+\item Headset cable
+\item USB cable
+\end{itemize}\mpe
+\end{tabular}
+\end{center}
+
+
+\section{Part names}
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=0.7\linewidth]{src/inst_gear1}
+\includegraphics[width=0.6\linewidth]{src/inst_gear2}
+\end{center}
+\caption[The parts of the \emph{\pokeT{} reality gear}]{The parts of the \emph{\poke{} reality gear}}
+\label{gear_parts}
+\end{figure}
+
+\begin{enumerate}
+\item USB Connector
+\item Tape
+\item On/Off Switch for the Neuro-Stimulator
+\item Front Cover
+\item Charging Port
+\item Lenses
+\item Foam Cushioning 
+\end{enumerate}
+
+\section{Putting the Headset on}
+The Pokémon Gear should be placed properly on your head during use.
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=0.5\linewidth]{src/inst_gear3}
+\end{center}
+\caption[The cable route of the \emph{\pokeT{} reality gear}]{The cable route of the \emph{\poke{} reality gear}}
+\label{gear_cable}
+\end{figure}
+\begin{enumerate}
+\item Pull the headset down until your eyes are on the same level with the lenses.
+\item Slide the head belt to the back of your head and fasten it so that it fits well. Make sure it is not too tight.
+\item Afterwards regularly check the headset’s fit so that you feel well while playing.
+\end{enumerate}
+
+\section{Managing the Neuro-Stimulators}
+
+When you put the headset on for the first time to play, a window will show up and ask you whether you want to turn the stimulators on. Choose 'Yes' or 'No'.
+
+When you turn them on you will experience dizziness and lightheadedness for approximately 5 seconds. \medskip\\
+Warning: If you feel dizzy or uncomfortable for a longer period of time, turn the Neuro-Stimulators immediately off by pressing the red button (No. 3) on the right side of the headset.
+
+\section{Connecting the headset to your computer}
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=0.5\linewidth]{src/inst_connect}
+\end{center}
+\caption[Connecting the \emph{\pokeT{} reality gear} to your Computer]{Connecting the \emph{\poke{} reality gear} to your Computer}
+\label{gear_connect}
+\end{figure}
+\begin{enumerate}
+\item Unwrap the cables that come with the Pokémon Reality Gear. There is a headset, USB and a power cable.
+\item	Plug the power cable into the charging port (No. 5) and then the other side of the cable to a power source. 
+\item	Insert the USB cable on the right USB port of your computer.
+\end{enumerate}
+
+\section{Cleaning the Headset and Lenses}
+
+\subsection*{The Headset}
+\begin{itemize}
+\item Wet the cleaning cloth that comes in the package with water to wipe the headset and lenses clean. Do not use any other cleaning liquid. Other liquids may cause damage to the headset.
+\item	The foam cushioning may get dirty if your face is sweating while wearing the Pokémon Reality Gear. This may harm the foam cushioning. Make sure that you keep your face and especially your forehead clean and dry while wearing the headset.
+\end{itemize}
+
+\subsection*{The Lenses}
+\begin{itemize}
+\item Use the same cleaning cloth provided in the package
+\item Wet the cloth with a lens cleaner or similar cleaning liquid.
+\item Wipe in circular motion without scratching the lenses.
+\end{itemize}
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=0.5\linewidth]{src/inst_clean}
+\end{center}
+\caption[Cleaning the \emph{\pokeT{} reality gear} lenses]{Cleaning the \emph{\poke{} reality gear} lenses}
+\label{gear_clean}
+\end{figure}
+
+\section{Setting up the device}
+
+After you have unpacked the device and connected the headset to your computer through the USB cable you can start the installation of the software.
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=0.5\linewidth]{src/inst_install}
+\end{center}
+\caption[Installing the \emph{\pokeT{} reality gear} software]{Installing the \emph{\poke{} reality gear} software}
+\label{gear_install}
+\end{figure}
+\begin{enumerate}
+\item Visit our Website pokémonreality.com to download the Pokémon setup software. 
+
+Note: you need to register on our page before you can download the software. Please use the username and password provided in the package.
+\item Make sure you have an internet connection before you start with the installation. The setup wizard will guide through the installation step by step so that you do not make any mistake. 
+\item Launch the Pokémon setup wizard and then click 'next'.
+\item Click 'install' to go ahead with the installation.
+\item After the installation is finished please restart your computer. 
+\item Run Pokémon Reality after the restart.
+\item A window will pop up asking you whether you want to use the Neuro-Stimulators. Please read the instructions given in 7. Managing the Neuro-Stimulators.
+\item Before you can start playing there is one more step you must follow: calibration your IPD.  Please follow the steps below.
+\end{enumerate}
+
+
+\section{Calibrating the interpupillary distance (IPD)}
+
+Everyone has a differently shaped head. To have the best experience it is necessary that the shift in the game corresponds to the shift in the real world. That is why we must know your interpupillary distance. 
+
+Interpupillary distance (IPD) is the distance between the center of the pupils of the two eyes.
+
+The Pokémon Gear has a Calibration setting for you to measure your IPD without the help of an optician. Follow the steps below after you have worn and turned the headset on:
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=0.5\linewidth]{src/inst_install3}
+\end{center}
+\caption[Configuring the \emph{\pokeT{} reality gear} software]{Configuring the \emph{\poke{} reality gear} software}
+\label{gear_ipd}
+\end{figure}
+\begin{enumerate}
+\item Go to the main menu, click 'vr\_calibration' and then Enter. The calibration screen will open and a piece of text will appear in front of you.
+\item After 3 seconds a horizontal line with an arrow on it will appear below the text. Choose the best calibration option by dragging the arrow on the line so that the text in front of you is as sharp as possible. 
+\item Follow this procedure twice for both eyes.
+\item After you have followed the procedure click 'Close'.
+\item The measured IPD will automatically be saved for further use.
+\item Now that the IPD has been measured you can immerse into the Pokémon world!
+\end{enumerate}
+
+\chapter{The Game}
+
+
+\chapter{Final Notes}
+
+Thank you for reading this technical instruction of the \emph{\poke{} reality game and gear}. We hope you enjoy our new revolutionary way of experiencing the \poke{} world.
+
+For a in-depth description of the \emph{\poke{} reality game and gear} please refer to our separately released \emph{technical description}.
+
+\bigskip
+
+If you have any feedback and suggestions regarding the \emph{\poke{} reality game and gear} you may contact us over email or send us a letter:\bigskip\\
+\begin{tabular}{l L{.5}}
+&Merko\& Strube Inc.\\
+\Letter & Charmanderstreet 5\newline
+D-04359 Squirtle Town\\
+\Email & MandS.inc@pokereality.com\\
+\end{tabular}
+
+%\newpage
+%\listoffigures
+%\newpage
+%\printbibliography
+
+\end{document}
