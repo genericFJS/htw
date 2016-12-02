@@ -1,5 +1,5 @@
 --==================================================--
--- Aufgabe I
+-- Teil I
 
 -- Aufgabe I-1 Skalarwertfunktion
 CREATE FUNCTION AlterErmitteln(@GebDat date)
@@ -36,7 +36,7 @@ SELECT *
 FROM dbo.Auslastung(0.8)
 
 --==================================================--
--- Aufgabe II
+-- Teil II
 
 -- Aufgabe II-1 DEFAULTS
 ALTER TABLE Mitarbeiter ADD CONSTRAINT DF_Mitarbeiter_Ort
@@ -115,4 +115,51 @@ INSERT INTO Projekt VALUES(99,'Test-Projekt 2', 'Dresden', NULL, 9,NULL)
 
 DELETE Projekt WHERE ProNr = 98
 DELETE Projekt WHERE ProNr = 99
+
+--==================================================--
+-- Aufgabe IV
+
+-- 4 - semantische Integrität
+
+CREATE TRIGGER tZuordnung ON Zuordnung FOR INSERT, UPDATE, DELETE 
+AS
+	-- 4.1
+	IF EXISTS(
+		SELECT SUM(Plananteil)
+			FROM Zuordnung 
+			GROUP BY MitID 
+			HAVING SUM(Plananteil)>1
+	) BEGIN
+		print 'Plananteil darf nicht über 1.0 liegen'
+		SELECT MitID, SUM(Plananteil)
+			FROM Zuordnung 
+			GROUP BY MitID 
+			HAVING SUM(Plananteil)>1
+		ROLLBACK TRANSACTION
+	END
+	-- 4.2
+	UPDATE Projekt SET Leiter = NULL WHERE ProNr NOT IN(SELECT ProNr FROM Zuordnung) AND Leiter IS NOT NULL
+RETURN
+
+DROP TRIGGER tZuordnung
+
+-- m
+UPDATE Zuordnung SET Plananteil = Plananteil + 0.3
+-- n
+UPDATE Zuordnung SET Plananteil = Plananteil + 0.4 WHERE MitID = 105
+-- o
+DELETE Zuordnung WHERE MitID = 130 AND ProNr = 36
+DELETE Zuordnung WHERE MitID = 106 AND ProNr = 36
+DELETE Zuordnung WHERE MitID = 107 AND ProNr = 36
+-- Wiederherstellen:
+INSERT INTO Zuordnung VALUES(130,36,0.3,0.4)
+INSERT INTO Zuordnung VALUES(106,36,0.1,0.1)
+INSERT INTO Zuordnung VALUES(107,36,0.5,0.5)
+-- p 
+UPDATE Zuordnung SET ProNr = 35 WHERE ProNr = 37
+
+SELECT * FROM Zuordnung ORDER BY ProNr
+SELECT * FROM Projekt
+
+-- 5 - Protokollierung
 
