@@ -831,7 +831,130 @@ Zum Wiederherstellen bei einem Ausfall (bspw. um 9:30) kann nur die gesicherte D
 \item Bestätigung an DB 1
 \end{enumerate}
 
+\subsection{DB-Serverstrukturen}
+am Beispiel MS SQL / Sybase\\
+Datenbanken (DB):
+\begin{itemize}
+\item Benutzerdatenbanken (siehe Praktikum)
+\begin{itemize}
+\item Benutzertabellen (z.B. Mitarbeiter, Projekt)
+\item Systemtabellen sys.… (Speicherung der Metadaten) + Systemsicht auf Systemtabellen
+\end{itemize}
+\item Systemdatenbanken
+\begin{itemize}
+\item master
+\begin{itemize}
+\item Verwaltung der Benutzer-DB
+\item Berechtigungen auf dem Server
+\item[] $\vdots$
+\end{itemize}
+\item model
+\begin{itemize}
+\item Prototyp einer Benutzer-DB
+\end{itemize}
+\item tempdb
+\begin{itemize}
+\item Ablage nicht dauerhafter Objekte
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\emph{Wichtig}: Metadaten liegen in Systemtabellen sys.***!
+
 \section{Zugriffsschutz/Datenschutz}
+\slidesScale{2}{47}
+\subsection{Probleme beim Datenschutz}
+\slidesScale{2}{48}
+\begin{tabular}{L{0.19} | L{0.4} L{0.4}}
+& Datenschutz & Zugriffsschutz \\\hline
+Bereich & Bundesweit & Informationssystem\\
+Gegenstand & personenbezogene Daten & Daten aller Fachgebiete\\
+Mittel & juristisch/organisatorisch & organisatorisch, SW/HW-Schutzfunktion
+\end{tabular}
+
+\subsection{Access- und Identity Management (IAM)}
+\slidesScale{2}{49}
+
+\subsection{Authentifizierung}
+\slidesScale{2}{50}
+Beispiel: Privilegien vergeben (Tabelle Mitarbeiter)\\
+\begin{tabular}{l | c | c | c | c}
+& MitNr & Name & Qualif. & Gehalt \\\hline
+Meier (Produktplaner) & lesen & lesen & lesen & X\\
+Schmidt (Geschäftsführung) & lesen & lesen & lesen & lesen\\
+Lehmann (HR/Personal) & schreiben & schreiben & schreiben & schreiben
+\end{tabular}
+
+\subsection{Verwaltung von Nutzer und Gruppen in SQL}
+\slidesScale{2}{51}
+\subsection{Aufgabenkomplexe Autorisierung}
+\slidesScale{2}{52}
+
+\subsection{Aufgaben der Zugriffskontrolle}
+\slidesScale{2}{53}
+
+\subsection{Komponenten der Autorisierung}
+\slidesScale{2}{54}
+
+\subsection{Zugriff auf den Server (MS SQL Server)}
+\slidesScale{2}{55}
+\subsubsection*{Anweisungen zum Zugriffsschutz}
+Zugriffsschutz im MS SQL Server\\
+sa … Systemadministrator\\
+dbo … DataBaseOwner
+\begin{lstlisting}[language=SQL]
+-- sa:
+CREATE LOGIN MeierU WITH PASSWORD '123'
+CREATE LOGIN Schmidt WITH PASSWORD '234'
+CREATE LOGIN Richter WITH PASSWORD '345'
+
+CREATE USER MeierU FOR LOGIN MeierU
+GRANT CREATE DATABASE TO MeierU
+-- Logout sa
+-- MeierU:
+CREATE DATABASE Test
+USE Test	-- in Datenbank Test springen
+CREATE USER Schmidt FOR LOGIN Schmidt
+GRANT CREATE TABLE TO Schmidt
+-- Logout MeierU
+-- Schmidt:
+USE Test
+CREATE TABLE Adresse (Ort, ...
+\end{lstlisting}
+Login: Zugriff auf Datenbankserver (ohne Berechtigungen an lesen/schreiben/…)\\
+User: Nutzer der Datenbank (Zugriffsberechtigung nach Vorgabe)
+\subsection{Zugriff auf Datenbank (MS SQL Server)}
+\slidesScale{2}{56}
+\subsubsection{Zugriff auf Befehle kontrollieren (Systemprivilegien)}
+\slidesScale{2}{57}
+\subsubsection{Zugriff auf Objekte kontrollieren (Objektprivilegien)}
+\slidesScale{2}{58}
+\subsubsection{Varianten der Umsetzung von Zugriffsschutz}
+Beispiel: Tabelle Mitarbeiter\\
+public: Mitnr, Name, Vorname, Anschrift\\
+geschützt: Gehalt
+\begin{enumerate}
+\item Direkter Schutz
+\begin{lstlisting}[language=SQL]
+GRANT SELECT ON Mitarbeiter(Mitr, Name, Vorname, Anschrift) TO MeierU
+\end{lstlisting}
+\item Indirekter Schutz (über VIEW)
+\begin{lstlisting}[language=SQL]
+CREATE VIEW MitAdresse AS 
+	SELECT Mitnr, Name, Vorname, Adresse
+	FROM Mitarbeiter
+GRANT SELECT ON MitAdresse TO MeierU
+\end{lstlisting}
+\item Indirekter Schutz (über stored procedure)
+\begin{lstlisting}[language=SQL]
+CREATE PROC MitProc AS
+	SELECT Mitnr, Name, Vorname, Adresse
+	FROM Mitarbeiter
+GRANT EXEC MitProc TO MeierU
+\end{lstlisting}
+\end{enumerate}
+
+
+
 
 \chapter{Logische Datenmodelle}
 \section{Logische und physische Datenorganisation / Überblick über Datenmodelle}
