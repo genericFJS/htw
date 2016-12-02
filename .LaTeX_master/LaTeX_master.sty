@@ -222,6 +222,9 @@ literate=%
 \usepackage{epstopdf}	% eps-Vektorgrafiken einfügen
 \usepackage{transparent}	% transparent nutzen: {\transparent{0.4} ...}
 %\epstopdfsetup{outdir=\customDir}
+%\usepackage{letltxmacro}	% Latex-Befehle unter anderem Namen neu definieren
+%\LetLtxMacro{\forceincludegraphics}{\includegraphics}
+%\renewcommand{\includegraphics}[2][]{\IfFileExists{#1}{\forceincludegraphics[#1]{#2}}{\fbox{Grafik: #2  \ifthenelse{\isempty{#1}}{}{\textit{#1}}}}}
 
 % pdf-Setup
 \usepackage{pdfpages}
