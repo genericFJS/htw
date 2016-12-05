@@ -1069,26 +1069,8 @@ Hier gilt also jeweils ein streng linearer Zusammenhang.
 \end{itemize} 
 
 \section{Spezielle Verteilungen}
-Wir werden folgende diskrete Verteilungen diskutieren:
-\begin{enumerate}[label=(D\arabic*)]
-\item Bernoulli-Verteilung
-\item Binominal-Verteilung
-\item Diskrete Gleichverteilung
-\item Hypergeometrische Verteilung
-\item Poisson Verteilung
-\item Geometrische Verteilung
-\end{enumerate}
-Und folgende stetige Verteilungen:
-\begin{enumerate}[label=(D\arabic*)]
-\item stetige Gleichverteilung (Bus-Beispiel)
-\item Normalverteilung (Zentraler Grenzwertsatz $\to$ wichtig!)
-\item Exponentialverteilung
-\item $\chi^2$-Verteilung (Chi-Quadradt-Verteilung)
-\item $t$-Verteilung
-\item $F$-Verteilung
-\end{enumerate}
-S4-S5 vor allem für Statistik relevant
-\subsection{Bernoulli Verteilung}
+\subsection{Spezielle diskrete Verteilungen}
+\subsubsection{Bernoulli Verteilung}
 Die Vorstellung einer (un-)fairen Münze liefert eine sehr einfache Zufallsvariable:
 \cparagraph{Definition} Eine ZV $X$ welche genau 2 Werte annehmen kann heißt Bernoulli-verteilt.
 \cparagraph{Bemerkung}
@@ -1126,7 +1108,7 @@ $\PP(Z_2=z)$ & $pq$ & $p^2+q^2$ & $pq$
 \begin{tabular}{l | c c c }
 $z$ & -1 &  0 & 1\\\hline
 $\PP(Z_1Z_2=z)$ & $pq$ & $p^2+q^2$ & $pq$
-\end{tabular}\\
+\end{tabular}
 \item $\cov (Z_1,Z_2)=\EE(Z_1Z_2)-\EE(Z_1) \EE(Z_2) = 0$, denn: \\
 $\EE(Z_1)=0\cdot q^2 + 1 \cdot 2 pq + 2 p^2 = 2p(q+p) = 2p$\\
 $\EE(Z_2)=-pq+pq = 0 =\EE(Z_1Z_2)$\\
@@ -1134,7 +1116,7 @@ $\Rightarrow Z_1$ und $Z_2$ sind unkorreliert
 \item Es müsste bspw. gelten $\underbrace{\PP(Z_1=0, Z_2=1)}_{0}=\underbrace{\PP(Z_1=0)}_{q^2} \underbrace{\PP(Z_2=1)}_{pq}$, ist aber falsch.\\
 $\Rightarrow Z_1$ und $Z_2$ nicht unabhängig.
 \end{anumerate}
-\subsection{Binomialverteilung}
+\subsubsection{Binomialverteilung}
 \cparagraph{Definition} Die ZV $X$ heißt binomialverteilt mit den Parametern $n$ und $p$ (wobei $n \in \NN, p\in [0,1]$), wenn sie die Werte $0,\dots, n$ mit den WKen
 $$p_i=\PP(X=i)=\binom{n}{i}p^i (1-p)^{n-i}, \quad i=0,\dots ,n$$
 annimmt.
@@ -1165,7 +1147,7 @@ Gesucht: $\PP(Y \leq 2)$
 &= 0,979
 \end{align*}
 
-\subsection{Diskrete Gleichverteilung}
+\subsubsection{Diskrete Gleichverteilung}
 
 \cparagraph{Definition} Eine ZV $X$ genügt der diskreten Gleichverteilung auf der Menge $T=\{x_1,\dots,x_n\}$, falls sie nur Werte aus $T$ annehmen kann und 
 $$\PP(X=x_1) = \dots = \PP(X=x_n) = \frac{1}{n}$$
@@ -1190,7 +1172,7 @@ $$\PP(\{\omega_1\})=\dots= \PP(\{\omega_n\})=\frac{1}{n}$$
 $$\PP(X=\omega_i)=\PP(\{\omega\in \Omega | X(\omega) = \omega_i\})=\PP(\omega_i)=\frac{1}{n}$$
 \end{itemize}
 
-\subsection{Hypergeometrische Verteilung}
+\subsubsection{Hypergeometrische Verteilung}
 \cparagraph{Definition} Eine ZV $X$ heißt Hypergeometrisch verteilt, mit ganzzahligen Parametern $N$, $M$ und $n$ ($0<M\leq N, 0 < n \leq N$), wenn sie nur die Werte $T=\{\max\{0,n+M-N\}, \dots, \min\{n,M\}\}$ annehmen kann und für jedes $m \in T$ gilt:
 $$p_m:=\PP(X=m)=\frac{\binom{M}{n}\binom{N-M}{n-m}}{\binom{N}{n}}$$
 
@@ -1221,7 +1203,7 @@ Das Ereignis, das uns interessiert ist: \\
 $A=\{\{a_1, a_2, a_3\}\in \Omega \;|\; \{a_1, a_2, a_3\} \text{ enthält genau 2 der }\{g_1, \dots,g_5\}\text{ und genau 1 der }\{n_1,\dots,n_{15}\}\}$\\
 Es gilt nun $A=\{X=2\}$ und $|A| = \binom{5}{2}\cdot \binom{15}{1} \Rightarrow \PP(X=2) = \frac{\binom{5}{2}\binom{15}{1}}{\binom{20}{3}}$
 
-\subsection{Geometrische Verteilung}
+\subsubsection{Geometrische Verteilung}
 \cparagraph{Definition} Eine ZV $X$ heißt geometrisch verteilt mit dem Parameter $p\in (0,1)$, falls sie nur die Werte $1,2,\dots$ annehmen kann und 
 $$p_m:=\PP(X=m)=p(1-p)^{m-1} \quad m=1,2,\dots$$
 gilt.
@@ -1272,7 +1254,7 @@ $\Rightarrow$ erwartete Wartezeit ist $3,\bar{3}$ Tage.
 $$F_X(m)=\PP(X\leq m) = 1-(1-p)^m$$
 für $n \in \NN_0$. Dazwischen ist $F_X$ konstant.
 
-\subsection{Poisson-Verteilung}
+\subsubsection{Poisson-Verteilung}
 \cparagraph{Definition} Eine ZV $X$ heißt Poisson-verteilt mit dem Parameter $\lambda >0$, falls sie nur die Werte $0,1,2,\dots$ annehmen kann und 
 $$p_m:=\PP(X=m)=\frac{\lambda^m}{m!}e^{-\lambda} \quad m=0,1,2,\dots$$
 \cparagraph{Bemerkung} 
@@ -1300,6 +1282,150 @@ $X$… Anzahl der Störungen in 8 Stunden
 &= 0,2166
 \end{align*}
 \end{itemize}
+
+\subsection{Spezielle stetige Verteilungen}
+
+\begin{enumerate}[label=(D\arabic*)]
+\item stetige Gleichverteilung (Bus-Beispiel)
+\item Normalverteilung (Zentraler Grenzwertsatz $\to$ wichtig!)
+\item Exponentialverteilung
+\item $\chi^2$-Verteilung (Chi-Quadradt-Verteilung)
+\item $t$-Verteilung
+\item $F$-Verteilung
+\end{enumerate}
+S4-S5 vor allem für Statistik relevant
+\subsubsection{Stetige Gleichverteilung}
+\cparagraph{Definition} Eine ZV $X$ heißt stetig gleichverteilt auf dem Intervall $I\subset \RR$, falls für alle Intervalle $J \subset I$ gilt:
+$$\PP(X\in J)=\frac{|J|}{|I|}$$
+\cparagraph{Bemerkung}
+\begin{itemize}
+\item Kurzschreibweise: $X \sim U(I)$
+\item Sei $a<b$. Ein Intervall $I$ kann die Form $(a,b),\;[a,b],\;[a,b)$ oder $(a,b]$ haben. Dann gilt $|I|=b-a$. Ist $I$ von dieser Form, so gilt:
+\item $\EE(X)=\frac{a+b}{2}$, $\var(X)=\frac{1}{12}(b-a)^2$
+\item Dichte und Verteilungsfunktion:
+$$f(x)=\begin{cases}
+\frac{1}{b-a} & a\leq x \leq b\\
+0 & \mathrm{sonst}
+\end{cases}, \quad F(x)=\begin{cases}
+0 & x \leq a\\
+\frac{x-a}{b-a} & a<x<b\\
+1 & x \geq b
+\end{cases}$$
+\end{itemize}
+ABB Skript
+\subsubsection{Normalverteilung}
+\cparagraph{Definition} Eine ZV $X$ heißt normalverteilt mit den Parametern $\mu$ und $\sigma^2$, ($\mu \in \RR, \; \sigma > 0$, wenn sie die Dichte\\
+$$f: \RR\to \RR, \qquad f(x)=\frac{1}{\sqrt{2\pi\sigma}}\exp\left(-frac{(x-\mu)^2}{2\sigma^2}\right)$$
+besitzt.
+
+\cparagraph{Bemerkung}
+\begin{itemize}
+\item Kurzschreibweise: $X\sim \cN(\mu, \sigma^2)$
+\item $\EE(X)=\mu$
+\item $\var(X) = \sigma^2$
+\item Verteilungsfunktion nicht in geschlossener Form angebbar (nur als Integraldarstellung oder unendliche Reihe)
+\end{itemize}
+ABB Skript
+
+\cparagraph{Satz} Gilt $X\sim \cN(\mu, \sigma^2)$, dann gilt für die transformierte ZV
+$$Y=\frac{X-\mu}{\sigma} \sim \cN (0,1)$$
+Wir sagen dann: $Y$ ist standardnormalverteilt.
+
+\cparagraph{Bemerkung} Für $Y \sim \cN (0,1)$ gilt:
+\begin{itemize}
+\item für die Verteilungsfunktion
+\begin{align*}
+\Phi(x):=F_Y(x)&=\frac{1}{\sqrt{2\pi}}\int\limits_{-\infty}^x \exp\left(-\frac{t^2}{2}\right)\intd{t}\\
+&= 0,5 + \frac{1}{\sqrt{2\pi}}\int\limits_0^x \exp\left(-\frac{t^2}{2}\right)\intd{t}
+\end{align*}
+\item Werte von $\Phi$ lassen sich Tabellen oder Software entnehmen.
+\item Jede beliebige Normalverteilung lässt sich auf die Standardnormalverteilung $\Phi$ zurückführen.
+\item Symmetrie: $\Phi(-x)=1-\Phi(x)$
+\end{itemize}
+
+\cparagraph{Bemerkung} Für $X \sim \cN(\mu, \sigma^2)$ gilt:
+\begin{itemize}
+\item $F_X(x) = \PP(X\leq x) = \Phi \left(\frac{x-\mu}{\sigma}\right)$
+\item $\PP(X\geq a) = 1 - \Phi \left(\frac{a-\mu}{\sigma}\right)$
+\item $\PP(a\leq X\leq b)=\Phi \left(\frac{b-\mu}{\sigma}\right)-\Phi \left(\frac{a-\mu}{\sigma}\right)$
+\item $\PP(X=a)=0$
+\item Anwendung:
+\begin{itemize}
+\item Messfehler
+\item geometrische und physikalische  Kenngrößen von Produkten (Länge, Masse, Widerstand, …)
+\item biologische Merkmale
+\item allgemein: Summe großer Anzahl von unabhängigen Größen
+\end{itemize}
+\end{itemize}
+
+\cparagraph{Beispiel} (Drehteil) Ein Drehteil besitzt einen Soll-Durchmesser von $500\unit{mm}$. Die Toleranzgrenzen sind $499,6\unit{mm}$ und $500,3 \unit{mm}$.\\
+Die von der Maschine hergestellten Teile besitzen in Wirklichkeit (statistisch überprüft) einen normalverteilten Durchmesser mit $\mu=500$ und $\sigma = 0,2$.\\
+Wie groß ist die WK, dass ein solches Teil…
+\begin{anumerate}
+\item innerhalb der Toleranzgrenzen liegt?
+\item einen Durchmesser kleiner als die untere Toleranzgrenze hat?
+\item Wie genau muss die Maschine arbeiten (also wie groß darf $\sigma$ sein) damit maximal $1\%$ der produzierten Teile einen Durchmesser von maximal $499,6\unit{mm}$ haben?
+\end{anumerate}
+Lösung:\\
+$X$ … Durchmesser in $\unit{mm}$\\
+dann $X \sim \cN(500,\; 0,2^2)$.
+\begin{anumerate}
+\item 
+\begin{align*}
+\PP(499,6 \leq X \leq 500,3)&=\Phi \left(\frac{500,3-500}{0,2}\right)-\Phi \left(\frac{499,6-500}{0,2}\right)\\
+&=\Phi(1,5)-\Phi(-2)\\
+&= \Phi (1,5)-(1-\Phi(2))\\
+&= \Phi(1,5)+\Phi(2)-1\\
+&= 0,93319+0,97725-1 &&|\;\mathrm{Tabelle}\\
+&= 0,91044\\
+&\approx 91\%
+\end{align*}
+\item $\PP(X<499,6) = \Phi\left(\frac{499,6-500}{0,2}\right) = 1-\Phi(2)=1-0,97725=0,02275$
+\item Nun ist $\sigma$ unbekannt. Also:\\
+$X\sim \cN(500, \sigma^2)$\\
+Wir suchen $\sigma$ mit 
+\begin{align*}
+0,01\geq\PP(X<499,6) &= \Phi\left(\frac{499,6-500}{\sigma}\right)\\
+&=\Phi\left(\frac{-0,4}{\sigma}\right)\\
+&=1-\Phi\left(\frac{0,4}{\sigma}\right)\\
+\Leftrightarrow 0,01 &\overset{!}{=}1-\Phi\left(\frac{0,4}{\sigma}\right)\\
+\Leftrightarrow \Phi\left(\frac{0,4}{\sigma}\right) &= 0,99\\
+\Leftrightarrow \frac{0,4}{\sigma}&=\Phi^{-1}(0,99) =:z_{0,99} && 0,99\mathrm2{-Quantil}\\
+z_{0,99}&=2,326 && |\; \mathrm{Tabelle}\\
+\Rightarrow \sigma &=0,172
+\end{align*}
+Bei ein Standardabweichung von max. $0,172$ wird im Mittel höchstens $1\%$ Ausschuss produziert.
+\end{anumerate}
+
+\cparagraph{Bemerkung} Sei $\Phi$ die Verteilungsfunktion zur Standard-Normalverteilung.
+\begin{itemize}
+\item Für $\alpha \in (0,1)$ benötigt man oft $\Phi^{-1}(\alpha)$.\\
+Dies ist das $\alpha$-Quantil $q_\alpha$.
+\item Im Fall der Normalverteilung schreibt man oft $q_\alpha = z_\alpha \quad\Big(=\Phi^{-1}(\alpha)\Big)$.
+\item Die Werte $z_\alpha$ entnimmt man einer Tabelle (o.ä.).
+\item $z_\alpha = - z_{1-\alpha}$
+\end{itemize}
+
+\subsubsection{Exponentialverteilung}
+\cparagraph{Definition} Die ZV $X$ heißt exponentialverteilt mit dem Parameter $\lambda >0$, wenn sie die folgende Dichte besitzt:
+$$f(x)=\begin{cases}
+\lambda \exp(-\lambda x) & \mathrm{falls} \; x\geq 0\\
+0 & \mathrm{sonst}
+\end{cases}
+$$
+\cparagraph{Bemerkung}
+\begin{itemize}
+\item Kurzschreibweise: $X\sim \mathrm{Exp}(\lambda)$
+\item $\EE(X)=\frac{1}{\lambda}, \quad \var(X)=\frac{1}{\lambda^2}$
+\item Verteilungsfunktion:
+$$F(x)=\begin{cases}
+1-\exp(-\lambda x) & \mathrm{falls}\; x \geq 0\\
+0 & \mathrm{sonst}
+\end{cases}$$
+\item Anwendung: Bedientheorie, Zuverlässigkeitstheorie, Verteilung von Zeitdauern wie Lebenszeiten, Reperaturzeiten, Wartezeiten, …
+\end{itemize}
+
+
 
 
 %\newpage
