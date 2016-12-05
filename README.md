@@ -51,28 +51,3 @@ Bei den Dokumenten (oder Abschnitten innerhalb von Dokumenten), die nicht von mi
 In der Regel wurden diese Dokumente von der öffentlich zugänglichen Seite des jeweiligen Lehrstuhls runter geladen.
 
 Rechte zur Nutzung und Weiterverteilung müssen dort entsprechend erfragt werden.
-
-## Kennzeichnung der Commits
-
-### Semesterbetrieb
-Commit | Emoji
-----------  | -------------
-Mitschrift (Aktualisierung) | :pencil: `:pencil:`
-Übung/Praktikum | :ledger: `:ledger:`
-
-### Projektentwicklung (Belege usw.)
-
-Commit | Emoji
-----------  | -------------
-Initial Commit | :tada: `:tada:`
-Version Tag | :bookmark: `:bookmark:`
-Neues Feature | :sparkles: `:sparkles:`
-Bugfix | :bug: `:bug:`
-Documentation | :books: `:books:`
-Refactoring | :package: `:package:`
-Performance | :bicyclist: `:bicyclist:`
-Kosmetisches | :art: `:art:`
-Tests | :clipboard: `:clipboard:`
-Deprecation | :poop: `:poop:`
-Work In Progress (WIP) | :construction: `:construction:`
-Other | [Link](http://www.emoji-cheat-sheet.com/)
