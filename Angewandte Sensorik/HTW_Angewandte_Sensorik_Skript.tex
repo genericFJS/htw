@@ -1153,10 +1153,192 @@ $L=\mu_0 \mu_r \frac{N^2 A}{l}$
 \item Messfehler: $1\%$
 \end{itemize}
 
+\chapter{Durchflusssensoren}
+Rohrströmung
+\begin{itemize}
+\item laminare Rohrströmung\\
+Strömung ohne Turbelenz
+\item turbulente Rohrströmung
+\end{itemize}
+Reynolds-Zahl: $\mathrm{Re}=\frac{\nu \cdot D \cdot \rho}{\eta}$\\
+Fließgeschwindigkeit im Rohr ist je nach laminarer oder torbulenter Strömung unterschiedlich verteilt. Bei der torbulenten Strömung ist das Profil (über den Querschnitt des Rohrs) ausgeglichener, bei laminarer zentriert (mit größerem Ausschlag).
 
+$\Rightarrow$ eine Ein-Punkt-Messung gibt keine Aussage über die gesamte Strömung.
 
+\section{Prinzipien der Durchflussmessung}
+\begin{itemize}
+\item Volumenstrom\\
+$q_v= \frac{\Delta V}{\Delta t}$
+\begin{itemize}
+\item Volumenzähler
+\begin{itemize}
+\item Volumetrische Zähler $\Delta V$
+\begin{itemize}
+\item Verdrängungszähler
+\item Auslaufzähler
+\end{itemize}
+\item Strömungszähler $\Delta V = A \cdot \nu$
+\begin{itemize}
+\item Messflügel
+\item Drosselgeräte (Wirkdruck $\Delta P$)
+\item Verschiedene physikalische Effekte
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\item Massenstrom\\
+$q_m = \frac{\Delta m}{\Delta t}$\\
+Aussagekräftig für die Frage der Menge die durchgeflossen ist.
+\begin{itemize}
+\item Massendurchflussmessung\\
+Coriolis, thermisch
+\end{itemize}
+\end{itemize}
 
+\subsection{Auslaufzähler}
+\begin{itemize}
+\item Kippzähler: Zählung der Kippvorgänge\\
+Flüssigkeit fließt in eine von zwei Messkammern. Wenn Messkammer gefüllt ist, schwenkt die Messkammer zur Seite (und entleert sich), dadurch fließt Flüssigkeit nun in die andere Messkammer. Es wird die Anzahl der Kippvorgänge gezählt.
+\item Trommelzähler: Zählung der Umdrehungen\\
+(Vergleich Wassermühle mit Eimern statt Schaufel)
+\end{itemize}
+Eigenschaften:
+\begin{itemize}
+\item Fluideigenschaften: nur Flüssigkeiten
+\item Messgenauigkeit: $\pm 0,1 \ldots 0,5 \%$ v.S. (vom Sollwert)
+\item Fehlerquellen: Ungemessene Flüssigkeitsmengen während des Kippvorgangs $\to$ negative Messabweichung
+\end{itemize}
+\begin{itemize}[label=$+$]
+\item hohe Genauigkeit
+\item Messung stark verschmutzter Flüssigkeiten möglich
+\item niedriger Grenzwert (kleinste Mengen können verarbeitet werden)
+\item geringe Druckverluste
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item Flüssigkeiten mit großer Viskosität des Mediums nicht möglich
+\item nicht für Gase geeignet
+\item erzeugen pulsierende Strömung
+\end{itemize}
+\subsection{Verdrängungszähler}
+Volumenzähler mit beweglichen Kammerwänden
+\begin{itemize}
+\item Ovalradzähler
+\item Drehkolben-Gaszähler
+\item Zahnradzähler
+\item Zahnringzähler
+\item Ringkolbenzähler
+\end{itemize}
+Es wird gezählt, wie viel sich der Zähler bewegt/verdreht.\\
+Eigenschaften:
+\begin{itemize}
+\item Fluideigenschaften: Flüssigkeiten und Gase
+\item Messgenauigkeiten: $\pm 0,5\%$ v.S.
+\item Fehlerquellen: hauptsächlich durch Spaltverluste (Verschleiß)
+\end{itemize}
+\begin{itemize}[label=$+$]
+\item großer Messebereich $0,15$ bis $150 \unit{l/s}$
+\item Betriebsdruck bis $30 \unit{bar}$
+\item hohe Genauigkeit über großen Messbereich
+\item weitgehende Viskositätsunabhängigkeit
+\item lange Lebensdauer (bei sorgfältiger Filterung des Messgutes)
+\item keine Störeinflüsse über die Strömungsprofile
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item extrem empfindlich gegenüber Verschmutzungen\\
+$\to$ sorgfältige Filterung des Messgutes notwendig
+\item pulsierende Strömung
+\item Druckverluste bis $1 \unit{bar}$
+\item Verschleiß
+\item Blockieren der Leitung im Falle einer Verstopfung oder Verklemmung
+\item Erhebliche Geräuschentwicklung
+\end{itemize}
+\subsection{Volumenzähler mit Messflügeln}
+Drehzahl des Turbinenrades: $f \sim \nu \sim q_v$
+\begin{itemize}
+\item Turbinenradzähler axial/senkrecht
+\item Flügelradzähler
+\end{itemize}
+Eigenschaften:
+\begin{itemize}
+\item Fluideigenschaften: reine Flüssigkeiten und Gase
+\item Messgenauigkeit: $\pm 2-5\%$ v.S.
+\item Fehlerquellen:
+\begin{itemize}
+\item durch Lagerreibung, Strömungsprofil, von der Viskosität abhängige hydraulische Verluste
+\item Verwirbelung, Strömungspulsation und Druckschwankungen
+\end{itemize}
+\end{itemize}
+\begin{itemize}[label=$+$]
+\item hohe Genauigkeit bei definierten Viskositäten ($2-5\%$)
+\item Temperaturen bis $350\unit{^\circ C}$
+\item für große Durchflussmengen geeignet
+\item Messungen bei hohem Druck bis $>600 \unit{bar}$ möglich
+\item längere Lebensdauer der Lager bei senkrechten Bauarten
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item Viskosität muss bekannt sein
+\item Beruhigungsstrecke vor und nach der Turbine erforderlich
+\item empfindlich gegenüber Verschmutzungen $\to$ Schmutzfilter
+\item aufgrund von Lagerreibung und Massenträgheit der Rotoren können Schleichmengen nicht erfasst werden
+\item Strömungsprofil-abhängig
+\end{itemize}
+\subsection{Schwebekörper-Durchflussmesser}
+Prinzip: Schwebekörper in einen Röhre. Von unten fließt das Medium ein. Die Steighöhe des Schwebekörpers $h$ ist ein Maß für die Strömungsgeschwindigkeit. Auf sie wirken 3 Kräfte:
+\begin{itemize}
+\item Gewichtskraft $\downarrow$: $F_G=m\cdot g$
+\item Auftriebskraft $\uparrow$: $F_A=V\cdot \rho$
+\item Kraft des Strömungswiderstandes $\uparrow$: $F_S\sim \frac{q_V}{h}$
+\end{itemize}
+Eigenschaften:
+\begin{itemize}
+\item Fluideigenschaften: Flüssigkeiten und Gase
+\item Messgenauigkeit: $\pm 2\%$ v.E. (von Endwert)
+\item Fehlerquellen: Abhängigkeit von der Schwerkraft, empfindlich auf Pulsation und Vibration
+\end{itemize}
+\begin{itemize}[label=$+$]
+\item einfacher, leicht kontrollierbarer Aufbau
+\item keine Vorlaufstrecke (Beruhigungsstrecke) erforderlich
+\item robust, einfache Montage, leicht einstellbare Grenzwerte
+\item günstiges Preis/Leistungsverhältnis
+\item auch für aggressive Medien geeignet
+\item näherungsweise lineare Skala
+\item geringer Druckverlust
+\item leichte elektronische Positionserfassung (z.B. induktiv)
+\item besonders für kleine Durchflussmengen
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item kann empfindlich gegen Verschmutzung sein
+\item senkrechte Einbaulage erforderlich
+\end{itemize}
 
+\subsection{Differenzdruckverfahren (Wirkdruckverfahren)}
+Rohr mit Verengung. Differenz zwischen den Drücken vor und nach der Blende wird gemessen (Wirkdruck):
+$$q_v\sim \sqrt{p_1-p_2}$$
+Varianten:
+\begin{itemize}
+\item Blende
+\item Düse (leicht führende Blende)
+\item Venturidüse
+\end{itemize}
+Eigenschaften:
+\begin{itemize}
+\item Fluideigenschaften: für reine Flüssigkeiten und Gase (keine Mehrphasenströmungen)
+\item Messgenauigkeit: $<1\%$ v.E.
+\item Fehlerqullen: Fehler durch Verschleiß der Blenden, empfindlich für Strömungsprofil und Verschmutzung des Messmediums
+\end{itemize}
+\begin{itemize}[label=$+$]
+\item einfach, robust und wartungsarm
+\item international genormt, keine Kalibrierung erforderlich
+\item besonders für große Durchflussmengen geeignet
+\item unter extremen Bedingungen (P,T, Überlastbetrieb, Medium) einsetzbar
+\item äußerst langzeitbeständig (je nach Aggressivität des Mediums)
+\item extrem große Nennweitenpalette bei nur minimaler Preisänderung
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item nur in voll gefüllten Rohren ($D > 50\unit{mm}$) anwendbar
+\item nichtlinearer Effekt: Wirkdruck steigt quadratisch mit Durchfluss
+\item hoher Druckverlust (Blende $35\%-90\%$, Düse $6\%-25\%$ des Wirkdrucks)
+\item große Ein- und Auslaufstrecken erforderlich
+\end{itemize}
 
 
 
