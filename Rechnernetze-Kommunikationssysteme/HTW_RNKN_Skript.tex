@@ -432,9 +432,85 @@ Wait for ACK $\to$ received ACK /  $\to$ Wait for Data\\
 Wait for ACK $\to$ timeout / resend packet || stop $\to$ Wait for ACK \\
 Wait for ACK $\to$ wrong ACK || wrong Session ID / $\to$ Wait for ACK
 
+\chapter{Vermittlungsschicht}
+\slidesScale{24-vermittlung_print}{3}
+\section{Leitungsvermittlung}
+\slidesScale{24-vermittlung_print}{4}
+\slidesScale{24-vermittlung_print}{5}
+\section{Paketvermittlung}
+\slidesScale{24-vermittlung_print}{6}
+\slidesScale{24-vermittlung_print}{7}
+\section{Mischformen}
+Betriebsarten paketvermittelter Netze
+\slidesScale{24-vermittlung_print}{8}
+\section{Zellvermittlung}
+\slidesScale{24-vermittlung_print}{9}
+\section{Routing}
+Vermittlungskonzepte
+\slidesScale{24-vermittlung_print}{10}
+\subsection{Wegesuchung}
+\slidesScale{24-vermittlung_print}{11}
+\subsection{Überlastungsprobleme}
+\subsubsection{flow control}
+\slidesScale{24-vermittlung_print}{12}
+\subsubsection{Verstopfungskontrolle}
+(congestion control)
+\slidesScale{24-vermittlung_print}{13}
+\subsection{Pufferspeicherverwaltung}
+\slidesScale{24-vermittlung_print}{14}
 
+\section{Internetprotokoll}
+\slidesScale{25-ip-schicht_print}{3}
+\subsection{Einführung}
+\subsubsection{Aufgaben der IP-Schicht}
+\slidesScale{25-ip-schicht_print}{4}
+\subsubsection{Vergleich OSI -- IP}
+\slidesScale{25-ip-schicht_print}{5}
+\subsubsection{Internetadressen}
+Drei unabhängige Namens-/Adressebenen
+\slidesScale{25-ip-schicht_print}{6}
+\subsubsection{Domain Name System (DNS)}
+\slidesScale{25-ip-schicht_print}{7}
 
+\subsubsection{IP-Vergabe}
+\slidesScale{25-ip-schicht_print}{8}
 
+\subsubsection{Internetadressen (IPv4)}
+\slidesScale{25-ip-schicht_print}{9}
+\subsection{Adressklassen}
+(classfull addressing) Unterteilung in Netz und Host
+\slidesScale{25-ip-schicht_print}{10}
+
+\subsubsection{Besondere Internet-Adressen}
+\slidesScale{25-ip-schicht_print}{11}
+\subsubsection{Subnetting}
+Aufteilung eines Netzes in mehrere Netze
+\slidesScale{25-ip-schicht_print}{12}
+\subsection{Classless Interdomain Routing (CIDR)}
+\slidesScale{25-ip-schicht_print}{13}
+\subsubsection*{Beispiel}
+Vergabe von Adressen aus dem Pool eines Internet-Providers
+\slidesScale{25-ip-schicht_print}{14}
+\slidesScale{25-ip-schicht_print}{15}
+\slidesScale{25-ip-schicht_print}{16}
+Hostadressen in einem /31 Netz: 0 (nur ein Bit für Adresse übrig: 0 steht für Netzadresse, 1 für Broadcastadresse $\to$ keine Hostadresse mehr übrig)\\
+$\Rightarrow$ /30 Netz: 2 Hostadressen
+\subsection{IP-Netz}
+\subsubsection{Definition IP-Netz}
+Hosts mit gleicher Netzadresse befinden sich im gleichen Netz
+\slidesScale{25-ip-schicht_print}{17}
+\subsubsection{Adressarten}
+\slidesScale{25-ip-schicht_print}{18}
+\subsubsection{Hardwareadressen}
+\slidesScale{25-ip-schicht_print}{19}
+\subsubsection{Adress Resolution Protokoll}
+Beispiel: A möchte HW-Adresse von B erhalten
+\slidesScale{25-ip-schicht_print}{20}
+\subsubsection*{Anzeigen}
+\slidesScale{25-ip-schicht_print}{21}
+\subsubsection{Übertragung eines Datagramms}
+Übertragung 111.111.111.111 zu 222.222.222.222 (Maske 255.255.255.0)
+\slidesScale{25-ip-schicht_print}{22}
 
 
 
