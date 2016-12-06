@@ -163,3 +163,32 @@ SELECT * FROM Projekt
 
 -- 5 - Protokollierung
 
+-- 5.1
+CREATE TABLE Bprotokoll(
+MitID		char(3),
+Nutzer		char(16),
+Zeit		datetime,
+Beruf_alt	char(15),
+Beruf_neu	char(15)
+)
+
+-- 5.2
+CREATE TRIGGER tMitarbeiter  ON Mitarbeiter  FOR UPDATE
+AS
+	INSERT INTO Bprotokoll
+		SELECT i.MitID, user_name(), GETDATE(), d.Beruf, i.Beruf
+		FROM inserted i JOIN deleted d ON i.MitID = d.MitID
+RETURN
+
+DROP TRIGGER tMitarbeiter
+
+-- 5.3
+UPDATE Mitarbeiter SET Beruf = 'Gott' WHERE MitID = 210
+
+SELECT * FROM Mitarbeiter
+SELECT * FROM Bprotokoll
+
+-- 5.4
+-- geeigneter Primärschlüssel: Kompositschlüssel aus Nutzer und Zeit
+
+-- 5.5
