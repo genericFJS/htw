@@ -486,8 +486,37 @@ local.properties
 .recommenders/
 
 # nicht benötigtes
-*-druckgesamt.pdf
-*_print.pdf
 Programmierung 2/Beleg/build*
-*.psd
 Rechnerarchitektur/Praktikum/prakt_labor/default/*
+Computergrafik 1/Beispiele
+Datenbanksysteme 1/Praktikum/Daten
+Elektronik/Übung
+Englisch C1/ESPS_Supplementary_Material
+Englisch C1/ESPS_Worksheets
+Englisch C1/opal files
+Programmierung 1/Beleg/cgi-bin
+Programmierung 1/Beleg/cgi/font-awesome
+Programmierung 1/Beleg/html
+Programmierung 1/Beleg/lendlib
+Programmierung 2/Vorlesung
+Mathe 2/Vorlesung
+# ignoriere Dateien
+*.pdf
+*.psd
+*.png
+*.jpg
+*.svg
+*.eps
+*.ico
+*.accdb
+*.cgi
+*.odt
+*.odp
+*.doc
+*.docx
+*.xls
+*.xlsx
+*.tar.gz
+*.obs
+*.csf
+*.exe
