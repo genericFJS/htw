@@ -37,11 +37,9 @@
 
 % (Vorlesungs-)Folien einbinden:
 % Folien von einer Datei skaliert
-\newcommand{\slideScale}[2][\customSlideScale]{\begin{center}
-\includegraphics[page=#2, scale=#1]{\customSlidePath .pdf}
-\end{center}}
+\newcommand{\slide}[2][\customSlideScale]{\slides[#1]{}{#2}}
 % Folien von mehreren nummerierten Dateien skaliert
-\newcommand{\slidesScale}[3][\customSlideScale]{\begin{center}
+\newcommand{\slides}[3][\customSlideScale]{\begin{center}
 \includegraphics[page=#3, scale=#1]{\customSlidePath #2.pdf}
 \end{center}}
 
