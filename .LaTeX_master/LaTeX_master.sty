@@ -168,6 +168,8 @@
 %\LetLtxMacro{\oldemph}{\emph}
 %\renewcommand{\emph}[1]{\oldemph{#1}}
 \RequirePackage{xpatch}	% ua. Konkatenieren von Strings/Variablen (etoolbox)
+\usepackage{xstring}	% String Operationen
+\usepackage{minibox}	% Minibox anstatt \fbox{} für Boxen mit Zeilenumbruch
 
 
 % Einrichtung von lst
@@ -222,9 +224,59 @@ literate=%
 \usepackage{epstopdf}	% eps-Vektorgrafiken einfügen
 \usepackage{transparent}	% transparent nutzen: {\transparent{0.4} ...}
 %\epstopdfsetup{outdir=\customDir}
-%\usepackage{letltxmacro}	% Latex-Befehle unter anderem Namen neu definieren
-%\LetLtxMacro{\forceincludegraphics}{\includegraphics}
-%\renewcommand{\includegraphics}[2][]{\IfFileExists{#1}{\forceincludegraphics[#1]{#2}}{\fbox{Grafik: #2  \ifthenelse{\isempty{#1}}{}{\textit{#1}}}}}
+% Prüft, ob Grafik existiert (mit \ifvalidimage{}{}) [Quelle: https://tex.stackexchange.com/a/99176]:
+\makeatletter
+\newif\ifgraphicexist
+\catcode`\*=11
+\newcommand\ifvalidimage[1]{%
+    \begingroup
+    \global\graphicexisttrue
+    \let\input@path\Ginput@path
+    \filename@parse{#1}%
+    \ifx\filename@ext\relax
+    \@for\Gin@temp:=\Gin@extensions\do{%
+        \ifx\Gin@ext\relax
+        \Gin@getbase\Gin@temp
+        \fi}%
+    \else
+    \Gin@getbase{\Gin@sepdefault\filename@ext}%
+    \ifx\Gin@ext\relax
+    \global\graphicexistfalse
+    \def\Gin@base{\filename@area\filename@base}%
+    \edef\Gin@ext{\Gin@sepdefault\filename@ext}%
+    \fi
+    \fi
+    \ifx\Gin@ext\relax
+    \global\graphicexistfalse
+    \else 
+    \@ifundefined{Gin@rule@\Gin@ext}%
+    {\global\graphicexistfalse}%
+    {}%
+    \fi  
+    \ifx\Gin@ext\relax 
+    \gdef\imageextension{unknown}%
+    \else
+    \xdef\imageextension{\Gin@ext}%
+    \fi 
+    \endgroup 
+    \ifgraphicexist
+    \expandafter \@firstoftwo
+    \else
+    \expandafter \@secondoftwo
+    \fi 
+} 
+\catcode`\*=12
+\makeatother
+\usepackage{letltxmacro}	% Latex-Befehle unter anderem Namen neu definieren
+\LetLtxMacro{\forceincludegraphics}{\includegraphics}	% neuer Befehl für includegraphics
+\renewcommand{\includegraphics}[2][]{	% altes includegraphics neu definieren, damit es auch nicht vorhandene einfügt
+\ifvalidimage{#2}{
+\forceincludegraphics[#1]{#2}
+}{
+\message{Achtung: Grafik wurde nicht gefunden: '#2'}
+\minibox[frame]{
+\textbf{\StrSubstitute{#2}{_}{\_}}  \ifthenelse{\isempty{#1}}{}{\\\textit{#1}}}
+}}
 
 % pdf-Setup
 \usepackage{pdfpages}
