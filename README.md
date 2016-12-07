@@ -3,26 +3,6 @@
 Hier sind einige Unterlagen (Skripte, Übungen, Praktika) vom Studiengang Bachelor Informatik der HTW Dresden zu finden. Zusammengestellt von Jonatan Strube.
 Alle Dateien sind (solange nicht anders besprochen) aussschließlich für den privaten Gebrauch zugelassen.
 
-## Repository
-
-Da in diesem Repo einige Binärdateien (pdfs usw.) liegen, wird git lfs (https://git-lfs.github.com/) verwendet. Zum Klonen muss daher ggf. folgendes befolgt werden (Quelle: https://github.com/github/git-lfs/issues/911#issuecomment-169998792):
-
-// Skip smudge - We'll download binary files later in a faster batch
-
-git lfs install --skip-smudge
-
-// Do git clone here
-
-git clone ...
-
-// Fetch all the binary files in the new clone
-
-git lfs pull
-
-// Reinstate smudge
-
-git lfs install --force
-
 ## LaTeX
 
 Zum kompilieren der *.tex*-Dateien innerhalb der */Modulname*-Ordner ist in (fast) jedem Fall der */LaTeX_master*-Ordner notwendig. Die Ordnerstruktur muss auch beibehalten werden. Ansonsten müssten die jeweiligen *\include{}*-Einträge angepasst werden.
