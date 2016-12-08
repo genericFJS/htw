@@ -1,5 +1,5 @@
 \newcommand{\customDir}{../}
-\input{\customDir .LaTeX_master/LaTeX_master_setup.sty}
+\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
 
 %\setboolean{twosided}{true}
 %\setCustomDocumentClass{scrartcl}
@@ -16,10 +16,10 @@
 %\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
 %\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
 
-\input{\customDir .LaTeX_master/LaTeX_master.sty}
-\input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
+\input{\customDir _LaTeX_master/LaTeX_master.sty}
+\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
 
-%\bibliography{\customDir .Literatur/HTW_Literatur.bib}
+%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
 
 \begin{document}
 
@@ -95,7 +95,7 @@ Nachteil & \mpb[0.4]
 \mpe
 \end{tabular}
 \subsection{Probleme von Datenbank-Schnittstellen}
-\slidesScale{1}{1}
+\slides{1}{1}
 \subsection{Zielstellung der Erweiterungen}
 \begin{itemize}
 \item Verbindung der Möglichkeiten einer prozeduralen Sprache mit den Möglichkeiten von SQL
@@ -109,7 +109,7 @@ Lösung der Probleme…
 \end{itemize}
 über:
 \subsection{Aufgaben von Schnittstellen zwischen Datenbank-Server und Client-Anwendung}
-\slidesScale{1}{2}
+\slides{1}{2}
 \paragraph{Bsp.:}
 \begin{itemize}
 \item Variablendeklaration in C
@@ -123,7 +123,7 @@ Lösung der Probleme…
 \end{itemize}
 Die SQL-Verarbeitung geschieht über ODBC
 \subsection{Auswahl an Schnittstellen zwischen Datenbank-Server und Client-Anwendung}
-\slidesScale{1}{3}
+\slides{1}{3}
 \subsection{Arten an Verbindungen zur Datenbank}
 \begin{itemize}
 \item \emph{eigenständig} (Client des DBMS):\\
@@ -154,19 +154,19 @@ $\Rightarrow$ ausführbar
 \end{itemize}
 
 \subsection{Architekturverfahren für Datenbank-Schnittstellen}
-\slidesScale{1}{4}
+\slides{1}{4}
 
 \section{Anweisungen von SQL in anderen Sprachen (ODBC)}
 \subsection{Call-Level Interface (CLI)}
-\slidesScale{1}{5}
+\slides{1}{5}
 \subsection{Call-Level Interface Dialekte}
-\slidesScale{1}{6}
+\slides{1}{6}
 \subsection{Architektur der ODBC-Schnittstelle}
-\slidesScale{1}{7}
+\slides{1}{7}
 \subsection{Merkmale von ODBC}
-\slidesScale{1}{8}
+\slides{1}{8}
 \subsection{Aufbau einer Datenbank-Verbindung über ODBC}
-\slidesScale{1}{9}
+\slides{1}{9}
 Bsp. Aufbau:
 \begin{lstlisting}[language=C]
 // Headerdatei sqltypes.h
@@ -202,8 +202,8 @@ $\Rightarrow$ Aufbau des C-Programms (Ablauf):
 \end{itemize}
 \subsection{Beschreibung der wichtigsten CLI-Funktionen in ODBC}
 \setCustomSlideScale{0.8}
-\slidesScale{1B}{1}
-\slidesScale{1B}{2}
+\slides{1B}{1}
+\slides{1B}{2}
 \setCustomSlideScale{1}
 Achtung: mit konstanten Bezeichnungen anstatt mit numerischen Werten arbeiten:
 \begin{lstlisting}[language=C]
@@ -216,25 +216,25 @@ Achtung: mit konstanten Bezeichnungen anstatt mit numerischen Werten arbeiten:
 
 \subsection{Minimalbeispiel ODBC}
 \setCustomSlideScale{0.7}
-\slidesScale{1B}{3}
-\slidesScale{1B}{4}
+\slides{1B}{3}
+\slides{1B}{4}
 \setCustomSlideScale{1}
 Achtung: Variable muss ein Zeichen größer sein als SQL-Eintrag ($\to$ Nullterminiert)
 \subsection{Programmausschnitt ODBC}
-\slidesScale{1}{10}
+\slides{1}{10}
 
 \subsection{Ergebnistypen ODBC}
-\slidesScale{1}{11}
+\slides{1}{11}
 \newpage\paragraph{Beispiel Datentypen}
 \setCustomSlideScale{0.7}
-\slidesScale{1C}{1}
+\slides{1C}{1}
 $\Rightarrow$ FETCH liest immer einen Datensatz (Zeilenweise)\\
 Achtung: Zeilen retcode braucht als 4. Argument ein @…
 
 \chapter{Datensicherheit/Zugriffsschutz}
 \section{Übersicht Datensicherheit/Transaktionen}
 \setCustomSlideScale{0.5}
-\slidesScale{2}{1}
+\slides{2}{1}
 \subsection{Datensicherheit in Datenbanksystemen}
 \begin{tabular}{l | l | l}
 & höhere Gewalt & Ausfall technischer Mittel\\
@@ -305,7 +305,7 @@ Diese lassen sich in Kategorien einteilen:
 \end{itemize}
 \end{itemize}
 \subsubsection{Klassifikation der Gefahrenbereiche}
-\slidesScale{2}{2}
+\slides{2}{2}
 \paragraph{Schadensursachen} \parskp
 \begin{tabular}{l l}
 Bedienfehler & $25\%$\\
@@ -318,17 +318,17 @@ Sturm & $1\%$\\
 Sonstige & $17\%$
 \end{tabular}
 \subsubsection{Sicherheitskonzepte}
-\slidesScale{2}{3}
+\slides{2}{3}
 \subsubsection*{Beispiel einer Schlüsselsicherung mit Prüfziffer}
-\slidesScale{2}{4}
+\slides{2}{4}
 \subsubsection{Überblick zur Integritätssicherung}
-\slidesScale{2}{5}
+\slides{2}{5}
 \subsection{Übersicht Transaktionsverarbeitung}
 \subsubsection*{Was ist eine Transaktion?}
-\slidesScale{2}{6}
+\slides{2}{6}
 \subsubsection{Eigenschaften einer Transaktion - ACID}
 (potentielle Prüfungsfrage!!!)
-\slidesScale{2}{7}
+\slides{2}{7}
 \subsubsection*{prinzipieller Ablauf}
 \begin{tabular}{L{0.3} c L{0.5}}
 \emph{Programm} & & \emph{DBMS}\\
@@ -389,15 +389,15 @@ BEGIN TRANSACTION
 \end{itemize}
 
 \section{Semantische Integrität}
-\slidesScale{2}{8}
-\slidesScale{2}{9}
+\slides{2}{8}
+\slides{2}{9}
 \subsection{Möglichkeiten zur Sicherung der semantischen Integrität}
-\slidesScale{2}{10}
+\slides{2}{10}
 Trigger:\\
 z.B. für Insert/Update/Delete (sodass dieser Trigger immer dann ausgeführt wird, wenn eine der Aktionen ausgeführt wird)
-\slidesScale{2}{11}
+\slides{2}{11}
 \subsection{Spalten- und Tabellen-bezogene Integrität}
-\slidesScale{2}{12}
+\slides{2}{12}
 
 Integritätsbedingungen (=constraints)
 \begin{itemize}
@@ -427,10 +427,10 @@ CREATE TABLE Kauf (
 )
 \end{lstlisting}
 \subsection{DEFAULTS und CHECK-Einschränkungen}
-\slidesScale{2}{13}
+\slides{2}{13}
 Bsp.: siehe oberhalb
 \subsection{DOMAINS / Nutzerdefinierte Datentypen und ASSERTIONS}
-\slidesScale{2}{14}
+\slides{2}{14}
 Bsp. 1:
 \begin{lstlisting}[language=SQL]
 CREATE DOMAIN Note INT 
@@ -474,13 +474,13 @@ CREATE ASSERTION AS_Vormerkungen
 Anmerkung: Assertion nicht allzu relevant.
 
 \subsection{Referentielles Integritätsproblem}
-\slidesScale{2}{15}
+\slides{2}{15}
 
 \subsection{Foreign key Klausel}
-\slidesScale{2}{16}
+\slides{2}{16}
 
 \subsection{Beachtung zyklischer Abhängigkeit}
-\slidesScale{2}{17}
+\slides{2}{17}
 Bsp.:
 
 \begin{tabular}{l l}
@@ -501,14 +501,14 @@ Problem: Tabelle 1 referenziert die 2. (Abtltr) und die 1. die 2. (Abtnr)\\
 Vorgehen: Erste Referenz im erstellen der Tabelle normal definieren, die zweite Referenz erst im Nachhinein mit ALTER TABLE einfügen
 
 \subsection{Benutzerdefinierte Funktionen}
-\slidesScale{2}{18}
+\slides{2}{18}
 \begin{lstlisting}[language=SQL]
 SELECT <Spaltenliste>	-- Skalarwertfunktion
 FROM <Tabellenliste>	-- Tabellenwertfunktion
 WHERE ...
 \end{lstlisting}
 \subsubsection{Skalarwertfunktion}
-\slidesScale{2}{19}
+\slides{2}{19}
 Anwendung für diese Funktion:
 \begin{lstlisting}[language=SQL]
 SELECT Kunr, Name, Kredit,
@@ -517,13 +517,13 @@ SELECT Kunr, Name, Kredit,
 FROM Kunde
 \end{lstlisting}
 \subsubsection*{Details zum Beispiel}
-\slidesScale{2B}{1}
+\slides{2B}{1}
 
 \subsubsection{Tabellenwertfunktion}
-\slidesScale{2}{20}
+\slides{2}{20}
 wichtiger Unterschied zwischen „View“ und „Tabellenwertfunktion“: View können keine Parameter übergeben werden.
 \subsubsection*{Details zum Beispiel}
-\slidesScale{2B}{2}
+\slides{2B}{2}
 \subsubsection*{Weiteres Beispiel}
 \begin{lstlisting}[language=SQL]
 declare @ort char(20)
@@ -535,7 +535,7 @@ FROM ErmittleKundenImOrt(@ort) a
 \end{lstlisting}
 
 \subsection{Trigger}
-\slidesScale{2}{21}
+\slides{2}{21}
 Trigger ist mit Tabelle verknüpft (für Aktionen wie Insert, Update, Delete, …).\\
 Wenn nun ein Insert, Update, Delete, … auf die Tabelle ausgeführt wird, wird der entsprechende Trigger ausgeführt.
 
@@ -576,7 +576,7 @@ Beispiel INSERT:\\
 Fall UPDATE: ist bloß Kombination aus DELETE+INSERT\\
 Mit dem Trigger erhält man Zugriff auf das letzte Stück des Transaktionlog (inserted/deleted), welches die Transaktion betrifft, die gerade bearbeitet wird.
 \subsubsection{Zusammenhang zwischen Programm und DBMS}
-\slidesScale{2}{22}
+\slides{2}{22}
 \subsubsection*{Trigger zur Abbildung der ref. Integrität}
 Löschweitergabe: kaskadierendes Löschen\\
 Kunde löschen in Tabelle Kunde $\Rightarrow$ Löschen seiner Einkäufe in Tabelle Kauf
@@ -639,7 +639,7 @@ FOR insert, update
 RETURN
 \end{lstlisting}
 \subsubsection*{Weiter Beispiele}
-\slidesScale{2}{23}
+\slides{2}{23}
 \begin{lstlisting}[language=SQL]
 CREATE TRIGGER MittelAenderung
 ON Projekt
@@ -650,23 +650,23 @@ BEGIN
 		FROM inserted i JOIN deleted d ON i.Kunr = d.Kunr AND i.Artnr = d.Artnr
 END
 \end{lstlisting}
-\slidesScale{2}{24}
+\slides{2}{24}
 
 \section{Operationale Integrität}
 „Gefahrenbereich“ Mehrbenutzerbetrieb.
 \subsection{Anomalien im Mehrbenutzerbetrieb}
 \subsubsection{Lost Update}
-\slidesScale{2}{25}
+\slides{2}{25}
 \subsubsection{Dirty Read}
-\slidesScale{2}{26}
+\slides{2}{26}
 \subsubsection{Non repeatable Read}
-\slidesScale{2}{27}
+\slides{2}{27}
 \subsubsection{Phantomproblem}
-\slidesScale{2}{28}
+\slides{2}{28}
 \subsection{Sicherung der operationalen Integrität}
-\slidesScale{2}{29}
+\slides{2}{29}
 \subsubsection{Sperrverfahren}
-\slidesScale{2}{30}
+\slides{2}{30}
 BOT… begin of transaction\\
 EOT… end of transaction\\
 \begin{tikzpicture}
@@ -701,9 +701,9 @@ EOT… end of transaction\\
 \draw (-3,0) node[below]{BOT} -- (-3,2) -- (1,2) -- (1,0) node[below]{EOT};
 \end{tikzpicture}
 \subsubsection{Statische und dynamische Sperrverfahren}
-\slidesScale{2}{31}
+\slides{2}{31}
 \subsubsection{Anforderungen an Sperrmodi}
-\slidesScale{2}{32}
+\slides{2}{32}
 Sperrgranulate:
 \begin{itemize}
 \item logische Objekte:\\
@@ -719,7 +719,7 @@ S & $+$ & $+$ & $-$\\
 X & $+$ & $-$ & $-$
 \end{tabular}
 \subsubsection{Stufen der Isolation paralleler Transaktionen}
-\slidesScale{2}{33}
+\slides{2}{33}
 SQL:
 \begin{lstlisting}[language=SQL]
 SET TRANSACTION ISOLATION LEVEL ...
@@ -735,7 +735,7 @@ Ebene & Lost Update & Dirty Read & Non repeat. Read & Phantom\\\hline
 Also: Nur mit Ebene-3 können alle Anomalien abgedeckt sein. Aber: tiefere Ebenen kosten mehr Leistung!
 
 \subsubsection{Optimistische Verfahren}
-\slidesScale{2}{34}
+\slides{2}{34}
 Grundgedanke:
 \begin{itemize}
 \item Transaktionen nutzen oft verschiedene Daten
@@ -744,12 +744,12 @@ Grundgedanke:
 \end{itemize}
 
 \subsubsection{Zeitstempelverfahren}
-\slidesScale{2}{35}
+\slides{2}{35}
 
 Letzten Endes werden Kombinationen verschiedener Verfahren verwendet:\\
 Jeder Nutzer bekommt einen Zeitstempel, im Backend läuft allerdings ein pessimistisches Verfahren.
 \section{Physische Integrität}
-\slidesScale{2}{36}
+\slides{2}{36}
 \begin{itemize}
 \item abgeschlossene Transaktion $\Rightarrow$ Ergebnis herstellen\\
 nicht abgeschlossene Transaktion $\Rightarrow$ Rücksetzen
@@ -763,12 +763,12 @@ Verfahren des Wiederherstellens $=$ Recovering
 \item Niveau (logisch: Tupel/Befehl oder physisch: Seite)
 \end{itemize}
 \subsubsection*{Eintragungen in der Protokolldatei}
-\slidesScale{2}{37}
+\slides{2}{37}
 \subsection{Einbringstrategien}
-\slidesScale{2}{38}
+\slides{2}{38}
 \subsection{Prinzip der physischen Protokollierung}
-\slidesScale{2}{39}
-\slidesScale{2}{40}
+\slides{2}{39}
+\slides{2}{40}
 \subsection{Datensicherung und Wiederherstellung am Beispiel MS SQL-Server}
 Log (*.ldf Datei)\\
 $\uparrow$\\
@@ -788,7 +788,7 @@ BACKUP LOG Vertrieb TO DISK = 'E:\Backups\V_log1.bak'
 Sobald Log gesichert wird, wird *.ldf Datei geleert!
 \end{itemize}
 \subsection{Wiederherstellungsmodi}
-\slidesScale{2}{41}
+\slides{2}{41}
 \begin{itemize}
 \item vollständig (Standard)
 \begin{lstlisting}[language=SQL]
@@ -814,14 +814,14 @@ $+$ Log-Datei „wächst nicht“ (Wird nur für Transaktionen benutzt)\\
 Zum Wiederherstellen bei einem Ausfall (bspw. um 9:30) kann nur die gesicherte Datenbank (von bspw. 6:00) wieder hergestellt werden, es gibt keine Logs dazwischen, die einen neueren Zustand wiederherstellen können!
 \end{itemize}
 \subsubsection{Zusammenhang zwischen Protokoll- und Recoveryverfahren}
-\slidesScale{2}{42}
+\slides{2}{42}
 \subsubsection{Weitere Recoveryverfahren}
-\slidesScale{2}{43}
+\slides{2}{43}
 \subsubsection{Übertragung Datenbankpuffer-Platte}
-\slidesScale{2}{44}
+\slides{2}{44}
 \subsection{Hochverfügbarkeit}
-\slidesScale{2}{45}
-\slidesScale{2}{46}
+\slides{2}{45}
+\slides{2}{46}
 \subsubsection{Spiegelung}
 \begin{enumerate}
 \item Eintragung in Datenbank 1
@@ -861,9 +861,9 @@ Datenbanken (DB):
 \emph{Wichtig}: Metadaten liegen in Systemtabellen sys.***!
 
 \section{Zugriffsschutz/Datenschutz}
-\slidesScale{2}{47}
+\slides{2}{47}
 \subsection{Probleme beim Datenschutz}
-\slidesScale{2}{48}
+\slides{2}{48}
 \begin{tabular}{L{0.19} | L{0.4} L{0.4}}
 & Datenschutz & Zugriffsschutz \\\hline
 Bereich & Bundesweit & Informationssystem\\
@@ -872,10 +872,10 @@ Mittel & juristisch/organisatorisch & organisatorisch, SW/HW-Schutzfunktion
 \end{tabular}
 
 \subsection{Access- und Identity Management (IAM)}
-\slidesScale{2}{49}
+\slides{2}{49}
 
 \subsection{Authentifizierung}
-\slidesScale{2}{50}
+\slides{2}{50}
 Beispiel: Privilegien vergeben (Tabelle Mitarbeiter)\\
 \begin{tabular}{l | c | c | c | c}
 & MitNr & Name & Qualif. & Gehalt \\\hline
@@ -885,18 +885,18 @@ Lehmann (HR/Personal) & schreiben & schreiben & schreiben & schreiben
 \end{tabular}
 
 \subsection{Verwaltung von Nutzer und Gruppen in SQL}
-\slidesScale{2}{51}
+\slides{2}{51}
 \subsection{Aufgabenkomplexe Autorisierung}
-\slidesScale{2}{52}
+\slides{2}{52}
 
 \subsection{Aufgaben der Zugriffskontrolle}
-\slidesScale{2}{53}
+\slides{2}{53}
 
 \subsection{Komponenten der Autorisierung}
-\slidesScale{2}{54}
+\slides{2}{54}
 
 \subsection{Zugriff auf den Server (MS SQL Server)}
-\slidesScale{2}{55}
+\slides{2}{55}
 \subsubsection*{Anweisungen zum Zugriffsschutz}
 Zugriffsschutz im MS SQL Server\\
 sa … Systemadministrator\\
@@ -923,11 +923,11 @@ CREATE TABLE Adresse (Ort, ...
 Login: Zugriff auf Datenbankserver (ohne Berechtigungen an lesen/schreiben/…)\\
 User: Nutzer der Datenbank (Zugriffsberechtigung nach Vorgabe)
 \subsection{Zugriff auf Datenbank (MS SQL Server)}
-\slidesScale{2}{56}
+\slides{2}{56}
 \subsubsection{Zugriff auf Befehle kontrollieren (Systemprivilegien)}
-\slidesScale{2}{57}
+\slides{2}{57}
 \subsubsection{Zugriff auf Objekte kontrollieren (Objektprivilegien)}
-\slidesScale{2}{58}
+\slides{2}{58}
 \subsubsection{Varianten der Umsetzung von Zugriffsschutz}
 Beispiel: Tabelle Mitarbeiter\\
 public: Mitnr, Name, Vorname, Anschrift\\

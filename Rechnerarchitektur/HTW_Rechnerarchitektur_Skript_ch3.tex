@@ -1,234 +1,234 @@
 %\subsection*{Speicherverwaltung: Einführung}
-\slidesScale{03}{2}
+\slides{03}{2}
 \section{Speicherhierarchie}
-\slidesScale{03}{3}
+\slides{03}{3}
 
 \subsection{Ebenen}
-\slidesScale{03}{4}
-\slidesScale{03}{5}
+\slides{03}{4}
+\slides{03}{5}
 
 \section{Cache}
 \subsection{Einführung}
 \subsubsection{Motivation und Grundidee}
-\slidesScale{03}{6}
+\slides{03}{6}
 
 \subsubsection{Umsetzung der Idee}
-\slidesScale{03}{7}
-\slidesScale{03}{8}
+\slides{03}{7}
+\slides{03}{8}
 
 \subsubsection{Hierarchie, Übertragungsmodi}
-\slidesScale{03}{9}
+\slides{03}{9}
 
 \subsection{Lokalität}
 \subsubsection{Prinzip}
-\slidesScale{03}{10}
+\slides{03}{10}
 Beispiel Lokalität: Wenn man bei C Arrays multipliziert, kann je nach Schachtelung der Schleifen die Laufzeit leiden. In C werden Arrays zeilenweise gespeichert, multipliziert man die Arrays allerdings spaltenweise, so muss viel gesprungen werden, da die Speicherblöcke weiter auseinander liegen.
 
 \subsubsection{Zeitliche Lokalität}
 (Temporal Locality)
-\slidesScale{03}{11}
+\slides{03}{11}
 
 \subsubsection{Räumliche Lokalität}
 (Spatial Locality)
-\slidesScale{03}{12}
+\slides{03}{12}
 
 \subsubsection{Bedeutung der Lokalität}
-\slidesScale{03}{13}
+\slides{03}{13}
 
 \subsubsection{Umsetzung des Lokalitätsprinzips}
-\slidesScale{03}{14}
+\slides{03}{14}
 
 \subsection{Zugriff}
 \subsubsection{Anordnung bezüglich CPU und Hauptspeicher}
-\slidesScale{03}{15}
+\slides{03}{15}
 \subsubsection{Fehlzugriffe}
-\slidesScale{03}{16}
+\slides{03}{16}
 weiterhin:
-\slidesScale{03}{17}
+\slides{03}{17}
 \subsubsection*{Compulsory-Miss}
-\slidesScale{03}{18}
+\slides{03}{18}
 
 \subsubsection{Lesezugriffe}
-\slidesScale{03}{19}
+\slides{03}{19}
 
 \subsubsection{Schreibzugriffe}
 \subsubsection*{Rückschreibestrategien}
-\slidesScale{03}{20}
+\slides{03}{20}
 \subsubsection*{Durchschreibverfahren}
-\slidesScale{03}{21}
+\slides{03}{21}
 \subsubsection*{Rückschreibeverfahren}
-\slidesScale{03}{22}
+\slides{03}{22}
 \subsubsection*{Write Hit und Write Miss}
-\slidesScale{03}{23}
+\slides{03}{23}
 
 \subsection{Kohärenz und Konsistenz}
 \subsubsection{Kohärenz}
 „Alle Speicherzugreifenden bekommen den richtigen Wert, wenn sie auf den Speicher zugreifen“
 \unimptnt{
 \subsubsection*{Kohärenz Beispiel mit Write-Through-Caches}
-\slidesScale{03}{24}
+\slides{03}{24}
 \subsubsection*{Kohärenz Beispiel mit Write-Back-Caches}
-\slidesScale{03}{25}
+\slides{03}{25}
 }
 
 \subsubsection*{Speicherkohärenz}
-\slidesScale{03}{26}
+\slides{03}{26}
 
 \subsubsection*{Definition Kohärenz}
-\slidesScale{03}{27}
-\slidesScale{03}{28}
+\slides{03}{27}
+\slides{03}{28}
 
 \subsubsection{Konsistenz}
-\slidesScale{03}{29}
+\slides{03}{29}
 
 \unimptnt{
 \subsubsection*{Speicher-Konsistenz}
-\slidesScale{03}{30}
+\slides{03}{30}
 }
 
 \subsubsection{Kohärenz-Protokolle}
-\slidesScale{03}{31}
+\slides{03}{31}
 \unimptnt{
 \subsubsection*{Vereichnisbasiert}
-\slidesScale{03}{32}
+\slides{03}{32}
 
 \subsubsection*{Bus-Snooping}
-\slidesScale{03}{33}
+\slides{03}{33}
 
 Möglichkeiten:
-\slidesScale{03}{34}
+\slides{03}{34}
 
 \subsubsection*{MESI-Kohärenzprotokoll}
-\slidesScale{03}{35}
+\slides{03}{35}
 Verbesserungen:
-\slidesScale{03}{36}
+\slides{03}{36}
 
 \subsubsection*{Update-basierte Protokolle}
-\slidesScale{03}{37}
+\slides{03}{37}
 }
 
 \section{Cacheorganisation}
 
 \subsection{Realisierung}
-\slidesScale{03}{38}
+\slides{03}{38}
 
 \subsection{Aufbau eines Cache-Speichers}
-\slidesScale{03}{39}
+\slides{03}{39}
 
 \subsection{Begriffe}
-\slidesScale{03}{40}
+\slides{03}{40}
 
 \subsection{Direktabbildender Cache}
 (Direct Mapped Cache)
-\slidesScale{03}{41}
+\slides{03}{41}
 Beispiel: Direkt abgebildeter Cache mit 8 Einträgen, Speicher mit $2^5$ Adressen: Die letzten Bits der Speicheradressen bestimmen die Position im Cache: $00001$, $01001$, $10001$ und $11001$ landen im Cache-Block $001$.
 \unimptnt{
-\slidesScale{03}{42}
+\slides{03}{42}
 }
 
 \subsection{vollassoziativer Cache}
 (Fully Associative Cache)
-\slidesScale{03}{43}
+\slides{03}{43}
 
 \subsection{p-fach satzassoziativer Cache}
-\slidesScale{03}{44}
+\slides{03}{44}
 \unimptnt{
-\slidesScale{03}{45}
+\slides{03}{45}
 
 \subsection{Cache-Mapping: zusammenfassendes Beispiel}
-\slidesScale{03}{46}
+\slides{03}{46}
 Die 2. und 3. Caches geben dem Cache also eine Struktur vor, die die Nachteile des voll-assoziativer Caches versuchen abzumildern.
 }
 
 \section{Leistungssteigerung durch Cache}
 
-\slidesScale{03}{47}
-\slidesScale{03}{48}
+\slides{03}{47}
+\slides{03}{48}
 \unimptnt{
-\slidesScale{03}{49}
+\slides{03}{49}
 }
 
 \subsection{Gesamtgröße und Block(rahmen)größe}
-\slidesScale{03}{50}
+\slides{03}{50}
 \unimptnt{
 \subsubsection{Einfluss der Blockrahmengröße}
-\slidesScale{03}{51}
+\slides{03}{51}
 }
 
 \section{Nachladestrategien}
 \subsection{Demand Fetching}
-\slidesScale{03}{52}
+\slides{03}{52}
 \subsection{Prefetching}
 \subsubsection*{Was}
-\slidesScale{03}{53}
+\slides{03}{53}
 \subsubsection*{Wann}
-\slidesScale{03}{54}
+\slides{03}{54}
 \unimptnt{
-\slidesScale{03}{55}
+\slides{03}{55}
 }
 Tagged Prefetch: Es wird nur weiter nachgeladen, wenn es sich zuvor „gelohnt“ hat ($\to$ ein Hit vorhanden war)
 
 \section{Verdrängungsstrategien}
 (Replacement Policy)
-\slidesScale{03}{56}
+\slides{03}{56}
 \subsection{Random, FIFO, Round Robin}
-\slidesScale{03}{57}
+\slides{03}{57}
 \subsection{LFU}
-\slidesScale{03}{58}
+\slides{03}{58}
 \subsection{LRU}
-\slidesScale{03}{59}
+\slides{03}{59}
 \unimptnt{
 \subsubsection{Algorithmus}
-\slidesScale{03}{60}
+\slides{03}{60}
 }
 
 \chapter{Speicher und Speicherverwaltung}
 \section*{Hauptspeicher}
-\slidesScale{04}{1}
+\slides{04}{1}
 \section{Virtueller Speicher}
 \subsection{Ziel}
-\slidesScale{04}{2}
+\slides{04}{2}
 \subsection{Virtueller Speicher}
-\slidesScale{04}{3}
+\slides{04}{3}
 \subsection{Speicherverwaltung: früher und heute}
-\slidesScale{04}{4}
+\slides{04}{4}
 \subsubsection{Begriffe}
-\slidesScale{04}{5}
-\slidesScale{04}{6}
-\slidesScale{04}{7}
+\slides{04}{5}
+\slides{04}{6}
+\slides{04}{7}
 \unimptnt{
 \subsubsection{Anordnung von Cache und MMU}
-\slidesScale{04}{8}
+\slides{04}{8}
 }
 
 \section{Dynamische Zuordnungsverfahren}
 \subsection{Relocation}
-\slidesScale{04}{9}
+\slides{04}{9}
 \unimptnt{
 \subsubsection*{Beispiel}
-\slidesScale{04}{10}
+\slides{04}{10}
 }
 \subsubsection{Probleme}
-\slidesScale{04}{11}
+\slides{04}{11}
 \subsection{Paging}
 \subsubsection{Methode}
-\slidesScale{04}{12}
+\slides{04}{12}
 \subsubsection{Prinzip der virtuellen Speicherverwaltung}
-\slidesScale{04}{13}
+\slides{04}{13}
 \subsubsection{Organisation der Seitentabellen}
-\slidesScale{04}{14}
+\slides{04}{14}
 
 \subsubsection{Einstufige Adressumsetzung}
-\slidesScale{04}{15}
+\slides{04}{15}
 
 \subsubsection*{Adressierung / Adressumsetzung}
-\slidesScale{04}{16}
+\slides{04}{16}
 \unimptnt{
-\slidesScale{04}{17}
+\slides{04}{17}
 \subsubsection*{Demand Paging}
 „Seitennachladen nach Bedarf“: Nur die Seiten (Programmelemente) werden nachgeladen, die benötigt werden.
 \subsubsection*{Demand Paging - Page Faults}
-\slidesScale{04}{18}
+\slides{04}{18}
 \subsubsection*{Beispiel}
 \begin{itemize}
 \item 32 Bit virtuelle Adresse ($\to$ 4 GiByte virtueller Adressraum)
@@ -257,56 +257,56 @@ $\Rightarrow$ PT kann im realen Hauptspeicher gehalten werden
 $\Rightarrow$ Dieser Aufwand wird \emph{Table Superfluity} genannt.
 }
 \subsubsection{Zweistufige Adressumsetzung}
-\slidesScale{04}{19}
+\slides{04}{19}
 
 \subsubsection{Inverted Page Table}
-\slidesScale{04}{20}
+\slides{04}{20}
 \unimptnt{
-\slidesScale{04}{21}
+\slides{04}{21}
 \subsubsection*{Adressumsetzung}
-\slidesScale{04}{22}
-\slidesScale{04}{23}
+\slides{04}{22}
+\slides{04}{23}
 }
 \subsection{Segmentation}
 \subsubsection{Methode}
-\slidesScale{04}{24}
+\slides{04}{24}
 \unimptnt{
 \subsubsection{Adressierung / Adressumsetzung}
-\slidesScale{04}{25}
+\slides{04}{25}
 }
 \subsubsection{Externe Fragmentierung}
-\slidesScale{04}{26}
+\slides{04}{26}
 \unimptnt{
 \subsubsection{Kompaktierung}
-\slidesScale{04}{27}
+\slides{04}{27}
 }
 
 \subsection{Paged Segmentation}
-\slidesScale{04}{28}
+\slides{04}{28}
 \unimptnt{
-\slidesScale{04}{29}
+\slides{04}{29}
 }
 
 \section{Speicherverwaltungsverfahren}
 \subsection{Überblick}
-\slidesScale{04}{30}
+\slides{04}{30}
 \subsection{Fetch / Placement}
-\slidesScale{04}{31}
+\slides{04}{31}
 
 \section{Translation Lookaside Buffer}
-\slidesScale{04}{32}
+\slides{04}{32}
 
 \unimptnt{
 \subsection{Adressumsetzung}
-\slidesScale{04}{33}
+\slides{04}{33}
 }
 
 \subsection{Ansatz}
-\slidesScale{04}{34}
+\slides{04}{34}
 
 \subsection{Probleme}
-\slidesScale{04}{35}
+\slides{04}{35}
 \unimptnt{
-\slidesScale{04}{36}
+\slides{04}{36}
 }
 $\Rightarrow$ In modernen Systemen mit stets wechselnden Prozessen lohnt sich kein zu großer TLB, da er mit jedem Prozess neu beschrieben wird. Wird also der Prozess gewechselt, was regelmäßig geschieht, ist der gesamte TLB ungültig… obwohl der vorhergehende Prozess ihn wahrscheinlich gar nicht komplett füllen konnte.

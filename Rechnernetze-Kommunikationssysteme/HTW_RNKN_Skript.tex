@@ -1,5 +1,5 @@
 \newcommand{\customDir}{../}
-\input{\customDir .LaTeX_master/LaTeX_master_setup.sty}
+\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
 
 %\setboolean{twosided}{true}
 %\setCustomDocumentClass{scrartcl}
@@ -16,10 +16,10 @@
 %\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
 %\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
 
-\input{\customDir .LaTeX_master/LaTeX_master.sty}
-\input{\customDir .LaTeX_master/LaTeX_master_macros.sty}
+\input{\customDir _LaTeX_master/LaTeX_master.sty}
+\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
 
-%\bibliography{\customDir .Literatur/HTW_Literatur.bib}
+%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
 \setlength{\headheight}{10mm}	% default: ca. 8mm
 
 \begin{document}
@@ -47,130 +47,130 @@ Sendeleistung: Nicht „zu laut reden“, damit sich andere auch noch verstehen.
 
 \section{Einführung}
 \subsection{Schnittstelle auf einem Host zur Datenübertragung an andere Prozesse}
-\slidesScale{10-sockets_print}{3}
+\slides{10-sockets_print}{3}
 \subsection{Socketschnittstelle: Abgrenzung}
-\slidesScale{10-sockets_print}{4}
+\slides{10-sockets_print}{4}
 \subsection{IP-Adressen und Ports}
-\slidesScale{10-sockets_print}{5}
+\slides{10-sockets_print}{5}
 \section{Demultiplexing}
-\slidesScale{10-sockets_print}{6}
+\slides{10-sockets_print}{6}
 \subsection{Verbindungsloses Demultiplexing (UDP)}
-\slidesScale{10-sockets_print}{7}
+\slides{10-sockets_print}{7}
 \paragraph{Testfrage:} Benötigte UDP-Sockets: 2 Sockets (beliebig viele Partner können auf einen Port/Socket kommen, dafür muss darauf geachtet werden, dass das Paket an den richtigen Absender zurück geschickt wird)
 \subsection{Verbindungsorientiertes Demultiplexing (TCP)}
-\slidesScale{10-sockets_print}{8}
+\slides{10-sockets_print}{8}
 \paragraph{Testfrage:} Benötigte TCP-Sockets: 3 Sockets (jeder Verbindung ist eigenständig und vom Rechner verwaltet, es muss sich nicht drum gekümmert werden, dass es auch an den richtigen Partner zurück geschickt wird)
-\slidesScale{10-sockets_print}{9}
+\slides{10-sockets_print}{9}
 \section{Socket-Programmierung}
-\slidesScale{10-sockets_print}{10}
+\slides{10-sockets_print}{10}
 \subsection{UDP-Sockets}
-\slidesScale{10-sockets_print}{11}
-\slidesScale{10-sockets_print}{12}
+\slides{10-sockets_print}{11}
+\slides{10-sockets_print}{12}
 \subsubsection{UDP-Demo Datenströme}
 Datenströme müssen explizit in Pakete gewandelt werden:\\
 UDP ist kein Stream $\to$ Konvertierung IO-Stream $\Leftrightarrow$ UDP.
-\slidesScale{10-sockets_print}{13}
+\slides{10-sockets_print}{13}
 \subsubsection{UDP-Demo Client}
-\slidesScale{10-sockets_print}{14}
-\slidesScale{10-sockets_print}{15}
+\slides{10-sockets_print}{14}
+\slides{10-sockets_print}{15}
 Achtung: Wenn Paket verloren geht, würde Programm stehen bleiben! Dafür gibt es in der Funktion \emph{.recieve()} auch die Option eines Timeouts.\\
 Hinweis nebenbei: sendData-Array hätte gar nicht initialisiert werden müssen, weil er in der Zuweisung später sowieso einen neuen Zeiger bekommt.
 \subsubsection{UDP-Demo Server}
-\slidesScale{10-sockets_print}{16}
-\slidesScale{10-sockets_print}{17}
-\slidesScale{10-sockets_print}{18}
+\slides{10-sockets_print}{16}
+\slides{10-sockets_print}{17}
+\slides{10-sockets_print}{18}
 UDP vor allem bei Anfragen sinnvoll, die in ein Paket passen. Nicht so sinnvoll für mehrere Pakete/Streams.
 
 \subsection{TCP-Sockets}
-\slidesScale{10-sockets_print}{19}
-\slidesScale{10-sockets_print}{20}
-\slidesScale{10-sockets_print}{21}
+\slides{10-sockets_print}{19}
+\slides{10-sockets_print}{20}
+\slides{10-sockets_print}{21}
 \subsubsection*{Dreiwege-Handshake}
-\slidesScale{10-sockets_print}{22}
-\slidesScale{10-sockets_print}{23}
+\slides{10-sockets_print}{22}
+\slides{10-sockets_print}{23}
 \subsubsection{TCP-Demo Datenströme}
 Eingabestrom: Quelle - Tastatur\\
 Ausgabestrom: Senke - Socket
-\slidesScale{10-sockets_print}{24}
-\slidesScale{10-sockets_print}{25}
+\slides{10-sockets_print}{24}
+\slides{10-sockets_print}{25}
 \subsubsection{TCP-Demo Client}
-\slidesScale{10-sockets_print}{26}
-\slidesScale{10-sockets_print}{27}
+\slides{10-sockets_print}{26}
+\slides{10-sockets_print}{27}
 \subsubsection{TCP-Demo Server}
-\slidesScale{10-sockets_print}{28}
-\slidesScale{10-sockets_print}{29}
+\slides{10-sockets_print}{28}
+\slides{10-sockets_print}{29}
 
 \section{Werkzeug Netcat}
-\slidesScale{10-sockets_print}{30}
+\slides{10-sockets_print}{30}
 
 \section*{Zusammenfassung}
-\slidesScale{10-sockets_print}{31}
+\slides{10-sockets_print}{31}
 
 \chapter{Grundlagen OSI}
 
 \section{Verzögerung}
 
 \subsection{Verzögerung in paketorientierten Netzen}
-\slidesScale{12-grundlagen_print}{3}
+\slides{12-grundlagen_print}{3}
 
 \subsubsection*{Beispiele}
-\slidesScale{12-grundlagen_print}{4}
+\slides{12-grundlagen_print}{4}
 
 \subsubsection*{Grafik Verzögerung}
-\slidesScale{12-grundlagen_print}{5}
+\slides{12-grundlagen_print}{5}
 (Hinweis: Interessant für Prüfung)
 
 \subsubsection{Datenrate-Verzögerungsprodukt}
 bandwitdh-delay product, BDP (Begriff Bandbreite hier korrekt)
-\slidesScale{12-grundlagen_print}{6}
+\slides{12-grundlagen_print}{6}
 Wichtig: Es gibt einen Unterschied zwischen dem physischen Durchsatz und dem, der tatsächlich nur ankommt. In diesem Fall ist der Unterschied sehr groß: da muss die Fenstergröße größer gewählt werden.
 
 \section{Standardisierung}
 \subsection{Standardisierungskommision}
 \subsubsection{International}
-\slidesScale{12-grundlagen_print}{7}
+\slides{12-grundlagen_print}{7}
 \subsubsection{National/Europäisch}
-\slidesScale{12-grundlagen_print}{8}
+\slides{12-grundlagen_print}{8}
 \subsection{Standards}
-\slidesScale{12-grundlagen_print}{9}
+\slides{12-grundlagen_print}{9}
 
 \section{OSI Modell}
 \subsection*{ISO OSI 7-Schichtenprotokoll}
-\slidesScale{12-grundlagen_print}{10}
+\slides{12-grundlagen_print}{10}
 OSI: Open System Interconnection
 \subsection*{Trennung in Anwendungs- und Transportverbindung}
-\slidesScale{12-grundlagen_print}{11}
+\slides{12-grundlagen_print}{11}
 \subsection{Bitübertragungsschicht (Physical Layer)}
-\slidesScale{12-grundlagen_print}{12}
+\slides{12-grundlagen_print}{12}
 \subsubsection*{Beispiel RS232}
-\slidesScale{12-grundlagen_print}{13}
+\slides{12-grundlagen_print}{13}
 \subsection{Sicherungsschicht (Data Link Layer)}
-\slidesScale{12-grundlagen_print}{14}
+\slides{12-grundlagen_print}{14}
 \subsection{Vermittlungsschicht (Network Layer)}
-\slidesScale{12-grundlagen_print}{15}
+\slides{12-grundlagen_print}{15}
 \subsection{Transportschicht (Transport Layer)}
-\slidesScale{12-grundlagen_print}{16}
+\slides{12-grundlagen_print}{16}
 \subsection{Sitzungsschicht (Session Layer)}
-\slidesScale{12-grundlagen_print}{17}
+\slides{12-grundlagen_print}{17}
 \subsection{Darstellungsschicht (Presentation Layer)}
-\slidesScale{12-grundlagen_print}{18}
+\slides{12-grundlagen_print}{18}
 \subsection{Anwendungsschicht (Application Layer)}
-\slidesScale{12-grundlagen_print}{19}
+\slides{12-grundlagen_print}{19}
 
 \section{Protokolle und Dienste}
 \subsection{Protokolle}
 \subsubsection{Protokollbegriff}
-\slidesScale{12-grundlagen_print}{20}
+\slides{12-grundlagen_print}{20}
 \subsubsection{Grundfunktionen in Protokollen}
-\slidesScale{12-grundlagen_print}{21}
+\slides{12-grundlagen_print}{21}
 \subsection{Dienste}
-\slidesScale{12-grundlagen_print}{22}
+\slides{12-grundlagen_print}{22}
 \subsubsection{Begriffe}
-\slidesScale{12-grundlagen_print}{23}
+\slides{12-grundlagen_print}{23}
 \subsection{Dienst und Protokoll}
-\slidesScale{12-grundlagen_print}{24}
+\slides{12-grundlagen_print}{24}
 \subsubsection*{Beispiel: Gespräch der Philosophen}
-\slidesScale{12-grundlagen_print}{25}
+\slides{12-grundlagen_print}{25}
 \begin{tabular}{c c c r}
 Chinesischer Philosoph & $\overset{\text{Thema}}{\longleftrightarrow}$ & Spanischer Philosoph\\
 $\downarrow$ &  &  $\downarrow$\\
@@ -180,246 +180,246 @@ Funker & $\overset{\text{Morse}}{\longleftrightarrow}$ & Funker
 \end{tabular}\\
 Veranschaulichung: Horizontal ist das Protokoll und vertikal der Dienst.
 \subsubsection{Dienstelemente: Funktionsprinzip}
-\slidesScale{12-grundlagen_print}{26}
+\slides{12-grundlagen_print}{26}
 \subsubsection{Protokolldateneinheit / Interfacedateneinheit}
-\slidesScale{12-grundlagen_print}{27}
+\slides{12-grundlagen_print}{27}
 \subsubsection{Zusammenhang: SDU - PCI - PDU - IDU}
-\slidesScale{12-grundlagen_print}{28}
+\slides{12-grundlagen_print}{28}
 \subsubsection{Schichten und PDUs}
-\slidesScale{12-grundlagen_print}{29}
+\slides{12-grundlagen_print}{29}
 \subsubsection{Beispiel für Dienstelemente}
-\slidesScale{12-grundlagen_print}{30}
+\slides{12-grundlagen_print}{30}
 \subsubsection{Zeitdiagramm mit Dienstelementen}
 Verbindungsaufbau zu Dienstelementen
-\slidesScale{12-grundlagen_print}{31}
+\slides{12-grundlagen_print}{31}
 \section{Protokollbeschreibungen}
 (Möglichkeiten, vgl. Software Engineering)
-\slidesScale{12-grundlagen_print}{32}
+\slides{12-grundlagen_print}{32}
 \subsection{Systementwurf / Detailentwurf}
-\slidesScale{12-grundlagen_print}{33}
+\slides{12-grundlagen_print}{33}
 \subsubsection{TCP-Zustände des Servers}
-\slidesScale{12-grundlagen_print}{34}
+\slides{12-grundlagen_print}{34}
 \subsubsection{TCP-Zustandsmaschine}
-\slidesScale{12-grundlagen_print}{35}
+\slides{12-grundlagen_print}{35}
 \subsection{Zusammenfassung}
-\slidesScale{12-grundlagen_print}{36}
+\slides{12-grundlagen_print}{36}
 \subsubsection{Übung für Dienst-Primitiven (Operationen)}
-\slidesScale{12-grundlagen_print}{37}
-\slidesScale{12-grundlagen_print}{38}
+\slides{12-grundlagen_print}{37}
+\slides{12-grundlagen_print}{38}
 
 \chapter{Transportschicht UDP/TCP}
 \section{Aufgaben der Transportschicht}
-\slidesScale{15-transportschicht_print}{3}
+\slides{15-transportschicht_print}{3}
 \subsection{Transportschichten im Internet}
-\slidesScale{15-transportschicht_print}{4}
+\slides{15-transportschicht_print}{4}
 \subsection{Multiplexing / Demultiplexing}
-\slidesScale{15-transportschicht_print}{5}
+\slides{15-transportschicht_print}{5}
 \subsection{Verbindungsloses Multiplexing}
-\slidesScale{15-transportschicht_print}{6}
+\slides{15-transportschicht_print}{6}
 \section{UDP}
 \subsection{UDP-Header}
 (RFC 768)
-\slidesScale{15-transportschicht_print}{7}
+\slides{15-transportschicht_print}{7}
 \subsection{UDP-Lite}
 (RFC 3828, UDP für geringe Verzögerungen $\to$ Mediendaten)
-\slidesScale{15-transportschicht_print}{8}
+\slides{15-transportschicht_print}{8}
 
 \subsection{Netzwerk-Datenformat}
-\slidesScale{15-transportschicht_print}{9}
+\slides{15-transportschicht_print}{9}
 \section{TCP}
 \subsection{Verbindungsorientiertes Multiplexing}
-\slidesScale{15-transportschicht_print}{10}
-\slidesScale{15-transportschicht_print}{11}
+\slides{15-transportschicht_print}{10}
+\slides{15-transportschicht_print}{11}
 \subsection{TCP-Nutzung}
-\slidesScale{15-transportschicht_print}{12}
+\slides{15-transportschicht_print}{12}
 \subsection{TCP-Eigenschaften}
-\slidesScale{15-transportschicht_print}{13}
+\slides{15-transportschicht_print}{13}
 \subsection{TCP-Header}
-\slidesScale{15-transportschicht_print}{14}
-\slidesScale{15-transportschicht_print}{15}
+\slides{15-transportschicht_print}{14}
+\slides{15-transportschicht_print}{15}
 
 \subsection{TCP Verbindungsstart}
 (Drei-Wege-Handshake)
-\slidesScale{15-transportschicht_print}{16}
+\slides{15-transportschicht_print}{16}
 \subsubsection{Sequenznummern}
-\slidesScale{15-transportschicht_print}{17}
+\slides{15-transportschicht_print}{17}
 \subsection{Freigabe von Verbindungen}
-\slidesScale{15-transportschicht_print}{18}
+\slides{15-transportschicht_print}{18}
 \subsubsection{Zwei-Armeen-Problem}
-\slidesScale{15-transportschicht_print}{19}
+\slides{15-transportschicht_print}{19}
 
 \subsection{TCP Verbindungsende}
-\slidesScale{15-transportschicht_print}{20}
+\slides{15-transportschicht_print}{20}
 \subsubsection{TCP Zustände des Servers}
-\slidesScale{15-transportschicht_print}{21}
+\slides{15-transportschicht_print}{21}
 \subsubsection{TCP Zustände des Clients}
-\slidesScale{15-transportschicht_print}{22}
+\slides{15-transportschicht_print}{22}
 
 \subsection{TCP Datenübertragung}
-\slidesScale{15-transportschicht_print}{23}
+\slides{15-transportschicht_print}{23}
 \subsubsection{Beispiel Datenübertragung}
-\slidesScale{15-transportschicht_print}{24}
+\slides{15-transportschicht_print}{24}
 \subsubsection{Beispiel Segmentverlust}
-\slidesScale{15-transportschicht_print}{25}
+\slides{15-transportschicht_print}{25}
 \subsubsection{Beispiel zu knapper Timeout}
-\slidesScale{15-transportschicht_print}{26}
+\slides{15-transportschicht_print}{26}
 \subsubsection{Beispiel Kumulative ACKs}
-\slidesScale{15-transportschicht_print}{27}
+\slides{15-transportschicht_print}{27}
 
 \subsubsection{Test TCP-Segmenterzeugung}
-\slidesScale{15-transportschicht_print}{28}
+\slides{15-transportschicht_print}{28}
 (potentielle Prüfungsaufgabe)
 
 \subsection{TCP-ACK-Erzeugung}
 (RFC 1122, RFC 2581)
-\slidesScale{15-transportschicht_print}{29}
+\slides{15-transportschicht_print}{29}
 \subsubsection{Beispiel TCP Fast Retransmit}
-\slidesScale{15-transportschicht_print}{30}
+\slides{15-transportschicht_print}{30}
 
 \subsection{TCP Flusskontrolle}
 Angleichen der Sende-/Empfangsgeschwindigkeit
-\slidesScale{15-transportschicht_print}{31}
+\slides{15-transportschicht_print}{31}
 \subsubsection{TCP-RcvWindow}
-\slidesScale{15-transportschicht_print}{32}
+\slides{15-transportschicht_print}{32}
 \subsubsection{Beispiel TCP Verbindungsaufbau}
 Paketsniffer Wireshark
-\slidesScale{15-transportschicht_print}{33}
-\slidesScale{15-transportschicht_print}{34}
+\slides{15-transportschicht_print}{33}
+\slides{15-transportschicht_print}{34}
 \subsubsection{Retransmission-Timer}
-\slidesScale{15-transportschicht_print}{35}
+\slides{15-transportschicht_print}{35}
 \subsubsection*{RTT Bestimmung}
-\slidesScale{15-transportschicht_print}{36}
+\slides{15-transportschicht_print}{36}
 \subsubsection*{RTO Bestimmung}
-\slidesScale{15-transportschicht_print}{37}
+\slides{15-transportschicht_print}{37}
 Achtung: Startwerte und Minimum RTO sind hier sehr konservativ angegeben!\\
 Hinweis: RTO Formel nützlich für Beleg. Startwerte kürzer setzen und Minimum nicht nötig.
 
 \subsection{TCP Überlastkontrolle}
-\slidesScale{15-transportschicht_print}{38}
+\slides{15-transportschicht_print}{38}
 1. Bild: Flusskontrolle, 2. Bild: Überlastkontrolle\\
 Daran stellt man Überlast fest:
 \begin{itemize}
 \item Paketverlust
 \end{itemize}
 \subsubsection{Ansätze zur Überlastkontrolle}
-\slidesScale{15-transportschicht_print}{39}
+\slides{15-transportschicht_print}{39}
 \subsubsection{Überlastkontrolle bei TCP}
-\slidesScale{15-transportschicht_print}{40}
+\slides{15-transportschicht_print}{40}
 \subsubsection{TCP Überlastkontrolle durch variable Fenstergröße}
 Erhöhung der Fenstergröße bis Verlust eintritt
-\slidesScale{15-transportschicht_print}{41}
+\slides{15-transportschicht_print}{41}
 \subsubsection{TCP Slow Start}
-\slidesScale{15-transportschicht_print}{42}
-\slidesScale{15-transportschicht_print}{43}
+\slides{15-transportschicht_print}{42}
+\slides{15-transportschicht_print}{43}
 \subsubsection{Fast Recovery}
-\slidesScale{15-transportschicht_print}{44}
+\slides{15-transportschicht_print}{44}
 \subsubsection{Optimale TCP Buffergröße}
 Sende- und Empfangspuffer des Sockets
-\slidesScale{15-transportschicht_print}{45}
+\slides{15-transportschicht_print}{45}
 \subsubsection{Zusammenfassung TCP Überlastkontrolle}
-\slidesScale{15-transportschicht_print}{46}
+\slides{15-transportschicht_print}{46}
 \subsubsection{Verfahren zur Verstopfungsvermeidung}
 Forschungsthema
-\slidesScale{15-transportschicht_print}{47}
+\slides{15-transportschicht_print}{47}
 
 \subsection{TCP Reset}
-\slidesScale{15-transportschicht_print}{48}
+\slides{15-transportschicht_print}{48}
 Verfahren beim Empfang in Abhängigkeit vom Zustand:
-\slidesScale{15-transportschicht_print}{49}
+\slides{15-transportschicht_print}{49}
 
 \subsection{Keepalive}
-\slidesScale{15-transportschicht_print}{50}
+\slides{15-transportschicht_print}{50}
 
 \section{Zusammenfassung Transportschicht}
-\slidesScale{15-transportschicht_print}{51}
+\slides{15-transportschicht_print}{51}
 
 \section{Ergänzungen}
 \subsection{Erweiterung Zeitstempel}
-\slidesScale{15-transportschicht_print}{52}
+\slides{15-transportschicht_print}{52}
 \subsection{Wireshark}
 Erkenntnisgewinn durch Paketanalyse
-\slidesScale{15-transportschicht_print}{53}
+\slides{15-transportschicht_print}{53}
 \subsection{TCP-Fairness}
-\slidesScale{15-transportschicht_print}{54}
+\slides{15-transportschicht_print}{54}
 \subsection{TCP offload engine (TOE)}
-\slidesScale{15-transportschicht_print}{55}
+\slides{15-transportschicht_print}{55}
 \subsection{TCP Zustandsmaschine}
-\slidesScale{15-transportschicht_print}{56}
+\slides{15-transportschicht_print}{56}
 
 \chapter{Sicherungsprotokolle}
 \section{Überblick}
 \subsection{FEC-Verfahren (Forward Error Correction)}
-\slidesScale{20-sicherungsprotokolle_print}{3}
+\slides{20-sicherungsprotokolle_print}{3}
 Potentielle als Echtzeitanwendung.
 
 \subsection{ARQ-Verfahren (Automatic Repeat Request)}
-\slidesScale{20-sicherungsprotokolle_print}{4}
+\slides{20-sicherungsprotokolle_print}{4}
 Nicht gut für Echtzeitanwendungen, da Verzögerung.
 
 \subsection{Hybride FEC/ARQ-Systeme}
-\slidesScale{20-sicherungsprotokolle_print}{5}
+\slides{20-sicherungsprotokolle_print}{5}
 
 \subsection{Coderate}
-\slidesScale{20-sicherungsprotokolle_print}{6}
+\slides{20-sicherungsprotokolle_print}{6}
 
 \subsection{Details zum ARQ-Verfahren}
 \subsubsection{Fehlerereignisse}
-\slidesScale{20-sicherungsprotokolle_print}{7}
+\slides{20-sicherungsprotokolle_print}{7}
 \subsubsection{Paketfehlerrate}
 Bei der Paketfehlerrate muss berücksichtigt werden, wie oft das Paket erfolgreich als fehlerhaft erkannt wird und erneut gesendet wird:
-\slidesScale{20-sicherungsprotokolle_print}{8}
+\slides{20-sicherungsprotokolle_print}{8}
 \subsubsection{Durchsatz}
-\slidesScale{20-sicherungsprotokolle_print}{9}
+\slides{20-sicherungsprotokolle_print}{9}
 \subsubsection{Beispiel}
-\slidesScale{20-sicherungsprotokolle_print}{10}
+\slides{20-sicherungsprotokolle_print}{10}
 D.h. maximal $84\%$ sind als Durchsatz zu erwarten!
 \subsubsection{Unterteilung}
-\slidesScale{20-sicherungsprotokolle_print}{11}
+\slides{20-sicherungsprotokolle_print}{11}
 
 \section{Stop-and-Wait}
-\slidesScale{20-sicherungsprotokolle_print}{12}
+\slides{20-sicherungsprotokolle_print}{12}
 \subsection{Durchsatz}
-\slidesScale{20-sicherungsprotokolle_print}{13}
+\slides{20-sicherungsprotokolle_print}{13}
 $T_W=2T_{AB}+T_{ACK}$
 \subsection{Beispiel Satellitenkanal}
-\slidesScale{20-sicherungsprotokolle_print}{14}
+\slides{20-sicherungsprotokolle_print}{14}
 Sehr ungünstig für Stop-and-Wait Protokoll, da das Verhältnis der Paketgröße zur Wartezeit zu ungünstig ist (zu kleine Pakete/zu lange Wartezeit) $\Rightarrow$ die Übertragungszeit ist zu lang.
 \subsection{Beispiel Rechnernetz}
 Abschätzung des Durchsatzes:
-\slidesScale{20-sicherungsprotokolle_print}{15}
+\slides{20-sicherungsprotokolle_print}{15}
 
 \section{Go-Back-N-Protokoll (GBN)}
-\slidesScale{20-sicherungsprotokolle_print}{16}
+\slides{20-sicherungsprotokolle_print}{16}
 \subsection{Optimale Fenstergröße}
-\slidesScale{20-sicherungsprotokolle_print}{17}
+\slides{20-sicherungsprotokolle_print}{17}
 Hinweise Notation: $\lceil a \rceil \Rightarrow a$ wird aufgerundet 
 \subsection{Sendefenster der Größe N}
-\slidesScale{20-sicherungsprotokolle_print}{18}
+\slides{20-sicherungsprotokolle_print}{18}
 \subsection{Durchsatz}
-\slidesScale{20-sicherungsprotokolle_print}{19}
+\slides{20-sicherungsprotokolle_print}{19}
 Ist zwar langsamer als folgendes (SR), dafür braucht Empfänger aber keinen Puffer!
 
 \section{Selective Repeat-Protokoll (SR)}
-\slidesScale{20-sicherungsprotokolle_print}{20}
+\slides{20-sicherungsprotokolle_print}{20}
 \subsection{Sendefenster}
-\slidesScale{20-sicherungsprotokolle_print}{21}
+\slides{20-sicherungsprotokolle_print}{21}
 \subsection{Empfangsfenster}
-\slidesScale{20-sicherungsprotokolle_print}{22}
+\slides{20-sicherungsprotokolle_print}{22}
 \subsection{Durchsatz}
-\slidesScale{20-sicherungsprotokolle_print}{23}
+\slides{20-sicherungsprotokolle_print}{23}
 
 \section{Ergänzungen}
 \subsection{Paketnummerierung}
-\slidesScale{20-sicherungsprotokolle_print}{24}
+\slides{20-sicherungsprotokolle_print}{24}
 \subsection{Bidirektionale Datenübertragung}
-\slidesScale{20-sicherungsprotokolle_print}{25}
+\slides{20-sicherungsprotokolle_print}{25}
 \subsection{Vergleich der Sicherungsprotokolle}
-\slidesScale{20-sicherungsprotokolle_print}{26}
+\slides{20-sicherungsprotokolle_print}{26}
 \subsection{Beispiel mit verschiedenen ARQ-Protokollen}
 (Richtfunkanlage)
-\slidesScale{20-sicherungsprotokolle_print}{27}
+\slides{20-sicherungsprotokolle_print}{27}
 \subsection{Zusammenfassung}
-\slidesScale{20-sicherungsprotokolle_print}{28}
+\slides{20-sicherungsprotokolle_print}{28}
 \subsection{Beleg Stop-and-Wait}
 Zustände Sender:
 \begin{itemize}
@@ -433,84 +433,84 @@ Wait for ACK $\to$ timeout / resend packet || stop $\to$ Wait for ACK \\
 Wait for ACK $\to$ wrong ACK || wrong Session ID / $\to$ Wait for ACK
 
 \chapter{Vermittlungsschicht}
-\slidesScale{24-vermittlung_print}{3}
+\slides{24-vermittlung_print}{3}
 \section{Leitungsvermittlung}
-\slidesScale{24-vermittlung_print}{4}
-\slidesScale{24-vermittlung_print}{5}
+\slides{24-vermittlung_print}{4}
+\slides{24-vermittlung_print}{5}
 \section{Paketvermittlung}
-\slidesScale{24-vermittlung_print}{6}
-\slidesScale{24-vermittlung_print}{7}
+\slides{24-vermittlung_print}{6}
+\slides{24-vermittlung_print}{7}
 \section{Mischformen}
 Betriebsarten paketvermittelter Netze
-\slidesScale{24-vermittlung_print}{8}
+\slides{24-vermittlung_print}{8}
 \section{Zellvermittlung}
-\slidesScale{24-vermittlung_print}{9}
+\slides{24-vermittlung_print}{9}
 \section{Routing}
 Vermittlungskonzepte
-\slidesScale{24-vermittlung_print}{10}
+\slides{24-vermittlung_print}{10}
 \subsection{Wegesuchung}
-\slidesScale{24-vermittlung_print}{11}
+\slides{24-vermittlung_print}{11}
 \subsection{Überlastungsprobleme}
 \subsubsection{flow control}
-\slidesScale{24-vermittlung_print}{12}
+\slides{24-vermittlung_print}{12}
 \subsubsection{Verstopfungskontrolle}
 (congestion control)
-\slidesScale{24-vermittlung_print}{13}
+\slides{24-vermittlung_print}{13}
 \subsection{Pufferspeicherverwaltung}
-\slidesScale{24-vermittlung_print}{14}
+\slides{24-vermittlung_print}{14}
 
 \section{Internetprotokoll}
-\slidesScale{25-ip-schicht_print}{3}
+\slides{25-ip-schicht_print}{3}
 \subsection{Einführung}
 \subsubsection{Aufgaben der IP-Schicht}
-\slidesScale{25-ip-schicht_print}{4}
+\slides{25-ip-schicht_print}{4}
 \subsubsection{Vergleich OSI -- IP}
-\slidesScale{25-ip-schicht_print}{5}
+\slides{25-ip-schicht_print}{5}
 \subsubsection{Internetadressen}
 Drei unabhängige Namens-/Adressebenen
-\slidesScale{25-ip-schicht_print}{6}
+\slides{25-ip-schicht_print}{6}
 \subsubsection{Domain Name System (DNS)}
-\slidesScale{25-ip-schicht_print}{7}
+\slides{25-ip-schicht_print}{7}
 
 \subsubsection{IP-Vergabe}
-\slidesScale{25-ip-schicht_print}{8}
+\slides{25-ip-schicht_print}{8}
 
 \subsubsection{Internetadressen (IPv4)}
-\slidesScale{25-ip-schicht_print}{9}
+\slides{25-ip-schicht_print}{9}
 \subsection{Adressklassen}
 (classfull addressing) Unterteilung in Netz und Host
-\slidesScale{25-ip-schicht_print}{10}
+\slides{25-ip-schicht_print}{10}
 
 \subsubsection{Besondere Internet-Adressen}
-\slidesScale{25-ip-schicht_print}{11}
+\slides{25-ip-schicht_print}{11}
 \subsubsection{Subnetting}
 Aufteilung eines Netzes in mehrere Netze
-\slidesScale{25-ip-schicht_print}{12}
+\slides{25-ip-schicht_print}{12}
 \subsection{Classless Interdomain Routing (CIDR)}
-\slidesScale{25-ip-schicht_print}{13}
+\slides{25-ip-schicht_print}{13}
 \subsubsection*{Beispiel}
 Vergabe von Adressen aus dem Pool eines Internet-Providers
-\slidesScale{25-ip-schicht_print}{14}
-\slidesScale{25-ip-schicht_print}{15}
-\slidesScale{25-ip-schicht_print}{16}
+\slides{25-ip-schicht_print}{14}
+\slides{25-ip-schicht_print}{15}
+\slides{25-ip-schicht_print}{16}
 Hostadressen in einem /31 Netz: 0 (nur ein Bit für Adresse übrig: 0 steht für Netzadresse, 1 für Broadcastadresse $\to$ keine Hostadresse mehr übrig)\\
 $\Rightarrow$ /30 Netz: 2 Hostadressen
 \subsection{IP-Netz}
 \subsubsection{Definition IP-Netz}
 Hosts mit gleicher Netzadresse befinden sich im gleichen Netz
-\slidesScale{25-ip-schicht_print}{17}
+\slides{25-ip-schicht_print}{17}
 \subsubsection{Adressarten}
-\slidesScale{25-ip-schicht_print}{18}
+\slides{25-ip-schicht_print}{18}
 \subsubsection{Hardwareadressen}
-\slidesScale{25-ip-schicht_print}{19}
+\slides{25-ip-schicht_print}{19}
 \subsubsection{Adress Resolution Protokoll}
 Beispiel: A möchte HW-Adresse von B erhalten
-\slidesScale{25-ip-schicht_print}{20}
+\slides{25-ip-schicht_print}{20}
 \subsubsection*{Anzeigen}
-\slidesScale{25-ip-schicht_print}{21}
+\slides{25-ip-schicht_print}{21}
 \subsubsection{Übertragung eines Datagramms}
 Übertragung 111.111.111.111 zu 222.222.222.222 (Maske 255.255.255.0)
-\slidesScale{25-ip-schicht_print}{22}
+\slides{25-ip-schicht_print}{22}
 
 
 

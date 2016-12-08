@@ -37,7 +37,7 @@
 	\hline
 	\end{tabular}
 	\begin{tabular}{l}
-	\rule{0pt}{4em}\includegraphics[width=3.25cm]{\customDir .LaTeX_master/HTW_GESAMTLOGO_CMYK.eps}\\
+	\rule{0pt}{4em}\includegraphics[width=3.25cm]{\customDir _LaTeX_master/HTW_GESAMTLOGO_CMYK.eps}\\
 	\end{tabular}
 	}
 	\makeatletter	
@@ -209,7 +209,7 @@ literate=%
 
 % BibTeX
 \usepackage[bibencoding=ascii,
-%backend=bibtex8,
+backend=bibtex8,
 %style=authortitle, citestyle=authortitle-ibid,
 %doi=false,
 %isbn=false,
@@ -318,7 +318,7 @@ urlcolor=green,%
 		\ifdefempty{\customSubtitle} {} {\renewcommand{\pdfTitleC}{ - \customSubtitle}}
 	}{}
 	
-	\newcommand{\customLogoLocation}{\customDir .LaTeX_master/\customLogo}
+	\newcommand{\customLogoLocation}{\customDir _LaTeX_master/\customLogo}
 	\hypersetup{
 		pdfauthor={\pdfAuthor},
 		pdftitle={\pdfTitleA\pdfTitleB\pdfTitleC},
@@ -342,7 +342,7 @@ urlcolor=green,%
 		\ofoot{\customSignature}
 		% Titelseite
 		\title{
-		\includegraphics[width=0.35\textwidth]{\customDir .LaTeX_master/\customLogo}\\\vspace{0.5em}
+		\includegraphics[width=0.35\textwidth]{\customDir _LaTeX_master/\customLogo}\\\vspace{0.5em}
 		\Huge\textbf{\customTitle}
 		\ifdefempty{\customSubtitle} {} {\\\vspace*{0.7em}\Large \customSubtitle}
 		\\\vspace*{5em}}

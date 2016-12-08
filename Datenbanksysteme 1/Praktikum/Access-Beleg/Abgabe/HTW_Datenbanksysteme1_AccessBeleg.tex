@@ -1,14 +1,24 @@
-% Header aus der Vorlage
-\input{../../../../LaTeX_master/LaTeX_master_HTW}
-\renewcommand{\workingdir}{../../../../}
-\renewcommand{\Autorformat}[1]{\textcolor{darkgray}{#1}}
-%\bibliography{../Literatur/HTW_Literatur.bib}
+\newcommand{\customDir}{../../../../}
+\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
 
-% Definition von Titel, Autor usw.
-\DTitel{Datenbanksysteme I}
-\DUntertitel{Beleg Access}
-\DAutor{Falk-Jonatan Strube}
-\DNotiz{Matrikelnr.: 39467\\Studiengang: Bachelor Informatik \bigskip}
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+%\setCustomSlidePath{Folien}
+
+\setCustomTitle{Datenbanksysteme I}
+\setCustomSubtitle{Beleg Access}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+\setCustomNoteB{Matrikelnr.: 39467\\Studiengang: Bachelor Informatik \bigskip}
+
+\setCustomSignature{\footnotesize{\textcolor{darkgray}{Beleg von\\ \customAuthor}}}	% Formatierung der Signatur in der Fußzeile
+\setCustomTitleAuthor{\textcolor{darkgray}{\customAuthor}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir _LaTeX_master/LaTeX_master.sty}
+\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
 
 \newcommand{\folie}[2]{\begin{center}
 \includegraphics[page=#2]{Vorlesung/oneperpage/Kap#1.pdf}
