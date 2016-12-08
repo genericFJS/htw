@@ -1,12 +1,24 @@
-% Header aus der Vorlage
-\input{../LaTeX_master/LaTeX_master_HTW}
+\newcommand{\customDir}{../}
+\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
 
-% Definition von Titel, Autor usw.
-\DTitel{Mathematik I}
-\DUntertitel{Spicker}
-\DAutor{Falk-Jonatan Strube}
-\DNotiz{Vorlesung von Prof. Dr. Fabian Schwarzenberger}
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+%\setCustomSlidePath{Folien}
 
+\setCustomTitle{Mathematik I}
+\setCustomSubtitle{Spicker}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+\setCustomNoteB{Vorlesung von Prof. Dr. Fabian Schwarzenberger}
+
+%\setCustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}}	% Formatierung der Signatur in der Fußzeile
+%\setCustomTitleAuthor{\textcolor{darkgray}{Mitschrift von \customAuthor}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir _LaTeX_master/LaTeX_master.sty}
+\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
 \makeatletter
 \renewcommand\tableofcontents{%
     \@starttoc{toc}%

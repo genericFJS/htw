@@ -1,14 +1,24 @@
-% Header aus der Vorlage
-\input{../../LaTeX_master/LaTeX_master_HTW}
+\newcommand{\customDir}{../../}
+\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
 
-% Definition von Titel, Autor usw.
-\DTitel{Programmierung I}
-\DUntertitel{Beleg}
-\DAutor{Falk-Jonatan Strube}
-\DNotiz{}
-\renewcommand{\workingdir}{../../}
-\renewcommand{\Dokumentensignatur}{}
-\renewcommand{\Autorformat}[1]{\textcolor{darkgray}{#1}}
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+%\setCustomSlidePath{Folien}
+
+\setCustomTitle{Programmierung I}
+\setCustomSubtitle{Beleg}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+%\setCustomNoteB{Vorlesung von}
+
+\setCustomSignature{}	% Formatierung der Signatur in der Fußzeile
+\setCustomTitleAuthor{\textcolor{darkgray}{\customAuthor}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir _LaTeX_master/LaTeX_master.sty}
+\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
 
 \begin{document}
 
