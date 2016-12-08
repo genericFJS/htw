@@ -1425,8 +1425,144 @@ $$F(x)=\begin{cases}
 \item Anwendung: Bedientheorie, Zuverlässigkeitstheorie, Verteilung von Zeitdauern wie Lebenszeiten, Reperaturzeiten, Wartezeiten, …
 \end{itemize}
 
+\cparagraph{Beispiel} (Parallelschaltung) Ein System besteht aus 3 unabhängig voneinander arbeitenden, parallel geschalteten Elementen. Es sei bekannt, dass die Lebensdauer der einzelnen Elemente exponentialverteilt ist. Die mittlere Lebensdauer eines Elementes ist $ 1000\unit{[h]} $
+\begin{anumerate}
+	\item Wie groß ist die WK, dass Element 1 höchstens $ 500\unit{Std.} $ funktioniert?
+	\item Wie groß ist die WK, dass das System mindestens $ 500 \unit{Std} $ funktioniert?
+	\item Für welchen Zeitraum beträgt die Zuverlässigkeit des Systems $ 99\% $
+\end{anumerate}
+Lösung:\\
+$ X_i $ … zufällige Lebensdauer von Element $ i, \; i=1,2,3 $\\
+$ \Rightarrow X_i \sim \exp(\lambda), \; \EE(X_I)=\frac{1}{\lambda}=1000 \Rightarrow \lambda=\frac{1}{1000} $
+\begin{anumerate}
+	\item ges.: $ \underbrace{\PP(X_1 \leq 500)}_{F_{X_1}(500)} = 1-\exp\left(-\frac{1}{1000}\cdot 500\right)=1-\exp\left(-\frac{1}{2}\right) = 0,3935 $
+	\item $ X $ … Lebensdauer des Systems\\
+	$ X=\max(X_1,X_2,X_3) $\\
+	Wie ist $ X $ verteilt?
+	\begin{align*}
+	F_X(x)&=\PP(X\leq x)=\PP(\max(X_1,X_2,X_3)\leq x)\\
+	&=\PP(\{X_1 \leq x\} \cap \{X_2 \leq x\} \cap \{X_3 \leq x\} )\\
+	&=\PP(X_1 \leq x) \cdot \PP(X_2 \leq x) \cdot \PP(X_3 \leq x)\\
+	&= \left(1-\exp\left(-\frac{1}{1000}x\right)\right)^3 \qquad \text{für alle }x\geq 0
+	\end{align*}
+	gesucht: 
+	\begin{align*}
+	\PP(X\geq 500) &= 1-\PP(X\leq 500)\\
+	&=1-\left(1-\exp\left(-\frac{500}{1000}\right)\right)^3\\
+	&=0,9391
+	\end{align*}
+	\item gesucht: Zeit $ t $, so dass $ X\geq t $ mit WK von mind. $ 0,99 $. Also: $ 0,99 \leq \PP(X\geq t) $
+	\begin{align*}
+	&&0,99 &= \PP(X\geq t)\\
+	\Leftrightarrow&& 0,99 &= 1-F_X (t)\\
+	\Leftrightarrow&& F_X(t) &= 0,01\\
+	\Leftrightarrow&& \left(1-\exp\left(-\frac{t}{1000}\right)\right)^3 &=0,01\\
+	\Leftrightarrow&& t &= 242,6 \unit{h}
+	\end{align*}
+\end{anumerate}
 
+\subsubsection{$ \chi^2 $-Verteilung}
 
+\cparagraph{Definition} Eine stetige ZV heißt $ \chi^2 $-verteilt mit $ n \in \NN $ Freiheitsgraden, falls $ X $ die Diche 
+$$f_n(x)=\begin{cases}
+\frac{x^{\frac{n}{2}-1}\exp\left(-\frac{x}{2}\right)}{2^{\frac{n}{2}}\Gamma\left(\frac{n}{2}\right)} & \text{falls }x>0\\
+0 & \text{sonst}
+\end{cases} \quad (x\in \RR)$$
+besitzt. Hier ist $\Gamma$ die Gammafunktion, d.h. $\Gamma(x):= \int\limits_{0}^{\infty}t^{x-1}e^{-t}\intd{t}$ für $x>0$.
+
+\cparagraph{Bemerkung}
+\begin{itemize}
+	\item Kurzschreibweise: $X\sim \chi^{2}$(n)
+	\item $\EE(X)=n$, $\var(X)=2n$
+	\item Verteilungsfunktion zeigen wir hier nicht (lässt sich mittels Gammafunktion darstellen)
+	\item Quantile: Ist $\alpha\in (0,1)$ und $F_X$ die Verteilungsfunktion zu $X \sim \chi^{2}(n)$, so bezeichnen wir das $\alpha$-Quantil $q_\alpha$ mit $\chi^{2}_{n,\alpha}=q_{\alpha}=F_X^{-1}(\alpha)$
+	\item Anwendung: Statistik, insbesondere Testtheorie
+\end{itemize}
+%todo Abb Skript
+
+Ein Grund für die große Bedeutung der $ \chi^2 $-Verteilung (in der Statistik) ist:
+\cparagraph{Satz} Seien $ X_1, X_2, \ldots, X_n $ unabhängige standard-normalverteilte ZVen. Dann ist 
+$$ X:=X_1^{2} + X_2^{2}+\ldots + X_n^{2} $$
+$ \chi^{2} $-verteilt mit $ n $ Freiheitsgraden.
+
+\subsubsection{$ t $-Verteilung}
+
+\cparagraph{Definition} Eine stetige ZV $X$ heißt $t$-verteilt mit $n\in \NN$ Freiheitsgraden, falls $X$ die Dichte 
+\[ f_n(x)=\frac{\Gamma\left(\frac{n+1}{2}\right)}{\sqrt{n \pi}\Gamma\left(\frac{n}{2}\right)}\left(1+\frac{x^2}{n}\right)^{-\frac{n+1}{2}} \quad (x\in \RR) \]
+besitzt. Hier ist $\Gamma$ wieder die Gammafunktion.
+
+\cparagraph{Bemerkung}
+\begin{itemize}
+	\item Kurzschreibweise: $X\sim t(n)$
+	\item falls $n>1$: $\EE(X)=0$, für $n=1$ existiert $\EE(X)$ nicht
+	\item falls $n>2$: $\var(X)=\frac{n}{n-1}$, für $n=1,2$ existiert $\var(X)$ nicht
+	\item Verteilungsfunktion zeigen wir nicht (lässt sich mittels Betafunktion darstellen)
+	\item Quantile: Ist $\alpha \in (0,1)$ und $F_X$ die Verteilungsfunktion zu $X\sim t(n)$, so bezeichnen wir das $\alpha$-Quantil $q_\alpha$ mit $t_{n,\alpha}=q_\alpha=F_{X}^{-1}(\alpha)$
+	\item Anwendung: Statistik, insbesondere Testtheorie
+\end{itemize}
+
+Ein Grund für die große Bedeutung der $ t $-Verteilung (in der Statistik) ist:
+\cparagraph{Satz} Seien $ Y $ und $ Z $ unabhängige ZVen mit $ Y\sim \chi^{2} (n) $ und $ Z \sim \cN(0,1) $. Dann ist 
+\[ X=\frac{Z}{\sqrt{\frac{Y}{n}}} \]
+$ t $-verteilt mit $ n $ Freiheitsgraden.
+
+\subsubsection{$ F $-Verteilung}
+
+\cparagraph{Definition} Eine stetige ZV $X$ heißt $F$-verteilt mit $m\in \NN$ Freiheitsgraden im Zähler und $n\in \NN$ Freiheitsgraden im Zähler, falls $X$ die Dichte
+\[ f_{m,n}(x)=\begin{cases}
+m^{\frac{m}{2}}n^{\frac{n}{2}}\frac{\Gamma\left(\frac{m}{2}+\frac{n}{2}\right)}{\Gamma\left(\frac{m}{2}\right)\Gamma\left(\frac{n}{2}\right)}\cdot \frac{x^{\frac{m}{2}-1}}{(mx+n)^{\frac{m+n}{2}}} & \text{falls }x\geq 0\\
+0 & \text{sonst}
+\end{cases} \] 
+besitzt. Hier ist $\Gamma$ wieder die Gammafunktion.
+\cparagraph{Bemerkung}
+\begin{itemize}
+	\item Kurzschreibweise: $X\sim F(m,n)$
+	\item falls $n>2$: $\EE(X)=\frac{n}{n-2}$, für $n=1,2$ existiert $\EE(X)$ nicht
+	\item falls $n>4$: $\var(X)=\frac{2n^2(m+n-2)}{m(n-2)^2(n-4)}$, für $n=1,2,3,4$ existiert $\var(X)$ nicht
+	\item Quantile: Ist $F_X$ die Verteilungsfunktion zu $X\sim F(m,n)$, so bezeichnen wir das $\alpha$-Quantil $q_\alpha$ mit $F_{m,n,\alpha}=q_\alpha=F_{X}^{-1}(\alpha)$
+	\item Anwendung: Statistik, insbesondere Testtheorie
+\end{itemize}
+
+Ein Grund für die große Bedeutung der $ F $-Verteilung (in der Statistik) ist:
+\cparagraph{Satz} Seien $ Y $ und $ Z $ unabhängige ZVen mit $ Y\sim \chi^{2} (m) $ und $ Z \sim \chi^{2}(n) $. Dann ist 
+\[ X=\frac{\frac{Z}{m}}{\frac{Z}{n}}\sim F(m,n) \text{.} \]
+\section{Grenzwertsätze}
+
+Wir betrachten nun Folgen von ZVen $X_1, X_2, X_3, \ldots$
+
+\cparagraph{Definition} Sind $X_1, X_2, \ldots$ ZVen, welche alle die gleiche Verteilungsfunktion haben, so sagen wir „die ZV sind \emph{identisch verteilt}“.
+
+\subsection{Gesetz der Großen Zahlen}
+\cparagraph{Beispiel} Wir werfen eine faire Münze $n$ mal und zählen die Ereignisse „Kopf“ und „Zahl“:\\
+\begin{tabular}{c | c | c | c}
+	$n$ & Anzahl Kopf & Anzahl Zahl & rel. Anz. Kopf\\\hline
+	$50$ & $22$ & $28$ & $0,44$\\
+	$200$& $89$& $111$ & $0,445$\\
+	$1000$ & $493$& $507$& $0,493$\\
+	$100\,000$& $50\,256$&$49\,744$& $0,50256$
+\end{tabular}\\
+Die relative Anzahl Kopf nähert sich anscheinend der $0,5$ immer weiter an.\\
+Diesen Zusammenhang formalisiert das Gesetz der großen Zahlen.
+
+\cparagraph{Satz} Seien $X_1, X_2, \ldots$ unabhängige und identisch verteilte ZVen mit Erwartungswert $\mu$ und Varianz $\sigma^{2}$ und sei
+\[ \overline{X_n}=\frac{1}{n}\cdot (X_1 + \ldots + X_n) \]
+das arithmetische Mittel der ersten $n$ ZVen.\\
+Dann gilt für jede (noch so kleine) Zahl $\varepsilon >0$
+\[ \lim_{n\to \infty} \PP(|\overline{X_n}) -\mu| < \varepsilon) = 1 \text{.}\]
+Insbesondere gilt
+\[ \PP(|\overline{X_n}-\mu | < \varepsilon)\geq 1-\frac{\sigma^{2}}{n \cdot \varepsilon^{2}} \text{.} \]
+
+Um zu verstehen, warum das GdgZ gilt benötigen wir die folgende Ungleichung:
+
+\cparagraph{Satz} (Tschebyschew-Ungleichung) Sei $X$ eine ZV so dass $\var(X)$ existiert: Dann gilt für beliebiges $a>0$:
+\[ \PP(|X-\EE X| \geq a) \leq \frac{\var(X)}{a^{2}} \text{.} \]
+
+\cparagraph{Bemerkung} Die $T$-Ungleichung liefert eine obere Schranke an die WK, dass eine ZV um einen Mindestabstand $a$ von ihrem Erwartungswert abweicht.\\
+Die Schranke ist klein, falls
+\begin{itemize}
+	\item $a$ groß ist
+	\item $\var(X)$ klein ist
+\end{itemize}
 
 %\newpage
 %\printbibliography
