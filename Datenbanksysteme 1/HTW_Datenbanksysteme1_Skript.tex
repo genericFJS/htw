@@ -819,8 +819,8 @@ Einteilung der Programmiersprachen:
 \item klassisch nach Gen. 1-4
 \item weitere Einteilung
 \end{itemize}
-\slidesHeight{4}{1}
-\slidesHeight{4}{2}
+\slides[.459]{4}{1}
+\slides[.459]{4}{2}
 \subparagraph{3. Generation of Language (GL)}
 (prozedural)
 \begin{lstlisting}[language=C]
@@ -841,7 +841,7 @@ FROM buecher
 WHERE leihfrist > 21
 \end{lstlisting}
 $\Rightarrow$ WAS
-\slidesHeight{4}{3}
+\slides[.459]{4}{3}
 
 \section{SQL als Standardsprache für relationale DBMS}
 \subsection{Überblick}
@@ -851,8 +851,8 @@ SQL - Structured Query Language
 \item Query -- „bescheiden“
 \item Language -- „unanfechtbar“
 \end{itemize}
-\slidesHeight{4}{4}
-\slidesHeight{4}{5}
+\slides[.459]{4}{4}
+\slides[.459]{4}{5}
 Klassen an SQL-Befehlen:
 \begin{itemize}
 \item DDL -- Data Definition Language
@@ -914,7 +914,7 @@ $::=$ & Definitionssymbol
 \subsection{Anweisungen zur Definiton (DDL-Befehle)}
 \subsubsection{Tabellendefinition}
 \paragraph{Anlegen einer Tabelle}
-\slidesHeight{4}{6}
+\slides[.459]{4}{6}
 \begin{lstlisting}[language=SQL]
 CREATE TABLE Kunde(
 	KuNr	 			INT PRIMARY KEY,
@@ -964,7 +964,7 @@ CREATE TABLE Artikel (
 )
 \end{lstlisting}
 \paragraph{Ändern der Tabellendefinition}
-\slidesHeight{4}{7}
+\slides[.459]{4}{7}
 \subparagraph{Bsp.:} Spalte Email an Tabelle Kunde anfügen.
 \begin{lstlisting}[language=SQL]
 ALTER TABLE Kunde ADD email CHAR(20) NULL
@@ -997,7 +997,7 @@ DROP INDEX tab_name.index_name
 DROP INDEX Kunde.iOrtName
 \end{lstlisting}
 \subsubsection{View-Definition}
-\slidesHeight{4}{8}
+\slides[.459]{4}{8}
 Eine View kann auch Daten aus mehreren Tabellen nehmen.
 \paragraph{Anlegen einer View} $ $
 \begin{lstlisting}[language=SQL]
@@ -1029,7 +1029,7 @@ FROM Beruf_Inf -- (View Name)
 
 \subsection{Anweisungen zur Abfrage (DML-Befehle)}
 \subsubsection{Standardabfrage}
-\slidesHeight{4}{9}
+\slides[.459]{4}{9}
 \begin{lstlisting}[language=SQL]
 SELECT	Bilbereich					<Attributliste>		Was?
 FROM		Definitionsbereich	<Relation>				Wovon?
@@ -1153,7 +1153,7 @@ DATEADD ( dd, 50, GETDATE() )
 \end{enumerate}
 
 \subsubsection{Sortierung / Gruppenbildung}
-\slidesHeight{4}{10}
+\slides[.459]{4}{10}
 \paragraph{Sortierung} $ $
 \begin{lstlisting}[language=SQL]
 SELECT * FROM Kunde
@@ -1256,7 +1256,7 @@ WHERE Kunr IN (
 
 \subsubsection{Abfrage über mehrere Relationen}
 $\Rightarrow$ JOIN
-\slidesHeight{4}{11}
+\slides[.459]{4}{11}
 \subparagraph{Bsp.:} Anzeige der Artikeldaten und deren Käufe
 Mehrere Varianten:
 \begin{enumerate}
@@ -1300,7 +1300,7 @@ WHERE Ort='Dresden'								-- WHERE: explizite Bedingung(en)
 $\Rightarrow$ JOIN ist der ersten Variante zu bevorzugen, da die impliziten und expliziten Bedingungen klar und auf den ersten Blicks erkennbar sind.
 \end{enumerate}
 \subsubsection{Weitere Abfragemöglichkeiten}
-\slidesHeight{4}{12}
+\slides[.459]{4}{12}
 \begin{itemize}
 \item Equi-JOIN
 \begin{lstlisting}[language=SQL]
@@ -1433,7 +1433,7 @@ WHERE Kredit < (
 \end{lstlisting}
 
 \subsubsection{Mengen-Operationen}
-\slidesHeight{4}{13}
+\slides[.459]{4}{13}
 \begin{tikzpicture}[scale=0.5]
 \pattern[pattern=north west lines, pattern color=gray]  (5,4) rectangle (8,-1);
 \pattern[pattern=north east lines, pattern color=gray]  (5,1) rectangle (8,-4);
@@ -1468,7 +1468,7 @@ WHERE Ort='Dresden'
 \end{lstlisting}
 
 \subsubsection{EXISTS / NOT EXISTS-Operator}
-\slidesHeight{4}{14}
+\slides[.459]{4}{14}
 \paragraph{Bsp.:} $ $
 \begin{lstlisting}[language=SQL]
 SELECT Name, Ort
@@ -1595,7 +1595,7 @@ Bsp.: Access
 
 \section{DBMS-spezifische Erweiterungen vom Standard-SQL (T-SQL)}
 \subsection{Statements zur Ablaufkontrolle}
-\slidesHeight{4}{15}
+\slides[.459]{4}{15}
 \subsubsection{IF}
 \begin{lstlisting}[language=SQL]
 IF SELECT AVERAGE(vPreis) FROM Kauf < 40
@@ -1616,7 +1616,7 @@ WHILE 2>1	-- Endlosschleife
 	END
 \end{lstlisting}
 \subsection{Benutzung von Variablen}
-\slidesHeight{4}{16}
+\slides[.459]{4}{16}
 \begin{tabular}{l l l}
 & \textbf{global} & \textbf{lokal} \\
 Deklaration: & System & im Programmcode\\
@@ -1687,10 +1687,10 @@ IF (SELECT Kredit FROM Kunde WHERE Kunr=123) < @dKredit
 \end{lstlisting}
 
 \subsection{Arbeiten mit Batch}
-\slidesHeight{4}{17}
+\slides[.459]{4}{17}
 \subsection{Arbeiten mit Stored Procedure}
-\slidesHeight{4}{18}
-\slidesHeight{4}{19}
+\slides[.459]{4}{18}
+\slides[.459]{4}{19}
 \paragraph{zu Bsp. 1:} (aus Folie 4.19)
 \begin{lstlisting}[language=SQL]
 CREATE PROCEDURE Erhoehe_Preis (@Prozent int = 5) AS
@@ -1715,11 +1715,11 @@ DECLARE @Anz int
 EXEC LoescheKu 123, @Anz OUTPUT -- OUTPUT muss hier auch noch mal angegeben werden!
 PRINT 'Anzahl gelöschter Käufe: ' + CONVERT(CHAR(10), @Anz)
 \end{lstlisting}
-\slidesHeight{4}{19}
-\slidesHeight{4}{20}
+\slides[.459]{4}{19}
+\slides[.459]{4}{20}
 
 \subsection{Cursor}
-\slidesHeight{4}{21}
+\slides[.459]{4}{21}
 Ablauf:
 \begin{lstlisting}[language=SQL]
 -- Cursor vereinbaren:
