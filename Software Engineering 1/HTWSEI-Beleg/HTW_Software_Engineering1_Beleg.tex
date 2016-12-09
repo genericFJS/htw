@@ -1,0 +1,118 @@
+\newcommand{\customDir}{../../}
+\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
+
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+\setCustomSlidePath{Vorlesung/VO}
+\setCustomSlideScale{1.5}
+
+\setCustomTitle{Software Engineering 1}
+\setCustomSubtitle{Beleg}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+\setCustomNoteB{Vorlesung von Prof. Dr. Hauptmann}
+
+\setCustomSignature{\footnotesize{\textcolor{darkgray}{von Luga, Pour, \\Retsch, Strube}}}	% Formatierung der Signatur in der Fußzeile
+\setCustomTitleAuthor{\textcolor{darkgray}{\customAuthor}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir _LaTeX_master/LaTeX_master.sty}
+\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
+
+\begin{document}
+
+%\selectlanguage{english}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\chapter{Aufgabe 1}
+\section{Funktionale Anforderungen}
+\subsection*{Anwesenheit verwalten}
+\begin{itemize}
+\item Anwesenheit erfassen
+\begin{itemize}
+\item eintragen
+\item austragen 
+\item zurückweisen
+\end{itemize}
+\item Übersicht der Anwesenden bereitstellen
+\end{itemize}
+\subsection*{Abwesenheit verwalten}
+\begin{itemize}
+\item Urlaub verwalten
+\begin{itemize}
+\item Anträge verwalten
+\begin{itemize}
+\item Einreichen
+\item Stornieren
+\item Genehmigen
+\item Ablehnen
+\end{itemize}
+\item Vorschläge verwalten
+\begin{itemize}
+\item Vorschlag erstellen
+\item Vorschlag annehmen
+\item Vorschlag ablehnen
+\end{itemize}
+\item Urlaubsinformationen anzeigen %(Mitarbeiter/Abteilungsleiter)
+\end{itemize}
+\item Krankheitszeiten verwalten
+\begin{itemize}
+\item Krankheitsdaten erfassen 
+\item Urlaubsdaten anpassen
+\end{itemize}
+\end{itemize}
+\subsection*{Auswertung}
+\begin{itemize}
+\item Auswertung der Arbeitszeit
+\begin{itemize}
+\item erstellen
+\item versenden
+\end{itemize}
+\item Auswertung der Gesamtbilanz
+\begin{itemize}
+%\item erstellen
+\item anfordern
+\end{itemize}
+\item Auswertung der Urlaubszeit
+\begin{itemize}
+%\item erstellen
+\item anfordern
+\end{itemize}
+\end{itemize}
+
+\section{Qualitätsanforderungen}
+
+\begin{itemize}
+\item hat Benutzerschnittstelle
+\item läuft selbstständig
+\item ist unterbrechungsfrei nutzbar %
+\item ist konsistent
+\end{itemize}
+
+\section{Rahmenbedingungen}
+\subsection{technisch/technologisch}
+\begin{itemize}
+\item Hardware für Benutzerinteraktion wird bereitgestellt
+\item Mitarbeiterausweis ist vorhanden
+\end{itemize}
+\subsection{rechtlich}
+\begin{itemize}
+\item Mitarbeiterdaten werden gespeichert
+\end{itemize}
+\subsection{organisatorisch}
+\begin{itemize}
+\item Arbeitstag = 8 Stunden
+\item Arbeitswoche = 40 Stunden
+\item Zugriff auf Jahreskalender
+\end{itemize}
+
+%\newpage
+
+%\printbibliography
+ 
+\end{document}
