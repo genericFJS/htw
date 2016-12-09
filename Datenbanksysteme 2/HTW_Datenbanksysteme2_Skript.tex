@@ -953,12 +953,130 @@ GRANT EXEC MitProc TO MeierU
 \end{lstlisting}
 \end{enumerate}
 
+\subsubsection{SQL-Injection abwehren}
+Beispiel: e-Business-Application\\
+\begin{tabular}{l | l | l}
+	ID & Name & PW\\\hline
+	1 & Meier & abc\\
+	2 & Schulze & xyz
+\end{tabular}
+\begin{lstlisting}[language=SQL]
+IF (SELECT COUNT (*))
+	FROM User
+	WHERE Name='Meier'
+	AND PW='abc') > 1
+\end{lstlisting}
+$\Rightarrow$ Wenn ein Ergebnis zurückkommt ist das Passwort richtig geraten.
+\begin{lstlisting}[language=SQL]
+string sql= "SELEC COUNT(*) FROM user WHERE Name='"
+	+strName
+	+"' AND PW='"
+	+strPW+"'";
+\end{lstlisting}
+Mittels einer SQL Injection kann der SQL Code so erweitert werden, dass eine Anmeldung immer erfolgreich ist.
+\begin{lstlisting}[language=SQL]
+strName = A'OR'x'='x
+strPW = A'OR'x'='x
 
-
-
+sql = SELECT COUNT(*)
+	FROM user
+	WHERE Name='A'OR'x'='x'
+	AND PW = 'A'OR'x'='x'
+\end{lstlisting}
+Lösung: stored procedure einsetzen:
+\begin{lstlisting}[language=SQL]
+CREATE PROC logintest (@Name char(10), @Pw char(10))
+BEGIN
+	IF EXISTS (
+		SELECT COUNT(*)
+		FROM user
+		WHERE Name=@Name
+		AND PW=@pw		
+	)
+		RETURN 1
+	ELSE
+		RETURN 0
+END
+\end{lstlisting}
+Aufruf der stored procedure:
+\begin{lstlisting}[language=SQL]
+string sql= 'exec dlogintest('=
+	+ strName
+	+ "','"
+	+ strPw
+	+ "')";
+\end{lstlisting}
+Aufruf der fehlerhaften stored procedure vie SQL-Injektion
+\begin{lstlisting}[language=SQL]
+exec logintest('A'OR'x'='x','A'OR'x'='x')
+\end{lstlisting}
 \chapter{Logische Datenmodelle}
+\setCustomSlideScale{1}
+Datenmodellierung ist ein zweistufiger Abstraktionsprozess:
+\slides{3}{15}
 \section{Logische und physische Datenorganisation / Überblick über Datenmodelle}
+\subsection{Zusammenhang zwischen semantischen und logischen Datenmodellen}
+\slides{3}{16}
+\subsection{Semantische Datenmodelle}
+\slides{3}{17}
+ERM:\\
+\begin{tikzpicture}[scale=.7]
+\draw  (-2.5,3.5) rectangle (3,1.5) node[midway]{Abteilung};
+\draw[rotate=45]  (0.5,0.5) rectangle (-0.5,-0.5)node [midway] (v2) {hat};
+\draw  (-2.5,-1.5) rectangle (3,-3.5)node[midway]{Mitarbeiter};
+\draw[rotate=45]  (-3,-3) node (v1) {} rectangle  (-5,-5)node [midway] {bearbeitet};
+\draw  (-2.5,-8) rectangle (3,-10)node[midway]{Projekt};
+\draw (0,-3.5) -- (0,-4.25)node[right, midway]{m};
+\draw (0,-7.1) -- (0,-8)node[right, midway]{n};
+\draw (0,1.5) -- (0,0.7)node[right, midway]{1};
+\draw (0,-0.7) -- (0,-1.5) node[right, midway]{n};
+\end{tikzpicture}
+\subsection{Logische Datenmodelle}
+\slides{3}{18}
+\slides{3}{19}
 \section{Klassische logische Datenmodelle}
+\subsection{Hierarchisches Modell}
+\slides{3}{20}
+Speicherung der Beziehung in den Datensätzen\\
+Vorteil: hohe Abfrageperformance\\
+Nachteil: eingeschränkte Datenunabhängigkeit („unflexibel“)
+\slides{3}{21}
+\subsection{Netwerkdatenmodell}
+\slides{3}{22}
+Speicherung der Beziehung in den Datensätzen\\
+Vorteil: hohe Abfrageperformance\\
+Nachteil: eingeschränkte Datenunabhängigkeit („unflexibel“)
+\slides{3}{23}
+\subsection{Relationales Datenmodell}
+\subsubsection{Relationenbegriff}
+\slides{3}{24}
+Beispiel:\\
+Entity-Typ: Zeugnis\\
+Attribute:\\
+$A_1$ Fach $W_1\{Ma,Ph\}$\\
+$A_2$ Note $W_2\{1,2,3,4,5\}$\\
+$PM=W_1*W_2$
+\subsubsection{Charakteristika}
+\slides{3}{25}
+Abfrage der Beziehungen zur Laufzeit\\
+Vorteil: Datenunabhängig, flexibel (Erweiterung, Abfrage)\\
+Nachteil: Performance schlechter als hierarchisch oder Netzwerk-DM
+
+\subsubsection{Grenzen des Relationalen Datenmodells: Modellierung Polyeder}
+\slides{3}{26}
+Abfrage aller Punkte mit \lstinline|F.fid<3|
+\begin{lstlisting}[language=SQL]
+SELECT F.fid, P.x, P.y, P.z
+FROM Punkt P, KP_Rel, KP, FK_Rel FK, Flaeche F
+WHERE F.fid<3
+	AND P.pid = KP.pid
+	AND KP.kid = K.kid
+	AND K.kid = FK.kid
+	AND FK.fid = F.fid
+\end{lstlisting}
+$\Rightarrow$ NF$^2$-Modell wäre schneller (keine 1. Normalform)
+\slides{3}{27}
+
 \section{Objektorientiertes Datenmodell}
 \section{DBMS-spezifische Erweiterungen vom Standard-SQL (Oracle)}
 \section{Objektrelationale Erweiterungen im RDM (Oracle)}
