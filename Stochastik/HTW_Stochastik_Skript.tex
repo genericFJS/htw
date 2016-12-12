@@ -1314,7 +1314,7 @@ $$f(x)=\begin{cases}
 \end{itemize}
 ABB Skript
 \subsubsection{Normalverteilung}
-\cparagraph{Definition} Eine ZV $X$ heißt normalverteilt mit den Parametern $\mu$ und $\sigma^2$, ($\mu \in \RR, \; \sigma > 0$, wenn sie die Dichte\\
+\cparagraph{Definition} Eine ZV $X$ heißt normalverteilt mit den Parametern $\mu$ und $\sigma^2$, ($\mu \in \RR, \; \sigma > 0$, wenn sie die Dichte
 $$f: \RR\to \RR, \qquad f(x)=\frac{1}{\sqrt{2\pi\sigma}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
 besitzt.
 
@@ -1461,7 +1461,7 @@ $ \Rightarrow X_i \sim \exp(\lambda), \; \EE(X_I)=\frac{1}{\lambda}=1000 \Righta
 	\end{align*}
 \end{anumerate}
 
-\subsubsection{$ \chi^2 $-Verteilung}
+\subsubsection{\texorpdfstring{$ \chi^2 $}{Chi-Quadrat}-Verteilung}
 
 \cparagraph{Definition} Eine stetige ZV heißt $ \chi^2 $-verteilt mit $ n \in \NN $ Freiheitsgraden, falls $ X $ die Diche 
 $$f_n(x)=\begin{cases}
@@ -1485,7 +1485,7 @@ Ein Grund für die große Bedeutung der $ \chi^2 $-Verteilung (in der Statistik)
 $$ X:=X_1^{2} + X_2^{2}+\ldots + X_n^{2} $$
 $ \chi^{2} $-verteilt mit $ n $ Freiheitsgraden.
 
-\subsubsection{$ t $-Verteilung}
+\subsubsection{\texorpdfstring{$ t $}{t}-Verteilung}
 
 \cparagraph{Definition} Eine stetige ZV $X$ heißt $t$-verteilt mit $n\in \NN$ Freiheitsgraden, falls $X$ die Dichte 
 \[ f_n(x)=\frac{\Gamma\left(\frac{n+1}{2}\right)}{\sqrt{n \pi}\Gamma\left(\frac{n}{2}\right)}\left(1+\frac{x^2}{n}\right)^{-\frac{n+1}{2}} \quad (x\in \RR) \]
@@ -1506,7 +1506,7 @@ Ein Grund für die große Bedeutung der $ t $-Verteilung (in der Statistik) ist:
 \[ X=\frac{Z}{\sqrt{\frac{Y}{n}}} \]
 $ t $-verteilt mit $ n $ Freiheitsgraden.
 
-\subsubsection{$ F $-Verteilung}
+\subsubsection{\texorpdfstring{$ F $}{F}-Verteilung}
 
 \cparagraph{Definition} Eine stetige ZV $X$ heißt $F$-verteilt mit $m\in \NN$ Freiheitsgraden im Zähler und $n\in \NN$ Freiheitsgraden im Zähler, falls $X$ die Dichte
 \[ f_{m,n}(x)=\begin{cases}
@@ -1564,6 +1564,87 @@ Die Schranke ist klein, falls
 	\item $\var(X)$ klein ist
 \end{itemize}
 
+\begin{proof}
+Sei also $X_1, X_2$ unabhängig identisch verteilt mit Erwartungswert $\mu$ und Varianz $\sigma^2$ und sei $\overline{X}_n=\frac{1}{n}\sum_{i=1}^nX_i$. Dann gilt:
+$$ \EE(\overline{X}_n)=\EE\left(\frac{1}{n}\sum_{i=1}^nX_i\right) = \frac{1}{n}\sum_{i=1}^n\underbrace{\EE X_i}_\mu = \mu$$
+und wegen der Unabhängigkeit gilt auch:
+$$\var(\overline{X}_n)=\var\left(\frac{1}{n}\sum_{i=1}^n X_i\right) = \frac{1}{n^2}\var\left(\sum_{i=1}^nX_i\right) \overset{\substack{\text{da}\\\text{unabh.}}}{=}\frac{1}{n^2}\sum_{i=1}^n \var(X_i)=\frac{\sigma^2}{n}$$
+Nun wenden wir Tschebyschew an:
+$$\underbrace{\PP(|\overline{X}_n-\EE \overline{X}_n|\geq \varepsilon)}_{\PP(|\overline{X}_n-\mu|\geq \varepsilon)}\leq \underbrace{\frac{\var(\overline{X}_n)}{\varepsilon^2}}_{\frac{\sigma^2}{n \varepsilon^2}}$$
+$$\PP(|\overline{X}_n-\mu| < \varepsilon) = 1-\PP(|\overline{X}_n-\mu | \geq \varepsilon) \geq 1-\frac{\sigma^2}{n\varepsilon^2}\overset{n\to \infty}{\longrightarrow} 1$$
+\end{proof}
+
+\cparagraph{Beispiel} Gegeben: unabhängige Poisson-verteilte ZVen mit $X_i \sim \mathrm{Poi}(3)$ für alle $i$\\
+$\Rightarrow\EE (X_i) = 3 = \var(X_i)$ für alle $i$\\
+$\Rightarrow$ für $\varepsilon = 0,1$ und $n=5000$ gilt $\PP(|\overline{X}_n-3|<0,1) \geq 1-\frac{3}{5000-0,1^2}=0,94$ 
+
+\subsection{Der zentrale Grenzwertsatz}
+
+\cparagraph{Satz} (Zentraler Grenzwertsatz)\\
+Seien $X_1, X_2, \ldots$ unabhängige und identisch verteilte Zufallsvariablen mit Erwartungswert $\mu$ und Varianz $\sigma^2$. Für $n\in \NN$ setzen wir
+$$S_n=X_1+\ldots+ X_n\text{.}$$
+Für die standardisierte Zufallsvariable
+$$Z_n=\frac{S_n-\EE S_n}{\sqrt{\var S_n}}=\frac{S_n - n \mu}{\sqrt{n}\cdot \sigma}$$
+gilt dann
+$$\lim_{n\to \infty} \underbrace{\PP(Z_n \leq z)}_{F_{Z_n}(z)} = \Phi (z) \qquad (z \in \RR)$$
+wobei $\Phi$ (wie immer) die Verteilungsfunktion der Standardverteilung ist.
+
+\cparagraph{Bemerkung} 
+\begin{itemize}
+\item Der Satz sagt aus, dass für großes $n$ die ZV $Z_n$ nahezu normalverteilt ist.
+\item Wesentlich: es ist \emph{keine} Annahme über die Verteilung der $X_i$ gemacht.
+\item mit $\overline{X}_n = \frac{1}{n}\sum_{i=1}^n X_i$ gilt
+$$Z_n=\frac{S_n - n \mu}{\sqrt{n}\sigma} = \frac{\overline{X}_n - \mu}{\frac{\sigma}{\sqrt{n}}}$$
+\item Sprechweise: „$Z_n$ ist asymptotisch/approximativ (standard-)normalverteilt.“
+\item Schreibweise: Die Gleichung
+$$\lim_{n\to \infty} \PP(Z_1 \leq z) = \Phi (z) \qquad (z \in \RR)$$
+wird als 
+$$Z_n \overset{a}{\sim}\cN (0,1)$$
+abgekürzt. In diesem Sinne kann man auch 
+$$S_n \overset{a}{\sim} \cN(n \mu, n \sigma^2) \text{ und } \overline{X}_n\overset{a}{\sim}\cN\left(\mu, \frac{\sigma^2}{n}\right)$$
+verstehen.
+\end{itemize}
+
+\cparagraph{Beispiel} Wir werfen einen fairen Würfel mehrmals hintereinander.\\
+$X_i$ … Ergebnis des $i$-ten Wurfs\\
+$S_n = \sum_{i=1}^n X_i$ … Augensumme der ersten $n$ Würfe\\
+ZGWS: $S_n \overset{a}{\sim} \cN (n \mu, n\sigma^2)$\\
+$S_n$ ist asymptotisch normalverteilt mit Erwartungswert $n \cdot \mu =3,5$ und Varianz $n\sigma^2 = n \cdot 2,91\bar 6$, denn: \\
+$\mu = \EE(X_n) = \frac{1}{6}(1+\ldots+6)=3,5$ und \\
+$\sigma^2=\var(X_n)=\underbrace{\frac{1}{6}(1^2+\ldots + 6^2}_{\EE(X_n^2)}-\underbrace{3,5^2}_{(\EE X_n)^2}=2,91\bar 6$
+
+\cparagraph{Beispiel} Es werden Schrauben mit einem zufälligen Gewicht mit EW $4\unit{g}$ und Standardabweichung $0,3\unit{g}$ hergestellt. Berechnen Sie mit dem ZGWS (unter Annahme der Unabhängigkeit):
+\begin{anumerate}
+\item WK, dass der inhalt einer Packung mit $200$ Schrauben maximal $795\unit{g}$ wiegt.
+\item Welches Nettogewicht wird eine $200$er Packung mit WK $0,99$ überschreiten?
+\end{anumerate}
+Lösung:\\
+$X_i$ … Gewicht der Schraube $i$ in Gramm, $i=1,\ldots, 200$\\
+$S=\sum_{i=1}^{200} X_i$\\
+$\Rightarrow \EE S = 800 \quad \var S = \var \left( \sum_{i=1}^{200} X_i\right)=\sum_{i=1}^{200} \underbrace{\var X_i}_{0,3^2} = 200 \cdot 0,09 = 18$
+
+\begin{anumerate}
+\item
+\begin{align*}
+\PP(S \leq 795) &= \PP( S - \EE S \leq 79 - \EE S) \\
+&= \PP\left(\underbrace{\frac{S - \EE S}{\sqrt{\var S}}}_{Z}\leq \frac{795-\EE S}{\sqrt{ \var S}}\right)\\
+&= \PP\left( Z \leq \frac{-5}{\sqrt{18}}\right)\\
+&= \PP(Z \leq - 1,1785)\\
+&\approx \PP(Z \leq - 1,18) \qquad \text{(runden)}\\
+&\approx \Phi(-1,18) \qquad \text{(ZGWS)}\\
+&= 1- \Phi(-1,18) = 1-0,881 = 0,119
+\end{align*}
+Wahrscheinlichkeit ist etwa $20\%$.
+\item Gesucht: Gewicht $a$ mit $\PP(S > a) = 0,99$
+\begin{align*}
+0,99 \overset{!}{=}& 1- \PP(S \leq a)\\
+=& 1- \PP\left( \frac{S-\EE S}{\sqrt{\var S}} \leq \frac{a-\EE S}{\sqrt{\var S}}\right)\\
+=& 1- \Phi\left(\frac{a-800}{\sqrt{18}}\right)\\
+\Leftrightarrow 0,01 =& \Phi (\dots)\\
+\Leftrightarrow \underbrace{\Phi^{-1} (0,01)}_{-2,3243} =& \frac{a-800}{\sqrt{18}}\\
+\Leftrightarrow a =& 790,13
+\end{align*}
+\end{anumerate}
 %\newpage
 %\printbibliography
 
