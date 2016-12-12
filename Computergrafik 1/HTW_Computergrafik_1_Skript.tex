@@ -4,7 +4,7 @@
 %\setboolean{twosided}{true}
 %\setCustomDocumentClass{scrartcl}
 %\setCustomDesign{htw}
-\setCustomSlidePath{Vorlesung/CG1-01-15}
+\setCustomSlidePath{Vorlesung/CG1-01-15-neu}
 
 \setCustomTitle{Computergrafik 1}
 \setCustomSubtitle{Vorlesungsskript}
@@ -28,6 +28,7 @@
 \tableofcontents
 \newpage
 
+\unimptnt{
 \chapter*{Vorbemerkung}
 Prüfung: alle Unterlagen erlaubt (Skripte, Bücher usw.)\\
 2 Teile: 1/2 Praxis (erste Hälfte der VL), 1/2 „Theorie“ (zweite Hälfte der VL)\\
@@ -38,11 +39,12 @@ Belegabgabe: Ende der Vorlesungszeit (03.02.2016), Vorabgabe (vorm Einreichen) i
 Folien mit +: wichtige Folien
 \chapter*{Grundbegriffe}
 \slide{3}
+}
 \section*{Systematisierung}
 \slide{4}
 
 \chapter{OpenGL: Anwendung und Programmierung}
-\slide{5}
+\unimptnt{\slide{5}
 \section{Systemarchitektur}
 \slide{6}
 \subsection{Interaktive generative grafische Systeme}
@@ -52,14 +54,16 @@ Folien mit +: wichtige Folien
 \subsection{Weg und Ziel}
 \slide{9}
 3. Bild: Schattierung (keine Schattenbildung, sondern „Einfärbung“ von Seiten)
-
+}
 \section{OpenGL}
 \slide{10}
+\unimptnt{
 \subsection{Versionen}
 \slide{11}
 \subsection{OpenGL Core Profile}
 \slide{12}
 Eckpunkte -> Vertex Shader -> Fragment Shader -> Framebuffer
+}
 \subsection{Grafik-Bibliotheken}
 \slide{13}
 \subsection{Initialisierung}
@@ -69,8 +73,9 @@ Eckpunkte -> Vertex Shader -> Fragment Shader -> Framebuffer
 \slide{15}
 \subsection{Sequentielle Struktur}
 \slide{16}
+\unimptnt{
 \slide{17}
-
+}
 \section{Rahmenprogramm}
 \subsection{Client-Seite}
 \slide{18}
@@ -85,13 +90,19 @@ Eckpunkte -> Vertex Shader -> Fragment Shader -> Framebuffer
 \section{Funktionsreferenz}
 \subsection{Funktionen GL}
 \slide{22}
+\unimptnt{
 \slide{25}
+}
 \subsection{Funktionen GLUT}
 \slide{23}
+\unimptnt{
 \slide{24}
+}
 
 \chapter{OpenGL: Shader und Programmierung}
+\unimptnt{
 \slide{28}
+}
 \section{Vorgehensweise}
 \slide{29}
 Fragment-Shader als Rasterisierung eines Bildes (bspw. Vektor-Strich von A nach B) und dann Zuweisung der Farbe den entsprechenden Rasterelementen/Pixel\\
@@ -100,19 +111,26 @@ Vertex-Shader guckt sich dem entgegen Eckpunkte an.
 \slide{30}
 \subsection{Programmbeispiele}
 \slide{32}
+\unimptnt{
 \subsection{Funktionen}
 \slide{31}
+}
 
 \section{Rasterisierung und obligatorischer Shader}
+\unimptnt{
+Aufgabe: Behandlung und Verarbeitung von Eckpunktdaten und Pixeldaten sowie deren Überführung
+ineinander; Transformation zwischen Hauptprogramm und Frame Buffer.
 \subsection{Rasterisierung}
 \slide{33}
+}
 \subsection{Vertex-Shader}
 \slide{34}
 \subsection{Fragment-Shader}
 \slide{35}
-
+\unimptnt{
 \subsection{Beispiele}
 \slide{36}
+}
 
 \section{Shader-Sprache}
 \slide{37}
@@ -137,16 +155,21 @@ Vertex-Shader guckt sich dem entgegen Eckpunkte an.
 \slide{48}
 
 \section{Programm- und Datenübergabe}
+\unimptnt{
 \slide{49}
+}
 \subsection{Interface Blöcke}
 \slide{50}
-
+\unimptnt{
 \section{Funktionsreferenz}
 \slide{51}
 \slide{52}
+}
 
 \chapter{OpenGL: Zeichnung und Daten}
+\unimptnt{
 \slide{54}
+}
 
 \section{Vorgehensweise}
 \slide{55}
@@ -174,42 +197,49 @@ Vertex-Shader guckt sich dem entgegen Eckpunkte an.
 zeigt NUR im Fragmentshader Wirkung
 \subsection{Farbe als Attribut}
 \slide{62}
+\subsection{Schattierungsarten}
+\slide{63}
 \subsection{Programmeinbindung der Vordergrundfarbe}
 \subsubsection*{Befehlsfolge:}
-\slide{63}
+\slide{64}
 
 \section{Pufferobjekte}
-\slide{64}
 \slide{65}
+\unimptnt{
 \slide{66}
+\slide{67}
+}
 \subsection{Programmbeispiele}
 \subsubsection*{Interpolation von Eckpunkten und Farben zweier Dreiecke}
-\slide{67}
 \slide{68}
-\subsubsection*{Zeichenvarianten eines Dreiecks}
 \slide{69}
-\subsubsection*{Indexierte Zeichnung eines Würfels}
+\subsubsection*{Zeichenvarianten eines Dreiecks}
 \slide{70}
+\subsubsection*{Indexierte Zeichnung eines Würfels}
 \slide{71}
+\slide{72}
 
+\unimptnt{
 \section{Polygone und Netze}
 \subsection{Quadriken}
-\slide{72}
-\subsection{Evaluatoren}
 \slide{73}
+\subsection{Evaluatoren}
+\slide{74}
 
 \section{Funktionsreferenz}
-\slide{74}
 \slide{75}
 \slide{76}
 \slide{77}
-
-\chapter{OpenGL: Pixel und Puffer}
 \slide{78}
-\section{Pufferstrukturen}
+}
+\chapter{OpenGL: Pixel und Puffer}
+\unimptnt{
 \slide{79}
-\section{Pufferoperationen}
+}
+\section{Pufferstrukturen}
 \slide{80}
+\section{Pufferoperationen}
+\slide{81}
 \begin{itemize}
 \item glClearColor(): Hintergrundfarbe, zu Beginn der display() Funktion, es sei denn für Effekte
 \item glClearDepth(): Tiefenpuffer , zu Beginn der display() Funktion, es sei denn für Effekte
@@ -226,10 +256,10 @@ Maskieren wird nach dem Fragmentshader verwendet.
 \end{itemize}
 \subsection{Tests und Operationen für Fragmente}
 \subsubsection{Scissor-Test, Multisampling-Fragment-Operationen, Stencil-Test}
-\slide{81}
+\slide{82}
 glScissor(x,y,w,h) (Ursprung, Länge, Höhe: Nur alles was in diesem Feld enthalten ist wird angezeigt
 \subsubsection{Depth-Test, Dithering, Logic}
-\slide{82}
+\slide{83}
 GL\_ LESS Objekte die kleiner sind als der eingestellte wert werden nicht gerendert
 \begin{lstlisting}[language=C++]
 init(){
@@ -246,78 +276,92 @@ display()
 \end{lstlisting}
 mit glPolygonOffset() kann sichergestellt werden das eine Kante um ein Objekt sichtbar wird.
 \subsubsection{Blending}
-\slide{83}
+\slide{84}
 Transparenz: GL\_SRC\_ALPHA, GL\_ONE\_MINUS\_SRC\_ALPHA\\
 Beispiel:$\alpha_q = 0.7 \Rightarrow 0.5*0.7+0.2*0.3 = 0.$
+\unimptnt{
 \subsubsection*{Funktionen für Blending}
-\slide{84}
-\subsubsection{Verdeckungsabfrangen, bedingtes Rendern}
 \slide{85}
-\subsection{Antialiasing}
+\subsubsection{Verdeckungsabfrangen, bedingtes Rendern}
 \slide{86}
-\subsubsection{Multisampling}
+\subsection{Antialiasing}
 \slide{87}
+\subsubsection{Multisampling}
+\slide{88}
+}
 \subsubsection*{Programmbeispiel}
 Räumlich beschränkte / tiefengerechte / transparente Ausgabe:
-\slide{88}
-\section{Framebuffer Objekte}
 \slide{89}
-\section{Multiple Renderbuffer}
+\unimptnt{
+\section{Framebuffer Objekte}
 \slide{90}
-\section{Lesen und Kopieren von Pixeldaten}
+\section{Multiple Renderbuffer}
 \slide{91}
+\section{Lesen und Kopieren von Pixeldaten}
+\slide{92}
 \subsection*{Beispiel}
 Zugriff auf Renderbuffer:
-\slide{92}
+\slide{93}
 
 \section{Funktionsreferenz}
-\slide{93}
 \slide{94}
 \slide{95}
+\slide{96}
+}
 
 \chapter{OpenGL: Ansicht und Transformation}
-\slide{96}
+\unimptnt{
+\slide{97}
+}
 
 \section{Modelle und Operationen}
-\slide{97}
+\unimptnt{
+\slide{98}
+}
 
 \subsection{Kamera Analogie und Geometrie Pipeline}
-\slide{98}
-\subsection{Vektoren und Matrizen}
 \slide{99}
-\subsection{Koordinatensysteme}
+\unimptnt{
+\subsection{Vektoren und Matrizen}
 \slide{100}
-
-\section{Transformation}
+}
+\subsection{Koordinatensysteme}
 \slide{101}
 
-\section{Projektion}
+\section{Transformation}
 \slide{102}
 
-\section{Viewport}
+\section{Projektion}
 \slide{103}
 
-\section{Matrizen}
+\section{Viewport}
 \slide{104}
-\slide{105}
 
+\section{Matrizen}
+\slide{105}
+\unimptnt{
+\slide{106}
+}
 \section{Bibliotheksoperationen}
-\slide{108}
+\slide{109}
 
 \subsection{Programmbeispiele}
-\slide{109}
 \slide{110}
+\slide{111}
 
 \section{Transformationsrückkopplung}
-\slide{111}
-\subsection{Programmbeispiel}
+\unimptnt{
 \slide{112}
+\subsection{Programmbeispiel}
+\slide{113}
 
 \section{Funktionsreferenz}
-\slide{113}
 \slide{114}
 \slide{115}
+\slide{116}
+}
 
+% bis 190
 
 
 %\newpage
