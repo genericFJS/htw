@@ -1,0 +1,84 @@
+\section{Überblick}
+\subsection{FEC-Verfahren (Forward Error Correction)}
+\slides{20-sicherungsprotokolle_print}{3}
+Potentielle als Echtzeitanwendung.
+
+\subsection{ARQ-Verfahren (Automatic Repeat Request)}
+\slides{20-sicherungsprotokolle_print}{4}
+Nicht gut für Echtzeitanwendungen, da Verzögerung.
+
+\subsection{Hybride FEC/ARQ-Systeme}
+\slides{20-sicherungsprotokolle_print}{5}
+
+\subsection{Coderate}
+\slides{20-sicherungsprotokolle_print}{6}
+
+\subsection{Details zum ARQ-Verfahren}
+\subsubsection{Fehlerereignisse}
+\slides{20-sicherungsprotokolle_print}{7}
+\subsubsection{Paketfehlerrate}
+Bei der Paketfehlerrate muss berücksichtigt werden, wie oft das Paket erfolgreich als fehlerhaft erkannt wird und erneut gesendet wird:
+\slides{20-sicherungsprotokolle_print}{8}
+\subsubsection{Durchsatz}
+\slides{20-sicherungsprotokolle_print}{9}
+\subsubsection{Beispiel}
+\slides{20-sicherungsprotokolle_print}{10}
+D.h. maximal $84\%$ sind als Durchsatz zu erwarten!
+\subsubsection{Unterteilung}
+\slides{20-sicherungsprotokolle_print}{11}
+
+\section{Stop-and-Wait}
+\slides{20-sicherungsprotokolle_print}{12}
+\subsection{Durchsatz}
+\slides{20-sicherungsprotokolle_print}{13}
+$T_W=2T_{AB}+T_{ACK}$
+\subsection{Beispiel Satellitenkanal}
+\slides{20-sicherungsprotokolle_print}{14}
+Sehr ungünstig für Stop-and-Wait Protokoll, da das Verhältnis der Paketgröße zur Wartezeit zu ungünstig ist (zu kleine Pakete/zu lange Wartezeit) $\Rightarrow$ die Übertragungszeit ist zu lang.
+\subsection{Beispiel Rechnernetz}
+Abschätzung des Durchsatzes:
+\slides{20-sicherungsprotokolle_print}{15}
+
+\section{Go-Back-N-Protokoll (GBN)}
+\slides{20-sicherungsprotokolle_print}{16}
+\subsection{Optimale Fenstergröße}
+\slides{20-sicherungsprotokolle_print}{17}
+Hinweise Notation: $\lceil a \rceil \Rightarrow a$ wird aufgerundet 
+\subsection{Sendefenster der Größe N}
+\slides{20-sicherungsprotokolle_print}{18}
+\subsection{Durchsatz}
+\slides{20-sicherungsprotokolle_print}{19}
+Ist zwar langsamer als folgendes (SR), dafür braucht Empfänger aber keinen Puffer!
+
+\section{Selective Repeat-Protokoll (SR)}
+\slides{20-sicherungsprotokolle_print}{20}
+\subsection{Sendefenster}
+\slides{20-sicherungsprotokolle_print}{21}
+\subsection{Empfangsfenster}
+\slides{20-sicherungsprotokolle_print}{22}
+\subsection{Durchsatz}
+\slides{20-sicherungsprotokolle_print}{23}
+
+\section{Ergänzungen}
+\subsection{Paketnummerierung}
+\slides{20-sicherungsprotokolle_print}{24}
+\subsection{Bidirektionale Datenübertragung}
+\slides{20-sicherungsprotokolle_print}{25}
+\subsection{Vergleich der Sicherungsprotokolle}
+\slides{20-sicherungsprotokolle_print}{26}
+\subsection{Beispiel mit verschiedenen ARQ-Protokollen}
+(Richtfunkanlage)
+\slides{20-sicherungsprotokolle_print}{27}
+\subsection{Zusammenfassung}
+\slides{20-sicherungsprotokolle_print}{28}
+\subsection{Beleg Stop-and-Wait}
+Zustände Sender:
+\begin{itemize}
+\item Wait for Data
+\item Wait for ACK
+\end{itemize}
+Übergange:\\
+Wait for Data $\to$ SW called send / send packet 0/1 $\to$ Wait for ACK\\
+Wait for ACK $\to$ received ACK /  $\to$ Wait for Data\\
+Wait for ACK $\to$ timeout / resend packet || stop $\to$ Wait for ACK \\
+Wait for ACK $\to$ wrong ACK || wrong Session ID / $\to$ Wait for ACK

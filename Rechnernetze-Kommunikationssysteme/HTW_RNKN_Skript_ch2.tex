@@ -1,0 +1,60 @@
+\section{Einführung}
+\subsection{Schnittstelle auf einem Host zur Datenübertragung an andere Prozesse}
+\slides{10-sockets_print}{3}
+\subsection{Socketschnittstelle: Abgrenzung}
+\slides{10-sockets_print}{4}
+\subsection{IP-Adressen und Ports}
+\slides{10-sockets_print}{5}
+\section{Demultiplexing}
+\slides{10-sockets_print}{6}
+\subsection{Verbindungsloses Demultiplexing (UDP)}
+\slides{10-sockets_print}{7}
+\paragraph{Testfrage:} Benötigte UDP-Sockets: 2 Sockets (beliebig viele Partner können auf einen Port/Socket kommen, dafür muss darauf geachtet werden, dass das Paket an den richtigen Absender zurück geschickt wird)
+\subsection{Verbindungsorientiertes Demultiplexing (TCP)}
+\slides{10-sockets_print}{8}
+\paragraph{Testfrage:} Benötigte TCP-Sockets: 3 Sockets (jeder Verbindung ist eigenständig und vom Rechner verwaltet, es muss sich nicht drum gekümmert werden, dass es auch an den richtigen Partner zurück geschickt wird)
+\slides{10-sockets_print}{9}
+\section{Socket-Programmierung}
+\slides{10-sockets_print}{10}
+\subsection{UDP-Sockets}
+\slides{10-sockets_print}{11}
+\slides{10-sockets_print}{12}
+\subsubsection{UDP-Demo Datenströme}
+Datenströme müssen explizit in Pakete gewandelt werden:\\
+UDP ist kein Stream $\to$ Konvertierung IO-Stream $\Leftrightarrow$ UDP.
+\slides{10-sockets_print}{13}
+\subsubsection{UDP-Demo Client}
+\slides{10-sockets_print}{14}
+\slides{10-sockets_print}{15}
+Achtung: Wenn Paket verloren geht, würde Programm stehen bleiben! Dafür gibt es in der Funktion \emph{.recieve()} auch die Option eines Timeouts.\\
+Hinweis nebenbei: sendData-Array hätte gar nicht initialisiert werden müssen, weil er in der Zuweisung später sowieso einen neuen Zeiger bekommt.
+\subsubsection{UDP-Demo Server}
+\slides{10-sockets_print}{16}
+\slides{10-sockets_print}{17}
+\slides{10-sockets_print}{18}
+UDP vor allem bei Anfragen sinnvoll, die in ein Paket passen. Nicht so sinnvoll für mehrere Pakete/Streams.
+
+\subsection{TCP-Sockets}
+\slides{10-sockets_print}{19}
+\slides{10-sockets_print}{20}
+\slides{10-sockets_print}{21}
+\subsubsection*{Dreiwege-Handshake}
+\slides{10-sockets_print}{22}
+\slides{10-sockets_print}{23}
+\subsubsection{TCP-Demo Datenströme}
+Eingabestrom: Quelle - Tastatur\\
+Ausgabestrom: Senke - Socket
+\slides{10-sockets_print}{24}
+\slides{10-sockets_print}{25}
+\subsubsection{TCP-Demo Client}
+\slides{10-sockets_print}{26}
+\slides{10-sockets_print}{27}
+\subsubsection{TCP-Demo Server}
+\slides{10-sockets_print}{28}
+\slides{10-sockets_print}{29}
+
+\section{Werkzeug Netcat}
+\slides{10-sockets_print}{30}
+
+\section*{Zusammenfassung}
+\slides{10-sockets_print}{31}

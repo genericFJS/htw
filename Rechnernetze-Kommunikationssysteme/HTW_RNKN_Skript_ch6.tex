@@ -1,0 +1,148 @@
+
+\slides{24-vermittlung_print}{3}
+\section{Leitungsvermittlung}
+\slides{24-vermittlung_print}{4}
+\slides{24-vermittlung_print}{5}
+\section{Paketvermittlung}
+\slides{24-vermittlung_print}{6}
+\slides{24-vermittlung_print}{7}
+\section{Mischformen}
+Betriebsarten paketvermittelter Netze
+\slides{24-vermittlung_print}{8}
+\section{Zellvermittlung}
+\slides{24-vermittlung_print}{9}
+\section{Routing}
+Vermittlungskonzepte
+\slides{24-vermittlung_print}{10}
+\subsection{Wegesuchung}
+\slides{24-vermittlung_print}{11}
+\subsection{Überlastungsprobleme}
+\subsubsection{flow control}
+\slides{24-vermittlung_print}{12}
+\subsubsection{Verstopfungskontrolle}
+(congestion control)
+\slides{24-vermittlung_print}{13}
+\subsection{Pufferspeicherverwaltung}
+\slides{24-vermittlung_print}{14}
+
+\section{Internetprotokoll}
+\slides{25-ip-schicht_print}{3}
+\subsection{Einführung}
+\subsubsection{Aufgaben der IP-Schicht}
+\slides{25-ip-schicht_print}{4}
+\subsubsection{Vergleich OSI -- IP}
+\slides{25-ip-schicht_print}{5}
+\subsubsection{Internetadressen}
+Drei unabhängige Namens-/Adressebenen
+\slides{25-ip-schicht_print}{6}
+\subsubsection{Domain Name System (DNS)}
+\slides{25-ip-schicht_print}{7}
+
+\subsubsection{IP-Vergabe}
+\slides{25-ip-schicht_print}{8}
+
+\subsubsection{Internetadressen (IPv4)}
+\slides{25-ip-schicht_print}{9}
+\subsection{Adressklassen}
+(classfull addressing) Unterteilung in Netz und Host
+\slides{25-ip-schicht_print}{10}
+
+\subsubsection{Besondere Internet-Adressen}
+\slides{25-ip-schicht_print}{11}
+\subsubsection{Subnetting}
+Aufteilung eines Netzes in mehrere Netze
+\slides{25-ip-schicht_print}{12}
+\subsection{Classless Interdomain Routing (CIDR)}
+\slides{25-ip-schicht_print}{13}
+\subsubsection*{Beispiel}
+Vergabe von Adressen aus dem Pool eines Internet-Providers
+\slides{25-ip-schicht_print}{14}
+\slides{25-ip-schicht_print}{15}
+\slides{25-ip-schicht_print}{16}
+Hostadressen in einem /31 Netz: 0 (nur ein Bit für Adresse übrig: 0 steht für Netzadresse, 1 für Broadcastadresse $\to$ keine Hostadresse mehr übrig)\\
+$\Rightarrow$ /30 Netz: 2 Hostadressen
+\subsection{IP-Netz}
+\subsubsection{Definition IP-Netz}
+Hosts mit gleicher Netzadresse befinden sich im gleichen Netz
+\slides{25-ip-schicht_print}{17}
+\subsubsection{Adressarten}
+\slides{25-ip-schicht_print}{18}
+\subsubsection{Hardwareadressen}
+\slides{25-ip-schicht_print}{19}
+\subsubsection{Adress Resolution Protokoll}
+Beispiel: A möchte HW-Adresse von B erhalten
+\slides{25-ip-schicht_print}{20}
+\subsubsection*{Anzeigen}
+\slides{25-ip-schicht_print}{21}
+\subsubsection{Übertragung eines Datagramms}
+Übertragung 111.111.111.111 zu 222.222.222.222 (Maske 255.255.255.0)
+\slides{25-ip-schicht_print}{22}
+
+\subsection{Weiterleitung und Wegewahl}
+\slides{25-ip-schicht_print}{23}
+\subsubsection{Analyse des Verbindungsweges}
+Beispiel für Nutzung von \lstinline|traceroute|
+\slides{25-ip-schicht_print}{24}
+\subsection{Dynamic Host Configuration Protocoll (DHCP)}
+RFC 2131, 2132
+\slides{25-ip-schicht_print}{25}
+\subsection{IP-Paketaufbau (IPv4)}
+Header 20 Byte + optionaler Anteil
+\slides{25-ip-schicht_print}{26}
+\slides{25-ip-schicht_print}{27}
+\subsubsection{IP-Fragmentierung}
+\slides{25-ip-schicht_print}{28}
+\subsubsection*{Beispiel}
+\slides{25-ip-schicht_print}{29}
+
+\subsection{Komponenten des Internet Protokolls}
+\slides{25-ip-schicht_print}{30}
+
+\subsubsection{Internet Contronl Message Protocoll (ICMP)}
+RFC 792
+\slides{25-ip-schicht_print}{31}
+\subsubsection*{ICMP Unreachable}
+\slides{25-ip-schicht_print}{32}
+
+\subsection{Weiterleitung}
+\slides{25-ip-schicht_print}{33}
+\subsubsection*{Genereller Aufbau}
+\slides{25-ip-schicht_print}{34}
+\subsubsection*{Beispiel}
+Routingtabelle für mittlere Router
+\slides{25-ip-schicht_print}{35}
+\subsubsection*{Befehler zur Konfiguration}
+\slides{25-ip-schicht_print}{36}
+\subsection{IPv6}
+Probleme von IPv4:
+\slides{25-ip-schicht_print}{37}
+
+\subsection{Aufbau und Funktion eines Routers}
+\slides{25-ip-schicht_print}{38}
+\subsubsection{Eingangsport}
+\slides{25-ip-schicht_print}{39}
+\subsubsection{Switching Fabric}
+\slides{25-ip-schicht_print}{40}
+\slides{25-ip-schicht_print}{41}
+\subsubsection{Ausgangsport}
+\slides{25-ip-schicht_print}{42}
+\subsubsection{Queueing am Ausgangsport}
+\slides{25-ip-schicht_print}{43}
+\subsubsection{Router Bauformen}
+\slides{25-ip-schicht_print}{44}
+
+\subsection{Network Address Translation (NAT)}
+\slides{25-ip-schicht_print}{45}
+\subsubsection*{Funktion ohne NAT}
+\slides{25-ip-schicht_print}{46}
+\subsubsection{Funktionsweise}
+\slides{25-ip-schicht_print}{47}
+\subsubsection*{Funktion mit NAT}
+\slides{25-ip-schicht_print}{48}
+\subsubsection{Probleme mit NAT}
+\slides{25-ip-schicht_print}{49}
+\subsubsection{Lösungsansätze zur Erreichbarkeit}
+Ein Server innerhalb von NAT soll erreicht werden
+\slides{25-ip-schicht_print}{50}
+\section{Zusammenfassung}
+\slides{25-ip-schicht_print}{51}
