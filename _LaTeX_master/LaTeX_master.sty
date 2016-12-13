@@ -275,8 +275,8 @@ backend=bibtex8,
 }{
 \message{Achtung: Grafik wurde nicht gefunden: '#2'}
 \minibox[frame]{
-\textbf{\StrSubstitute{#2}{_}{\_}}  \ifthenelse{\isempty{#1}}{}{\\\textit{#1}}}
-}}
+\textbf{\StrSubstitute{#2}{_}{\_}}%  \ifthenelse{\isempty{#1}}{}{\\\textit{#1}}
+}}}
 
 % pdf-Setup
 \usepackage{pdfpages}
