@@ -1205,7 +1205,8 @@ Eigenschaften:
 \begin{itemize}
 \item Fluideigenschaften: nur Flüssigkeiten
 \item Messgenauigkeit: $\pm 0,1 \ldots 0,5 \%$ v.S. (vom Sollwert)
-\item Fehlerquellen: Ungemessene Flüssigkeitsmengen während des Kippvorgangs $\to$ negative Messabweichung
+\item Fehlerquellen: Ungemessene Flüssigkeitsmengen während des Kippvorgangs\\
+$\to$ negative Messabweichung
 \end{itemize}
 \begin{itemize}[label=$+$]
 \item hohe Genauigkeit
@@ -1339,6 +1340,135 @@ Eigenschaften:
 \item hoher Druckverlust (Blende $35\%-90\%$, Düse $6\%-25\%$ des Wirkdrucks)
 \item große Ein- und Auslaufstrecken erforderlich
 \end{itemize}
+
+\subsection{Staudruckverfahren}
+Es wird der Druck auf einen Staukörper gemessen (zwei Röhrchen in dem „Strahl“, zwischen denen die Druckdifferenz gemessen wird)\\
+$v=\sqrt{\frac{2}{\rho}\cdot \Delta p}$ \qquad $\Delta p$: unterschied des Drucks\\
+$q_V = A \cdot \nu$\\
+Eigenschaften
+\begin{itemize}
+\item Fluideigenschaften: vor allem Gase
+\item Messgenaugikeit: $(\pm 3) \pm 1 \%$ v.S.
+\end{itemize}
+\begin{itemize}[label=$+$]
+\item robust und wartungsarm
+\item punktförmige Messung der Strömungsgeschwindigkeit
+\item geringe Druckverluste
+\end{itemize}
+
+\begin{itemize}[label=$-$]
+\item nichtlineare Abhängigkeit der Strömungsgeschwindigkeit vom Druck\\
+$\to$ hohe Messfehler im unteren Bereich
+\item Gesamtdurchfluss ergibt sich durch das Abtasten der Geschwindigkeitsverteilung über Querschnitt und anschließende Integration
+\end{itemize}
+
+\subsection{Wirbelzähler}
+Zählt Verwirbelungen, die sich hinter einem Objekt (Störkörper) in einem Strom (in Rohr) ergeben (Vergleich: Flagge an Mast).\\
+Wirbelablösefrequenz: $f \sim \frac{v}{d}$\\
+Messverfahren:
+\begin{itemize}
+\item Drucksensoren an Rohrwandung
+\item Drucksensoren an Störkörper
+\item Vorgeheizte Thermistatoren an Querbohrung des Störkörpers
+\item DMS oder Piezo-Wandler an schwingungsfähigen Steg
+\end{itemize}
+Eigenschaften
+\begin{itemize}
+\item Fluideigenschaften: Gase, Dämpfe und/oder niedrigviskose Flüssigkeiten
+\item Messgenaugikeit: $\pm 1 \%$ v.S.
+\item Fehlerquellen: Schwingungen des Messrohres und Pulsation des Mediums
+\end{itemize}
+\begin{itemize}[label=$+$]
+\item robust und wartungsarm
+\item hohe Genauigkeit, großer Dynamikbereich
+\item hohe Langzeitstabilität
+\item Unempfindlichkeit gegen Verschmutzung
+\item linearer Zusammenhang $f(v)$
+\item beliebige Einbaulage
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item für kleine Durchflussgeschwindigkeiten nicht geeignet
+\item relativ hohe verbleibende Druckverluste
+\item große Ein- und Auslaufstrecke und ggf. Strömungsleichrichter nötig
+\end{itemize}
+
+\subsection{Magnetisch: Induktives Verfahren}
+Abhängig von Lorentz-Kraft: $\originalVec{F}_L=q\cdot \originalVec{\nu} \times \originalVec{B}$\\
+Spannung an dem Rohr: $U=B\cdot d \cdot \nu$\\
+Eigenschaften:
+\begin{itemize}
+\item Medien: insbesondere wässrige Lösungen
+\item Messgenaugikeit: $\pm 0,2\%$ bis $\pm 1\%$ v.S.
+\item Fehlerquellen: Querschnittsverkleinerung durch Ablagerungen im Messrohr, relativ kleine Messsignale (im $\unit{mV}$-Bereich und niedriger)
+\end{itemize}
+\begin{itemize}[label=$+$]
+\item berührungslos, robust, praktisch verschleiß- und wartungsfrei
+\item unabhängig von Dichte, Temperatur, Druck, Viskosität des Mediums
+\item unabhängig von Art der Strömung (laminar, turbulent) und vom Strömungsprofil
+\item linearer Zusammenhang $q_v(U)$
+\item keine Rohreinbauten notwending\\
+$\to$  keine Querschnittsverengung $\to$ keine zusätzlichen Druckverluste
+\item geeignet für korrosive, aggressive und verschmutzte Medien (Schlämme, Feststoffe)
+\item kurze Ein- und Auslaufstrecken
+\item Eignung für kleinste bis mittlere Mengen
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item nur für leitende Flüssigkeiten ($> 1 \unit{\mu S/cm}$) geeignet $\to$ nicht für Gase
+\item es dürfen sich keine elektrisch leitenden Ablagerungen bilden
+\item mit der Nennweitgröße überproportional steigende Herstellungskosten
+\item die Elektroden sollten aus korrosionsfesten Material bestehen
+\end{itemize}
+
+\subsection{Ultraschall-Durchflussmessung}
+Ultraschall durch Medium
+\begin{itemize}
+\item Diagonalverfahren: Messung diagonal zum Rohr mit zwei Sendern/Empfängern auf jeweils einer Seite des Rohrs.\\
+ $\nu \approx \frac{c^2 \cdot \Delta t}{2 \cdot L \cdot \cos \varphi}$
+\item Reflexionsverfahren: Messung mit einem Sender und einem Empfänger, durch Reflexion des Schalls am Rohr wird der Durchfluss gemessen.
+\item Doppler-Verfahren: Beweglicher Sender/Empfänger. Durch Doppler-Effekt wird Durchfluss gemessen.\\
+$\Delta f = 2 \cdot f_0 \cdot \cos \varphi \cdot \frac{\nu}{c}$
+\end{itemize}
+Eigenschaften:
+\begin{itemize}
+\item Medien: reine Flüssigkeiten und Gase (für Doppler: Streuzentren notwendig)
+\item Messgenauigkeit: $\pm 0,5\%$ bis $3 \%$ v.S. (Doppler: schlechter)
+\end{itemize}
+\begin{itemize}[label=$+$]
+\item keine Einbauten in der Rohrleitung\\
+$\to$ keine Querschnittsverengung $\to$ keine zusätzlichen Druckverluste\\
+Messungen über mehrere Meter Distanz möglich
+\item linearer Messeffekt
+\item Einsatz auch bei nichtleitenden und verschmutzten Fluiden (Doppler)
+\item Clamp-On-Verfahren möglich
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item gut ausgebildete Strömungsprofile erforderlich
+\item die Flüssigkeit muss frei von größeren Störkörpern sein (Feststoffe, Gasblasen)
+\item die Laufzeitdifferenz ist Stoff- und temperaturabhängig
+\item Schall schluckende bzw. reflektierende Ablagerungen sind zu vermeiden
+\item relativ großer messtechnischer Aufwand
+\item Beschränkung der Nennweitenpalette nach unten
+\end{itemize}
+
+\subsection{Korrelationsdurchflussmessung}
+An Rohr werden (mit Abstand $d$) zwei Sensoren (für alles möglich: Druck, Temperatur usw.) befestigt. Diese werden beständig gemessen und erhalten dem entsprechend zwei Signale. Diese Signale werden auf Ähnlichkeiten untersucht. Der zeitliche Abstand dieser Ähnlichkeiten stellt den Durchfluss dar.\\
+Eigenschaften:
+\begin{itemize}
+\item Fluideigenschaften: Flüssigkeiten, Gase, Mehrphasenströme
+\item Messgenauigkeit: Abhängig von der Aufgabenstellung
+\end{itemize}
+\begin{itemize}[label=$+$]
+\item dort, wo andere Verfahren versagen, besonders bei Mehrphasenströmungen
+\item hohe Flexibilität bezüglich der Messstellen und Messstoffe
+\item kann als Clamp-On-Messverfahren eingesetzt werden
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item manchmal sehr stark eingeschränkte Genauigkeit
+\item aufgrund der rechnerischen Auswertung im Korrelator immer langsamer als direkt anzeigende Messverfahren
+\end{itemize}
+
+
+
 
 
 
