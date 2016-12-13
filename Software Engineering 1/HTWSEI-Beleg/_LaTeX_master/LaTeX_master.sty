@@ -1,0 +1,381 @@
+%-- Prüfen, ob Beamer
+\ifthenelse{\equal{\customDocumentClass}{beamer}}{
+%%% TODO: andere Layouts für Beamer außer HTW
+	\documentclass[ignorenonframetext, 11pt, table]{beamer}
+	
+	\usenavigationsymbolstemplate{}
+	\setbeamercolor{author in head/foot}{fg=black}
+	\setbeamercolor{title}{fg=black}
+	\setbeamercolor{bibliography entry author}{fg=htworange!70}
+	%\setbeamercolor{bibliography entry title}{fg=blue} 
+	\setbeamercolor{bibliography entry location}{fg=htworange!60} 
+	\setbeamercolor{bibliography entry note}{fg=htworange!60}  
+	
+	\setbeamertemplate{itemize item}{\color{black}$\bullet$}
+	\setbeamertemplate{itemize subitem}{\color{black}--}
+	\setbeamertemplate{itemize subsubitem}{\color{black}$\bullet$}
+	\makeatother
+	\setbeamertemplate{footline}
+	{
+	\leavevmode
+	\def\arraystretch{1.2}
+	\arrayrulecolor{gray}
+	\begin{tabular}{ p{0.167\textwidth} | p{0.491\textwidth} | p{0.089\textwidth} | p{0.103\textwidth}}
+	\hline
+	\strut\insertshortauthor & \insertshorttitle & Slide \insertframenumber{}% / \inserttotalframenumber{}
+	 & May 4, 2016\\
+	\end{tabular}
+	}
+	\setbeamertemplate{headline}
+	{
+	\leavevmode
+	\setlength{\arrayrulewidth}{1pt}
+	\hspace*{2em}	
+	\begin{tabular}{p{0.63\textwidth}}
+	\rule{0pt}{3em}\normalsize{\textbf{\insertsection\strut}}\\
+	\arrayrulecolor{htworange}
+	\hline
+	\end{tabular}
+	\begin{tabular}{l}
+	\rule{0pt}{4em}\includegraphics[width=3.25cm]{\customDir _LaTeX_master/HTW_GESAMTLOGO_CMYK.eps}\\
+	\end{tabular}
+	}
+	\makeatletter	
+}{	
+	%-- Für Spicker einiges anders:
+	\ifthenelse{\equal{\customDocumentClass}{cheatsheet}}{
+		\documentclass[a4paper,10pt,landscape]{scrartcl}
+		\usepackage{geometry}
+		\geometry{top=2mm, bottom=2mm, headsep=0mm, footskip=0mm, left=2mm, right=2mm}
+		
+		% Für Spicker \spsection für Section, zur Strukturierung \HRule oder \HDRule Linie einsetzen
+		\usepackage{multicol}
+		\newcommand{\spsection}[1]{\textbf{#1}}	% Platzsparende "section" für Spicker
+	}{	%-- Ende Spicker-Unterscheidung-if
+		%-- Unterscheidung Doppelseitig
+		\ifthenelse{\boolean{twosided}}{
+			\documentclass[a4paper,11pt, footheight=26pt,twoside]{\customDocumentClass}
+			\usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
+			\geometry{top=30mm, bottom=22mm, headsep=10mm, footskip=12mm, inner=27mm, outer=13mm}
+		}{
+			\documentclass[a4paper,11pt, footheight=26pt]{\customDocumentClass}
+			\usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
+			\geometry{top=30mm, bottom=22mm, headsep=10mm, footskip=12mm, left=20mm, right=20mm}
+		}
+		%-- Nummerierung bis Subsubsection für Report
+		\ifthenelse{\equal{\customDocumentClass}{report} \OR \equal{\customDocumentClass}{scrreprt}}{
+			\setcounter{secnumdepth}{3}	% zählt auch subsubsection
+			\setcounter{tocdepth}{3}	% Inhaltsverzeichnis bis in subsubsection
+		}{}
+	}%-- Ende Spicker-Unterscheidung-else
+	
+	\usepackage{scrlayer-scrpage}	% Kopf-/Fußzeile
+	\renewcommand*{\thefootnote}{\fnsymbol{footnote}}	% Fußnoten-Symbole anstatt Zahlen
+	\renewcommand*{\titlepagestyle}{empty} % Keine Seitennummer auf Titelseite
+	\usepackage[perpage]{footmisc}	% Fußnotenzählung Seitenweit, nicht Dokumentenweit
+}
+
+% Input inkl. Umlaute, Silbentrennung
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\usepackage[english,ngerman]{babel}
+\usepackage{csquotes}	% Anführungszeichen
+\RequirePackage{marvosym}
+\usepackage{eurosym}
+
+% Style-Aufhübschung
+\usepackage{soul, color}	% Kapitälchen, Unterstrichen, Durchgestrichen usw. im Text
+%\usepackage{titleref}
+\usepackage[breakwords, fit]{truncate}	% Abschneiden von Sätzen
+\renewcommand{\TruncateMarker}{\,…}
+
+% Mathe usw.
+\usepackage{amssymb}
+\usepackage{amsthm}
+\ifthenelse{\equal{\customDocumentClass}{beamer}}{}{
+\usepackage[fleqn,intlimits]{amsmath}	% fleqn: align-Umgebung rechtsbündig; intlimits: Integralgrenzen immer ober-/unterhalb
+}
+%\usepackage{mathtools} % u.a. schönere underbraces
+\usepackage{xcolor}
+\usepackage{esint}	% Schönere Integrale, \oiint vorhanden
+\everymath=\expandafter{\the\everymath\displaystyle}	% Mathe Inhalte werden weniger verkleinert
+\usepackage{wasysym}	% mehr Symbole, bspw \lightning
+%\renewcommand{\int}{\int\limits}
+%\usepackage{xfrac}	% mehr fracs: sfrac{}{}
+\let\oldemptyset\emptyset	% schöneres emptyset
+\let\emptyset\varnothing
+%\RequirePackage{mathabx}	% mehr Symbole
+\mathchardef\mhyphen="2D	% Hyphen in Math
+
+% tikz usw.
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.11}	% Umgeht Fehlermeldung
+\usetikzlibrary{graphs}
+%\usetikzlibrary{through}	% ???
+\usetikzlibrary{arrows}
+\usetikzlibrary{arrows.meta}	% Pfeile verändern / vergrößern: \draw[-{>[scale=1.5]}] (-3,5) -> (-3,3);
+\usetikzlibrary{automata,positioning} % Zeilenumbruch im Node node[align=center] {Text\\nächste Zeile} automata für Graphen
+\usetikzlibrary{matrix}
+\usetikzlibrary{patterns}	% Schraffierte Füllung
+\usetikzlibrary{shapes.geometric}	% Polygon usw.
+\tikzstyle{reverseclip}=[insert path={	% Inverser Clip \clip
+	(current page.north east) --
+	(current page.south east) --
+	(current page.south west) --
+	(current page.north west) --
+	(current page.north east)}
+% Nutzen: 
+%\begin{tikzpicture}[remember picture]
+%\begin{scope}
+%\begin{pgfinterruptboundingbox}
+%\draw [clip] DIE FLÄCHE, IN DER OBJEKT NICHT ERSCHEINEN SOLL [reverseclip];
+%\end{pgfinterruptboundingbox}
+%\draw DAS OBJEKT;
+%\end{scope}
+%\end{tikzpicture}
+]	% Achtung: dafür muss doppelt kompliert werden!
+\usepackage{graphpap}	% Grid für Graphen
+\tikzset{every state/.style={inner sep=2pt, minimum size=2em}}
+\usetikzlibrary{mindmap, backgrounds}
+%\usepackage{tikz-uml}	% braucht Dateien: http://perso.ensta-paristech.fr/~kielbasi/tikzuml/
+
+% Tabular
+\usepackage{longtable}	% Große Tabellen über mehrere Seiten
+\usepackage{multirow}	% Multirow/-column: \multirow{2[Anzahl der Zeilen]}{*[Format]}{Test[Inhalt]} oder \multicolumn{7[Anzahl der Reihen]}{|c|[Format]}{Test2[Inhalt]}
+\renewcommand{\arraystretch}{1.3} % Tabellenlinien nicht zu dicht
+\usepackage{colortbl}
+\arrayrulecolor{gray}	% heller Tabellenlinien
+\usepackage{array}	% für folgende 3 Zeilen (für Spalten fester breite mit entsprechender Ausrichtung):
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{\dimexpr#1\columnwidth-2\tabcolsep-1.5\arrayrulewidth}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{\dimexpr#1\columnwidth-2\tabcolsep-1.5\arrayrulewidth}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{\dimexpr#1\columnwidth-2\tabcolsep-1.5\arrayrulewidth}}
+\usepackage{caption}	% Um auch unbeschriftete Captions mit \caption* zu machen
+
+% Nützliches
+\usepackage{verbatim}	% u.a. zum auskommentieren via \begin{comment} \end{comment}
+\usepackage{tabto}	% Tabs: /tab zum nächsten Tab oder /tabto{.5 \CurrentLineWidth} zur Stelle in der Linie
+\NumTabs{6}	% Anzahl von Tabs pro Zeile zum springen
+\usepackage{listings} % Source-Code mit Tabs
+\usepackage{lstautogobble} 
+\ifthenelse{\equal{\customDocumentClass}{beamer}}{}{
+\usepackage{enumitem}	% Anpassung der enumerates
+%\setlist[enumerate,1]{label=(\arabic*)}	% global andere Enum-Items
+\renewcommand{\labelitemiii}{$\scriptscriptstyle ^\blacklozenge$} % global andere 3. Item-Aufzählungszeichen
+}
+\usepackage{letltxmacro} % neue Definiton von Grundbefehlen
+% Nutzen:
+%\LetLtxMacro{\oldemph}{\emph}
+%\renewcommand{\emph}[1]{\oldemph{#1}}
+\RequirePackage{xpatch}	% ua. Konkatenieren von Strings/Variablen (etoolbox)
+\usepackage{xstring}	% String Operationen
+\usepackage{minibox}	% Minibox anstatt \fbox{} für Boxen mit Zeilenumbruch
+
+
+% Einrichtung von lst
+\lstset{
+basicstyle=\ttfamily, 
+%mathescape=true, 
+%escapeinside=^^, 
+autogobble, 
+tabsize=2,
+basicstyle=\footnotesize\sffamily\color{black},
+frame=single,
+rulecolor=\color{lightgray},
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+commentstyle=\color{gray},
+keywordstyle=\color{green},
+stringstyle=\color{orange},
+morecomment=[l][\color{magenta}]{\#}
+showspaces=false,
+showstringspaces=false,
+breaklines=true,
+literate=%
+    {Ö}{{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}1
+    {ü}{{\"u}}1
+    {ä}{{\"a}}1
+    {ö}{{\"o}}1
+    {~}{{\textasciitilde}}1
+}
+\usepackage{scrhack} % Fehler umgehen
+\def\ContinueLineNumber{\lstset{firstnumber=last}} % vor lstlisting. Zum wechsel zum nicht-kontinuierlichen muss wieder \StartLineAt1 eingegeben werden
+\def\StartLineAt#1{\lstset{firstnumber=#1}} % vor lstlisting \StartLineAt30 eingeben, um bei Zeile 30 zu starten
+\let\numberLineAt\StartLineAt
+
+% BibTeX
+\usepackage[bibencoding=ascii,
+backend=bibtex8,
+%style=authortitle, citestyle=authortitle-ibid,
+%doi=false,
+%isbn=false,
+%url=false
+]{biblatex}	% BibTeX
+\usepackage{makeidx}
+%\makeglossary
+%\makeindex
+
+% Grafiken
+\usepackage{graphicx}
+\usepackage{epstopdf}	% eps-Vektorgrafiken einfügen
+\usepackage{transparent}	% transparent nutzen: {\transparent{0.4} ...}
+%\epstopdfsetup{outdir=\customDir}
+% Prüft, ob Grafik existiert (mit \ifvalidimage{}{}) [Quelle: https://tex.stackexchange.com/a/99176]:
+\makeatletter
+\newif\ifgraphicexist
+\catcode`\*=11
+\newcommand\ifvalidimage[1]{%
+    \begingroup
+    \global\graphicexisttrue
+    \let\input@path\Ginput@path
+    \filename@parse{#1}%
+    \ifx\filename@ext\relax
+    \@for\Gin@temp:=\Gin@extensions\do{%
+        \ifx\Gin@ext\relax
+        \Gin@getbase\Gin@temp
+        \fi}%
+    \else
+    \Gin@getbase{\Gin@sepdefault\filename@ext}%
+    \ifx\Gin@ext\relax
+    \global\graphicexistfalse
+    \def\Gin@base{\filename@area\filename@base}%
+    \edef\Gin@ext{\Gin@sepdefault\filename@ext}%
+    \fi
+    \fi
+    \ifx\Gin@ext\relax
+    \global\graphicexistfalse
+    \else 
+    \@ifundefined{Gin@rule@\Gin@ext}%
+    {\global\graphicexistfalse}%
+    {}%
+    \fi  
+    \ifx\Gin@ext\relax 
+    \gdef\imageextension{unknown}%
+    \else
+    \xdef\imageextension{\Gin@ext}%
+    \fi 
+    \endgroup 
+    \ifgraphicexist
+    \expandafter \@firstoftwo
+    \else
+    \expandafter \@secondoftwo
+    \fi 
+} 
+\catcode`\*=12
+\makeatother
+\usepackage{letltxmacro}	% Latex-Befehle unter anderem Namen neu definieren
+\LetLtxMacro{\forceincludegraphics}{\includegraphics}	% neuer Befehl für includegraphics
+\renewcommand{\includegraphics}[2][]{	% altes includegraphics neu definieren, damit es auch nicht vorhandene einfügt
+\ifvalidimage{#2}{
+\forceincludegraphics[#1]{#2}
+}{
+\message{Achtung: Grafik wurde nicht gefunden: '#2'}
+\minibox[frame]{
+\textbf{\StrSubstitute{#2}{_}{\_}}%  \ifthenelse{\isempty{#1}}{}{\\\textit{#1}}
+}}}
+
+% pdf-Setup
+\usepackage{pdfpages}
+\ifthenelse{\equal{\customDocumentClass}{beamer}}{}{
+\usepackage[bookmarks,%
+bookmarksopen=false,% Klappt die Bookmarks in Acrobat aus
+colorlinks=true,%
+linkcolor=black,%
+citecolor=red,%
+urlcolor=green,%
+]{hyperref}
+}
+
+%-- Unterscheidung des Stils
+\newcommand{\customLogo}{}
+\newcommand{\customPreamble}{}
+\ifthenelse{\equal{\customDesign}{htw}}{
+	% HTW Corporate Design: Arial (Helvetica)
+	\usepackage{helvet}
+	\renewcommand{\familydefault}{\sfdefault}
+	\renewcommand{\customLogo}{HTW-Logo}
+	\renewcommand{\customPreamble}{HTW Dresden}
+}{
+% \renewcommand{\customLogo}{HTW-Logo.eps}
+}
+
+% Nach Dokumentenbeginn ausführen:
+\AtBeginDocument{
+	% Autor und Titel für pdf-Eigenschaften festlegen, falls noch nicht geschehen
+	\providecommand{\pdfAuthor}{John Doe}
+	\ifdefempty{\customAuthor} {} {\renewcommand{\pdfAuthor}{\customAuthor}}
+	\providecommand{\pdfTitle}{}
+	\providecommand{\pdfTitleA}{}
+	\providecommand{\pdfTitleB}{}
+	\providecommand{\pdfTitleC}{}	
+	\ifdefempty{\pdfTitle}{
+		\ifdefempty{\customPreamble} {} {\renewcommand{\pdfTitleA}{\customPreamble{} | }}
+		\ifdefempty{\customTitle} {\renewcommand{\pdfTitleB}{No Title}} {\renewcommand{\pdfTitleB}{\customTitle}}
+		\ifdefempty{\customSubtitle} {} {\renewcommand{\pdfTitleC}{ - \customSubtitle}}
+	}{}
+	
+	\newcommand{\customLogoLocation}{\customDir _LaTeX_master/\customLogo}
+	\hypersetup{
+		pdfauthor={\pdfAuthor},
+		pdftitle={\pdfTitleA\pdfTitleB\pdfTitleC},
+	}
+	\ifthenelse{\equal{\customDocumentClass}{beamer}}{
+		\title{\customTitle}
+		\author{\customAuthor}
+	}{
+		\automark[section]{section}
+		\automark*[subsection]{subsection}
+		\pagestyle{scrheadings}
+		\ifthenelse{\equal{\customDocumentClass}{report} \OR \equal{\customDocumentClass}{scrreprt}}{
+		\renewcommand*{\chapterpagestyle}{scrheadings}
+		}{}
+		%\renewcommand*{\titlepagestyle}{scrheadings}
+		\ihead{\includegraphics[height=1.7em]{\customLogoLocation}}
+		%\ohead{\truncate{4cm}{\customTitle}}
+		\chead{\truncate{.5\textwidth}{\headmark}}
+		\ohead{\customTitle}
+		\cfoot{\pagemark}
+		\ofoot{\customSignature}
+		% Titelseite
+		\title{
+		\includegraphics[width=0.35\textwidth]{\customDir _LaTeX_master/\customLogo}\\\vspace{0.5em}
+		\Huge\textbf{\customTitle}
+		\ifdefempty{\customSubtitle} {} {\\\vspace*{0.7em}\Large \customSubtitle}
+		\\\vspace*{5em}}
+		\author{
+		\ifdefempty{\customNoteA} {} {\customNoteA \vspace*{1em}}\\ 
+		\ifdefempty{\customAuthor} {} {\customTitleAuthor}
+		\ifdefempty{\customNoteB}{}{\vspace*{1em}\\\customNoteB}
+		}
+		
+		\ifthenelse{\equal{\customDocumentClass}{cheatsheet}}{
+			\pagestyle{empty}
+			\setlist{nolistsep}
+	%		\usepackage{parskip}	% Aufzählung Abstand
+	%		\setlength{\parskip}{0em}
+			\lstset{
+	    belowcaptionskip=0pt,
+	    belowskip=0pt,
+	    aboveskip=0pt,
+			tabsize=2,
+			frame=none,
+			numbers=none,
+			showspaces=false,
+			showstringspaces=false,
+			breaklines=true,
+			}
+		}{}
+	}
+}
+
+% Unterabschnitte
+%\newtheorem{example}{Beispiel}%[section]
+%\newtheorem{definition}{Definition}[section]
+%\newtheorem{discussion}{Diskussion}[section]
+%\newtheorem{remark}{Bemerkung}[section]
+%\newtheorem{proof}{Beweis}[section]
+%\newtheorem{notation}{Schreibweise}[section]
