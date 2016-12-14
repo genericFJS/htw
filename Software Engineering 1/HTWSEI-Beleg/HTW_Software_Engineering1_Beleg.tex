@@ -19,6 +19,7 @@
 \input{\customDir _LaTeX_master/LaTeX_master.sty}
 \input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
 
+\usepackage{adjustbox}
 %\bibliography{\customDir _Literatur/HTW_Literatur.bib}
 
 \begin{document}
@@ -29,7 +30,9 @@
 \tableofcontents
 \newpage
 
-\chapter{Aufgabe 1}
+\chapter*{Aufgabe 1: Anforderungsanalyse}
+\addtocounter{chapter}{1}
+\addcontentsline{toc}{chapter}{Aufgabe 1: Anforderungsanalyse}
 \section{Funktionale Anforderungen}
 \subsection*{Anwesenheit verwalten}
 \begin{itemize}
@@ -40,6 +43,10 @@
 \item zurückweisen
 \end{itemize}
 \item Übersicht der Anwesenden bereitstellen
+\begin{itemize}
+\item für Sicherheitsdienst von allen
+\item für Abteilungsleiter von Abteilung
+\end{itemize}
 \end{itemize}
 \subsection*{Abwesenheit verwalten}
 \begin{itemize}
@@ -63,7 +70,9 @@
 \item Krankheitszeiten verwalten
 \begin{itemize}
 \item Krankheitsdaten erfassen 
+\begin{itemize}
 \item Urlaubsdaten anpassen
+\end{itemize}
 \end{itemize}
 \end{itemize}
 \subsection*{Auswertung}
@@ -99,6 +108,7 @@
 \begin{itemize}
 \item Hardware für Benutzerinteraktion wird bereitgestellt
 \item Mitarbeiterausweis ist vorhanden
+\item Mitarbeiterausweis von anwesenden MA wird auf Firmengelände Raumweise ermittelt
 \end{itemize}
 \subsection{rechtlich}
 \begin{itemize}
@@ -111,6 +121,112 @@
 \item Zugriff auf Jahreskalender
 \end{itemize}
 
+\chapter*{Aufgabe 2: Auslöser-Reaktions-Tabelle}
+\addtocounter{chapter}{1}
+\addcontentsline{toc}{chapter}{Aufgabe 2: Auslöser-Reaktions-Tabelle}
+
+\adjustbox{width=\linewidth}{
+\begin{tabular}{L{.25} | L{.25} | L{.2} | L{.2} | L{.4}}
+Ereignis & funktionale Anforderungen & Eingabe-Daten & Ausgabe-Daten &Bemerkung (Q,R)\\
+\hline 
+Person betritt/verlässt Firma & Anwesenheit erfassen & Mitarbeiterausweis & Ablehnung & Ablehnung nur bei ungültiger MA\_ID\\\hline
+Neue Stunde zwischen 22 und 6 Uhr & Anwesenheitsliste bereitstellen & & Anwesenheitsliste & aller Mitarbeiter an Sicherheitsdienst\\ \hline
+Mitarbeiter beantragt Urlaub & Urlaubsantrag einreichen & Urlaubsantrag &  & \\\hline
+Abteilungsleiter genehmigt Urlaubsantrag & Urlaubsantrag genehmigen & Urlaubs\_ID &  &\\\hline
+Abteilungsleiter lehnt Urlaubsantrag ab& Urlaubsantrag ablehnen & Urlaubs\_ID &  & \\\hline
+MA ruft Urlaubsinform. ab& Urlaubsinformationen anzeigen & MA\_ID & Urlaubsinformationen & Abteilungsleiter kann zusätzlich Urlaubsinf. seiner MA abrufen\\\hline
+MA storniert Urlaub & Urlaub stornieren & Urlaubs\_ID & & Urlaubsinformation werden gelöscht, wenn Voraussetzung erfüllt(offen / abgelehnt / genehmigt und nicht angetreten)\\\hline
+Urlaubsvorschlag an MA unterbreiten& Urlaubsvorschlag erstellen& MA\_ID & & \\\hline
+MA nimmt Urlaubsvorschlag an & Urlaubsvorschlag annehmen & Urlaubs\_ID & & \\\hline
+MA lehnt Urlaubsvorschlag ab & Urlaubsvorschlag ablehnen & Urlaubs\_ID & & \\\hline
+MA meldet sich krank & Krankmeldung erfassen & Krankenschein & & Urlaubsdaten werden korrigiert \\\hline
+Woche ist zu Ende& Arbeitszeitauswertung versenden & & & E-Mail versenden\\\hline
+Abteilungsleiter fordert Auswertung an& Auswertung anfordern & 2* Zeitraum & Auswertung & Zeiträume: in Zukunft für Gesamtbilanz, in Vergangenheit für Urlaubszeitbilanz. Auswertung besteht aus Gesamtbilanz, Urlaubsbilanz und Anwesenheitsliste der Abteilung des Abteilungsleiters
+\end{tabular}
+}
+\chapter*{Aufgabe 3: Datenstruktur}
+\addtocounter{chapter}{1}
+\addcontentsline{toc}{chapter}{Aufgabe 3: Datenstruktur}
+\section{Mitarbeiterausweis}
+\begin{itemize}
+\item MA\_ID
+\item Gültigkeit
+\item Vorname
+\item Name
+\item Geburtsdatum
+\end{itemize}
+\section{Ablehnung}
+\begin{itemize}
+\item Ablehnung
+\end{itemize}
+\section{Anwesenheitsliste}
+Liste: 
+\begin{itemize}
+\item MA\_ID
+\item Name
+\item Raum
+\end{itemize}
+\section{Urlaubsantrag}
+\begin{itemize}
+\item MA\_ID
+\item Urlaubs\_ID
+\item Zeitraum
+\end{itemize}
+\section{Urlaubs\_ID}
+\begin{itemize}
+\item Identifikationsnummer
+\end{itemize}
+\section{Urlaubsinformationen}
+\begin{itemize}
+\item Anzahl verbrauchter Urlaubstage
+\item Anzahl verbleibender Urlaubstage
+\end{itemize}
+Liste: 
+\begin{itemize}
+\item Urlaubs\_ID
+\item Zeitraum
+\item Status
+\end{itemize}
+\section{Krankenschein}
+\begin{itemize}
+\item Mit\_ID
+\item Zeitraum
+\end{itemize}
+\section{Zeitraum}
+\begin{itemize}
+\item Start-Datum
+\item End-Datum
+\end{itemize}
+\section{Auswertung}
+\begin{itemize}
+\item Gesamtbilanz
+\begin{itemize}
+\item Sollarbeitszeit
+\item tatsächliche Arbeitsstunden
+\item der Urlaubstage
+\item Krankheitstage
+\item Überstunden
+\end{itemize}
+jeweils: 
+\begin{itemize}
+\item[]
+\begin{itemize}
+\item absolut
+\item prozentual
+\end{itemize}
+\end{itemize}
+\item Urlaubszeitbilanz
+\begin{itemize}
+\item beantragte Urlaubstage\\
+(bezogen auf Gesamtarbeitszeit)
+\begin{itemize}
+\item absolut
+\item prozentual
+\end{itemize}
+\end{itemize}
+\item Anwesenheitsliste\\
+(der Mitarbeiter in der Abteilung)
+\end{itemize}
 %\newpage
 
 %\printbibliography
