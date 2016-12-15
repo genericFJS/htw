@@ -28,6 +28,12 @@
 \newpage
 \tableofcontents
 \newpage
+\chapter*{Vorbemerkung}
+2 Teile (jeweils 50 Punkte)
+\begin{itemize}
+\item Praktikum (kleine Anforderungsanalyse, vgl. Belegarbeit)
+\item Vorlesung (Fragen, wie sie auch auf den Folien formuliert sind)
+\end{itemize}
 
 \chapter{Einführung}
 \slides{1}{3}
@@ -865,6 +871,60 @@ Datei-System
 \draw [blue] (-8,-2) -- (-8,0) -- (-2,0);
 \draw [orange]  (-5,5) rectangle (9,-5) node[below left]{Entwurfsmuster: Kompositum (Composite)};
 \end{tikzpicture}
+
+\subsubsection{Perspektiven}
+Drei Perspektiven eines Klassendiagramms:
+\begin{enumerate}
+\item \emph{Analyse}-Klassendiagramm\\
+Perspektive des Kunden:\\
+Sicht auf Klasssen\emph{kandidaten} aus dem Anwendungskontext
+
+„was muss gemacht werden?“\\
+OOA
+\item \emph{Entwurfs}-Klassendiagramm\\
+Perspektive des Entwerfers:\\
+Sicht auf die \emph{Schnittstellen} der Klassen und ihre Beziehungen $\to$ alle \emph{öffentlichen} Operationen\\
+Grobentwurf (Systemarchitektur) $\to$ Feinentwurf (Komponenten-Entwurf)
+
+„wie muss das aus der Analyse gemacht werden $\Rightarrow$ wer macht was?“\\
+OOD
+\item \emph{Implementations}-Klassendiagramm\\
+Perspektive des Entwicklers (Programmierers):\\
+Sicht auf \emph{alle} Details einer Klasse\\
+(Attribute, Operationen [Signaturen: \lstinline$... funktname (...)$; auch: Prototyp, Funktionskopf])
+
+„wie wird der Entwurf tatsächlich umgesetzt?“\\
+OOP
+\end{enumerate}
+
+% Folie 1
+
+\section{Essentielle Funktionen}
+Was ist eine essentielle Funktion?\\
+\begin{tabular}{L{.2} | L{.2} | L{.15} | L{.15} | L{.25}}
+Ereignis & funktionale Anforderungen & Eingabe-Daten & Ausgabe-Daten &Bemerkung (Q,R)\\
+\hline\hline
+beliebige Person will im Katalog suchen & im Katalog suchen & Suchanfrage & Suchantwort & --\\\hline
+Person will sich anmelden & Benutzer anmelden & Anmeldewunsch & Benutzerausweis / Absage & beim wiederholten Anmelden $\to$ Absage\\\hline
+Benutzer will sich abmelden & Benutzer abmelden & … & … & …\\\hline
+Benutzer will Daten ändern & Benutzerdaten ändern & … & … & …\\\hline
+Benutzer will Gültigkeit verlängern & Benutzerausweis verlängern & … & … & …
+\end{tabular}\\
+Benutzerdaten verwalten besteht aus Benutzer anmelden/abmelden, Benutzerdaten ändern und Benutzerausweis verlängern.\\
+Benutzer anmelden $\to$ essentielle Funktion\\
+Benutzerdaten verwalten $\to$ essentielle \emph{Gruppe}\\\bigskip
+
+Eine essentielle Funktion ist:
+\begin{itemize}
+\item kleinste, von anderen essentielle Funktion \emph{unabhängige} Funktion
+\item hat genau einen \emph{Auslöser}
+\begin{itemize}
+\item datengetrieben ($\to$ Eingabedaten)
+\item zeitlich
+\end{itemize}
+\item hat kein, eine oder mehrere Reaktionen ($\to$ Ausgabedaten)
+\item wiederholbar, ohne dass dazwischen eine essentielle Funktion ausgeführt werden muss
+\end{itemize}
 
 \chapter{Konfigurationsverwaltung}
 \section{Der Sinn von Konfigurationsverwaltung}
