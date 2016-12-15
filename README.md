@@ -23,7 +23,7 @@ Diese von mir erstellten Dateien dürfen beliebig für den privaten Gebrauch wei
 
 Ohne meine explizite Zustimmung ist es nicht erlaubt die von mir erstellten Dateien:
 - Über den privaten Gebrauch hinaus gehend zu verwenden. 
-- Außerhalb dieses Repos hochzuladen und anzubieten.
+- Außerhalb dieses Repos hochzuladen und anzubieten (forken ist natürlich erlaubt).
 
 ### Dateien von dritten
 
