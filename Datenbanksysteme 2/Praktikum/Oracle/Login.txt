@@ -1,0 +1,6 @@
+Verbindungsname:	s-Nummer
+Benutzer:			s-Nummer
+Kennwort:			s-Nummer
+IP:					141.56.2.45
+Port:					1521
+SJD:					orcl

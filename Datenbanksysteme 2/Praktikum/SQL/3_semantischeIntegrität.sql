@@ -192,3 +192,17 @@ SELECT * FROM Bprotokoll
 -- geeigneter Primärschlüssel: Kompositschlüssel aus Nutzer und Zeit
 
 -- 5.5
+CREATE TRIGGER dMitarbeiter ON Mitarbeiter FOR DELETE
+AS
+	DELETE Bprotokoll WHERE Bprotokoll.MitID IN (
+		SELECT MitID
+		FROM deleted)
+RETURN
+
+
+INSERT INTO Mitarbeiter VALUES(946, 'Test', 'Torsten', DEFAULT , '01.02.1983', DEFAULT, 'niemals')
+UPDATE Mitarbeiter SET Beruf = 'Halbgott' WHERE MitID = 946
+UPDATE Mitarbeiter SET Beruf = 'Gott' WHERE MitID = 946
+UPDATE Mitarbeiter SET Beruf = '42' WHERE MitID = 946
+SELECT * FROM Mitarbeiter
+DELETE Mitarbeiter WHERE MitID=946
