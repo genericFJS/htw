@@ -1626,13 +1626,13 @@ $\Rightarrow \EE S = 800 \quad \var S = \var \left( \sum_{i=1}^{200} X_i\right)=
 \begin{anumerate}
 \item
 \begin{align*}
-\PP(S \leq 795) &= \PP( S - \EE S \leq 79 - \EE S) \\
+\PP(S \leq 795) &= \PP( S - \EE S \leq 795 - \EE S) \\
 &= \PP\left(\underbrace{\frac{S - \EE S}{\sqrt{\var S}}}_{Z}\leq \frac{795-\EE S}{\sqrt{ \var S}}\right)\\
 &= \PP\left( Z \leq \frac{-5}{\sqrt{18}}\right)\\
 &= \PP(Z \leq - 1,1785)\\
 &\approx \PP(Z \leq - 1,18) \qquad \text{(runden)}\\
 &\approx \Phi(-1,18) \qquad \text{(ZGWS)}\\
-&= 1- \Phi(-1,18) = 1-0,881 = 0,119
+&= 1- \Phi(1,18) = 1-0,881 = 0,119
 \end{align*}
 Wahrscheinlichkeit ist etwa $20\%$.
 \item Gesucht: Gewicht $a$ mit $\PP(S > a) = 0,99$
