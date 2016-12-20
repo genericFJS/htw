@@ -1615,8 +1615,8 @@ $\sigma^2=\var(X_n)=\underbrace{\frac{1}{6}(1^2+\ldots + 6^2}_{\EE(X_n^2)}-\unde
 
 \cparagraph{Beispiel} Es werden Schrauben mit einem zufälligen Gewicht mit EW $4\unit{g}$ und Standardabweichung $0,3\unit{g}$ hergestellt. Berechnen Sie mit dem ZGWS (unter Annahme der Unabhängigkeit):
 \begin{anumerate}
-\item WK, dass der inhalt einer Packung mit $200$ Schrauben maximal $795\unit{g}$ wiegt.
-\item Welches Nettogewicht wird eine $200$er Packung mit WK $0,99$ überschreiten?
+\item WK, dass der inhalt einer Packung mit $200$ Schrauben maximal $795\unit{g}$ wiegt.\label{itm:1.4-10-a}
+\item Welches Nettogewicht wird eine $200$er Packung mit WK $0,99$ überschreiten?\label{itm:1.4-10-b}
 \end{anumerate}
 Lösung:\\
 $X_i$ … Gewicht der Schraube $i$ in Gramm, $i=1,\ldots, 200$\\
@@ -1645,6 +1645,179 @@ Wahrscheinlichkeit ist etwa $20\%$.
 \Leftrightarrow a =& 790,13
 \end{align*}
 \end{anumerate}
+
+\cparagraph{Bemerkung}
+Bei der Anwendung des ZGWS spielt oft die Gleichung
+$$\PP(\sum_{i=1}^n X_i \leq a) = p$$
+ein Rolle. Im Beispiel \ref{itm:1.4-10-a} war $p$ gesucht (mit $a$ und $n$ gegeben), in \ref{itm:1.4-10-b} war $a$ gesucht (mit $p$ und $n$ gegeben). 
+
+Es könnte auch mal $n$ gesucht sein (siehe Hausaufgabe).\\
+Spezialfall des ZWGS:
+\cparagraph{Satz} (von Moivre-Laplace)\\
+Gilt $S_n \sim \mathrm{Bin}(n,p)$, so gilt 
+$$\lim_{n\to \infty} \PP\left( \frac{S_n - np}{\sqrt{np (1-p)}} \leq z \right) = \Phi(z)$$
+bzw.
+$$\frac{S_n - np}{\sqrt{np (1-p)}} \overset{a}{\sim} \cN(0,1)\text{.}$$
+
+\cparagraph{Bemerkung}
+\begin{itemize}
+\item Satz sagt, dass für \emph{großes} $n$ nahezu $S_n \sim \cN(np, np(1-p))$ gilt.
+\item \emph{Faustregel} für großes $n$:
+$$np(1-p) \geq 9$$
+\item Sind $X_1, X_2, \ldots$ unabhängig identisch Bernoulli-verteilte ZVen mit Parameter $p$, dann
+$$\EE(X_1)=p, \quad \var (X_1) = p (1-p)$$
+und
+$$S_n = \sum_{i=1}^n X_i \sim \mathrm{Bin}(n,p)$$
+Formel aus Satz 1.4-14 folgt jetzt aus ZGWS.
+\end{itemize}
+
+\cparagraph{Beispiel} Betrachten den $12\, 000$-fachen Münzwurf. Frage: Wie groß ist die WK, dass die Anzahl der Ergebnisse „Zahl“ weniger als $20$ vom Erwartungswert abweichen?\\
+Lösung:\\
+$S$ … Anzahl des Eintretens von Zahl bei $12\, 000$ Würfen\\
+$\Rightarrow S\sim \mathrm{Bin}(12\,000,\; 0,5)$\\
+$\overset{\text{Moivre-Laplace}}{\Longrightarrow} S \overset{a}{\sim} \cN (6\,000, 3\,000)$\\
+Es gilt: $\EE(S)=12\,000 \cdot 0,5 = 6\,000$\\
+Gesucht: $\PP(|S-6\,000|\leq 19)$\\
+Wir berechnen diese WK approximativ mit Satz von Moivre-Laplace. Dazu: 
+$$\PP(|S-6\,000|\leq 19)=\PP(|S-6\,000|\leq 19,99) = \PP(|S-6\,000|\leq 19,5)$$
+Diese Werte wären theoretisch gleich (weil Verteilung diskret), in der Approximation (die dann stetig Verteilt ist) dann aber nicht mehr. Daher nehmen wir für die Approximation den Wert zwischen den beiden Extremen: die $19,5$ (Stetigkeits-Korrektur)!\\
+Damit gilt:
+\begin{align*}
+\PP(5\,980,5 \leq S \leq 6\,019,5)&\approx \Phi\left(\frac{6\,019,5-6\,000}{\sqrt{3\,000}}\right) - \Phi \left( \frac{5\,980,5-6\,000}{\sqrt{3\,000}}\right) \\
+&= 2 \Phi \left( \frac{19,5}{\sqrt{3\,000}}\right)-1 \\
+&= 0,27817416
+\end{align*}
+Bemerkung: Exakter Wert $\sum_{m=5\,901}^{6\,019} \binom{12\,000}{m}\cdot \left(\frac{1}{2}\right)^{12\,000}=0,2781725$
+
+\chapter{Statistik}
+\section{Deskriptive Statistik}
+\subsection{Grundbegriffe}
+\cparagraph{Definition} (Grundgesamtheit und Merkmale)
+\begin{itemize}
+\item Grundgesamtheit $\Omega$ … klar festgelegte Menge von gleichartigen Objekten, die hinsichtlich bestimmter Eigenschaften untersucht werden sollen
+\item $\omega \in \Omega$ … Merkmalsträger / statistische Einheit / Untersuchungseinheit
+\item Merkmal … die in der Grundgesamtheit zu untersuchende Eigenschaft
+\item Zustandsraum $S$ … Menge der möglichen Merkmalsausprägungen / unterschiedliche Eigenschaften
+\item $s \in S$ … Merkmalsausprägung\\
+Mathematische Darstellung:
+$$X: \Omega \to S, \; \omega \mapsto x$$
+\end{itemize}
+Beachte: $X$ ordnet jedem Element aus $\Omega$ ein Merkmal zu. $X$ wird daher oft selbst als \emph{Merkmal} bezeichnet.
+
+\cparagraph{Beispiel} (Notenspiegel)
+\begin{itemize}
+\item $\Omega = \{ \text{alle Schüler einer Klasse}\}$
+\item $S=\{1,2,3,4,5,6\}$
+\item $X$ … Funktion, welche jedem Schüler seine Zensur zuordnet, bspw. $X(\omega_1) = 3; \; X(\omega_2) = 5;$
+\end{itemize}
+
+\cparagraph{Beispiel} (medizinischer Fragebogen zur Pneumonie)
+\begin{itemize}
+\item $\Omega = \{ \text{alle Patienten, die in einem bestimmten Jahr an Pneumonie erkrankt sind}\}$
+\item abfrage Merkmale: Alter, Geschlecht, Größe, Dauer des Krankenhausaufenthalts
+\item Mehrdimensionaler Zustandsraum, z.B.:\\
+$X(\omega_1)=(65,"m",182\unit{cm},5\unit{d}) \in S$\\
+$X(\omega_2)=(34,"w",162\unit{cm},2\unit{d}) \in S$
+\item $X$ … Funktion, welche jedem Patienten seine Merkmals-Vektoren zuordnet
+\item Beachte: Mehrdimensionale Merkmale behandelt man in der \emph{multivariaten Statistik}
+\end{itemize}
+
+\cparagraph{Bemerkung} Merkmale lassen sich auf verschiedene Weisen in Klassen einteilen. Wir betrachten 3 dieser möglichen Einteilungen:
+\begin{enumerate}[label=(\Alph*)]
+\item Ein Merkmal heißt
+\begin{itemize}
+\item \emph{qualitatives Merkmal}, falls die Ausprägungen eine Qualität wiedergeben (und nicht ein Ausmaß). Insbesondere gibt es nur endlich viele Ausprägungen. Für qualitative Merkmale gibt es keine zwingende Ordnung/Reihenfolge.\\
+Beispiele: Geschlecht, Religionszugehörigkeit oder Parteipräferenz
+\item \emph{quantitatives Merkmal}, falls die Ausprägung ein Ausmaß bzw. eine Intensität wiederspiegeln. Die Ausprägungen sind in diesem Fall Zahlen (mit oder ohne Maßeinheit).\\
+Beispiele: Alter, Größe oder Einkommen.
+\end{itemize}
+\item Ein Merkmal heißt
+\begin{itemize}
+\item \emph{diskret}, wenn es endlich viele oder abzählbar unendlich viele Ausprägungen annehmen kann.\\
+Beispiele: Zensuren, Einwohnerzahl, Produktionszahlen einer Maschine an verschiedenen Tagen
+\item \emph{stetig}, wenn überabzählbar viele Ausprägungen angenommen werden können.\\
+Beispiele: Gewicht, Zeitmessung in $100\unit{m}$ Lauf, Länge einer Schraube
+\end{itemize}
+\item Ein Merkmal heißt
+\begin{itemize}
+\item \emph{nominalskaliert}, genau dann wenn es qualitativ ist (also qualitatives Merkmal = nominalskaliertes Merkmal)\\
+Beispiele: Geschlecht, Religionszugehörigkeit oder Parteipräferenz
+\item \emph{ordinalskaliert}, wenn es eine Rangordnung der Merkmalausprägung gibt, jedoch die Abstände zwischen den Merkmalsausprägungen nicht interpretiert werden können.\\
+Beispiele: Dienstrang beim Militär, Zufriedenheit mit Produkt (gut > mittel > schlecht)
+\item \emph{metrisch skaliert (oder karinalskaliert)}, falls es eine Rangordnung der Merkmalsausprägung gibt und die Abstände zwischen den Ausprägungen messbar und interpretierbar sind.\\
+Weitere Unterscheidung für metrisch skalierte Merkmale:
+\begin{itemize}
+\item \emph{Intervallskala:} natürlicher Nullpunkt existiert nicht\\
+Beispiele: IQ-Skala, Temperatur in Celsius-Skala, Jahreszahlen
+\item \emph{Verhältnisskala:} natürlicher Nullpunkt existiert\\
+Beispiele: Zeitdauer, Masse, Preis
+\end{itemize}
+\end{itemize}
+\end{enumerate}
+
+\cparagraph{Bemerkung} Statistisch Sinnvolle Auswertungen
+\begin{itemize}
+\item \emph{Nominalskala}
+\begin{itemize}
+\item Häufigkeiten durch Zählen der einzelnen Ausprägungen
+\item geeignetes Lagemaß: Modalwert
+\item kein sinnvolles Streuungsmaß
+\end{itemize}
+\item \emph{Ordinalskala}
+\begin{itemize}
+\item Häufigkeiten durch Zählen der einzelnen Ausprägungen
+\item geeignetes Lagemaß: Modalwert, Median
+\item geeignetes Streuungsmaß: Spannweweite
+\end{itemize}
+\item \emph{metrische Skala}
+\begin{itemize}
+\item Häufigkeiten durch Zählen der einzelnen Ausprägungen
+\item geeignetes Lagemaß: Modalwert, Median, arithmetisches Mittel
+\item geeignetes Streuungsmaß: Spannweite, Standardabweichung, Varianz, …
+\end{itemize}
+\end{itemize}
+
+\cparagraph{Bemerkung}
+\begin{itemize}
+\item Bei Nominal und Ordinalskala sind keine Rechenoperationen wie Addition, Subtraktion, Multiplikation oder Division erlaubt.
+\item Bei Intervallskala ist Differenzenbildung erlaubt (jedoch keine Quotienten), da kein natürlicher Nullpunkt existiert.
+\item Bei Verhältnisskala ist Quotientenbildung erlaubt (jedoch keine Differenzen), da natürlicher Nullpunkt existiert.
+\end{itemize}
+
+Nun wollen wir Stichproben einführen.\\
+Vorüberlegung:
+\begin{itemize}
+\item Ist $X: \Omega \to S, \; \omega \mapsto x$ ein Merkmal mit $S\subseteq \RR$ (metrische Skala), so interessiert uns wie dieses Merkmal auf der Grundgesamtheit (GG) verteilt ist, d.h. 
+$$F_X(z) = \PP(X \leq z)$$
+(das WK-Maß $\PP$ entsteht durch zufälliges (gleichverteiltes) rausgreifen eines Merkmalsträgers aus $\Omega$)\\
+Verteilung des Merkmals in $\Omega \leftrightsquigarrow$ Verteilung $\PP$ bzw. $FX$\\
+z.B. ein Viertel der Personen in der GG hat Körpergröße $> 1,8 \unit{m} \leftrightsquigarrow \PP(X > 1,8) = 0,25$
+\item Problem: Oft ist $\Omega$ zu groß, als dass man alle Werte $X(\omega), \; \omega \in \Omega$ erheben kann (Gründe sind etwa: Kosten, Zeit, …).
+\item Idee: Einschränkung auf möglichst „representative“ Teilmenge von Messungen der Merkmale. Berechnung der Kennzahlen, Eigenschaften, … auf dieser Teilmenge.
+\item Hoffnung: Diese Berechnung geben uns Aufschluss über die Zusammensetzung der Merkmale.
+\item Ziehen daher Stichprobe aus den Daten.
+\end{itemize}
+
+\cparagraph{Definition} Sei ein Merkmal $X$ gegeben und seien $X_1, \ldots, X_n$ unabhängige, identische wie $X$ verteilte Zufallsvariablen. Dann heißt der Vektor 
+$$\vec{X} = (X_1, \ldots, X_n)^T$$
+mathematische Stichprobe vom Umfang $n$. Jede Realisierung $\vec{x}=(x_1, \ldots, x_n)^T$ von $\vec{X}$ heißt konkrete Stichprobe (Beobachtungsreihe).
+
+\cparagraph{Bemerkung} Sei $X: \Omega \to S, \; \omega \mapsto x$ ein Merkmal
+\begin{itemize}
+\item Um die Stichprobe vom Umfang $n$ zu modellieren wählen wir $n$ unabhängige identisch (wie $X$) verteilte ZV:
+$$X_1, \ldots, X_n \qquad \text{(große Buchstaben)}$$
+(Vor der Beobachtung, Mathematische Stichprobe $\rightsquigarrow$ Induktive Statistik)
+\item Nach der Auswertung dieser Variablen (einsetzen von $\omega$) erhalten wir Realisierungen dieser Zufallsvariablen:
+$$x_1, \ldots, x_n \qquad \text{(kleine Buchstaben)}$$
+(Nach der Beobachtung, konkrete Stichprobe $\rightsquigarrow$ Deskriptive Statistik)
+\end{itemize}
+
+
+
+
+
+
+
 %\newpage
 %\printbibliography
 
