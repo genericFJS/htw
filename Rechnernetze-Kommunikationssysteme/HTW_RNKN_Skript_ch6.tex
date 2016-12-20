@@ -144,5 +144,89 @@ Probleme von IPv4:
 \subsubsection{Lösungsansätze zur Erreichbarkeit}
 Ein Server innerhalb von NAT soll erreicht werden
 \slides{25-ip-schicht_print}{50}
-\section{Zusammenfassung}
+\subsection{Zusammenfassung}
 \slides{25-ip-schicht_print}{51}
+
+\section{Routing-Protokolle}
+\subsection{Netzwerke als Graph}
+\slides{26-ip-routing_print}{3}
+
+\subsection{Metriken bei Netzwerken}
+Maß für die Güte einer Verbindung
+\slides{26-ip-routing_print}{4}
+
+\subsection{Routinalgorithmen}
+Wie erfolgt die Wegesuche im Internet?
+\slides{26-ip-routing_print}{5}
+
+\subsection{Distanzvektor Routing}
+\slides{26-ip-routing_print}{6}
+
+\subsubsection{Prinzip: Bellmann-Ford-Gleichung}
+\slides{26-ip-routing_print}{7}
+\slides{26-ip-routing_print}{8}
+\subsubsection{Ablauf}
+\slides{26-ip-routing_print}{9}
+\subsubsection{Beispiel für Distanzvektor Routing}
+Entfernungsmaß sei Übertragungszeit
+\slides{26-ip-routing_print}{10}
+\subsubsection{Änderung der Kosten:}
+\slides{26-ip-routing_print}{11}
+\subsubsection{Problem: Count-to-Infinity}
+\slides{26-ip-routing_print}{12}
+\subsubsection{RIP-Protokoll (RIPv2)}
+\slides{26-ip-routing_print}{13}
+\subsubsection*{RIP-Timer}
+\slides{26-ip-routing_print}{14}
+
+\subsection{Link State Routing}
+Routing in Fünf Schritten
+\slides{26-ip-routing_print}{15}
+\subsubsection{Dijkstra-Algorithmus}
+Berechnung des kürzesten Pfades von A nach B
+\slides{26-ip-routing_print}{16}
+\slides{26-ip-routing_print}{17}
+\subsubsection*{Beispiel}
+\slides{26-ip-routing_print}{18}
+\subsubsection*{Komplexitätsbetrachtung}
+\slides{26-ip-routing_print}{19}
+\subsubsection*{Probleme mit Oszillation bei netzlastabhängigen Metriken}
+\slides{26-ip-routing_print}{20}
+
+\subsubsection{Open Shortest Path First OSPF}
+\slides{26-ip-routing_print}{21}
+
+\subsection{Vergleich Routingprotokolle (Intra-AS)}
+\slides{26-ip-routing_print}{22}
+
+\subsection{Hierarchisches Routing -- Autonome Systeme (AS)}
+\slides{26-ip-routing_print}{23}
+\slides{26-ip-routing_print}{24}
+\slides{26-ip-routing_print}{25}
+\subsubsection*{Autonome Systeme}
+\slides{26-ip-routing_print}{26}
+
+\subsubsection{Beziehungen}
+Provider, Peers, Kunden
+\slides{26-ip-routing_print}{27}
+\subsubsection{3-Stufen Hierarchie}
+\slides{26-ip-routing_print}{28}
+
+\subsection{Border-Gateway-Protokoll (BGP)}
+\slides{26-ip-routing_print}{29}
+\subsubsection{Grundlagen:}
+\slides{26-ip-routing_print}{30}
+\subsubsection{Supernetting}
+\slides{26-ip-routing_print}{31}
+\subsubsection{Routenauswahl}
+Vereinfachte Auswahlregeln
+\slides{26-ip-routing_print}{32}
+\subsubsection{Routingrichtlinien: Beispiel mit 6 AS}
+\slides{26-ip-routing_print}{33}
+
+\subsection{AS in Deutschland}
+\slides{26-ip-routing_print}{34}
+
+\subsection{Zusammenfassung}
+\slides{26-ip-routing_print}{35}
+
