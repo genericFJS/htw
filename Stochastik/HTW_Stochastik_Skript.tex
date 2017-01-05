@@ -1812,6 +1812,114 @@ $$x_1, \ldots, x_n \qquad \text{(kleine Buchstaben)}$$
 (Nach der Beobachtung, konkrete Stichprobe $\rightsquigarrow$ Deskriptive Statistik)
 \end{itemize}
 
+\subsection{Eindimensionales Datenmaterial}
+Erinnerung:\\
+\begin{tabular}{C{0.49} C{0.49}}
+eindimensional & mehrdimensional\\
+\mpb[0.45]
+\begin{itemize}[leftmargin=*]
+\item $S=\{ 1, \ldots , 6\}$ (Schulnoten, Würfel)
+\item $S=\{0,1\}$ (Geschlecht, Münze, …)
+\end{itemize}
+\mpe
+&
+\mpb[0.45]
+\begin{itemize}[leftmargin=*]
+\item $S=\RR^2$ (Körpergröße und Gewicht)
+\item $S=\{1,\ldots,6\}^2$ (2 mal würfeln)
+\end{itemize}
+\mpe
+\\
+\end{tabular}
+
+\subsubsection{Stichprobenfunktionen}
+\cparagraph{Definition} Sei $(X_1, \ldots, X_n)$ eine mathematische Stichprobe. Sei $f$ eine Funktion auf $S^n$, also $f: S^n \to \RR, \; (x_1, \ldots, x_n) \mapsto f(x_1, \ldots, x_n) = y$.\\
+Dann heißt die Zufallsvariable 
+$$T:= f(X_1, \ldots , X_n)$$
+\emph{Stichprobenfunktion}.\\
+Es folgen spezielle Stichprobenfunktionen.
+
+\cparagraph{Definition} Sei $(X_1, \ldots, X_n)$ eine mathematische Stichprobe zum Merkmal $X$. Wir definieren:
+\begin{itemize}
+\item (Stichproben-)Mittelwert:
+$$\overline{X}=\frac{X_1+\ldots + X_n}{n}$$
+\item (Stichproben-)Streuung/Varianz
+$$S^2=\frac{1}{n-1} \sum_{i=1}^n (X_i - \overline{X})^2$$
+\item (Stichproben-)Standardabweichung
+$$S=\sqrt{S^2}$$
+\item Variationskoeffizient
+$$V=\frac{S}{\overline{X}}$$
+\item Spannweite
+$$R=\max (X_1, \ldots, X_n) - \min (X_1, \ldots, X_n) \bigskip$$
+Sei $X=(X_1, \ldots, X_n)$ dann bezeichnet 
+$$(X_{(1)}, X_{(2)}, \ldots, X_{(n)})$$ 
+den Vektor der geordneten Stichproben, d.h. 
+$$X_{(1)}\leq X_{(2)} \leq \ldots \leq X_{(n)}\text{.}$$
+Wir definieren damit
+\item $\alpha$-Quantil $\widetilde{X}_\alpha$ mittels
+$$\widetilde{X}_\alpha := \begin{cases}
+X_{(k)} & \text{falls }\alpha n\text{ keine ganze Zahl ist und }\\
+& k\text{ kleinste ganze Zahle größer }\alpha n\text{.}\\
+\frac{1}{2}(X_{(\alpha n)}+X_{\alpha n+1)}) & \text{falls }\alpha n\text{ ganzzahlig.}
+\end{cases}$$
+dann gilt:
+\begin{enumerate}
+\item höchstens $\alpha \cdot n$ Stichprobenwerte sind kleiner als $\widetilde{X}_\alpha$.
+\item höchstens $(a-\alpha) n$ SP-Werte sind größer als $\widetilde{X}_\alpha$
+\end{enumerate}
+\item Median $:=\widetilde{X}_{0,5}$
+\item Quartilsabstand (Inter-Quartil-Range)
+$$IQR = \widetilde{X}_{0,75}-\widetilde{X}_{0,25}$$
+\end{itemize}
+
+\cparagraph{Definition} Sei $X_1, \ldots, X_n$ eine mathematische Stichprobe. Dann heißt 
+$$S_n: \RR \to \RR, \; S_n(z)= \frac{\text{Anzahl der }X_i\text{ mit } X_1 \leq z}{n}$$
+empirische Verteilungsfunktion der Stichprobe.
+
+\cparagraph{Bemerkung} 
+\begin{itemize}
+\item Bezeichnungen für konkrete SP ($x_1, \ldots ,x_n$) analog, nur mit kleinen Buchstaben:
+$$\overline{x},\; s^2,\; s, \; v, \; \tilde{x}_\alpha, \; s_n(z) $$
+\item Stichproben-Mittelwert, -Varianz, -Standardabweichung, Variationskoeffizient sind nur sinnvoll für \emph{metrisch} skalierte Merkmale!
+\item Quantile, Median, IQR und empirische Verteilungsfunktionen auch sinnvoll für ordinal skalierte Daten.
+\item Fur nominal skalierte Merkmale ist keine der oben genannten Funktionen sinnvoll. Hier verwendet man z.B. den Modalwert (Häufigkeit aufgetretener Werte) zur Charakterisierung.
+\end{itemize}
+Die empirische Verteilungsfunktion $S_n$ ist eine Näherung der theoretischen Verteilungsfunktion $F$ von $X$:
+\cparagraph{Satz} (Glivenko-Cantelli, Hauptsatz der Statistik)\\
+Sei $X_1, X_2, \ldots$ eine Folge von unabhängigen, identisch mit Verteilungsfunktion F verteilten ZVen und $S_n$ die empirische VF von den ersten $n$ Zufallsvariablen. Dann gilt für jede noch so kleine Zahl $\varepsilon > 0$ und jedes $x \in \RR$:
+$$\lim_{n\to \infty} \PP(|S_n(x) - F(x)|<\varepsilon) = 1$$
+
+\subsubsection{Aufbereitung statistischer Daten am Beispiel}
+
+\cparagraph{Beispiel} $X$ … Anzahl der Störungen im Maschinenpark eines Betriebes in einer Woche
+\begin{itemize}
+\item $n=20$ Beobachtungen ($20$ verschiedene Wochen)
+\item konkrete Stichprobe:\\
+$(x_1, \ldots , x_{20}) = (4,2,6,3,3,1,5,2,2,1,0,4,2,5,5,3,7,2,1,3)$
+\item Beobachtete Ausprägungen $a_j$:\\
+$a_1=0, \; a_2 = 1, \ldots, \; a_8=7$
+\item Häufigkeitstabelle:\\
+\begin{tabular}{L{0.15} | L{0.15} | L{0.2} | L{0.15} | L{0.2}}
+Ausprägung $a_j$ & Abs. Häufigkeit $h_j$ & Summen der abs. Häufigkeiten $\sum_{i=1}^j h_i$ & relative Häufigkeit $w_j$ & Summe der rel. Häufigkeiten $s_j = \sum_{i=1}^j w_i$\\\hline
+0 & 1 & 1 & 0,05 & 0,05\\
+1 & 3 & 4 & 0,15 & 0,2\\
+2 & 5 & 9 & 0,25 & 0,45\\
+3 & 4 & 13 & 0,2 & 0,65\\
+4 & 2 & 15 & 0,1 & 0,75\\
+5 & 3 & 18 & 0,15 & 0,9\\
+6 & 1 & 19 & 0,05 & 0,95\\
+7 & 1 & 20 & 0,05 & 1
+\end{tabular}\\
+Beachte: bei metrisch oder ordinal skalierten Merkmalen ordnet man die Ausprägungen der Größe nach.\\
+Summen sind auch nur für metrisch oder ordinal skalierte Merkmale sinnvoll.
+\item Graphische Dartellung mittels Stabdiagramm:\\
+ABB R
+\begin{itemize}
+\item absolute/relative Häufung $h_j$/$w_j$ auf $y$-Achse
+\item Ausprägung $a_j$ auf $x$-Achse
+\end{itemize}
+\end{itemize}
+
 
 
 
