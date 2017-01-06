@@ -1077,9 +1077,326 @@ WHERE F.fid<3
 $\Rightarrow$ NF$^2$-Modell wäre schneller (keine 1. Normalform)
 \slides{3}{27}
 
+% Vorlesung
+
 \section{Objektorientiertes Datenmodell}
+\begin{tabular}{ll}
+\textbf{Konventionelles Programm}&\textbf{Objektorientiertes Programm}\\
+\mpb[.5]
+\begin{tikzpicture}
+
+\draw  (-4.5,3.5) rectangle (-0.5,2.5) node [midway]{Funktion};
+\draw  (-4.5,1.5) rectangle (-0.5,0.5) node [midway]{Funktion};
+\draw  (-4.5,-1.5) rectangle (-0.5,-0.5) node [midway]{Funktion};
+\draw[-latex] (-2.5,2.5) -- (-2.5,1.5);
+
+\draw [-latex](-2.5,0.5) -- (-2.5,-0.5);
+
+\draw  (2.5,3) ellipse (1 and 0.5)node{Datenmodell};
+\draw (1.5,3) -- (1.5,1.5);
+\draw (3.5,3) -- (3.5,1.5);
+
+\draw[-latex, gray] (-0.5,3) -- (1.5,2);
+
+\draw[-latex] (-0.5,-1) node (v1) {} -- (1,-1) -- (1,1) -- (-0.5,1);
+
+\draw[-latex, gray] (-0.5,-1) -- (1.5,2);
+\end{tikzpicture}
+\mpe&
+\mpb
+\begin{itemize}
+    \item Objekt:
+    \begin{itemize}
+        \item Daten
+        \item Funktion
+        \item Funktion
+        \item Funktion
+    \end{itemize}
+    
+    \item Objekt:
+    \begin{itemize}
+        \item Daten
+        \item Funktion
+    \end{itemize}
+    
+    \item Objekt:
+    \begin{itemize}
+        \item Daten
+        \item Funktion
+        \item Funktion
+    \end{itemize}
+\end{itemize}
+\mpe
+\end{tabular}
+\slides{3}{28}
+\begin{tikzpicture}
+
+\node at (-2,2) {KFZ};
+\draw  (-0.5,3) rectangle (2,2)node[midway]{Hersteller};
+\draw  (-0.5,2) rectangle (2,1)node[midway]{Baujahr};
+\draw  (-0.5,1) rectangle (2,0)node[midway]{KFz-KZ};
+\draw [-latex](-1.5,2) node (v1) {} -- (-0.5,2.5);
+
+\draw [-latex](v1) -- (-0.5,1.5);
+
+\draw [-latex](v1) -- (-0.5,0.5);
+\node at (-2,-1.5) {LKW};
+\node at (3,-1.5) {PKW};
+\draw (-2,1.5) node (v2) {} -- (-2,-1);
+
+\draw (v2) -- (-0.5,-0.5) -- (3,-1);
+\draw  (-4.5,-1) rectangle (-2.5,-1.5)node[midway]{Ladeflaeche};
+\draw  (-4.5,-1.5) rectangle (-2.5,-2)node[midway]{Nutzlast};
+\draw[-latex] (-2,-1.7) -- (-2.5,-1.8);
+
+\draw [-latex](-2,-1.3) -- (-2.5,-1.2);
+
+\node at (-2.5,-4) {Pickup};
+\draw (-2,-2) -- (-2.5,-3.5);
+
+\draw (3,-2) -- (-2,-3.5);
+\draw  (4,-1) rectangle (6.5,-1.5)node[midway]{Sitzplaetze};
+\draw[-latex] (3.5,-1.5) -- (4,-1.3);
+\end{tikzpicture}
+\subsection{Charakterisierung der Objektorientierung}
+\slides{3}{29}
+\slides{3}{30}
+\subsection{Bedeutung des Objektorientierten Datenmodells}
+\slides{3}{31}
+\subsection{Objektorientierten und Objektrelationales Datenmodell}
+\slides{3}{32}
+\subsection{Objektrelationales Datenmodell}
+\slides{3}{33}
+\subsubsection[NF2-Ausprägung (1 Tupel)]{NF$^2$-Ausprägung (1 Tupel)}
+\slides{3}{34}
 \section{DBMS-spezifische Erweiterungen vom Standard-SQL (Oracle)}
+
+\subsection{Datendefinition in Oracle}
+\slides{3}{1}
+\subsubsection{Oracle SQL Datentypen}
+\slides{3}{2}
+\subsection{Arbeit mit Systemtabellen des Data Dictonary}
+\slides{3}{3}
+\subsection{Sequenz}
+\slides{3}{4}
+Kein SELECT ohne FROM.\\
+SELECT in Oracle:
+\begin{lstlisting}[language=SQL]
+SELECT sysdate FROM dual;
+--Output: 16.12.2016 09:41
+
+SELECT user FROM dual;
+--Output: sxxxxx
+
+SELECT Name || ',' || Vorname 
+       || ' (' || SUBSTR(Beruf,1,3) 
+       || ')' AS Kundenname
+FROM Kunde
+
+-- Output:
+-- Meier, Uwe (Ing)
+-- Adler, Sabine (Inf)
+\end{lstlisting}
+\subsection{Spezifika bei Abfragen}
+\slides{3}{5}
+\subsubsection{Hierarchische Abfragen}
+\slides{3}{6}
+\subsection{Ausgewählte SQL-Funktionen in Oracle}
+\slides{3}{7}
+\subsection{PL/SQL-Statements in Proceduren und Triggern}
+\slides{3}{8}
+Variablendeklaration:
+\begin{lstlisting}[language=SQL]
+DECLARE v_name VARCHAR2(10) := 'Otto';
+        v_ort VARCHAR2(20);
+        v_alt NUMBER(3);
+\end{lstlisting}
+Wertzuweisung:
+\begin{lstlisting}[language=SQL]
+v_alt := 27;
+v_ort := 'Dresden';
+\end{lstlisting}
+\subsection{Stored Procedures}
+\slides{3}{9}
+\subsection{Cursor in PL/SQL}
+\slides{3}{10}
+\begin{lstlisting}[language=SQL]
+CREATE OR REPLACE PROCEDURE p1(K_wert INTEGER)
+IS
+    DECLARE CURSOR C1 IS
+        SELECT Kunr, Name
+        FROM Kunde
+        FOR Kredit > K_wert;
+    FOR satz IN C1 LOOP
+        DBMS_OUTPUT.PUTLINE('Kunr:' || satz.Kunr);
+        DBMS_OUTPUT.PUTLINE('Name:' || satz.Name);
+    END LOOP;
+    END;
+/
+\end{lstlisting}
+
+2. Variante CURSOR-Nutzung:
+\begin{lstlisting}[language=SQL]
+...
+DECLARE C1 IS 
+	SELECT Kunr, Name, Vorname
+	FROM Kunde
+	WHERE Kredit > K_wert;
+FOR satz IN C1 LOOP
+	DBMS_OUTPUT.PUTLINE('Kunr: '|| satz.Kunr);
+	DBMS_OUTPUT.PUTLINE('Name: '|| satz.Name);
+	DBMS_OUTPUT.PUTLINE('Vorname: '|| satz.Vorname);
+END LOOP;
+...
+\end{lstlisting}
+\subsection{Trigger in PL/SQL}
+\slides{3}{11}
+\subsubsection{Trigger-Beispiele}
+\slides{3}{12}
+\subsubsection*{Trigger zur Sicherung referentieller Integrität}
+(DS in Kauf einfügen oder ändern $\Rightarrow$ prüfen, ob Kunde vorhanden ist)
+\begin{lstlisting}[language=SQL]
+CREATE OR REPLACE TRIGGER CheckKunde
+	AFTER INSERT OR UPDATE ON Kauf
+	FOR EACH ROW
+		DECLARE i int;
+						nicht_moeglich EXCEPTION;
+		BEGIN 
+			SELECT COUNT(*) into i
+			FROM Kunde k
+			WHERE k.Kunr = :NEW.Kunr;
+			IF i=0 THEN
+				RAISE nicht_moeglich;
+			END IF
+			-- ggf. weitere Prüfungen
+			
+			EXCEPTION
+				WHEN nicht_moeglich
+					raise_application_error(-2100,'Kunr nicht vorhanden');
+				-- ggf. weitere Exceptions
+			
+			END;
+		/
+\end{lstlisting}
+
+\slides{3}{13}
+\paragraph{Zeilen} :NEW :OLD nur im Row-Trigger
+\begin{tabular}{l | l | l}
+Operation & :OLD & :NEW\\\hline
+INSERT & NULL & einzufügende Tupel\\
+UPDATE & Tupel vor Update & Tupel nach Update\\
+DELETE & zu löschender Tupel & NULL
+\end{tabular}
+
+Trigger:
+\begin{itemize}
+\item Beim Einfügen in Artikel\\
+$\Rightarrow$ ArtNr als nächsten Wert einer Sequenz setzen
+\item Beim Ändern\\
+$\Rightarrow$ keine Änderung der ArtNr (primary key) zulassen
+\end{itemize}
+\begin{enumerate}
+\item Sequenz anlegen:
+\begin{lstlisting}[language=SQL]
+create sequence sq_artikel
+	increment by 1
+	start with 10000;
+\end{lstlisting}
+\item Trigger anlegen:
+\begin{lstlisting}[language=SQL]
+create or replace trigger tr_artikel
+	befor insert or update on Artikel
+	for each row
+	begin
+		if inserting then		-- nur für Insert
+			select sq_artikel.nextval
+				into :NEW.Artnr from dual
+		end if;
+		if updating then		-- nur für Update
+			:NEW.Artnr := :OLD.Artnr
+		end if;
+	exception
+		when others then
+			raise_application_error(-2100, sqlerrm);
+	end;
+\end{lstlisting}
+\end{enumerate}
+\slides{3}{14}
+
+\subsection{Unterschiedliche Strategien beim Umgang mit dem Transaktion-Log in Triggern}
+\begin{tabular}{L{0.18} | l | l}
+& MS SQL-Server/Sybase & Oracle\\\hline
+Ansatz & Tabellen-orientiert & Datensatz-orientiert\\
+Umsetzung & „magic“ \emph{tables}: deleted, inserted & \emph{tupel} (einzelne Datensätze!): :OLD, :NEW\\
+Verwendung & in jedem Trigger & nur im ROW-Trigger\\
+Transaktion zurücksetzen & ROLLBACK TRAN & RAISE\_APPLICATION\_ERROR(…)
+\end{tabular}\bigskip\\
+Beispiel:
+\begin{lstlisting}[language=SQL]
+UPDATE Kauf SET vPreis = vPreis * 1.1 WHERE Kunr=123
+\end{lstlisting}
+\emph{MS-SQL}\\
+table deleted:\\
+\begin{tabular}{c | c | c | c}
+Kunr & Artnr & Menge & vPreis\\\hline
+123 & 1234 & 10 & 360\\
+123 & 5555 & 10 & 320\\
+123 & 2222 & 10 & 3600\\
+\end{tabular}\\
+table inserted:\\
+\begin{tabular}{c | c | c | c}
+Kunr & Artnr & Menge & vPreis\\\hline
+123 & 1234 & 10 & 396\\
+123 & 5555 & 10 & 352\\
+123 & 2222 & 10 & 3960\\
+\end{tabular}\bigskip\\
+\emph{Oracle}\\
+1. row:\\
+\begin{tabular}{c | c | c | c | c}
+&Kunr & Artnr & Menge & vPreis\\\hline
+:OLD & 123 & 1234 & 10 & 360\\
+:NEW & 123 & 1234 & 10 & 396
+\end{tabular}\\
+2. row:\\
+\begin{tabular}{c | c | c | c | c}
+&Kunr & Artnr & Menge & vPreis\\\hline
+:OLD & 123 & 5555 & 10 & 320\\
+:NEW & 123 & 5555 & 10 & 352
+\end{tabular}\\
+3. row:\\
+\begin{tabular}{c | c | c | c | c}
+&Kunr & Artnr & Menge & vPreis\\\hline
+:OLD & 123 & 2222 & 10 & 3600\\
+:NEW & 123 & 2222 & 10 & 3960
+\end{tabular}
 \section{Objektrelationale Erweiterungen im RDM (Oracle)}
+\subsection{Objektrelationale Features in Oracle}
+\slides{3}{35}
+\subsection{Komplexbeispiel für relationale Features}
+\slides{3}{36}
+\subsection{Abstrakte Datentypen - Objekt}
+\slides{3}{37}
+\slides{3}{38}
+\subsection{Objektviews}
+\slides{3}{39}
+Überschreibt den eigentlichen INSERT-Befehl.
+\slides{3}{40}
+\subsection{Methoden}
+\slides{3}{41}
+\slides{3}{42}
+\subsection{Verschachtelte Tabellen (Nested Tables)}
+\slides{3}{43}
+\slides{3}{44}
+\slides{3}{45}
+\subsection{Variable Arrays (VARRAYs)}
+\slides{3}{46}
+\subsection{Large Objects (LOBs)}
+\slides{3}{47}
+\slides{3}{48}
+\subsection{Evolution von Datenmodellen}
+\slides{3}{49}
+\subsubsection{Aufgabenverteilung im Wandel der Zeit}
+\slides{3}{50}
 
 \chapter{Physische Datenorganisation}
 \section{Übersicht/Abgrenzung}
