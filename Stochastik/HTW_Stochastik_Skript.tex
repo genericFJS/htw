@@ -1920,9 +1920,100 @@ ABB R
 \end{itemize}
 \end{itemize}
 
+\subsection{Zweidimensionales Datenmaterial}
 
+\subsubsection{Anschauung am Beispiel}
+\begin{itemize}
+\item Zwei Merkmale $X$ und $Y$ werden an $n$ Untersuchungseinheiten beobachtet.
+\item Wir erhalten eine 2-dimensionale mathematische Stichprobe
+$$(X_1, Y_1), \ldots , (X_n, Y_n)$$
+und die konkrete Stichprobe 
+$$(x_1,y_1), \ldots, (x_n,y_n)$$
+\item Ausprägungen von $X: a_1, \ldots, a_l$, $Y: b_1, \ldots, b_m$
+\item Ausprägungen von $(X,Y): (a_j,b_k)$ mit $j\in\{1,\ldots, l\},\; k \in \{1,\ldots ,m\}$
+\item absolute Häufigkeit von $(a_j, b_k)$ wird mit $h_{jk}$ bezeichnet.
+\end{itemize}
+\subsubsection*{Darstellungsmöglichkeiten}
+\begin{enumerate}
+\item Häufigkeitstabelle\\
+Die Häufigkeiten $H=(h_{jk})$ werden in einer Tabelle dargestellt. Diese heißt auch Kreuztabelle oder Kontingenztafel.\\
+Besonders geeignet für diskrete Merkmale mit wenigen Ausprägungen.
+\item Streudiagramm\\
+Graphische Veranschaulichung, wobei die Werte $(x_1,y_1),\ldots ,(x_n, y_n)$ in einem 2-dimensionalen Koordinatensystem als Punkte dargestellt werden.\\
+Besonders geeignet für stetige Merkmale oder diskrete Merkmale mit beiden Ausprägungen.
+\end{enumerate}
 
+% FOLIEN 5-7
 
+\subsubsection{Stichprobenfunktionen für 2-dimensionale Merkmale}
+
+\cparagraph{Definition} Zu den beiden metrisch skalierten Merkmalen sei die zweidimensionale Stichprobe $(X_1,Y_1),\ldots, (X_n, Y_n)$ gegeben.\\
+Wir definieren die folgenden Stichprobenfunktionen:
+\begin{itemize}
+\item Stichprobenkovarianz:
+$$S_{X,Y}=\frac{1}{n-1}\sum_{i=1}^n(X_i - \overline{X})(Y_i-\overline{Y})$$
+\item Stichproben-Korrelationskoeffizient (nach Pearson)
+$$R_{X,Y}=\frac{S_{X,Y}}{S_X\cdot S_Y} \qquad \in [-1,1]$$
+\end{itemize}
+
+\cparagraph{Bemerkung} Für 2 ZVen $X$ und $Y$ kennen wir schon den Korrelationskoeffizienten
+$$\varrho_{X,Y}=\frac{\cov{X,Y}}{\sigma_X \sigma_Y}\text{.}$$
+Der Stichprobenkorrelationskoeffizient $R_{X,Y}$ (bzw. $r_{x,y}$ für die konkrete Stichprobe) ist ein Schätzwert für (das unbekannte) $\varrho_{X,Y}$.\bigskip
+
+Wie findet man die Gerade $g$, welche die Daten $(x_1,y_1), \ldots, (x_n, y_n)$ „am besten“ approximiert?
+\begin{itemize}
+\item dazu sollen die Werte $(y_i-g(x_i))^2$ für alle $i$ möglichst klein sein.\\
+\begin{tikzpicture}[scale=1]
+\draw[green] (-3.5,-3) -- (2.5,2.5);
+\node at (-3,-1) {$\bullet$};
+\node at (-1,-2.5) {$\bullet$};
+\node at (1.5,0) {$\bullet$};
+\node at (0,1.5) {$\bullet$};
+\node at (2,3) {$\bullet$};
+\node at (-0.5,-1) {$\bullet$};
+\draw[orange] (-3,-1) -- (-3,-2.5);
+\draw[orange] (-1,-2.5) -- (-1,-0.7);
+\draw[orange] (0,1.5) -- (0,0.24);
+\draw[orange] (2,3) -- (2,2.05);
+\draw[orange] (1.5,0) -- (1.5,1.6);
+\draw[orange] (-0.5,-1) -- (-0.5,-0.22);
+\end{tikzpicture}
+\item wir minimieren dazu die Summer der quadrierten Abstände, also wir suchen $g$ so, dass 
+$$\sum_{i=1}^n (y_i-g(x_i))^2$$
+minimal wird. Dies führt zu folgender Definition:
+\end{itemize}
+\cparagraph{Satz} Sei eine konkrete Stichprobe $(x_1,y_1),\ldots, (x_n,y_n)$ mit $s_x\not = 0$ gegeben. Die Gerade 
+$$g: \RR\to \RR, \; g(x)=a_0+a_1x$$
+mit
+$$a_1 = r_{xy}\frac{s_y}{s_x} \text{ und } a_0 = \overline{y} - a_1 \overline{x}$$
+ist die eindeutige Lösung des Minimierungsproblems (siehe Summe aus vorhergehender Bemerkung). D.h. für eine beliebige Gerade $\tilde{g}$ gilt
+$$\sum_{i=1}^n (y_i - g(x_i))^2 \leq \sum_{i=1}^n(y_1 - \tilde{g}(x_i))^2 \text{.}$$
+$g$ heißt \emph{Regressionsgerade}.\\
+(nur sinnvoll für metrische Merkmale)
+
+\cparagraph{Bemerkung} Falls eine 2-dimensionale Stichprobe aus mindestens einem ordinal-skalierten Merkmal besteht, verwendet man den Korrelationskoeffizient nach Spearman.\\
+Vorgehen:
+\begin{enumerate}
+\item Ordne der Größe nach:
+$$x_{(1)}\leq x_{(2)} \leq \ldots \leq x_{(n)}$$
+Z.B.:\\
+\begin{tabular}{r | c c c c c c c c c}
+$x_{(i)}$ & -2 & -2 & 0 & 1 &  5 & 6 &6 &6 &8\\\hline
+Platz & 1 & 2 & 3 &4 &5 & 6 & 7 &8 &9\\
+Rang & 1,5 & 1,5& 3 &4 &5 &7 &7 &7 &9
+\end{tabular}
+\item Rang einer Ausprägung berechnen mittels
+$$R_(a) = \begin{cases}
+k & \text{falls }a\text{ nur einmal (auf Platz }k\text{) auftritt}\\
+\frac{k_1+k_2}{2} & \text{falls }a\text{ auf den Plätzen }k_1\text{ bis }k_2\text{ auftritt}
+\end{cases}$$
+\item $R(x_i)=$Rang der Ausprägung $x_i$\\
+Setze $$\tilde{x}:= (R(x_1),R(x_2), \ldots, R(x_n))$$
+\item gehe genauso für $y_i$ vor:
+$$\tilde{y}=(R(y_1),\ldots, R(y_n))$$
+\item Der Rangkorrelationskoeffizient nach Spearman ist nun
+$$r_{x,y}^{(S)} := r_{\tilde{x},\tilde{y}}$$
+\end{enumerate}
 
 
 
