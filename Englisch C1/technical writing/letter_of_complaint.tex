@@ -1,0 +1,78 @@
+% Header aus der Vorlage
+\input{.LaTeX_master/LaTeX_master_HTW_en_letter}
+\renewcommand{\workingdir}{../../../}
+
+
+% Definition von Titel, Autor usw.
+\DTitel{\textsc{English C1 Report}}
+\DUntertitel{Object oriented programming}
+\DAutor{Falk-Jonatan Strube}
+\DNotiz{}
+\DNoti{}
+\renewcommand{\Dokumentensignatur}{}
+
+\KOMAoptions{
+foldmarks=false,
+foldmarks=BlmTP,
+%fromurl=true,
+fromemail=true,
+fromphone=false,
+fromalign=right,
+fromrule=aftername,
+fromemail=true,
+footsepline=off,
+backaddress=off
+}
+
+\definecolor{mygray}{gray}{.55}
+
+%&Merko\& Strube Inc.\\
+%\Letter & Charmanderstreet 5\newline
+%D-04359 Squirtle Town\\
+%\Email & MandS.inc@pokereality.com\\
+
+\setkomavar{fromname}{Merko \& Strube Inc.}
+\setkomafont{fromname}{\bfseries\color{mygray}\LARGE}
+\setkomafont{fromrule}{\color{mygray}}
+%\setkomafont{addressee}{\small}
+
+\setkomavar{fromaddress}{Charmanderstreet 5\\
+D-04359 Squirtle Town}
+\setkomavar{fromemail}[\Letter~]{MandS.inc@pokereality.com}
+\setkomafont{fromaddress}{\small\rmfamily\mdseries\slshape}
+
+
+\setkomavar{signature}{
+Anxhela Merko \qquad Jonatan Strube\\\hspace*{1.5cm} Sales Managers}
+\renewcommand*{\raggedsignature}{\raggedright}
+
+\begin{document}
+
+%\setkomavar{subject}{Letter of complaint regarding the Neuralizer}
+\setkomavar{place}{}
+\setkomavar{date}{\today}
+
+% German address
+\begin{letter}{
+HTW Dresden\\
+\emph{Dezernat Technik}\\
+Friedrich-List-Platz 1\\
+01069 Dresden\\
+Germany
+}
+\opening{Dear Ms Reinicke and Hirsch:}
+
+We want to thank you again for the fruitful negotiations concerning your \emph{Neuralizer} on the 12th December 2016. We are very happy to have found such a competent partner as yourself. The customized \emph{Neuralizer} you shipped have been tested in conjunction with the \emph{Pokémon reality game and gear} and have shown remarkable results in our testing environments.
+
+The \emph{Pokémon reality game and gear - Neuralizer Edition} which includes the customized Neuralizer has been publicly launched and has already sold over 1000 units. To our regret, we have received over 100 complaints concerning the \emph{Neuralizer} in the weeks following the release. 
+
+Our clients have contacted us reporting that the power indicator of the \emph{Neuralizer} did not work. The indicator light was not lit although the device had enough power to work. This leads to trouble using the device as it is not possible to predict if there is enough power or not.  Additionally, some clients have reported that they were not able to expand the \emph{Neuralizer} after letting the device charge for some time. 
+
+Please see to it that these problems are being solved. As we did not encounter these defects in our testing environment and only had complaints by some customers, we assume that there is a fault in the manufacturing process. We expect the faulty \emph{Neuralizers} to be repaired or replaced as part of the negotiated 4-year-warranty. We furthermore expect these defects to be resolved by your next shipments.
+
+We are looking forward to your reply within the next 14 days.
+
+\closing{Sincerley,}
+\end{letter}
+
+\end{document}
