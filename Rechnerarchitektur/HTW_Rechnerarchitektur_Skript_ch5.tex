@@ -1,20 +1,111 @@
 \unimptnt{
-\section{Einführung}
---
+\section{Einführendes Beispiel}
+\slides{05}{1}
 }
 
-\section{Statische Vorhersage}
-\subsection{Stall/Freeze}
-\slides{06}{2}
-\subsection{Delayed Branches}
-\slides{06}{3}
-\subsection{Predict (Not) Taken}
-\slides{06}{4}
+\section{Prinzip des Pipelining}
+
 \unimptnt{
-\subsection{Erweiterung}
-\slides{06}{5}
+\subsection{idealisiertes Prozessor-/Speichersystem}
+\slides{05}{2}
+}
+\subsubsection{Typischer Befehlszyklus}
+\slides{05}{3}
+
+\subsection{Einführung}
+\slides{05}{4}
+\slides{05}{5}
+
+\subsection{Grundidee}
+\slides{05}{6}
+
+\subsection{Fließband-, Pipeline-, Ablaufdiagramm}
+\slides{05}{7}
+
+\section{Leistungsfähigkeit und -parameter}
+\subsection{Steigerung der Leistungsfähigkeit}
+\unimptnt{
+\slides{05}{8}
+}
+\slides{05}{9}
+\slides{05}{10}
+\subsection{Pipeling-Paradoxon}
+\slides{05}{11}
+Loop-Unrolling: anstatt bspw. eine 10-fach Schleife als solche zu notieren (while/for), diese in 10 Schritte sequentiell hin schreiben.
+
+\section{Konflikte beim Pipelining}
+\subsection{Überblick}
+\slides{05}{12}
+\slides{05}{13}
+
+\subsection{Strukturelle Konflikte}
+\subsubsection{Belegungsmatrix}
+\slides{05}{14}
+\unimptnt{
+\subsubsection*{struktureller Konflikt}
+\slides{05}{15}
+}
+\subsubsection{Entwurfsziele}
+\slides{05}{16}
+\subsubsection{Uni- und Multifunktionale Pipelinestruktur}
+\slides{05}{17}
+\subsubsection{Lineares Pipelineschema}
+\slides{05}{18}
+\unimptnt{
+\subsubsection{Auswirkung einer nichtlinearen, multifunktionalen Pipeline}
+\slides{05}{19}
+}
+\subsubsection{Weitere Entwurfsziele}
+\slides{05}{20}
+\subsubsection{Ursache und Lösung}
+\slides{05}{24}
+\unimptnt{
+\subsubsection{Beispielarchitektur}
+\subsubsection*{Datenpfad}
+\slides{05}{21}
+\subsubsection*{Hardware-Belegungsmatrix}
+\slides{05}{22}
+\subsubsection*{Ablaufdiagramm}
+\slides{05}{23}
+\subsubsection*{Lösung}
+\slides{05}{25}
 }
 
+\subsubsection{Lösung Harvard-Architektur}
+\slides{05}{26}
 
+\unimptnt{
+\subsubsection{Leistungsfähikeitsgewinn durch Harvard-Architektur}
+\subsubsection*{Beispielsituation}
+\slides{05}{27}
+\subsubsection*{Beispielrechnung}
+\slides{05}{28}
+}
 
+\subsection{Datenkonflikte}
+\slides{05}{29}
 
+\unimptnt{
+\subsubsection*{Beispiel}
+\slides{05}{30}
+}
+\subsubsection{Lösungsansatz mittels Software}
+\slides{05}{31}
+\subsubsection{Lösungsansatz mittels Hardware}
+\slides{05}{32}
+\slides{05}{33}
+\subsubsection*{Aufwand für Forwarding}
+\slides{05}{34}
+
+\subsubsection{Vergleich der Lösungsansätze}
+\slides{05}{35}
+
+\subsection{Steuerkonflikte}
+\slides{05}{36}
+
+\subsubsection{Auswirkungen}
+\slides{05}{37}
+\slides{05}{38}
+
+\subsubsection{Lösungansätze mittels Software}
+\slides{05}{39}
