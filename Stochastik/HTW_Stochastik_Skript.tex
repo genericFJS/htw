@@ -1943,7 +1943,180 @@ Graphische Veranschaulichung, wobei die Werte $(x_1,y_1),\ldots ,(x_n, y_n)$ in 
 Besonders geeignet für stetige Merkmale oder diskrete Merkmale mit beiden Ausprägungen.
 \end{enumerate}
 
-% FOLIEN 5-7
+\cparagraph{Beispiel}
+\begin{itemize}
+\item $X$ … Anzahl der Störungen im Maschinenpark eines Betriebes innerhalb einer Woche
+\item $X$ ist quantitativ, metrisch skaliert, diskret
+\item $n=20$ Beobachtungen ($20$ Arbeitsperioden von je einer Woche)
+\item Konkrete Stichprobe:
+$$(x_1, \ldots, x_{20})=(4,2,6,3,3,1,5,2,2,1,0,4,2,5,5,3,7,2,1,3)$$
+\item Beobachtete Ausprägungen $a_j$:
+$$a_1=0, a_2 = 1, \ldots , a_8=7$$
+\item Häufigkeitstabelle schafft Übersicht:\\
+\begin{tabular}{C{0.15} C{0.19} C{0.19} C{0.19} C{0.19}}
+Ausprägungen $a_j$ & absolute Häufigkeiten $h_j$ & Summe der absoluten Häufigkeiten $\sum_{i=1}^j h_j$ & relative Häufigkeit $w_j$ & Summe der relativen Häufigkeiten $s_j=\sum_{i=1}^j w_j$\\\hline
+0 &	1 & 1 & 0,05 & 0,05\\
+1 & 3 & 4 & 0,15 & 0,20\\
+2 & 5 & 9 & 0,25 & 0,45\\
+3 & 4 & 13 & 0,20 & 0,65\\
+4 & 2 & 15 & 0,10 & 0,75\\
+5 & 3 & 18 & 0,15 & 0,90\\
+6 & 1 & 19 & 0,05 & 0,95\\
+7 & 1 & 20  & 0,05 & 1
+\end{tabular}
+\paragraph{Beachte:} bei metrischen oder ordinal skaliertem Merkmal ordnet man die Ausprägungen der Größe nach. Summen (Spalte 3 und 5) sind auch nir für metrische oder ordinal skalierte Merkmale sinnvoll.
+\item Graphische Darstellung mittels Stabdiagramm
+\begin{itemize}
+\item ABB Skript 5.1\\
+absolute Häufigkeit $h_j$ auf $y$-Achse\\
+Ausprägung $a_j$ auf $x$-Achse
+\item ABB Skript 5.2\\
+relative Häufigkeit $w_j$ auf $y$-Achse\\
+Ausprägung $a_j$ auf $x$-Achse
+\end{itemize}
+\item Graphische Darstellung mittels Kreisdiagramm\\
+ABB Skript 5.3\\
+Abgetragen: Anzahl der Störungen\\
+Winkel $\varphi_j$ proportional zur relativen Häufigkeit $w_j$\\
+$\varphi_j = 360^\circ \cdot w_j$\\
+\begin{tabular}{c c c}
+$a_j$ & $w_j$ & $\varphi_j$\\
+0 & 0,05 & $18^\circ$\\
+1 & 0,15 & $54^\circ$\\
+2 & 0,25 & $90^\circ$\\
+3 & 0,20 & $72^\circ$\\
+4 & 0,10 & $36^\circ$\\
+5 & 0,15 & $54^\circ$\\
+6 & 0,05 & $18^\circ$\\
+7 & 0,05 & $18^\circ$
+\end{tabular}
+\item Stichprobenmittelwert
+\begin{align*}
+\overline{x} &= \frac{1}{n} \sum_{i=1}^n x_i = \frac{1}{n} \sum_{j=1}^k h_j a_j\\
+&= \frac{1}{20}(4+2+6+3+3+11+5+2+2+1+0+4+2+5+5+3+7+2+1+3)\\
+&= 3,05
+\end{align*}
+\item Stichprobenvarianz
+\begin{align*}
+s^2 &= \frac{1}{n-1}\sum_{i=1}^n (x_i-\overline{x})^2 = \frac{1}{n-1}\sum_{j=1}^k h_j (a_j-\overline{x})^2\\
+&= \frac{1}{19} (1 \cdot (0-3,05)^2 + 3 \cdot (1-3,05)^2 + \ldots)\\
+&= 3,418
+\end{align*}
+\item Median\\
+Nötig: geordnete Stichprobe
+$$(x_{(1)}\ldots x_{(20)}=(0,1,1,1,2,2,2,2,2,\textbf{3},\textbf{3},3,3,4,4,5,5,5,6,7)$$
+$$\tilde x _{0,5} = \frac{1}{2}(x_{(0,5\cdot 20)} + x_{(0,5\cdot 20 + 1)}) = \frac{1}{2}(3+3) = 3$$
+Genauso werden die Quantile $\tilde x_q$ für beliebiges $q \in (0,1)$ bestimmt.
+\item Graphische Darstellung mittels Boxplot\\
+ABB Skript 5.4\\
+$y$-Achse: Anzahl der Störungen\\
+Graphische Darstellung von 
+\begin{itemize}
+\item Maximum
+\item $0,75$-Quantil
+\item Median
+\item $0,25$-Quantil
+\item Minimum
+\end{itemize}
+\item empirische Verteilungsfunktion
+$$s_n(x) = \begin{cases}
+0 & \text{falls }x < a_1\\
+s_j & \text{falls }a_j \leq x < a_{j+1} \quad s_n(j_j) = s_j\\
+1 & \text{falls }x\geq a_k
+\end{cases}$$
+ABB Skript 5.5
+\end{itemize}
+
+\cparagraph{Beispiel} (stetige bzw. metrische Daten)
+\begin{itemize}
+\item Bei 100 elektrischen Bauteilen des gleichen Typs wurde die Lebensdauer überprüft. Die sortierten Daten lauten:
+$$(x_{(1)}, \ldots, x_{(100)} = (121.9,131.7,167.2,171.7,203.3,208.6,\ldots,6954.8,7859.8,8448.9)$$
+Jeder Wert kommt nur einmal vor.
+\item Darstellung:
+\begin{itemize}
+\item Häufigkeitstabelle
+\item Stabdiagramm
+\item Kreisdiagramm
+\end{itemize}
+sehr ungünstig\\
+ABB Skript 6.1
+\item Besser geeignet:
+\begin{itemize}
+\item Boxplot (übersichtlich, aber Informationsverlust)
+\item Verteilungsfunktion (übersichtlich, ohne Informationsverlust)
+\item Klassierung der Daten (und anschließend Histogramm, Häufigkeitstabelle, Kreisdiagramm, \ldots)
+\end{itemize}
+ABB Skrit 6.2
+\item \emph{Klassierung der Daten}\\
+Um auf für stetige Merkmale Häufigkeitstabellen und Säulendiagramme zu nutzen, fassen wir „ähnliche“ Daten in Klassen zusammen. Genauer:\\
+Wir unterteilen das Intervall $x_{min},x_{max})$ in $k$ Intervalle auf und betrachten dann diese gruppierten Daten in Häufigkeitstabelle und Diagrammen.\\
+Empfehlung zur Einteilung der Klassen:
+\begin{itemize}
+\item Anzahl $k$ der Klassen:
+\begin{itemize}
+\item $k \approx \sqrt{n}$ falls $n\leq 400$
+\item $20$ falls $n > 400$
+\end{itemize}
+\item Klassenbreite $d_j$ muss nicht notwendigerweise für jede Klasse gleich sein. Falls doch
+$$d_j = d \approx \frac{x_{max}-x_{min}}{k}$$
+\end{itemize}
+\item Häufigkeitstabelle für klassierte Daten\\
+\begin{tabular}{c C{0.18} C{0.18} C{0.18} C{0.18} C{0.18}}
+$j$ & Klasse $K_j$ & absolute Klassenhäufigkeit $h_j$ & Klassenmitte $m_j$ & relative Klassenhäufigkeiten $w_j$ & relative Summenhäufigkeit $s_1+\ldots + s_j$\\\hline
+1 & [0,1000) & 36 & 500 & 0,36 & 0,36\\
+2 & [1000,2000) & 23 & 1500 & 0,23 & 0,59\\
+3 & [2000,3000) & 19 & 2500 & 0,19 & 0,78\\
+4 & [3000,4000) & 10 & 3500 & 0,1 & 0,88\\
+5 & [4000,5000) & 3 & 4500 & 0,03 & 0,91\\
+6 & [5000,6000) & 4 & 5500 & 0,04 & 0,95\\
+7 & [6000,7000) & 3 & 6500 & 0,03 & 0,98\\
+8 & [7000,8000) & 1 & 7500 & 0,01 & 0,99\\
+9 & [8000,9000) & 1 & 8500 & 0,01 & 1\\
+\end{tabular}
+\item Histogramm mit konstanter Klassenbreite\\
+ABB Skript 6.3\\
+Säulenfläche proportional zur absoluten Häufigkeit $h_j$\\
+Bei konstanter Klassenbreite ist auch Säulenhöhe proportional zur absoluten Häufigkeit $h_j$
+\item Histogramm mit unterschiedlicher Klassenbreite\\
+ABB Skript 6.4\\
+Säulenfläche proportional zur absoluten Häufigkeit $h_j$\\
+Bei unterschiedlicher Klassenbreite ist die $y$-Achse so skaliert, dass gilt:
+$$\sum_{j=1}^k d_j \cdot l_j = 1$$
+wobei $d_j$ … Klassenbreite, $l_j$ … Säulenhöhe
+\end{itemize} 
+
+\cparagraph{Beispiel} Uns liegt eine Stichprobe der Größe $116$ von (gleichzeitigen) Messungen des Ozongehaltes $X$ der Luft (in 1/1Mio Teilchen) und der Temperatur $Y$ (in Grad Fahrenheit)) vor:
+$$((x_1,y_1),(x_2,y_2), \ldots, (x_{150},y_{150}))=((41,67),(36,72),(115,79),\ldots, (18,62))$$
+\begin{itemize}
+\item Streudiagramm\\
+ABB Skript 7.1
+\item \emph{Klassierung und Kontingenztafel}\\
+Wir stellen uns vor die Daten liegen uns nur in klassierter Form vor:
+\begin{itemize}
+\item Ozongehalt $X$ nimmt Werte $1,2,3$ an, wobei\\
+$1$ … Ozongehalt $<50$;\\
+$2$ … Ozongehalt in $[50,100)$;\\
+$3$ … Ozongehalt $\geq 100$
+\item Temperatur $Y$ nimmt Werte $0,1$ an, wobei\\
+$0$ … Temperatur $<75$;\\
+$1$ … Temperatur $\geq 75$
+\end{itemize}
+Nun sieht die konkrete Stichprobe wie folgt aus:
+$$((x_1,y_1),(x_2,y_2),\ldots,(x_{150},y_{150}))=((1,0),(1,0),(3,1),\ldots,(1,0))$$
+Kontingenztafel und Streudiagramm\\
+\begin{tabular}{c | c c}
+& $Y=0$ & $Y=1$\\\hline
+$X=1$ & 40 & 41\\
+$X=2$ & 0 & 28\\
+$X=3$ & 0 & 7
+\end{tabular}\\
+ABB Skript 7.2
+\item Regressionsgerade:
+$$a_1=r_{xy}\frac{s_y}{s_x}=\frac{s_{xy}}{s_x \cdot s_y}\cdot \frac{s_y}{s_x}=\frac{s_{xy}}{s_x^2}=0,2$$
+und $a_0=\overline{y}-a_1 \cdot \overline{x}=77,87 - 0,2 \cdot 42,13 = 69,4$ also 
+$$y=0,2 x + 69,4$$
+ABB Skript 7.3
+\end{itemize}
 
 \subsubsection{Stichprobenfunktionen für 2-dimensionale Merkmale}
 
