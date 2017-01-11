@@ -1,0 +1,46 @@
+\RequirePackage{ifthen,xifthen}
+
+% Input inkl. Umlaute, Silbentrennung
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+
+% Arbeitsordner (in Abhängigkeit vom Master) Standard: .LateX_master Ordner liegt im Eltern-Ordner
+\providecommand{\customDir}{../}
+\newcommand{\setCustomDir}[1]{\renewcommand{\customDir}{#1}}
+%%% alle Optionen:
+% Doppelseitig (mit Rand an der Innenseite)
+\newboolean{twosided}
+\setboolean{twosided}{false}
+% Eigene Dokument-Klasse (alle KOMA möglich; cheatsheet für Spicker [3 Spalten pro Seite, alles kleiner])
+\newcommand{\customDocumentClass}{scrreprt}
+\newcommand{\setCustomDocumentClass}[1]{\renewcommand{\customDocumentClass}{#1}}
+% Unterscheidung verschiedener Designs: htw, fjs
+\newcommand{\customDesign}{htw}
+\newcommand{\setCustomDesign}[1]{\renewcommand{\customDesign}{#1}}
+% Dokumenten Metadaten
+\newcommand{\customTitle}{}
+\newcommand{\setCustomTitle}[1]{\renewcommand{\customTitle}{#1}}
+\newcommand{\customSubtitle}{}
+\newcommand{\setCustomSubtitle}[1]{\renewcommand{\customSubtitle}{#1}}
+\newcommand{\customAuthor}{}
+\newcommand{\setCustomAuthor}[1]{\renewcommand{\customAuthor}{#1}}
+%	Notiz auf der Titelseite (A: vor Autor, B: nach Autor)
+\newcommand{\customNoteA}{}
+\newcommand{\setCustomNoteA}[1]{\renewcommand{\customNoteA}{#1}}
+\newcommand{\customNoteB}{}
+\newcommand{\setCustomNoteB}[1]{\renewcommand{\customNoteB}{#1}}
+% Format der Signatur in Fußzeile:
+\newcommand{\customSignature}{\ifthenelse{\equal{\customAuthor}{}} {} {\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}}}
+\newcommand{\setCustomSignature}[1]{\renewcommand{\customSignature}{#1}}
+% Format des Autors auf dem Titelblatt:
+\newcommand{\customTitleAuthor}{\textcolor{darkgray}{Mitschrift von \customAuthor}}
+\newcommand{\setCustomTitleAuthor}[1]{\renewcommand{\customTitleAuthor}{#1}}
+% Standard Sprache
+\newcommand{\customDefaultLanguage}[1]{}
+\newcommand{\setCustomDefaultLanguage}[1]{\renewcommand{\customDefaultLanguage}{#1}}
+% Folien-Pfad (inkl. Dateiname ohne Endung und ggf. ohne Nummerierung)
+\newcommand{\customSlidePath}{}
+\newcommand{\setCustomSlidePath}[1]{\renewcommand{\customSlidePath}{#1}}
+% Folien Eigenschaften
+\newcommand{\customSlideScale}{0.5}
+\newcommand{\setCustomSlideScale}[1]{\renewcommand{\customSlideScale}{#1}}

@@ -1,0 +1,52 @@
+\documentclass[a4paper,18pt]{scrreprt}
+
+\usepackage[ngerman]{babel}
+\usepackage{fontspec} 
+\usepackage{unicode-math}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm,headheight=1cm,headsep=1cm,footskip=1cm}
+\usepackage{graphicx}
+
+\providecommand{\customTitle}{Titel}
+\providecommand{\customAuthor}{Autor}
+
+\title{\customTitle}
+\author{\customAuthor}
+
+\usepackage{xcolor}
+\definecolor{darkblue}{RGB}{0,0,102}
+\color{darkblue}
+
+\providecommand{\imptnt}[1]{#1}
+\usepackage{amsmath}
+\usepackage{enumitem}	% Anpassung der enumerates
+
+\usepackage{geometry}
+\geometry{top=10mm, bottom=15mm, left=15mm, right=15mm}
+
+\setmainfont{FJS} 
+\setsansfont{FJS} 
+\setmonofont{FJS}
+
+\setmathfont{FJS}
+\setmathfont[range=\mathup]  {FJS}
+\setmathfont[range=\mathbfup]{FJS}
+\setmathfont[range=\mathbfit]{FJS}
+\setmathfont[range=\mathit]  {FJS}
+
+\usepackage{enumitem}	% Anpassung der enumerates
+
+\usepackage{luacode,luatexbase} 
+
+\begin{luacode}
+local function replaceSomething ( line )
+  return string.gsub(line, "\\Rightarrow" , "=>") 
+end
+luatexbase.add_to_callback( "process_input_buffer",  replaceSomething, "replace_something")
+\end{luacode}
+
+\usepackage{array}	% für folgende 3 Zeilen (für Spalten fester breite mit entsprechender Ausrichtung):
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{\dimexpr#1\columnwidth-2\tabcolsep-1.5\arrayrulewidth}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{\dimexpr#1\columnwidth-2\tabcolsep-1.5\arrayrulewidth}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{\dimexpr#1\columnwidth-2\tabcolsep-1.5\arrayrulewidth}}
+\usepackage{caption}	% Um auch unbeschriftete Captions mit \caption* zu machen
