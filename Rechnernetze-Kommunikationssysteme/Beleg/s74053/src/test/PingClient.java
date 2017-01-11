@@ -10,10 +10,6 @@ public class PingClient {
     private static long returnTime;   
     private static int returnSeq;   
       
-    /**
-     * @param args
-     * @throws Exception
-     */
     public static void main(String[] args)throws Exception    
     {   
        if (args.length != 2) { 
@@ -55,10 +51,6 @@ public class PingClient {
         }   
     }   
    
-    /**
-     * @param request
-     * @throws Exception
-     */
     private static void printData(DatagramPacket request) throws Exception    
     {   
         long currentTime = System.currentTimeMillis();   
@@ -68,11 +60,6 @@ public class PingClient {
                 ": " + returnSeq + ":" + returnTime + "elapsed: " + rtt);   
     }   
 
-    /**
-     * @param returnSeq
-     * @param packetNumber
-     * @return
-     */
     private static boolean checkSequence(int returnSeq, int packetNumber) {   
         if (returnSeq != packetNumber)   
             return false;   
@@ -80,10 +67,6 @@ public class PingClient {
            return true;              
     }   
    
-    /**
-     * @param request
-     * @throws Exception
-     */
     private static void parseReply(DatagramPacket request) throws Exception{   
         byte[] buf = request.getData();          
         ByteArrayInputStream bais = new ByteArrayInputStream(buf);   
