@@ -1,0 +1,164 @@
+\newcommand{\customDir}{}
+\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
+
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+%\setCustomSlidePath{Folien}
+
+\setCustomTitle{Beleg UDP-Dateiübertragung}
+\setCustomSubtitle{\texorpdfstring{Rechnernetze /\\ Kommunikationssysteme}{Rechnernetze / Kommunikationssysteme}}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+\setCustomNoteB{\textcolor{darkgray}{Vorlesung von Prof. Dr.-Ing. Vogt}}
+
+\setCustomSignature{\textcolor{darkgray}{\customAuthor{}\\ s74053}}	% Formatierung der Signatur in der Fußzeile
+\setCustomTitleAuthor{Beleg von \customAuthor{} (s74053)}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir _LaTeX_master/LaTeX_master.sty}
+\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
+%\setlength{\headheight}{10mm}	% default: ca. 8mm
+\setlength{\footheight}{10mm}	% default: ca. 8mm
+
+
+\usepackage{tikz-uml}
+
+% TeXDoclet Compatibility:
+\makeatletter
+\DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
+\DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
+\DeclareOldFontCommand{\tt}{\normalfont\ttfamily}{\mathtt}
+\DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
+\DeclareOldFontCommand{\it}{\normalfont\itshape}{\mathit}
+\DeclareOldFontCommand{\sl}{\normalfont\slshape}{\@nomath\sl}
+\DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
+\makeatother
+
+% TeXDoclet Preamble:
+%\input{javadoc/TeXDoclet_preamble.tex}
+\usepackage{ifpdf}
+\lstset{language=Java,breaklines=true}
+
+\newcommand{\entityintro}[3]{%
+  \hbox to \hsize{%
+    \vbox{%
+      \hbox to .2in{}%
+    }%
+    {\bf  #1}%
+    \dotfill\pageref{#2}%
+  }
+  \makebox[\hsize]{%
+    \parbox{.4in}{}%
+    \parbox[l]{5in}{%
+      \vspace{1mm}%
+      #3%
+      \vspace{1mm}%
+    }%
+  }%
+}
+\newcommand{\refdefined}[1]{
+\expandafter\ifx\csname r@#1\endcsname\relax
+\relax\else
+{$($in \ref{#1}, page \pageref{#1}$)$}\fi}
+\chardef\textbackslash=`\\
+
+\begin{document}
+
+%\selectlanguage{english}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\chapter{Dokumentation}
+
+\section{Aufgabe}
+
+\subsection{Rahmenaufgaben}
+
+Es gibt folgende Rahmenaufgaben, die abseits des Programmierens gelöst werden sollen:
+\begin{enumerate}
+\setcounter{enumi}{7}
+\item Errechneter maximal erzielbarer Durchsatz beim SW-Protokoll bei $10\%$ Paketverlust und $10\unit{ms}$ Verzögerung:
+$$ttt$$
+Tatsächlich erzielter Durchsatz:
+$$tat$$
+Der Unterschied ist damit zu erklären, dass …
+\item Dokumentation der Funktionen unter Nutzung von \LaTeX{}.\\
+Siehe vor allem Abschnitt \ref{stated} für die Zustandsdiagramme, Abschnitt \ref{ausblick} für Probleme/Limitierungen/Verbesserungsvorschläge  und Kapitel \ref{javadoc} für die Funktionen. Zugunsten der besseren Lesbarkeit im Quellcode wurde die Dokumentation der Funktionen in Englisch gehalten.
+\end{enumerate}
+
+\subsection{Programmierung}
+
+Die Programmierung wurde nach den Anforderungen der Aufgabenstellung gelöst. Diese lauten wie folgt:
+\begin{itemize}
+\item Client:
+\begin{itemize}
+\item Über Konsole mit Parametern „Zieladresse“, „Portnummer“ und „Dateiname“ aufrufbar (zum debuggen auch „Paketverlust“ und „mittlere Verzögerung“)
+\item Zeigt während der Übertragung jede Sekunde die Datenrate an
+\item Zeigt nach der Übertragung die Datenrate an
+\item Korrigiert Fehler bei verlorenen oder vertauschten Paketen
+\end{itemize}
+\item Server:
+\begin{itemize}
+\item Über Konsole mit dem Parameter „Portnummer“ aufrufbar (zum debuggen auch „Paketverlust“ und „mittlere Verzögerung“)
+\item Speichert Datei in seinem Pfad unter dem korrekten Dateiname (Zeichen „1“ wird angehängt, wenn Datei bereits existiert)
+\item Korrigiert Fehler bei verlorenen oder vertauschten Paketen
+\end{itemize}
+\end{itemize}
+
+\section{Zustandsdiagramme}
+\label{stated}
+\subsection{Client}
+\begin{center}
+\begin{tikzpicture}
+\begin{umlstate}[name=Amain]{Etat global de l'objet A}
+\begin{umlstate}[name=Bgraph, fill=red!20]{graphe B}
+\umlstateinitial[name=Binit]
+\umlbasicstate[y=-4, name=test1, fill=white]{test1}
+\umltrans{Binit}{test1}
+\umltrans[recursive=20|60|2.5cm, recursive direction=right to top, arg={op1}, pos=1.5]{test1}{test1}
+\umltrans[recursive=160|120|2.5cm, recursive direction=left to top, arg={op2}, pos=1.5]{test1}{test1}
+\umltrans[recursive=-160|-120|2.5cm, recursive direction=left to bottom, arg={op3}, pos=1.5]{test1}{test1}
+\umltrans[recursive=-20|-60|2.5cm, recursive direction=right to bottom, arg={op4}, pos=1.5]{test1}{test1}
+\umlbasicstate[y=-8, name=test2, fill=white]{test2}
+\umltrans[recursive=-160|-120|2.5cm, recursive direction=left to bottom, arg={op5}, pos=1.5]{test2}{test2}
+\umltrans{test1}{test2}
+\umlstatefinal[x=3, y=-7.75, name=Bfinal]
+\umltrans{test2}{Bfinal}
+\end{umlstate}
+\umlstateinitial[x=6, y=1, name=Ainit]
+\umlVHtrans[anchor2=40]{Ainit}{Bgraph}
+\umlstatefinal[x=6, y=-3.5, name=Afinal]
+\umlHVtrans[anchor1=30]{Bgraph}{Afinal}
+\umlbasicstate[x=6, y=-6, name=visu, fill=green!20]{Visualisation}
+\umlHVtrans{Bfinal}{visu}
+\umltrans{visu}{Afinal}
+\umltrans[recursive=-20|-60|2.5cm, recursive direction=right to bottom, arg=a, pos=1.5]{visu}{visu}
+\end{umlstate}
+\end{tikzpicture}
+\end{center}
+\subsection{Server}
+
+\section{Ausblick}
+\label{ausblick}
+\subsection{Probleme}
+--
+
+\subsection{Limitierungen}
+--
+
+\subsection{Verbesserungsvorschläge}
+--
+
+\chapter{JavaDoc}
+\selectlanguage{english}
+\label{javadoc}
+\input{javadoc/TeXDoclet.tex}
+
+%\newpage
+%\printbibliography
+
+\end{document}
