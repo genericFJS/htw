@@ -81,8 +81,19 @@
 Es gibt folgende Rahmenaufgaben, die abseits des Programmierens gelöst werden sollen:
 \begin{enumerate}
 \setcounter{enumi}{7}
-\item Errechneter maximal erzielbarer Durchsatz beim SW-Protokoll bei $10\%$ Paketverlust und $10\unit{ms}$ Verzögerung:
-$$ttt$$
+\item Errechneter maximal erzielbarer Durchsatz beim SW-Protokoll bei $10\%$ Paketverlust und $=10\unit{ms}$ Verzögerung:\\
+Datenlänge: $400 \unit{Byte} = 3200\unit{Bit}$\\
+$R=1$ (Vereinfachung)\\
+$v$: Geschwindigkeit\\
+$P_{CS}=P_{SC}=0,1$\\
+$T_{CS}=T_{SC}=10\unit{Bit}/v$\\
+$T_P=(16+8)\unit{Bit}/v+3\,200\unit{Bit}/v=3\,224\unit{Bit}/v$ \\
+$T_W=T_{CS}+T_{SC}+T_{ACK}=10\unit{s}+10\unit{s}+(16+8)\unit{Bit}/v=20\unit{s}+24\unit{Bit}/v$
+\begin{align*}
+\eta_{SW}&=\frac{T_P}{T_P+ T_W}\cdot (1-P_{CS})\cdot(1-P_{SC}) \cdot R \\
+&= \frac{3\,224\unit{Bit}/v}{3\,224\unit{Bit}/v+20\unit{s}+24\unit{Bit}/v}\cdot 0,9^2\\
+&=\frac{3\,224\unit{Bit}/v}{3\,248\unit{Bit}/v+20\unit{s}}\cdot 0,9^2
+\end{align*}
 Tatsächlich erzielter Durchsatz:
 $$tat$$
 Der Unterschied ist damit zu erklären, dass …
