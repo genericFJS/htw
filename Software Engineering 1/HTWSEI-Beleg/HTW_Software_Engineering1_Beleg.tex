@@ -122,6 +122,7 @@
 \end{itemize}
 
 \chapter*{Aufgabe 2: Auslöser-Reaktions-Tabelle}
+\setcounter{section}{0}
 \addtocounter{chapter}{1}
 \addcontentsline{toc}{chapter}{Aufgabe 2: Auslöser-Reaktions-Tabelle}
 
@@ -145,11 +146,12 @@ Woche ist zu Ende& Arbeitszeitauswertung versenden & & & E-Mail versenden\\
 \end{tabular}
 }
 \chapter*{Aufgabe 3: Datenstruktur}
+\setcounter{section}{0}
 \addtocounter{chapter}{1}
 \addcontentsline{toc}{chapter}{Aufgabe 3: Datenstruktur}
 \section{Mitarbeiterausweis}
-\begin{itemize}
-\item MA\_ID
+\begin{itemize}[label=+]
+\item[] MA\_ID
 \item Gültigkeit
 \item Vorname
 \item Name
@@ -157,75 +159,76 @@ Woche ist zu Ende& Arbeitszeitauswertung versenden & & & E-Mail versenden\\
 \end{itemize}
 \section{Ablehnung}
 \begin{itemize}
-\item Ablehnung
+\item[] Ablehnung
 \end{itemize}
 \section{Anwesenheitsliste}
-Liste: 
 \begin{itemize}
-\item MA\_ID
+\item[] 0\{Anwesenheit\}n
+\end{itemize}
+\subsection{Anwesenheit}
+\begin{itemize}[label=+]
+\item[] MA\_ID
 \item Name
 \item Raum
 \end{itemize}
 \section{Urlaubsantrag}
-\begin{itemize}
-\item MA\_ID
+\begin{itemize}[label=+]
+\item[] MA\_ID
 \item Urlaubs\_ID
 \item Zeitraum
 \end{itemize}
 \section{Urlaubsinformationen}
-\begin{itemize}
-\item Anzahl verbrauchter Urlaubstage
+\begin{itemize}[label=+]
+\item[] Anzahl verbrauchter Urlaubstage
 \item Anzahl verbleibender Urlaubstage
+\item 0\{Urlaubseintrag\}n
 \end{itemize}
-Liste: 
-\begin{itemize}
-\item Urlaubs\_ID
+\subsection{Urlaubseintrag}
+\begin{itemize}[label=+]
+\item[] Urlaubs\_ID
 \item Zeitraum
 \item Status
 \end{itemize}
 \section{Krankenschein}
-\begin{itemize}
-\item Mit\_ID
+\begin{itemize}[label=+]
+\item[] Mit\_ID
 \item Zeitraum
 \end{itemize}
 \section{Zeitraum}
-\begin{itemize}
-\item Start-Datum
+\begin{itemize}[label=+]
+\item[] Start-Datum
 \item End-Datum
 \end{itemize}
 \section{Auswertung}
-\begin{itemize}
-\item Gesamtbilanz
-\begin{itemize}
-\item Sollarbeitszeit
-\item tatsächliche Arbeitsstunden
-\item der Urlaubstage
-\item Krankheitstage
-\item Überstunden
-\end{itemize}
-jeweils: 
-\begin{itemize}
-\item[]
-\begin{itemize}
-\item absolut
-\item prozentual
-\end{itemize}
-\end{itemize}
+\begin{itemize}[label=+]
+\item[] Gesamtbilanz
 \item Urlaubszeitbilanz
-\begin{itemize}
-\item beantragte Urlaubstage\\
-(bezogen auf Gesamtarbeitszeit)
-\begin{itemize}
-\item absolut
-\item prozentual
+\item Anwesenheitsliste * der Mitarbeiter in der Abteilung *
 \end{itemize}
+
+\subsection{Gesamtbilanz}
+\begin{itemize}[label=+]
+\item[] Sollarbeitszeit absolut
+\item Sollarbeitszeit relativ
+\item tatsächliche Arbeitsstunden absolut
+\item tatsächliche Arbeitsstunden relativ
+\item der Urlaubstage absolut
+\item der Urlaubstage relativ
+\item Krankheitstage absolut
+\item Krankheitstage relativ
+\item Überstunden absolut
+\item Überstunden relativ
 \end{itemize}
-\item Anwesenheitsliste\\
-(der Mitarbeiter in der Abteilung)
+
+\subsection{Urlaubszeitbilanz}
+\begin{itemize}[label=+]
+\item[] beantragte Urlaubstage absolut
+\item beantragte Urlaubstage relativ
 \end{itemize}
 %\newpage
 
 \chapter*{Aufgabe 4: Kontextdiagramm}
+\setcounter{section}{0}
 \addtocounter{chapter}{1}
 \addcontentsline{toc}{chapter}{Aufgabe 4: Kontextdiagramm}
 
@@ -243,21 +246,174 @@ jeweils:
 \end{center}
 
 \chapter*{Aufgabe 5: Grobes Anwendungsfalldiagramm}
+\setcounter{section}{0}
 \addtocounter{chapter}{1}
 \addcontentsline{toc}{chapter}{Aufgabe 5: Grobes Anwendungsfalldiagramm}
 
 \begin{center}
-	\includegraphics[scale=0.4]{GrobesAnwendungsfalldiagramm.PNG}
+	\includegraphics[width=0.9\linewidth]{GrobesAnwendungsfalldiagramm.PNG}
 \end{center}
 
 
 \chapter*{Aufgabe 6: Detailliertes Anwendungsfalldiagramm von Urlaub planen}
+\setcounter{section}{0}
 \addtocounter{chapter}{1}
 \addcontentsline{toc}{chapter}{Aufgabe 6: Detailliertes Anwendungsfalldiagramm von Urlaub planen}
 
 \begin{center}
-	\includegraphics[scale=0.4]{UrlaubPlanen_AWF.PNG}
+	\includegraphics[width=0.9\linewidth]{UrlaubPlanen_AWF.PNG}
 \end{center}
+
+\chapter*{Aufgabe 7:}
+\setcounter{section}{0}
+\addtocounter{chapter}{1}
+\addcontentsline{toc}{chapter}{Aufgabe 7: Anwendungsfallbeschreibung}
+
+\section{Jonatan: Urlaub einreichen}
+
+\subsection{Textliche Beschreibung}
+
+\subsubsection{Kurzbeschreibung}
+
+Ein Mitarbeiter reicht einen Urlaubsantrag ein.
+
+\subsubsection{Akteur}
+
+Mitarbeiter
+
+\subsubsection{Vorbedingungen}
+
+\begin{itemize}
+\item Urlaubsantrag
+\end{itemize}
+
+Urlaubsantrag =
+\begin{itemize}
+\item[] MA\_ID
+\item[+] Urlaubs\_ID
+\item[+] Zeitraum
+\end{itemize}
+
+Zeitraum = 
+\begin{itemize}
+\item[] Start-Datum
+\item[+] End-Datum
+\end{itemize}
+
+\subsubsection{Nachbedingungen}
+\begin{itemize}
+\item Urlaubsantrag ist im System gespeichert
+\end{itemize}
+
+\subsubsection{Trigger}
+\begin{itemize}
+\item Urlaubsantrag stellen
+\end{itemize}
+
+\subsubsection{Szenarios}
+
+\paragraph{Hauptszenario:} Mitarbeiter gibt validen Urlaubsantrag ein.
+\begin{enumerate}
+\item Mitarbeiter möchte Urlaubsantrag stellen
+\item Mitarbeiter gibt Urlaubseintrag in System ein
+\item System überprüft Urlaubsantrag
+\item System trägt Urlaubseintrag in Urlaubsinformationen des Mitarbeiters ein
+\end{enumerate}
+
+\paragraph{Alternativszenario:} Mitarbeiter gibt keinen validen Urlaubsantrag ein.
+\begin{enumerate}
+\item Mitarbeiter möchte Urlaubsantrag stellen
+\item Mitarbeiter gibt Urlaubseintrag in System ein \label{jo-alt-back}
+\item System überprüft Urlaubsantrag
+\item Zurück zu \ref{jo-alt-back}.
+\end{enumerate}
+
+Urlaubseintrag=
+\begin{itemize}[label=+]
+\item[] Urlaubs\_ID
+\item Zeitraum
+\item Status
+\end{itemize}
+
+\subsubsection{Weiterführende Informationen}
+keine
+
+\subsection{Aktivitätsdiagramm}
+
+\begin{center}
+	\includegraphics[width=0.9\linewidth]{Urlaub_einreichen.pdf}
+\end{center}
+
+\subsection{Satzschablonen}
+Die Funktion „Urlaub einreichen“…
+\begin{itemize}
+\item muss fähig sein einen validen Urlaubseintrag in die Datenbank einzutragen.
+\item muss Validität eines Urlaubseintrags erkennen.
+\item soll die Möglichkeit bieten dem Mitarbeiter ausreichend Feedback bezüglich der Validität des Urlaubseintrags zu geben.
+\end{itemize}
+
+\section{Simon: Urlaubsvorschlag annehmen}
+
+\subsection{Textliche Beschreibung}
+
+\subsubsection{Kurzbeschreibung}
+Ein Mitarbeiter nimmt einen vorgeschlagenen Urlaub an.
+
+\subsubsection{Akteur}
+\begin{itemize}
+	\item System
+	\item Mitarbeiter
+\end{itemize}
+
+\subsubsection{Vorbedingungen}
+\begin{itemize}
+	\item Urlaubs ID
+\end{itemize}
+
+\subsubsection{Nachbedingungen}
+
+\subsubsection{Trigger}
+Wunsch den Urlaubsvorschlag anzunehmen
+
+\subsubsection{Szenarios}
+\paragraph{Hauptszenario}
+Urlaubsvorschlag liegt vor und Mitarbeiter nimmt diesen mit einer gültigen Urlaubs ID an.
+
+\begin{enumerate}
+	\item Mitarbeiter bekommt Urlaubsinformationen angezeigt
+	\item Mitarbeiter nimmt Urlaubsvorschlag an
+	\item Urlaubs ID wird an das System übermittelt
+	\item System prüft ob Urlaubs ID gültig ist
+	\item System trägt Urlaub als angenommen ein
+\end{enumerate}
+
+
+
+\paragraph{Hauptszenario}
+Urlaubsvorschlag liegt vor und Mitarbeiter nimmt diesen mit einer ungültigen Urlaubs ID an.
+
+\begin{enumerate}
+	\item Mitarbeiter bekommt Urlaubsinformationen angezeigt
+	\item Mitarbeiter nimmt Urlaubsvorschlag an
+	\item Urlaubs ID wird an das System übermittelt
+	\item System prüft ob Urlaubs ID gültig ist
+	\item System unternimmt keine weiteren Schritte, da die Urlaubs ID ungültig ist
+\end{enumerate}
+
+
+\subsubsection{Weiterführende Informationen}
+Urlaub gilt als angenommen
+
+\subsection{Aktivitätsdiagramm}
+
+\begin{center}
+\includegraphics[width=0.9\linewidth]{Urlaubsvorschlag_annehmen.pdf}
+\end{center}
+
+\subsection{Satzschablonen}
+
+
+\section{Ragnar: Urlaubsvorschlag ablehnen}
 
 %\printbibliography
  
