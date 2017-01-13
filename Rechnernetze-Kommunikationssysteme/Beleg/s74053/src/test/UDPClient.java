@@ -6,8 +6,7 @@ class UDPClient {
     public static void main(String args[]) throws Exception 
     { 
   
-      BufferedReader inFromUser = 
-        new BufferedReader(new InputStreamReader(System.in)); 
+      BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in)); 
   
       DatagramSocket clientSocket = new DatagramSocket(); 
   
@@ -18,18 +17,15 @@ class UDPClient {
   
       String sentence = inFromUser.readLine(); 
       sendData = sentence.getBytes();         
-      DatagramPacket sendPacket = 
-         new DatagramPacket(sendData, sendData.length, IPAddress, 9876); 
+      DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876); 
   
       clientSocket.send(sendPacket); 
   
-      DatagramPacket receivePacket = 
-         new DatagramPacket(receiveData, receiveData.length); 
+      DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length); 
   
       clientSocket.receive(receivePacket); 
   
-      String modifiedSentence = 
-          new String(receivePacket.getData()); 
+      String modifiedSentence = new String(receivePacket.getData()); 
   
       System.out.println("FROM SERVER:" + modifiedSentence); 
       clientSocket.close(); 
