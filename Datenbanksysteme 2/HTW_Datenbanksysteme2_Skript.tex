@@ -1400,7 +1400,114 @@ Kunr & Artnr & Menge & vPreis\\\hline
 
 \chapter{Physische Datenorganisation}
 \section{Übersicht/Abgrenzung}
+2 Aufgabenstellungen:
+\begin{itemize}
+\item Bildung und Strukturierung internen Sätze
+\begin{itemize}
+\item variable oder feste Satzlänge
+\item feste Formate oder Kennzeichenformate
+\item Datentypen
+\item Blockung, Segmentierung\\
+z.B.: 1 Black = 2 kByte = 2048 Byte
+\end{itemize}
+\item Festlegung der Zugriffspfade
+\begin{itemize}
+\item Pfade der Daten (Kapitel 4.2)
+\item Pfade innerhalb der Daten (Kapitel 4.3)
+\end{itemize}
+\end{itemize}
+\slides{4}{1}
+Datensatz (Mitnr, Name, Vorname, Alter)
+\begin{itemize}
+\item feste Länge ohne Kennzeichen:\\
+\begin{tabular}{c | c | c | c}
+ \_103 & Meier\_\,\_\,\_\,\_ & Paul \_\,\_ & \_37
+\end{tabular}
+\item feste Länge mit Kennzeichen\\
+\begin{tabular}{c | c | c | c | c | c }
+\tblue{I} & \_103 & \tblue{N} & Meier\_\,\_\,\_\,\_& \tblue{A} & \_37
+\end{tabular}
+\item variable Länge ohne Kennzeichen\\
+\begin{tabular}{c | c | c | c | c | c | c  | c}
+\tred{L} & 103 & \tred{L} & Meier & \tred{L} & Paul & \tred{L} & 37
+\end{tabular}
+\item variable Länge mit Kennzeichen\\
+\begin{tabular}{c | c | c | c | c | c | c | c | c }
+\tblue{I} & \tred{L} & 103 & \tblue{N} & \tred{L} & Meier & \tblue{A} & \tred{L} & 37
+\end{tabular}
+\end{itemize}
 \section{Zugriffspfade außerhalb der Datensätze/Indexierung}
+\subsection{Grundprinzip der Indexierung}
+\slides{4}{2}
+\subsubsection{Geordneter Binärbaum}
+\slides{4}{3}
+\subsubsection{Geordneter, balancierter Binärbaum}
+\slides{4}{4}
+Binärbaum:
+\begin{itemize}
+\item binäre Suche möglich
+\item einfaches Einfügen/Ändern
+\item alle Knoten enthalten Daten
+\item gut für Datenhaltung im Hauptspeicher
+\end{itemize}
+aber DBS $\Rightarrow$ Datenhaltung auf Festplatte $\to$ Datenhaltung an Blöcken (Seiten) orientieren
+\subsection{B*-Bäume}
+\slides{4}{5}
+\subsubsection*{Beispielstruktur eines B*-Baums}
+\slides{4}{6}
+\subsubsection*{Bsp.: Datenmenge im B*-Baum}
+\begin{tabular}{l l}
+DS-Länge: & $80 \unit{Byte}$\\
+Schlüssel + Zeiger: & $10 \unit{Byte}$\\
+Seitengröße: & $2048 \unit{Byte}$\\
+Anzahl DS/Seite: & $\tfrac{2048}{80} = 25$\\
+durchschnittliche Anzahl DS/Seite: & $\tfrac{5}{6} \cdot 25 = \boxed{20}$\\
+Anzahl Schlüssel/Seite: & $\tfrac{2048}{10} = 204$\\
+durschnittliche Anzahl Schlüssel/Seite & $\tfrac{5}{6} \cdot 204 = \boxed{170}$
+\end{tabular}\\
+\begin{tabular}{c r}
+Ebenen-Anzahl & DS-Anzahl\\
+1 & $20$\\
+2 & $170 \cdot 20 = 3\,400$\\
+3 & $170 \cdot 170 \cdot 20 = 578\,000$\\
+4 & $170 \cdot 170 \cdot 170  \cdot 20 = 98\,260\,000$
+\end{tabular}
+\subsubsection{B*-Baum-Transformation (Splitting)}
+\slides{4}{7}
+
+Struktur der DB aus physischer Sicht:
+\begin{itemize}
+\item Verzeichnis der Seiten
+\begin{itemize}
+\item Freie Seiten
+\end{itemize}
+\item je Index
+\begin{itemize}
+\item Wurzelseite
+\item Index-Schlüssel-Seiten
+\item Datenseiten
+\end{itemize}
+\end{itemize}
+Zugriff von „oben“ nach „unten“: Wurzelseite $\to$ Schlüssel-Seiten $\to$ Datenseite\bigskip\\
+B*-Baum:
+\begin{itemize}
+\item HDD-Speicherung
+\item optimiert für Einzel-Tupel-Zugriffe
+\end{itemize}
+\subsubsection{Ermittlung der benötigten Kapazität (Anzahl der Seiten)}
+\slides{4}{8}
+Beispiel:\\
+\begin{tabular}{l r}
+Tupelanzahl & $10\,000$\\
+Spaltenanzahl & $10$\\
+DS-Länge & $85$
+\end{tabular}
+\begin{align*}
+\text{Seitenanzahl:}&=\frac{10\,000 \cdot (5+10+85)}{(2\,048-90)\cdot \left(1-\frac{10}{10\,000}\right)}\\
+&= \frac{1\,000\,000}{1\,958\cdot 0,9}= \frac{1\,000\,000}{1\,762,2}\\
+&=567,5 = 568 \unit{Seiten}
+\end{align*}
+
 \section{Zugriffspfade außerhalb der Datensätze/Verkettung}
 
 \chapter{Projektierung von relationalen Datenbanksystemen (Betriebliche Datenmodellierung und Datenbankanwendungen)}
