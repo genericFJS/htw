@@ -74,9 +74,7 @@
 
 \chapter{Dokumentation}
 
-\section{Aufgabe}
-
-\subsection{Rahmenaufgaben}
+\section{Rahmenaufgaben}
 
 Es gibt folgende Rahmenaufgaben, die abseits des Programmierens gelöst werden sollen:
 \begin{enumerate}
@@ -98,11 +96,13 @@ Tatsächlich erzielter Durchsatz:
 $$tat$$
 Der Unterschied ist damit zu erklären, dass …
 \item Dokumentation der Funktionen unter Nutzung von \LaTeX{}.\\
-Siehe vor allem Abschnitt \ref{stated} für die Zustandsdiagramme, Abschnitt \ref{ausblick} für Probleme/Limitierungen/Verbesserungsvorschläge  und Kapitel \ref{javadoc} für die Funktionen. Zugunsten der besseren Lesbarkeit im Quellcode wurde die Dokumentation der Funktionen in Englisch gehalten.
+Siehe vor allem Abschnitt \ref{stated} für die Zustandsdiagramme, Abschnitt \ref{programing} für Details zur Implementierung (dabei ergeben sich Probleme/Limitierungen/Verbesserungsvorschläge implizit aus dem Unterabschnitt \ref{abgrenz})  und Kapitel \ref{javadoc} für die Funktionen. Zugunsten der besseren Lesbarkeit im Quellcode wurde die Dokumentation der Funktionen in Englisch gehalten.
 \end{enumerate}
 
-\subsection{Programmierung}
+\section{Programmierung}
+\label{programing}
 
+\subsection{Anforderungen}
 Die Programmierung wurde nach den Anforderungen der Aufgabenstellung gelöst. Diese lauten wie folgt:
 \begin{itemize}
 \item Client:
@@ -110,14 +110,32 @@ Die Programmierung wurde nach den Anforderungen der Aufgabenstellung gelöst. Di
 \item Über Konsole mit Parametern „Zieladresse“, „Portnummer“ und „Dateiname“ aufrufbar (zum debuggen auch „Paketverlust“ und „mittlere Verzögerung“)
 \item Zeigt während der Übertragung jede Sekunde die Datenrate an
 \item Zeigt nach der Übertragung die Datenrate an
-\item Korrigiert Fehler bei verlorenen oder vertauschten Paketen
+\item Korrigiert Fehler bei verlorenen oder vertauschten Paketen:\\
+verlorenes ACK: Datenpaket erneut senden, vertauschtes ACK: vorhergehendes Datenpaket senden.
 \end{itemize}
 \item Server:
 \begin{itemize}
 \item Über Konsole mit dem Parameter „Portnummer“ aufrufbar (zum debuggen auch „Paketverlust“ und „mittlere Verzögerung“)
 \item Speichert Datei in seinem Pfad unter dem korrekten Dateiname (Zeichen „1“ wird angehängt, wenn Datei bereits existiert)
-\item Korrigiert Fehler bei verlorenen oder vertauschten Paketen
+\item Korrigiert Fehler bei verlorenen oder vertauschten Paketen:\\
+verlorenes Datenpaket: kein ACK senden, vertauschtes Datenpaket: ACK des vorhergehenden Datenpakets senden.
 \end{itemize}
+\end{itemize}
+\subsection{Eigenschaften}
+Folgende Eigenschaften wurden im Rahmen der Aufgabenstellung angepasst:
+\begin{itemize}
+\item Größe der Datenpakete: $400 \unit{Byte}\;(+\text{Sessionnr., Paketnr. und ggf. CRC})$\footnote{Basierend auf der empfohlenen maximalen UDP Datenmenge von $508\unit{Bytes}$ laut RFC 791 und RFC 2460.}.
+\item Als der „Pfad des Servers“ wurde der Pfad zur \texttt{server-udp}-Datei (Ordner \texttt{s74053}) angenommen, nicht der \texttt{/bin}-Pfad.
+\item 
+\end{itemize}
+
+\subsection{Abgrenzungen}
+\label{abgrenz}
+In der Aufgabenstellung wurde über einige Merkmale keine Aussage getroffen. Es wurde daher angenommen, dass sie nicht relevant sind. Die Merkmale, die nicht enthalten sind (aber ggf. zur Funktionalität beitragen würden), sind hier aufgeführt.
+\begin{itemize}
+\item Der Server kann nicht mehrere Clients auf einmal bedienen.
+\item Das Programm ist nicht „portabel“. Das heißt, dass es nur bei genau der Unterordneranordnung des Ordners \texttt{s74053} funktioniert.
+\item 
 \end{itemize}
 
 \section{Zustandsdiagramme}
@@ -127,14 +145,14 @@ Die Programmierung wurde nach den Anforderungen der Aufgabenstellung gelöst. Di
 \begin{tikzpicture}
 \umlstateinitial[y=3,name=start]
 \umlbasicstate[y=0,name=startupload, fill=white]{Initialisiere Upload}
-\umltrans[arg={Ok},left, pos=.5]{start}{startupload}
+\umltrans{start}{startupload}
 \umlstatefinal[x=6,y=-2,name=finalerror]
 \umlHVtrans[arg={Fehler},pos=.5, anchor2=90]{startupload}{finalerror}
 %\umlbasicstate[y=-4,name=sendfirst, fill=white]{Sende erstes Paket}
 %\umltrans[arg={Ok},left, pos=.5]{startupload}{sendfirst}
 %\umltrans[arg={Timeout},pos=.5]{sendfirst}{finalerror}
 \umlbasicstate[y=-4,name=sendpacket, fill=white]{Sende Paket}
-\umltrans{startupload}{sendpacket}
+\umltrans[arg={Ok},left, pos=.5]{startupload}{sendpacket}
 \umlHVtrans[arg={Timeout mit max. Anzahl Versuche},pos=.1, below right, anchor2=-90]{sendpacket}{finalerror}
 \umltrans[recursive=160|200|2.5cm, recursive direction = right to right, left, arg={ACK empfangen || Timeout},pos=1.5]{sendpacket}{sendpacket}
 \umlstatefinal[y=-7,name=finalok]
@@ -154,7 +172,7 @@ Die Programmierung wurde nach den Anforderungen der Aufgabenstellung gelöst. Di
 \umlbasicstate[y=-4,name=processpacket, fill=white]{Verarbeite Paket}
 \umltrans[arg={Paket empfangen},left, anchor1=-110, anchor2=110, pos=.5]{startupload}{processpacket}
 \umlbasicstate[y=-8,name=sendack, fill=white]{Sende ACK}
-\umltrans[arg={Ok}, left, pos=.5]{processpacket}{sendack}
+\umltrans[arg={Ok || Falsches Paket}, left, pos=.5]{processpacket}{sendack}
 \umltrans[arg={Fehler},right, anchor1=70, anchor2=-70, pos=.5]{processpacket}{waitpacket}
 \umlHVHtrans[right, arg={},pos=1.5,anchor1=180, anchor2=180, arm1=-2.5cm]{sendack}{startupload}
 \umlbasicstate[y=-12,name=processfile, fill=white]{Verarbeite Datei}
@@ -163,18 +181,6 @@ Die Programmierung wurde nach den Anforderungen der Aufgabenstellung gelöst. Di
 \umltrans[arg={Ok},right, anchor1=70, anchor2=-70, pos=.5]{processfile}{sendack}
 \end{tikzpicture}
 \end{center}
-
-
-\section{Ausblick}
-\label{ausblick}
-\subsection{Probleme}
---
-
-\subsection{Limitierungen}
---
-
-\subsection{Verbesserungsvorschläge}
---
 
 \chapter{JavaDoc}
 \selectlanguage{english}

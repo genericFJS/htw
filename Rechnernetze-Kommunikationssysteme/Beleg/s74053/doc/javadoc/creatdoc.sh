@@ -12,14 +12,15 @@ javadoc -docletpath TeXDoclet.jar \
 	-doclet org.stfm.texdoclet.TeXDoclet \
 	-noindex \
 	-hyperref \
+	-tree \
 	-nopackagetoc \
 	-output TeXDoclet.tex \
 	-sourcepath ../../src \
-	-subpackages beleg \
+	-subpackages filetransfer_udp \
  	-include \
  	-sectionlevel section
 
 # option tree:
 # -tree \
 # no empty pagestyle
-#sed -i -e 's/\\thispagestyle{empty}/%\\thispagestyle{empty}/g' TeXDoclet.tex
+sed -i -e 's/\\thispagestyle{empty}/%\\thispagestyle{empty}/g' TeXDoclet.tex

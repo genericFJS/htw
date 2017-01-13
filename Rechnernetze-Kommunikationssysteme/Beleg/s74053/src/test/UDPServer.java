@@ -1,6 +1,7 @@
 package test;
-import java.io.*; 
-import java.net.*; 
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress; 
   
 class UDPServer { 
   public static void main(String args[]) throws Exception 
@@ -23,6 +24,8 @@ class UDPServer {
           String capitalizedSentence = sentence.toUpperCase(); 
 
           sendData = capitalizedSentence.getBytes(); 
+          
+          Thread.sleep(5000);
   
           DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
   
