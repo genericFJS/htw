@@ -1,0 +1,18 @@
+insert into Table (select b.Preis from bauteil b where b.BtNr=5000) values ('7019', 910, to_date('20.10.2013'));
+insert into bauteil values (5003, 'Tuergriff links', 15, '134556', 5000, ntPreisentwicklung());
+insert into Table (select b.Preis from bauteil b where b.BtNr=5003) values ('7010', 20, to_date('12.10.2013'));
+insert into Table (select b.Preis from bauteil b where b.BtNr=5003) values ('7018', 22, to_date('12.11.2013'));
+insert into bauteil values (5004, 'Schlossriegel links', 5, '134556', 5000, ntPreisentwicklung());
+insert into Table (select b.Preis from bauteil b where b.BtNr=5004) values ('7011', 10, to_date('12.10.2013'));
+insert into bauteil values (5005, 'Türgummi', 3, '134556', 5000, ntPreisentwicklung());
+insert into Table (select b.Preis from bauteil b where b.BtNr=5005) values ('7012', 5, to_date('12.10.2013'));
+insert into bauteil values (5006, 'Auspuffrohr', 25, '693253', 5002, ntPreisentwicklung());
+insert into Table (select b.Preis from bauteil b where b.BtNr=5006) values ('7013', 30, to_date('12.10.2013'));
+insert into bauteil values (5007, 'Schelle', 5, '693253', 5002, ntPreisentwicklung());
+insert into Table (select b.Preis from bauteil b where b.BtNr=5007) values ('7014', 0.5, to_date('12.10.2013'));
+insert into bauteil values (5008, 'Schraube', 1, '693253', 5007, ntPreisentwicklung());
+insert into Table (select b.Preis from bauteil b where b.BtNr=5008) values ('7015', 0.1, to_date('12.10.2013'));
+insert into bauteil values (5009, 'Spiegelglas', 10, '588797', 5001, ntPreisentwicklung());
+insert into Table (select b.Preis from bauteil b where b.BtNr=5009) values ('7016', 2.30, to_date('12.10.2013'));
+insert into bauteil values (5010, 'Gehäuse', 12, '693253', 5001, ntPreisentwicklung());
+insert into Table (select b.Preis from bauteil b where b.BtNr=5010) values ('7017', 6, to_date('12.10.2013'));

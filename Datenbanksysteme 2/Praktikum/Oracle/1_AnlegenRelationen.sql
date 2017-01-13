@@ -1,3 +1,5 @@
+--==================================================--
+-- Aufgabe 1
 -- 1.1
 CREATE TABLE Fahrzeug(
   FzNr NUMBER(5) PRIMARY KEY,
@@ -54,8 +56,7 @@ ORDER BY Plz;
 -- 1.7
 SELECT *
 FROM Hersteller
-WHERE (sysdate - Kontaktaufnahme) < 5;
+WHERE (sysdate - Kontaktaufnahme) < 5*365;
 
 -- 1.8
 ALTER TABLE Bauteil ADD FOREIGN KEY (HstNr) REFERENCES Hersteller;
-
