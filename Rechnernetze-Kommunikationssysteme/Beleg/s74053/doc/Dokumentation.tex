@@ -84,15 +84,15 @@ Es gibt folgende Rahmenaufgaben, die abseits des Programmierens gelöst werden s
 \item Errechneter maximal erzielbarer Durchsatz beim SW-Protokoll bei $10\%$ Paketverlust und $=10\unit{ms}$ Verzögerung:\\
 Datenlänge: $400 \unit{Byte} = 3200\unit{Bit}$\\
 $R=1$ (Vereinfachung)\\
-$v$: Geschwindigkeit\\
+$r_b$: Geschwindigkeit\\
 $P_{CS}=P_{SC}=0,1$\\
-$T_{CS}=T_{SC}=10\unit{Bit}/v$\\
-$T_P=(16+8)\unit{Bit}/v+3\,200\unit{Bit}/v=3\,224\unit{Bit}/v$ \\
-$T_W=T_{CS}+T_{SC}+T_{ACK}=10\unit{s}+10\unit{s}+(16+8)\unit{Bit}/v=20\unit{s}+24\unit{Bit}/v$
+$T_{CS}=T_{SC}=10\unit{Bit}/r_b$\\
+$T_P=(16+8)\unit{Bit}/r_b+3\,200\unit{Bit}/r_b=3\,224\unit{Bit}/r_b$ \\
+$T_W=T_{CS}+T_{SC}+T_{ACK}=10\unit{s}+10\unit{s}+(16+8)\unit{Bit}/r_b=20\unit{s}+24\unit{Bit}/r_b$
 \begin{align*}
 \eta_{SW}&=\frac{T_P}{T_P+ T_W}\cdot (1-P_{CS})\cdot(1-P_{SC}) \cdot R \\
-&= \frac{3\,224\unit{Bit}/v}{3\,224\unit{Bit}/v+20\unit{s}+24\unit{Bit}/v}\cdot 0,9^2\\
-&=\frac{3\,224\unit{Bit}/v}{3\,248\unit{Bit}/v+20\unit{s}}\cdot 0,9^2
+&= \frac{3\,224\unit{Bit}/r_b}{3\,224\unit{Bit}/r_b+20\unit{s}+24\unit{Bit}/r_b}\cdot 0,9^2\\
+&=\frac{3\,224\unit{Bit}/r_b}{3\,248\unit{Bit}/r_b+20\unit{s}}\cdot 0,9^2
 \end{align*}
 Tatsächlich erzielter Durchsatz:
 $$tat$$
@@ -125,33 +125,45 @@ Die Programmierung wurde nach den Anforderungen der Aufgabenstellung gelöst. Di
 \subsection{Client}
 \begin{center}
 \begin{tikzpicture}
-\begin{umlstate}[name=Amain]{Etat global de l'objet A}
-\begin{umlstate}[name=Bgraph, fill=red!20]{graphe B}
-\umlstateinitial[name=Binit]
-\umlbasicstate[y=-4, name=test1, fill=white]{test1}
-\umltrans{Binit}{test1}
-\umltrans[recursive=20|60|2.5cm, recursive direction=right to top, arg={op1}, pos=1.5]{test1}{test1}
-\umltrans[recursive=160|120|2.5cm, recursive direction=left to top, arg={op2}, pos=1.5]{test1}{test1}
-\umltrans[recursive=-160|-120|2.5cm, recursive direction=left to bottom, arg={op3}, pos=1.5]{test1}{test1}
-\umltrans[recursive=-20|-60|2.5cm, recursive direction=right to bottom, arg={op4}, pos=1.5]{test1}{test1}
-\umlbasicstate[y=-8, name=test2, fill=white]{test2}
-\umltrans[recursive=-160|-120|2.5cm, recursive direction=left to bottom, arg={op5}, pos=1.5]{test2}{test2}
-\umltrans{test1}{test2}
-\umlstatefinal[x=3, y=-7.75, name=Bfinal]
-\umltrans{test2}{Bfinal}
-\end{umlstate}
-\umlstateinitial[x=6, y=1, name=Ainit]
-\umlVHtrans[anchor2=40]{Ainit}{Bgraph}
-\umlstatefinal[x=6, y=-3.5, name=Afinal]
-\umlHVtrans[anchor1=30]{Bgraph}{Afinal}
-\umlbasicstate[x=6, y=-6, name=visu, fill=green!20]{Visualisation}
-\umlHVtrans{Bfinal}{visu}
-\umltrans{visu}{Afinal}
-\umltrans[recursive=-20|-60|2.5cm, recursive direction=right to bottom, arg=a, pos=1.5]{visu}{visu}
-\end{umlstate}
+\umlstateinitial[y=3,name=start]
+\umlbasicstate[y=0,name=startupload, fill=white]{Initialisiere Upload}
+\umltrans[arg={Ok},left, pos=.5]{start}{startupload}
+\umlstatefinal[x=6,y=-2,name=finalerror]
+\umlHVtrans[arg={Fehler},pos=.5, anchor2=90]{startupload}{finalerror}
+%\umlbasicstate[y=-4,name=sendfirst, fill=white]{Sende erstes Paket}
+%\umltrans[arg={Ok},left, pos=.5]{startupload}{sendfirst}
+%\umltrans[arg={Timeout},pos=.5]{sendfirst}{finalerror}
+\umlbasicstate[y=-4,name=sendpacket, fill=white]{Sende Paket}
+\umltrans{startupload}{sendpacket}
+\umlHVtrans[arg={Timeout mit max. Anzahl Versuche},pos=.1, below right, anchor2=-90]{sendpacket}{finalerror}
+\umltrans[recursive=160|200|2.5cm, recursive direction = right to right, left, arg={ACK empfangen || Timeout},pos=1.5]{sendpacket}{sendpacket}
+\umlstatefinal[y=-7,name=finalok]
+\umltrans[arg={ACK zu letztem Paket empfangen}, pos=.5, left]{sendpacket}{finalok}
 \end{tikzpicture}
 \end{center}
+
 \subsection{Server}
+\begin{center}
+\begin{tikzpicture}
+\umlstateinitial[y=3,name=start]
+\umlbasicstate[y=0,name=waitpacket, fill=white]{Warte auf Paket}
+\umltrans{start}{startupload}
+%\umlbasicstate[y=-4,name=sendfirst, fill=white]{Sende erstes Paket}
+%\umltrans[arg={Ok},left, pos=.5]{startupload}{sendfirst}
+%\umltrans[arg={Timeout},pos=.5]{sendfirst}{finalerror}
+\umlbasicstate[y=-4,name=processpacket, fill=white]{Verarbeite Paket}
+\umltrans[arg={Paket empfangen},left, anchor1=-110, anchor2=110, pos=.5]{startupload}{processpacket}
+\umlbasicstate[y=-8,name=sendack, fill=white]{Sende ACK}
+\umltrans[arg={Ok}, left, pos=.5]{processpacket}{sendack}
+\umltrans[arg={Fehler},right, anchor1=70, anchor2=-70, pos=.5]{processpacket}{waitpacket}
+\umlHVHtrans[right, arg={},pos=1.5,anchor1=180, anchor2=180, arm1=-2.5cm]{sendack}{startupload}
+\umlbasicstate[y=-12,name=processfile, fill=white]{Verarbeite Datei}
+\umltrans[arg={Paket hat Datei-CRC}, left, pos=.5, anchor1=-110, anchor2=110]{sendack}{processfile}
+\umlHVHtrans[right, arg={Fehler},pos=1.5,anchor1=0, anchor2=0, arm1=1.5cm]{processfile}{startupload}
+\umltrans[arg={Ok},right, anchor1=70, anchor2=-70, pos=.5]{processfile}{sendack}
+\end{tikzpicture}
+\end{center}
+
 
 \section{Ausblick}
 \label{ausblick}
