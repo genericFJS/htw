@@ -33,7 +33,6 @@ public class Client extends FileTransfer {
 //		try {
 //			test();
 //		} catch (Exception e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 		
@@ -69,7 +68,7 @@ public class Client extends FileTransfer {
 			// sendPackets();
 		//}
 		
-		test_deux();
+		//test_deux();
 	}
 	
 	private void initializeUpload(){
@@ -79,7 +78,17 @@ public class Client extends FileTransfer {
 		setByteFileNameLength();
 		setByteFileName();
 		
-		getFirstPacket();
+		currentPacket = createFirstPacket();
+		previousPacket = createFirstPacket();
+		
+		printSessionData();
+		resetSession();
+		printSessionData();
+		
+		getFirstPacketContents(currentPacket);
+		printSessionData();
+		
+		
 	}	
 
 	private void test() throws Exception {
@@ -104,8 +113,8 @@ public class Client extends FileTransfer {
 	private void test_deux(){
 		ByteBuffer buffer = ByteBuffer.allocate(9);
 		buffer.put("123456789".getBytes(StandardCharsets.US_ASCII));
-		out.println(ByteBuffer.wrap(this.getFirstPacketCRC(buffer.array())).getInt());
-		out.println(this.getFirstPacketCRC(buffer.array()));
+		out.println(ByteBuffer.wrap(this.createFirstPacketCRC(buffer.array())).getInt());
+		out.println(this.createFirstPacketCRC(buffer.array()));
 	}
 
 	private void displayArguments() {
