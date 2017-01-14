@@ -13,6 +13,8 @@ import java.io.InputStreamReader;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Falk-Jonatan Strube (s74053)
@@ -71,7 +73,13 @@ public class Client extends FileTransfer {
 	}
 	
 	private void initializeUpload(){
+		setByteSessionNumber();
+		setByteStartIdentifier();
+		setByteFileLength();
+		setByteFileNameLength();
+		setByteFileName();
 		
+		getFirstPacket();
 	}	
 
 	private void test() throws Exception {
@@ -94,16 +102,10 @@ public class Client extends FileTransfer {
 	}
 	
 	private void test_deux(){
-		this.setFilePath("test.jpg");
-		this.setByteFileNameLength();
-		out.println(fileName.length());
-		out.println(this.getByteFileNameLengthShort());
-		this.setFilePath("test/test500.jpg");
-		this.setByteFileNameLength();
-		out.println(fileName.length());
-		out.println(this.getByteFileNameLengthShort());
-		out.println(filePath);
-		out.println(fileName);
+		ByteBuffer buffer = ByteBuffer.allocate(9);
+		buffer.put("123456789".getBytes(StandardCharsets.US_ASCII));
+		out.println(ByteBuffer.wrap(this.getFirstPacketCRC(buffer.array())).getInt());
+		out.println(this.getFirstPacketCRC(buffer.array()));
 	}
 
 	private void displayArguments() {
@@ -125,7 +127,7 @@ public class Client extends FileTransfer {
 		// Assign Server and Port
 		setConnectionIP(args[0]);
 		setPort(Integer.parseInt(args[1]));
-		setFilePath(args[2]);
+		setClientFile(args[2]);
 		if (args.length > 3) {
 			// Check for debug flag (only even argument-length)
 			if (args.length % 2 == 0 && (args[3].contains("--debug") || (args.length > 5 && args[5].contains("--debug")))) {
