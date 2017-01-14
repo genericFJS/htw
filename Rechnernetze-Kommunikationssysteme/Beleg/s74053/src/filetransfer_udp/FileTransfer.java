@@ -46,13 +46,13 @@ public abstract class FileTransfer {
 	// server
 	// other
 	boolean debug;
+	static final String LINE = "----------------------------------------";
 
 	void exitApp(String message, int status) {
-		String line = "----------------------------------------";
 		if (status == 0) {
-			out.println(line + "\nSTATUS: " + message);
+			out.println(LINE + "\nSTATUS: " + message);
 		} else {
-			err.println(line + "\nERROR:  " + message);
+			err.println(LINE + "\nERROR:  " + message);
 		}
 		System.exit(status);
 	}
@@ -113,7 +113,7 @@ public abstract class FileTransfer {
 		}
 	}
 
-	public byte[] getFirstPacket() {
+	public byte[] createFirstPacket() {
 		int packetLength = 18 + fileName.length();
 
 		ByteBuffer buffer = ByteBuffer.allocate(packetLength);
@@ -126,18 +126,18 @@ public abstract class FileTransfer {
 
 		ByteBuffer packetBuffer = ByteBuffer.allocate(packetLength + 4);
 		packetBuffer.put(buffer.array());
-		packetBuffer.put(getFirstPacketCRC(buffer.array()));
+		packetBuffer.put(createFirstPacketCRC(buffer.array()));
 		return packetBuffer.array();
 	}
 
-	public byte[] getFirstPacketCRC(byte[] packetContent) {
+	public byte[] createFirstPacketCRC(byte[] packetContent) {
 		CRC32 crc = new CRC32();
 		crc.update(packetContent);
 		long checksum = crc.getValue();
 		return ByteBuffer.allocate(4).putInt((int) checksum).array();
 	}
 
-	public void getFirstPacket(byte[] packet) {
+	public void getFirstPacketContents(byte[] packet) {
 		ByteBuffer buffer = ByteBuffer.wrap(packet);
 		buffer.get(byteSessionNumber);
 		bytePacketNumber = buffer.get();
@@ -149,6 +149,29 @@ public abstract class FileTransfer {
 		buffer.get(byteFileName);
 		buffer.get(byteFirstPacketCRC);
 	}
+	
+	public void resetSession(){
+		this.byteSessionNumber = new byte[2];
+		this.bytePacketNumber = (byte)0;
+		this.byteStartIdentifier = new byte[5];
+		this.byteFileLength = new byte[8];
+		this.byteFileNameLength = new byte[2];
+		this.byteFileName = null;
+	}
+	
+	public void printSessionData(){
+		String sessionData = LINE +"\nSession Number: "+getByteSessionNumberShort();
+		sessionData +="\nPacket Number: "+getBytePacketNumber();
+		sessionData +="\nStart Identifier: "+getByteStartIdentifierString();
+		sessionData +="\nFile Length: "+getByteFileLengthLong()+ " Byte";
+		sessionData +="\nFile Name Length: "+getByteFileNameLengthShort()+ " Byte";
+		sessionData +="\nFile Name: ";
+		if (byteFileName != null)
+			sessionData +=getByteFileNameString();
+		else 
+			sessionData +="N/A";
+		out.println(sessionData);
+	}
 
 	// ================================
 	// getter and setter
@@ -157,7 +180,7 @@ public abstract class FileTransfer {
 	}
 
 	public void setByteFirstPacketCRC(byte[] byteFirstPacketCRC) {
-		this.byteFirstPacketCRC = byteFirstPacketCRC;
+		this.byteFirstPacketCRC = byteFirstPacketCRC.clone();
 	}
 
 	public byte[] getByteLastPacketCRC() {
@@ -165,16 +188,21 @@ public abstract class FileTransfer {
 	}
 
 	public void setByteLastPacketCRC(byte[] byteLastPacketCRC) {
-		this.byteLastPacketCRC = byteLastPacketCRC;
+		this.byteLastPacketCRC = byteLastPacketCRC.clone();
 	}
 
 	public byte[] getByteFileName() {
 		return byteFileName;
 	}
 
-	public void setByteFileName(byte[] byteFileName) {
-		this.byteFileName = byteFileName;
+	public String getByteFileNameString(){
+		return new String(byteFileName);
 	}
+	
+	public void setByteFileName(byte[] byteFileName) {
+		this.byteFileName = byteFileName.clone();
+	}
+	
 
 	public void setByteFileName() {
 		byteFileName = fileName.getBytes(StandardCharsets.UTF_8);
@@ -183,9 +211,13 @@ public abstract class FileTransfer {
 	public byte[] getByteStartIdentifier() {
 		return byteStartIdentifier;
 	}
+	
+	public String getByteStartIdentifierString(){
+		return new String(byteStartIdentifier);
+	}
 
 	public void setByteStartIdentifier(byte[] startIdentifier) {
-		this.byteStartIdentifier = startIdentifier;
+		this.byteStartIdentifier = startIdentifier.clone();
 	}
 
 	public void setByteStartIdentifier() {
@@ -197,7 +229,7 @@ public abstract class FileTransfer {
 	}
 
 	public void setPreviousPacket(byte[] previousPacket) {
-		this.previousPacket = previousPacket;
+		this.previousPacket = previousPacket.clone();
 	}
 
 	public byte[] getCurrentPacket() {
@@ -205,24 +237,29 @@ public abstract class FileTransfer {
 	}
 
 	public void setCurrentPacket(byte[] currentPacket) {
-		this.currentPacket = currentPacket;
+		this.currentPacket = currentPacket.clone();
 	}
 
 	public byte[] getByteSessionNumber() {
 		return byteSessionNumber;
 	}
 
+	public short getByteSessionNumberShort(){
+		return ByteBuffer.wrap(byteSessionNumber).getShort();
+	}
+
 	public void setByteSessionNumber(byte[] sessionNumber) {
-		this.byteSessionNumber = sessionNumber;
+		this.byteSessionNumber = sessionNumber.clone();
 	}
 
 	public void setByteSessionNumber() {
-		new Random().nextBytes(byteSessionNumber);
+		this.byteSessionNumber = ByteBuffer.allocate(2).putShort((short) new Random().nextInt(Short.MAX_VALUE+1)).array();
 	}
 
 	public byte getBytePacketNumber() {
 		return bytePacketNumber;
 	}
+
 
 	public void setBytePacketNumber(byte packetNumber) {
 		this.bytePacketNumber = packetNumber;
@@ -239,9 +276,13 @@ public abstract class FileTransfer {
 	public byte[] getByteFileLength() {
 		return byteFileLength;
 	}
+	
+	public long getByteFileLengthLong(){
+		return ByteBuffer.wrap(byteFileLength).getLong();
+	}
 
 	public void setByteFileLength(byte[] fileLength) {
-		this.byteFileLength = fileLength;
+		this.byteFileLength = fileLength.clone();
 	}
 
 	public void setByteFileLength() {
@@ -257,7 +298,7 @@ public abstract class FileTransfer {
 	}
 
 	public void setByteFileNameLength(byte[] fileNameLength) {
-		this.byteFileNameLength = fileNameLength;
+		this.byteFileNameLength = fileNameLength.clone();
 	}
 
 	public void setByteFileNameLength() {
