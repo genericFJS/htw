@@ -3,8 +3,10 @@ package filetransfer_udp;
 import static java.lang.System.err;
 import static java.lang.System.out;
 
+import java.io.File;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.URISyntaxException;
 
 /**
  * @author jonatan
@@ -31,12 +33,35 @@ public class FileTransfer {
 		System.exit(status);
 	}
 	
-	void displayLossRateDelayValues(){
+	String getPrintableLossRateDelayValues(){
 		if(packetDelay > 0 || packetLossRate > 0)
-			out.println("Packet Loss:\t" + packetLossRate*100 + "%\nPacket Delay:\t" + packetDelay + "ms");		
+			return "Packet Loss:\t" + packetLossRate*100 + "%\nPacket Delay:\t" + packetDelay + "ms";	
+		else
+			return "";
 	}
-	void displayDebugStatus(){
+	String getPrintableDebugStatus(){
 		if(debug)
-			out.println("=== DEBUG MODE ON ===");		
+			return "=== DEBUG MODE ON ===";		
+		else
+			return "";
+	}
+	
+	String getAppLocation(){
+		String appLocation = "";
+		try {
+			appLocation = FileTransfer.class.getProtectionDomain().getCodeSource().getLocation().toURI().getSchemeSpecificPart();
+			// Location without /bin folder
+			appLocation = appLocation.substring(0, appLocation.length() - 4);
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		this.getClass();
+		return appLocation;
+	}
+	
+	String getNewFileName(String fileName){
+		int fileLoc = fileName.lastIndexOf("/")+1;
+		int extLoc = fileName.lastIndexOf(".");
+		return fileName.substring(fileLoc, extLoc) + "1" + fileName.substring(extLoc);
 	}
 }
