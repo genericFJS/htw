@@ -13,36 +13,34 @@ import java.io.FileOutputStream;
  * @author Falk-Jonatan Strube (s74053)
  *
  */
-public class Client extends FileTransfer{
+public class Client extends FileTransfer {
 
 	private String server;
-	String fileName;
+	private String filePath;
+	private String fileName;
+	
 
 	public Client(String[] args) {
-		if (!argumentsParsed(args)) {
-			exitApp("Error while parsing arguments.", 1);
-		}
+		parseArguments(args);
 		displayArguments();
-		try {
-			// test();
-		} catch (Exception e) {
-			e.printStackTrace();
+		
+		//initializeUpload();
+		
+		while(true){
+			
+			//sendPackets();
 		}
 	}
 
 	private void test() throws Exception {
-		File f = new File(fileName);
-		out.println(f.getAbsolutePath());
+		File f = new File(filePath);
+		out.println("Bildpfad: "+f.getAbsolutePath());
 
-		out.println(f.getParent());
-		String savePath = Client.class.getProtectionDomain().getCodeSource().getLocation().toURI().getSchemeSpecificPart();
-		savePath = savePath.substring(0, savePath.length() - 4);
-		out.println(savePath);
+		String savePath = getAppLocation();
+		out.println("Speicherpfad: "+savePath);
 
-		int extLoc = fileName.lastIndexOf(".");
-		int fileLoc = fileName.lastIndexOf("/");
-		File f_new = new File(savePath + fileName.substring(fileLoc + 1, extLoc) + "1" + fileName.substring(extLoc));
-		out.println(savePath + fileName.substring(fileLoc + 1, extLoc) + "1" + fileName.substring(extLoc));
+		File f_new = new File(savePath + getNewFileName(filePath));
+		out.println("Bild gespeichert unter: "+savePath + getNewFileName(filePath));
 		DataInputStream fileStream = new DataInputStream(new BufferedInputStream(new FileInputStream(f)));
 		byte[] buffer = new byte[(int) f.length()];
 		int read = fileStream.read(buffer);
@@ -52,17 +50,22 @@ public class Client extends FileTransfer{
 		outputStream.write(buffer);
 		fileStream.close();
 	}
-
+	
 	private void displayArguments() {
-		out.println("Transfering to:\t" + server + ":" + port + "\nFile:\t\t" + fileName);
-		displayLossRateDelayValues();
-		displayDebugStatus();
+		String printableArguments = "Transfering to:\t" + server + ":" + port + "\nFile:\t\t" + filePath;
+		String printableLossRateDelayValues = getPrintableLossRateDelayValues();
+		String printableDebugStatus = getPrintableDebugStatus();
+		if (!printableLossRateDelayValues.isEmpty())
+			printableArguments += "\n"+printableLossRateDelayValues;
+		if (!printableDebugStatus.isEmpty())
+			printableArguments += "\n"+printableDebugStatus;
+		out.println(printableArguments);
 	}
 
-	private boolean argumentsParsed(String[] args) {
+	private void parseArguments(String[] args) {
 		if (args.length < 3) {
 			out.println(argumentMessage);
-			return false;
+			exitApp("Error while parsing arguments: Too few Arguments", 1);
 		}
 		// Assign Server and Port
 		setServer(args[0]);
@@ -70,19 +73,18 @@ public class Client extends FileTransfer{
 		setFileName(args[2]);
 		if (args.length > 3) {
 			// Check for debug flag
-			if (args.length % 2 == 0 && (args[3].equals("--debug") || (args.length > 5 && args[5].equals("--debug")))) {
+			if (args.length % 2 == 0 && (args[3].contains("--debug") || (args.length > 5 && args[5].contains("--debug")))) {
 				setDebug(true);
 			} else {
-				err.println("Searched for --debug, but was not found! Check your arguments.\n" + argumentMessage);
-				return false;
+				err.println(argumentMessage);
+				exitApp("Error while parsing arguments: Searched for --debug, but was not found!", 1);
 			}
 			// Assign optional Parameters
 			if (args.length > 4) {
 				setPacketLossRate(Float.parseFloat(args[3]));
-				setPacketDelay(Integer.parseUnsignedInt(args[4]));
+				setPacketDelay(Integer.parseInt(args[4]));
 			}
 		}
-		return true;
 	}
 
 	public static void main(String[] args) {
@@ -118,6 +120,8 @@ public class Client extends FileTransfer{
 	}
 
 	public void setPacketLossRate(float packetLossRate) {
+		if (packetLossRate < 0)
+			this.packetLossRate = 0;
 		if (packetLossRate > 1)
 			this.packetLossRate = 1;
 		else
@@ -129,14 +133,17 @@ public class Client extends FileTransfer{
 	}
 
 	public void setPacketDelay(int packetDelay) {
-		this.packetDelay = packetDelay;
+		if (packetDelay < 0)
+			this.packetDelay = 0;
+		else
+			this.packetDelay = packetDelay;
 	}
 
 	public String getFileName() {
-		return fileName;
+		return filePath;
 	}
 
 	public void setFileName(String fileName) {
-		this.fileName = fileName;
+		this.filePath = fileName;
 	}
 }
