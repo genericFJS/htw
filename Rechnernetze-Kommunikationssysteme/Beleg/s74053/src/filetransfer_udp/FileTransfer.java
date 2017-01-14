@@ -31,15 +31,17 @@ public abstract class FileTransfer {
 	byte[] previousPacket;
 	byte[] currentPacket;
 	byte[] byteSessionNumber = new byte[2];
-	byte[] bytePacketNumber = new byte[1];
+	byte bytePacketNumber = (byte) 0;
 	byte[] byteStartIdentifier = new byte[5];
 	byte[] byteFileLength = new byte[8];
 	byte[] byteFileNameLength = new byte[2];
 	byte[] byteFileName;
+	byte[] byteFirstPacketCRC = new byte[4];
+	byte[] byteLastPacketCRC = new byte[4];
 	int packetDataLength = 400;
 	String fileName;
-	File file;
 	// client
+	File clientFile;
 	String filePath;
 	// server
 	// other
@@ -48,9 +50,9 @@ public abstract class FileTransfer {
 	void exitApp(String message, int status) {
 		String line = "----------------------------------------";
 		if (status == 0) {
-			out.println(line + "\n" + message);
+			out.println(line + "\nSTATUS: " + message);
 		} else {
-			err.println(line + "\n" + message);
+			err.println(line + "\nERROR:  " + message);
 		}
 		System.exit(status);
 	}
@@ -96,7 +98,7 @@ public abstract class FileTransfer {
 	}
 
 	public void flipPacketNumber() {
-		if (getBytePacketNumberInt() == 0) {
+		if (getBytePacketNumber() == (byte) 0) {
 			setBytePacketNumber(1);
 		} else {
 			setBytePacketNumber(0);
@@ -111,11 +113,9 @@ public abstract class FileTransfer {
 		}
 	}
 
-	public byte[] getFirstPacket(){
+	public byte[] getFirstPacket() {
 		int packetLength = 18 + fileName.length();
-		byte[] packetWithoutCRC = new byte[packetLength];
-		byte[] packet = new byte[packetLength+4];
-		
+
 		ByteBuffer buffer = ByteBuffer.allocate(packetLength);
 		buffer.put(byteSessionNumber);
 		buffer.put(bytePacketNumber);
@@ -123,27 +123,50 @@ public abstract class FileTransfer {
 		buffer.put(byteFileLength);
 		buffer.put(byteFileNameLength);
 		buffer.put(byteFileName);
-//		buffer.put(src)
-		return packet;
+
+		ByteBuffer packetBuffer = ByteBuffer.allocate(packetLength + 4);
+		packetBuffer.put(buffer.array());
+		packetBuffer.put(getFirstPacketCRC(buffer.array()));
+		return packetBuffer.array();
 	}
-	
-    public byte[] getFirstPacketCRC(byte[] packetContent) {
-        CRC32 crc = new CRC32();
 
-        crc.update(packetContent);
+	public byte[] getFirstPacketCRC(byte[] packetContent) {
+		CRC32 crc = new CRC32();
+		crc.update(packetContent);
+		long checksum = crc.getValue();
+		return ByteBuffer.allocate(4).putInt((int) checksum).array();
+	}
 
-        long checksum = crc.getValue();
-        byte byteChecksum[] = new byte[4];
+	public void getFirstPacket(byte[] packet) {
+		ByteBuffer buffer = ByteBuffer.wrap(packet);
+		buffer.get(byteSessionNumber);
+		bytePacketNumber = buffer.get();
+		buffer.get(byteStartIdentifier);
+		buffer.get(byteFileLength);
+		buffer.get(byteFileNameLength);
 
-        for (int i = 0; i < 4; i++) {
-            byteChecksum[3-i] = (byte) (checksum >> i*8);
-        }     
-        
-        return byteChecksum;
-    }
+		byteFileName = new byte[getByteFileNameLengthShort()];
+		buffer.get(byteFileName);
+		buffer.get(byteFirstPacketCRC);
+	}
 
 	// ================================
 	// getter and setter
+	public byte[] getByteFirstPacketCRC() {
+		return byteFirstPacketCRC;
+	}
+
+	public void setByteFirstPacketCRC(byte[] byteFirstPacketCRC) {
+		this.byteFirstPacketCRC = byteFirstPacketCRC;
+	}
+
+	public byte[] getByteLastPacketCRC() {
+		return byteLastPacketCRC;
+	}
+
+	public void setByteLastPacketCRC(byte[] byteLastPacketCRC) {
+		this.byteLastPacketCRC = byteLastPacketCRC;
+	}
 
 	public byte[] getByteFileName() {
 		return byteFileName;
@@ -152,9 +175,9 @@ public abstract class FileTransfer {
 	public void setByteFileName(byte[] byteFileName) {
 		this.byteFileName = byteFileName;
 	}
-	
-	public void setByteFileName(){
-        byteFileName = fileName.getBytes(StandardCharsets.UTF_8);
+
+	public void setByteFileName() {
+		byteFileName = fileName.getBytes(StandardCharsets.UTF_8);
 	}
 
 	public byte[] getByteStartIdentifier() {
@@ -197,15 +220,11 @@ public abstract class FileTransfer {
 		new Random().nextBytes(byteSessionNumber);
 	}
 
-	public byte[] getBytePacketNumber() {
+	public byte getBytePacketNumber() {
 		return bytePacketNumber;
 	}
 
-	public int getBytePacketNumberInt() {
-		return ByteBuffer.wrap(bytePacketNumber).getInt();
-	}
-
-	public void setBytePacketNumber(byte[] packetNumber) {
+	public void setBytePacketNumber(byte packetNumber) {
 		this.bytePacketNumber = packetNumber;
 	}
 
@@ -226,14 +245,14 @@ public abstract class FileTransfer {
 	}
 
 	public void setByteFileLength() {
-		this.byteFileLength = ByteBuffer.allocate(8).putLong(file.length()).array();
+		this.byteFileLength = ByteBuffer.allocate(8).putLong(clientFile.length()).array();
 	}
 
 	public byte[] getByteFileNameLength() {
 		return byteFileNameLength;
 	}
-	
-	public int getByteFileNameLengthShort(){
+
+	public int getByteFileNameLengthShort() {
 		return ByteBuffer.wrap(byteFileNameLength).getShort();
 	}
 
@@ -244,13 +263,18 @@ public abstract class FileTransfer {
 	public void setByteFileNameLength() {
 		this.byteFileNameLength = ByteBuffer.allocate(2).putShort((short) fileName.length()).array();
 	}
-	
-	public File getFile() {
-		return file;
+
+	public File getClientFile() {
+		return clientFile;
 	}
 
-	public void setFile(File file) {
-		this.file = file;
+	public void setClientFile(File file) {
+		this.clientFile = file;
+	}
+	
+	public void setClientFile(String filePath){
+		setFilePath(filePath);
+		this.clientFile = new File(filePath);
 	}
 
 	public int getPacketDataLength() {
