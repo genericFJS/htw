@@ -8,15 +8,16 @@ rm TeXDoclet.tex
 
 # -imagespath ".." not needed here because path texdoclet_images is in subdir of MyDocument.tex
 
-javadoc -docletpath TeXDoclet.jar \
+javadoc -private -docletpath TeXDoclet.jar \
 	-doclet org.stfm.texdoclet.TeXDoclet \
 	-noindex \
 	-hyperref \
 	-tree \
+	-noinherited \
 	-nopackagetoc \
 	-output TeXDoclet.tex \
 	-sourcepath ../../src \
-	-subpackages filetransfer_udp \
+	-subpackages filetransferUDP \
  	-include \
  	-sectionlevel section
 

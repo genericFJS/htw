@@ -1,9 +1,8 @@
-package filetransfer_udp;
+package filetransferUDP;
 
 import static java.lang.System.err;
 import static java.lang.System.out;
 
-import java.io.DataInput;
 import java.io.File;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -17,20 +16,37 @@ import java.util.Random;
 import java.util.zip.CRC32;
 
 /**
- * @author jonatan
+ * @author Falk-Jonatan Strube (s74053)
  *
  */
 public abstract class FileTransfer {
 
+	// settings
+	/**
+	 * The port of the server. For the server: After the server is started, this variable is used as the port of the client.
+	 */
 	int port;
 	float packetLossRate = 0;
 	int packetDelay = 0;
+	static final int PACKETDATALENGTH = 400;
+	static final int PACKETLENGTH = PACKETDATALENGTH + 2 + 1 + 4;
+	static final int MAX_TRIES = 10;
+	static final int TIMEOUT = 1000;
+	// globals
 	DatagramSocket dataSocket;
 	DatagramPacket dataPacket;
 	InetAddress connectionIP;
 	byte[] previousPacket;
 	byte[] currentPacket;
+	String fileName;
+	int tries = 0;
+	int bytesProccessed;
+	byte[] processedBytes;
+	// packet contents
 	byte[] byteSessionNumber = new byte[2];
+	/**
+	 * The packet number of the current packet (client) or the expected packet (server).
+	 */
 	byte bytePacketNumber = (byte) 0;
 	byte[] byteStartIdentifier = new byte[5];
 	byte[] byteFileLength = new byte[8];
@@ -38,21 +54,23 @@ public abstract class FileTransfer {
 	byte[] byteFileName;
 	byte[] byteFirstPacketCRC = new byte[4];
 	byte[] byteLastPacketCRC = new byte[4];
-	int packetDataLength = 400;
-	String fileName;
 	// client
 	File clientFile;
 	String filePath;
+	boolean sendPrevious = false;
 	// server
+	short activeSession = 0;
+	byte[] packetData;
 	// other
 	boolean debug;
 	static final String LINE = "----------------------------------------";
+	static final String LINED = "========================================";
 
 	void exitApp(String message, int status) {
 		if (status == 0) {
-			out.println(LINE + "\nSTATUS: " + message);
+			out.println(LINED + "\nSTATUS: " + message);
 		} else {
-			err.println(LINE + "\nERROR:  " + message);
+			err.println(LINED + "\nERROR:  " + message);
 		}
 		System.exit(status);
 	}
@@ -66,7 +84,7 @@ public abstract class FileTransfer {
 
 	String getPrintableDebugStatus() {
 		if (debug)
-			return "=== DEBUG MODE ON ===";
+			return "============ DEBUG MODE ON =============";
 		else
 			return "";
 	}
@@ -75,14 +93,14 @@ public abstract class FileTransfer {
 		switch (type) {
 		case 1:
 			if (debug) {
-				out.println(LINE + "\nDEBUG:  " + message);
+				out.println("DEBUG:  " + message);
 			}
 			break;
 		case 2:
-			err.println(LINE + "\nERROR:  " + message);
+			err.println("ERROR:  " + message);
 			break;
 		default:
-			out.println(LINE + "\nSTATUS: " + message);
+			out.println("STATUS: " + message);
 			break;
 		}
 	}
@@ -125,7 +143,7 @@ public abstract class FileTransfer {
 		}
 	}
 
-	public boolean startIdentifierCorrect() {
+	public boolean isCorrectStartIdentifier() {
 		if (Arrays.equals("Start".getBytes(StandardCharsets.US_ASCII), byteStartIdentifier)) {
 			return true;
 		} else {
@@ -177,10 +195,11 @@ public abstract class FileTransfer {
 		this.byteFileLength = new byte[8];
 		this.byteFileNameLength = new byte[2];
 		this.byteFileName = null;
+		this.activeSession = 0;
 	}
 
 	public void printSessionData() {
-		String sessionData = "\nSession Number: " + getByteSessionNumberShort();
+		String sessionData = LINE + "\n" + "Session Number: " + getByteSessionNumberShort();
 		sessionData += "\nPacket Number: " + getBytePacketNumber();
 		sessionData += "\nStart Identifier: " + getByteStartIdentifierString();
 		sessionData += "\nFile Length: " + getByteFileLengthLong() + " Byte";
@@ -190,11 +209,121 @@ public abstract class FileTransfer {
 			sessionData += getByteFileNameString();
 		else
 			sessionData += "N/A";
-		out.println(sessionData);
+		out.println(sessionData + "\n" + LINE);
+	}
+
+	public boolean isCorrectPacketNumber(byte sessionNumber) {
+		if (sessionNumber == getBytePacketNumber()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean isCorrectFirstPacketCRC(byte[] packetContent){
+		if (Arrays.equals(createFirstPacketCRC(packetContent),byteFirstPacketCRC)){
+			return true;
+		}
+		return false;
+	}
+
+	public int verifyACK(byte[] packet) {
+		byte[] packetSession = Arrays.copyOfRange(packet, 0, 2);
+		byte packetPacketNumber = packet[2];
+		if (!Arrays.equals(packetSession, byteSessionNumber)) {
+			printMessage("Wrong session number: " + getByteSessionNumberShort(packetSession), 1);
+			return -1;
+		} else if (packetPacketNumber != bytePacketNumber) {
+			printMessage("Wrong packet number: " + packetPacketNumber, 1);
+			return 1;
+		}
+		return 0;
 	}
 
 	// ================================
-	// getter and setter
+	// custom getter and setter
+	public void setByteFileName() {
+		byteFileName = fileName.getBytes(StandardCharsets.UTF_8);
+	}
+
+	public void setByteStartIdentifier() {
+		this.byteStartIdentifier = "Start".getBytes(StandardCharsets.US_ASCII);
+	}
+
+	public short getByteSessionNumberShort() {
+		return getByteSessionNumberShort(byteSessionNumber);
+	}
+
+	public short getByteSessionNumberShort(byte[] sessionNumber) {
+		return ByteBuffer.wrap(sessionNumber).getShort();
+	}
+
+	public void setByteSessionNumber() {
+		this.byteSessionNumber = ByteBuffer.allocate(2).putShort((short) (new Random().nextInt(Short.MAX_VALUE) + 1)).array();
+	}
+
+	public void setBytePacketNumber(int packetNumber) {
+		if (packetNumber == 0) {
+			setBytePacketNumber((byte) 0);
+		} else {
+			setBytePacketNumber((byte) 1);
+		}
+	}
+
+	public long getByteFileLengthLong() {
+		return ByteBuffer.wrap(byteFileLength).getLong();
+	}
+
+	public void setByteFileLength() {
+		this.byteFileLength = ByteBuffer.allocate(8).putLong(clientFile.length()).array();
+	}
+
+	public int getByteFileNameLengthShort() {
+		return ByteBuffer.wrap(byteFileNameLength).getShort();
+	}
+
+	public void setByteFileNameLength() {
+		this.byteFileNameLength = ByteBuffer.allocate(2).putShort((short) fileName.length()).array();
+	}
+
+	public void setClientFile(String filePath) {
+		setFilePath(filePath);
+		this.clientFile = new File(filePath);
+	}
+
+	public void setConnectionIP(String connectionName) {
+		try {
+			this.connectionIP = InetAddress.getByName(connectionName);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+			exitApp("Could not resolve connection name to IP-address.", -1);
+		}
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+		int fileLoc = filePath.lastIndexOf("/") + 1;
+		this.setFileName(filePath.substring(fileLoc));
+	}
+
+	public void setPacketLossRate(float packetLossRate) {
+		if (packetLossRate < 0)
+			this.packetLossRate = 0;
+		if (packetLossRate > 1)
+			this.packetLossRate = 1;
+		else
+			this.packetLossRate = packetLossRate;
+	}
+
+	public void setPacketDelay(int packetDelay) {
+		if (packetDelay < 0)
+			this.packetDelay = 0;
+		else
+			this.packetDelay = packetDelay;
+	}
+
+	// ================================
+	// generic getter and setter
 	public byte[] getByteFirstPacketCRC() {
 		return byteFirstPacketCRC;
 	}
@@ -223,10 +352,6 @@ public abstract class FileTransfer {
 		this.byteFileName = byteFileName.clone();
 	}
 
-	public void setByteFileName() {
-		byteFileName = fileName.getBytes(StandardCharsets.UTF_8);
-	}
-
 	public byte[] getByteStartIdentifier() {
 		return byteStartIdentifier;
 	}
@@ -237,10 +362,6 @@ public abstract class FileTransfer {
 
 	public void setByteStartIdentifier(byte[] startIdentifier) {
 		this.byteStartIdentifier = startIdentifier.clone();
-	}
-
-	public void setByteStartIdentifier() {
-		this.byteStartIdentifier = "Start".getBytes(StandardCharsets.US_ASCII);
 	}
 
 	public byte[] getPreviousPacket() {
@@ -263,16 +384,8 @@ public abstract class FileTransfer {
 		return byteSessionNumber;
 	}
 
-	public short getByteSessionNumberShort() {
-		return ByteBuffer.wrap(byteSessionNumber).getShort();
-	}
-
 	public void setByteSessionNumber(byte[] sessionNumber) {
 		this.byteSessionNumber = sessionNumber.clone();
-	}
-
-	public void setByteSessionNumber() {
-		this.byteSessionNumber = ByteBuffer.allocate(2).putShort((short) new Random().nextInt(Short.MAX_VALUE + 1)).array();
 	}
 
 	public byte getBytePacketNumber() {
@@ -283,44 +396,20 @@ public abstract class FileTransfer {
 		this.bytePacketNumber = packetNumber;
 	}
 
-	public void setBytePacketNumber(int packetNumber) {
-		if (packetNumber == 0) {
-			setBytePacketNumber((byte) 0);
-		} else {
-			setBytePacketNumber((byte) 1);
-		}
-	}
-
 	public byte[] getByteFileLength() {
 		return byteFileLength;
-	}
-
-	public long getByteFileLengthLong() {
-		return ByteBuffer.wrap(byteFileLength).getLong();
 	}
 
 	public void setByteFileLength(byte[] fileLength) {
 		this.byteFileLength = fileLength.clone();
 	}
 
-	public void setByteFileLength() {
-		this.byteFileLength = ByteBuffer.allocate(8).putLong(clientFile.length()).array();
-	}
-
 	public byte[] getByteFileNameLength() {
 		return byteFileNameLength;
 	}
 
-	public int getByteFileNameLengthShort() {
-		return ByteBuffer.wrap(byteFileNameLength).getShort();
-	}
-
 	public void setByteFileNameLength(byte[] fileNameLength) {
 		this.byteFileNameLength = fileNameLength.clone();
-	}
-
-	public void setByteFileNameLength() {
-		this.byteFileNameLength = ByteBuffer.allocate(2).putShort((short) fileName.length()).array();
 	}
 
 	public File getClientFile() {
@@ -331,17 +420,8 @@ public abstract class FileTransfer {
 		this.clientFile = file;
 	}
 
-	public void setClientFile(String filePath) {
-		setFilePath(filePath);
-		this.clientFile = new File(filePath);
-	}
-
-	public int getPacketDataLength() {
-		return packetDataLength;
-	}
-
-	public void setPacketDataLength(int packetDataLength) {
-		this.packetDataLength = packetDataLength;
+	public int getPACKETDATALENGTH() {
+		return PACKETDATALENGTH;
 	}
 
 	public InetAddress getConnectionIP() {
@@ -352,23 +432,8 @@ public abstract class FileTransfer {
 		this.connectionIP = connectionIP;
 	}
 
-	public void setConnectionIP(String connectionName) {
-		try {
-			this.connectionIP = InetAddress.getByName(connectionName);
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-			exitApp("Could not resolve connection name to IP-address.", -1);
-		}
-	}
-
 	public String getFilePath() {
 		return filePath;
-	}
-
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
-		int fileLoc = filePath.lastIndexOf("/") + 1;
-		this.setFileName(filePath.substring(fileLoc));
 	}
 
 	public int getPort() {
@@ -391,24 +456,8 @@ public abstract class FileTransfer {
 		return packetLossRate;
 	}
 
-	public void setPacketLossRate(float packetLossRate) {
-		if (packetLossRate < 0)
-			this.packetLossRate = 0;
-		if (packetLossRate > 1)
-			this.packetLossRate = 1;
-		else
-			this.packetLossRate = packetLossRate;
-	}
-
 	public int getPacketDelay() {
 		return packetDelay;
-	}
-
-	public void setPacketDelay(int packetDelay) {
-		if (packetDelay < 0)
-			this.packetDelay = 0;
-		else
-			this.packetDelay = packetDelay;
 	}
 
 	public String getFileName() {
