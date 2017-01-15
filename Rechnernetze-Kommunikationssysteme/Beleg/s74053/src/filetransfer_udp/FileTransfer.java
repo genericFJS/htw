@@ -71,6 +71,26 @@ public abstract class FileTransfer {
 			return "";
 	}
 
+	void printMessage(String message, int type) {
+		switch (type) {
+		case 1:
+			if (debug) {
+				out.println(LINE + "\nDEBUG:  " + message);
+			}
+			break;
+		case 2:
+			err.println(LINE + "\nERROR:  " + message);
+			break;
+		default:
+			out.println(LINE + "\nSTATUS: " + message);
+			break;
+		}
+	}
+
+	void printMessage(String message) {
+		printMessage(message, 0);
+	}
+
 	String getAppLocation() {
 		String appLocation = "";
 		try {
@@ -149,27 +169,27 @@ public abstract class FileTransfer {
 		buffer.get(byteFileName);
 		buffer.get(byteFirstPacketCRC);
 	}
-	
-	public void resetSession(){
+
+	public void resetSession() {
 		this.byteSessionNumber = new byte[2];
-		this.bytePacketNumber = (byte)0;
+		this.bytePacketNumber = (byte) 0;
 		this.byteStartIdentifier = new byte[5];
 		this.byteFileLength = new byte[8];
 		this.byteFileNameLength = new byte[2];
 		this.byteFileName = null;
 	}
-	
-	public void printSessionData(){
-		String sessionData = LINE +"\nSession Number: "+getByteSessionNumberShort();
-		sessionData +="\nPacket Number: "+getBytePacketNumber();
-		sessionData +="\nStart Identifier: "+getByteStartIdentifierString();
-		sessionData +="\nFile Length: "+getByteFileLengthLong()+ " Byte";
-		sessionData +="\nFile Name Length: "+getByteFileNameLengthShort()+ " Byte";
-		sessionData +="\nFile Name: ";
+
+	public void printSessionData() {
+		String sessionData = "\nSession Number: " + getByteSessionNumberShort();
+		sessionData += "\nPacket Number: " + getBytePacketNumber();
+		sessionData += "\nStart Identifier: " + getByteStartIdentifierString();
+		sessionData += "\nFile Length: " + getByteFileLengthLong() + " Byte";
+		sessionData += "\nFile Name Length: " + getByteFileNameLengthShort() + " Byte";
+		sessionData += "\nFile Name: ";
 		if (byteFileName != null)
-			sessionData +=getByteFileNameString();
-		else 
-			sessionData +="N/A";
+			sessionData += getByteFileNameString();
+		else
+			sessionData += "N/A";
 		out.println(sessionData);
 	}
 
@@ -195,14 +215,13 @@ public abstract class FileTransfer {
 		return byteFileName;
 	}
 
-	public String getByteFileNameString(){
+	public String getByteFileNameString() {
 		return new String(byteFileName);
 	}
-	
+
 	public void setByteFileName(byte[] byteFileName) {
 		this.byteFileName = byteFileName.clone();
 	}
-	
 
 	public void setByteFileName() {
 		byteFileName = fileName.getBytes(StandardCharsets.UTF_8);
@@ -211,8 +230,8 @@ public abstract class FileTransfer {
 	public byte[] getByteStartIdentifier() {
 		return byteStartIdentifier;
 	}
-	
-	public String getByteStartIdentifierString(){
+
+	public String getByteStartIdentifierString() {
 		return new String(byteStartIdentifier);
 	}
 
@@ -244,7 +263,7 @@ public abstract class FileTransfer {
 		return byteSessionNumber;
 	}
 
-	public short getByteSessionNumberShort(){
+	public short getByteSessionNumberShort() {
 		return ByteBuffer.wrap(byteSessionNumber).getShort();
 	}
 
@@ -253,13 +272,12 @@ public abstract class FileTransfer {
 	}
 
 	public void setByteSessionNumber() {
-		this.byteSessionNumber = ByteBuffer.allocate(2).putShort((short) new Random().nextInt(Short.MAX_VALUE+1)).array();
+		this.byteSessionNumber = ByteBuffer.allocate(2).putShort((short) new Random().nextInt(Short.MAX_VALUE + 1)).array();
 	}
 
 	public byte getBytePacketNumber() {
 		return bytePacketNumber;
 	}
-
 
 	public void setBytePacketNumber(byte packetNumber) {
 		this.bytePacketNumber = packetNumber;
@@ -276,8 +294,8 @@ public abstract class FileTransfer {
 	public byte[] getByteFileLength() {
 		return byteFileLength;
 	}
-	
-	public long getByteFileLengthLong(){
+
+	public long getByteFileLengthLong() {
 		return ByteBuffer.wrap(byteFileLength).getLong();
 	}
 
@@ -312,8 +330,8 @@ public abstract class FileTransfer {
 	public void setClientFile(File file) {
 		this.clientFile = file;
 	}
-	
-	public void setClientFile(String filePath){
+
+	public void setClientFile(String filePath) {
 		setFilePath(filePath);
 		this.clientFile = new File(filePath);
 	}

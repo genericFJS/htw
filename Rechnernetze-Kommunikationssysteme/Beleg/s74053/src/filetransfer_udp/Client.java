@@ -79,16 +79,7 @@ public class Client extends FileTransfer {
 		setByteFileName();
 		
 		currentPacket = createFirstPacket();
-		previousPacket = createFirstPacket();
-		
-		printSessionData();
-		resetSession();
-		printSessionData();
-		
-		getFirstPacketContents(currentPacket);
-		printSessionData();
-		
-		
+		previousPacket = currentPacket.clone();
 	}	
 
 	private void test() throws Exception {
