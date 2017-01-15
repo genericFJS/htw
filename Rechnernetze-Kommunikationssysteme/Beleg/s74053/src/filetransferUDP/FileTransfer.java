@@ -3,7 +3,10 @@ package filetransferUDP;
 import static java.lang.System.err;
 import static java.lang.System.out;
 
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -16,6 +19,7 @@ import java.util.Random;
 import java.util.zip.CRC32;
 
 /**
+ * FileTransfer is the base for a Server or Client.
  * @author Falk-Jonatan Strube (s74053)
  *
  */
@@ -28,10 +32,9 @@ public abstract class FileTransfer {
 	int port;
 	float packetLossRate = 0;
 	int packetDelay = 0;
-	static final int PACKETDATALENGTH = 400;
+	static final int PACKETDATALENGTH = 1400;
 	static final int PACKETLENGTH = PACKETDATALENGTH + 2 + 1 + 4;
 	static final int MAX_TRIES = 10;
-	static final int TIMEOUT = 1000;
 	// globals
 	DatagramSocket dataSocket;
 	DatagramPacket dataPacket;
@@ -40,8 +43,9 @@ public abstract class FileTransfer {
 	byte[] currentPacket;
 	String fileName;
 	int tries = 0;
-	int bytesProccessed;
+	long bytesProcessed;
 	byte[] processedBytes;
+	int timeout = 1000;
 	// packet contents
 	byte[] byteSessionNumber = new byte[2];
 	/**
@@ -55,7 +59,13 @@ public abstract class FileTransfer {
 	byte[] byteFirstPacketCRC = new byte[4];
 	byte[] byteLastPacketCRC = new byte[4];
 	// client
+	long startTime; 
+	long lastInfo;
+	int speed;
+	boolean packedAllBytes = false;
+	boolean finished = false;
 	File clientFile;
+	byte[] byteClientFile;
 	String filePath;
 	boolean sendPrevious = false;
 	// server
@@ -66,6 +76,11 @@ public abstract class FileTransfer {
 	static final String LINE = "----------------------------------------";
 	static final String LINED = "========================================";
 
+	/**
+	 * Closes the Client/Server.
+	 * @param message the message.
+	 * @param status 0 for a positive exit status, everything else for errors.
+	 */
 	void exitApp(String message, int status) {
 		if (status == 0) {
 			out.println(LINED + "\nSTATUS: " + message);
@@ -75,6 +90,10 @@ public abstract class FileTransfer {
 		System.exit(status);
 	}
 
+	/**
+	 * Packs the loss rate and delay value into a nice line.
+	 * @return Line with packet loss and delay values.
+	 */
 	String getPrintableLossRateDelayValues() {
 		if (packetDelay > 0 || packetLossRate > 0)
 			return "Packet Loss:\t" + packetLossRate * 100 + "%\nPacket Delay:\t" + packetDelay + "ms";
@@ -82,6 +101,10 @@ public abstract class FileTransfer {
 			return "";
 	}
 
+	/**
+	 * Creates a nice line for displaying the debug-status.
+	 * @return line with debug information.
+	 */
 	String getPrintableDebugStatus() {
 		if (debug)
 			return "============ DEBUG MODE ON =============";
@@ -89,6 +112,11 @@ public abstract class FileTransfer {
 			return "";
 	}
 
+	/**
+	 * Prints a message to the console.
+	 * @param message the message.
+	 * @param type 1 is debug (only printed in debug mode), 2 for errors, everything else a status.
+	 */
 	void printMessage(String message, int type) {
 		switch (type) {
 		case 1:
@@ -105,10 +133,18 @@ public abstract class FileTransfer {
 		}
 	}
 
+	/**
+	 * Prints a status message.
+	 * @param message the message.
+	 */
 	void printMessage(String message) {
 		printMessage(message, 0);
 	}
 
+	/**
+	 * Returns the Location where the Client/Server runs (without /bin).
+	 * @return location.
+	 */
 	String getAppLocation() {
 		String appLocation = "";
 		try {
@@ -122,6 +158,11 @@ public abstract class FileTransfer {
 		return appLocation;
 	}
 
+	/**
+	 * Generates a new file name for saving a downloaded file.
+	 * @param fileName the original file name.
+	 * @return the file name.
+	 */
 	String getNewFileName(String fileName) {
 		int fileLoc = fileName.lastIndexOf("/") + 1;
 		int extLoc = fileName.lastIndexOf(".");
@@ -135,6 +176,9 @@ public abstract class FileTransfer {
 		return newFileName + extension;
 	}
 
+	/**
+	 * Flips the packet number between 0 and 1.
+	 */
 	public void flipPacketNumber() {
 		if (getBytePacketNumber() == (byte) 0) {
 			setBytePacketNumber(1);
@@ -143,14 +187,23 @@ public abstract class FileTransfer {
 		}
 	}
 
-	public boolean isCorrectStartIdentifier() {
-		if (Arrays.equals("Start".getBytes(StandardCharsets.US_ASCII), byteStartIdentifier)) {
+	/**
+	 * Checks, if the start identifier is correct ASCII "Start".
+	 * @param startIdentifier the identifier.
+	 * @return true, if the identifier is correct.
+	 */
+	public boolean isCorrectStartIdentifier(byte[] startIdentifier) {
+		if (Arrays.equals("Start".getBytes(StandardCharsets.US_ASCII), startIdentifier)) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
+	/**
+	 * Creates the first packet.
+	 * @return the first packet.
+	 */
 	public byte[] createFirstPacket() {
 		int packetLength = 18 + fileName.length();
 
@@ -164,17 +217,26 @@ public abstract class FileTransfer {
 
 		ByteBuffer packetBuffer = ByteBuffer.allocate(packetLength + 4);
 		packetBuffer.put(buffer.array());
-		packetBuffer.put(createFirstPacketCRC(buffer.array()));
+		packetBuffer.put(generateCRC(buffer.array()));
 		return packetBuffer.array();
 	}
 
-	public byte[] createFirstPacketCRC(byte[] packetContent) {
+	/**
+	 * Generates the CRC value of a byte-array.
+	 * @param packetContent the byte-array.
+	 * @return The CRC of that byte-array.
+	 */
+	public byte[] generateCRC(byte[] packetContent) {
 		CRC32 crc = new CRC32();
 		crc.update(packetContent);
 		long checksum = crc.getValue();
 		return ByteBuffer.allocate(4).putInt((int) checksum).array();
 	}
 
+	/**
+	 * Parses the first packet and saves its contents.
+	 * @param packet the first packet.
+	 */
 	public void getFirstPacketContents(byte[] packet) {
 		ByteBuffer buffer = ByteBuffer.wrap(packet);
 		buffer.get(byteSessionNumber);
@@ -186,8 +248,12 @@ public abstract class FileTransfer {
 		byteFileName = new byte[getByteFileNameLengthShort()];
 		buffer.get(byteFileName);
 		buffer.get(byteFirstPacketCRC);
+		setActiveSession();
 	}
 
+	/**
+	 * Resets a session.
+	 */
 	public void resetSession() {
 		this.byteSessionNumber = new byte[2];
 		this.bytePacketNumber = (byte) 0;
@@ -196,8 +262,13 @@ public abstract class FileTransfer {
 		this.byteFileNameLength = new byte[2];
 		this.byteFileName = null;
 		this.activeSession = 0;
+		this.bytesProcessed = 0;
+		this.processedBytes = null;
 	}
 
+	/**
+	 * Prints the data of a (new) session.
+	 */
 	public void printSessionData() {
 		String sessionData = LINE + "\n" + "Session Number: " + getByteSessionNumberShort();
 		sessionData += "\nPacket Number: " + getBytePacketNumber();
@@ -212,21 +283,48 @@ public abstract class FileTransfer {
 		out.println(sessionData + "\n" + LINE);
 	}
 
-	public boolean isCorrectPacketNumber(byte sessionNumber) {
-		if (sessionNumber == getBytePacketNumber()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	public boolean isCorrectFirstPacketCRC(byte[] packetContent){
-		if (Arrays.equals(createFirstPacketCRC(packetContent),byteFirstPacketCRC)){
+	/**
+	 * Checks, if the packet number is as expected.
+	 * @param packetNumber the packet number of the packet to check.
+	 * @return true, if it is the correct number.
+	 */
+	public boolean isCorrectPacketNumber(byte packetNumber) {
+		if (packetNumber == getBytePacketNumber()) {
 			return true;
 		}
 		return false;
 	}
 
+	/**
+	 * Checks, if the session number is as expected.
+	 * @param sessionNumber the session number of the packet to check.
+	 * @return true, if it is the correct number.
+	 */
+	public boolean isCorrectSessionNumber(byte[] sessionNumber) {
+		if (Arrays.equals(sessionNumber, getByteSessionNumber())){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Compares the CRC value of a given byte-array with another CRC value.
+	 * @param packetContent the byte-array.
+	 * @param crc the CRC number.
+	 * @return true, if it is the same CRC number.
+	 */
+	public boolean isCorrectCRC(byte[] packetContent, byte[] crc) {
+		if (Arrays.equals(generateCRC(packetContent), crc)) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Checks, if the acknowledge packet is correct (with the right session and packet number).
+	 * @param packet the packet to check.
+	 * @return 0 if correct, -1 if the session number is wrong and 1 if the packet number is wrong.
+	 */
 	public int verifyACK(byte[] packet) {
 		byte[] packetSession = Arrays.copyOfRange(packet, 0, 2);
 		byte packetPacketNumber = packet[2];
@@ -270,6 +368,14 @@ public abstract class FileTransfer {
 		}
 	}
 
+	public void toggleBytePacketNumber() {
+		if (bytePacketNumber == (byte) 0) {
+			setBytePacketNumber(1);
+		} else {
+			setBytePacketNumber(0);
+		}
+	}
+
 	public long getByteFileLengthLong() {
 		return ByteBuffer.wrap(byteFileLength).getLong();
 	}
@@ -289,6 +395,15 @@ public abstract class FileTransfer {
 	public void setClientFile(String filePath) {
 		setFilePath(filePath);
 		this.clientFile = new File(filePath);
+		try {
+			DataInputStream fileStream;
+			fileStream = new DataInputStream(new BufferedInputStream(new FileInputStream(clientFile)));
+			byteClientFile = new byte[(int) clientFile.length()];
+			fileStream.read(byteClientFile);
+			fileStream.close();
+		} catch (Exception e) {
+			exitApp("Could not open File.", -1);
+		}
 	}
 
 	public void setConnectionIP(String connectionName) {
@@ -320,6 +435,10 @@ public abstract class FileTransfer {
 			this.packetDelay = 0;
 		else
 			this.packetDelay = packetDelay;
+	}
+
+	public void setActiveSession() {
+		this.activeSession = getByteSessionNumberShort();
 	}
 
 	// ================================

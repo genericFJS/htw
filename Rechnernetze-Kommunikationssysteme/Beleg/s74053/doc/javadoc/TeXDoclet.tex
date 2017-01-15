@@ -5,54 +5,73 @@
 \subsection*{Classes}
 {\raggedright
 \hspace{0.0cm} $\bullet$ java.lang.Object {\tiny \refdefined{java.lang.Object}} \\
-\hspace{1.0cm} $\bullet$ fjs.filetransfer.udp.FileTransfer {\tiny \refdefined{fjs.filetransfer.udp.FileTransfer}} \\
-\hspace{2.0cm} $\bullet$ fjs.filetransfer.udp.Client {\tiny \refdefined{fjs.filetransfer.udp.Client}} \\
-\hspace{2.0cm} $\bullet$ fjs.filetransfer.udp.Server {\tiny \refdefined{fjs.filetransfer.udp.Server}} \\
-\hspace{1.0cm} $\bullet$ fjs.filetransfer.udp.packets.Packet {\tiny \refdefined{fjs.filetransfer.udp.packets.Packet}} \\
-\hspace{2.0cm} $\bullet$ fjs.filetransfer.udp.packets.AckPacket {\tiny \refdefined{fjs.filetransfer.udp.packets.AckPacket}} \\
-\hspace{2.0cm} $\bullet$ fjs.filetransfer.udp.packets.DataPacket {\tiny \refdefined{fjs.filetransfer.udp.packets.DataPacket}} \\
-\hspace{2.0cm} $\bullet$ fjs.filetransfer.udp.packets.FirstPacket {\tiny \refdefined{fjs.filetransfer.udp.packets.FirstPacket}} \\
+\hspace{1.0cm} $\bullet$ filetransferUDP.FileTransfer {\tiny \refdefined{filetransferUDP.FileTransfer}} \\
+\hspace{2.0cm} $\bullet$ filetransferUDP.Client {\tiny \refdefined{filetransferUDP.Client}} \\
+\hspace{2.0cm} $\bullet$ filetransferUDP.Server {\tiny \refdefined{filetransferUDP.Server}} \\
 }
 }
-\section{Package fjs.filetransfer.udp}{
-\label{fjs.filetransfer.udp}\hypertarget{fjs.filetransfer.udp}{}
-\subsection{\label{fjs.filetransfer.udp.Client}Class Client}{
-\hypertarget{fjs.filetransfer.udp.Client}{}\vskip .1in 
-Client UDP\vskip .1in 
+\section{Package filetransferUDP}{
+\label{filetransferUDP}\hypertarget{filetransferUDP}{}
+\subsection{\label{filetransferUDP.Client}Class Client}{
+\hypertarget{filetransferUDP.Client}{}\vskip .1in 
+The Client takes a file and transfers it to the server.\vskip .1in 
 \subsubsection{Declaration}{
 \begin{lstlisting}[frame=none]
 public class Client
- extends fjs.filetransfer.udp.FileTransfer\end{lstlisting}
+ extends filetransferUDP.FileTransfer\end{lstlisting}
+\subsubsection{Field summary}{
+\begin{verse}
+\hyperlink{filetransferUDP.Client.ARGUMENT_MESSAGE}{{\bf ARGUMENT\_MESSAGE}} \\
+\end{verse}
+}
 \subsubsection{Constructor summary}{
 \begin{verse}
-\hyperlink{fjs.filetransfer.udp.Client(java.lang.String[])}{{\bf Client(String\lbrack \rbrack )}} \\
+\hyperlink{filetransferUDP.Client(java.lang.String[])}{{\bf Client(String\lbrack \rbrack )}} Executes the client.\\
 \end{verse}
 }
 \subsubsection{Method summary}{
 \begin{verse}
-\hyperlink{fjs.filetransfer.udp.Client.getFileName()}{{\bf getFileName()}} \\
-\hyperlink{fjs.filetransfer.udp.Client.getPacketDelay()}{{\bf getPacketDelay()}} \\
-\hyperlink{fjs.filetransfer.udp.Client.getPacketLossRate()}{{\bf getPacketLossRate()}} \\
-\hyperlink{fjs.filetransfer.udp.Client.getPort()}{{\bf getPort()}} \\
-\hyperlink{fjs.filetransfer.udp.Client.getServer()}{{\bf getServer()}} \\
-\hyperlink{fjs.filetransfer.udp.Client.isDebug()}{{\bf isDebug()}} \\
-\hyperlink{fjs.filetransfer.udp.Client.main(java.lang.String[])}{{\bf main(String\lbrack \rbrack )}} \\
-\hyperlink{fjs.filetransfer.udp.Client.setDebug(boolean)}{{\bf setDebug(boolean)}} \\
-\hyperlink{fjs.filetransfer.udp.Client.setFileName(java.lang.String)}{{\bf setFileName(String)}} \\
-\hyperlink{fjs.filetransfer.udp.Client.setPacketDelay(int)}{{\bf setPacketDelay(int)}} \\
-\hyperlink{fjs.filetransfer.udp.Client.setPacketLossRate(float)}{{\bf setPacketLossRate(float)}} \\
-\hyperlink{fjs.filetransfer.udp.Client.setPort(int)}{{\bf setPort(int)}} \\
-\hyperlink{fjs.filetransfer.udp.Client.setServer(java.lang.String)}{{\bf setServer(String)}} \\
+\hyperlink{filetransferUDP.Client.displayArguments()}{{\bf displayArguments()}} Displays the client arguments.\\
+\hyperlink{filetransferUDP.Client.getNextPacket()}{{\bf getNextPacket()}} Loads the next packet to be send to the server.\\
+\hyperlink{filetransferUDP.Client.initializeUpload()}{{\bf initializeUpload()}} Prepares the first packet and sets the socket up.\\
+\hyperlink{filetransferUDP.Client.main(java.lang.String[])}{{\bf main(String\lbrack \rbrack )}} Calls Client(args) and thereby starts the client.\\
+\hyperlink{filetransferUDP.Client.parseArguments(java.lang.String[])}{{\bf parseArguments(String\lbrack \rbrack )}} Parses the command line arguments.\\
+\hyperlink{filetransferUDP.Client.printInfo()}{{\bf printInfo()}} Prints the secondly progress (and speed) info.\\
+\hyperlink{filetransferUDP.Client.receiveACK()}{{\bf receiveACK()}} Tries to receive the acknowledge packet from the server.\\
+\hyperlink{filetransferUDP.Client.sendPacket(byte[])}{{\bf sendPacket(byte\lbrack \rbrack )}} Sends the packet to the server.\\
 \end{verse}
+}
+\subsubsection{Fields}{
+\begin{itemize}
+\item{
+\index{ARGUMENT\_MESSAGE}
+\label{filetransferUDP.Client.ARGUMENT_MESSAGE}\hypertarget{filetransferUDP.Client.ARGUMENT_MESSAGE}{\texttt{static final java.lang.String\ {\bf  ARGUMENT\_MESSAGE}}
+}
+}
+\end{itemize}
 }
 \subsubsection{Constructors}{
 \vskip -2em
 \begin{itemize}
 \item{ 
 \index{Client(String\lbrack \rbrack )}
-\hypertarget{fjs.filetransfer.udp.Client(java.lang.String[])}{{\bf  Client}\\}
+\hypertarget{filetransferUDP.Client(java.lang.String[])}{{\bf  Client}\\}
 \begin{lstlisting}[frame=none]
 public Client(java.lang.String[] args)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Executes the client.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{args} -- command line arguments.}
+  \end{itemize}
+}%end item
+\end{itemize}
 }%end item
 \end{itemize}
 }
@@ -60,225 +79,1357 @@ public Client(java.lang.String[] args)\end{lstlisting} %end signature
 \vskip -2em
 \begin{itemize}
 \item{ 
-\index{getFileName()}
-\hypertarget{fjs.filetransfer.udp.Client.getFileName()}{{\bf  getFileName}\\}
+\index{displayArguments()}
+\hypertarget{filetransferUDP.Client.displayArguments()}{{\bf  displayArguments}\\}
 \begin{lstlisting}[frame=none]
-public java.lang.String getFileName()\end{lstlisting} %end signature
+private void displayArguments()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Displays the client arguments.
+}
+\end{itemize}
 }%end item
 \item{ 
-\index{getPacketDelay()}
-\hypertarget{fjs.filetransfer.udp.Client.getPacketDelay()}{{\bf  getPacketDelay}\\}
+\index{getNextPacket()}
+\hypertarget{filetransferUDP.Client.getNextPacket()}{{\bf  getNextPacket}\\}
 \begin{lstlisting}[frame=none]
-public int getPacketDelay()\end{lstlisting} %end signature
+private void getNextPacket()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Loads the next packet to be send to the server.
+}
+\end{itemize}
 }%end item
 \item{ 
-\index{getPacketLossRate()}
-\hypertarget{fjs.filetransfer.udp.Client.getPacketLossRate()}{{\bf  getPacketLossRate}\\}
+\index{initializeUpload()}
+\hypertarget{filetransferUDP.Client.initializeUpload()}{{\bf  initializeUpload}\\}
 \begin{lstlisting}[frame=none]
-public float getPacketLossRate()\end{lstlisting} %end signature
-}%end item
-\item{ 
-\index{getPort()}
-\hypertarget{fjs.filetransfer.udp.Client.getPort()}{{\bf  getPort}\\}
-\begin{lstlisting}[frame=none]
-public int getPort()\end{lstlisting} %end signature
-}%end item
-\item{ 
-\index{getServer()}
-\hypertarget{fjs.filetransfer.udp.Client.getServer()}{{\bf  getServer}\\}
-\begin{lstlisting}[frame=none]
-public java.lang.String getServer()\end{lstlisting} %end signature
-}%end item
-\item{ 
-\index{isDebug()}
-\hypertarget{fjs.filetransfer.udp.Client.isDebug()}{{\bf  isDebug}\\}
-\begin{lstlisting}[frame=none]
-public boolean isDebug()\end{lstlisting} %end signature
+private void initializeUpload()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Prepares the first packet and sets the socket up.
+}
+\end{itemize}
 }%end item
 \item{ 
 \index{main(String\lbrack \rbrack )}
-\hypertarget{fjs.filetransfer.udp.Client.main(java.lang.String[])}{{\bf  main}\\}
+\hypertarget{filetransferUDP.Client.main(java.lang.String[])}{{\bf  main}\\}
 \begin{lstlisting}[frame=none]
 public static void main(java.lang.String[] args)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Calls Client(args) and thereby starts the client.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{args} -- command line arguments}
+  \end{itemize}
+}%end item
+\end{itemize}
 }%end item
 \item{ 
-\index{setDebug(boolean)}
-\hypertarget{fjs.filetransfer.udp.Client.setDebug(boolean)}{{\bf  setDebug}\\}
+\index{parseArguments(String\lbrack \rbrack )}
+\hypertarget{filetransferUDP.Client.parseArguments(java.lang.String[])}{{\bf  parseArguments}\\}
 \begin{lstlisting}[frame=none]
-public void setDebug(boolean debug)\end{lstlisting} %end signature
+private void parseArguments(java.lang.String[] args)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Parses the command line arguments.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{args} -- command line arguments.}
+  \end{itemize}
+}%end item
+\end{itemize}
 }%end item
 \item{ 
-\index{setFileName(String)}
-\hypertarget{fjs.filetransfer.udp.Client.setFileName(java.lang.String)}{{\bf  setFileName}\\}
+\index{printInfo()}
+\hypertarget{filetransferUDP.Client.printInfo()}{{\bf  printInfo}\\}
 \begin{lstlisting}[frame=none]
-public void setFileName(java.lang.String fileName)\end{lstlisting} %end signature
+private void printInfo()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Prints the secondly progress (and speed) info.
+}
+\end{itemize}
 }%end item
 \item{ 
-\index{setPacketDelay(int)}
-\hypertarget{fjs.filetransfer.udp.Client.setPacketDelay(int)}{{\bf  setPacketDelay}\\}
+\index{receiveACK()}
+\hypertarget{filetransferUDP.Client.receiveACK()}{{\bf  receiveACK}\\}
 \begin{lstlisting}[frame=none]
-public void setPacketDelay(int packetDelay)\end{lstlisting} %end signature
+private void receiveACK()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Tries to receive the acknowledge packet from the server.
+}
+\end{itemize}
 }%end item
 \item{ 
-\index{setPacketLossRate(float)}
-\hypertarget{fjs.filetransfer.udp.Client.setPacketLossRate(float)}{{\bf  setPacketLossRate}\\}
+\index{sendPacket(byte\lbrack \rbrack )}
+\hypertarget{filetransferUDP.Client.sendPacket(byte[])}{{\bf  sendPacket}\\}
 \begin{lstlisting}[frame=none]
-public void setPacketLossRate(float packetLossRate)\end{lstlisting} %end signature
+private boolean sendPacket(byte[] packet)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Sends the packet to the server. If command line arguments are set, it may delay or lose the packet.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{packet} -- the packet to be send.}
+  \end{itemize}
 }%end item
-\item{ 
-\index{setPort(int)}
-\hypertarget{fjs.filetransfer.udp.Client.setPort(int)}{{\bf  setPort}\\}
-\begin{lstlisting}[frame=none]
-public void setPort(int port)\end{lstlisting} %end signature
+\item{{\bf  Returns} -- 
+true, if the packet has been send, else false. 
 }%end item
-\item{ 
-\index{setServer(String)}
-\hypertarget{fjs.filetransfer.udp.Client.setServer(java.lang.String)}{{\bf  setServer}\\}
-\begin{lstlisting}[frame=none]
-public void setServer(java.lang.String server)\end{lstlisting} %end signature
+\end{itemize}
 }%end item
 \end{itemize}
 }
 }
-\subsection{\label{fjs.filetransfer.udp.FileTransfer}Class FileTransfer}{
-\hypertarget{fjs.filetransfer.udp.FileTransfer}{}\vskip .1in 
+\subsection{\label{filetransferUDP.FileTransfer}Class FileTransfer}{
+\hypertarget{filetransferUDP.FileTransfer}{}\vskip .1in 
+FileTransfer is the base for a Server or Client.\vskip .1in 
 \subsubsection{Declaration}{
 \begin{lstlisting}[frame=none]
-public class FileTransfer
+public abstract class FileTransfer
  extends java.lang.Object\end{lstlisting}
-\subsubsection{All known subclasses}{Server\small{\refdefined{fjs.filetransfer.udp.Server}}, Client\small{\refdefined{fjs.filetransfer.udp.Client}}}
+\subsubsection{All known subclasses}{Server\small{\refdefined{filetransferUDP.Server}}, Client\small{\refdefined{filetransferUDP.Client}}}
+\subsubsection{Field summary}{
+\begin{verse}
+\hyperlink{filetransferUDP.FileTransfer.activeSession}{{\bf activeSession}} \\
+\hyperlink{filetransferUDP.FileTransfer.byteClientFile}{{\bf byteClientFile}} \\
+\hyperlink{filetransferUDP.FileTransfer.byteFileLength}{{\bf byteFileLength}} \\
+\hyperlink{filetransferUDP.FileTransfer.byteFileName}{{\bf byteFileName}} \\
+\hyperlink{filetransferUDP.FileTransfer.byteFileNameLength}{{\bf byteFileNameLength}} \\
+\hyperlink{filetransferUDP.FileTransfer.byteFirstPacketCRC}{{\bf byteFirstPacketCRC}} \\
+\hyperlink{filetransferUDP.FileTransfer.byteLastPacketCRC}{{\bf byteLastPacketCRC}} \\
+\hyperlink{filetransferUDP.FileTransfer.bytePacketNumber}{{\bf bytePacketNumber}} The packet number of the current packet (client) or the expected packet (server).\\
+\hyperlink{filetransferUDP.FileTransfer.byteSessionNumber}{{\bf byteSessionNumber}} \\
+\hyperlink{filetransferUDP.FileTransfer.bytesProcessed}{{\bf bytesProcessed}} \\
+\hyperlink{filetransferUDP.FileTransfer.byteStartIdentifier}{{\bf byteStartIdentifier}} \\
+\hyperlink{filetransferUDP.FileTransfer.clientFile}{{\bf clientFile}} \\
+\hyperlink{filetransferUDP.FileTransfer.connectionIP}{{\bf connectionIP}} \\
+\hyperlink{filetransferUDP.FileTransfer.currentPacket}{{\bf currentPacket}} \\
+\hyperlink{filetransferUDP.FileTransfer.dataPacket}{{\bf dataPacket}} \\
+\hyperlink{filetransferUDP.FileTransfer.dataSocket}{{\bf dataSocket}} \\
+\hyperlink{filetransferUDP.FileTransfer.debug}{{\bf debug}} \\
+\hyperlink{filetransferUDP.FileTransfer.fileName}{{\bf fileName}} \\
+\hyperlink{filetransferUDP.FileTransfer.filePath}{{\bf filePath}} \\
+\hyperlink{filetransferUDP.FileTransfer.finished}{{\bf finished}} \\
+\hyperlink{filetransferUDP.FileTransfer.lastInfo}{{\bf lastInfo}} \\
+\hyperlink{filetransferUDP.FileTransfer.LINE}{{\bf LINE}} \\
+\hyperlink{filetransferUDP.FileTransfer.LINED}{{\bf LINED}} \\
+\hyperlink{filetransferUDP.FileTransfer.MAX_TRIES}{{\bf MAX\_TRIES}} \\
+\hyperlink{filetransferUDP.FileTransfer.packedAllBytes}{{\bf packedAllBytes}} \\
+\hyperlink{filetransferUDP.FileTransfer.packetData}{{\bf packetData}} \\
+\hyperlink{filetransferUDP.FileTransfer.PACKETDATALENGTH}{{\bf PACKETDATALENGTH}} \\
+\hyperlink{filetransferUDP.FileTransfer.packetDelay}{{\bf packetDelay}} \\
+\hyperlink{filetransferUDP.FileTransfer.PACKETLENGTH}{{\bf PACKETLENGTH}} \\
+\hyperlink{filetransferUDP.FileTransfer.packetLossRate}{{\bf packetLossRate}} \\
+\hyperlink{filetransferUDP.FileTransfer.port}{{\bf port}} The port of the server.\\
+\hyperlink{filetransferUDP.FileTransfer.previousPacket}{{\bf previousPacket}} \\
+\hyperlink{filetransferUDP.FileTransfer.processedBytes}{{\bf processedBytes}} \\
+\hyperlink{filetransferUDP.FileTransfer.sendPrevious}{{\bf sendPrevious}} \\
+\hyperlink{filetransferUDP.FileTransfer.speed}{{\bf speed}} \\
+\hyperlink{filetransferUDP.FileTransfer.startTime}{{\bf startTime}} \\
+\hyperlink{filetransferUDP.FileTransfer.timeout}{{\bf timeout}} \\
+\hyperlink{filetransferUDP.FileTransfer.tries}{{\bf tries}} \\
+\end{verse}
+}
 \subsubsection{Constructor summary}{
 \begin{verse}
-\hyperlink{fjs.filetransfer.udp.FileTransfer()}{{\bf FileTransfer()}} \\
+\hyperlink{filetransferUDP.FileTransfer()}{{\bf FileTransfer()}} \\
 \end{verse}
+}
+\subsubsection{Method summary}{
+\begin{verse}
+\hyperlink{filetransferUDP.FileTransfer.createFirstPacket()}{{\bf createFirstPacket()}} Creates the first packet.\\
+\hyperlink{filetransferUDP.FileTransfer.exitApp(java.lang.String, int)}{{\bf exitApp(String, int)}} Closes the Client/Server.\\
+\hyperlink{filetransferUDP.FileTransfer.flipPacketNumber()}{{\bf flipPacketNumber()}} Flips the packet number between 0 and 1.\\
+\hyperlink{filetransferUDP.FileTransfer.generateCRC(byte[])}{{\bf generateCRC(byte\lbrack \rbrack )}} Generates the CRC value of a byte-array.\\
+\hyperlink{filetransferUDP.FileTransfer.getAppLocation()}{{\bf getAppLocation()}} Returns the Location where the Client/Server runs (without /bin).\\
+\hyperlink{filetransferUDP.FileTransfer.getByteFileLength()}{{\bf getByteFileLength()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getByteFileLengthLong()}{{\bf getByteFileLengthLong()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getByteFileName()}{{\bf getByteFileName()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getByteFileNameLength()}{{\bf getByteFileNameLength()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getByteFileNameLengthShort()}{{\bf getByteFileNameLengthShort()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getByteFileNameString()}{{\bf getByteFileNameString()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getByteFirstPacketCRC()}{{\bf getByteFirstPacketCRC()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getByteLastPacketCRC()}{{\bf getByteLastPacketCRC()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getBytePacketNumber()}{{\bf getBytePacketNumber()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getByteSessionNumber()}{{\bf getByteSessionNumber()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getByteSessionNumberShort()}{{\bf getByteSessionNumberShort()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getByteSessionNumberShort(byte[])}{{\bf getByteSessionNumberShort(byte\lbrack \rbrack )}} \\
+\hyperlink{filetransferUDP.FileTransfer.getByteStartIdentifier()}{{\bf getByteStartIdentifier()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getByteStartIdentifierString()}{{\bf getByteStartIdentifierString()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getClientFile()}{{\bf getClientFile()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getConnectionIP()}{{\bf getConnectionIP()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getCurrentPacket()}{{\bf getCurrentPacket()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getDataPacket()}{{\bf getDataPacket()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getDataSocket()}{{\bf getDataSocket()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getFileName()}{{\bf getFileName()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getFilePath()}{{\bf getFilePath()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getFirstPacketContents(byte[])}{{\bf getFirstPacketContents(byte\lbrack \rbrack )}} Parses the first packet and saves its contents.\\
+\hyperlink{filetransferUDP.FileTransfer.getNewFileName(java.lang.String)}{{\bf getNewFileName(String)}} Generates a new file name for saving a downloaded file.\\
+\hyperlink{filetransferUDP.FileTransfer.getPACKETDATALENGTH()}{{\bf getPACKETDATALENGTH()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getPacketDelay()}{{\bf getPacketDelay()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getPacketLossRate()}{{\bf getPacketLossRate()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getPort()}{{\bf getPort()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getPreviousPacket()}{{\bf getPreviousPacket()}} \\
+\hyperlink{filetransferUDP.FileTransfer.getPrintableDebugStatus()}{{\bf getPrintableDebugStatus()}} Creates a nice line for displaying the debug-status.\\
+\hyperlink{filetransferUDP.FileTransfer.getPrintableLossRateDelayValues()}{{\bf getPrintableLossRateDelayValues()}} Packs the loss rate and delay value into a nice line.\\
+\hyperlink{filetransferUDP.FileTransfer.isCorrectCRC(byte[], byte[])}{{\bf isCorrectCRC(byte\lbrack \rbrack , byte\lbrack \rbrack )}} Compares the CRC value of a given byte-array with another CRC value.\\
+\hyperlink{filetransferUDP.FileTransfer.isCorrectPacketNumber(byte)}{{\bf isCorrectPacketNumber(byte)}} Checks, if the packet number is as expected.\\
+\hyperlink{filetransferUDP.FileTransfer.isCorrectSessionNumber(byte[])}{{\bf isCorrectSessionNumber(byte\lbrack \rbrack )}} Checks, if the session number is as expected.\\
+\hyperlink{filetransferUDP.FileTransfer.isCorrectStartIdentifier(byte[])}{{\bf isCorrectStartIdentifier(byte\lbrack \rbrack )}} Checks, if the start identifier is correct ASCII "Start".\\
+\hyperlink{filetransferUDP.FileTransfer.isDebug()}{{\bf isDebug()}} \\
+\hyperlink{filetransferUDP.FileTransfer.printMessage(java.lang.String)}{{\bf printMessage(String)}} Prints a status message.\\
+\hyperlink{filetransferUDP.FileTransfer.printMessage(java.lang.String, int)}{{\bf printMessage(String, int)}} Prints a message to the console.\\
+\hyperlink{filetransferUDP.FileTransfer.printSessionData()}{{\bf printSessionData()}} Prints the data of a (new) session.\\
+\hyperlink{filetransferUDP.FileTransfer.resetSession()}{{\bf resetSession()}} Resets a session.\\
+\hyperlink{filetransferUDP.FileTransfer.setActiveSession()}{{\bf setActiveSession()}} \\
+\hyperlink{filetransferUDP.FileTransfer.setByteFileLength()}{{\bf setByteFileLength()}} \\
+\hyperlink{filetransferUDP.FileTransfer.setByteFileLength(byte[])}{{\bf setByteFileLength(byte\lbrack \rbrack )}} \\
+\hyperlink{filetransferUDP.FileTransfer.setByteFileName()}{{\bf setByteFileName()}} \\
+\hyperlink{filetransferUDP.FileTransfer.setByteFileName(byte[])}{{\bf setByteFileName(byte\lbrack \rbrack )}} \\
+\hyperlink{filetransferUDP.FileTransfer.setByteFileNameLength()}{{\bf setByteFileNameLength()}} \\
+\hyperlink{filetransferUDP.FileTransfer.setByteFileNameLength(byte[])}{{\bf setByteFileNameLength(byte\lbrack \rbrack )}} \\
+\hyperlink{filetransferUDP.FileTransfer.setByteFirstPacketCRC(byte[])}{{\bf setByteFirstPacketCRC(byte\lbrack \rbrack )}} \\
+\hyperlink{filetransferUDP.FileTransfer.setByteLastPacketCRC(byte[])}{{\bf setByteLastPacketCRC(byte\lbrack \rbrack )}} \\
+\hyperlink{filetransferUDP.FileTransfer.setBytePacketNumber(byte)}{{\bf setBytePacketNumber(byte)}} \\
+\hyperlink{filetransferUDP.FileTransfer.setBytePacketNumber(int)}{{\bf setBytePacketNumber(int)}} \\
+\hyperlink{filetransferUDP.FileTransfer.setByteSessionNumber()}{{\bf setByteSessionNumber()}} \\
+\hyperlink{filetransferUDP.FileTransfer.setByteSessionNumber(byte[])}{{\bf setByteSessionNumber(byte\lbrack \rbrack )}} \\
+\hyperlink{filetransferUDP.FileTransfer.setByteStartIdentifier()}{{\bf setByteStartIdentifier()}} \\
+\hyperlink{filetransferUDP.FileTransfer.setByteStartIdentifier(byte[])}{{\bf setByteStartIdentifier(byte\lbrack \rbrack )}} \\
+\hyperlink{filetransferUDP.FileTransfer.setClientFile(java.io.File)}{{\bf setClientFile(File)}} \\
+\hyperlink{filetransferUDP.FileTransfer.setClientFile(java.lang.String)}{{\bf setClientFile(String)}} \\
+\hyperlink{filetransferUDP.FileTransfer.setConnectionIP(java.net.InetAddress)}{{\bf setConnectionIP(InetAddress)}} \\
+\hyperlink{filetransferUDP.FileTransfer.setConnectionIP(java.lang.String)}{{\bf setConnectionIP(String)}} \\
+\hyperlink{filetransferUDP.FileTransfer.setCurrentPacket(byte[])}{{\bf setCurrentPacket(byte\lbrack \rbrack )}} \\
+\hyperlink{filetransferUDP.FileTransfer.setDataPacket(java.net.DatagramPacket)}{{\bf setDataPacket(DatagramPacket)}} \\
+\hyperlink{filetransferUDP.FileTransfer.setDataSocket(java.net.DatagramSocket)}{{\bf setDataSocket(DatagramSocket)}} \\
+\hyperlink{filetransferUDP.FileTransfer.setDebug(boolean)}{{\bf setDebug(boolean)}} \\
+\hyperlink{filetransferUDP.FileTransfer.setFileName(java.lang.String)}{{\bf setFileName(String)}} \\
+\hyperlink{filetransferUDP.FileTransfer.setFilePath(java.lang.String)}{{\bf setFilePath(String)}} \\
+\hyperlink{filetransferUDP.FileTransfer.setPacketDelay(int)}{{\bf setPacketDelay(int)}} \\
+\hyperlink{filetransferUDP.FileTransfer.setPacketLossRate(float)}{{\bf setPacketLossRate(float)}} \\
+\hyperlink{filetransferUDP.FileTransfer.setPort(int)}{{\bf setPort(int)}} \\
+\hyperlink{filetransferUDP.FileTransfer.setPreviousPacket(byte[])}{{\bf setPreviousPacket(byte\lbrack \rbrack )}} \\
+\hyperlink{filetransferUDP.FileTransfer.toggleBytePacketNumber()}{{\bf toggleBytePacketNumber()}} \\
+\hyperlink{filetransferUDP.FileTransfer.verifyACK(byte[])}{{\bf verifyACK(byte\lbrack \rbrack )}} Checks, if the acknowledge packet is correct (with the right session and packet number).\\
+\end{verse}
+}
+\subsubsection{Fields}{
+\begin{itemize}
+\item{
+\index{port}
+\label{filetransferUDP.FileTransfer.port}\hypertarget{filetransferUDP.FileTransfer.port}{\texttt{ int\ {\bf  port}}
+}
+\begin{itemize}
+\item{\vskip -.9ex 
+The port of the server. For the server: After the server is started, this variable is used as the port of the client.}
+\end{itemize}
+}
+\item{
+\index{packetLossRate}
+\label{filetransferUDP.FileTransfer.packetLossRate}\hypertarget{filetransferUDP.FileTransfer.packetLossRate}{\texttt{ float\ {\bf  packetLossRate}}
+}
+}
+\item{
+\index{packetDelay}
+\label{filetransferUDP.FileTransfer.packetDelay}\hypertarget{filetransferUDP.FileTransfer.packetDelay}{\texttt{ int\ {\bf  packetDelay}}
+}
+}
+\item{
+\index{PACKETDATALENGTH}
+\label{filetransferUDP.FileTransfer.PACKETDATALENGTH}\hypertarget{filetransferUDP.FileTransfer.PACKETDATALENGTH}{\texttt{static final int\ {\bf  PACKETDATALENGTH}}
+}
+}
+\item{
+\index{PACKETLENGTH}
+\label{filetransferUDP.FileTransfer.PACKETLENGTH}\hypertarget{filetransferUDP.FileTransfer.PACKETLENGTH}{\texttt{static final int\ {\bf  PACKETLENGTH}}
+}
+}
+\item{
+\index{MAX\_TRIES}
+\label{filetransferUDP.FileTransfer.MAX_TRIES}\hypertarget{filetransferUDP.FileTransfer.MAX_TRIES}{\texttt{static final int\ {\bf  MAX\_TRIES}}
+}
+}
+\item{
+\index{dataSocket}
+\label{filetransferUDP.FileTransfer.dataSocket}\hypertarget{filetransferUDP.FileTransfer.dataSocket}{\texttt{ java.net.DatagramSocket\ {\bf  dataSocket}}
+}
+}
+\item{
+\index{dataPacket}
+\label{filetransferUDP.FileTransfer.dataPacket}\hypertarget{filetransferUDP.FileTransfer.dataPacket}{\texttt{ java.net.DatagramPacket\ {\bf  dataPacket}}
+}
+}
+\item{
+\index{connectionIP}
+\label{filetransferUDP.FileTransfer.connectionIP}\hypertarget{filetransferUDP.FileTransfer.connectionIP}{\texttt{ java.net.InetAddress\ {\bf  connectionIP}}
+}
+}
+\item{
+\index{previousPacket}
+\label{filetransferUDP.FileTransfer.previousPacket}\hypertarget{filetransferUDP.FileTransfer.previousPacket}{\texttt{ byte\lbrack \rbrack \ {\bf  previousPacket}}
+}
+}
+\item{
+\index{currentPacket}
+\label{filetransferUDP.FileTransfer.currentPacket}\hypertarget{filetransferUDP.FileTransfer.currentPacket}{\texttt{ byte\lbrack \rbrack \ {\bf  currentPacket}}
+}
+}
+\item{
+\index{fileName}
+\label{filetransferUDP.FileTransfer.fileName}\hypertarget{filetransferUDP.FileTransfer.fileName}{\texttt{ java.lang.String\ {\bf  fileName}}
+}
+}
+\item{
+\index{tries}
+\label{filetransferUDP.FileTransfer.tries}\hypertarget{filetransferUDP.FileTransfer.tries}{\texttt{ int\ {\bf  tries}}
+}
+}
+\item{
+\index{bytesProcessed}
+\label{filetransferUDP.FileTransfer.bytesProcessed}\hypertarget{filetransferUDP.FileTransfer.bytesProcessed}{\texttt{ long\ {\bf  bytesProcessed}}
+}
+}
+\item{
+\index{processedBytes}
+\label{filetransferUDP.FileTransfer.processedBytes}\hypertarget{filetransferUDP.FileTransfer.processedBytes}{\texttt{ byte\lbrack \rbrack \ {\bf  processedBytes}}
+}
+}
+\item{
+\index{timeout}
+\label{filetransferUDP.FileTransfer.timeout}\hypertarget{filetransferUDP.FileTransfer.timeout}{\texttt{ int\ {\bf  timeout}}
+}
+}
+\item{
+\index{byteSessionNumber}
+\label{filetransferUDP.FileTransfer.byteSessionNumber}\hypertarget{filetransferUDP.FileTransfer.byteSessionNumber}{\texttt{ byte\lbrack \rbrack \ {\bf  byteSessionNumber}}
+}
+}
+\item{
+\index{bytePacketNumber}
+\label{filetransferUDP.FileTransfer.bytePacketNumber}\hypertarget{filetransferUDP.FileTransfer.bytePacketNumber}{\texttt{ byte\ {\bf  bytePacketNumber}}
+}
+\begin{itemize}
+\item{\vskip -.9ex 
+The packet number of the current packet (client) or the expected packet (server).}
+\end{itemize}
+}
+\item{
+\index{byteStartIdentifier}
+\label{filetransferUDP.FileTransfer.byteStartIdentifier}\hypertarget{filetransferUDP.FileTransfer.byteStartIdentifier}{\texttt{ byte\lbrack \rbrack \ {\bf  byteStartIdentifier}}
+}
+}
+\item{
+\index{byteFileLength}
+\label{filetransferUDP.FileTransfer.byteFileLength}\hypertarget{filetransferUDP.FileTransfer.byteFileLength}{\texttt{ byte\lbrack \rbrack \ {\bf  byteFileLength}}
+}
+}
+\item{
+\index{byteFileNameLength}
+\label{filetransferUDP.FileTransfer.byteFileNameLength}\hypertarget{filetransferUDP.FileTransfer.byteFileNameLength}{\texttt{ byte\lbrack \rbrack \ {\bf  byteFileNameLength}}
+}
+}
+\item{
+\index{byteFileName}
+\label{filetransferUDP.FileTransfer.byteFileName}\hypertarget{filetransferUDP.FileTransfer.byteFileName}{\texttt{ byte\lbrack \rbrack \ {\bf  byteFileName}}
+}
+}
+\item{
+\index{byteFirstPacketCRC}
+\label{filetransferUDP.FileTransfer.byteFirstPacketCRC}\hypertarget{filetransferUDP.FileTransfer.byteFirstPacketCRC}{\texttt{ byte\lbrack \rbrack \ {\bf  byteFirstPacketCRC}}
+}
+}
+\item{
+\index{byteLastPacketCRC}
+\label{filetransferUDP.FileTransfer.byteLastPacketCRC}\hypertarget{filetransferUDP.FileTransfer.byteLastPacketCRC}{\texttt{ byte\lbrack \rbrack \ {\bf  byteLastPacketCRC}}
+}
+}
+\item{
+\index{startTime}
+\label{filetransferUDP.FileTransfer.startTime}\hypertarget{filetransferUDP.FileTransfer.startTime}{\texttt{ long\ {\bf  startTime}}
+}
+}
+\item{
+\index{lastInfo}
+\label{filetransferUDP.FileTransfer.lastInfo}\hypertarget{filetransferUDP.FileTransfer.lastInfo}{\texttt{ long\ {\bf  lastInfo}}
+}
+}
+\item{
+\index{speed}
+\label{filetransferUDP.FileTransfer.speed}\hypertarget{filetransferUDP.FileTransfer.speed}{\texttt{ int\ {\bf  speed}}
+}
+}
+\item{
+\index{packedAllBytes}
+\label{filetransferUDP.FileTransfer.packedAllBytes}\hypertarget{filetransferUDP.FileTransfer.packedAllBytes}{\texttt{ boolean\ {\bf  packedAllBytes}}
+}
+}
+\item{
+\index{finished}
+\label{filetransferUDP.FileTransfer.finished}\hypertarget{filetransferUDP.FileTransfer.finished}{\texttt{ boolean\ {\bf  finished}}
+}
+}
+\item{
+\index{clientFile}
+\label{filetransferUDP.FileTransfer.clientFile}\hypertarget{filetransferUDP.FileTransfer.clientFile}{\texttt{ java.io.File\ {\bf  clientFile}}
+}
+}
+\item{
+\index{byteClientFile}
+\label{filetransferUDP.FileTransfer.byteClientFile}\hypertarget{filetransferUDP.FileTransfer.byteClientFile}{\texttt{ byte\lbrack \rbrack \ {\bf  byteClientFile}}
+}
+}
+\item{
+\index{filePath}
+\label{filetransferUDP.FileTransfer.filePath}\hypertarget{filetransferUDP.FileTransfer.filePath}{\texttt{ java.lang.String\ {\bf  filePath}}
+}
+}
+\item{
+\index{sendPrevious}
+\label{filetransferUDP.FileTransfer.sendPrevious}\hypertarget{filetransferUDP.FileTransfer.sendPrevious}{\texttt{ boolean\ {\bf  sendPrevious}}
+}
+}
+\item{
+\index{activeSession}
+\label{filetransferUDP.FileTransfer.activeSession}\hypertarget{filetransferUDP.FileTransfer.activeSession}{\texttt{ short\ {\bf  activeSession}}
+}
+}
+\item{
+\index{packetData}
+\label{filetransferUDP.FileTransfer.packetData}\hypertarget{filetransferUDP.FileTransfer.packetData}{\texttt{ byte\lbrack \rbrack \ {\bf  packetData}}
+}
+}
+\item{
+\index{debug}
+\label{filetransferUDP.FileTransfer.debug}\hypertarget{filetransferUDP.FileTransfer.debug}{\texttt{ boolean\ {\bf  debug}}
+}
+}
+\item{
+\index{LINE}
+\label{filetransferUDP.FileTransfer.LINE}\hypertarget{filetransferUDP.FileTransfer.LINE}{\texttt{static final java.lang.String\ {\bf  LINE}}
+}
+}
+\item{
+\index{LINED}
+\label{filetransferUDP.FileTransfer.LINED}\hypertarget{filetransferUDP.FileTransfer.LINED}{\texttt{static final java.lang.String\ {\bf  LINED}}
+}
+}
+\end{itemize}
 }
 \subsubsection{Constructors}{
 \vskip -2em
 \begin{itemize}
 \item{ 
 \index{FileTransfer()}
-\hypertarget{fjs.filetransfer.udp.FileTransfer()}{{\bf  FileTransfer}\\}
+\hypertarget{filetransferUDP.FileTransfer()}{{\bf  FileTransfer}\\}
 \begin{lstlisting}[frame=none]
 public FileTransfer()\end{lstlisting} %end signature
 }%end item
 \end{itemize}
 }
+\subsubsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{createFirstPacket()}
+\hypertarget{filetransferUDP.FileTransfer.createFirstPacket()}{{\bf  createFirstPacket}\\}
+\begin{lstlisting}[frame=none]
+public byte[] createFirstPacket()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Creates the first packet.
 }
-\subsection{\label{fjs.filetransfer.udp.Server}Class Server}{
-\hypertarget{fjs.filetransfer.udp.Server}{}\vskip .1in 
+\item{{\bf  Returns} -- 
+the first packet. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{exitApp(String, int)}
+\hypertarget{filetransferUDP.FileTransfer.exitApp(java.lang.String, int)}{{\bf  exitApp}\\}
+\begin{lstlisting}[frame=none]
+ void exitApp(java.lang.String message,int status)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Closes the Client/Server.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{message} -- the message.}
+   \item{
+\texttt{status} -- 0 for a positive exit status, everything else for errors.}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{flipPacketNumber()}
+\hypertarget{filetransferUDP.FileTransfer.flipPacketNumber()}{{\bf  flipPacketNumber}\\}
+\begin{lstlisting}[frame=none]
+public void flipPacketNumber()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Flips the packet number between 0 and 1.
+}
+\end{itemize}
+}%end item
+\item{ 
+\index{generateCRC(byte\lbrack \rbrack )}
+\hypertarget{filetransferUDP.FileTransfer.generateCRC(byte[])}{{\bf  generateCRC}\\}
+\begin{lstlisting}[frame=none]
+public byte[] generateCRC(byte[] packetContent)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Generates the CRC value of a byte-array.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{packetContent} -- the byte-array.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+The CRC of that byte-array. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getAppLocation()}
+\hypertarget{filetransferUDP.FileTransfer.getAppLocation()}{{\bf  getAppLocation}\\}
+\begin{lstlisting}[frame=none]
+ java.lang.String getAppLocation()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Returns the Location where the Client/Server runs (without /bin).
+}
+\item{{\bf  Returns} -- 
+location. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getByteFileLength()}
+\hypertarget{filetransferUDP.FileTransfer.getByteFileLength()}{{\bf  getByteFileLength}\\}
+\begin{lstlisting}[frame=none]
+public byte[] getByteFileLength()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getByteFileLengthLong()}
+\hypertarget{filetransferUDP.FileTransfer.getByteFileLengthLong()}{{\bf  getByteFileLengthLong}\\}
+\begin{lstlisting}[frame=none]
+public long getByteFileLengthLong()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getByteFileName()}
+\hypertarget{filetransferUDP.FileTransfer.getByteFileName()}{{\bf  getByteFileName}\\}
+\begin{lstlisting}[frame=none]
+public byte[] getByteFileName()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getByteFileNameLength()}
+\hypertarget{filetransferUDP.FileTransfer.getByteFileNameLength()}{{\bf  getByteFileNameLength}\\}
+\begin{lstlisting}[frame=none]
+public byte[] getByteFileNameLength()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getByteFileNameLengthShort()}
+\hypertarget{filetransferUDP.FileTransfer.getByteFileNameLengthShort()}{{\bf  getByteFileNameLengthShort}\\}
+\begin{lstlisting}[frame=none]
+public int getByteFileNameLengthShort()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getByteFileNameString()}
+\hypertarget{filetransferUDP.FileTransfer.getByteFileNameString()}{{\bf  getByteFileNameString}\\}
+\begin{lstlisting}[frame=none]
+public java.lang.String getByteFileNameString()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getByteFirstPacketCRC()}
+\hypertarget{filetransferUDP.FileTransfer.getByteFirstPacketCRC()}{{\bf  getByteFirstPacketCRC}\\}
+\begin{lstlisting}[frame=none]
+public byte[] getByteFirstPacketCRC()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getByteLastPacketCRC()}
+\hypertarget{filetransferUDP.FileTransfer.getByteLastPacketCRC()}{{\bf  getByteLastPacketCRC}\\}
+\begin{lstlisting}[frame=none]
+public byte[] getByteLastPacketCRC()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getBytePacketNumber()}
+\hypertarget{filetransferUDP.FileTransfer.getBytePacketNumber()}{{\bf  getBytePacketNumber}\\}
+\begin{lstlisting}[frame=none]
+public byte getBytePacketNumber()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getByteSessionNumber()}
+\hypertarget{filetransferUDP.FileTransfer.getByteSessionNumber()}{{\bf  getByteSessionNumber}\\}
+\begin{lstlisting}[frame=none]
+public byte[] getByteSessionNumber()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getByteSessionNumberShort()}
+\hypertarget{filetransferUDP.FileTransfer.getByteSessionNumberShort()}{{\bf  getByteSessionNumberShort}\\}
+\begin{lstlisting}[frame=none]
+public short getByteSessionNumberShort()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getByteSessionNumberShort(byte\lbrack \rbrack )}
+\hypertarget{filetransferUDP.FileTransfer.getByteSessionNumberShort(byte[])}{{\bf  getByteSessionNumberShort}\\}
+\begin{lstlisting}[frame=none]
+public short getByteSessionNumberShort(byte[] sessionNumber)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getByteStartIdentifier()}
+\hypertarget{filetransferUDP.FileTransfer.getByteStartIdentifier()}{{\bf  getByteStartIdentifier}\\}
+\begin{lstlisting}[frame=none]
+public byte[] getByteStartIdentifier()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getByteStartIdentifierString()}
+\hypertarget{filetransferUDP.FileTransfer.getByteStartIdentifierString()}{{\bf  getByteStartIdentifierString}\\}
+\begin{lstlisting}[frame=none]
+public java.lang.String getByteStartIdentifierString()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getClientFile()}
+\hypertarget{filetransferUDP.FileTransfer.getClientFile()}{{\bf  getClientFile}\\}
+\begin{lstlisting}[frame=none]
+public java.io.File getClientFile()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getConnectionIP()}
+\hypertarget{filetransferUDP.FileTransfer.getConnectionIP()}{{\bf  getConnectionIP}\\}
+\begin{lstlisting}[frame=none]
+public java.net.InetAddress getConnectionIP()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getCurrentPacket()}
+\hypertarget{filetransferUDP.FileTransfer.getCurrentPacket()}{{\bf  getCurrentPacket}\\}
+\begin{lstlisting}[frame=none]
+public byte[] getCurrentPacket()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getDataPacket()}
+\hypertarget{filetransferUDP.FileTransfer.getDataPacket()}{{\bf  getDataPacket}\\}
+\begin{lstlisting}[frame=none]
+public java.net.DatagramPacket getDataPacket()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getDataSocket()}
+\hypertarget{filetransferUDP.FileTransfer.getDataSocket()}{{\bf  getDataSocket}\\}
+\begin{lstlisting}[frame=none]
+public java.net.DatagramSocket getDataSocket()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getFileName()}
+\hypertarget{filetransferUDP.FileTransfer.getFileName()}{{\bf  getFileName}\\}
+\begin{lstlisting}[frame=none]
+public java.lang.String getFileName()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getFilePath()}
+\hypertarget{filetransferUDP.FileTransfer.getFilePath()}{{\bf  getFilePath}\\}
+\begin{lstlisting}[frame=none]
+public java.lang.String getFilePath()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getFirstPacketContents(byte\lbrack \rbrack )}
+\hypertarget{filetransferUDP.FileTransfer.getFirstPacketContents(byte[])}{{\bf  getFirstPacketContents}\\}
+\begin{lstlisting}[frame=none]
+public void getFirstPacketContents(byte[] packet)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Parses the first packet and saves its contents.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{packet} -- the first packet.}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getNewFileName(String)}
+\hypertarget{filetransferUDP.FileTransfer.getNewFileName(java.lang.String)}{{\bf  getNewFileName}\\}
+\begin{lstlisting}[frame=none]
+ java.lang.String getNewFileName(java.lang.String fileName)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Generates a new file name for saving a downloaded file.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{fileName} -- the original file name.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+the file name. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getPACKETDATALENGTH()}
+\hypertarget{filetransferUDP.FileTransfer.getPACKETDATALENGTH()}{{\bf  getPACKETDATALENGTH}\\}
+\begin{lstlisting}[frame=none]
+public int getPACKETDATALENGTH()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getPacketDelay()}
+\hypertarget{filetransferUDP.FileTransfer.getPacketDelay()}{{\bf  getPacketDelay}\\}
+\begin{lstlisting}[frame=none]
+public int getPacketDelay()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getPacketLossRate()}
+\hypertarget{filetransferUDP.FileTransfer.getPacketLossRate()}{{\bf  getPacketLossRate}\\}
+\begin{lstlisting}[frame=none]
+public float getPacketLossRate()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getPort()}
+\hypertarget{filetransferUDP.FileTransfer.getPort()}{{\bf  getPort}\\}
+\begin{lstlisting}[frame=none]
+public int getPort()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getPreviousPacket()}
+\hypertarget{filetransferUDP.FileTransfer.getPreviousPacket()}{{\bf  getPreviousPacket}\\}
+\begin{lstlisting}[frame=none]
+public byte[] getPreviousPacket()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getPrintableDebugStatus()}
+\hypertarget{filetransferUDP.FileTransfer.getPrintableDebugStatus()}{{\bf  getPrintableDebugStatus}\\}
+\begin{lstlisting}[frame=none]
+ java.lang.String getPrintableDebugStatus()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Creates a nice line for displaying the debug-status.
+}
+\item{{\bf  Returns} -- 
+line with debug information. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{getPrintableLossRateDelayValues()}
+\hypertarget{filetransferUDP.FileTransfer.getPrintableLossRateDelayValues()}{{\bf  getPrintableLossRateDelayValues}\\}
+\begin{lstlisting}[frame=none]
+ java.lang.String getPrintableLossRateDelayValues()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Packs the loss rate and delay value into a nice line.
+}
+\item{{\bf  Returns} -- 
+Line with packet loss and delay values. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{isCorrectCRC(byte\lbrack \rbrack , byte\lbrack \rbrack )}
+\hypertarget{filetransferUDP.FileTransfer.isCorrectCRC(byte[], byte[])}{{\bf  isCorrectCRC}\\}
+\begin{lstlisting}[frame=none]
+public boolean isCorrectCRC(byte[] packetContent,byte[] crc)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Compares the CRC value of a given byte-array with another CRC value.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{packetContent} -- the byte-array.}
+   \item{
+\texttt{crc} -- the CRC number.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+true, if it is the same CRC number. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{isCorrectPacketNumber(byte)}
+\hypertarget{filetransferUDP.FileTransfer.isCorrectPacketNumber(byte)}{{\bf  isCorrectPacketNumber}\\}
+\begin{lstlisting}[frame=none]
+public boolean isCorrectPacketNumber(byte packetNumber)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks, if the packet number is as expected.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{packetNumber} -- the packet number of the packet to check.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+true, if it is the correct number. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{isCorrectSessionNumber(byte\lbrack \rbrack )}
+\hypertarget{filetransferUDP.FileTransfer.isCorrectSessionNumber(byte[])}{{\bf  isCorrectSessionNumber}\\}
+\begin{lstlisting}[frame=none]
+public boolean isCorrectSessionNumber(byte[] sessionNumber)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks, if the session number is as expected.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{sessionNumber} -- the session number of the packet to check.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+true, if it is the correct number. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{isCorrectStartIdentifier(byte\lbrack \rbrack )}
+\hypertarget{filetransferUDP.FileTransfer.isCorrectStartIdentifier(byte[])}{{\bf  isCorrectStartIdentifier}\\}
+\begin{lstlisting}[frame=none]
+public boolean isCorrectStartIdentifier(byte[] startIdentifier)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks, if the start identifier is correct ASCII "Start".
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{startIdentifier} -- the identifier.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+true, if the identifier is correct. 
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{isDebug()}
+\hypertarget{filetransferUDP.FileTransfer.isDebug()}{{\bf  isDebug}\\}
+\begin{lstlisting}[frame=none]
+public boolean isDebug()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{printMessage(String)}
+\hypertarget{filetransferUDP.FileTransfer.printMessage(java.lang.String)}{{\bf  printMessage}\\}
+\begin{lstlisting}[frame=none]
+ void printMessage(java.lang.String message)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Prints a status message.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{message} -- the message.}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{printMessage(String, int)}
+\hypertarget{filetransferUDP.FileTransfer.printMessage(java.lang.String, int)}{{\bf  printMessage}\\}
+\begin{lstlisting}[frame=none]
+ void printMessage(java.lang.String message,int type)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Prints a message to the console.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{message} -- the message.}
+   \item{
+\texttt{type} -- 1 is debug (only printed in debug mode), 2 for errors, everything else a status.}
+  \end{itemize}
+}%end item
+\end{itemize}
+}%end item
+\item{ 
+\index{printSessionData()}
+\hypertarget{filetransferUDP.FileTransfer.printSessionData()}{{\bf  printSessionData}\\}
+\begin{lstlisting}[frame=none]
+public void printSessionData()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Prints the data of a (new) session.
+}
+\end{itemize}
+}%end item
+\item{ 
+\index{resetSession()}
+\hypertarget{filetransferUDP.FileTransfer.resetSession()}{{\bf  resetSession}\\}
+\begin{lstlisting}[frame=none]
+public void resetSession()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Resets a session.
+}
+\end{itemize}
+}%end item
+\item{ 
+\index{setActiveSession()}
+\hypertarget{filetransferUDP.FileTransfer.setActiveSession()}{{\bf  setActiveSession}\\}
+\begin{lstlisting}[frame=none]
+public void setActiveSession()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setByteFileLength()}
+\hypertarget{filetransferUDP.FileTransfer.setByteFileLength()}{{\bf  setByteFileLength}\\}
+\begin{lstlisting}[frame=none]
+public void setByteFileLength()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setByteFileLength(byte\lbrack \rbrack )}
+\hypertarget{filetransferUDP.FileTransfer.setByteFileLength(byte[])}{{\bf  setByteFileLength}\\}
+\begin{lstlisting}[frame=none]
+public void setByteFileLength(byte[] fileLength)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setByteFileName()}
+\hypertarget{filetransferUDP.FileTransfer.setByteFileName()}{{\bf  setByteFileName}\\}
+\begin{lstlisting}[frame=none]
+public void setByteFileName()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setByteFileName(byte\lbrack \rbrack )}
+\hypertarget{filetransferUDP.FileTransfer.setByteFileName(byte[])}{{\bf  setByteFileName}\\}
+\begin{lstlisting}[frame=none]
+public void setByteFileName(byte[] byteFileName)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setByteFileNameLength()}
+\hypertarget{filetransferUDP.FileTransfer.setByteFileNameLength()}{{\bf  setByteFileNameLength}\\}
+\begin{lstlisting}[frame=none]
+public void setByteFileNameLength()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setByteFileNameLength(byte\lbrack \rbrack )}
+\hypertarget{filetransferUDP.FileTransfer.setByteFileNameLength(byte[])}{{\bf  setByteFileNameLength}\\}
+\begin{lstlisting}[frame=none]
+public void setByteFileNameLength(byte[] fileNameLength)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setByteFirstPacketCRC(byte\lbrack \rbrack )}
+\hypertarget{filetransferUDP.FileTransfer.setByteFirstPacketCRC(byte[])}{{\bf  setByteFirstPacketCRC}\\}
+\begin{lstlisting}[frame=none]
+public void setByteFirstPacketCRC(byte[] byteFirstPacketCRC)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setByteLastPacketCRC(byte\lbrack \rbrack )}
+\hypertarget{filetransferUDP.FileTransfer.setByteLastPacketCRC(byte[])}{{\bf  setByteLastPacketCRC}\\}
+\begin{lstlisting}[frame=none]
+public void setByteLastPacketCRC(byte[] byteLastPacketCRC)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setBytePacketNumber(byte)}
+\hypertarget{filetransferUDP.FileTransfer.setBytePacketNumber(byte)}{{\bf  setBytePacketNumber}\\}
+\begin{lstlisting}[frame=none]
+public void setBytePacketNumber(byte packetNumber)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setBytePacketNumber(int)}
+\hypertarget{filetransferUDP.FileTransfer.setBytePacketNumber(int)}{{\bf  setBytePacketNumber}\\}
+\begin{lstlisting}[frame=none]
+public void setBytePacketNumber(int packetNumber)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setByteSessionNumber()}
+\hypertarget{filetransferUDP.FileTransfer.setByteSessionNumber()}{{\bf  setByteSessionNumber}\\}
+\begin{lstlisting}[frame=none]
+public void setByteSessionNumber()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setByteSessionNumber(byte\lbrack \rbrack )}
+\hypertarget{filetransferUDP.FileTransfer.setByteSessionNumber(byte[])}{{\bf  setByteSessionNumber}\\}
+\begin{lstlisting}[frame=none]
+public void setByteSessionNumber(byte[] sessionNumber)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setByteStartIdentifier()}
+\hypertarget{filetransferUDP.FileTransfer.setByteStartIdentifier()}{{\bf  setByteStartIdentifier}\\}
+\begin{lstlisting}[frame=none]
+public void setByteStartIdentifier()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setByteStartIdentifier(byte\lbrack \rbrack )}
+\hypertarget{filetransferUDP.FileTransfer.setByteStartIdentifier(byte[])}{{\bf  setByteStartIdentifier}\\}
+\begin{lstlisting}[frame=none]
+public void setByteStartIdentifier(byte[] startIdentifier)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setClientFile(File)}
+\hypertarget{filetransferUDP.FileTransfer.setClientFile(java.io.File)}{{\bf  setClientFile}\\}
+\begin{lstlisting}[frame=none]
+public void setClientFile(java.io.File file)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setClientFile(String)}
+\hypertarget{filetransferUDP.FileTransfer.setClientFile(java.lang.String)}{{\bf  setClientFile}\\}
+\begin{lstlisting}[frame=none]
+public void setClientFile(java.lang.String filePath)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setConnectionIP(InetAddress)}
+\hypertarget{filetransferUDP.FileTransfer.setConnectionIP(java.net.InetAddress)}{{\bf  setConnectionIP}\\}
+\begin{lstlisting}[frame=none]
+public void setConnectionIP(java.net.InetAddress connectionIP)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setConnectionIP(String)}
+\hypertarget{filetransferUDP.FileTransfer.setConnectionIP(java.lang.String)}{{\bf  setConnectionIP}\\}
+\begin{lstlisting}[frame=none]
+public void setConnectionIP(java.lang.String connectionName)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setCurrentPacket(byte\lbrack \rbrack )}
+\hypertarget{filetransferUDP.FileTransfer.setCurrentPacket(byte[])}{{\bf  setCurrentPacket}\\}
+\begin{lstlisting}[frame=none]
+public void setCurrentPacket(byte[] currentPacket)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setDataPacket(DatagramPacket)}
+\hypertarget{filetransferUDP.FileTransfer.setDataPacket(java.net.DatagramPacket)}{{\bf  setDataPacket}\\}
+\begin{lstlisting}[frame=none]
+public void setDataPacket(java.net.DatagramPacket dataPacket)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setDataSocket(DatagramSocket)}
+\hypertarget{filetransferUDP.FileTransfer.setDataSocket(java.net.DatagramSocket)}{{\bf  setDataSocket}\\}
+\begin{lstlisting}[frame=none]
+public void setDataSocket(java.net.DatagramSocket dataSocket)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setDebug(boolean)}
+\hypertarget{filetransferUDP.FileTransfer.setDebug(boolean)}{{\bf  setDebug}\\}
+\begin{lstlisting}[frame=none]
+public void setDebug(boolean debug)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setFileName(String)}
+\hypertarget{filetransferUDP.FileTransfer.setFileName(java.lang.String)}{{\bf  setFileName}\\}
+\begin{lstlisting}[frame=none]
+private void setFileName(java.lang.String fileName)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setFilePath(String)}
+\hypertarget{filetransferUDP.FileTransfer.setFilePath(java.lang.String)}{{\bf  setFilePath}\\}
+\begin{lstlisting}[frame=none]
+public void setFilePath(java.lang.String filePath)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setPacketDelay(int)}
+\hypertarget{filetransferUDP.FileTransfer.setPacketDelay(int)}{{\bf  setPacketDelay}\\}
+\begin{lstlisting}[frame=none]
+public void setPacketDelay(int packetDelay)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setPacketLossRate(float)}
+\hypertarget{filetransferUDP.FileTransfer.setPacketLossRate(float)}{{\bf  setPacketLossRate}\\}
+\begin{lstlisting}[frame=none]
+public void setPacketLossRate(float packetLossRate)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setPort(int)}
+\hypertarget{filetransferUDP.FileTransfer.setPort(int)}{{\bf  setPort}\\}
+\begin{lstlisting}[frame=none]
+public void setPort(int port)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setPreviousPacket(byte\lbrack \rbrack )}
+\hypertarget{filetransferUDP.FileTransfer.setPreviousPacket(byte[])}{{\bf  setPreviousPacket}\\}
+\begin{lstlisting}[frame=none]
+public void setPreviousPacket(byte[] previousPacket)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{toggleBytePacketNumber()}
+\hypertarget{filetransferUDP.FileTransfer.toggleBytePacketNumber()}{{\bf  toggleBytePacketNumber}\\}
+\begin{lstlisting}[frame=none]
+public void toggleBytePacketNumber()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{verifyACK(byte\lbrack \rbrack )}
+\hypertarget{filetransferUDP.FileTransfer.verifyACK(byte[])}{{\bf  verifyACK}\\}
+\begin{lstlisting}[frame=none]
+public int verifyACK(byte[] packet)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Checks, if the acknowledge packet is correct (with the right session and packet number).
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{packet} -- the packet to check.}
+  \end{itemize}
+}%end item
+\item{{\bf  Returns} -- 
+0 if correct, -1 if the session number is wrong and 1 if the packet number is wrong. 
+}%end item
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+\subsection{\label{filetransferUDP.Server}Class Server}{
+\hypertarget{filetransferUDP.Server}{}\vskip .1in 
+The server tries to download files from a client.\vskip .1in 
 \subsubsection{Declaration}{
 \begin{lstlisting}[frame=none]
 public class Server
- extends fjs.filetransfer.udp.FileTransfer\end{lstlisting}
+ extends filetransferUDP.FileTransfer\end{lstlisting}
+\subsubsection{Field summary}{
+\begin{verse}
+\hyperlink{filetransferUDP.Server.ARGUMENT_MESSAGE}{{\bf ARGUMENT\_MESSAGE}} \\
+\end{verse}
+}
 \subsubsection{Constructor summary}{
 \begin{verse}
-\hyperlink{fjs.filetransfer.udp.Server()}{{\bf Server()}} \\
+\hyperlink{filetransferUDP.Server(java.lang.String[])}{{\bf Server(String\lbrack \rbrack )}} Executes the server.\\
 \end{verse}
+}
+\subsubsection{Method summary}{
+\begin{verse}
+\hyperlink{filetransferUDP.Server.displayArguments()}{{\bf displayArguments()}} Displays the server arguments.\\
+\hyperlink{filetransferUDP.Server.initializeDownload()}{{\bf initializeDownload()}} Sets the Sockets up.\\
+\hyperlink{filetransferUDP.Server.main(java.lang.String[])}{{\bf main(String\lbrack \rbrack )}} Calls Server(args) and thereby starts the server.\\
+\hyperlink{filetransferUDP.Server.parseArguments(java.lang.String[])}{{\bf parseArguments(String\lbrack \rbrack )}} Parses the command line arguments.\\
+\hyperlink{filetransferUDP.Server.proccessPacket()}{{\bf proccessPacket()}} Processes the received packet.\\
+\hyperlink{filetransferUDP.Server.receivePacket()}{{\bf receivePacket()}} Tries to receive a packet.\\
+\hyperlink{filetransferUDP.Server.sendACK(byte)}{{\bf sendACK(byte)}} Sends an acknowledge packet to the client.\\
+\end{verse}
+}
+\subsubsection{Fields}{
+\begin{itemize}
+\item{
+\index{ARGUMENT\_MESSAGE}
+\label{filetransferUDP.Server.ARGUMENT_MESSAGE}\hypertarget{filetransferUDP.Server.ARGUMENT_MESSAGE}{\texttt{static final java.lang.String\ {\bf  ARGUMENT\_MESSAGE}}
+}
+}
+\end{itemize}
 }
 \subsubsection{Constructors}{
 \vskip -2em
 \begin{itemize}
 \item{ 
-\index{Server()}
-\hypertarget{fjs.filetransfer.udp.Server()}{{\bf  Server}\\}
+\index{Server(String\lbrack \rbrack )}
+\hypertarget{filetransferUDP.Server(java.lang.String[])}{{\bf  Server}\\}
 \begin{lstlisting}[frame=none]
-public Server()\end{lstlisting} %end signature
+public Server(java.lang.String[] args)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Executes the server.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{args} -- command line arguments}
+  \end{itemize}
+}%end item
+\end{itemize}
 }%end item
 \end{itemize}
 }
-}
-}
-\section{Package fjs.filetransfer.udp.packets}{
-\label{fjs.filetransfer.udp.packets}\hypertarget{fjs.filetransfer.udp.packets}{}
-\subsection{\label{fjs.filetransfer.udp.packets.AckPacket}Class AckPacket}{
-\hypertarget{fjs.filetransfer.udp.packets.AckPacket}{}\vskip .1in 
-\subsubsection{Declaration}{
-\begin{lstlisting}[frame=none]
-public class AckPacket
- extends fjs.filetransfer.udp.packets.Packet\end{lstlisting}
-\subsubsection{Constructor summary}{
-\begin{verse}
-\hyperlink{fjs.filetransfer.udp.packets.AckPacket()}{{\bf AckPacket()}} \\
-\end{verse}
-}
-\subsubsection{Constructors}{
+\subsubsection{Methods}{
 \vskip -2em
 \begin{itemize}
 \item{ 
-\index{AckPacket()}
-\hypertarget{fjs.filetransfer.udp.packets.AckPacket()}{{\bf  AckPacket}\\}
+\index{displayArguments()}
+\hypertarget{filetransferUDP.Server.displayArguments()}{{\bf  displayArguments}\\}
 \begin{lstlisting}[frame=none]
-public AckPacket()\end{lstlisting} %end signature
+private void displayArguments()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Displays the server arguments.
+}
+\end{itemize}
+}%end item
+\item{ 
+\index{initializeDownload()}
+\hypertarget{filetransferUDP.Server.initializeDownload()}{{\bf  initializeDownload}\\}
+\begin{lstlisting}[frame=none]
+private void initializeDownload()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Sets the Sockets up.
+}
+\end{itemize}
+}%end item
+\item{ 
+\index{main(String\lbrack \rbrack )}
+\hypertarget{filetransferUDP.Server.main(java.lang.String[])}{{\bf  main}\\}
+\begin{lstlisting}[frame=none]
+public static void main(java.lang.String[] args)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Calls Server(args) and thereby starts the server.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{args} -- command line arguments}
+  \end{itemize}
 }%end item
 \end{itemize}
-}
-}
-\subsection{\label{fjs.filetransfer.udp.packets.DataPacket}Class DataPacket}{
-\hypertarget{fjs.filetransfer.udp.packets.DataPacket}{}\vskip .1in 
-\subsubsection{Declaration}{
-\begin{lstlisting}[frame=none]
-public class DataPacket
- extends fjs.filetransfer.udp.packets.Packet\end{lstlisting}
-\subsubsection{Constructor summary}{
-\begin{verse}
-\hyperlink{fjs.filetransfer.udp.packets.DataPacket()}{{\bf DataPacket()}} \\
-\end{verse}
-}
-\subsubsection{Constructors}{
-\vskip -2em
-\begin{itemize}
+}%end item
 \item{ 
-\index{DataPacket()}
-\hypertarget{fjs.filetransfer.udp.packets.DataPacket()}{{\bf  DataPacket}\\}
+\index{parseArguments(String\lbrack \rbrack )}
+\hypertarget{filetransferUDP.Server.parseArguments(java.lang.String[])}{{\bf  parseArguments}\\}
 \begin{lstlisting}[frame=none]
-public DataPacket()\end{lstlisting} %end signature
+private void parseArguments(java.lang.String[] args)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Parses the command line arguments.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{args} -- command line arguments.}
+  \end{itemize}
 }%end item
 \end{itemize}
-}
-}
-\subsection{\label{fjs.filetransfer.udp.packets.FirstPacket}Class FirstPacket}{
-\hypertarget{fjs.filetransfer.udp.packets.FirstPacket}{}\vskip .1in 
-\subsubsection{Declaration}{
-\begin{lstlisting}[frame=none]
-public class FirstPacket
- extends fjs.filetransfer.udp.packets.Packet\end{lstlisting}
-\subsubsection{Constructor summary}{
-\begin{verse}
-\hyperlink{fjs.filetransfer.udp.packets.FirstPacket()}{{\bf FirstPacket()}} \\
-\end{verse}
-}
-\subsubsection{Constructors}{
-\vskip -2em
-\begin{itemize}
+}%end item
 \item{ 
-\index{FirstPacket()}
-\hypertarget{fjs.filetransfer.udp.packets.FirstPacket()}{{\bf  FirstPacket}\\}
+\index{proccessPacket()}
+\hypertarget{filetransferUDP.Server.proccessPacket()}{{\bf  proccessPacket}\\}
 \begin{lstlisting}[frame=none]
-public FirstPacket()\end{lstlisting} %end signature
+private void proccessPacket()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Processes the received packet. The packet is either a first packet or a data packet.\mbox{}\newline If everything went o.k., an ACK is sent.\mbox{}\newline If the data packet has the wrong packet number, an ACK with the expected packet number is sent.
+}
+\end{itemize}
+}%end item
+\item{ 
+\index{receivePacket()}
+\hypertarget{filetransferUDP.Server.receivePacket()}{{\bf  receivePacket}\\}
+\begin{lstlisting}[frame=none]
+private void receivePacket()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Tries to receive a packet. If the receiving process times out and a session was active, delete the session.
+}
+\end{itemize}
+}%end item
+\item{ 
+\index{sendACK(byte)}
+\hypertarget{filetransferUDP.Server.sendACK(byte)}{{\bf  sendACK}\\}
+\begin{lstlisting}[frame=none]
+private void sendACK(byte packetNumber)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Sends an acknowledge packet to the client. If command line arguments are set, it may delay or lose the packet.
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{packetNumber} -- the packet number which should be acknowledged.}
+  \end{itemize}
 }%end item
 \end{itemize}
-}
-}
-\subsection{\label{fjs.filetransfer.udp.packets.Packet}Class Packet}{
-\hypertarget{fjs.filetransfer.udp.packets.Packet}{}\vskip .1in 
-\subsubsection{Declaration}{
-\begin{lstlisting}[frame=none]
-public class Packet
- extends java.lang.Object\end{lstlisting}
-\subsubsection{All known subclasses}{FirstPacket\small{\refdefined{fjs.filetransfer.udp.packets.FirstPacket}}, DataPacket\small{\refdefined{fjs.filetransfer.udp.packets.DataPacket}}, AckPacket\small{\refdefined{fjs.filetransfer.udp.packets.AckPacket}}}
-\subsubsection{Constructor summary}{
-\begin{verse}
-\hyperlink{fjs.filetransfer.udp.packets.Packet()}{{\bf Packet()}} \\
-\end{verse}
-}
-\subsubsection{Constructors}{
-\vskip -2em
-\begin{itemize}
-\item{ 
-\index{Packet()}
-\hypertarget{fjs.filetransfer.udp.packets.Packet()}{{\bf  Packet}\\}
-\begin{lstlisting}[frame=none]
-public Packet()\end{lstlisting} %end signature
 }%end item
 \end{itemize}
 }
