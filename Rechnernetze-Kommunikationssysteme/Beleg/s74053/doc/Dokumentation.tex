@@ -1,0 +1,193 @@
+\newcommand{\customDir}{}
+\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
+
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+%\setCustomSlidePath{Folien}
+
+\setCustomTitle{Beleg UDP-Dateiübertragung}
+\setCustomSubtitle{\texorpdfstring{Rechnernetze /\\ Kommunikationssysteme}{Rechnernetze / Kommunikationssysteme}}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+\setCustomNoteB{\textcolor{darkgray}{Vorlesung von Prof. Dr.-Ing. Vogt}}
+
+\setCustomSignature{\textcolor{darkgray}{\customAuthor{}\\ s74053}}	% Formatierung der Signatur in der Fußzeile
+\setCustomTitleAuthor{Beleg von \customAuthor{} (s74053)}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir _LaTeX_master/LaTeX_master.sty}
+\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
+%\setlength{\headheight}{10mm}	% default: ca. 8mm
+\setlength{\footheight}{10mm}	% default: ca. 8mm
+
+
+\usepackage{tikz-uml}
+
+% TeXDoclet Compatibility:
+\makeatletter
+\DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
+\DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
+\DeclareOldFontCommand{\tt}{\normalfont\ttfamily}{\mathtt}
+\DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
+\DeclareOldFontCommand{\it}{\normalfont\itshape}{\mathit}
+\DeclareOldFontCommand{\sl}{\normalfont\slshape}{\@nomath\sl}
+\DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
+\makeatother
+
+% TeXDoclet Preamble:
+%\input{javadoc/TeXDoclet_preamble.tex}
+\usepackage{ifpdf}
+\lstset{language=Java,breaklines=true}
+
+\newcommand{\entityintro}[3]{%
+  \hbox to \hsize{%
+    \vbox{%
+      \hbox to .2in{}%
+    }%
+    {\bf  #1}%
+    \dotfill\pageref{#2}%
+  }
+  \makebox[\hsize]{%
+    \parbox{.4in}{}%
+    \parbox[l]{5in}{%
+      \vspace{1mm}%
+      #3%
+      \vspace{1mm}%
+    }%
+  }%
+}
+\newcommand{\refdefined}[1]{
+\expandafter\ifx\csname r@#1\endcsname\relax
+\relax\else
+{$($in \ref{#1}, page \pageref{#1}$)$}\fi}
+\chardef\textbackslash=`\\
+
+\begin{document}
+
+%\selectlanguage{english}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\chapter{Dokumentation}
+
+\section{Rahmenaufgaben}
+
+Es gibt folgende Rahmenaufgaben, die abseits des Programmierens gelöst werden sollen:
+\begin{enumerate}
+\setcounter{enumi}{7}
+\item Errechneter maximal erzielbarer Durchsatz beim SW-Protokoll bei $10\%$ Paketverlust und $=10\unit{ms}$ Verzögerung:\\
+Datenlänge: $1400 \unit{Byte} = 11\,200\unit{Bit}$\\
+$R=1$ (Vereinfachung)\\
+$r_b$: Geschwindigkeit\\
+$P_{CS}=P_{SC}=0,1$\\
+$T_{CS}=T_{SC}=10\unit{Bit}/r_b$\\
+$T_P=(16+8)\unit{Bit}/r_b+11\,200\unit{Bit}/r_b=11\,224\unit{Bit}/r_b$ \\
+$T_W=T_{CS}+T_{SC}+T_{ACK}=10\unit{s}+10\unit{s}+(16+8)\unit{Bit}/r_b=20\unit{s}+24\unit{Bit}/r_b$
+\begin{align*}
+\eta_{SW}&=\frac{T_P}{T_P+ T_W}\cdot (1-P_{CS})\cdot(1-P_{SC}) \cdot R \\
+&= \frac{11\,224\unit{Bit}/r_b}{11\,224\unit{Bit}/r_b+20\unit{s}+24\unit{Bit}/r_b}\cdot 0,9^2\\
+&=\frac{11\,224\unit{Bit}/r_b}{11\,248\unit{Bit}/r_b+20\unit{s}}\cdot 0,9^2
+\end{align*}
+Tatsächlich erzielter Durchsatz:
+$$deutlich\;geringer$$
+Der Unterschied ist damit zu erklären, dass vor allem das Programm nicht optimiert geschrieben ist.
+\item Dokumentation der Funktionen unter Nutzung von \LaTeX{}.\\
+Siehe vor allem Abschnitt \ref{stated} für die Zustandsdiagramme, Abschnitt \ref{programing} für Details zur Implementierung (dabei ergeben sich Probleme/Limitierungen/Verbesserungsvorschläge implizit aus dem Unterabschnitt \ref{abgrenz})  und Kapitel \ref{javadoc} für die Funktionen. Zugunsten der besseren Lesbarkeit im Quellcode wurde die Dokumentation der Funktionen in Englisch gehalten.
+\end{enumerate}
+
+\section{Programmierung}
+\label{programing}
+
+\subsection{Anforderungen}
+Die Programmierung wurde nach den Anforderungen der Aufgabenstellung gelöst. Diese lauten wie folgt:
+\begin{itemize}
+\item Client:
+\begin{itemize}
+\item Über Konsole mit Parametern „Zieladresse“, „Portnummer“ und „Dateiname“ aufrufbar (zum debuggen auch „Paketverlust“ und „mittlere Verzögerung“)
+\item Zeigt während der Übertragung jede Sekunde die Datenrate an
+\item Zeigt nach der Übertragung die Datenrate an
+\item Korrigiert Fehler bei verlorenen oder vertauschten Paketen:\\
+verlorenes ACK: Datenpaket erneut senden, vertauschtes ACK: vorhergehendes Datenpaket senden.
+\end{itemize}
+\item Server:
+\begin{itemize}
+\item Über Konsole mit dem Parameter „Portnummer“ aufrufbar (zum debuggen auch „Paketverlust“ und „mittlere Verzögerung“)
+\item Speichert Datei in seinem Pfad unter dem korrekten Dateiname (Zeichen „1“ wird angehängt, wenn Datei bereits existiert)
+\item Korrigiert Fehler bei verlorenen oder vertauschten Paketen:\\
+verlorenes Datenpaket: kein ACK senden, vertauschtes Datenpaket: ACK des vorhergehenden Datenpakets senden.
+\end{itemize}
+\end{itemize}
+\subsection{Eigenschaften}
+Folgende Eigenschaften wurden im Rahmen der Aufgabenstellung angepasst:
+\begin{itemize}
+\item Größe der Datenpakete: $1400 \unit{Byte}\;(+\text{Sessionnr., Paketnr. und ggf. CRC})$\footnote{Basierend auf dem TCP Standard von maxim $1500 \unit{Byte}$.}.
+\item Als der „Pfad des Servers“ wurde der Pfad zur \texttt{server-udp}-Datei (Ordner \texttt{s74053}) angenommen, nicht der \texttt{/bin}-Pfad.
+\end{itemize}
+
+\subsection{Abgrenzungen}
+\label{abgrenz}
+In der Aufgabenstellung wurde über einige Merkmale keine Aussage getroffen. Es wurde daher angenommen, dass sie nicht relevant sind. Die Merkmale, die nicht enthalten sind (aber ggf. zur Funktionalität beitragen würden), sind hier aufgeführt.
+\begin{itemize}
+\item Der Server kann nicht mehrere Clients auf einmal bedienen.
+\item Das Programm ist nicht „portabel“. Das heißt, dass es nur bei genau der Unterordneranordnung des Ordners \texttt{s74053} funktioniert.
+\item Es wird sich darauf verlassen, dass kein Dateiname übergeben wird, der länger als 255 Byte lang ist.
+\item Der Client kann nicht wisse, ob die Datei tatsächlich fertig übertragen wurde, wenn das letzte ACK-Paket vom Server verloren geht.
+\end{itemize}
+
+\section{Zustandsdiagramme}
+\label{stated}
+\subsection{Client}
+\begin{center}
+\begin{tikzpicture}
+\umlstateinitial[y=3,name=start]
+\umlbasicstate[y=0,name=startupload, fill=white]{Initialisiere Upload}
+\umltrans{start}{startupload}
+\umlstatefinal[x=6,y=-2,name=finalerror]
+\umlHVtrans[arg={Fehler},pos=.5, anchor2=90]{startupload}{finalerror}
+%\umlbasicstate[y=-4,name=sendfirst, fill=white]{Sende erstes Paket}
+%\umltrans[arg={Ok},left, pos=.5]{startupload}{sendfirst}
+%\umltrans[arg={Timeout},pos=.5]{sendfirst}{finalerror}
+\umlbasicstate[y=-4,name=sendpacket, fill=white]{Sende Paket}
+\umltrans[arg={Ok},left, pos=.5]{startupload}{sendpacket}
+\umlHVtrans[arg={Timeout mit max. Anzahl Versuche},pos=.1, below right, anchor2=-90]{sendpacket}{finalerror}
+\umltrans[recursive=160|200|2.5cm, recursive direction = right to right, left, arg={ACK empfangen || Timeout},pos=1.5]{sendpacket}{sendpacket}
+\umlstatefinal[y=-7,name=finalok]
+\umltrans[arg={ACK zu letztem Paket empfangen}, pos=.5, left]{sendpacket}{finalok}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Server}
+\begin{center}
+\begin{tikzpicture}
+\umlstateinitial[y=3,name=start]
+\umlbasicstate[y=0,name=waitpacket, fill=white]{Warte auf Paket}
+\umltrans{start}{startupload}
+%\umlbasicstate[y=-4,name=sendfirst, fill=white]{Sende erstes Paket}
+%\umltrans[arg={Ok},left, pos=.5]{startupload}{sendfirst}
+%\umltrans[arg={Timeout},pos=.5]{sendfirst}{finalerror}
+\umlbasicstate[y=-4,name=processpacket, fill=white]{Verarbeite Paket}
+\umltrans[arg={Paket empfangen},left, anchor1=-110, anchor2=110, pos=.5]{startupload}{processpacket}
+\umlbasicstate[y=-8,name=sendack, fill=white]{Sende ACK}
+\umltrans[arg={Ok || Falsches Paket}, left, pos=.5]{processpacket}{sendack}
+\umltrans[arg={Fehler},right, anchor1=70, anchor2=-70, pos=.5]{processpacket}{waitpacket}
+\umlHVHtrans[right, arg={},pos=1.5,anchor1=180, anchor2=180, arm1=-2.5cm]{sendack}{startupload}
+\umlbasicstate[y=-12,name=processfile, fill=white]{Verarbeite Datei}
+\umltrans[arg={Paket hat Datei-CRC}, left, pos=.5, anchor1=-110, anchor2=110]{sendack}{processfile}
+\umlHVHtrans[right, arg={Fehler},pos=1.5,anchor1=0, anchor2=0, arm1=1.5cm]{processfile}{startupload}
+\umltrans[arg={Ok},right, anchor1=70, anchor2=-70, pos=.5]{processfile}{sendack}
+\end{tikzpicture}
+\end{center}
+
+\chapter{JavaDoc}
+\selectlanguage{english}
+\label{javadoc}
+\input{javadoc/TeXDoclet.tex}
+
+%\newpage
+%\printbibliography
+
+\end{document}
