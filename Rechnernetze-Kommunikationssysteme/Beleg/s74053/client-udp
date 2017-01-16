@@ -1,0 +1,2 @@
+#!/bin/bash
+java -cp bin:s74053/bin filetransferUDP.Client $@

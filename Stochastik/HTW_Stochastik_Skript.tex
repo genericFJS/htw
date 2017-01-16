@@ -1406,6 +1406,9 @@ Dies ist das $\alpha$-Quantil $q_\alpha$.
 \item $z_\alpha = - z_{1-\alpha}$
 \end{itemize}
 
+\cparagraph{Satz} Seien $X\sim \cN(\mu_1, \sigma_1^2)$ und $Y\sim \cN(\mu^2, \sigma^2)$ unabhängige ZVen. Dann:
+$$X+Y \sim \cN (\mu_1+\mu_2, \sigma_1^2+\sigma_2^2)$$
+
 \subsubsection{Exponentialverteilung}
 \cparagraph{Definition} Die ZV $X$ heißt exponentialverteilt mit dem Parameter $\lambda >0$, wenn sie die folgende Dichte besitzt:
 $$f(x)=\begin{cases}
@@ -2044,7 +2047,7 @@ ABB Skript 6.1
 \begin{itemize}
 \item Boxplot (übersichtlich, aber Informationsverlust)
 \item Verteilungsfunktion (übersichtlich, ohne Informationsverlust)
-\item Klassierung der Daten (und anschließend Histogramm, Häufigkeitstabelle, Kreisdiagramm, \ldots)
+\item Klassierung der Daten (und anschließend Histogramm, Häufigkeitstabelle, Kreisdiagramm, …)
 \end{itemize}
 ABB Skrit 6.2
 \item \emph{Klassierung der Daten}\\
@@ -2185,10 +2188,143 @@ Setze $$\tilde{x}:= (R(x_1),R(x_2), \ldots, R(x_n))$$
 \item gehe genauso für $y_i$ vor:
 $$\tilde{y}=(R(y_1),\ldots, R(y_n))$$
 \item Der Rangkorrelationskoeffizient nach Spearman ist nun
-$$r_{x,y}^{(S)} := r_{\tilde{x},\tilde{y}}$$
+$$r_{x,y}^{(S)} := r_{\tilde{x},\tilde{y}}\text{.}$$
 \end{enumerate}
 
+\section{Schätztheorie}
 
+\subsection{Einführung}
+\begin{itemize}
+\item Ziel: Anhand einer Stichprobe Rückschlüsse auf die Verteilung eines Merkmals $X$ in einer Grundgesamtheit zu ziehen.
+\item Gegeben: Stichprobe $X_1,\ldots, X_n$ zu Merkmal $X$.
+\item Bekannt: Der Verteilungstyp (Normal-/Poisson-/…verteilung). D.h. wir unterstellen, dass die tatsächliche Verteilung aus einer vorgegebenen ein- oder mehrparametrigen Schar von Verteilungsfunktionen stammt.\\
+Raum der möglichen Parameter: $\Theta$ (groß Theta)
+\item Unbekannt: der wahre Parameter $\vartheta \in \Theta$
+\item Aufgabe: $\vartheta$ anhand der Stichprobe schätzen.
+\item Beispiele: 
+\begin{itemize}
+\item Exponentialverteilung: Setzen voraus, dass $X\sim \mathrm{Exp}(\lambda)$ wobei $\lambda = \vartheta$ der unbekannte Parameter ist. $\Theta =(0,\infty) $
+\item Normalverteilung: Setzen voraus, dass $X\sim \cN (\mu, \sigma^2)$, wobei $\mu$ und $\sigma^2$ unbekannt sind. Dann:
+$$\Theta = \RR \times (0,\infty)$$
+\end{itemize}
+\end{itemize}
+Wir unterscheiden:
+\begin{itemize}
+\item \emph{Punktschätzer}\\
+Stichprobenfunktion $T=T(X_1,\ldots, X_n)$ liefert zu jeder konkreten Stichprobe eine konkrete Schätzung $\hat{\vartheta}$ des Parameters $\vartheta$.
+\item \emph{Bereichsschätzer}\\
+Gesucht ist hier ein Bereich $I=I(X_1,\ldots, X_n)$ mit 
+$$\PP(\vartheta \in I) \geq 1-\lambda$$
+für kleines (vorgegebenes) $\lambda$.\\
+Meist ist $I$ ein \emph{Intervall}.
+\end{itemize}
+
+\subsection{Punktschätzer}
+
+\subsubsection{Eigenschaften von Punktschätzern}
+
+\cparagraph{Definition} Eine Stichprobenfunktion $T(X_1,\ldots, X_n)$ welche zur Schätzung eines Parameters $\vartheta \in \Theta$ verwendet wird heißt \emph{Schätzfunktion} (oder „Punktschätzer“ oder „Schätzer“) für $\vartheta$.
+
+\cparagraph{Bemerkung} 
+\begin{itemize}
+\item Eine Stichprobenfunktion ist eine Zufallsvariable.
+\item Um die Abhängigkeiten von $T(X_1,\ldots, X_n)$ von der Stichprobengröße $n$ zu verdeutlichen schreibt man oft auch $T_n$ statt $T(X_1, \ldots, X_n)$.
+\item Oft verwendet man auch um den Schätzer zu bezeichnen den gleichen wie den zu schätzenden Parameter, jedoch versehen mit einem $\hat{\;}$, also etwa $\hat{\vartheta}$ (statt $T$).
+\end{itemize}
+
+\cparagraph{Beispiel}
+\begin{itemize}
+\item Gesuchter Parameter: Mittlere Abfüllmenge bei einem Getränkehersteller.\\
+Schätzfunktion: $T=\overline{X}=\frac{1}{n}(X_1+\ldots + X_n)$
+\item Gesuchter Parameter: Varianz der Abfüllmenge bei einem Hersteller\\
+Schätzfunktion: $T=S^2=\frac{1}{n-1}\sum_{i=1}^n (X_i-\overline{X})^2$
+\end{itemize}
+
+\cparagraph{Definition}
+Ein Punktschätzer $T$ für $\vartheta$ heißt
+\begin{anumerate}
+\item \emph{erwartungstreu} (oder unverzerrt), wenn 
+$$\EE(T)=\vartheta\text{.}$$
+\item \emph{asymptotisch erwartungstreu}, wenn
+$$\lim_{n\to \infty} \EE(T_n)=\vartheta$$
+\item \emph{(schwach) konsistent}, wenn für jedes $\varepsilon > 0$ gilt:
+$$\lim_{n\to \infty}\PP(|T_n-\theta| < \varepsilon) = 1$$
+\end{anumerate}
+
+\cparagraph{Satz} Ist ein Schätzer $T_n$
+\begin{itemize}
+\item erwartungstreu und 
+\item erfüllt $\lim_{n\to \infty} \var (T_n) = 0$
+\end{itemize}
+so ist er auch (schwach) konsistent.
+
+\cparagraph{Beispiel} Sei $X$ ein Merkmal. Setze $\mu := \EE(X)$ und $\sigma ^2 = \var (X)$.
+\begin{anumerate}
+\item $T:= \overline{X} = \frac{1}{n} (X_1+\ldots + X_n)$ ist erwartungstreuer Schätzer für $\vartheta = \mu$, denn
+$$\EE(T)=\EE \left( \frac{1}{n} (X_1+\ldots + X_n) \right)=\frac{1}{n}\cdot (\underbrace{\EE(X_1)}_{\mu}+\ldots + \underbrace{\EE(X_n)}_{\mu})=\mu $$
+\item Wegen (a) und 
+$$\var (T)=\var (\overline{X}) = \var \left( \frac{1}{n} \sum_{i=1}^n X_i\right) \overset{(unabh.)}{=}\frac{1}{n^2}\sum_{i=1}^n \underbrace{\var X_i}_{\sigma^2} = \frac{\sigma^2}{n} \overset{n\to \infty}{\longrightarrow} 0$$
+ist $T=\overline{X}$ sogar ein konsistenter Schätzer für $\mu$.
+\item $T=S^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i-\overline{X})^2$ ist erwartungstreuer Schätzer für $\vartheta = \sigma^2$ (siehe Übung).
+\end{anumerate}
+
+\subsection{Bereichsschätzer}
+
+\subsubsection{Problemstellung}
+
+Wozu Bereichsschätzer?
+\begin{itemize}
+\item Punktschätzer liefert Wert, der den wahren Parameter höchstwahrscheinlich nicht genau trifft.
+\item Frage: Wie weit liegt die Schätzung neben dem wahren Wert?
+\item Bereichsschätzer liefern einen (zufälligen) Bereich, welcher mit hoher WK den wahren Wert überdeckt.
+\item Meist (und hier immer) ist dieser Bereich ein Intervall.\\
+Daher auch „Intervallschätzer“ oder „Konfidenzintervall“.
+\end{itemize}
+
+\cparagraph{Definition} Ein Intervall
+$$I(X_1, \ldots, X_n) =[g_u (X_1, \ldots, X_n), g_o(X_1, \ldots, X_n)]$$
+welches zur vorgegebenen $\alpha \in (0,1)$ die Bedingung
+$$\PP(\vartheta \in I(X_1, \ldots, X_n)) \geq 1-\alpha$$
+erfüllt heißt \emph{Konfidenzintervall} (oder „Vertrauensintervall“) zum Niveau $1-\alpha$. man nennt $1-\alpha$ das \emph{Konfidenzniveau}.
+
+\cparagraph{Bemerkung} 
+\begin{itemize}
+\item $I(X_1, \ldots, X_n$ ist zufällig!
+\item $\vartheta \in \Theta$ ist fest (aber unbekannt).
+\item Um ein Konfidenzintervall (KI) zu bestimmen, wählt man \emph{zuerst} $\alpha\in (0,1)$. Typische Werte: $\alpha = 0,01$, $\alpha = 0,05$.
+\item Die Intervallgrenzen $g_u$ und $g_o$ können $-\infty$ bzw. $+\infty$ annehmen. D.h. Intervalle der Art $(-\infty, b]$ oder $[a,\infty)$ sind möglich.
+\item Die Realisierung $I(x_1, \ldots, x_n)$ der KI für eine konkrete Stichprobe heißt konkretes Konfidenzintervall.
+\end{itemize}
+Warum nicht einfach $\alpha = 0$ wählen?
+\begin{itemize}
+\item d.h. wir suchen $I$ mit $\PP(\vartheta \in I) =1$
+\item dies liefert typischer Weise $I=\Theta$ und damit keinen Erkenntnisgewinn.
+\end{itemize}
+
+\cparagraph{Beispiel} (und allgemeine Vorgehensweise)\\
+Sei $X\sim \cN(\mu, \sigma^2)$ ein Merkmal mit \emph{bekanntem $\sigma^2$}.\\
+Gesucht: KI für $\vartheta= \mu$ zum Niveau $1-\alpha$.
+\begin{enumerate}
+\item Punktschätzer bestimmen: Kennen wir schon aus Beispiel 2.2-6:
+$$T=\overline{X}$$
+\item Verteilung von $T$ bestimmen: \\
+$T$ ist normalverteilt (wegen Satz 1.3-31) und $\EE(T) = \mu$, $\var (T) = \frac{\sigma^2}{n}$ (siehe Bsp. 2.2.6) also $T\sim \cN \left( \mu, \frac{\sigma^2}{n}\right)$
+\item Transformation von $T$, so dass $T$ in bekannte Verteilung übergeht.
+\item $s_1$ und $s_2$ so wählen, dass 
+$$\PP(S \in [s_1, s_2]) \geq 1-\alpha$$
+\begin{itemize}
+\item Wähle zuerst $\alpha_1$ und $\alpha_2$ mit $\alpha = \alpha_1 + \alpha_2$.
+\item Wähle $s_1$ und $s_2$ so, dass $\PP(S\leq s_1) \leq \alpha$ und $\PP(S\geq s_2) \leq \alpha_2$
+\end{itemize}
+ABB SX1\\
+Also $s_1=z_{\alpha_1} = -z_{1-\alpha_1}$ und $s_2 = z_{1-\alpha_2}$. Dann:
+$$\PP\left( - z_{1-\alpha_1} \leq \frac{\overline{X}-\mu}{\sigma}\sqrt{n} \leq z_{1-\alpha_2}\right) \geq 1-\alpha$$
+\item Umstellen liefert:
+$$\PP\left(\overline{X}-\frac{z_{1-\alpha_2}\sigma}{\sqrt{n}}\leq \mu \leq \overline{X} + \frac{z_{1-\alpha_1}\sigma}{\sqrt{n}}\right) \geq 1-\alpha$$
+d.h. das gesuchte KI ist
+$$I=\left[ \overline{X}-\frac{z_{1-\alpha_2}\sigma}{\sqrt{n}}, \overline{X} + \frac{z_{1-\alpha_1}\sigma}{\sqrt{n}} \right]$$
+
+\end{enumerate}
 
 %\newpage
 %\printbibliography

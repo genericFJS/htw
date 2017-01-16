@@ -417,6 +417,7 @@ Programmierung 1/Beleg/lendlib
 Programmierung 2/Vorlesung
 Mathe 2/Vorlesung
 Software Engineering 1/HTWSEI-Beleg/.git*
+Rechnernetze-Kommunikationssysteme/Beleg/s74053/src/rnbeleg
 # ignoriere Dateien
 *.pdf
 *.psd
@@ -437,3 +438,5 @@ Software Engineering 1/HTWSEI-Beleg/.git*
 *.obs
 *.csf
 *.exe
+*.jar
+*.class

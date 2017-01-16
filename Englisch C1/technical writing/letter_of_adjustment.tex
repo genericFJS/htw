@@ -1,0 +1,78 @@
+% Header aus der Vorlage
+\input{.LaTeX_master/LaTeX_master_HTW_en_letter}
+\renewcommand{\workingdir}{../../../}
+
+
+% Definition von Titel, Autor usw.
+\DTitel{\textsc{English C1 Report}}
+\DUntertitel{Object oriented programming}
+\DAutor{Falk-Jonatan Strube}
+\DNotiz{}
+\DNoti{}
+\renewcommand{\Dokumentensignatur}{}
+
+\KOMAoptions{
+foldmarks=false,
+foldmarks=BlmTP,
+%fromurl=true,
+fromemail=true,
+fromphone=false,
+fromalign=right,
+fromrule=aftername,
+fromemail=true,
+footsepline=off,
+backaddress=off
+}
+
+\definecolor{mygray}{gray}{.55}
+
+%&Merko\& Strube Inc.\\
+%\Letter & Charmanderstreet 5\newline
+%D-04359 Squirtle Town\\
+%\Email & MandS.inc@pokereality.com\\
+
+\setkomavar{fromname}{Merko \& Strube Inc.}
+\setkomafont{fromname}{\bfseries\color{mygray}\LARGE}
+\setkomafont{fromrule}{\color{mygray}}
+%\setkomafont{addressee}{\small}
+
+\setkomavar{fromaddress}{Charmanderstreet 5\\
+D-04359 Squirtle Town}
+\setkomavar{fromemail}[\Letter~]{MandS.inc@pokereality.com}
+\setkomafont{fromaddress}{\small\rmfamily\mdseries\slshape}
+
+
+\setkomavar{signature}{
+Anxhela Merko \qquad Jonatan Strube\\\hspace*{1.5cm} Sales Managers}
+\renewcommand*{\raggedsignature}{\raggedright}
+
+\begin{document}
+
+%\setkomavar{subject}{Letter of complaint regarding the Neuralizer}
+\setkomavar{place}{}
+\setkomavar{date}{\today}
+
+% German address
+\begin{letter}{
+PrimoPaint Ltd.\\
+Schillerstraße 22\\
+01159 Dresden\\
+Germany
+
+}
+\opening{Dear Ms. Ritter, Mr. Park and Mr. Fitzsimmons:}
+
+We have received your recent letter dated January 9, 2017 concerning the \emph{Pokémon reality gear}. We are very delighted to hear that our VR-Gears have made your employees happy. Thank you for letting us know about the possible flaw in the built-in microphones, as we want to ensure full customer satisfaction. 
+
+	We would like to ensure you that we will look into the matter within the next 14 days. The Pokémon reality gear comes with a 2-year long guarantee, so all the faulty devices will be repaired as soon as we locate the problem. 
+	
+	The devices are always tested before delivery -- even in noisy environments. That's why our technicians believe that the flaw might not be in the built-in microphone. We would like to ask your employees to make sure that they installed the device as instructed in the manual. If we find any fault with the device, we will attend your repair as soon as possible.
+	
+	Please allow us to express our sincere apology for the inconvenience we might have caused you. We would like to give all your employees a limited time 15\% discount at our Pokémon online shop as compensation.
+	
+	We are looking forward to making more business with you in the future and assure you that such inconveniences will not happen again.
+
+\closing{Sincerley,}
+\end{letter}
+
+\end{document}
