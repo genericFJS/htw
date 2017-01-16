@@ -48,7 +48,7 @@ public class Client extends FileTransfer {
 			}
 		}
 		if (finished) {
-			exitApp("File transfer successfull. Average transfer speed: " + speed + " Byte/s", 0);
+			exitApp("File transfer successfull. Average transfer speed: " + speed + " kByte/s", 0);
 		} else {
 			if (packedAllBytes) {
 				exitApp("File transfer not successfull (either wrong CRC, last ACK got lost or file could not be saved).", 2);
@@ -86,11 +86,12 @@ public class Client extends FileTransfer {
 	 * @return true, if the packet has been send, else false.
 	 */
 	private boolean sendPacket(byte[] packet) {
+		dataPacket = new DatagramPacket(packet, packet.length, connectionIP, port);
 
 		try {
 			if (packetDelay > 0){
 				int sleepTime = (int) (new Random().nextInt(packetDelay * 2));
-				printMessage("Sleep "+sleepTime+"ms",1);
+//				printMessage("Sleep "+sleepTime+"ms",1);
 				Thread.sleep(sleepTime);
 			}
 		} catch (InterruptedException e1) {
@@ -98,14 +99,14 @@ public class Client extends FileTransfer {
 		}
 
 		if (new Random().nextInt(100) < packetLossRate * 100) {
-			printMessage("Lose packet.",1);
+//			printMessage("Lose packet.",1);
 			return true;
 		}
 
-		dataPacket = new DatagramPacket(packet, packet.length, connectionIP, port);
 		try {
 			dataSocket.send(dataPacket);
 			printInfo();
+//			printMessage("Packet sent: "+(short)bytePacketNumber, 1);
 			return true;
 		} catch (IOException e) {
 			printMessage("Startpacket not sent.Try: " + tries, 1);
@@ -132,6 +133,7 @@ public class Client extends FileTransfer {
 				printMessage("ACK has wrong packet number. Try: " + tries, 1);
 				sendPrevious = true;
 			}
+//			printMessage("ACK received.", 1);
 		} catch (IOException e) {
 			tries++;
 			printMessage("Connection timed out while waiting for ACK. Try: " + tries, 1);
@@ -182,10 +184,10 @@ public class Client extends FileTransfer {
 	 * Prints the secondly progress (and speed) info.
 	 */
 	private void printInfo() {
-		speed = (int) ((float) bytesProcessed / (System.nanoTime() - startTime) * 1000000000.0f);
+		speed = (int) ((float) bytesProcessed / (System.nanoTime() - startTime) * 1000000000.0f/1024);
 		if (lastInfo + 250000000 < System.nanoTime()) {
 			float percent = (long) ((float) bytesProcessed / getByteFileLengthLong() * 1000.0f) / 10.0f;
-			printMessage("Progress: " + percent + "% - Speed: " + speed + " Byte/s", 0);
+			printMessage("Progress: " + percent + "% - Speed: " + speed + " kByte/s", 0);
 			lastInfo = System.nanoTime();
 		}
 	}

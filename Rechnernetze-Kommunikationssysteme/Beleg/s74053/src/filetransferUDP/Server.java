@@ -14,6 +14,7 @@ import java.util.Random;
 
 /**
  * The server tries to download files from a client.
+ * 
  * @author Falk-Jonatan Strube (s74053)
  *
  */
@@ -23,7 +24,9 @@ public class Server extends FileTransfer {
 
 	/**
 	 * Executes the server.
-	 * @param args command line arguments
+	 * 
+	 * @param args
+	 *            command line arguments
 	 */
 	public Server(String[] args) {
 		parseArguments(args);
@@ -45,7 +48,7 @@ public class Server extends FileTransfer {
 		try {
 			dataSocket = new DatagramSocket(port);
 			dataSocket.setSoTimeout(timeout);
-			printMessage("Socket opened.", 1);			
+			printMessage("Socket opened.", 1);
 		} catch (SocketException e) {
 			exitApp("Could not open Socket.", -1);
 		}
@@ -63,12 +66,16 @@ public class Server extends FileTransfer {
 				dataSocket.receive(dataPacket);
 				packetData = new byte[dataPacket.getLength()];
 				packetData = Arrays.copyOfRange(dataPacket.getData(), 0, packetData.length);
-				toggleBytePacketNumber();
 				return;
 			} catch (Exception e) {
-				if (activeSession != 0 && tryNumber == MAX_TRIES) {
-					printMessage("Connection timed out, waiting for new connection.", 0);
-					resetSession();
+				if (activeSession != 0) {
+					if (tryNumber == MAX_TRIES) {
+						printMessage("Connection timed out, waiting for new connection.", 0);
+						resetSession();
+					} else {
+//						printMessage("Resending ACK: "+bytePacketNumber,1);
+						sendACK(bytePacketNumber);
+					}
 				}
 				// printMessage("No packet received "+activeSession+" ("+tryNumber+").",1);
 				if (activeSession == 0) {
@@ -77,7 +84,6 @@ public class Server extends FileTransfer {
 				continue;
 			}
 		}
-		sendACK(bytePacketNumber);
 	}
 
 	/**
@@ -100,7 +106,9 @@ public class Server extends FileTransfer {
 					getFirstPacketContents(packetData);
 					setPort(dataPacket.getPort());
 					setConnectionIP(dataPacket.getAddress());
-					sendACK((byte) 0);
+					sendACK(bytePacketNumber);
+//					printMessage("Sending first ACK: "+bytePacketNumber,1);		
+					toggleBytePacketNumber();
 					if (debug) {
 						printSessionData();
 					}
@@ -136,6 +144,7 @@ public class Server extends FileTransfer {
 			processedBytes = procBuffer.array();
 			bytesProcessed = processedBytes.length;
 			if (isCorrectSessionNumber(tempSessionNumber) && isCorrectPacketNumber(tempPacketNumber)) {
+//				printMessage("Packet received: "+(short)tempPacketNumber, 1);
 				if (isLastPacket) {
 					if (isCorrectCRC(processedBytes, byteLastPacketCRC)) {
 						String savePath = getAppLocation() + getNewFileName(getByteFileNameString());
@@ -155,24 +164,26 @@ public class Server extends FileTransfer {
 					return;
 				}
 				sendACK(bytePacketNumber);
-				toggleBytePacketNumber();
+//				printMessage("Sending ACK: "+bytePacketNumber,1);
 			} else {
 				printMessage("The packet doesn't have a valid session and/or packet number: " + getByteSessionNumberShort(tempSessionNumber) + ", " + (short) tempPacketNumber, 1);
 			}
-			sendACK(bytePacketNumber);
+			toggleBytePacketNumber();
 		}
 	}
 
 	/**
 	 * Sends an acknowledge packet to the client. If command line arguments are set, it may delay or lose the packet.
-	 * @param packetNumber the packet number which should be acknowledged.
+	 * 
+	 * @param packetNumber
+	 *            the packet number which should be acknowledged.
 	 */
 	private void sendACK(byte packetNumber) {
 
 		try {
-			if (packetDelay > 0){
+			if (packetDelay > 0) {
 				int sleepTime = (int) (new Random().nextInt(packetDelay * 2));
-				printMessage("Sleep "+sleepTime+"ms",1);
+//				printMessage("Sleep " + sleepTime + "ms", 1);
 				Thread.sleep(sleepTime);
 			}
 		} catch (InterruptedException e1) {
@@ -180,7 +191,7 @@ public class Server extends FileTransfer {
 		}
 
 		if (new Random().nextInt(100) < packetLossRate * 100) {
-			printMessage("Lose packet.",1);
+//			printMessage("Lose packet.", 1);
 			return;
 		}
 
@@ -214,7 +225,9 @@ public class Server extends FileTransfer {
 
 	/**
 	 * Parses the command line arguments.
-	 * @param args command line arguments.
+	 * 
+	 * @param args
+	 *            command line arguments.
 	 */
 	private void parseArguments(String[] args) {
 		if (args.length < 1) {
@@ -241,7 +254,9 @@ public class Server extends FileTransfer {
 
 	/**
 	 * Calls Server(args) and thereby starts the server.
-	 * @param args command line arguments
+	 * 
+	 * @param args
+	 *            command line arguments
 	 */
 	public static void main(String[] args) {
 		new Server(args);
