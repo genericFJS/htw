@@ -1623,6 +1623,150 @@ Einsatzgebiete:
 \item Präzisionsmessung
 \item …
 \end{itemize}
+
+\section{Näherungsschalter}
+\subsection{Reedkontakte}
+Messprinzip: Kontakt über Magnetfeld betätigen
+\begin{itemize}
+\item 1 Schaltpunkt:\\
+Magnet parallel (Ebene N-S) zum Schalter: näher -- geschlossen; weiter entfernt -- offen
+\item 2 Schaltpunkte:\\
+Magnet orthogonal (N an Schalter, S von Schalter Weg) zum Schalter: direkt drüber -- offen; links/rechts entfernt -- geschlossen
+\item 3 Schaltpunkte:\\
+Magnet parallel (Ebene N-S) zum Schalter: direkt darüber / links davon / rechts davon
+\end{itemize}
+\begin{itemize}[label=$+$]
+\item berührungslos schaltend
+\item höhere Schaltfrequenz als bei mechanischen Schaltern (bis $200\unit{Hz}$)
+\item vermindertes Prellen gegenüber mech. Schaltern
+\item hohe Schutzart durch geschlossenen Glaskörper und Kunststoffgehäuse
+\item niedriger Preis
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item magnetische Feldstärke höher als bei magnetischen Sensoren
+\item Verschleiß der Kontakte
+\item Schaltpunktdrift durch Materialermüdung
+\item geringe Wiederholgenauigkeit des Schaltpunktes
+\item Übergangswiderstände an den Kontakten
+\item Anzahl der Schaltspiele ist begrenzt
+\item mehr als ein Schaltpunkt durch Nebenfelder
+\item erschütterungs- und vibrationsempfindlich
+\end{itemize}
+
+\subsection{Induktive Näherungsschalter / Wirbelstromsensoren}
+Faradaysches Induktionsgesetz: 
+$$U_{ind}=-\frac{1}{A}\cdot \frac{\diffd{\vec{B}}}{\diffd{t}}$$
+Flussdichte $\vec{B}$ in den Wirbelstrom, Wirbelstrom gegen den Uhrzeigersinn.\\
+Realisierung:\\
+An der Stirnseite des Sensors sitzt eine Spule (mit Ferritkern). Dahinter folgt
+\begin{itemize}
+\item Oszillator
+\item Demodulator
+\item Trigger
+\item Verstärker
+\end{itemize}
+und endet im Ausgangssignal.\\
+Messprinzip:
+\begin{itemize}
+\item Sensor erzeugt magnetisches Streufeld.
+\item In elektrisch leitendem Stoff, der ins Streufeld kommt, werden Wirbelströme induziert (bspw. Metallplatte vor Sensor).
+\end{itemize}
+Wirbelstromverluste: bei $s_n=10\unit{mm}$ ca. $10\%$. Läuft gegen $0\%$ für höhere und gegen $100\%$ für geringe Dicken.\\
+Schaltabstand hängt ab von:
+\begin{itemize}
+\item Art und Bauform des Sensors
+\item Abstand und Lage des Gegenstands
+\item Form und Abmessung des Gegenstands
+\item elektrische Leitfähigkeit und magnetische Permeabilität des Gegenstands
+\item äußere Bedingungen
+\end{itemize}
+Wiederholgenauigkeit der Wirbelstromsensoren: $<5\%\;S_n$
+\subsubsection{Materialfaktor und Schaltfrequenz}
+\begin{tabular}{l | r l}
+Material & $\sim $ Leitwert & $\sim $ Materialfaktor\\\hline
+Kupfer & $10^8$ & $0,35$\\
+Aluminium & $8\cdot 10^7$ & $0,4$\\
+Messing & $2 \cdot 10^7$ & $0,42$\\
+Eisen & $10^7$ & $0,95$\\
+Blei & $9\cdot 10^6$ & $0,55$\\
+Titan & $2 \cdot 10^6$ & $0,65$\\
+Graphit & $10^5$ & $1,0$
+\end{tabular}
+Schaltfrequenz hängt ab von:
+\begin{itemize}
+\item im Oszillatorschwingkreis gespeicherte Energie
+\item Frequenz des Oszillators
+\item Größe der Wirbelstromverluste im Schwingkreis
+\item Aufschwingung $>$ Dämpfen des Oszillators
+\end{itemize}
+\begin{tabular}{l | c}
+Durchmesser & max. Schaltfrequenz, $\unit{kHz}$\\\hline
+$<8 \unit{mm}$ & $5$\\
+$<12 \unit{mm}$ & $2$\\
+$<20\unit{mm}$ & $1$\\
+$>20 \unit{mm}$ & $0,5$
+\end{tabular}
+
+\subsubsection{Vorteile und Nachteile}
+\begin{itemize}[label=$+$]
+\item weite Verbreitung in der Automatisierungs- und Verfahrenstechnik
+\item arbeiten berührungslos und rückwirkungsfrei
+\item wegen geschlossener Bauform resistent gegen Umwelteinflüsse
+\item hohe Zuverlässigkeit
+\item keinen Einfluss von nichtmetallischer Verschmutzung
+\item kein Kontaktprellen und Verschleiß
+\item hohe Schaltfrequenz (bis $5 \unit{kHz}$)
+\item keine Rückwirkung auf die Werkstoffoberfläche
+\item dem Abstand proportionales Analogsignal möglich
+\item preisgünstiger als optische Sensoren
+\item sehr hohe Messgenauigkeit möglich ($< 0,01 \unit{mm}$)
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item es lassen sich nur leitende Materialien detektieren
+\item nur kurze Reichweite. Faustformel: Schaltabstand = $0,5 \unit{Durchmesser}$
+\item gegenseitige Beeinflussung (vorgeschriebener Abstand ist einzuhalten)
+\end{itemize}
+
+\subsubsection{Anwendungsbeispiele}
+Objektdistanz über/unterschritten: Autoindustrie usw.
+
+\subsection{Kapazität}
+$$C=\varepsilon_0 \varepsilon_r \frac{A}{d}$$
+\begin{tabular}{l | c}
+Material & $\varepsilon_r$\\\hline
+Papier & $1,2\ldots 3$\\
+PVC & $3$\\
+Glas & $3 \ldots 5$\\
+Alkohol & $25$\\
+Wasser & $81$
+\end{tabular}
+
+Messprinzip:
+\begin{itemize}
+\item Sensor erzeugt elektrisches Streufeld
+\item Objekt, das ins Streufeld kommt, erhöht die Kapazität des Sensors
+\end{itemize}
+
+\subsubsection{Nennschaltabstand}
+Normmessplatte: Metall $a,b>D$ oder $3 S_n$\\
+Nennschaltabstand hängt ab von:
+\begin{itemize}
+\item Bauform des Sensors
+\item äußere Bedingungen
+\item Form, Abmessung und Materialeigenschaften des zu erfassenden Objektes
+\end{itemize}
+\begin{tabular}{l | r l}
+Material & $\sim \varepsilon_r$ & $\sim$ Materialfaktor\\\hline 
+Öl & $2$ & $0,25$\\
+Eis & $5$ & $0,38$\\
+PVC & $5$ & $0,4$\\
+Keramik & $5$ & $0,5$\\
+Glas & $5$ & $0,6$\\
+Alkohol & $25$ & $0,75$\\
+Wasser & $81$ & $1,0$
+\end{tabular}
+
+
 %\newpage
 %\printbibliography
 
