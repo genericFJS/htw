@@ -72,6 +72,7 @@ CREATE OR REPLACE TYPE ntPreisentwicklung AS TABLE OF tPreisentwicklung;
 ALTER TABLE Bauteil ADD Preis ntPreisentwicklung 
   NESTED TABLE Preis STORE AS PreisentwicklungNT;
 
+-- 4.4
 INSERT INTO Bauteil VALUES(5000,'Tuer links', 20, 134556, NULL, ntPreisentwicklung());
 INSERT INTO TABLE (
   SELECT b.Preis
@@ -91,7 +92,7 @@ INSERT INTO TABLE (
   WHERE b.BtNr = 5002)
   VALUES(7009,2000,to_date('12.10.2015','DD.MM.YYYY'));
   
- -- 4.4 (angepasstes to_date)
+ -- 4.5 (angepasstes to_date)
 insert into Table (select b.Preis from bauteil b where b.BtNr=5000) values ('7019', 910, to_date('20.10.2013','DD.MM.YYYY'));
 insert into bauteil values (5003, 'Tuergriff links', 15, '134556', 5000, ntPreisentwicklung());
 insert into Table (select b.Preis from bauteil b where b.BtNr=5003) values ('7010', 20, to_date('12.10.2013','DD.MM.YYYY'));
@@ -112,13 +113,31 @@ insert into bauteil values (5010, 'Gehäuse', 12, '693253', 5001, ntPreisentwickl
 insert into Table (select b.Preis from bauteil b where b.BtNr=5010) values ('7017', 6, to_date('12.10.2013','DD.MM.YYYY'));
 
 -- 4.6
-SHOW LPAD('Page 1',15,'*.');
+SELECT LPAD(' ',(LEVEL-1)*3, ' ') || Teilename "Teilename", Einbauzeit
+  FROM Bauteil
+  CONNECT BY PRIOR Btnr = Baugruppe
+  START WITH Baugruppe IS NULL;
+  
+-- 4.7  
+SELECT b.Btnr, b.Teilename, p.Netto, p.Datum
+  FROM Bauteil b, table(b.Preis) p
+  ORDER BY b.Btnr, p.Datum;
+  
+-- 4.8
+SELECT b.Teilename
+  FROM (SELECT *
+    FROM Bauteil
+    ORDER BY Btnr) b
+  WHERE ROWNUM <= 5;
+  
+-- 4.9
+SELECT * FROM Bauteil;
 
-SELECT LPAD('',50,' '), h.HSTNAME
-FROM Hersteller h;
-
-SELECT last_name, employee_id, manager_id, LEVEL*LPAD
-  FROM employees
-  START WITH employee_id = 100
-  CONNECT BY PRIOR employee_id = manager_id
-  ORDER SIBLINGS BY last_name;
+SELECT *
+FROM (
+SELECT Baugruppe, b.Btnr, b.Teilename, b.Einbauzeit,  
+  RANK() OVER (PARTITION BY Baugruppe ORDER BY b.Einbauzeit) as reihenfolge
+FROM Bauteil b
+WHERE Baugruppe IS NOT NULL
+)
+WHERE reihenfolge = 1;

@@ -56,7 +56,8 @@ ORDER BY Plz;
 -- 1.7
 SELECT *
 FROM Hersteller
-WHERE (sysdate - Kontaktaufnahme) < 5*365;
+-- WHERE (sysdate - Kontaktaufnahme) < 5*365; -- unsicher, da nicht bekannt, ob Tage oder anderes
+WHERE months_between(sysdate, Kontaktaufnahme) < 60;  -- sicherer
 
 -- 1.8
 ALTER TABLE Bauteil ADD FOREIGN KEY (HstNr) REFERENCES Hersteller;
