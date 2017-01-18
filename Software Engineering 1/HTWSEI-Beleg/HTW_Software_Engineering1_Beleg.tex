@@ -9,7 +9,7 @@
 
 \setCustomTitle{Software Engineering 1}
 \setCustomSubtitle{Beleg}
-\setCustomAuthor{Falk-Jonatan Strube}
+\setCustomAuthor{Luga, Pour, Retsch, Strube}
 %\setCustomNoteA{TitlepageNoteBeforeAuthor}
 \setCustomNoteB{Vorlesung von Prof. Dr. Hauptmann}
 
@@ -179,7 +179,8 @@ Woche ist zu Ende& Arbeitszeitauswertung versenden & & & E-Mail versenden\\
 \end{itemize}
 \section{Urlaubsinformationen}
 \begin{itemize}[label=+]
-\item[] Anzahl verbrauchter Urlaubstage
+\item[] Urlaubsinfo\_ID
+\item Anzahl verbrauchter Urlaubstage
 \item Anzahl verbleibender Urlaubstage
 \item 0\{Urlaubseintrag\}n
 \end{itemize}
@@ -191,7 +192,7 @@ Woche ist zu Ende& Arbeitszeitauswertung versenden & & & E-Mail versenden\\
 \end{itemize}
 \section{Krankenschein}
 \begin{itemize}[label=+]
-\item[] Mit\_ID
+\item[] MA\_ID
 \item Zeitraum
 \end{itemize}
 \section{Zeitraum}
@@ -199,6 +200,15 @@ Woche ist zu Ende& Arbeitszeitauswertung versenden & & & E-Mail versenden\\
 \item[] Start-Datum
 \item End-Datum
 \end{itemize}
+
+\section{Arbeitszeitauswertung}
+\begin{itemize}[label=+]
+\item[] MA\_ID
+\item zu leistende Pflichtarbeitsstunden
+\item tatsächliche Arbeitsstunden
+\item Stand des Arbeitszeitkontos
+\end{itemize}
+
 \section{Auswertung}
 \begin{itemize}[label=+]
 \item[] Gesamtbilanz
@@ -208,12 +218,13 @@ Woche ist zu Ende& Arbeitszeitauswertung versenden & & & E-Mail versenden\\
 
 \subsection{Gesamtbilanz}
 \begin{itemize}[label=+]
-\item[] Sollarbeitszeit absolut
+\item[] GBilanz\_ID
+\item Sollarbeitszeit absolut
 \item Sollarbeitszeit relativ
 \item tatsächliche Arbeitsstunden absolut
 \item tatsächliche Arbeitsstunden relativ
-\item der Urlaubstage absolut
-\item der Urlaubstage relativ
+\item Urlaubstage absolut
+\item Urlaubstage relativ
 \item Krankheitstage absolut
 \item Krankheitstage relativ
 \item Überstunden absolut
@@ -222,7 +233,8 @@ Woche ist zu Ende& Arbeitszeitauswertung versenden & & & E-Mail versenden\\
 
 \subsection{Urlaubszeitbilanz}
 \begin{itemize}[label=+]
-\item[] beantragte Urlaubstage absolut
+\item[] UZBilanz\_ID
+\item beantragte Urlaubstage absolut
 \item beantragte Urlaubstage relativ
 \end{itemize}
 %\newpage
@@ -264,7 +276,7 @@ Woche ist zu Ende& Arbeitszeitauswertung versenden & & & E-Mail versenden\\
 	\includegraphics[width=0.9\linewidth]{UrlaubPlanen_AWF.PNG}
 \end{center}
 
-\chapter*{Aufgabe 7:}
+\chapter*{Aufgabe 7: Anwendungsfallbeschreibung}
 \setcounter{section}{0}
 \addtocounter{chapter}{1}
 \addcontentsline{toc}{chapter}{Aufgabe 7: Anwendungsfallbeschreibung}
@@ -347,8 +359,10 @@ keine
 \subsection{Satzschablonen}
 Die Funktion „Urlaub einreichen“…
 \begin{itemize}
-\item muss fähig sein einen validen Urlaubseintrag in die Datenbank einzutragen.
-\item muss Validität eines Urlaubseintrags erkennen.
+\item muss einen eingegebenen Urlaubsantrag erfassen.
+\item muss fähig seinen einen erfassten Urlaubsantrag zu prüfen.
+\item muss fähig sein einen Urlaubseintrag in die Datenbank einzutragen.
+\item muss dem Mitarbeiter die Möglichkeit bieten bei einem nicht validen Urlaubsantrag den Urlaubsantrag erneut einzugeben.
 \item soll die Möglichkeit bieten dem Mitarbeiter ausreichend Feedback bezüglich der Validität des Urlaubseintrags zu geben.
 \end{itemize}
 
@@ -415,46 +429,58 @@ Urlaub gilt als angenommen
 \end{center}
 
 \subsection{Satzschablonen}
-Die Funktion Urlaubsvorschlag annehmen sollte folgende Aufgaben erledigen:
+Die Funktion Urlaubsvorschlag annehmen:
 \begin{itemize}
-	\item Entscheidung ob eine Urlaubs ID gültig ist oder nicht
-	\item Eintragung eines Urlaubes als angenommen
-	\item Dem Mitarbeiter soll die Möglichkeit gegeben werden, dass er nach einer falschen Eingabe der Urlaubs ID, erneut die ID eingeben kann.
+	\item muss eine Eintragung eines Urlaubes vornehmen können
+	\item muss die Entscheidung treffen können ob eine Urlaubs ID gültig ist oder nicht
+	\item muss bei einer nicht gültigen Urlaubs ID dem Mitarbeiter die Möglichkeit bieten die Urlaubs ID neu einzugeben
 \end{itemize}
 
 \section{Ragnar: Urlaubsvorschlag ablehnen}
 
 \subsection{Textliche Beschreibung}
-
+ 
 \subsubsection{Kurzbeschreibung}
-
+Ein Mitarbeiter lehnt einen Urlaubsvorschlag an.
 \subsubsection{Akteur}
-
+\begin{itemize}
+\item System
+\item Mitarbeiter
+\end{itemize}
 \subsubsection{Vorbedingungen}
+\begin{itemize}
+\item Urlaubs ID
+\end{itemize}
 
 \subsubsection{Nachbedingungen}
-
+\begin{itemize}
+\item Urlaub abgelehnt
+\end{itemize}
 \subsubsection{Trigger}
-
+Wunsch den Urlaubsvorschlag ablehnen
 
 \subsubsection{Szenarios}
-\paragraph{Hauptszenario:}
-
+\paragraph{Hauptszenario:}Urlaubsvorschlag liegt vor und Mitarbeiter lehnt diesen mit einer gültigen Urlaubs ID ab.
 \begin{enumerate}
-	\item 
+	\item Mitarbeiter bekommt Urlaubsinformationen angezeigt
+	\item Mitarbeiter gibt die Urlaubs ID an um den Urlaubsvorschlag ablehnen
+	\item Urlaubs ID wird an das System übermittelt
+	\item System prüft ob Urlaubs ID gültig ist
+	\item System trägt Urlaubs als abgelehnt ein
 \end{enumerate}
 
-
-
-\paragraph{Alternativszenario:}
-
+\paragraph{Alternativszenario:}Urlaubsvorschlang liegt vor und Mitarbeiter lehnt diesen mit einer ungültigen Urlaubs ID ab.
 \begin{enumerate}
-	\item 
+	\item Mitarbeiter bekommt Urlaubsinformationen angezeigt
+	\item Mitarbeiter gibt die Urlaubs ID an um den Urlaubsvorschlag ablehnen
+	\item Urlaubs ID wird an das System übermittelt
+	\item System prüft ob Urlaubs ID gültig ist
+	\item Mitarbeiter bekommt erneut die Möglichkeit die Urlaubs ID einzugeben 
 \end{enumerate}
 
 
 \subsubsection{Weiterführende Informationen}
-
+Urlaub gilt als abgelehnt
 
 \subsection{Aktivitätsdiagramm}
 
@@ -463,7 +489,16 @@ Die Funktion Urlaubsvorschlag annehmen sollte folgende Aufgaben erledigen:
 \end{center}
 
 \subsection{Satzschablonen}
-
+Die Funktion Urlaubsvorschlag ablehnen:
+%Die Funktion Urlaubsvorschlag ablehnen sollte folgende Aufgaben erledigen:
+\begin{itemize}
+	\item muss eine Austragung eines Urlaubes vornehmen können
+	\item muss die Entscheidung treffen können ob eine Urlaubs ID gültig ist oder nicht
+	\item muss bei einer nicht gültigen Urlaubs ID dem Mitarbeiter die Möglichkeit bieten die Urlaubs ID neu einzugeben
+	%\item Entscheidung ob eine Urlaubs ID gültig ist oder nicht
+	%\item Eintragung eines Urlaubes als abgelehnt
+	%\item Dem Mitarbeiter soll die Möglichkeit gegeben werden, dass er nach falschen Eingabe der Urlaubs ID, erneut die ID eingeben kann.
+\end{itemize}
 \section{Raphael: Urlaub stornieren}
 \subsection{Textliche Beschreibung}
 \subsubsection{Kurzbeschreibung}
@@ -493,8 +528,6 @@ Mitarbeiter
 	\item System prüft ob Urlaubszeitraum in der Zukunft liegt
 	\item System entfernt Urlaubseintrag aus der Datenbank
 \end{enumerate}
-
-
 
 \paragraph{Alternativszenario:}
 
@@ -533,6 +566,43 @@ Die Funktion „Urlaub stornieren“...
     \item muss Gültigkeit eines Urlaubseintrags erkennen.
     \item soll dem Mitarbeiter die Gültigkeit seiner Anfrage zurückgeben.
 \end{itemize}
+
+\chapter*{Aufgabe 8: Zustandsdiagramm Urlaubsantrag}
+\setcounter{section}{0}
+\addtocounter{chapter}{1}
+\addcontentsline{toc}{chapter}{Aufgabe 8: Zustandsdiagramm Urlaubsantrag}
+
+\begin{center}
+\includegraphics[width=0.95\linewidth]{Aktivitaet_Urlaubsantrag}
+\end{center}
+
+\chapter*{Aufgabe 9: ERM}
+\setcounter{section}{0}
+\addtocounter{chapter}{1}
+\addcontentsline{toc}{chapter}{Aufgabe 9: ERM}
+\begin{center}
+\includegraphics[width=0.95\linewidth]{Anwesenheitserfassung_ERM}
+\end{center}
+%\begin{center}
+%\includegraphics[width=0.95\linewidth]{Anwesenheitserfassung_REL}
+%\end{center}
+
+\chapter*{Aufgabe 10: Glossar}
+\setcounter{section}{0}
+\addtocounter{chapter}{1}
+\addcontentsline{toc}{chapter}{Aufgabe 10: Glossar}
+
+\begin{tabular}{L{0.3} L{0.7}}
+Ablehnung (bei Erfassung der Anwesenheit)					&	Text mit Grund der Ablehnung.				\\
+Status (Urlaubseintrag)					&	eingereicht / abgelehnt / genehmigt / storniert / verfallen / verbraucht (basierend auf Urlaubsantrag und Urlaubsvorschlag).				\\
+*\_ID					&	Ein eindeutiger Schlüssel (Zahl).				\\
+Gültigkeit					&	gültig / nicht gültig				\\
+Auswertung					&	Auswertung für den Abteilungsleiter				\\
+Arbeitszeitauswertung					&	wöchentliche Auswertung für den Mitarbeiter				\\
+Stand des Arbeitszeitkontos					&	das Arbeitszeitkonto (Zahl: positiv -- hat Überstunden, negativ -- zu wenige Stunden gearbeitet)				\\
+%					&					\\
+\end{tabular}
+
 %\printbibliography
  
 \end{document}
