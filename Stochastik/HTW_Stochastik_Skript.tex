@@ -2325,8 +2325,95 @@ $$\PP\left( - z_{1-\alpha_1} \leq \frac{\overline{X}-\mu}{\sigma}\sqrt{n} \leq z
 \item Umstellen liefert:
 $$\PP\left(\overline{X}-\frac{z_{1-\alpha_2}\sigma}{\sqrt{n}}\leq \mu \leq \overline{X} + \frac{z_{1-\alpha_1}\sigma}{\sqrt{n}}\right) \geq 1-\alpha$$
 d.h. das gesuchte KI ist
-$$I=\left[ \overline{X}-\frac{z_{1-\alpha_2}\sigma}{\sqrt{n}}, \overline{X} + \frac{z_{1-\alpha_1}\sigma}{\sqrt{n}} \right]$$
+$$I=\left[ \overline{X}-\frac{z_{1-\alpha_2}\sigma}{\sqrt{n}},\; \overline{X} + \frac{z_{1-\alpha_1}\sigma}{\sqrt{n}} \right]$$
+\end{enumerate}
 
+Für Prüfung: KI muss abgelesen (nicht gebildet) werden.
+
+\cparagraph{Bemerkung}
+\begin{itemize}
+\item Oft wird $\alpha_1=\alpha_2 = \frac{\alpha}{2}$ gewählt.
+\item Teilweise werden aber auch einseitige KIe betrachtet. Dann gilt:
+$$\alpha_1 = \alpha, \; \alpha_2 = 0 \text{ oder } \alpha_1 = 0 ,\; \alpha_2 = \alpha$$
+\end{itemize}
+
+\subsubsection{Konfidenzintervalle bei Normalverteilung}
+Sei $X$ ein normalverteiltes Merkmal mit Erwartungswert $\mu$ und Varianz $\sigma^2$. Konfidenzintervalle für $\mu$ und $\sigma^2$ sind der Tabelle zu entnehmen.\\
+Achtung: Es ist jeweils zu beachten, ob der andere Parameter bekannt ist oder auch aus den Daten geschätzt wurde.
+\cparagraph{Beispiel}
+In einem Abfüllautomaten werde Zucker in Tüten abgefüllt. Der Sollwert beträgt $\mu_0 = 1\,000\unit{[g]}$. Die tatsächliche Abfüllmenge ist jedoch normalverteilt mit EW $\mu$ und Varianz $\sigma^2$. Aus einer SP vom Umfang $n=50$ ergab sich der Wert $\overline{x}=988,7$ und $s=31,2$.\\
+Gesucht: einseitiges KI der Art $(-\infty, a]$ für $\mu$ zum Niveau $1-\alpha = 0,99$.\\
+Lösung: KI für $\mu$, wobei $\sigma^2$ unbekannt ist:
+\begin{align*}
+I(x_1, \ldots, x_{50}) &= \left[ \overline{x}-\frac{t_{n-1,1-\alpha_2}}{\sqrt{n}} \cdot s, \; \overline{x}-\frac{t_{n-1,1-\alpha_1}}{\sqrt{n}} \cdot s \right]\\
+& \text{mit }\alpha_2=0, \alpha_1=\alpha=0,01\\
+&=\left[988,7 - \frac{t_{49,1}}{\sqrt{50}}\cdot 31,2, \; 988,7 - \frac{t_{49,099}}{\sqrt{50}}\cdot 31,2\right]\\
+& \text{mit }t_{49,1} = \infty \quad t_{49,099}=2,405\\
+&= (-\infty,\; 999,31]
+\end{align*}
+Beachte: $999,31 < 1\,000$
+\cparagraph{Bemerkung} Ob ein einseitiges oder zweiseitiges KI gefragt ist, hängt von der konkreten Anwendung ab.
+\begin{itemize}
+\item Aus Sicht des Abnehmers der Ware:\\
+$I=(-\infty,\; 999,31] \Rightarrow$ Ablehnung der Ware, da ein solches KI den wahren Mittelwert mit WK $0,99$ enthält. Der wahre Mittelwert liegt also mit $99\%$ WK unter den gewünschten $1\,000$, nämlich wahrscheinlich höchstens bei $999,31$.
+\item Aus Sicht des Herstellers:\\
+Ansatz: $I_2 = [a,\infty)$ liefert $I_2=[978,09,\; \infty)$. Da $1\,000 \in I_2$, hat er keine Einwände.
+\item Aus Sicht eines unabhängigen Kontrolleurs:\\
+Zweiseitiges KI ($\alpha_1 = \alpha_2 = 0,005$) ergibt $I=[976,87, \; 1\,000,53]$. Da $1\,000 \in I_3$ hat er keine Einwände.
+\end{itemize}
+
+\subsubsection{Konfidenzintervall für eine unbekannte Wahrscheinlichkeit}
+Problem: Betrachte zufälliges Ereignis $A$ mit $\PP(A)=p$.\\
+Zur Schätzung von $p$ betrachten wir $n$ unabhängige Versuchswiederhoungen. $\rightsquigarrow$ Modellierung mit $n$ unabhängigen ZV $X_1, \ldots, X_n$, welche alle Bernoulli-verteilt sind mit $p$. Erinnerung: $\EE(X_i)=p$ und $T=\overline{X}$ ist konsistenter Schätzer für $p$.\\
+Gesucht ist KI für $\vartheta = p$.\\
+2 Möglichkeiten:
+\begin{enumerate}
+\item \emph{asymptotisches KI} (beruht auf ZGWS) liefert Intervall, welches nahezu ein KI ist.\\
+Faustregel zur Anwendung: $n \overline{x}(1-\overline{x})\geq 9$
+\item \emph{exaktes KI} liefert tatsächliches KI
+\end{enumerate}
+(siehe Tabelle)
+
+\cparagraph{Beispiel} Bei der Produktion von USB-Sticks wird eine SP der Größe $n=200$ entnommen. $12$ dieser USB-Sticks sind unbrauchbar.\\
+Gesucht: KI zum Niveau $1-\alpha = 0,95$ für Ausschussteil $p$.
+\hangpara{Lösung: $n=200$, $\overline{x}=\frac{12}{200}= 0,06$, $\alpha = 0,05$.\\
+Faustregel: $n\overline{x}(1-\overline{x})=11,28 > 9 \Rightarrow$ ok. \\
+$Z_{1-\frac{\alpha}{2}}=Z_{0,975} = 1,96$.}
+Einsetzen: 
+\begin{itemize}
+\item asymptotisches KI
+$$I_a=[0,0346, \; 0,1020]$$
+\item exaktes KI
+$$F_1=F_{24,\; 378,\; 0,025}=0,5103$$
+$$F_2=F_{26,\; 376, \; 0,975}=1,6509$$
+$$I_e=[0,0314, \; 0,1025]$$
+\end{itemize}
+
+\subsection{Bootstrapping}
+Bootstrapping liefert eine Methode um Güte von Schätzern zu bewerten (auch wenn keine klassische Formel für KI vorhanden ist).\\
+Frage: wie bewerten wir die Güte von Schätzern, wenn
+\begin{itemize}
+\item keine Annahme über zugrunde liegende Verteilung gemacht werden kann/soll.
+\item wir einen Wert schätzen, für den es (in der Literatur) keinen Ansatz für ein KI gibt.
+\end{itemize}
+Grundidee:
+\begin{itemize}
+\item Es liegt nur \emph{eine} Stichprobe vor (Größe $n$)
+\item Satz von Glivenko-Cantelli besagt, dass für großes $n$ die theoretische Verteilung (reale Verteilung) durch die empirische Verteilung (Verteilung der Stichprobe) approximiert werden kann.
+\item Entsprechend der empirischen Verteilung generieren wir nun zufällig $k$ neue Stichproben (der Größe $n$), sogenannte Bootstrap-Stichproben. Dies entspricht $n$-fachem Ziehen mit Zurücklegen (aus original SP) $\rightsquigarrow$ liefert $k$ unabhängige SP der Größe $n$.\\
+Anhand dieser lassen sich die Varianz des Schätzers, sowie Konfidenzintervalle schätzen.
+\end{itemize}
+
+\cparagraph{Definition} Sei $(X_1, \ldots, X_n)$ eine SP zum Merkmal $X$ nd $(x_1, \ldots, x_n)$ eine konkrete SP. Sei $T(X)$ eine reellwertige SP-Funktion. Das folgende Vorgehen generiert die Bootstrap-Schätzung für die Varianz von $T(X)$, sowie ein $(1-\alpha)$-Bootstrap-Konfidenzintervall für $T(X)$.
+\begin{enumerate}
+\item Ziehe $n$-mal aus $x_1, \ldots, x_n$ mit Zurücklegen und nenne diese Bootstrap-SP $x_1^{(b)}$
+\item Wiederhole (1) noch $(k-1)$ mal und erhalte so die Bootstrap-SPen $x_2^{(B)}, \ldots ,x_k^{(B)}$
+\item Wende die SP-Funktion $T$ auf die Bootstrap-SPen an:
+$$t_1=T(x_1^{(B)}), \ldots , t_n=T(x_k^{(B)})$$
+\item Die Bootstrap-Schätzung für die Varianz von $T(X)$ ist nun:
+$$s_B^2=\frac{1}{k-1}\sum_{i=1}^k (t_i-\overline{t})^2\quad \overline{t}=\frac{1}{k}\sum_{i=1}^k t_i$$
+\item Die Quantile $\tilde{t}_{\frac{\alpha}{2}}, \tilde{t}_{1-\frac{\alpha}{2}}$ des Vektors $t_1, \ldots, t_k$ liefern Schätzer für das 2-seitige KI.:
+$$I_B=[\tilde{t}_{\frac{\alpha}{2}},\; \tilde{t}_{1-\frac{\alpha}{2}}]$$
 \end{enumerate}
 
 %\newpage
