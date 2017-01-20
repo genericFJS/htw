@@ -440,3 +440,5 @@ Rechnernetze-Kommunikationssysteme/Beleg/s74053/src/rnbeleg
 *.exe
 *.jar
 *.class
+*.tks
+*.mp4

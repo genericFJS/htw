@@ -173,7 +173,6 @@
 \usepackage{xstring}	% String Operationen
 \usepackage{minibox}	% Minibox anstatt \fbox{} für Boxen mit Zeilenumbruch
 
-
 % Einrichtung von lst
 \lstset{
 basicstyle=\ttfamily, 
@@ -337,11 +336,13 @@ urlcolor=green,%
 		}{}
 		%\renewcommand*{\titlepagestyle}{scrheadings}
 		\ihead{\includegraphics[height=1.7em]{\customLogoLocation}}
+		\ihead{\transparent{1}\includegraphics[height=1.7em]{\customLogoLocation}}
 		%\ohead{\truncate{4cm}{\customTitle}}
-		\chead{\truncate{.5\textwidth}{\headmark}}
-		\ohead{\customTitle}
-		\cfoot{\pagemark}
-		\ofoot{\customSignature}
+		\chead{\transparent{1}\truncate{.5\textwidth}{\headmark}}
+		%\ohead{\customTitle}
+		\ohead{\transparent{1}\customTitle}
+		\cfoot{\transparent{1}\pagemark}
+		\ofoot{\transparent{1}\customSignature}
 		% Titelseite
 		\title{
 		\includegraphics[width=0.35\textwidth]{\customDir _LaTeX_master/\customLogo}\\\vspace{0.5em}
