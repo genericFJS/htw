@@ -34,6 +34,9 @@
 \item Praktikum (kleine Anforderungsanalyse, vgl. Belegarbeit)
 \item Vorlesung (Fragen, wie sie auch auf den Folien formuliert sind)
 \end{itemize}
+Extra-Punkte für Klausur:\\
+Analyse, wie man das gelernte aus der Veranstaltung SE 1 auf andere Fächer, Bereiche usw. anwenden konnte (spezifisch). Ca. eine Seite.\\
+Per Email an Frau Hautpmann. Betreff: Reflektion SE 1 IA
 
 \chapter{Einführung}
 \slides{1}{3}
@@ -797,7 +800,7 @@ PAP, Petrinetze, Datenflussdiagramme
 \subsubsection{Topologie}
 netzförmig
 
-\subsection{Das Zustands-(übirgangs-)diagramm}
+\subsection{Das Zustands-(übergangs-)diagramm}
 \subsubsection{Semantik}
 Das Zustandsdiagramm stellt die einzelnen Zustände dar, die eine Betrachtungseinheit haben kann, inklusive der Zustandsübergange.\\
 Das heißt das Zustandsdiagramm zeigt, wann ein \emph{Zustand} in einen anderen \emph{wechselt} (nach welchem \emph{Ereignis}?) und welche nach außen sichtbare Reaktion dabei erfolgt (welche \emph{Aktion} wird dabei ausgeführt?)\\
@@ -941,33 +944,42 @@ Eine essentielle Funktion ist:
 \end{itemize}
 
 \subsection{Regel der Satzschablonen}
-\slides{7}{1}
-\slides{7}{2}
+\slides{11}{1}
+\slides{11}{2}
 
 \subsection{Bilden von Satzschablonen}
 
 \subsubsection{Charakter der Aktivität}
-\slides{7}{3}
+\slides{11}{3}
 
 \subsubsection{Rechtliche Verbindlichkeiten}
-\slides{7}{4}
-\slides{7}{5}
-\slides{7}{6}
+\slides{11}{4}
+\slides{11}{5}
+\slides{11}{6}
 
 \subsubsection{Objekt einbeziehen}
-\slides{7}{7}
+\slides{11}{7}
 
 \subsubsection{Bedingungsabhängikeiten einbeziehen}
-\slides{7}{8}
+\slides{11}{8}
 
 
 \chapter{Lasten und Pflichtenheft}
 
-Folie 11
+\slides{11a}{1}
 
 Unterschied Lasten $\leftrightarrow$ Pflichtenheft:
 \begin{itemize}
-\item Folie 12
+\item Das Lastenheft (siehe DIN 69905 1997)\\
+„Das Lastenheft enthält eine Definition der Systemvision eine Beschreibung der wesentlichen Systemziele (Funktionen und Qualitäten) und benennt wichtige Kontextaspekte (z.B. Rahmenbedingungen) der vier Kontextfacetten sowie ihre Beziehung zur Vision und zu den definierten Systemzielen.“
+\item Das Pflichtenheft (siehe DIN 69905 1997)\\
+„Das Pflichtenheft detailliert die im Lastenheft beschriebene Vision und die Systemziele (abstrakte Funktionen und Qualitäten) sowie ggf. im Lastenheft definierte Rahmenbedingungen \emph{im Hinblick} auf die angestrebte technische Umsetzung (Realisierung) des Systems.“
+\end{itemize}
+bzw. kurz:
+\begin{itemize}
+\item Das Lastenheft beschreibt die System-\emph{Vision} des Auftraggebers.
+\item Das Pflichtenheft detailliert diese Vision aus der Sicht des Auftragnehmers.\\
+Es ist eine mögliche Realisierungsvariante.
 \end{itemize}
 
 \section{Pflichtenheft}
@@ -987,17 +999,218 @@ Auftraggeber verteilt Pflichtenheft an potentielle Auftragnehmer, die sich für 
 Vertragscharakter
 \end{itemize}
 
-Pflichtenheft muss enthalten:\\
-Folie 13
+\subsection{Pflichtenheft muss enthalten}
+Alle Anforderungen an das zu entwickelnde SW‐(Teil‐)System, die (zu dieser Zeit) erkennbar sind.\\
+D.h. funktionale und Qualitätsanforderungen ebenso wie einschränkende Rahmenbedingungen (organisatorische, rechtliche und technische/technologische).\\
+Da es in der Regel zwei Adressaten (AG/AN) und quasi Vertragscharakter hat,
+muss es analog zur Anforderungsanalyse folgende Eigenschaften haben:
+\begin{itemize}
+\item verständlich sein für den Auftraggeber und hinreichend präzise für den
+Auftragnehmer,
+\item korrekt, vollständig, eindeutig, widerspruchsfrei, minimal, erweiterbar sein,
+\item realisierbar, nachvollziehbar und hinsichtlich der Erfüllung überprüfbar sein. 
+\end{itemize}
 
-Aufbau eines Pflichtenhefts:\\
-Folie 14
+\subsection{Aufbau eines Pflichtenhefts}
+\begin{enumerate}
+\item Ausgangssituation und Zielsetzung
+\item Systemeinsatz und Umgebung
+\item Benutzerschnittstellen
+\item Funktionale Anforderungen
+\item Qualitätsanforderungen
+\item Rahmenbedingungen (techn./technologisch, org., rechtlich)
+\item Fehlertoleranzmaßnahmen
+\item Anforderung an die Dokumentation
+\item Abnahmekriterien
+\item[] Glossar (Begriffslexikon)
+\item[] Index
+\item[] Anhang
+\end{enumerate}
+
+% Lastenheft?
+
+\chapter{Vorgehensmodelle der SW-Entwicklung}
+
+\section{SW-Lebenszyklus}
+\slides{12}{8}
+(auch „Wasserfallmodell“ genannt)
+\subsection{SW-Lebenszyklus mit Rückkopplung}
+\slides{12}{9}
+
+\section{V-Modell}
+\slides{12}{11}
+\slides{12}{12}
+\subsection{Interaktion der Submodelle}
+\slides{12}{13}
+\subsection{Das Submodell SWE}
+\slides{12}{14}
+\subsection{Rollenzuordnung}
+\slides{12}{15}
+\slides{12}{16}
+
+\section{Spiralmodell nach Boehm}
+\slides{12}{18}
+Jeder Quadrant wird pro Phase nur einmalig besucht!
+
+\section{Iterativ-inkrementelles Vorgehen}
+\slides{12}{21}
+
+\subsection{Rational Unified Process (RUP)}
+Unified Process $\to$ Rational Unified Process (RUP) (Booch, Jakobsen, Rumbaugh)
+\slides{12}{22}
+\slides{12}{23}
+
+\subsection{Iterativ-inkrementelles Vorgehen}
+\slides{12}{24}
+
+\section{Vergleich der Modelle}
+\subsection{SW-Lebenszyklus}
+\paragraph{Wesen}
+\begin{itemize}
+\item SW-Entwicklungsprozess ist zerlegt in sachliche Phasen, die aufeinander folgen ($\to$ sachliche + zeitliche Gliederung).
+\item Das Ergebnis einer Phase ist Ausgangspunkt der folgenden Phase.
+\end{itemize}
+
+\paragraph{Vorteil}
+\begin{itemize}
+\item Einfache Projektverwaltung 
+\end{itemize}
+
+\paragraph{Nachteil}
+\begin{itemize}
+\item \emph{keine} Rückkopplung
+\item bzw. mit Rückkopplung: Im Fehlerfall wird nur um eine Stufe zurück gegangen.
+\end{itemize}
+
+\paragraph{Rahmenbedingung}
+\begin{itemize}
+\item Alle Anforderungen stehen zu Beginn fest.
+\end{itemize}
+
+\paragraph{Rahmenbedingung} siehe SW-Lebenszyklus
+
+\subsection{V-Modell}
+\paragraph{Wesen} 
+\begin{itemize}
+\item Standard im öffentlichen Bereich
+\item 4 Submodelle (QS, SWE, KM, PM)
+\item Submodell SWE betrachtet den gesamten Geschäftsprozess (System-/DV-/Software-Analyse zur Implementation bis zur Integration und wieder zurück mit jeweils Rückkopplung zur Analyse)
+\end{itemize}
+
+\paragraph{Vorteil}
+\begin{itemize}
+\item Einbeziehung der QS, KM, PM 
+\end{itemize}
+
+\paragraph{Nachteil}
+\begin{itemize}
+\item Großer Verwaltungsaufwand. 
+\end{itemize}
+
+\paragraph{Rahmenbedingung}
+\begin{itemize}
+\item Alle Anforderungen stehen zu Beginn fest.
+\end{itemize}
+
+\subsection{Spiralmodell}
+\paragraph{Wesen} 
+\begin{itemize}
+\item klare Zielbestimmung
+\item Suche nach Lösungs\emph{alternativen}
+\item Evaluierung der Lösungsalternativen auf der Basis der Risikoabschätzung $\to $ Risikominimierung
+\end{itemize}
+
+\paragraph{Vorteil}
+\begin{itemize}
+\item Einbeziehung der alternativen
+\item Risikobetrachtung
+\end{itemize}
+
+\paragraph{Nachteil}
+\begin{itemize}
+\item fehlende Rückkopplungen
+\end{itemize}
+
+\paragraph{Rahmenbedingung}
+\begin{itemize}
+\item Alle Anforderungen stehen zu Beginn fest.
+\end{itemize}
+
+\subsection{Iterativ-inkrementelles Vorgehen}
+\paragraph{Wesen} 
+\begin{itemize}
+\item Gesamtfunktionalität wird in Teilfunktionalitäten aufgeteilt (Inkremente), die iterative entwickelt werden\\
+\item[]$\to$ evolutionärer Prototyp
+\end{itemize}
+
+\paragraph{Vorteil}
+\begin{itemize}
+\item Komplexitätsbeherrschung durch „kleine Schritte“
+\end{itemize}
+
+\paragraph{Nachteil}
+\begin{itemize}
+\item hoher Verwaltungsaufwand
+\end{itemize}
+
+\paragraph{Rahmenbedingung}
+\begin{itemize}
+\item Anforderungen können sich in geringem Maß ändern
+\item Es müssen nicht alle Anforderungen zu Beginn bekannt sein
+\end{itemize}
+
+\chapter{Agile Softwareentwicklung}
+Sich ändernde Anforderungen des Kunden gehören zum Projekt. D.h. Wandel ist integraler Bestandteil des Projektes.
+
+\section{Agilität}
+„Kleine Schritte führen zum Ziel.“
+\begin{itemize}
+\item Stück für Stück implementieren
+\item immer wider überprüfen
+\item immer miteinander reden
+\item einfache Lösungen suchen und implementieren
+\item wenn nötig korrigieren
+\end{itemize}
+\subsection{Korrektur}
+Korrigiert wird: der bisherige Aufbau des Systems\\
+Also:\\
+Wechsel von \emph{architektur-zentriert} $\to$ \emph{code-zentriert}\\
+Achtung: es ist nicht gemeint, dass nur noch gecodet wird.
+
+\subsection{Bedeutung}
+\begin{itemize}
+\item Akzeptanz von Wandel
+\item Forderung von Wandel, wenn es sinnvoll erscheint
+\end{itemize}
+$\Rightarrow$ SW-Entwicklungsteam muss gewandt sein\\
+nötig ist:
+\begin{itemize}
+\item umfangreiches theoretisches Wisen
+\item praktische Erfahrung
+\item Bereitschaft zur Überarbeitung und Änderung
+\end{itemize}
 
 
+\subsection{Manifest}
+Es wird unterscheiden zwischen wichtigem und wichtigerem:\\
+\begin{tabular}{c c}
+wichtig\emph{er} & wichtig\\
+Individuen und Interaktion & Prozesse und Werkzeuge\\
+funktionierende Software & umfangreiche Dokumente\\
+Zusammenarbeit mit Kunden & Vertragsverhandlung\\
+auf Änderungen reagieren & einem Plan folgen
+\end{tabular}\\
+Achtung: wichtiges ist nicht unwichtig, nur weniger wichtig im Vergleich zum jeweiligem wichtigerem!
 
+\subsection{Beispiele}
+XP: extremes Programmieren\\
+SCRUM
 
+\section{Extremes Programmieren}
+%Folie 9-12
 
-
+\section{SCRUM}
+%Folie 14-16
 
 
 
@@ -1005,9 +1218,22 @@ Folie 14
 
 
 \chapter{Konfigurationsverwaltung}
+
 \section{Der Sinn von Konfigurationsverwaltung}
+Die Konfigurationsverwaltung ist eine Rolle oder Organisationseinheit im Kontext des SW-Entwicklungsprozesses, die die SW-Einheiten
+\begin{itemize}
+\item identifiziert,
+\item bei Bedarf bereitstellt
+\item ihre Änderungen überwacht und dokumentiert.
+\end{itemize}
+Dazu gehört auch die Rekonstruktion älterer SW-Einheiten und Konfigurationen.\\
+D.h. ein Konfigurationsverwaltungssystem ermöglicht das effiziente Bereitstellen definierter
+Konfigurationen eines SW-Systems abhängig von Varianten und Versionen.\\
+Das Konfigurationsmanagement ist demzufolge eine Methode für die Organisation der täglichen
+Arbeit. ($\to$ organisatorische Qualitätssicherung)
 
 \section{Beziehung zwischen Konfigurations-, Varianten- und Versionsverwaltung}
+Versions- und Variantenverwaltung sind Bestandteile der Konfigurationsverwaltung.
 
 \section{Begriffe}
 \begin{itemize}
