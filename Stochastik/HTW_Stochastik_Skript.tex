@@ -2416,6 +2416,159 @@ $$s_B^2=\frac{1}{k-1}\sum_{i=1}^k (t_i-\overline{t})^2\quad \overline{t}=\frac{1
 $$I_B=[\tilde{t}_{\frac{\alpha}{2}},\; \tilde{t}_{1-\frac{\alpha}{2}}]$$
 \end{enumerate}
 
+\cparagraph{Beispiel} Die Qualität eines Laser Entfernungsmesser soll überprüft werden. Dafür wurde $10$ mal die gleiche Entfernung in $\unit{mm}$ gemessen:
+$$x=(1432,1431,1429,1430,1425,1431,1432,1436,1442,1422)\text{.}$$
+Es soll ein Bootstrap Konfidenzintervall zum Niveau $1-\alpha = 0,8$ für die Standardabweichung angegeben werden. Außerdem ist eine Schätzung für die Varianz des Schätzers für die Standardabweichung zu bestimmen.\\
+Lösung:
+\begin{itemize}
+\item Wir verwenden $k=15$ Bootstrap-Wiederholungen (in der Praxis sollte $k$ deutlich größer sein). $15$ mal $n$-maliges Ziehen mit Zurückliegen ergibt:
+% Tabelle Skript
+\item für alle $15$ Bootstrap-Stichproben berechnen wir die Stichprobenstandardabweichung:
+$$t_1=6,85, \; t_2 = 5,83,\ldots, \; 5_{15}=4,65$$
+\item Für alle $15$ Bootstrap-Stichproben die Stichprobenstandardabweichung, geordnet:
+$$2,71,\; 2,96, \; 3,23,\; 4,65,\; 4,98,\; 5,03,\; 5,06,\; 5,83,\; 6,06,\; 6,46,\; 6,70,\; 6,85,\; 6,85$$
+\item Quantile: $\alpha = 0,2, \; \frac{\alpha}{2}=0,1$\\
+$0,1 \cdot 15 = 1,5$ und $0,9 \cdot 15 = 13,5$ sind keine Zahlen, daher wird $1,5$ und $13,5$ aufgerundet und es gilt
+$$\tilde{t}_{0,1}=2,96 \text{ und } \tilde{t}_{0,9}=6,85$$
+\item Konfidenzintervall:
+$$I=[2,96\; 6,85]$$
+\item Varianz:
+\begin{align*}
+s_B^2&=\frac{1}{14}\sum_{i=1}^15 (t_i-\tilde{t})^2\\
+&= ((2,71-5,14)^2 + \ldots + (6,85-5,14)^2)/14-1,87
+\end{align*}
+\end{itemize} 
+
+\cparagraph{Bemerkung} 
+\begin{itemize}
+\item Wie groß ist $k$ zu wählen?\\
+$\to$ Möglichst groß! Mithilfe von PCs ist $k=1\,000$ und mehr meist kein Problem.
+\item Vorteile:
+\begin{itemize}
+\item keine Verteilungsannahmen nötig
+\item auf beliebige Stichprobenfunktionen anwendbar
+\item einfach
+\end{itemize}
+\item Nachteil:
+\begin{itemize}
+\item Ungenauigkeit, da 2 Approximationsschritte vorgenommen werden:
+\begin{enumerate}
+\item theoretische Verteilung \\
+$\rightsquigarrow$ empirische Verteilung
+\item zufällige Stichproben aus empirischen Verteilung
+\end{enumerate}
+\item nicht deterministisch (liefert bei jedem Durchführen neue Werte)
+\end{itemize}
+\item Bootstrapping ist eine Methode aus dem Bereich Resampling.
+\end{itemize}
+
+\section{Testtheorie}
+\subsection{Grundidee}
+\begin{itemize}
+\item Gegeben: Stichprobe $X_1, \ldots, X_n$ zu Merkmal $X$.
+\item Aufgabe: Annahmen (Hypothese) über die (unbekannte) Verteilung von $X$ überprüfen.
+\end{itemize}
+Zwei Fälle:
+\begin{anumerate}
+\item Verteilung ist bis auf einen Parameter $\vartheta$ bekannt. Hypothese betrifft nur den Parameter $\vartheta$ (bspw. $\vartheta = \vartheta _0$ wobei $\vartheta_0$ der Sollwert ist).
+\item Verteilungstyp unbekannt (nicht parametrische Tests).
+\end{anumerate}
+Idee:
+\begin{itemize}
+\item Definiere Nullhypothese ($H_0$, der für mich unproblematische Normalfall) und Alternativhypothese ($H_1$, problematischer Fall)
+\item Ein Test ist eine Entscheidungsregel, die anhand der Stichprobe zu „Ablehnen“ oder „Nicht-Ablehnen“ der Nullhypothese führt.
+\item Eine solche Entscheidung kann natürlich auch falsch sein („Nullhypothese ablehnen, obwohl sie stimmt“ oder „Nullhypothese nicht ablehnen, obwohl sie nicht stimmt“).
+\item Wollen WK für „$H_0$ ablehnen, obwohl $H_0$ stimmt“ (peinlicher Irrtum) durch vorgegebenes $\alpha \in (0,1)$ beschränken.
+\end{itemize}
+
+\cparagraph{Definition} Ein (statistischer) Test ist eine Abbildung $\varphi$, welche eine Stichprobe $\mathbf{X}=(X_1, \ldots, X_n)$ nach $\{0,1\}$ abbildet. Seien zusätzlich $\alpha \in (0,1)$ und $\{P_\theta \;|\; \theta \in \Theta\}$ die Menge aller mäglichen Verteilungen der Stichprobe und $\Theta_0 \subseteq \Theta$, sowie $\Theta_1 = \frac{\Theta}{\Theta_0}$ gegeben. Dann heißt $\phi$ Test der Nullhypothese $\theta \in \Theta_0$ zum Signifikanzniveau $\alpha$, wenn
+$$\PP_\theta (\underbrace{\phi = 1}_{H_0\text{ ablehnen}}) \leq \alpha \text{ für alle } \underbrace{\theta \in \Theta_0}_{H_0 \text{ stimmt aber}}\text{.}$$
+
+\cparagraph{Bemerkung} Interpretation des Testergebnis:\\
+\begin{tabular}{l p{0.85\linewidth}}
+$\phi (\mathbf{X}) = 0$ & … Anhand der Stichprobe $\mathbf{X}=(x_1, \ldots, x_n)$ lässt sich der Verdacht, dass die Alternativhypothese richtig ist nicht rechtfertigen.\\
+$\phi (\mathbf{X}) = 1$ & … Die Stichprobe $\mathbf{X}$ spricht gegen die Nullhypothese. Wir verwerfen sie daher und nehmen an, dass die Alternativhypothese gilt.
+\end{tabular}
+
+\cparagraph{Bemerkung} (konkrete Vorgehensweise)\\
+Gegeben:
+\begin{itemize}
+\item Merkmal $X$ mit (unbekannter) Verteilung $\PP_{\theta^*}$.
+\item Stichprobe $\mathbf{X} = (X_1, \ldots, X_n)$, \\
+konkrete SP $\mathbf{x}=(x_1, \ldots, x_n)$.
+\item $\{\PP_\theta \;|\; \theta \in \Theta\}$ … Menge aller in Frage kommenden Verteilungen.
+\end{itemize}
+\begin{enumerate}
+\item Wahl des Signifikanzniveaus $\alpha \in (0,1)$
+\item Aufstellen einer (Null-)hypothese\\
+Wähle $\Theta_0 \subseteq \Theta$ dann \\
+$H_0: \theta^* \in \Theta_0$ \\
+$H_1: \theta^* \in \Theta_1 = \frac{\Theta}{\Theta_0}$\\
+(bspw. $X$ ist normalverteilt mit unbekanntem Erwartungswert $\mu$, wir vermuten $\mu = \mu_0$, befürchten aber $\mu \not = \mu_0$. Dann $\Theta = \RR, \; \Theta_0 =\{\mu\}$ und $\Theta_1 = \RR\setminus \{\mu_0\}$. $H_0: \mu=\mu_0$, $H_1: \mu \not = \mu_0$)
+\item Konstruktion (und Berechnung) einer Testgröße
+$$T=T(\mathbf{X})$$
+mit bekannter Verteilung, falls $H_0$ richtig ist.\\
+$T$ soll Unterschiede zwischen der hypothetischen Verteilung $\PP_\theta, \; \theta \in \Theta_0$ und der tatsächlichen Verteilung widerspiegeln.\\
+Für eine konkrete SP $\mathbf{x}$ wird der Testwert $t=T(\mathbf{x})$ berechnet.
+\item Konstruktion eines kritischen Bereichs $K$ mit der Eigenschaft
+$$\PP_\theta (T\in K) \leq \alpha \text{ für alle }\theta \in \Theta_0$$
+(nach Möglichkeit mit $=$ statt $\leq $).
+\item Entscheidungsregel:
+\begin{itemize}
+\item Fall $t\in K$: Ablehnen der Nullhypothese $H_0$ (Test ist signifikant; $\phi(\mathbf{x})=1$)
+\item Fall $t \not \in K$: Auf Basis des durchgeführten Test ist nichts gegen die Nullhypothese einzuwenden (Test ist nicht signifikant; $\phi(\mathbf{x})=0$).
+\end{itemize}
+\end{enumerate}
+
+\cparagraph{Bemerkung} Konstellation für Hypothesen (bei Parametertests)
+\begin{itemize}
+\item $H_0: \theta = \theta_0 ,\qquad H_1: \theta \not = \theta_0$
+\item $H_0: \theta \leq \theta_0 ,\qquad H_1: \theta > \theta_0$
+\item $H_0: \theta \geq \theta_0, \qquad H_1: \theta < \theta_0$
+\end{itemize}
+
+\cparagraph{Bemerkung} (Fehler) Bei Tests kann es zu verschiedenen Fehlern kommen:
+\begin{enumerate}
+\item Fehler 1. Art: Entscheidung für $H_1$, obwohl $H_0$ wahr ist ($\alpha$-Fehler, type-I-error)\\
+\fbox{$\phi(\mathbf{x})=1$ obwohl $H_0$ gilt.}
+\item Fehler 2. Art: $H_0$ wird nicht abgelehnt, obwohl $H_1$ wahr ist ($\beta$-Fehler, type-II-error)\\
+\fbox{$\phi(\mathbf{x})=0$ obwohl $H_1$ gilt.}
+\end{enumerate}
+\begin{tabular}{r | c c}
+& $H_0$ gilt & $H_1$ gilt\\\hline
+Test verwirft $H_0$, $\phi(\mathbf{x})=1$ & Fehler 1. Art & korrekt\\
+Test verwirft $H_0$ nicht, $\phi(\mathbf{x})=0$ & korrekt & Fehler 2. Art
+\end{tabular}
+
+\cparagraph{Bemerkung} Sei $\phi$ ein Test zur Nullhypothese $\theta \in \Theta_0$ mit $\alpha \in (0,1)$.
+\begin{itemize}
+\item Laut Konstruktion ist WK für Fehler 1. Art durch $\alpha$ beschränkt:
+$$\PP_\theta (\phi =1 ) \leq \alpha \text{ für } \theta \in \Theta_0$$
+\item $\beta$ ist eine Schranke für den Fehler 2. Art, falls
+$$\PP_\theta (\phi =0 )\leq \beta \text{ für alle } \theta \in \Theta_1$$
+(Test verwirft $H_0$ nicht, obwohl $H_1$ richtig ist)\\
+Wählt man die kleinstmögliche Schranke $\beta$, so heißt $1-\beta$ die Macht (oder Power) des Tests.
+\end{itemize}
+
+\subsection{Parametertests}
+
+Geben Übersicht zu wichtigsten Test.\\
+Zum Durchführen wichtig:
+\begin{itemize}
+\item Welche Nullhypothese wird getestet?
+\item Testvoraussetzungen?
+\item Testgröße $T$?
+\item Verteilung von $T$ unter $H_0$?
+\item Kritischer Bereich?
+\end{itemize}
+
+\subsubsection[Tests für mü und sigma unter Normalverteilung]{Tests für $\mu$ und $\sigma$ unter Normalverteilung}
+
+Sei $X\sim \cN(\mu, \sigma^2)$ ein normalverteiltes Merkmal und $X_1, \ldots, X_n$ zugehörige Stichprobe. Tests werden entsprechend der Tabelle 1 durchgeführt.
+
+
+
+
 %\newpage
 %\printbibliography
 
