@@ -4,7 +4,7 @@
 \setCustomTitle{Angewandte Sensorik}
 \setCustomSubtitle{Vorlesungsskript}
 \setCustomAuthor{Falk-Jonatan Strube}
-\setCustomNoteA{oder: „Vodka Gorbunoff: Der Sensorik reinster Seele“}
+\setCustomNoteA{oder: „Vodka Gorbunoff: Der Sensorik reinster Seele“\\ oder: „Wieso sollte ich meine Studenten ernst nehmen?“}
 \setCustomNoteB{Vorlesung von Prof. Dr.-Ing. habil. Gorbunoff}
 \input{\customDir _LaTeX_master/LaTeX_master.sty}
 \input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
@@ -1766,6 +1766,80 @@ Alkohol & $25$ & $0,75$\\
 Wasser & $81$ & $1,0$
 \end{tabular}
 
+Störfaktoren:
+\begin{itemize}
+\item Fremde Objekte
+\item Oberflächenbeschaffenheiten
+\item Feuchtigkeit, Spritzwasser
+\item Staub, Verschmutzung
+\item elektrische Wechselfelder
+\item Temperatur
+\end{itemize}
+
+\subsubsection{Vor-/Nachteile}
+\begin{itemize}[label=$+$]
+\item erfasst praktisch alle Materialien (bes. wasserhaltige und Metalle)
+\item hohe Zuverlässigkeit, keine beweglichen Teile
+\item Schaltfrequenz: $5\ldots 50 \unit{Hz}$ (kleiner als bei ind. aber größer als bei mech. Sensoren)
+\item völlig berührungslos  und rückwirkungsfrei
+\item Kontakt mit Medium nicht erforderlich (und damit Betrieb unter widrigsten Bedingungen möglich)
+\item berührungslose Erfassung selbst durch Wände oder PTFE-Schutzhüllen hindurch
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item teurer als induktive Sensoren
+\item kurzreichweitig. Schaltabstände sind aber größer als bei induktiven
+\item Streukapazität zu klein: eine bestimmte minimale Sensorfläche nötig
+\item nicht so klein wie induktive (min. Fläche ca $1\unit{cm^2}$
+\item anfälliger gegen Störungen, z.B. durch Wasser oder Ablagerungen
+\item wird von allen Objekten im Streufeld beeinflusst
+\item Reproduzierbarkeit: schlechter als bei induktiven Sensoren
+\item Gegenseitige Beeinflussung: wie bei den induktiven Sensoren
+\end{itemize}
+\subsubsection{Anwendungsbeispiele}
+Messgrößen:
+\begin{itemize}
+\item Anwesenheit des Objektes im bestimmten Raum
+\item Objektdistanz über/unterschritten
+\item Niveau
+\end{itemize}
+Bspw. Füllstand einer Flasche.
+
+\chapter{Verschiedenes}
+
+\section{Elektromagnetische Strahlung}
+sichtbares Licht:
+$380\unit{mm}\text{ (blau)} \leq \lambda \leq 750 \unit{mm} \text{ (rot)}$
+
+\subsection{Rot gegen Infrarot}
+Infrarot: $\lambda = 950 \unit{mm}$
+\paragraph{Infrarot}
+\begin{itemize}[label=$+$]
+\item Sendedioden haben einen höheren Wirkungsgrad und sind billiger
+\item maximale Empfindlichkeit von Si-Photodioden und Phototransistoren
+\item IR-Optik ist weniger für kleine Staubteilchen empfindlich
+\item Geräte sind unempfindlicher gegen sichtbare Fremdlichtstörungen
+\item[$-$] IR-Lichtfleck ist nicht sichtbar $\to$ schwierigere Montage und Justage
+\end{itemize}
+\paragraph{Rotlicht}
+\begin{itemize}[label=$+$]
+\item Polfilter für Rotlicht sind besser und preiswerter
+\item Dämpfungen in Lichtleitern ist geringer
+\item Lichtfleck ist sichtbar $\to$ einfachere Montage und Justage
+\item[$-$] Störende Wirkung des Tageslichts
+\item[$-$] kleinere Abstrahlleistung als bei Infrarot-LED
+\end{itemize}
+
+\section{Reflektion}
+Reflektionsarten:
+\begin{itemize}
+\item ideal spiegelnd (Eintrittswinkel = Austrittswinkel)
+\item gerichtet diffus (Austrittswinkel entspricht grob dem Winkel des Austrittswinkels)
+\item ideal diffus (komplette Streuung des Austrittswinkels)
+\end{itemize}
+
+\section{Polarisation}
+Metallobjekte: Polarisationsrichtung wird nicht geändert.\\
+Tripelspiegel: Polarisationsrichtung wird um $90^\circ$ gedreht.
 
 %\newpage
 %\printbibliography
