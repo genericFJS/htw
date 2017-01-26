@@ -1,0 +1,93 @@
+\documentclass[a4paper,20pt]{scrartcl}
+
+\usepackage[ngerman]{babel}
+\usepackage{fontspec} 
+\usepackage{unicode-math}
+
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=1.12cm,bmargin=1.5cm,lmargin=2.5cm,rmargin=3.5cm,
+headheight=0cm,headsep=0cm,footskip=0.6cm}
+
+\usepackage{setspace}
+\renewcommand{\baselinestretch}{1.14} 
+
+\providecommand{\customTitle}{Software Engineering 1 Reflexionen}
+\providecommand{\customAuthor}{Fal-Jonatan Strube}
+\title{\customTitle}
+\author{\customAuthor}
+
+\usepackage{xcolor}
+\definecolor{darkblue}{RGB}{0,0,102}
+\color{darkblue}
+
+\setmainfont{FJS} 
+\setsansfont{FJS} 
+\setmonofont{FJS}
+
+\usepackage{graphicx}
+%\usepackage[pages=some]{background}
+\usepackage{background}
+\backgroundsetup{
+scale=1,
+opacity=0.9,
+angle=0,
+%contents={\includegraphics[width=\paperwidth]{pic/kariert}}
+contents={
+\begin{tikzpicture}[line width=0.2mm]
+\definecolor{linecolor}{RGB}{200,200,210}
+\begin{scope}[linecolor]
+\def\xwidth{210}
+\def\ywidth{297}
+\def\xoffset{2.5}	% Verschiebung in x-Richtung in mm 
+\def\yoffset{-1}	% Verschiebung in y-Richtung in mm
+\definecolor{bgcolor}{RGB}{237,238,242}
+% Papierformat:
+\clip(0,0) rectangle (\xwidth mm,\ywidth mm);
+\fill[bgcolor] (-5mm, -5mm) rectangle (\xwidth mm + 5mm, \ywidth mm + 5mm);
+% kariert:
+\begin{scope}[shift={(\xoffset mm,\yoffset mm)}]
+\def\lborder{20}
+\def\rborder{175}
+\foreach \x in {-5,0,...,\xwidth mm + 5mm}
+\draw (\x mm,-5mm) -- (\x mm,\ywidth mm + 5 mm);
+\foreach \y in {-5,0,...,\ywidth mm + 5 mm}
+\draw (-5mm,\y mm) -- (\xwidth mm + 5 mm,\y mm);
+\draw [line width=0.6mm] (\lborder mm, -5mm) -- (\lborder mm,305mm);
+\draw [line width=0.6mm] (\rborder mm, -5mm) -- (\rborder mm,305mm);
+\end{scope}
+% Löcher:
+\begin{scope}[shift={(12mm,148.5mm)}]
+\fill[white] (0,120mm) circle (2.5mm);
+\fill[white] (0,40mm) circle (2.5mm);
+\fill[white] (0,-40mm) circle (2.5mm);
+\fill[white] (0,-120mm) circle (2.5mm);
+%\draw (0,120mm) circle (2.5mm);
+%\draw (0,40mm) circle (2.5mm);
+%\draw (0,-40mm) circle (2.5mm);
+%\draw (0,-120mm) circle (2.5mm);
+\end{scope}
+\end{scope}
+\end{tikzpicture}
+}
+}
+
+\begin{document}
+\section*{\customTitle}
+\vspace*{-0.74cm}
+von Falk-Jonatan Strube (s74053)\vspace*{0.5cm}\\
+Ich habe bereits vor der Vorlesung „Software Engineering 1“ an der „HTW Dresden“ die vergleichbare Vorlesung „Softwaretechnologie 1“ an der „TU Dresden“ gehört. Deswegen habe ich einige der Prinzipien der Softwareentwicklung schon in vorherigen Semestern angewandt:
+
+Bereits in den ersten beiden Semestern hatten wir Programmierbelege anzufertigen. Obwohl es nicht gefordert war, habe ich für mich Pflichtenheft für diese Belege angefertigt, die die Anforderungen textlich beschrieben haben. Dies war für mich eine gute Orientierung im Vornherein und hat dem Programmieren Struktur gegeben.
+
+Im aktuellen Semester ist vor allem der Rechnernetze-Beleg zu erwähnen, für den explizit eine Dokumentation gefordert war -- inklusive UML-Diagrammen. Auch hier war beispielsweise das angefertigte Zustandsdiagramm sehr hilfreich um produktiv zu programmieren.
+
+Da in diesen Belegen die Aufgaben schon relativ eindeutig formuliert waren, habe ich die Anforderungsanalyse vor allem in dem Hinblick genutzt, dass ich  Abgrenzungskriterien aufgeschrieben habe. Dadurch habe ich sicher gestellt, dass ich mich nicht mit unnötigen „Features“ aufgehalten habe.
+
+Im Vergleich zu „echten“ Softwareprojekten waren die Belege allerdings in Hinblick auf die Qualitätsmerkmale sehr „gnädig“. Es wurde vor allem darauf geachtet, dass die Grundfunktion vorhanden sind und Merkmale wie „Usability“, „Effizienz“ und selbst „Zuverlässigkeit“ wurde wenig Wert gelegt. Da hatte ich dann teilweise das Gefühl mir mit der Anforderungsanalyse und dem Pflichtenheft zu viel Arbeit gemacht zu haben und dass ich den Beleg auch einfach „runterprogrammieren“ hätte können.
+
+Gerade deswegen bin ich auf das vierte Semester gespannt, wo in „Software Engineering 2“ hoffentlich mit dem Beleg das Software Engineering mal richtig angewandt wird: Inklusive (simulierter) Kunden-Kommunikation usw.
+
+Im großen und ganzen würde ich sagen, dass mir der Themenbereich Software Engineering in der Hinsicht viel gebracht hat, dass ich damit (wenn ich will) viel strukturierter und ergebnisorientierter an die Entwicklung von Software ran gehen kann.
+
+
+\end{document}
