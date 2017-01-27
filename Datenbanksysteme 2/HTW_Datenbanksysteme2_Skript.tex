@@ -1508,12 +1508,130 @@ DS-Länge & $85$
 &=567,5 = 568 \unit{Seiten}
 \end{align*}
 
+\emph{Begriffswege}
+\begin{itemize}
+    \item getrennt von Datensätzen $\Rightarrow$ \emph{Index}
+    \item im Datensatz $\Rightarrow$ \emph{Verkettung}
+\end{itemize}
+
 \section{Zugriffspfade außerhalb der Datensätze/Verkettung}
+\subsection{Adressverkettung}
+\slides{4}{9}
+\subsubsection{Owner-Member}
+\slides{4}{10}
+\subsubsection{Owner1-Member-Owner2}
+\slides{4}{11}
+
+\subsection{Anfragebeispiel auf relationales DBMS}
+\slides{4}{12}
+
+\section{Speicherung auf Basis von  Bitmap-Indizes}
+Problemstellung: Index für Abfrage nutzen?\\
+Strategie klassischer DBMS:\\
+Index: B$^*$-Baum\\
+1. Abfrage (ja, Index nutzen, da Einzel-DS lesen)
+\begin{lstlisting}[language=SQL]
+SELECT Name, Vorname
+FROM Kunde
+WHERE Kunr=345
+\end{lstlisting}
+2. Abfrage (nein, Index nicht nutzen, da alle DS lesen)
+\begin{lstlisting}[language=SQL]
+SELECT AVG(Kredit), Ort
+FROM Kunde
+GROUP BY (Ort)
+\end{lstlisting}
+\subsection{Vertikale Positionierung und Bitmap Index}
+\slides{4}{13}
+\subsection{Beispiel für I/O-Reduzierung}
+\slides{4}{14}
+
+\subsection{Beispiel Index für relationales DBMS}
+\slides{4}{15}
+
+\subsection{Fast Projection}
+\slides{4}{16}
+\subsubsection{FFP und FFFP}
+\slides{4}{17}
+\subsection{Low Fast}
+\slides{4}{18}
+
+\subsection{High Group}
+\slides{4}{19}
+
+\subsection{High Non Group}
+\slides{4}{20}
+
+\subsection{Beispiel für den Einsatz der Indexarten}
+\slides{4}{21}
 
 \chapter{Projektierung von relationalen Datenbanksystemen (Betriebliche Datenmodellierung und Datenbankanwendungen)}
+Datenbank-Anwendungssystem:
+\begin{itemize}
+\item DBS
+\begin{itemize}
+\item DBMS
+\begin{itemize}
+\item Datenbasis
+\end{itemize}
+\end{itemize}
+\item Nutzer/Anwender-Programme
+\end{itemize}
 \section{Lebenszyklus von Datenbankanwendungen}
+\begin{enumerate}
+\item Systemdefinition
+\item Entwurf
+\item Implementierung
+\item Dateneingabe und -analyse
+\item Test und Validierung
+\item Nutzung
+\item Verbesserung und Wartung / Anpassung
+\end{enumerate}
 \section{Überblick über den Entwurfsprozess von DBS}
+\begin{itemize}
+\item Anforderungsanalyse
+\item Konzeptioneller Entwurf
+\item Logischer Entwurf
+\item Implementierungsentwurf
+\item Physischer Entwurf
+\item Wartung
+\end{itemize}
+\subsection{Diskussion ausgewählter Problemfelder}
+\begin{tabular}{l | l | l | l | l | l | l}
+& Analyse & Entwurf & Implem. & Test & Installation & Nutzung\\\hline
+Fehlerkosten & 0,2 & 0,5 & 1 & 2 & 5 & 10-20\\
+Fehlerentdeckung & bei Nutzung & im Test & in Impl. & & \\
+Aufwand (soll) & hoch & hoch & hoch & sehr hoch & hoch & gering\\
+Aufwand (oft) &  sehr gering & gering & mittel & hoch & sehr hoch & extrem hoch\\
+
+\end{tabular}
+\subsection{Mitarbeiteranzahl und Bearbeitungsdauer}
+Eigentlich: mit steigender Anzahl der Mitarbeiter sollte die Bearbeitungsdauer linear sinken.\\
+Aber: Kommunikationswege heben die Dauer wieder. Zusammen mit den Kommunikationswegen schaffen zu viele Mitarbeiter wieder mehr Aufwand als dass sie die Dauer senken $\to$ Badewannenkurve. Die optimale Anzahl an Mitarbeitern ist wichtig.
+\subsection{Software-Entwicklung}
+\begin{itemize}
+\item Coding-Guides
+\begin{itemize}
+\item Namens-Konventionen
+\item Kommentierung
+\end{itemize}
+\item Software-Tests
+\begin{itemize}
+\item automatisiert (Unit-Tests)
+\end{itemize}
+\item formale Methoden
+\begin{itemize}
+\item Versionsverwaltung
+\item Ticketsysteme
+\item Netzplantechnik
+\item Ressourcenplanung
+\item Terminplanung
+\end{itemize}
+\item soziale Kompetenz
+\end{itemize}
 \section{Phasen des Entwurfsprozesses}
+\setCustomSlideScale{.7}
+\slides{5_1}{1}
 \subsection{Anforderungsanalyse}
 \subsection{Konzeptueller Entwurf}
 \subsection{Logischer Entwurf}
