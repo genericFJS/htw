@@ -22,3 +22,116 @@ CREATE OR REPLACE VIEW Lieferant_OV(LiefNr, Name, Strasse, Plz, Ort) AS
 -- 5.4
 INSERT INTO Lieferant_OV VALUES(752443, 'Laepple Teublitz', 'Maxstr. 12', '93158', 'Teublitz');
 -- geht nicht, weil die Adressdaten in der View nicht insertable bzw. deleteable sind
+
+--==================================================--
+-- Aufgabe 6
+-- 6.1
+-- Limitierung auf NOT NULL usw.
+
+-- 6.2
+CREATE OR REPLACE TRIGGER Lieferant_OV_ins 
+  INSTEAD OF INSERT
+  ON Lieferant_OV
+  FOR EACH ROW
+  BEGIN
+    IF INSERTING THEN
+      INSERT INTO Lieferant 
+        VALUES(:NEW.LiefNr, :NEW.Name, TAdresse(:NEW.Strasse, :NEW.Plz, :NEW.Ort));
+    END IF;
+  END;
+/
+
+INSERT INTO Lieferant_OV VALUES(752443, 'Laepple Teublitz', 'Maxstr. 12', '93158', 'Teublitz');
+
+SELECT * FROM Lieferant_OV;
+
+-- 6.3
+-- a
+CREATE SEQUENCE sq_einbau
+  INCREMENT BY 1
+  START WITH 2000;
+
+-- b
+CREATE OR REPLACE TRIGGER einbauPK
+  BEFORE INSERT OR UPDATE ON Einbau
+  FOR EACH ROW
+  BEGIN
+    IF INSERTING THEN
+      SELECT 'E' || sq_einbau.NEXTVAL
+      INTO :NEW.EbNr FROM dual;
+    END IF;
+    IF UPDATING THEN
+      :NEW.EbNr := :OLD.Ebnr;
+    END IF;
+  END;
+/
+
+-- c
+INSERT INTO Einbau VALUES(NULL, 5000, 10000, 1);
+
+SELECT * FROM Einbau;
+
+-- 6.4
+CREATE OR REPLACE TRIGGER einbauPK
+  BEFORE INSERT OR UPDATE ON Einbau
+  FOR EACH ROW
+  DECLARE
+    exce EXCEPTION;
+    cnt INT;
+  BEGIN
+    IF INSERTING THEN
+      SELECT COUNT(*) INTO cnt
+      FROM Bauteil b
+      WHERE b.BAUGRUPPE IS NULL AND :NEW.Btnr = b.Btnr;
+      IF cnt = 0 THEN
+        RAISE exce;
+      END IF;
+      SELECT 'E' || sq_einbau.NEXTVAL
+      INTO :NEW.EbNr FROM dual;
+    END IF;
+    IF UPDATING THEN
+      :NEW.EbNr := :OLD.Ebnr;
+    END IF;
+  EXCEPTION
+    WHEN exce THEN
+      raise_application_error(-20042, 'Einfügen nicht möglich, da keine Baugruppe.');
+  END;
+/
+
+-- 6.5
+INSERT INTO Einbau VALUES(NULL, 5001, 10001, 1);
+INSERT INTO Einbau VALUES(NULL, 5010, 10002, 2);
+
+SELECT * FROM Einbau;
+
+-- 6.6
+SELECT * FROM Einbau;
+SELECT * FROM Fahrzeug;
+DELETE Fahrzeug WHERE FzNr = 10001;
+-- mit dem Fahrzeug wurde auch der Eintrag in Einbau gelöscht.
+
+--==================================================--
+-- Aufgabe 7
+set serveroutput on
+-- 7.1
+CREATE OR REPLACE PROCEDURE procWeight (limit IN INT)
+IS
+  CURSOR cur IS
+    SELECT FzNr, Bezeichnung, Gewicht 
+    FROM Fahrzeug
+    WHERE Gewicht <= limit;
+  BEGIN
+    FOR item IN cur
+    LOOP
+      DBMS_OUTPUT.PUT_LINE('FzNr:        ' || item.FzNr);
+      DBMS_OUTPUT.PUT_LINE('Bezeichnung: ' || item.Bezeichnung);
+      DBMS_OUTPUT.PUT_LINE('Gewicht:     ' || item.Gewicht);
+      DBMS_OUTPUT.PUT_LINE('----------------------------------------');
+    END LOOP;
+  END;
+/
+
+EXEC procWeight(900);
+
+-- 7.2
+
