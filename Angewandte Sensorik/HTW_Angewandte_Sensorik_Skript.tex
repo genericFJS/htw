@@ -10,6 +10,7 @@
 \input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
 
 %\input{\customDir _LaTeX_master/LuaLaTeX_master.sty}
+\renewcommand{\imptnt}[1]{#1}
 
 \begin{document}
 
@@ -1804,13 +1805,14 @@ Messgrößen:
 \end{itemize}
 Bspw. Füllstand einer Flasche.
 
-\chapter{Verschiedenes}
+\section{Lichtschranken/-taster}
 
-\section{Elektromagnetische Strahlung}
+\subsection{Grundlagen }
+\subsubsection{Elektromagnetische Strahlung}
 sichtbares Licht:
 $380\unit{mm}\text{ (blau)} \leq \lambda \leq 750 \unit{mm} \text{ (rot)}$
 
-\subsection{Rot gegen Infrarot}
+\subsubsection*{Rot gegen Infrarot}
 Infrarot: $\lambda = 950 \unit{mm}$
 \paragraph{Infrarot}
 \begin{itemize}[label=$+$]
@@ -1829,7 +1831,7 @@ Infrarot: $\lambda = 950 \unit{mm}$
 \item[$-$] kleinere Abstrahlleistung als bei Infrarot-LED
 \end{itemize}
 
-\section{Reflektion}
+\subsubsection{Reflektion}
 Reflektionsarten:
 \begin{itemize}
 \item ideal spiegelnd (Eintrittswinkel = Austrittswinkel)
@@ -1837,9 +1839,145 @@ Reflektionsarten:
 \item ideal diffus (komplette Streuung des Austrittswinkels)
 \end{itemize}
 
-\section{Polarisation}
+\subsubsection{Polarisation}
 Metallobjekte: Polarisationsrichtung wird nicht geändert.\\
 Tripelspiegel: Polarisationsrichtung wird um $90^\circ$ gedreht.
+
+\subsection{Arten von Lichtschranken/-taster}
+\begin{itemize}
+\item Einweg-Lichtschranke (bis $100\unit{m}$)
+\item Reflexions-Lichtschranke (bis $4 \unit{m}$)
+\item Reflexions-Lichttaster (bis $0,5\unit{m}$)
+\end{itemize}
+Messprinzip: Lichtstrahl wird unterbrochen\\
+Erfasst wird: Lichtmenge auf dem Empfänger
+
+\subsubsection{Einweg Lichtschranken}
+Schaltet nur, wenn Lichtstrahl von Sender zum Empfänger durch kommt.\\
+$\text{Funktionsreserve}=\frac{\text{Lichtintensität auf Empfänger}}{\text{Schaltschwellwert}}$
+\begin{itemize}[label=$+$]
+\item große Wegstrecken (bis $>100\unit{m}$)
+\item große Funktionsreserve (Sicherheit)
+\item unkritisch zu spiegelnden Oberflächen
+\item unkritisch zu Verschmutzung der Linsen
+\item sicheres Erkennen von undurchsichtigen Gegenständen
+\item weitgehend unempfindlich gegen Fremdlicht, sofern es nicht direkt in Empfänger leuchtet
+\end{itemize}
+\subsubsection*{Vor-/Nachteile}
+\begin{itemize}[label=$-$]
+\item hoher Preis (zwei Geräte mit Linsensystemen und Elektronik)
+\item teure Installation von zwei getrennten Geräten
+\item aufwändige Justierung bei größeren Überwachungsstrecken
+\item unsicheres Erkennen von transparenten Gegenständen
+\end{itemize}
+Anwendungen:\\
+\begin{itemize}
+\item Papierstau in Drucker
+\item Einfahrt in Garage
+\item Durchgang in Tür
+\end{itemize}
+Messgrößen:
+\begin{itemize}
+\item Anwesenheit des Objektes im bestimmten Raum
+\item Niveau
+\end{itemize}
+
+\subsubsection{Reflexlichtschranke}
+Ein Gerät mit Sender und Empfänger. Gerät sendet zu einem Retroreflektor-Bauteil und misst die (vorhandene) Reflexion.\\
+Zwischen Sender(LED) und Empfänger(Fotodiode) liegt ein Blindbereich (also ein Abstand von dem Gerät), in dem die Reflexion nicht gemessen werden kann. Lösung dafür: Sender und Empfänger werden im Gerät durch Spiegel an eine Position gebracht, dadurch ist der Weg des Lichts gerade und es gibt keinen Blindbereich.
+
+\subsubsection*{Retroreflektor}
+Ist kein einfacher Spiegel, sondern ein „Katzenauge“: 
+\begin{itemize}
+\item Tripelspiegel (3 Spiegel senkrecht zueinander). Dreht die Polarisationsrichtung um $90^\circ$.
+\item Reflexfolie (Folie mit vielen durchsichtigen Kugeln eingebettet in reflektierendem Material)
+\end{itemize}
+
+\subsubsection*{Reflexionschranke mit gekreuzten Polfiltern}
+Erkennung von hochreflektierenden und transparenten Objekten. Durch normale Objekte wird die Polarisation des gesendeten Lichts nicht geändert. Das kann erkannt werden.
+
+\subsubsection*{Vor-/Nachteile}
+\begin{itemize}[label=$+$]
+\item nur ein kompaktes Gerät für Sender und Empfänger
+\item einfache Montage
+\item sicheres Erkennen von undurchsichtigen Gegenständen und spiegelden Objekten (mit Polfiltern)
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item Blindbereich
+\item mittlere Reichweite, da doppelter Strahlenweg
+\item unsicheres Erkennen von transparenten Gegenständen
+\item Funktionsreserve ist klein
+\item Verschmutzung ist sehr kritisch
+\item Störung durch Witterungseinflüsse wie Schnee, Nebel und Eisbesatz an den Linsen
+\end{itemize}
+
+\subsubsection{Reflexlichttaster}
+Tastet ohne Reflektor.\\
+Intensitäts-RLT: Tastet zwischen $3\unit{mm}$ und maximal $200 \unit{mm}$\\
+Autokollimations-RLT: kein Blindbereich, sehr kleine Tastweite
+
+\subsubsection*{Winkellichtverfahren (Nahbereichtaster)}
+Sensoren sind durch die (Winkel-)Position zueinander für eine Distanz genau eingestellt.
+\begin{itemize}[label=$-$]
+\item[$+$] keine Störungen durch hochreflektierende Gegenstände im Hintergrund
+\item Empfänger werksseitig fest auf eine bestimmte Tastweite eingestellt
+\item Die Tastweite beträgt nur $20-30\%$ des baugleichen Reflexlichttasters
+\item Die Tastweite ist stark von der Oberflächenstruktur/Farbe abhängig
+\end{itemize}
+
+\subsubsection*{Triangulationsverfahren}
+Der Empfänger im Gerät nimmt zwei Messungen nebeneinander durch eine kippbare Linse vor. Dadurch bekommt man mehrere Werte, wenn mehrere Objekte getroffen wurden.\\
+Es wird die Differenz der Lichtmengen der beiden Messungen ausgewertet.
+\begin{itemize}[label=$+$]
+\item keine Störungen durch hellen Hintergrund oder Fremdlicht
+\item kein Einfluss der Farbe, Größe
+\item auf eine bestimmte Tastweite einstellbar
+\item[$-$] teurer
+\end{itemize}
+
+\subsubsection*{Position Sensitive Detector (PSD)}
+Der Empfänger im Gerät (PSD) kann messen, wo die Reflexion eintrifft und damit den Abstand messen. Je näher das Objekt, desto flacher der eintreffende Lichtwinkel
+\begin{itemize}[label=$+$]
+\item keine Mechanik
+\item geringer Blindbereich
+\item automatische Abstandmessung
+\item geringere Anfälligkeit gegen Fremdlicht
+\item[$-$] noch teurer
+\end{itemize}
+
+\subsubsection*{Vor-/Nachteile Reflex-Lichttaster}
+\begin{itemize}[label=$+$]
+\item direktes Abtasten von Gegenständen
+\item einfache Montage
+\item transparente Objekte sind besser erkennbar als bei der EW- oder R-LS
+\item beim LT mit Hintergrundausblendung ist eine Abstandsmessung möglich
+\end{itemize}
+\begin{itemize}[label=$-$]
+\item geringere Tastweiten im Vergleich zu den Reichweiten der Lichtschranken. Bei gleicher Bauweise verhalten sich die Tastweiten bei der EW-LS, R-LS und R-LT wie $20:5:1$
+\item Störungen durch Hintergrund (Spiegel, Metall, weiß)
+\item Hintergrundausblendung mit noch geringeren Tastweiten möglich
+\item keine präzisen Schaltpunkte. Die Tastweite ist abhängig von:
+\begin{itemize}[label=\textbullet]
+\item von den Reflexionseigenschaften der zu erfassenden Objekte
+\item der Verschmutzung der Linsen
+\end{itemize}
+\end{itemize}
+
+\subsubsection*{Anwendungsbeispiele}
+Messgrößen:
+\begin{itemize}
+\item Anwesenheit des Objektes im bestimmten Raum
+\item Objektdistanz über/unterschritten
+\item Niveau
+\item Objektzustand (bspw. Gewinde vorhanden)
+\end{itemize}
+Gemessen wird bspw.:
+\begin{itemize}
+\item Erkennung von Rollende (Papier)
+\item Erkennung von Referenzmarken (gelochtes Papier)
+\item Erkennung von Chiporientierung (Fließband)
+\end{itemize}
+
 
 %\newpage
 %\printbibliography
