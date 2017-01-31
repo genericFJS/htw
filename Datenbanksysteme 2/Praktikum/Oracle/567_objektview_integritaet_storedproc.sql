@@ -134,4 +134,35 @@ IS
 EXEC procWeight(900);
 
 -- 7.2
+-- Skript:
+insert into einbau values (1,'5001', '10000', 1);
+insert into einbau values (1,'5002', '10000', 2);
+insert into einbau values (1,'5000', '10002', 1);
+insert into einbau values (1,'5001', '10002', 1);
+-- 
+CREATE OR REPLACE PROCEDURE readEinbau
+IS
+  CURSOR cur1 IS
+    SELECT DISTINCT Bezeichnung, f.FzNr
+    FROM Fahrzeug f JOIN Einbau e ON e.FzNr = f.FzNr;
+  CURSOR cur2 IS
+    SELECT Teilename, e.FzNr
+    FROM Bauteil b JOIN Einbau e ON e.BTNR = b.BTNR;
+  BEGIN
+    FOR fz IN cur1
+    LOOP
+      DBMS_OUTPUT.PUT_LINE(fz.Bezeichnung);
+      FOR bt IN cur2
+      LOOP
+        IF bt.FzNr = fz.FzNr THEN
+          DBMS_OUTPUT.PUT_LINE('    '||bt.Teilename);
+        END IF;
+      END LOOP;
+    END LOOP;
+  END;
+/
+
+EXEC readEinbau;
+
+
 
