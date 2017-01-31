@@ -2566,7 +2566,197 @@ Zum Durchführen wichtig:
 
 Sei $X\sim \cN(\mu, \sigma^2)$ ein normalverteiltes Merkmal und $X_1, \ldots, X_n$ zugehörige Stichprobe. Tests werden entsprechend der Tabelle 1 durchgeführt.
 
+\cparagraph{Beispiel} 
+Bei der Herstellung von Zylindern kann der Durchmesser als normalverteilt
+angenommen werden. Die Standardabweichung $\sigma$ des Durchmessers kann als Maß für die Qualität der Produkte angesehen werden. Der Hersteller gibt an, dass die Standardabweichung $\sigma$ höchstens $0,03 \unit{[mm]}$ beträgt. Der Käufer zweifelt dies an, entnimmt eine Stichprobe vom Umfang $n = 40$ um die Aussage des Herstellers zu widerlegen. Aus der Stichprobe ergeben sich die
+Werte $\overline{x} = 50,03 \unit{[mm]}$ und $s = 0,037 \unit{[mm]}$.
 
+Führen Sie einen Test aus Sicht des Käufers zum Signifikanznivau $ \sigma = 0,05$ durch.\medskip\\
+Lösung: Verwende $\chi^2$-Steuungstest, wobei $\theta = \sigma^2$ und $\mu$ unbekannt ist.\\
+Setze $\sigma_0 = 0,03$.
+\begin{enumerate}
+\item Signifikanznivau: $\alpha = 0,05$
+\item Hypothesen: $H_0: \; \sigma^2 \leq 0,03^2 \quad H_1: \sigma^2 > 0,03^2$\\
+(\emph{Merke}: Was man zeigen will, wird als Alternativhypothese formuliert. Hier: der Käufer will zeigen, dass die Abweichung höher als angegeben ist.)
+\item Testgröße:
+$$t=\frac{(n-1)S^2}{\sigma_0^2 \sim \chi^2 (n-1)}$$
+Konkreter Testwert: $t=T(x)=\frac{(n-1)s^2}{\sigma_0^2}=\frac{39 \cdot 0,037^2}{0,03^2}=59,32$
+\item  Kritischer Bereich: $K=(\chi^2_{n-1, 1-\alpha}, \infty) = (\chi^2_{39, \; 0,95}, \infty) = (54,57, \infty)$\\
+(aus Quantiltabelle für die $\chi^2$-Verteilung ablesen)
+\item Entscheidung: $t \in K \Rightarrow H_0$ wird abgelehnt ($\phi(xi)=1$)
+(6) Interpretation: Die Stichprobe bestätigt die Vermutung des Käufers. Die Nullhypothese, dass „die Standardabweichung maximal $0.03\unit{[mm]}$ beträgt“, wird verworfen.
+\end{enumerate}
+
+\cparagraph{Bemerkung}
+\begin{itemize}
+\item Die Entscheidung „Ablehnen von $H_0$“ oder nicht hängt von $\alpha$ ab. Hätten wir im Beispiel $\alpha = 0,01$ gewählt, so erhielten wir $t \not \in K = (62,43 \;,\; \infty)$, d.h. gegen $H_0$ wäre nichts einzuwenden gewesen.
+\item $\alpha$ ist immer \emph{vor} der Durchführung des Tests zu wählen.\\
+Derjenige $\alpha$-Wert, für den die Grenze des kritischen Bereichs genau mit dem konkreten Wert $t$ der Testgröße übereinstimmt (also die Grenzstelle zwischen Ablehnung und Nicht-Ablehnung) heißt \emph{p-Wert}.
+\item Es gilt:\\
+$p < \alpha \Rightarrow$ Ablehnen von $H_0$\\
+$p \geq \alpha \Rightarrow$ gegen $H_0$ ist nichts einzuwenden.\\
+Beachte: p-Wert ist die typische Ausgabe von Statistik-Software beim Durchführen von Tests.
+\item p-Wert ist die WK, dass die Testgröße $T$ den konkreten Wert $t$ oder einen extremeren annimmt.\\
+Liegt das $t$ in dem kritischen Bereich $K$ (dessen Flächeninhalt $\alpha$ ist), wird $H_0$ abgelehnt, der p-Wert ist die Fläche ab $t$ (und ist kleiner $\alpha$, wenn $H_0$ abgelehnt wird).\\
+Liegt das $t$ nicht im kritischen Bereich $K$, dann ist der p-Wert die Fläche ab $t$ (und $p\geq \alpha \Leftrightarrow t \not \in K$).\\
+Bei der beidseitigen Betrachtung wird für p-Wert die Fläche von $\pm t$ bis $\pm \infty$ betrachtet. Dabei gilt wieder: $p< \alpha \Leftrightarrow H_0$ wird abgelehnt und anders herum.
+\end{itemize}
+
+\subsubsection{Tests für 2 unabhängige Stichproben unter Normalverteilung}
+\begin{itemize}
+\item Betrachte 2 normalverteilte Merkmale mit je einer Stichprobe.
+\item Die SPen können von unterschiedlicher Größe sein.
+\item Es sollen Hypothesen zum Vergleich der Erwartungswerte bzw. der Varianzen untersucht bzw. getestet werden.
+\item Beispiele:
+\begin{itemize}
+\item Sind Männer im Mittel größer als Frauen?
+\item Ist das Einkommen in den neuen und den alten Bundesländern im Mittel gleich?
+\item Ist die Varianz der Körpergrößen bei Männern und bei Frauen die gleiche?
+\end{itemize}
+\item Vorgehen: Entsprechend der Schritte (1)-(5) aus Bemerkung 2.3-3, wobei Testgröße, kritischer Bereich, … der Tabelle 2 zu nehmen sind. 
+\end{itemize}
+
+\cparagraph{Beispiel} Klaus behauptet sein Ruhepuls ist niedriger als der von Peter. Nachdem Klaus $10$ Tage und Peter $15$ Tage mit einem Messgerät den Ruhepuls gemessen haben, versucht Klaus mit einem Test (zum Sig.niveau $\alpha = 0,05$) seine Behauptung zu bestätigen. Welches Ergebnis zeigt sich, wenn folgendes gemessen/berechnet wurde:\\
+$\overline{x}_K=55\quad, \; \overline{x}_P=57$\\
+$s_k = 3 \quad, \; s_P = 4$\\
+(Annahme: Merkmale normalverteilt und $\sigma_P=\sigma_K$)
+\begin{enumerate}
+\item $\alpha = 0,05$
+\item $H_0:\mu_K \geq \mu_P \qquad H_1: \mu_K < \mu_P$ (weil Klaus zeigen will, dass sein Ruhepuls niedriger ist)
+\item $T=\frac{(\overline{X}-\overline{Y}\sqrt{\frac{n_1 n_2}{n_1+n_2}}}{\sqrt{\dots}}$\\
+$t=\frac{(55-57)\cdot \sqrt{\frac{10\cdot 15}{10 + 15}}}{\sqrt{\frac{9\cdot 3^2 - 14 \cdot 4^2}{23}}}=-1,345$
+\item $K=(-\infty, -t_{n_1+n_2-2, \; 1-\alpha})=(-\infty, \; - 1,7139)$
+\item Entscheidung: $t\not \in K \Rightarrow H_0$ wird nicht verworfen.
+\item Interpretation: Auf Grundlage der vorliegenden Daten kann (bei einem Signifikanzniveau von $\alpha=0,05$) nicht gezeigt werden, dass „der Ruhepuls von Klaus im Mittel niedriger ist als der von Peter“.
+\end{enumerate}
+Beachte: Hätte Klaus weniger Angst vor einem falsch-positiven Ergebnis gehabt, hätte er mit $\alpha=0,1$ gerechnet. Dann wäre $t\in K$ heraus gekommen.
+
+\subsubsection{Tests für unbekannte Wahrscheinlichkeiten}
+\begin{enumerate}[label=(\Alph*)]
+\item eine Stichprobe\\
+Gegeben:
+\begin{itemize}
+\item A zufälliges Ereignis mit $\PP(A)=p\in[0,1]$
+\item $X$ mit Parameter $p$ Beroulli-verteiltes Merkmal mit SP $X_1, \ldots, X_n$
+\item $\sum_{i=1}^n X_i = n \overline{X}$ … absolute Häufigkeit von $A$ bei $n$ unabhängigen Versuchen
+\item $\overline{X}$ … relative Häufigkeit
+\end{itemize}
+Aufgabe: Nullhypothese $p=p_0, \; p \leq p_0$ bzw $p \geq p_0$ für vorgegebenes $p_0\in [0,1]$ überprüfen.\\
+Vorgehen: entsprechend Bemerkung 2.3-3 und Tabelle 3
+\item zwei SPen\\
+Gegeben:
+\begin{itemize}
+\item $A,\;B$ zufällige Ereignisse mit $\PP(A)=p_1, \; \PP(B)=p_2$
+\item $X\sim \mathrm{Bin}(p_1), \; Y\sim \mathrm{Ber}(p_2)$ Merkmale mit SPen $X_1, \ldots, X_n$ und $Y_1, \ldots , Y_n$
+\end{itemize}
+Aufgabe: Nullhypothese $p_1=p_2,\; p_1 \leq p_2$ bzw. $p_1 \geq p_2$ überprüfen\\
+Vorgehen: entsprechend Bemerkung 2.3-3 und Tabelle 4
+\end{enumerate}
+
+\cparagraph{Beispiel} Bei der Herstellung von Zahnprothesen wird der Ausschussanteil untersucht. Es ist zu prüfen ob sich zeigen lässt, dass das neue Herstellungsverfahren (B) gegenüber dem alten Verfahren (A) eine Verbesserung ist.\\
+\begin{tabular}{c | c | c}
+Verfahren & SP-Umfang & Ausschussanzahl\\\hline
+A & $400$ & $29$\\
+B & $500$ & $25$
+\end{tabular}\\
+Es ist ein Test zum Signifikanzniveau $\alpha=0,05$ durchzuführen.
+\begin{enumerate}
+\item $\alpha = 0,05$
+\item $H_0=p_a \leq p_B \qquad H_1= p_A > p_B$\\
+$p_A$ … Ausschussverfahren von Verteilung A\\
+$p_B$ … Ausschussverfahren von Verteilung B
+\item $T=\frac{\overline{X}-\overline{Y}}{\sqrt{\hat{p}(1-\hat{p})\frac{n_1+n_2}{n_1\cdot n_2}}} \sim \cN(0,1)$ mit $\hat{p}=\frac{n_1 \overline{X}-n_2 \overline{Y}}{n_1+n_2}$\\
+konkreter Testwert: $t=\frac{\overline{x}-\overline{y}}{\sqrt{\hat{p}(1-\hat{p})\frac{n_1+n_2}{n_1\cdot n_2}}}=\frac{\frac{29}{400}-\frac{25}{500}}{\sqrt{0,06(1-0,06)\frac{900}{400\cdot 500}}}=1,412$\\
+$\hat{p}=\frac{29+25}{900}=0,06$\\
+Prüfen der Faustregel: $n\overline{x}(1-\overline{x})=26,9 > 9 \quad n\overline{y}(1-\overline{y})=23,8>9 \Rightarrow$ ok
+\item Kritischer Bereich\\
+$K=(z_{1-\alpha}, \infty) = (z_{0,95}, \infty) = (1,645\;,\;\infty)$
+\item $t\not \in K \Rightarrow H_0$ wird nicht verworfen.
+\item Interpretation: Auf Grundlage der vorliegenden SP lässt sich die (Alternativ-)hypothese, dass „das neue Herstellungsverfahren gegenüber dem alten Verfahren einen geringeren Ausschussanteil hat“ nicht nachweisen.
+\end{enumerate}
+
+\subsection{Parameterfreie Tests}
+Vorgehensweise ist fast wie bei parametrischen Tests, mit dem Unterschied, dass hier nicht nur die Parameterwerte in die Hypothesen eingehen. Wir lernen hier „nur“ den $\chi^2$-Unabhängigkeitstest kennen.
+
+\subsubsection[chi-quadrat-Unabhängigkeitstest]{$\chi^2$-Unabhängigkeitstest}
+Aufgabenstellung: Zu überprüfen ist, ob zwei diskrete Merkmale $X$ und $Y$ unabhängig sind. Dafür liegt eine 2-dimensionale SP vor.
+$$(X_1,Y_1), (X_2, Y_2), \ldots, (X_n, Y_n)$$
+Kontingenztafel:\\
+$X$ habe Ausprägungen $1, \ldots, l$\\
+$Y$ habe Ausprägungen $1, \ldots, m$\\
+\begin{tabular}{c | c c c c | c}
+$X\setminus Y$ & $1$ & $2$ & $\dots$ & $m$ & $\sum$\\\hline
+$1$ & $H_{11}$ & $H_{12}$ & $\dots$ & $H_{1m}$ & $H_{1 *}$\\
+$2$ & $H_{21}$ & $H_{22}$ & $\dots$ & $H_{2m}$ & $H_{2 *}$\\
+$\vdots$ & $\vdots$ &  &  & $\vdots$ & $\vdots$\\
+$l$ & $H_{l1}$ & $H_{l2}$ & $\dots$ & $H_{lm}$ & $H_{l *}$\\\hline
+$\sum$ & $H_{* 1}$ & $H_{* 2}$ & $\dots$ & $H_{* m}$ & $n$
+\end{tabular}
+\begin{itemize}
+\item $H_{jk}$ … Häufigkeit des gleichzeitigen Auftreten von $X=j$ und $Y=k$
+\item $H_{j*}=\sum_{k=1}^m H_{jk}$ … Randhäufigkeit (Zeilensumme)
+\item $H_{* k} =\sum_{k=1}^l H_{jk}$ … Randhäufigkeit (Spaltensumme)
+\end{itemize}
+Gehe nun in die üblichen Schritte (1)-(5) bzw. (6) und nach Tabelle 6 vor.
+
+\cparagraph{Bemerkung}
+\begin{itemize}
+\item Falls die Merkmal $X$ bzw. $Y$ stetig sind, so lässt sich ein $\chi^2$-Unabhängigkeitstest rechnen, wenn man die Daten in Klassen einteilt.
+\item Faustregel für Anwendbarkeit:
+$$\frac{H_{j*} \cdot H_{* k}}{n}\geq 5 \text{ für alle }j,k$$
+\item Die Teststatistik $T=\sum\sum \dots$ wird groß, falls die beobachteten Häufigkeiten $H_{jk}$ stark von den erwarteten Häufigkeiten $\frac{1}{n}\cdot H_{j*} \cdot H_{*k}$ abweichen.\\
+Die Größe $\frac{H_{j*}H_{*k}}{n}$ beschreibt die erwartete Häufigkeit unter der Annahme von Unabhängigkeit bei gegebenen Randhäufigkeiten $H_{j*}$ und $H_{*k}$.
+\item Im Spezialfall $m=l=2$ gibt es eine vereinfachte Formel für $T$, siehe Tabelle.
+\end{itemize}
+
+\cparagraph{Beispiel} (mit $m=l=2$) Von $90$ Schülern ($47$ Mädchen, $43$ Jungs) der 4. Klasse einer Grundschule gehen $34$ auf das Gymnasium. Von diesen $34$ Schülern sind $20$ Mädchen. Lässt sich mit einem Test zum Signifikanzniveau $0,05$ zeigen, dass die Wahl der Bildungseinrichtung vom Geschlecht abhängig ist?
+\begin{enumerate}
+\item $\alpha = 0,05$
+\item $H_0: X\text{ und }Y\text{ unabhängig} \quad H_1=X \text{ und }Y \text{ nicht unabhängig}$ wobei \\
+$X$ … Wahl der Bildungseinrichtung ($1=$Gymnasium, $2=$kein Gymnasium)\\
+$Y$ … Geschlecht ($1$ … männlich, $2$ … weiblich)
+\item $T=n\cdot \frac{(H_{11} H_{22}-H_{12}H_{21})^2}{H_{1*}H_{2*}H_{*1}H_{*2}}$\\
+Kontingenztafel:\\
+\begin{tabular}{c | c c | c}
+$X\setminus Y$ & $1$ & $2$ & $\sum$\\\hline
+$1$ & $14$ & $20$ & $34$\\
+$2$ & $29$ & $27$ & $56$\\\hline
+$\sum$& $43$ & $47$ & $90$
+\end{tabular}\\
+$t=90\frac{(14\cdot 27-20 \cdot 29)^2}{34\cdot 56 \cdot 43 \cdot 47}=0,945$
+\item Kritischer Bereich\\
+$K=(\chi_{1, 1-0,05}, \infty) = (3,84\;,\; \infty)$
+\item $t\not \in K \Rightarrow H_0$ wird nicht verworfen
+\item Interpretation: Auf Grundlage der SP lässt sich die Unabhängigkeit von Bildungseinrichtungswahl und Geschlecht nicht widerlegen.
+\end{enumerate}
+
+\cparagraph{Beispiel} $550$ Personen wurden nach Rauchgewohnheiten und sportlichen Betätigungen befragt. Von den $381$ Nichtrauchern treiben $56$ regelmäßig, $143$ gelegentlich und $182$ nie Sport. Unter den Rauchern betragen entsprechende Häufigkeiten $15$, $46$ und $108$.\\
+Kann man (mit Signifikanzniveau $0,01$) zeigen, dass das Rauchverhalten und sportliche Betätigung als abhängig angesehen werden können?\\
+Lösung:\\
+$X$ … Rauchgewohnheit ($1=$ Nichtraucher, $2=$ Raucher)\\
+$Y$ … Sport ($1=$ regelmäßig, $2=$ gelegentlich, $3=$ nie)\\
+\begin{tabular}{c | c c c | c}
+$X\setminus Y$ & $1$ & $2$ & $3$ & $\sum$\\\hline
+$1$ & $56$ & $143$ & $182$ & $381$\\
+$2$ & $15$ & $46$ & $108$ & $169$\\\hline
+$\sum$& $71$ & $189$ & $290$ & $550$
+\end{tabular}
+\begin{enumerate}
+\item $\alpha = 0,01$
+\item $H_0: X\text{ und }Y\text{ unabhängig} \quad H_1=X \text{ und }Y \text{ nicht unabhängig}$
+\item $T=\sum_{j=1}^2 \sum_{k=1}^3 \left(H_{jk}-\frac{H_j H_k}{n}\right)^2 \cdot \frac{n}{H_{j*}H_{*k}}$\\
+Trage $\frac{h_{j*}h_{*k}}{n}$ in Tabelle ab:\\
+\begin{tabular}{c | c c c | c}
+$X\setminus Y$ & $1$ & $2$ & $3$ & $\sum$\\\hline
+$1$ & $49,2$ & $130,9$ & $200,9$ & $381$\\
+$2$ & $21,8$ & $58,1$ & $108$ & $89,1$\\\hline
+$\sum$& $71$ & $189$ & $290$ & $550$
+\end{tabular} z.B. $\frac{381\cdot 71}{550}=49,2$\\
+$t=\frac{(56-49,2)^2}{49,2}+\frac{(143-130,9)^2}{130,9}+\ldots + \frac{(108-89,1)}{89,1}=12,45$
+\item $K=(\chi_{1\cdot 2, 0,99},\infty) = (9,81\;,\; \infty)$
+\item $t\in K \Rightarrow H_0 $ ablehnen
+\item Interpretation: Auf Grundlage der SP lässt sich die Unabhängigkeit von Rauchgewohnheiten und sportlicher Betätigung widerlegen (sie sind also abhängig).
+\end{enumerate}
 
 
 %\newpage
