@@ -1221,12 +1221,12 @@ v_ort := 'Dresden';
 \subsection{Cursor in PL/SQL}
 \slides{3}{10}
 \begin{lstlisting}[language=SQL]
-CREATE OR REPLACE PROCEDURE p1(K_wert INTEGER)
+CREATE OR REPLACE PROCEDURE p1(K_wert IN INTEGER)
 IS
-    DECLARE CURSOR C1 IS
+    CURSOR C1 IS
         SELECT Kunr, Name
         FROM Kunde
-        FOR Kredit > K_wert;
+        WHERE Kredit > K_wert;
     FOR satz IN C1 LOOP
         DBMS_OUTPUT.PUTLINE('Kunr:' || satz.Kunr);
         DBMS_OUTPUT.PUTLINE('Name:' || satz.Name);
@@ -1238,7 +1238,7 @@ IS
 2. Variante CURSOR-Nutzung:
 \begin{lstlisting}[language=SQL]
 ...
-DECLARE C1 IS 
+CURSOR C1 IS 
 	SELECT Kunr, Name, Vorname
 	FROM Kunde
 	WHERE Kredit > K_wert;
