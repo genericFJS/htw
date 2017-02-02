@@ -900,6 +900,11 @@ Sicht auf \emph{alle} Details einer Klasse\\
 OOP
 \end{enumerate}
 
+\section{Verwendungen von UML-Diagrammen}
+Klassendiagramm: statische Struktur des Softwaresystems (Perspektiven: erste Analyse / Blick auf Schnittstellen / Implementation)\\
+Anwendungsfalldiagramm: Beschreibung der funktionalen Anforderungen (Überblick)\\
+Aktivitätsdiagramm: Beschreibung eines Anwendungsfalls (Details)\\
+Zustandsdiagramm: Bei welchem Ereignis ändert das Objekt seinen Zustand (und was bekommt die Außenwelt davon mit). Diese Zustände beschreiben die Werte eines Status-Variable einer Klasse.
 % Folie 1
 
 \section{Essentielle Funktionen}
@@ -962,6 +967,7 @@ Eine essentielle Funktion ist:
 
 \subsubsection{Bedingungsabhängikeiten einbeziehen}
 \slides{11}{8}
+
 
 
 \chapter{Lasten und Pflichtenheft}
@@ -1207,10 +1213,58 @@ XP: extremes Programmieren\\
 SCRUM
 
 \section{Extremes Programmieren}
-%Folie 9-12
+\slides{13}{9}
+
+\subsection{4 Grundwerte}
+\slides{13}{10}
+
+\subsection{Praktiken}
+\slides{13}{11}
+
+\subsection{Zusammenfassung}
+\slides{13}{12}
+
+\subsection{Chancen}
+\slides{13}{13}
 
 \section{SCRUM}
-%Folie 14-16
+\slides{13}{14}
+\slides{13}{15}
+\slides{13}{16}
+
+\chapter{Analyse und Test}
+\section{Tests}
+Es kann bspw. getestet werden auf:
+\begin{itemize}
+\item Geschwindigkeit (Antwortzeit)
+\item Was mit einem Input als Output raus kommt. Bspw. bei:
+\begin{itemize}
+\item Funktion (bei der Implementierung $\to$ Whiteboxtest)
+\item Klassen (\emph{Komponententest})
+\item Zusammenarbeit zwischen Klassen/Komponenten (\emph{Integrationstest}, man testet Schnittstellen)
+\item ganzes System (\emph{Systemtest} $\to$ Blackboxtest)\\
+Perspektive: des Kunden
+\end{itemize}
+\end{itemize}
+
+\section{Systemtest}
+\slides{15}{6}
+$\Rightarrow$ Systematischer Test aus der Perspektive des Kunden\\
+Daten die zu testen sind:
+\begin{itemize}
+\item kritische Daten (bspw. Division durch 0)
+\item Grenzdaten (bspw. 18 bei Zulassung ab 18)
+\end{itemize}
+
+\subsection{Testdaten, Testfall und Rahmenbedingungen}
+\slides{15}{7}
+
+\section{Zusammenhang zwischen Anforderungsanalyse und Test eines SW-Systems}
+\begin{itemize}
+\item Die funktionalen Anforderungen (konkrete Anwendungsfälle, insbesondere die essenziellen Funktionen) sind wichtige \emph{Testfälle} im Kontext des Systemtestes.
+\item Die Auslöser/Reaktionen der essenziellen Funktionen (Ein- und Ausgabedaten zu den konkreten Anwendungsfällen) sind wichtige \emph{Testdaten} im Kontext des Systemtestes.
+\item Die Beschreibung der Anwendungsfälle (textlich, Aktivitätsdiagramm, Zustandsdiagramm, Satzschablonen) können wichtige \emph{Rahmenbedingungen} für die jeweiligen Testfälle enthalten.
+\end{itemize}
 
 
 
@@ -1220,7 +1274,7 @@ SCRUM
 \chapter{Konfigurationsverwaltung}
 
 \section{Der Sinn von Konfigurationsverwaltung}
-Die Konfigurationsverwaltung ist eine Rolle oder Organisationseinheit im Kontext des SW-Entwicklungsprozesses, die die SW-Einheiten
+Die Konfigurationsverwaltung ist eine Rolle oder Organisationseinheit im Kontext des SW-Ent\-wick\-lungs\-prozesses, die die SW-Einheiten
 \begin{itemize}
 \item identifiziert,
 \item bei Bedarf bereitstellt
