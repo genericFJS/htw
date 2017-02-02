@@ -60,7 +60,8 @@ Vergabe von Adressen aus dem Pool eines Internet-Providers
 \slides{25-ip-schicht_print}{15}
 \slides{25-ip-schicht_print}{16}
 Hostadressen in einem /31 Netz: 0 (nur ein Bit für Adresse übrig: 0 steht für Netzadresse, 1 für Broadcastadresse $\to$ keine Hostadresse mehr übrig)\\
-$\Rightarrow$ /30 Netz: 2 Hostadressen
+$\Rightarrow$ /30 Netz: 2 Hostadressen\bigskip\\
+Beispiel $\underbrace{141.56}_{Netz}.\underbrace{0.0}_{Host}/\underbrace{16}_{Netzanteil}$: $2^{16}-2$ Hosts möglich (die zwei Adressen $0.0$ als Netzschlüssel und $255.255$ als Broadcast vergeben)
 \subsection{IP-Netz}
 \subsubsection{Definition IP-Netz}
 Hosts mit gleicher Netzadresse befinden sich im gleichen Netz
@@ -188,6 +189,7 @@ Berechnung des kürzesten Pfades von A nach B
 \slides{26-ip-routing_print}{17}
 \subsubsection*{Beispiel}
 \slides{26-ip-routing_print}{18}
+Tipp: Nexthop und Wegelänge an Knoten ran schreiben.
 \subsubsection*{Komplexitätsbetrachtung}
 \slides{26-ip-routing_print}{19}
 \subsubsection*{Probleme mit Oszillation bei netzlastabhängigen Metriken}
