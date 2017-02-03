@@ -1,0 +1,95 @@
+\section{Einführung}
+\slides{10}{2}
+\slides{10}{3}
+
+\section{Programmierte E/A}
+\slides{10}{4}
+\subsection{Memory Mapped I/O}
+\slides{10}{5}
+\subsection{I/O Mapping (Isolierte Adressierung)}
+\slides{10}{6}
+Weiterer Vorteil: Adressräume können dynamisch verschoben werden.
+\unimptnt{
+\subsection{Befehle}
+\slides{10}{7}
+}
+\subsection[E/A Testschleife -> Polling (Busy Waiting)]{E/A Testschleife $\to$ Polling (Busy Waiting)}
+\slides{10}{8}
+\slides{10}{9}
+
+\section{Interrupts}
+\slides{10}{10}
+\subsection{Grundmethode (technische Lösung)}
+\slides{10}{11}
+\unimptnt{
+\subsection{Sprung zur ISR}
+\slides{10}{12}
+}
+\subsection{Identifikation der Quelle}
+\slides{10}{13}
+
+\subsubsection{Polling}
+\slides{10}{14}
+\unimptnt{
+\slides{10}{15}
+Es wird rundum abgefragt, wer den Interrupt ausgelöst hat. Wenn einer gefunden wurde, wird an der Stelle weiter gesucht.
+\slides{10}{16}
+Es wird rundum abgefragt, wer den Interrupt ausgelöst hat. Wenn einer gefunden wurde, wird wieder von vorne rundum abgefragt (die letzten können ggf. nie erreicht werden).
+}
+
+\subsubsection{Daisy Chain}
+\slides{10}{17}
+
+\subsubsection{Multilevel Interrupt}
+\slides{10}{18}
+
+\subsection{Ermittlung der Adresse der ISR}
+\slides{10}{19}
+\subsubsection{Berechnung der ISR-Startadresse}
+\slides{10}{21}
+
+\subsection{(Ausnahme-)Vektortabelle}
+\slides{10}{20}
+
+
+\subsection{Maskierung}
+\unimptnt{
+\slides{10}{22}
+}
+\slides{10}{23}
+
+\unimptnt{
+\subsection{Programmierbare Interrupt-Controller (PIC)}
+\slides{10}{24}
+}
+
+\subsection{Programmierte E/A mit Interrupts: Vor-/Nachteile}
+\slides{10}{25}
+
+\unimptnt{
+\subsection{Noch mehr Verbesserungen?}
+\slides{10}{26}
+}
+
+\section{Direct Memory Access (DMA)}
+\slides{10}{27}
+\subsection{Definition}
+\slides{10}{28}
+
+\subsection{DMA-Controller (DMAC)}
+\slides{10}{29}
+
+\subsection{Konfliktlösung bei Speicherzugriff}
+\slides{10}{30}
+
+\section{E/A-Prozessoren}
+\subsection{Prinzip}
+\slides{10}{31}
+
+\unimptnt{
+\subsection{Device Driver}
+\slides{10}{32}
+}
+
+\subsection[Anschlussschemata IOP <=> Geräte]{Anschlussschemata IOP $\Leftrightarrow$ Geräte}
+\slides{10}{33}
