@@ -30,13 +30,35 @@
 \newpage
 \chapter*{Vorbemerkungen}
 \section*{Prüfung}
-SP: 90 min
+SP: 90 min\\
+1 A4 einseitig handschriftlich beschrieben + Kurzreferenz (ohne Notizen)
 
 \section*{PVL}
 Beleg (Abnahme im Praktikum)
 \begin{itemize}
 \item MS SQL
 \item Oracle
+\end{itemize}
+
+\section*{Klausurthemen}
+\begin{itemize}
+\item Beispiel mit 3 Tabellen mit Dateninhalt. Abfragen bzgl. Datenabfrage/Datenmanipulation, Correlation, Joins, Outerjoin, Leftjoin
+\item Wie läuft das Datenhandling mit ODBC ab, Befehle + Grundprinzip: Abruf, Datenbindung, Datenausgabe
+\item Datensicherheit, Transaktion: Was sind Transaktionen? Wie ist die aufgebaut? ACID-Prinzip
+\item Zugriffsschutz (Wissen, Besitz, Biometrie)\\
+Varianten ZGS: auf Tabelle mit (grant/revoke), mit views, stored procedures\\
+Authentifizierung
+\item Semantische Sicherung:\\
+DEFAULT\\
+Trigger (MSSQL) (auch für einfügen/ändern usw. mehrere eingaben (also keine zwischenspeicherung in variable), ohne Cursor)
+\item operationale Int.: nein
+\item physische Integrität: ja
+\item Logische/Physische Datenbank\\
+B*-Baum (Eigenschaften, Aufbau, Unterschied Binärbaum)\\
+Zugriffspfade außerhalb der Indexierung!\\
+keine Verkettung, keine Bitmap-Indizes, kein Objektorientiertes Datenmodell (außer in Bezug auf Oracle)
+\item Objectrelationale Featuers (keine Syntax, sondern Features)
+\item Projektierung: Schritte und Abhängigkeit (ohne ERM). Abfolge wichtig!
 \end{itemize}
 
 \chapter{Erweiterung von Datenbanksprachen}
@@ -1632,14 +1654,24 @@ Aber: Kommunikationswege heben die Dauer wieder. Zusammen mit den Kommunikations
 \section{Phasen des Entwurfsprozesses}
 \setCustomSlideScale{.7}
 \slides{5_1}{1}
-\subsection{Anforderungsanalyse}
-\subsection{Konzeptueller Entwurf}
-\subsection{Logischer Entwurf}
-\subsection{Implementierungsentwurf}
-\subsection{Physischer Entwurf}
-\subsection{Nutzung/Wartung}
+\begin{enumerate}
+\item Anforderungsanalyse/-spezifikation
+\item Konzeptioneller Entwurf (ERM)
+\item Logischer Entwurf (RM)
+\item Implementierungsentwurf
+\item Physischer Entwurf
+\item Wartung + Anpassung
+\end{enumerate}
+bis 2.: unabhängig vom logischen Modell\\
+bis 3.: unabhängig vom konkreten DBMS
+%\subsection{Anforderungsanalyse}
+%\subsection{Konzeptueller Entwurf}
+%\subsection{Logischer Entwurf}
+%\subsection{Implementierungsentwurf}
+%\subsection{Physischer Entwurf}
+%\subsection{Nutzung/Wartung}
 
-\chapter{Überblick zu aktuellen Entwicklungen auf dem Gebiet DBS}
+%\chapter{Überblick zu aktuellen Entwicklungen auf dem Gebiet DBS}
 
 %\newpage
 %\printbibliography
