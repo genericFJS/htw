@@ -1,0 +1,345 @@
+\newcommand{\customDir}{../}
+\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
+
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+%\setCustomSlidePath{Folien}
+
+\setCustomTitle{Stochastik}
+\setCustomSubtitle{Spicker}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+\setCustomNoteB{Vorlesung von Prof. Dr. Schwarzenberger}
+
+%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
+%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir _LaTeX_master/LaTeX_master.sty}
+\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
+
+\setlist[enumerate,1]{label=(\arabic*)}
+\renewenvironment{anumerate}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}} % Alphabetische Aufzählung
+
+
+%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
+\begin{document}
+
+%\selectlanguage{english}
+\maketitle
+%\newpage
+%\tableofcontents
+\newpage
+\chapter{Wahrscheinlichkeitsrechnung}
+\section{Ereignisse und Wahrscheinlichkeit}
+\subsection{Wahrscheinlichkeit}
+Regeln:
+\begin{itemize}
+\item $\PP(\emptyset)=0$
+\item $\PP(\bar A) = 1 - \PP (A)$
+\item $\boxed{\PP(A \cup B)=\PP(A)+\PP(B)-\PP(A \cap B)}$\\
+$\PP ( A \cup B \cup C) = \PP(A) + \PP(B) + \PP(C)-\PP(A \cap B) - \PP(A\cap C) - \PP(B\cap C ) + \PP(A \cap B \cap C)$
+\end{itemize}
+
+\subsection{Bedingte Wahrscheinlichkeit}
+$$\boxed{\PP(A|B)=\frac{\PP(A \cap B)}{\PP(B)}}$$
+\begin{itemize}
+\item Falls $A$ und $B$ disjunkt, gilt $\PP(A|B)=0$
+\item $\boxed{\PP(\bar A | B) = 1-\PP(A|B)}$
+\item $\boxed{\PP(A_1 \cup A_2 | B ) =\PP(A_1 | B ) + \PP (A_2|B) - \PP (A_1 \cap A_2 | B)}$
+\item Multiplikationssatz:
+$$\boxed{\PP(A\cup B ) = \PP(A ) \cdot \PP(B|A) = \PP(B) \cdot \PP(A|B)}$$
+\item Mit Bedingung:
+\begin{itemize}
+\item $\bigcup_{i=1}^n B_i = \Omega$
+\item $B_i \cap B_j = \emptyset $ für $i \not= j$
+\item $\PP (B_i) >0$ für alle $i=1,\dots,n$
+\end{itemize}
+gilt totale WK:
+$$\boxed{\PP(A) = \sum_{i=1}^n \PP(A|B_i) \cdot \PP (B_i)} \quad \text{Anwendung: }\PP(A)=\PP(A|B)\cdot \PP(B) + \PP(A | \bar B) \cdot \PP(\bar B)$$
+und Satz von Bayes:
+$$\boxed{\PP(B_j|A)=\frac{\PP(A|B_j)\cdot \PP(B_j)}{\PP(A)}=\frac{\PP(A|B_j)\cdot \PP(B_j)}{\sum_{i=1}^n \PP(A|B_i) \cdot \PP(B_i)}}$$
+\end{itemize}
+
+
+\subsection{Unabhängigkeit}
+$$\boxed{\PP(A\cap B)=\PP(A) \cdot \PP(B)}$$
+
+\section{Zufallsvariablen}
+
+\subsection{Verteilungsfunktion}
+$$F_X: \RR\to [0,1], \quad \boxed{F_X(x):=\PP(X \leq x)}$$
+
+\subsection{Diskrete und stetige Zufallsvariable}
+Dichtefunktion:
+\begin{align*}
+\PP(a < X<b) &= \PP(\leq X \leq b)
+= \PP(a \leq X <b) 
+= \PP(a < X \leq b)\\
+&=F(b)-F(a) \\
+&= \int\limits_a^b f(x) \intd{x}
+\end{align*}
+
+ \subsection{Erwartungswert und Varianz}
+Diskret:
+$$\boxed{\EE(X) = \sum_i x_i \cdot p_i = \sum_i x_i \cdot f(x_i)}$$
+$$\boxed{\var(X)=\sum_i (x_i - \EE(X))^2 \cdot p_i = \sum_i (x_i - \EE(X))^2 f(x_i)}$$
+Stetig:
+$$\boxed{\EE(X) = \int\limits_{-\infty}^{\infty} x\cdot f(x) \intd{x}}$$
+$$\boxed{\var (X) = \int\limits_{-\infty}^{\infty} (x-\EE(X))^2 f(x) \intd{x}}$$
+Allgemein:
+$$\boxed{\var (X) = \EE(X^2) - (\EE(X))^2}$$
+\begin{itemize}
+\item $\boxed{\EE(a+bX)=a+b\EE(X)}$
+\item $\boxed{\var(a+bX) = b^2 \var X}$
+\end{itemize}
+
+
+\subsection{Kovarianz und Unabhängigkeit}
+\begin{itemize}
+\item $\cov(X,Y) = \EE((X-\EE X) ( Y - \EE Y)) = \EE (XY) - \EE X \cdot \EE Y$ die \emph{Kovarianz} von $X$ und $Y$.
+\item $\varrho_{X,Y}:=\frac{\cov(X,Y)}{\sqrt{\var(X)}\sqrt{\var(Y)}}$ der \emph{Korrelationskoeffizient}.
+\item $X$ und $Y$ \emph{unkorreliert}, wenn $\varrho_{X,Y}=0$ (also wenn $\cov(X,Y) = 0$)
+\end{itemize}
+
+\begin{itemize}
+\item $X$ und $Y$ unabhängig $\Rightarrow \boxed{\EE(XY)=\EE X \cdot \EE Y}$
+\end{itemize}
+
+\begin{itemize}
+\item $\boxed{\EE(aX+bY)=a\EE(X)+b\EE(Y)}$
+\item $\boxed{\var(X\pm Y) = \var(X)+\var(Y)\pm \cov(X,Y)}$
+\item $\boxed{\cov(aX+bY,Z)=a\cov(X,Z)+b\cov(Y,Z)}$
+\item $\boxed{\cov(X,Y)=\cov(Y,X)}$
+\end{itemize}
+
+\section{Spezielle Verteilungen}
+\subsection{Spezielle diskrete Verteilungen}
+\subsubsection{Bernoulli Verteilung}
+Genau 2 Werte!
+\begin{itemize}
+\item $\PP(X=1)=p, \; \PP(X=0)=1-p=q$ und $X \sim \mathrm{Ber}(p)$
+\item Erwartungswert: $\EE(X)=0\cdot q + 1 \cdot p = p$
+\item Varianz: $\var (X) = \EE(X^2) - (\EE(X))^2 = 0^2 \cdot q + 1^2 \cdot p - p^2 = pq$
+\item Standardabweichung: $\sigma_X=\sqrt{pq}$
+\end{itemize}
+\subsubsection{Binomialverteilung}
+$$p_i=\PP(X=i)=\binom{n}{i}p^i (1-p)^{n-i}, \quad i=0,\dots ,n$$
+\begin{itemize}
+\item $X \sim \mathrm{Bin}(n,p)$
+\item Erwartungswert: $\EE(X)=np$
+\item Varianz: $\var (X) = np (1-p)$
+\end{itemize}
+
+\subsubsection{Diskrete Gleichverteilung}
+
+$$\PP(X=x_1) = \dots = \PP(X=x_n) = \frac{1}{n}$$
+
+\begin{itemize}
+\item $X\sim U(T)$
+\item Erwartungswert: $\EE(X)=\frac{1}{n}\sum_{i=1}^n x_i$
+\item Varianz: $\var(X)=\EE(X^2)-(\EE(X))^2 = \frac{1}{n} \sum_{i=1}^n x_i^2+\left(\frac{1}{n}\sum_{i=1}^n x_i\right)^2$
+\item faire Münze, fairer Würfel, …
+\end{itemize}
+
+\subsubsection{Hypergeometrische Verteilung}
+$$p_m:=\PP(X=m)=\frac{\binom{M}{n}\binom{N-M}{n-m}}{\binom{N}{n}}$$
+
+\begin{itemize}
+\item $X\sim \mathrm{Hyp}(N,M,n)$
+\item Erwartungswert und Varianz: \\
+$\EE(X)=n\frac{M}{N}$\
+$\var (X)=n\frac{M}{N}\left(1-\frac{M}{N}\right) \frac{N-n}{N-1}$
+\item Stichprobe ohne Zurücklegen (bspw. Qualitätskontrolle, Lotto)
+\begin{itemize}
+\item $N$ Objekte, davon $M$ mit bestimmten Merkmal (bspw. Ausschuss, Gewinnzahl)
+\item $n$ Objekte werden entnommen
+\item $X$ … Anzahl der Objekte unter den $n$ entnommenen, die das Merkmal besitzen
+$$\Rightarrow X\sim \mathrm{Hyp}(N,M,n)$$
+\end{itemize}
+\end{itemize}
+
+\subsubsection{Geometrische Verteilung}
+Kann nur die Werte $1,2,\dots$ annehmen.
+$$p_m:=\PP(X=m)=p(1-p)^{m-1} \quad m=1,2,\dots$$
+\begin{itemize}
+\item $X\sim \mathrm{Geo}(p)$
+\item Varianz: $\var(X)=\frac{1-p}{p^2}$
+\item Anwendung: Anzahl der Versuche \emph{bis der erste Erfolg eintritt}, bei hintereinander ausführen von unabhängigen identischen Bernoulli Zufallsexperimenten.
+\end{itemize}
+
+\subsubsection{Poisson-Verteilung}
+Kann nur die Werte $1,2,\dots$ annehmen.
+$$p_m:=\PP(X=m)=\frac{\lambda^m}{m!}e^{-\lambda} \quad m=0,1,2,\dots$$
+\begin{itemize}
+\item $X\sim \mathrm{Poi}(\lambda)$
+\item Erwartungswert: $\EE(X)=\lambda$
+\item Varianz: $\var(X)=\lambda$
+\item Anwendung: Bedientheorie, Zuverlässigkeitstheorie
+\begin{itemize}
+\item Anzahl der Kunden pro Zeiteinheit
+\item Anzahl der Störungen im Produktionsprozess eines Betriebs pro Zeiteinheit
+\end{itemize}
+\end{itemize}
+
+\subsection{Spezielle stetige Verteilungen}
+
+\subsubsection{Stetige Gleichverteilung}
+
+$$\PP(X\in J)=\frac{|J|}{|I|}$$
+\begin{itemize}
+\item $X \sim U(I)$
+\item Sei $a<b$. Ein Intervall $I$ kann die Form $(a,b),\;[a,b],\;[a,b)$ oder $(a,b]$ haben. Dann gilt $|I|=b-a$. Ist $I$ von dieser Form, so gilt:
+\item $\EE(X)=\frac{a+b}{2}$, $\var(X)=\frac{1}{12}(b-a)^2$
+\item Dichte und Verteilungsfunktion:
+$$f(x)=\begin{cases}
+\frac{1}{b-a} & a\leq x \leq b\\
+0 & \mathrm{sonst}
+\end{cases}, \quad F(x)=\begin{cases}
+0 & x \leq a\\
+\frac{x-a}{b-a} & a<x<b\\
+1 & x \geq b
+\end{cases}$$
+\end{itemize}
+
+\subsubsection{Normalverteilung}
+$$f: \RR\to \RR, \qquad f(x)=\frac{1}{\sqrt{2\pi\sigma}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
+
+\begin{itemize}
+\item $X\sim \cN(\mu, \sigma^2)$
+\item $\EE(X)=\mu$
+\item $\var(X) = \sigma^2$
+\end{itemize}
+
+\subsubsection{Exponentialverteilung}
+$$f(x)=\begin{cases}
+\lambda \exp(-\lambda x) & \mathrm{falls} \; x\geq 0\\
+0 & \mathrm{sonst}
+\end{cases}
+$$
+\begin{itemize}
+\item $X\sim \mathrm{Exp}(\lambda)$
+\item $\EE(X)=\frac{1}{\lambda}, \quad \var(X)=\frac{1}{\lambda^2}$
+\item Verteilungsfunktion:
+$$F(x)=\begin{cases}
+1-\exp(-\lambda x) & \mathrm{falls}\; x \geq 0\\
+0 & \mathrm{sonst}
+\end{cases}$$
+\item Anwendung: Bedientheorie, Zuverlässigkeitstheorie, Verteilung von Zeitdauern wie Lebenszeiten, Reperaturzeiten, Wartezeiten, …
+\end{itemize}
+
+\subsubsection{\texorpdfstring{$ \chi^2 $}{Chi-Quadrat}-Verteilung}
+
+$$f_n(x)=\begin{cases}
+\frac{x^{\frac{n}{2}-1}\exp\left(-\frac{x}{2}\right)}{2^{\frac{n}{2}}\Gamma\left(\frac{n}{2}\right)} & \text{falls }x>0\\
+0 & \text{sonst}
+\end{cases} \quad (x\in \RR)$$
+
+\begin{itemize}
+	\item $X\sim \chi^{2}$(n)
+	\item $\EE(X)=n$, $\var(X)=2n$
+	\item Statistik, insbesondere Testtheorie
+\end{itemize}
+
+\subsubsection{\texorpdfstring{$ t $}{t}-Verteilung}
+
+\[ f_n(x)=\frac{\Gamma\left(\frac{n+1}{2}\right)}{\sqrt{n \pi}\Gamma\left(\frac{n}{2}\right)}\left(1+\frac{x^2}{n}\right)^{-\frac{n+1}{2}} \quad (x\in \RR) \]
+
+\begin{itemize}
+	\item $X\sim t(n)$
+	\item falls $n>1$: $\EE(X)=0$, für $n=1$ existiert $\EE(X)$ nicht
+	\item falls $n>2$: $\var(X)=\frac{n}{n-1}$, für $n=1,2$ existiert $\var(X)$ nicht
+	\item Statistik, insbesondere Testtheorie
+\end{itemize}
+
+\subsubsection{\texorpdfstring{$ F $}{F}-Verteilung}
+
+\[ f_{m,n}(x)=\begin{cases}
+m^{\frac{m}{2}}n^{\frac{n}{2}}\frac{\Gamma\left(\frac{m}{2}+\frac{n}{2}\right)}{\Gamma\left(\frac{m}{2}\right)\Gamma\left(\frac{n}{2}\right)}\cdot \frac{x^{\frac{m}{2}-1}}{(mx+n)^{\frac{m+n}{2}}} & \text{falls }x\geq 0\\
+0 & \text{sonst}
+\end{cases} \] 
+\begin{itemize}
+	\item $X\sim F(m,n)$
+	\item falls $n>2$: $\EE(X)=\frac{n}{n-2}$, für $n=1,2$ existiert $\EE(X)$ nicht
+	\item falls $n>4$: $\var(X)=\frac{2n^2(m+n-2)}{m(n-2)^2(n-4)}$, für $n=1,2,3,4$ existiert $\var(X)$ nicht
+	\item Statistik, insbesondere Testtheorie
+\end{itemize}
+
+\section{Grenzwertsätze}
+Tschebyschew-Ungleichung
+\[ \PP(|X-\EE X| \geq a) \leq \frac{\var(X)}{a^{2}} \text{.} \]
+
+\subsection{Der zentrale Grenzwertsatz}
+
+$$Z_n=\frac{S_n-\EE S_n}{\sqrt{\var S_n}}=\frac{S_n - n \mu}{\sqrt{n}\cdot \sigma}$$
+Rechnung bspw.:
+$$\PP(S \leq ?) = \PP( S - \EE S \leq ? - \EE S)$$
+
+Moivre-Laplace:
+$$\frac{S_n - np}{\sqrt{np (1-p)}} \overset{a}{\sim} \cN(0,1)\text{.}$$
+
+\chapter{Statistik}
+\section{Deskriptive Statistik}
+\subsection{Grundbegriffe}
+
+\subsection{Eindimensionales Datenmaterial}
+
+\subsubsection{Stichprobenfunktionen}
+\begin{itemize}
+\item (Stichproben-)Mittelwert:
+$$\overline{X}=\frac{X_1+\ldots + X_n}{n}$$
+\item (Stichproben-)Streuung/Varianz
+$$S^2=\frac{1}{n-1} \sum_{i=1}^n (X_i - \overline{X})^2$$
+\item (Stichproben-)Standardabweichung
+$$S=\sqrt{S^2}$$
+\item Variationskoeffizient
+$$V=\frac{S}{\overline{X}}$$
+\item $\alpha$-Quantil $\widetilde{X}_\alpha$ mittels
+$$\widetilde{X}_\alpha := \begin{cases}
+X_{(k)} & \text{falls }\alpha n\text{ keine ganze Zahl ist und }\\
+& k\text{ kleinste ganze Zahle größer }\alpha n\text{.}\\
+\frac{1}{2}(X_{(\alpha n)}+X_{\alpha n+1)}) & \text{falls }\alpha n\text{ ganzzahlig.}
+\end{cases}$$
+\item Median $:=\widetilde{X}_{0,5}$
+\item Inter-Quartilsabstand (Inter-Quartil-Range)
+$$IQR = \widetilde{X}_{0,75}-\widetilde{X}_{0,25}$$
+\end{itemize}
+
+\subsection{Zweidimensionales Datenmaterial}
+
+\begin{itemize}
+\item Stichprobenkovarianz:
+$$S_{X,Y}=\frac{1}{n-1}\sum_{i=1}^n(X_i - \overline{X})(Y_i-\overline{Y})$$
+\item Stichproben-Korrelationskoeffizient (nach Pearson)
+$$R_{X,Y}=\frac{S_{X,Y}}{S_X\cdot S_Y} \qquad \in [-1,1]$$
+\end{itemize}
+
+$$\varrho_{X,Y}=\frac{\cov{X,Y}}{\sigma_X \sigma_Y}\text{.}$$
+Konkrete Stichprobe $(x_1,y_1),\ldots, (x_n,y_n)$ mit $s_x\not = 0$ gegeben. Die Gerade 
+$$g: \RR\to \RR, \; g(x)=a_0+a_1x$$
+mit
+$$a_1 = r_{xy}\frac{s_y}{s_x} \text{ und } a_0 = \overline{y} - a_1 \overline{x}$$
+ist die eindeutige Lösung des Minimierungsproblems.
+
+\section{Schätztheorie}
+
+\section{Testtheorie}
+\begin{enumerate}
+\item[(0)] Beschreibung der Zufallsvariablen, wie sie verteilt ist und was bekannt ist.
+\item Wahl des Signifikanzniveaus $\alpha \in (0,1)$
+\item Aufstellen einer (Null-)hypothese
+\item Konstruktion (und Berechnung) einer Testgröße
+$$T=T(\mathbf{X})$$
+\item Konstruktion eines kritischen Bereichs $K$ mit der Eigenschaft
+$$\PP_\theta (T\in K) \leq \alpha \text{ für alle }\theta \in \Theta_0$$
+\item Entscheidungsregel:
+\begin{itemize}
+\item Fall $t\in K$: Ablehnen der Nullhypothese $H_0$ (Test ist signifikant; $\phi(\mathbf{x})=1$)
+\item Fall $t \not \in K$: Auf Basis des durchgeführten Test ist nichts gegen die Nullhypothese einzuwenden (Test ist nicht signifikant; $\phi(\mathbf{x})=0$).
+\end{itemize}
+\end{enumerate}
+
+%\newpage
+%\printbibliography
+
+\end{document}

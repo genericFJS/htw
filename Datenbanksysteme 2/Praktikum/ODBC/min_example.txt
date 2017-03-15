@@ -1,0 +1,45 @@
+#define NAMESIZE 20
+	SQLHENV handleEnvironment = SQL_NULL_HENV;
+	SQLHDBC handleDatabaseConnection = SQL_NULL_HDBC;
+	SQLHSTMT handleStatement = SQL_NULL_HSTMT;
+
+	sqlConnect(&handleEnvironment, 
+		&handleDatabaseConnection, 
+		&handleStatement);
+
+	SQLCHAR mitName[NAMESIZE+1];
+	SQLCHAR mitVName[NAMESIZE+1];
+	SQLLEN bindLen;
+	SQLRETURN returnValue;
+
+	char *query = "SELECT Vorname, Nachname FROM Mitarbeiter";
+	
+	returnValue = SQLExecDirect(handleStatement, (SQLCHAR *)query, SQL_NTS);
+
+	if (!checkReturnCode("Error executing the query", returnValue, handleStatement, SQL_HANDLE_STMT)){
+		freeSQLHandles(&handleEnvironment, 
+			&handleDatabaseConnection, 
+			&handleStatement);
+		exit(0);
+	}
+
+	returnValue = SQLBindCol(handleStatement, 1, SQL_C_CHAR, mitName, NAMESIZE + 1, &bindLen);
+	checkReturnCode("[i] SQLCOLBIND:", returnValue, handleStatement, SQL_HANDLE_STMT);
+
+	returnValue = SQLBindCol(handleStatement, 2, SQL_C_CHAR, mitVName, NAMESIZE + 1, &bindLen);
+	checkReturnCode("[i] SQLCOLBIND:", returnValue, handleStatement, SQL_HANDLE_STMT);
+	int i = 0;
+	while ((returnValue = SQLFetch(handleStatement)) != SQL_NO_DATA)	{
+		if (returnValue == SQL_ERROR){
+			printf("[!] Error on Fetch");
+			break;
+		}
+		if (returnValue == SQL_SUCCESS_WITH_INFO){
+			printf("[i] Fetch with SQL_SUCCESS_WITH_INFO");
+			break;
+		}
+		printf("%s, %s\n", mitName, mitVName);
+	}
+	sqlDisconnect(&handleEnvironment, &handleDatabaseConnection, &handleStatement);
+	system("PAUSE");
+}
