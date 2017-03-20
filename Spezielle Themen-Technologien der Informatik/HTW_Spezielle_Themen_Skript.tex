@@ -1,0 +1,68 @@
+\newcommand{\customDir}{../}
+\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
+
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+\setCustomSlidePath{Vorlesung/}
+\setCustomSlideScale{1}
+
+\setCustomTitle{Spezielle Themen/Technologien der Informatik}
+\setCustomSubtitle{Vorlesungsskript}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+\setCustomNoteB{Vorlesung von:\\
+Prof. Dr.-Ing. habil. Peter Sobe\\
+Prof. Dr. rer. pol. Dirk Reichelt\\
+Prof. Dr. rer. nat. Marco Block-Berlitz\\
+Prof. Dr.-Ing. Robert Baumgartl\\
+Prof. Dr.-Ing. Anna Sabine Hauptmann
+}
+
+%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
+%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir _LaTeX_master/LaTeX_master.sty}
+\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
+\begin{document}
+
+%\selectlanguage{english}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\chapter*{Vorbemerkungen}
+
+\section*{Belege}
+Teil-Beleg Ausgabe von jedem Professor.\\
+3-aus-5 Auswahl der besten Teilergebnisse.
+
+\chapter{Reliability of Computer Systems}
+Vorlesungen von: Prof. Dr.-Ing. habil. Peter Sobe
+\input{HTW_Spezielle_Themen_Skript_ch1}
+
+\chapter{Semantische Interoperabilität für M2M Szenarien / Genetische Algorithmen}
+Vorlesungen von: Prof. Dr. rer. pol. Dirk Reichelt
+
+\chapter{3D-Rekonstruktion}
+Vorlesungen von: Prof. Dr. rer. nat. Marco Block-Berlitz
+
+\chapter{Reverse Engineering}
+Vorlesungen von: Prof. Dr.-Ing. Robert Baumgartl
+
+\chapter{Antipattern im Kontext der Software-Entwicklung}
+Vorlesungen von: Prof. Dr.-Ing. Anna Sabine Hauptmann
+
+
+
+
+
+
+%\newpage
+
+%\printbibliography
+ 
+\end{document}
