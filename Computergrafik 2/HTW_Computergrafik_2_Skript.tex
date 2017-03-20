@@ -1,0 +1,54 @@
+\newcommand{\customDir}{../}
+\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
+
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+\setCustomSlidePath{Vorlesung/CG2-01-15}
+
+\setCustomTitle{Computergrafik 2}
+\setCustomSubtitle{Vorlesungsskript}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+\setCustomNoteB{Vorlesung von Prof. Dr.-Ing. habil. Oertel}
+
+%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
+%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir _LaTeX_master/LaTeX_master.sty}
+\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
+
+%\renewcommand{\unimptnt}[1]{}
+
+\begin{document}
+
+%\selectlanguage{english}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\unimptnt{
+\chapter*{Vorbemerkung}
+
+Folien mit *: wichtige Folien
+}
+
+\section*{Beleg}
+Gesteine und Mineralien
+
+\section*{Prüfung (mündlich)}
+Gespräch (ohne Aufgabenzettel und Vorbereitungszeit), 20 Minuten.\\
+Keine Unterlagen.
+
+\chapter{3dsMax: Struktur und Objekt}
+\input{HTW_Computergrafik_2_Skript_ch1}
+
+
+
+%\newpage
+%\printbibliography
+
+\end{document}
