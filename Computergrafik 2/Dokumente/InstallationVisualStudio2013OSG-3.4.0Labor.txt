@@ -1,0 +1,17 @@
+
+PATH Variable:
+
+P:\OpenGL\OpenSG\OpenSceneGraph-3.4.0\bin
+P:\OpenGL\bin
+
+Include Path:
+
+P:\OpenGL\OpenSG\OpenSceneGraph-3.4.0\include
+
+Library Path:
+
+P:\OpenGL\OpenSG\OpenSceneGraph-3.4.0\lib;P:\OpenGL\OpenSG\OpenSceneGraph-3.4.0\lib\osgPlugins-3.4.0 
+
+Libraries:
+
+osgPresentation.lib;osgWidget.lib;osgManipulator.lib;osgAnimation.lib;osgVolume.lib;osgViewer.lib;osgSim.lib;osgText.lib;osgShadow.lib;osgParticle.lib;osgGA.lib;osgFX.lib;osgTerrain.lib;osgDB.lib;osgUtil.lib;osg.lib;OpenThreads.lib

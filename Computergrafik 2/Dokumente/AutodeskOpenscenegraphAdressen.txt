@@ -1,0 +1,7 @@
+
+Autodesk:
+www.autodesk.de
+www.students.autodesk.de
+
+Open Scene Graph:
+www.openscenegraph.org
