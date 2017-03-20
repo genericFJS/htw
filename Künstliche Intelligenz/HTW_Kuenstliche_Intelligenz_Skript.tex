@@ -1,0 +1,61 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\newcommand{\customDir}{../}
+\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
+
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+%\setCustomSlidePath{Folien}
+
+\setCustomTitle{Künstliche Intelligenz}
+\setCustomSubtitle{Vorlesungsskript}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+\setCustomNoteB{Vorlesung von Prof. Dr. rer. nat.  Boris Hollas}
+
+%\setCustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}}	% Formatierung der Signatur in der Fußzeile
+%\setCustomTitleAuthor{\textcolor{darkgray}{Mitschrift von \customAuthor}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir _LaTeX_master/LaTeX_master.sty}
+\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
+\begin{document}
+
+%\selectlanguage{english}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\chapter*{Vorbemerkungen}
+\section*{Inhalt}
+\begin{enumerate}
+\item Prädikatenlogik
+\item Prolog-Programmmierung
+\item Logisches Schließen
+\item Sprachverstehen
+\item Problemlösen durch Suche
+\item Bayes'sche Netze
+\end{enumerate}
+
+\section*{Prüfungsvorleistung}
+
+\section*{Prüfung}
+\begin{itemize}
+\item selbstbeschriebenes Blatt
+\item Taschenrechner
+\end{itemize}
+
+\section*{Literatur}
+\begin{itemize}
+\item Ertl: Grundkurs Künstliche Intelligenz
+\item Russell/Norvig: Künstliche Intelligenz
+\end{itemize}
+
+\chapter{Prädikatenlogik}
+\input{HTW_Kuenstliche_Intelligenz_Skript_ch1}
+%\newpage
+%\printbibliography
+
+\end{document}
