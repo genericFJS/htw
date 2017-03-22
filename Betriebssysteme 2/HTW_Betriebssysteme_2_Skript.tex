@@ -1,0 +1,44 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\newcommand{\customDir}{../}
+\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
+
+%\setboolean{twosided}{true}
+%\setCustomDocumentClass{scrartcl}
+%\setCustomDesign{htw}
+\setCustomSlidePath{Vorlesung/bs2-}
+\setCustomSlideScale{1}
+
+\setCustomTitle{Betriebssysteme 2}
+\setCustomSubtitle{Vorlesungsskript}
+\setCustomAuthor{Falk-Jonatan Strube}
+%\setCustomNoteA{TitlepageNoteBeforeAuthor}
+\setCustomNoteB{Vorlesung von Prof. Dr.-Ing. Baumgartl}
+
+%\setCustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}}	% Formatierung der Signatur in der Fußzeile
+%\setCustomTitleAuthor{\textcolor{darkgray}{Mitschrift von \customAuthor}}	% Formatierung des Autors auf dem Titelblatt
+
+\input{\customDir _LaTeX_master/LaTeX_master.sty}
+\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
+
+%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
+
+\begin{document}
+
+%\selectlanguage{english}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\chapter*{Vorbemerkungen}
+
+\section*{Prüfung}
+keine Unterlagen
+
+\chapter{Synchronisation}
+\input{HTW_Betriebssysteme_2_Skript_ch1}
+
+%\newpage
+%\printbibliography
+
+\end{document}

@@ -1,0 +1,59 @@
+\lecdate{22.03.2017}
+\section{Beispiel Bankautomat}
+\slides{00-synchronisation}{2}
+\subsection*{Möglicher (typischer) Ablauf}
+\slides{00-synchronisation}{3}
+\section{Race Condition}
+\slides{00-synchronisation}{4}
+\section{Kritischer Abschnitt}
+\slides{00-synchronisation}{5}
+$\to$ Lost-Update-Problem!
+\begin{framed}
+Zugriffsoperationen zur gemeinsam genutzten Variable
+bilden einen so genannten \emph{kritischen Abschnitt} (critical
+section).
+\end{framed}
+Zur Erinnerung: Scheduling (kooperativ $\to$ syscalls [$\Rightarrow$ Semaphor], …)
+\section{Steuerung des kritischen Abschnitts}
+\slides{00-synchronisation}{6}
+\subsection*{Steuerung durch klammernde Funktionen}
+\slides{00-synchronisation}{7}
+$\to$ dezentrale Steuerung\\
+Was müssen die Funktionen \lstinline$enter_cs()$ und \lstinline$leave_cs()$ tun?
+\slides{00-synchronisation}{8}
+\section{Realisierungsvarianten}
+\slides{00-synchronisation}{9}
+\subsection{Versuch dezentral zu koordinieren}
+\subsubsection{Naiver Versuch 1: „Ping-Pong“}
+\slides{00-synchronisation}{11}
+$\Rightarrow$ funktioniert daher nicht vernünftig.
+\subsubsection{Versuch 2: Variable zeigt freien kritischen Abschnitt an}
+\slides{00-synchronisation}{12}
+Bewertung:
+\slides{00-synchronisation}{13}
+$\Rightarrow$ funktioniert gar nicht, da kritischer Abschnitt von beiden betreten werden kann!
+\subsubsection{Versuch 3: Mehrere Variablen zeigen freien kritischen Abschnitt an}
+\slides{00-synchronisation}{14}
+Bewertung:
+\slides{00-synchronisation}{15}
+$\Rightarrow$ funktioniert auch nicht, aus selben Grund wie Versuch 2!
+\subsubsection{Versuch 4: Mehrere Variablen zeigen Wunsch zum Eintreten in kritischen Abschnitt an}
+\slides{00-synchronisation}{16}
+Bewertung:
+\slides{00-synchronisation}{17}
+$\Rightarrow$ funktioniert nicht vernünftig, da Deadlock-Risiko.
+\subsubsection{Versuch 5: Mehrere Variablen mit Eintrittswunsch und weiterer Prüfung}
+\slides{00-synchronisation}{18}
+Bewertung:
+\slides{00-synchronisation}{19}
+$\Rightarrow$ durch zufällige Verzögerung ist diese Lösung schon relativ gut. Statistisch kann trotzdem (bei Mehrprozessorsystemen) noch ein Livelock eintreten.
+\subsubsection{Algorithmus von Peterson}
+Vergleich auch: Algorithmus von Dekker und Dijkstra.
+\slides{00-synchronisation}{20}
+Bewertung:
+\slides{00-synchronisation}{21}
+Anmerkung: Bei Implementation kann es passieren, dass es nicht funktioniert $\to$ Der Algorithmus geht davon aus, dass Wertänderungen (bspw. von \lstinline$turn$) sofort von dem anderen Prozess gesehen wird. Tatsächlich passiert das (bei typischen Multiprozessorsystemen) erst zeitverzögert. Dafür müssten Schreibbarrieren eingeführt werden.
+
+
+
+
