@@ -171,7 +171,8 @@
 %\renewcommand{\emph}[1]{\oldemph{#1}}
 \RequirePackage{xpatch}	% ua. Konkatenieren von Strings/Variablen (etoolbox)
 \usepackage{xstring}	% String Operationen
-\usepackage{minibox}	% Minibox anstatt \fbox{} für Boxen mit Zeilenumbruch
+\usepackage{minibox}	% Minibox anstatt \fbox{} für Boxen mit (manuellen) Zeilenumbruch
+\usepackage{framed}		% \begin{framed} statt minibox/fbox mit automatischem Zeilenumbruch
 
 % Einrichtung von lst
 \lstset{
