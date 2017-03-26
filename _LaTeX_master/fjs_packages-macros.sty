@@ -1,87 +1,20 @@
-% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
-%-- Prüfen, ob Beamer
-\ifthenelse{\equal{\customDocumentClass}{beamer}}{
-%%% TODO: andere Layouts für Beamer außer HTW
-	\documentclass[ignorenonframetext, 11pt, table]{beamer}
-	
-	\usenavigationsymbolstemplate{}
-	\setbeamercolor{author in head/foot}{fg=black}
-	\setbeamercolor{title}{fg=black}
-	\setbeamercolor{bibliography entry author}{fg=htworange!70}
-	%\setbeamercolor{bibliography entry title}{fg=blue} 
-	\setbeamercolor{bibliography entry location}{fg=htworange!60} 
-	\setbeamercolor{bibliography entry note}{fg=htworange!60}  
-	
-	\setbeamertemplate{itemize item}{\color{black}$\bullet$}
-	\setbeamertemplate{itemize subitem}{\color{black}--}
-	\setbeamertemplate{itemize subsubitem}{\color{black}$\bullet$}
-	\makeatother
-	\setbeamertemplate{footline}
-	{
-	\leavevmode
-	\def\arraystretch{1.2}
-	\arrayrulecolor{gray}
-	\begin{tabular}{ p{0.167\textwidth} | p{0.491\textwidth} | p{0.089\textwidth} | p{0.103\textwidth}}
-	\hline
-	\strut\insertshortauthor & \insertshorttitle & Slide \insertframenumber{}% / \inserttotalframenumber{}
-	 & May 4, 2016\\
-	\end{tabular}
-	}
-	\setbeamertemplate{headline}
-	{
-	\leavevmode
-	\setlength{\arrayrulewidth}{1pt}
-	\hspace*{2em}	
-	\begin{tabular}{p{0.63\textwidth}}
-	\rule{0pt}{3em}\normalsize{\textbf{\insertsection\strut}}\\
-	\arrayrulecolor{htworange}
-	\hline
-	\end{tabular}
-	\begin{tabular}{l}
-	\rule{0pt}{4em}\includegraphics[width=3.25cm]{\customDir _LaTeX_master/HTW_GESAMTLOGO_CMYK.eps}\\
-	\end{tabular}
-	}
-	\makeatletter	
-}{	
-	%-- Für Spicker einiges anders:
-	\ifthenelse{\equal{\customDocumentClass}{cheatsheet}}{
-		\documentclass[a4paper,10pt,landscape]{scrartcl}
-		\usepackage{geometry}
-		\geometry{top=2mm, bottom=2mm, headsep=0mm, footskip=0mm, left=2mm, right=2mm}
-		
-		% Für Spicker \spsection für Section, zur Strukturierung \HRule oder \HDRule Linie einsetzen
-		\usepackage{multicol}
-		\newcommand{\spsection}[1]{\textbf{#1}}	% Platzsparende "section" für Spicker
-	}{	%-- Ende Spicker-Unterscheidung-if
-		%-- Unterscheidung Doppelseitig
-		\ifthenelse{\boolean{twosided}}{
-			\documentclass[a4paper,11pt, footheight=26pt,twoside]{\customDocumentClass}
-			\usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
-			\geometry{top=30mm, bottom=22mm, headsep=10mm, footskip=12mm, inner=27mm, outer=13mm}
-		}{
-			\documentclass[a4paper,11pt, footheight=26pt]{\customDocumentClass}
-			\usepackage[head=23pt]{geometry}	% head=23pt umgeht Fehlerwarnung, dafür größeres "top" in geometry
-			\geometry{top=30mm, bottom=22mm, headsep=10mm, footskip=12mm, left=20mm, right=20mm, marginparsep=0mm}
-		}
-		%-- Nummerierung bis Subsubsection für Report
-		\ifthenelse{\equal{\customDocumentClass}{report} \OR \equal{\customDocumentClass}{scrreprt}}{
-			\setcounter{secnumdepth}{3}	% zählt auch subsubsection
-			\setcounter{tocdepth}{3}	% Inhaltsverzeichnis bis in subsubsection
-		}{}
-	}%-- Ende Spicker-Unterscheidung-else
-	
-	\usepackage{scrlayer-scrpage}	% Kopf-/Fußzeile
-	\renewcommand*{\thefootnote}{\fnsymbol{footnote}}	% Fußnoten-Symbole anstatt Zahlen
-	\renewcommand*{\titlepagestyle}{empty} % Keine Seitennummer auf Titelseite
-	\usepackage[perpage]{footmisc}	% Fußnotenzählung Seitenweit, nicht Dokumentenweit
-}
+%-- Nummerierung bis Subsubsection für Report
+\setcounter{secnumdepth}{3}	% zählt auch subsubsection
+\setcounter{tocdepth}{3}	% Inhaltsverzeichnis bis in subsubsection
+
+% LuaLaTeX Unterscheidung
+\usepackage{ifluatex}
 
 % Input inkl. Umlaute, Silbentrennung
-\RequirePackage[T1]{fontenc}
-\RequirePackage[utf8]{inputenc}
+\ifluatex
+	\usepackage{fontspec}
+\else
+	\usepackage[utf8]{inputenc}
+	\usepackage[T1]{fontenc}
+\fi
 \usepackage[english,ngerman]{babel}
 \usepackage{csquotes}	% Anführungszeichen
-\RequirePackage{marvosym}
+\usepackage{marvosym}
 \usepackage{eurosym}
 
 % Style-Aufhübschung
@@ -93,9 +26,7 @@
 % Mathe usw.
 \usepackage{amssymb}
 \usepackage{amsthm}
-\ifthenelse{\equal{\customDocumentClass}{beamer}}{}{
 \usepackage[fleqn,intlimits]{amsmath}	% fleqn: align-Umgebung rechtsbündig; intlimits: Integralgrenzen immer ober-/unterhalb
-}
 %\usepackage{mathtools} % u.a. schönere underbraces
 \usepackage{xcolor}
 \usepackage{esint}	% Schönere Integrale, \oiint vorhanden
@@ -160,11 +91,10 @@
 \NumTabs{6}	% Anzahl von Tabs pro Zeile zum springen
 \usepackage{listings} % Source-Code mit Tabs
 \usepackage{lstautogobble} 
-\ifthenelse{\equal{\customDocumentClass}{beamer}}{}{
+\usepackage{transparent}
 \usepackage{enumitem}	% Anpassung der enumerates
 %\setlist[enumerate,1]{label=(\arabic*)}	% global andere Enum-Items
 \renewcommand{\labelitemiii}{$\scriptscriptstyle ^\blacklozenge$} % global andere 3. Item-Aufzählungszeichen
-}
 \usepackage{letltxmacro} % neue Definiton von Grundbefehlen
 % Nutzen:
 %\LetLtxMacro{\oldemph}{\emph}
@@ -225,7 +155,7 @@ bibencoding=ascii,
 % Grafiken
 \usepackage{graphicx}
 \usepackage{epstopdf}	% eps-Vektorgrafiken einfügen
-\usepackage{transparent}	% transparent nutzen: {\transparent{0.4} ...}
+%\usepackage{transparent}	% transparent nutzen: {\transparent{0.4} ...}
 %\epstopdfsetup{outdir=\customDir}
 % Prüft, ob Grafik existiert (mit \ifvalidimage{}{}) [Quelle: https://tex.stackexchange.com/a/99176]:
 \makeatletter
@@ -270,7 +200,6 @@ bibencoding=ascii,
 } 
 \catcode`\*=12
 \makeatother
-\usepackage{letltxmacro}	% Latex-Befehle unter anderem Namen neu definieren
 \LetLtxMacro{\forceincludegraphics}{\includegraphics}	% neuer Befehl für includegraphics
 \renewcommand{\includegraphics}[2][]{	% altes includegraphics neu definieren, damit es auch nicht vorhandene einfügt
 \ifvalidimage{#2}{
@@ -283,7 +212,6 @@ bibencoding=ascii,
 
 % pdf-Setup
 \usepackage{pdfpages}
-\ifthenelse{\equal{\customDocumentClass}{beamer}}{}{
 \usepackage[bookmarks,%
 bookmarksopen=false,% Klappt die Bookmarks in Acrobat aus
 colorlinks=true,%
@@ -291,97 +219,202 @@ linkcolor=black,%
 citecolor=red,%
 urlcolor=green,%
 ]{hyperref}
-}
-
-%-- Unterscheidung des Stils
-\newcommand{\customLogo}{}
-\newcommand{\customPreamble}{}
-\ifthenelse{\equal{\customDesign}{htw}}{
-	% HTW Corporate Design: Arial (Helvetica)
-	\usepackage{helvet}
-	\renewcommand{\familydefault}{\sfdefault}
-	\renewcommand{\customLogo}{HTW-Logo}
-	\renewcommand{\customPreamble}{HTW Dresden}
-}{
-% \renewcommand{\customLogo}{HTW-Logo.eps}
-}
 
 % Nach Dokumentenbeginn ausführen:
-\AtBeginDocument{
-	% Autor und Titel für pdf-Eigenschaften festlegen, falls noch nicht geschehen
-	\providecommand{\pdfAuthor}{John Doe}
-	\ifdefempty{\customAuthor} {} {\renewcommand{\pdfAuthor}{\customAuthor}}
-	\providecommand{\pdfTitle}{}
-	\providecommand{\pdfTitleA}{}
-	\providecommand{\pdfTitleB}{}
-	\providecommand{\pdfTitleC}{}	
-	\ifdefempty{\pdfTitle}{
-		\ifdefempty{\customPreamble} {} {\renewcommand{\pdfTitleA}{\customPreamble{} | }}
-		\ifdefempty{\customTitle} {\renewcommand{\pdfTitleB}{No Title}} {\renewcommand{\pdfTitleB}{\customTitle}}
-		\ifdefempty{\customSubtitle} {} {\renewcommand{\pdfTitleC}{ - \customSubtitle}}
-	}{}
-	
-	\newcommand{\customLogoLocation}{\customDir _LaTeX_master/\customLogo}
+\makeatletter
+\AtBeginDocument{	
+	% pdf Informationen
 	\hypersetup{
-		pdfauthor={\pdfAuthor},
-		pdftitle={\pdfTitleA\pdfTitleB\pdfTitleC},
+		pdfauthor={\@author},
+		pdftitle={\@title},
 		pdfproducer={LaTeX Layout erstellt von Falk-Jonatan Strube}
 	}
-	\ifthenelse{\equal{\customDocumentClass}{beamer}}{
-		\title{\customTitle}
-		\author{\customAuthor}
-	}{
-		\automark[section]{section}
-		\automark*[subsection]{subsection}
-		\pagestyle{scrheadings}
-		\ifthenelse{\equal{\customDocumentClass}{report} \OR \equal{\customDocumentClass}{scrreprt}}{
-		\renewcommand*{\chapterpagestyle}{scrheadings}
-		}{}
-		%\renewcommand*{\titlepagestyle}{scrheadings}
-		\ihead{\includegraphics[height=1.7em]{\customLogoLocation}}
-		\ihead{\transparent{1}\includegraphics[height=1.7em]{\customLogoLocation}}
-		%\ohead{\truncate{4cm}{\customTitle}}
-		\chead{\transparent{1}\truncate{.5\textwidth}{\headmark}}
-		%\ohead{\customTitle}
-		\ohead{\transparent{1}\customTitle}
-		\cfoot{\transparent{1}\pagemark}
-		\ofoot{\transparent{1}\customSignature}
-		% Titelseite
-		\title{
-		\includegraphics[width=0.35\textwidth]{\customDir _LaTeX_master/\customLogo}\\\vspace{0.5em}
-		\Huge\textbf{\customTitle}
-		\ifdefempty{\customSubtitle} {} {\\\vspace*{0.7em}\Large \customSubtitle}
-		\\\vspace*{5em}}
-		\author{
-		\ifdefempty{\customNoteA} {} {\customNoteA \vspace*{1em}}\\ 
-		\ifdefempty{\customAuthor} {} {\customTitleAuthor}
-		\ifdefempty{\customNoteB}{}{\vspace*{1em}\\\customNoteB}
-		}
-		
-		\ifthenelse{\equal{\customDocumentClass}{cheatsheet}}{
-			\pagestyle{empty}
-			\setlist{nolistsep}
-	%		\usepackage{parskip}	% Aufzählung Abstand
-	%		\setlength{\parskip}{0em}
-			\lstset{
-	    belowcaptionskip=0pt,
-	    belowskip=0pt,
-	    aboveskip=0pt,
-			tabsize=2,
-			frame=none,
-			numbers=none,
-			showspaces=false,
-			showstringspaces=false,
-			breaklines=true,
-			}
-		}{}
+	% signierte Fußzeile
+	\providecommand{\ofootname}{Mitschrift von}
+	\providecommand{\pathtomaster}{../}
+	\ofoot{%
+	\ifdefined\ofoottext
+	\else
+	\begin{minipage}{40mm}
+	\begin{flushright}
+	\textcolor{gray}{
+	\ofootname\\
+	Falk-Jonatan Strube\vspace*{-1mm}}
+	\end{flushright}
+	\end{minipage}
+	\fi
+	\begin{minipage}{10 mm}
+	\includegraphics[height=9mm]{\pathtomaster/FJS-logo_gray}
+	\end{minipage}%
 	}
 }
+\makeatother
 
-% Unterabschnitte
-%\newtheorem{example}{Beispiel}%[section]
-%\newtheorem{definition}{Definition}[section]
-%\newtheorem{discussion}{Diskussion}[section]
-%\newtheorem{remark}{Bemerkung}[section]
-%\newtheorem{proof}{Beweis}[section]
-%\newtheorem{notation}{Schreibweise}[section]
+
+
+%%% ==================================================
+%%% ===================== MACROS =====================
+%%% ==================================================
+% Horizontale Linie:
+\newcommand{\HRule}[1][\medskipamount]{\par
+  \vspace*{\dimexpr-\parskip-\baselineskip+#1}
+  \noindent\rule[0.2ex]{\linewidth}{0.2mm}\par
+  \vspace*{\dimexpr-\parskip-.5\baselineskip+#1}}
+% Gestrichelte horizontale Linie:
+\RequirePackage{dashrule}
+\newcommand{\HDRule}[1][\medskipamount]{\par
+  \vspace*{\dimexpr-\parskip-\baselineskip+#1}
+  \noindent\hdashrule[0.2ex]{\linewidth}{0.2mm}{1mm} \par
+  \vspace*{\dimexpr-\parskip-.5\baselineskip+#1}}
+% Mathe in Anführungszeichen:
+\newsavebox{\mathbox}\newsavebox{\mathquote}
+\makeatletter
+\newcommand{\mq}[1]{% \mathquotes{<stuff>}
+  \savebox{\mathquote}{\text{"}}% Save quotes
+  \savebox{\mathbox}{$\displaystyle #1$}% Save <stuff>
+  \raisebox{\dimexpr\ht\mathbox-\ht\mathquote\relax}{"}#1\raisebox{\dimexpr\ht\mathbox-\ht\mathquote\relax}{''}
+}
+\makeatother
+
+% Paragraph mit Zähler (Section-Weise)
+\newcounter{cparagraphC}
+\newcommand{\cparagraph}[1]{
+\stepcounter{cparagraphC}
+\paragraph{\thesection{}-\thecparagraphC{} #1}
+%\addcontentsline{toc}{subsubsection}{\thesection{}-\thecparagraphC{} #1}
+\label{\thesection-\thecparagraphC}
+}
+\makeatletter
+\@addtoreset{cparagraphC}{section}
+\makeatother
+
+
+% (Vorlesungs-)Folien einbinden:
+% Folien von einer Datei skaliert
+\newcommand{\slide}[2][\customSlideScale]{\slides[#1]{}{#2}}
+\newcommand{\slideTrim}[6][\customSlideScale]{\slides[#1 , clip,  trim = #5cm #4cm #6cm #3cm]{}{#2}}
+% Folien von mehreren nummerierten Dateien skaliert
+\newcommand{\slides}[3][\customSlideScale]{\begin{center}
+\includegraphics[page=#3, scale=#1]{\customSlidePath #2.pdf}
+\end{center}}
+
+% \emph{} anders definieren
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \scshape \fi}
+\makeatother
+
+% unwichtiges
+\newcommand{\unimptnt}[1]{{\transparent{0.5}#1}}
+
+% alph. enumerate
+\newenvironment{anumerate}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}} % Alphabetische Aufzählung
+
+% Hanging parameters
+\newcommand{\hangpara}[1]{\par\noindent\hangindent+2em\hangafter=1 #1\par\noindent}
+
+%% EINFACHE BEFEHLE
+
+% Abkürzungen Mathe
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\PP}{\mathbb{P}}
+\renewcommand{\SS}{\mathbb{S}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cV}{\mathcal{V}}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\theta}{\vartheta}
+
+% Verschiedene als Mathe-Operatoren
+\DeclareMathOperator{\arccot}{arccot}
+\DeclareMathOperator{\arccosh}{arccosh}
+\DeclareMathOperator{\arcsinh}{arcsinh}
+\DeclareMathOperator{\arctanh}{arctanh}
+\DeclareMathOperator{\arccoth}{arccoth} 
+\DeclareMathOperator{\var}{Var} % Varianz 
+\DeclareMathOperator{\cov}{Cov} % Co-Varianz 
+
+% Farbdefinitionen
+\definecolor{red}{RGB}{180,0,0}
+\definecolor{green}{RGB}{75,160,0}
+\definecolor{blue}{RGB}{0,75,200}
+\definecolor{orange}{RGB}{255,128,0}
+\definecolor{yellow}{RGB}{255,245,0}
+\definecolor{purple}{RGB}{75,0,160}
+\definecolor{cyan}{RGB}{0,160,160}
+\definecolor{brown}{RGB}{120,60,10}
+
+\definecolor{itteny}{RGB}{244,229,0}
+\definecolor{ittenyo}{RGB}{253,198,11}
+\definecolor{itteno}{RGB}{241,142,28}
+\definecolor{ittenor}{RGB}{234,98,31}
+\definecolor{ittenr}{RGB}{227,35,34}
+\definecolor{ittenrp}{RGB}{196,3,125}
+\definecolor{ittenp}{RGB}{109,57,139}
+\definecolor{ittenpb}{RGB}{68,78,153}
+\definecolor{ittenb}{RGB}{42,113,176}
+\definecolor{ittenbg}{RGB}{6,150,187}
+\definecolor{itteng}{RGB}{0,142,91}
+\definecolor{ittengy}{RGB}{140,187,38}
+
+% Textfarbe ändern
+\newcommand{\tred}[1]{\textcolor{red}{#1}}
+\newcommand{\tgreen}[1]{\textcolor{green}{#1}}
+\newcommand{\tblue}[1]{\textcolor{blue}{#1}}
+\newcommand{\torange}[1]{\textcolor{orange}{#1}}
+\newcommand{\tyellow}[1]{\textcolor{yellow}{#1}}
+\newcommand{\tpurple}[1]{\textcolor{purple}{#1}}
+\newcommand{\tcyan}[1]{\textcolor{cyan}{#1}}
+\newcommand{\tbrown}[1]{\textcolor{brown}{#1}}
+
+% Umstellen der Tabellen Definition
+\newcommand{\mpb}[1][.3]{\begin{minipage}{#1\textwidth}\vspace*{3pt}}
+\newcommand{\mpe}{\vspace*{3pt}\end{minipage}}
+
+\newcommand{\resultul}[1]{\underline{\underline{#1}}}
+\newcommand{\parskp}{$ $\\}	% new line after paragraph
+\newcommand{\corr}{\;\widehat{=}\;}
+\newcommand{\mdeg}{^{\circ}}
+
+% mathematische Abkürzungen
+\newcommand{\nok}[2]{\binom{#1}{#2}}	% n über k BESSER: \binom{n}{k}
+\newcommand{\mtr}[1]{\begin{pmatrix}#1\end{pmatrix}}	% Matrix
+\newcommand{\dtr}[1]{\begin{vmatrix}#1\end{vmatrix}}	% Determinante (Betragsmatrix)
+\LetLtxMacro{\originalVec}{\vec}
+\renewcommand{\vec}[1]{\underline{#1}}	% Vektorschreibweise
+\newcommand{\imptnt}[1]{\colorbox{red!30}{#1}}	% Wichtiges
+\newcommand{\intd}[1]{\,\mathrm{d}#1}
+\newcommand{\diffd}[1]{\mathrm{d}#1}
+% für Module-Rechnung: \pmod{}
+\newcommand{\unit}[1]{\,\mathrm{#1}}
+%\LetLtxMacro{\ntilde}{\tilde}
+%\renewcommand{\tilde}{\widetilde}
+
+% weiter Abkürzungen
+\newcommand{\gdw}{genau dann wenn}
+\newcommand{\lecdate}[1]{\marginpar{\small\textcolor{gray}{Vorlesung\newline #1}}}
