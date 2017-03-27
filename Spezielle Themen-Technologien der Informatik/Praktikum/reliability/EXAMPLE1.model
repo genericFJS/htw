@@ -1,0 +1,16 @@
+[num states]
+4
+0 1 a failure
+1 0 b repair
+1 2 c failure
+2 1 d repair
+2 3 e failure
+[assign]
+a=3*lam
+b=mu
+c=2*lam
+d=2*mu
+e=lam
+lam=0.00005
+mu= 0.2
+[END]
