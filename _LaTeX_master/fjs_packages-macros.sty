@@ -290,13 +290,23 @@ urlcolor=green,%
 
 
 % (Vorlesungs-)Folien einbinden:
+\makeatletter
+% Folien-Pfad (inkl. Dateiname ohne Endung und ggf. ohne Nummerierung)
+\newcommand{\@slidePath}{}
+\newcommand{\slidePath}[1]{\renewcommand{\@slidePath}{#1}}
+% Folien Eigenschaften
+\newcommand{\@slideScale}{0.5}
+\newcommand{\slideScale}[1]{\renewcommand{\@slideScale}{#1}}
+\AtBeginDocument{
 % Folien von einer Datei skaliert
-\newcommand{\slide}[2][\customSlideScale]{\slides[#1]{}{#2}}
-\newcommand{\slideTrim}[6][\customSlideScale]{\slides[#1 , clip,  trim = #5cm #4cm #6cm #3cm]{}{#2}}
+\newcommand{\slide}[2][\@slideScale]{\slides[#1]{}{#2}}
+\newcommand{\slideTrim}[6][\@slideScale]{\slides[#1 , clip,  trim = #5cm #4cm #6cm #3cm]{}{#2}}
 % Folien von mehreren nummerierten Dateien skaliert
-\newcommand{\slides}[3][\customSlideScale]{\begin{center}
-\includegraphics[page=#3, scale=#1]{\customSlidePath #2.pdf}
+\newcommand{\slides}[3][\@slideScale]{\begin{center}
+\includegraphics[page=#3, scale=#1]{\@slidePath #2.pdf}
 \end{center}}
+}
+\makeatother
 
 % \emph{} anders definieren
 \makeatletter
