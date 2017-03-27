@@ -91,7 +91,6 @@
 \NumTabs{6}	% Anzahl von Tabs pro Zeile zum springen
 \usepackage{listings} % Source-Code mit Tabs
 \usepackage{lstautogobble} 
-\usepackage{transparent}
 \usepackage{enumitem}	% Anpassung der enumerates
 %\setlist[enumerate,1]{label=(\arabic*)}	% global andere Enum-Items
 \renewcommand{\labelitemiii}{$\scriptscriptstyle ^\blacklozenge$} % global andere 3. Item-Aufzählungszeichen
@@ -155,7 +154,7 @@ bibencoding=ascii,
 % Grafiken
 \usepackage{graphicx}
 \usepackage{epstopdf}	% eps-Vektorgrafiken einfügen
-%\usepackage{transparent}	% transparent nutzen: {\transparent{0.4} ...}
+\usepackage{transparent}	% transparent nutzen: {\transparent{0.4} ...}
 %\epstopdfsetup{outdir=\customDir}
 % Prüft, ob Grafik existiert (mit \ifvalidimage{}{}) [Quelle: https://tex.stackexchange.com/a/99176]:
 \makeatletter
@@ -242,7 +241,8 @@ urlcolor=green,%
 	Falk-Jonatan Strube\vspace*{-1mm}}
 	\end{flushright}
 	\end{minipage}
-	\fi
+	\fi%
+	\hspace*{1mm}%
 	\begin{minipage}{10 mm}
 	\includegraphics[height=9mm]{\pathtomaster/FJS-logo_gray}
 	\end{minipage}%
@@ -398,10 +398,11 @@ urlcolor=green,%
 
 \newcommand{\resultul}[1]{\underline{\underline{#1}}}
 \newcommand{\parskp}{$ $\\}	% new line after paragraph
-\newcommand{\corr}{\;\widehat{=}\;}
-\newcommand{\mdeg}{^{\circ}}
+\newcommand{\parnl}{\unskip\parfillskip 0pt \par} % justified new line (brace line!)
 
 % mathematische Abkürzungen
+\newcommand{\corr}{\;\widehat{=}\;}
+\newcommand{\mdeg}{^{\circ}}
 \newcommand{\nok}[2]{\binom{#1}{#2}}	% n über k BESSER: \binom{n}{k}
 \newcommand{\mtr}[1]{\begin{pmatrix}#1\end{pmatrix}}	% Matrix
 \newcommand{\dtr}[1]{\begin{vmatrix}#1\end{vmatrix}}	% Determinante (Betragsmatrix)
