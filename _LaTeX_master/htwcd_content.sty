@@ -180,6 +180,7 @@
 %%% Titelseite (inspiriert von dem Paket tudscr):
 \renewcommand*{\maketitle}{%
 \begin{titlepage}%
+\begin{flushleft}
 \renewcommand{\thefootnote}{$\star$}%
 %%% Kopfzeile HTW-Style:
 \@htwheader\\[13mm]
@@ -218,6 +219,7 @@
 \ifdefempty{\@publishers}{}{\\[4.5mm]{\Large\@publishers{}\strut}}%
 \renewcommand\footnoterule{}
 \@thanks\global\let\@thanks\@empty
+\end{flushleft}
 \end{titlepage}
 \setcounter{footnote}{0}
 }

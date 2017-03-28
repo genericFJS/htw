@@ -102,15 +102,17 @@
 \usepackage{xstring}	% String Operationen
 \usepackage{minibox}	% Minibox anstatt \fbox{} für Boxen mit (manuellen) Zeilenumbruch
 \usepackage{framed}		% \begin{framed} statt minibox/fbox mit automatischem Zeilenumbruch
+\usepackage{microtype}	% Verfeinerte Hyphenation
 
 % Einrichtung von lst
+%\renewcommand*{\ttdefault}{qcr}
 \lstset{
 basicstyle=\ttfamily, 
+%basicstyle=\footnotesize\sffamily\color{black},
 %mathescape=true, 
 %escapeinside=^^, 
 autogobble, 
 tabsize=2,
-basicstyle=\footnotesize\sffamily\color{black},
 frame=single,
 rulecolor=\color{lightgray},
 numbers=left,
@@ -216,7 +218,7 @@ bookmarksopen=false,% Klappt die Bookmarks in Acrobat aus
 colorlinks=true,%
 linkcolor=black,%
 citecolor=red,%
-urlcolor=green,%
+urlcolor=htworange,%
 ]{hyperref}
 
 % Nach Dokumentenbeginn ausführen:
