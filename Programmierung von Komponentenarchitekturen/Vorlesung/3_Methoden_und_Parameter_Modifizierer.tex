@@ -1,0 +1,81 @@
+\lstinline$public int myFunction(int a, out string s, ref double d, params double[] d);$
+\section{Ausgabeparameter (out)}
+\begin{itemize}
+\item müssen in der Methode zugewiesen werden
+\item müssen nicht vor Aufruf der Methode initialisiert werden
+\item pass-by-reference
+\end{itemize}
+\subsubsection*{Beispiel}
+\begin{lstlisting}[language={[Sharp]C}]
+public static int myFunction(out double d){
+	d = 1;
+	return 0;
+}
+
+// Aufruf: 
+double d;
+int i = myFunction(out d);
+// d=1
+\end{lstlisting}
+\section{Referenzparameter (ref)}
+\begin{itemize}
+\item Wert-Änderungen ändern den Parameter auch nach Abarbeitung der Methode
+\item pass-by-reference
+\end{itemize}
+\subsubsection*{Beispiel}
+\begin{lstlisting}[language={[Sharp]C}]
+public static void myFunction(ref double d){
+	// d=0
+	d = 1;
+}
+
+// Aufruf: 
+double d = 0.0;
+int i = myFunction(ref d);
+// d=1
+\end{lstlisting}
+\section{Beliebig viele Parameter (params)}
+\begin{itemize}
+\item Erlaubt beliebig viele Parameter des gleichen Typs zu übergeben ohne dass explizit ein Array erzeugt werden muss
+\item nur ein einzelner params Modifizierer pro Methode, stets an letzter Stelle der Argumentliste
+\end{itemize}
+\subsubsection*{Beispiel}
+\begin{lstlisting}[language={[Sharp]C}]
+public static double add(params double[] d){
+	double sum = 0; 
+	for (int i=0; i{\textless}dd.Length; i++) sum += d[i];
+	return sum;
+}
+
+// Aufruf: 
+double summe = add(0.1, 0.2, 0.3);
+\end{lstlisting}
+\section{pass-by-value}
+\begin{itemize}
+\item Wert der übergebenen Variable wird in eine neue lokale Variable kopiert
+\end{itemize}
+\subsubsection*{Beispiel}
+\begin{lstlisting}[language={[Sharp]C}]
+public static void myFunction(double d){
+	d = 1;
+}
+
+// Aufruf: 
+double d = 0;
+int i = myFunction(d);
+// still d = 0 
+\end{lstlisting}
+
+\section{Veranschaulichung}
+Wie viele Fehler finden Sie (angenommen die Signatur der Funktion ist korrekt)?
+\begin{lstlisting}[language={[Sharp]C}]
+public static int myFunction(int a, out int o, ref int r){ 
+	int result = a+o+r; 
+	return result; 
+} 
+
+static void Main(string[] args) { 
+	double a; 
+	myFunction(a, 1, 2); 
+}
+\end{lstlisting}

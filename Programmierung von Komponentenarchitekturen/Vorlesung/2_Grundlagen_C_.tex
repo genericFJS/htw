@@ -1,0 +1,255 @@
+\begin{lstlisting}[language={[Sharp]C}]
+// The topmost class in the .NET univeres: System.Object
+namespace System{
+	public class Object{
+		public Object();	// Konstruktor, wird auch von Konstruktoren abgeleiteter Klassen gerufen
+		public virtual Boolean Equals(Object obj);	// aktuelles Objekt und Objekt gleich?
+		public static Boolean Equals(Object o1, Object o2); // Objekte o1 und o2 gleich?
+		public virtual int GetHashCode();	// Eindeutiger Wert, override seitens abgeleiteter Klasse
+		public Type GetType();	// liefert exakten Typ des Objektes zur Laufzeit
+		pubilc virtual String ToString();	// gibt String zurück, der das aktuelle Objekt darstellt
+		protected virtual void Finalize();	// gibt einem Objekt Gelegenheit zum Versuch, Ressourcen freizugeben, bevor Objekt vom Garbage Collector freigegeben wird
+		protected Object MemberwiseClone();	// erstellt eine flache Kopie des aktuellen Objektes
+		public static bool ReferenceEquals(object objA, object objB);	// stellt fest, ob die angegebenen Objekte identischen Speicherplatz belegen, d.h. nicht nur gleiche Werte besitzen. Aus ReferenceEquals(o1,o2) == true folgt immer Equals(o1,o2) == true bzw. o1.Equals(o2) == true. Umgekehrt gilt die Aussage jedoch nicht.
+	}
+}
+\end{lstlisting}
+
+
+%\begin{center}
+%\includegraphics[scale=.25]{Vorlesung/a2GrundlagenC-img001.png} 
+%\end{center}
+
+\section{Intrinsische Datentypen}
+{\begin{otherlanguage}{english}\footnotesize%
+\begin{longtable}{L{.12} L{.125} L{.18} L{.28} L{.25}}
+C\# Shorthand & CLS \newline Compliant? & System Type & Range & Meaning \\\hline
+\lstinline$bool$ & yes & \lstinline$System.Boolean$ & \lstinline$true$ oder \lstinline$false$ & logical value \\
+\lstinline$sbyte$ & no & \lstinline$System.SByte$ & $-128$ … $127$ & signed 8-bit number \\
+\lstinline$byte$ & yes & \lstinline$System.Byte$ & $0$ … $255$ & unsigned 8-bit number \\
+\lstinline$short$ & yes & \lstinline$System.Int16$ & $-32\,768$ … $32\,767$ & signed 16-bit number \\
+\lstinline$ushort$ & no & \lstinline$System.UInt16$ & $0$ … $65\,535$ & unsigned 16-bit number \\
+\lstinline$int$ & yes & \lstinline$System.Int32$ & $-2\,147\,483\,648$ … $2\,147\,483\,647$ & signed 32-bit number \\
+\lstinline$uint$ & no & \lstinline$System.UInt32$ & $0$ … $4\;294\;967\;295$ & unsigned 32-bit number \\
+\lstinline$long$ & yes & \lstinline$System.Int64$ & $-9\;223\;372\;036\;854\;775\;808$ … $9\;223\;372\;036\;854\;775\;807$ & signed 64-bit number \\
+\lstinline$ulong$ & no & \lstinline$System.UInt64$ & $0$ … $18\;446\;744\;073\;\;709\;551\;615$ & unsigned 64-bit number \\
+\lstinline$char$ & yes & \lstinline$System.Char$ & \lstinline$U+0000$ … \lstinline$U+ffff$ & single 16-bit Unicode character \\
+\lstinline$float$ & yes & \lstinline$System.Single$ & $-3,4\cdot 10^{38}$ … $+3,4 \cdot 10^{38}$ & 32-bit floating-point number \\
+\lstinline$double$ & yes & \lstinline$System.Double$ & $\pm 5,0 \cdot 10^{-324}$ … $\pm 1,7 \cdot 10^{308}$ & 64-bit floating-point number \\
+\lstinline$decimal$ & yes & \lstinline$System.Decimal$ & $(-7,0 \times 10^{28}$ … $7,9\times 10^{28})$ / $10^{0 \text{ … }28}$ & \\
+\lstinline$string$ & yes & \lstinline$System.String$ & Limited by system memory & Represents a set of Unicode characters \\
+\lstinline$Object$ & yes & \lstinline$System.Object$ & Can store any data type in an object variable & The base class of all types in the .NET universe \\
+\end{longtable}
+\end{otherlanguage}}
+%\begin{center}
+%\includegraphics[width=.9\textwidth]{Vorlesung/a2GrundlagenC-img002.png}
+%\end{center}
+%\begin{center}
+%\includegraphics[width=.9\textwidth]{Vorlesung/a2GrundlagenC-img003.png}
+%\end{center}
+\begin{center}
+\includegraphics[width=.7\textwidth]{Vorlesung/a2GrundlagenC-img004.png}
+\end{center}
+
+\section{Boxing / Unboxing}
+
+\emph{boxing}: Konvertierung (Einschachteln) eines Wertetyps in ein object (implizit)\\
+\emph{unboxing}: Extraktion eines Wertetyps aus einem object (explizit)
+
+\subsection*{Beispiel Boxing}
+
+Boxing:
+\begin{lstlisting}[language={[Sharp]C}]
+Console.WriteLine("12.Equals(23) = \{0\}", 12.Equals(23));
+Console.WriteLine("12.ToString() = \{0\}", 12.ToString());
+Console.WriteLine("12.GetType() = \{0\}", 12.GetType());
+\end{lstlisting}
+Ausgabe:
+\begin{lstlisting}[language={[Sharp]C}]
+12.Equals(23) =
+12.ToString() =
+12.GetType() = 
+\end{lstlisting}
+Unboxing:
+\begin{lstlisting}[language={[Sharp]C}]
+object o = 123;
+int i = (int) o;
+\end{lstlisting}
+
+\subsection{Member der intrinsischen Datentypen}
+
+\begin{lstlisting}[language={[Sharp]C}]
+int.MaxValue	// liefert größten int
+int.MinValue	// liefert kleinsten int
+double.Epsilon	// liefert kleinste darstellbare Zahl
+
+char myChar = {}'a';
+char.isDigit(myChar)	// liefert True wenn myChar eine Zahl ist
+char.isLetter(myChar)	// liefert True wenn myChar eine Zahl ist
+char.isWhiteSpace({}'Hallo du',5)	// steht an 5-ter Stelle ein Leerzeichen?
+
+// Konvertierung von Strings:
+bool b = bool.Parse(inputString);	// liefert True wenn inputString = "True"
+double d = double.Parse(inputString);	// convertiert inputString in double
+int i = int.Parse(inputString);	// convertiert inputString in int
+\end{lstlisting}
+
+\subsection{Arbeiten mit Strings}
+\begin{otherlanguage}{english}
+\begin{longtable}{L{.2} L{.7}}
+String Member & Meaning\\\hline
+\lstinline$Length$ & This property returns the length of the current string.\\
+\lstinline$Compare()$ & This static method compares two strings.\\
+\lstinline$Contains()$ & This method determines whether a string contains a specific substring.\\
+\lstinline$Equals()$ & This method tests whether two string objects contain identical character data.\\
+\lstinline$Format()$ & This static method formats a string using other primitives (e.g., numerical data, other strings) and the \lstinline${0}$ notation.\\
+\lstinline$Insert()$ & This method inserts a string within a given string.\\
+\lstinline$PadLeft()$\newline \lstinline$PadRight()$ & These methods ar used to pad a string with some characters\\
+\lstinline$Remove()$\newline \lstinline$Replace()$ & Use these methods to receive a copy of a string with modifications (characters removed or replaced)\\
+\lstinline$Split()$ & This method returns a String array containing the substrings in this instance that are delimited by elements of a specified char array or string array.\\
+\lstinline$Trim()$ & This method removes all occurrences of a set of specified characters from the beginning and end of the current string.\\
+\lstinline$ToUpper()$\newline \lstinline$ToLower()$ & These methods create a copy of the current string in uppercase or lowercase format, respectively.
+\end{longtable}
+\end{otherlanguage}
+
+%\begin{center}
+%\includegraphics[width=.9\textwidth]{Vorlesung/a2GrundlagenC-img005.png}
+%\includegraphics[width=.9\textwidth]{Vorlesung/a2GrundlagenC-img006.png}
+%\end{center}
+
+\subsubsection*{Beispiel}
+\begin{lstlisting}[language={[Sharp]C}]
+string s = Console.ReadLine();	// z.B. "Hallo Welt"
+s = s.Replace("Hallo", "Tschüss");
+Console.WriteLine("Modified string: \{0\}", s);	// Tschüss Welt
+s = s + " ...";	// string concatenation
+Console.WriteLine("Modified string: \{0\}", s);	// Tschüss Welt ... 
+\end{lstlisting}
+
+\subsection{Textformatierung}
+%\includegraphics[scale=.35]{Vorlesung/a2GrundlagenC-img007.png} 
+\lstinline$Console.WriteLine("i = {0:F8}", i);$
+\subsubsection*{Allgemein}
+\lstinline${index[,breite][::formatierung]}$
+\begin{itemize}
+\item \lstinline$index$:\\
+Laufende Nummer des Ausdrucks (von 0 an 0(1)…)
+\item \lstinline$breite$:\\
+Anzahl Zeichen für Ergebnis der Formatierung:
+\begin{itemize}
+\item $>0$: Rechtsbündig
+\item $<0$: Linksbündig
+\end{itemize}
+wenn fehlt: kürzeste Ganzzahl (Länge)
+\item \lstinline$formatierung$:\\
+\begin{tabular}{l l l}
+Zeichen & Beschreibung & Defaultergebnis\\\hline
+\lstinline$C,c$ & Währung & \euro{}, \$ xx,xx.xx\\
+\lstinline$D,d$ & dezimal & [-] xxxx \\
+\lstinline$E,e$ & exponentiell & [-] x,xxxxE$\pm$xxx \\
+\lstinline$F,f$ & Festkomma & [-] xxxx,xx \\
+\lstinline$G,g[E,e]$ & exponentiell & variabel \\
+\lstinline$N,n$ & Nummer mit Trennzeichen & [-] xx,xxx,xx \\
+\lstinline$X,x$ & hexa, ganz & variabel \\
+\end{tabular}
+\end{itemize}
+\subsection{Escape Characters}
+\begin{otherlanguage}{english}
+\begin{longtable}{L{.2} L{.7}}
+Character & Meaning \\\hline
+\lstinline$\'$ & Inserts a single quote into a string literal.\\
+\lstinline$\"$ & Inserts a double quote into a string literal.\\
+\lstinline$\\$ & Inserst a backslash into a string literal. This can be quite helpful when defining a file or network paths.\\
+\lstinline$\a$ & Triggers a system alert (beep). For console programs, this can be an audio clue to the user.\\
+\lstinline$\n$ & Inserts a new line (on Windows platforms).\\
+\lstinline$\r$ & Inserts a carriage return.\\
+\lstinline$\t$ & Inserts a horizontal tab into the string literal.
+\end{longtable}
+\end{otherlanguage}
+%\begin{center}
+%\includegraphics[width=.9\textwidth]{Vorlesung/a2GrundlagenC-img008.png}
+%\end{center}
+
+\subsection{Widening / Narrowing}
+
+Im folgenden Code nimmt die Add Methode nur Argumente vom Typ int, bekommt aber short übergeben. Was passiert? Welcher Teil des Codes könnte Probleme geben?
+%%% TODO
+\begin{lstlisting}[language={[Sharp]C}]
+public static void Main(string[] args){
+	short a = 10, b = 10;	
+	short c = Add(a, b);
+	Console.WriteLine("{0} + {1} = {2}", a, b, c);
+}
+
+public static int Add(int a, int b){
+	return a + b;
+}
+\end{lstlisting}[language={[Sharp]C}]
+
+\subsection{Schlüsselwort var}
+Typen werden automatisch aus der anfänglichen Zuweisungen geschlussfolgert.\\
+$\to$ implizite Typisierung
+
+\subsubsection*{Beispiel}
+\begin{lstlisting}[language={[Sharp]C}]
+var myInt = 0;
+var myBool = true;
+var myString = "Time, marches on ... ";
+Console.WriteLine("myInt is a: {0}", myInt.GetType().Name);
+Console.WriteLine("myBool is a: {0}", myBool.GetType().Name);
+Console.WriteLine("myString is a: {0}", myString.GetType().Name);
+\end{lstlisting}
+
+~
+
+\section{Schleifen}
+
+Wie in C\# gibt es die folgenden Schleifen:
+\begin{itemize}
+\item \lstinline$do {...} while (...)$
+\item \lstinline$while (...) {...}$
+\item \lstinline$for (...; ...; ...) {...}$
+\end{itemize}
+Zusätzlich gibt es die foreach Schleife:
+\begin{itemize}
+\item \lstinline$foreach$ (Typ element in Menge)
+\item jedes Element einer Menge wird genau 1 mal durchlaufen
+\item Die Menge kann alles sein was das Ienumerable Interface implementiert (Array, Liste, …)
+\item entspricht einem Iterator in C++
+\item durchlaufene Elemente können nicht verändert werden
+\item Beispiel:
+\end{itemize}
+\begin{lstlisting}[language={[Sharp]C}]
+string[] carTypes = {"Ford", "BMW", "Trabbi", "Honda"};
+foreach (string c in carTypes) 
+Console.WriteLine(c);
+\end{lstlisting}
+
+%\includegraphics{Vorlesung/a2GrundlagenC-img009.png} 
+
+\section{Garbage Collector}
+
+\begin{itemize}
+\item Objekte benötigen Speicher im Heap (Speicherallokation mit new)
+\item werden Objekte nicht mehr benötigt sollte der Speicher wieder freigegeben werden
+\item Bsp: 
+\begin{lstlisting}[language={[Sharp]C}]
+Circle kreis1 = new Circle();
+Circle kreis2 = new Circle();
+[...]
+kreis1 = null2;
+\end{lstlisting}
+\item Speicherfreigabe ist in C\# nicht explizit möglich, sondern geschieht durch den Garbage Collector
+\end{itemize}
+
+\subsubsection*{Funktionsweise}
+\begin{center}
+\includegraphics[scale=.7]{Vorlesung/a2GrundlagenC-img010.png}
+\end{center}
+Garbage Collector wird ausgelöst:
+\begin{enumerate}
+\item wenn Programm wenig ausgelastet
+\item wenn Speicherressurcen knapp
+\item bei Programmende
+\item manuell mit \lstinline$GC.collect();$
+\end{enumerate}

@@ -1,0 +1,62 @@
+\section{Enumeration (Aufzählung)}
+
+\subsubsection*{Beispiel}
+\begin{lstlisting}[language={[Sharp]C}]
+public enum Karte{
+	Karo = 9,
+	Herz = 10,
+	Pik = 11,
+	Kreuz = 12
+}
+\end{lstlisting}
+
+\subsection{Eigenschaften}
+
+\begin{itemize}
+\item gruppiert Konstanten die thematisch verwandt sind
+\item Konstanten sind (wenn nicht anders angegeben) vom Typ int
+\item ohne Angabe von Werten werden automatisch Werte vergeben (0, … , n)
+\item ein Objekt von Typ enum hat genau einen Wert
+\end{itemize}
+\begin{lstlisting}[language={[Sharp]C}]
+Karte card1;
+card1 = Karte.Herz;
+if (card1 == Karte.Herz)
+	Console.WriteLine("Sie haben Herz.");
+\end{lstlisting}
+
+\subsection{Einen enum durchlaufen}
+\begin{lstlisting}[language={[Sharp]C}]
+foreach (Karte karte in Enum.GetValues(typeof(Karte)))
+	Console.WriteLine(karte);
+\end{lstlisting}
+
+\section{Struct}
+
+\begin{itemize}
+\item ähnlich wie class, aber Wertetyp (auf dem Stack abgelegt)
+\item Unterschiede zu class:
+\begin{itemize}
+\item kann nicht abgeleitet werden (erbt nur von ValueType)
+\item besitzt immer parameterlosen Konstruktor
+\item Speicherallokation mit new nicht nötig, wenn auf Initialisierung der Felder des struct verzichtet werden kann
+\end{itemize}
+\end{itemize}
+Beispiele: alle primitiven Datentypen
+
+\section{Array}
+
+Arrays erben direkt von \lstinline$System.Object$, sind also Referenztypen!\\
+Was tun die folgenden Zeilen ? 
+\begin{lstlisting}[language={[Sharp]C}]
+int[] elements = new int[3];
+elements = {23, 9, 7};
+
+int[,] points = new int[4,3];
+int[,] points = {{1,2,3},{4,5,6}};
+
+int[][] myArray = new int[3][];
+myArray[0] = new int[3];
+myArray[1] = new int[4];
+myArray[2] = new int[2];
+\end{lstlisting}

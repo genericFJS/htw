@@ -1,0 +1,242 @@
+\section{Microsoft .NET Platform}
+\lecdate{24.03.2017}
+
+\begin{center}
+\href{https://worldcompressed.blogspot.com/2016/06/download-microsoft-net-framework-all.html}{ \includegraphics[scale=.3]{Vorlesung/a1Introduction-img001.png} }
+\end{center}
+
+
+\begin{itemize}
+\item 2002 eingeführt
+\item Hauptprogrammierplattform für Windows
+\end{itemize}
+
+\subsection{.NET Versionen und Komponenten}
+\begin{center}
+\href{https://de.wikipedia.org/wiki/.NET_Framework}{ \includegraphics[scale=.6]{Vorlesung/a1Introduction-img002.png} }
+\includegraphics[width=.7\textwidth]{Vorlesung/a1Introduction-img003.png} 
+\end{center}
+
+\subsection{Features}
+\begin{itemize}
+\item Komponentenbasiert: \\
+Unterschiedliche Komponenten aus unterschiedlichen Programmiersprachen:
+\begin{itemize}
+\item[]
+\begin{itemize}
+\item C\#, Visual Basic, F\#, JavaScript, C++ (in Visual Studio)
+\item Ruby, Python, COBOL, Pascal (externe Compiler)
+\item \href{https://en.wikipedia.org/wiki/List_of_CLI_languages}{Liste von CLI Sprachen}
+\end{itemize}
+\item Vererbung, Exception Handling, Debugging (über mehrere Programmiersprachen hinweg)
+\end{itemize}
+\item Versionskompatibilität: mehrere Versionen der gleichen .dll können nebeneinander existieren
+\item .NET Distributionen:
+\begin{itemize}
+\item Microsoft, included in Visual Studio
+\item Andere Distributionen (\href{http://www.mono-project.com}{www.mono-project.com}, \href{http://www.dotgnu.org}{www.dotgnu.org}) stellen Compiler und Runtime Environment für Linux Android, IOS, … 
+\item .NET Core (plattformunabhängig, schlank)
+\end{itemize}
+\item Erstellte Anwendungen sind Plattform-unabhängig, und laufen unter verschiedenen Betriebssystemen (Windows, MacOS, Linux, Android, … ) 
+\end{itemize}
+
+\paragraph{Warum mehrere Programmiersprachen?}
+
+%%%TODO
+
+\paragraph{Wie tauschen sich die unterschiedlichen Programmiersprachen untereinander aus?}
+
+%%%TODO
+
+\subsection{Compilierung in .NET}
+
+\begin{itemize}
+\item Erzeugt *.dll Bibliotheken und *.exe Dateien $\to$ heißen Assembly
+\item Diese Dateien haben bis auf ihre Endung nichts mit normalen .exe, .dll Dateien zu tun
+\item Dateien enthalten Code in einer Intermediate Language (IL) + Metadaten + Manifest
+\item Enthält keine Plattform-spezifischen Informationen $\to$ plattformunabhängig
+\item Metadaten beschreiben Typen, bspw. von wem eine Klasse erbt, welche Methoden sie hat, Version, …
+\end{itemize}
+\begin{center}
+\includegraphics[width=.7\textwidth]{Vorlesung/a1Introduction-img004.png} 
+\end{center}
+
+\subsubsection{C\# Code}
+
+\begin{lstlisting}[language={[Sharp]C}]
+class Calc{
+	public int Add(int x, int y){
+		return x + y;
+	}
+}
+\end{lstlisting}
+%\begin{center}
+%\includegraphics[scale=.5]{Vorlesung/a1Introduction-img005.png}
+%\end{center}
+
+~
+
+\subsubsection{Visual Basic Code}
+
+\begin{lstlisting}[language={[Visual]Basic}]
+Class Calc
+	Public Function Add(ByVal x As Integer, ByVal y As Integer) As Integer
+		Return x + y
+	End Function
+End Class
+\end{lstlisting}
+
+%\begin{center}
+%\includegraphics{Vorlesung/a1Introduction-img006.png} 
+%\end{center}
+
+\subsubsection{Entsprechender IL Code}
+
+\url{https://en.wikipedia.org/wiki/List_of_CIL_instructions}
+
+\begin{lstlisting}[language=]
+.method public hidebysig instance int32 Add(int32 x, int32 y) cil managed{
+// Code size 9 (0x9)
+.maxstack 2
+.lacals init (int32 V_0)
+IL_0000:	nop
+IL_0001:	ldarg.1
+IL_0002:	ldarg.2
+IL_0003:	add
+IL_0004:	stloc.0
+IL_0005:	br.s IL_0007
+IL_0007:	ldloc.0
+IL_0008:	ret
+}	//end of method Calc::Add
+\end{lstlisting}
+
+%\begin{center}
+%\includegraphics[scale=.5]{Vorlesung/a1Introduction-img007.png}
+%\end{center} 
+
+\subsection{Ausführung des Programms}
+
+\begin{itemize}
+\item ruft just-in time compiler (JIT, jitter) auf der den code compiliert und ausführt
+\item Methoden werden nur einmal kompiliert und im Speicher gelagert, (-{\textgreater} kein Interpreter) so dass mehrfacher Aufruf der gleichen Methode nur eine einzige Kompilierung benötigt. 
+\end{itemize}
+~
+
+\subsection{Teile von .NET}
+\begin{itemize}
+\item Common Language Runtime (CLR)
+\begin{itemize}
+\item Findet, lädt und managed .Net Objekte
+\item Nutzt Metadaten der Assembly um Typen zu finden
+\item Memory management, thread coordination, …
+\item Compiliert nötigen IL Code und führt ihn aus
+\end{itemize}
+\item Common Type System (CTS)
+\begin{itemize}
+\item Spezifiziert Datentypen und Programmkonstrukte und deren Interaktion
+\end{itemize}
+\item Common Language Specification (CLS)
+\begin{itemize}
+\item Definiert eine Teilmenge von CTS, die über alle .NET Sprachen geteilt ist
+\item Denn nicht jede .NET Sprache unterstützt alle features und Datentypen der CTS
+\item Programmierung nur mit CLS features erzeugt Code Bibliotheken die garantiert mit jeder anderen .NET Sprache kommunizieren können
+\item Festgelegt in Regeln
+\begin{itemize}
+\item Erste Regel: Alle Regeln beziehen sich nur auf die Teile eines Typs, der außerhalb eines Assemblys sichtbar sind
+\end{itemize}
+\item C\# Compiler kann prüfen, ob die Regeln eingehalten wurden, also ob der Code der CLS entspricht
+\end{itemize}
+\item Base Class Library
+\begin{itemize}
+\item Existiert für jede .NET Sprache
+\item Beinhaltet Behandlung von I/O, Threads, Grafik, Hardware-Schnittstellen
+\end{itemize}
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=.9\textwidth]{Vorlesung/a1Introduction-img008.png}
+\end{center} 
+
+
+\paragraph{Wie behält man die Übersicht bei vielen verschiedenen Klassen?}
+
+\subsection{Namespaces}
+\begin{itemize}
+\item Zur Organisation aller Typen der .NET Platform über alle Sprachen hinweg
+\item Namespaces können subspaces (Unterräume) enthalten
+\begin{itemize}
+\item System, System.IO, … 
+\end{itemize}
+\item Jedes Assembly kann beliebig viele Namespaces enthalten 
+\item Bsp: System namespace enthält System.Int32, System.String, …
+\item Zugriff auf Typen durch
+\begin{itemize}
+\item Namespace.Subnamespace.Subnamespace.Typname
+\item using keyword: using Namespace.Subnamespace.Subnamespace Typname 
+\end{itemize}
+\end{itemize}
+
+\section{Die Sprache C\#}
+%\href{http://www.pskills.org/csharp.jsp}{\includegraphics{Vorlesung/a1Introduction-img009.png}}
+\begin{itemize}
+\item Syntax sehr ähnlich zu Java
+\item Vereint Konzepte von Java, Visual Basic, C++
+\item Idee: die Vorteile aller Sprachen vereinigen
+\begin{itemize}
+\item Syntaktisch sauber wie Java
+\item Einfach wie Visual Basic
+\item Flexibel und Mächtig wie C++
+\end{itemize}
+\end{itemize}
+
+\subsection{Features}
+\begin{itemize}
+\item Keine Pointer nötig
+\item Automatisches Speichermanagement (Garbage Collector)
+\item Operatorüberladung
+\item Attribut-basierte Programmierung
+\item Generische Programmierung
+\item Lambda Operatoren
+\item Einfaches Multithreading mit Async/Await Keywords
+\end{itemize}
+
+\begin{center}
+\href{https://visualstudiomagazine.com/articles/salary-surveys/salary-survey.aspx}{ \includegraphics[scale=.4]{Vorlesung/a1Introduction-img010.jpg}}
+\end{center}
+
+%Aus \url{https://www.google.de/search?q=c%23+statistics&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjtiJ30ocnSAhWsIsAKHRvXAKAQ_AUIBigB&biw=1920&bih=918}
+
+~
+
+\subsubsection*{Most popular coding languages}
+
+\begin{center}
+\href{https://blogs.msdn.microsoft.com/zxue/2016/10/24/how-many-developers-use-c-vs-c-vs-other-programming-languages/}{\includegraphics[width=.7\textwidth]{Vorlesung/a1Introduction-img011.png}}
+\end{center}
+
+%Aus \url{https://www.google.de/search?q=c%23+f%C3%BCr+windows+anwendungen+statistik&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjsr9fgusnSAhXCFsAKHRSBC1wQ_AUICSgC&biw=1920&bih=918} 
+
+\subsection{.NET Core}
+.NET Core ist eine \href{https://de.wikipedia.org/wiki/Free/Libre_Open_Source_Software}{freie und quelloffene }\href{https://de.wikipedia.org/wiki/Plattform_(Computer)}{Software-Plattform} (innerhalb) der \href{https://de.wikipedia.org/wiki/.NET}{.NET}{}-Plattform
+\begin{itemize}
+\item 2016 veröffentlicht
+\item Plattform-unabhängig!
+\item Abgespeckte Version von .NET
+\item Fast alles was wir hier lernen kann direkt in .NET Core verwendet werden
+\end{itemize}
+
+\section{Gliederung des Kurses}
+\begin{itemize}
+\item Grundlagen C\#
+\item Vererbung, Polymorphie, Schnittstellen
+\item Generische Programmierung
+\item Fehlerbehandlung Exceptions
+\item Delegates und Ereignisse
+\item Windows Forms
+\item Parallele Programmierung
+\item Test-basierte Entwicklung
+\item Agile / emergente Entwicklung
+\end{itemize}
+
+%\href{http://www.enterprise-application-development.org/research/partners/companies.html}{ \includegraphics{Vorlesung/a1Introduction-img012.jpg} }
+\endinput

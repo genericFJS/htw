@@ -1,0 +1,176 @@
+\section{Vererbung}
+Alle Member der Basisklasse werden quasi vom Compiler in die Subklasse kopiert.
+
+\begin{center}
+\href{https://commons.wikimedia.org/w/index.php?curid=6326887}{\includegraphics[width=.9\textwidth]{Vorlesung/a5ObjektOrientierung-img001.png}}
+\end{center}
+
+\begin{itemize}
+\item In C\# nur einfach Vererbung (genau eine Mutterklasse)
+\item dafür beliebige Anzahl von Schnittstellen
+\item \emph{base}-Schlüsselwort zum Aufrufen der überschriebenen Basisklassenmember von abgeleiteten Klassen
+\item \emph{sealed}-Schlüsselwort verhindert Vererbung von dieser Klasse
+\end{itemize}
+
+\section{Der Konstruktor}
+
+\begin{itemize}
+\item spezielle Methode die automatisch bei Speicherallokation mit \emph{new} aufgerufen wird
+\item kann nicht explizit aufgerufen werden
+\item wenn kein Konstruktor angegeben wird ein Standard-Konstruktor zur Verfügung gestellt 
+\item spezielle Syntax: kein Rückgabewert, Name = Klassenname
+\end{itemize}\bigskip
+\begin{itemize}
+\item sind mehrere Konstruktoren vorhanden kann man diese nutzen mit \emph{this}
+\item auf Konstruktoren der Mutterklasse kann mit \emph{base} zugegriffen werden
+\end{itemize}
+
+\paragraph{Beispiel} Was tun die 3 Konstruktoren von Employee? 
+\begin{lstlisting}[language={[Sharp]C}]
+class Person {
+	public string name;
+	public Person(string name) {
+		// perform some checks here 
+		this.name = name;
+	}
+}
+
+class Employee : Person {
+	public int id;
+	public Employee() : this("unbekannt", 0) { }
+	public Employee(int id) : this("unbekannt", id) { }  
+	public Employee(string name, int id) : base(name) {
+		// perform some checks here
+		this.id = id;
+	}
+}
+\end{lstlisting}
+
+\section{Polymorphie}
+Auf einer Referenz der Basisklasse kann die spezifische Methode der Sub-klasse aufgerufen werden.\\
+Funktioniert in C\# durch die Schlüsselwörter \lstinline$virtual$ und \lstinline$override$. 
+\begin{lstlisting}[language={[Sharp]C}]
+class Basisklasse { 
+	public virtual void test() { 
+		Console.WriteLine("Basis"); 
+	} 
+} 
+
+class Subklasse : Basisklasse { 
+	public override void test() { 
+		Console.WriteLine("Sub"); 
+	} 
+} 
+
+// Aufruf:
+Basisklasse b = new Subklasse; 
+b.test(); // Ausgabe: Sub
+\end{lstlisting}
+
+\section{Schlüsselwort-Optionen für Klassenmethoden}
+
+\begin{itemize}
+\item \emph{virtual}: Die Methode kann Inhalt enthalten und kann in einer Abgeleiteten Klasse polymorph überschrieben werden
+\item \emph{override}: Muss bei einer überschriebenen Methode angegeben werden um eine virtual Methode der Basisklasse zu überschreiben
+\item \emph{sealed}: Eine überschriebene virtuelle Methode darf in Tochterklassen nicht weiter überschrieben werden
+\item \emph{abstract}: Die Methode ist leer und muss überschrieben werden
+\item \emph{new}: Wenn die zu überschreibende Methode nicht virtual in der Basisklasse ist kann override nicht verwendet werden -{\textgreater} new nötig, Polymorphismus funktioniert dann nicht
+\item \emph{static}: Methode muss von der Klasse aus aufgerufen werden, nicht von einer Instanz
+\item \emph{const}: Der Rückgabewert kann nicht verändert werden (Aufruf function()=1 geht nicht)
+\end{itemize}
+
+\section{Optionen für Klassendeklaration}
+
+\begin{itemize}
+\item \emph{static}: Klasse darf nur statische Member enthalten und kann nicht instanziiert werden 
+\item \emph{abstract}: wenn eine abstracte Methode enthalten ist muss die Klasse als abstract markiert werden, verhindert Instanziierung
+\end{itemize}
+
+\section{Optionen für Variablen}
+\begin{itemize}
+\item \emph{static}: die Variable oder Klasse existiert einmalig für die Funktion oder Klasse und nicht für eine Instanz)
+\item \emph{const}: (die Variable ändert sich nicht)
+\begin{itemize}
+\item const vor Parametern: Die Parameter können nicht verändert werden
+\item const vor Membervariable: Variablenwert muss sofort zugewiesen werden, Variable ist dann automatisch auch static, beide Einschränkungen sind aufgehoben wenn \emph{readonly} statt \emph{const} verwendet wird 
+\end{itemize}
+\end{itemize}
+
+\section{Zugriffsmodifizierer für Sichtbarkeit}
+
+\begin{tabular}{L{.15} | L{.15} L{.15} L{.15} L{.4}}
+& Überall & Bibliothek & abgeleitete Klassen & \\\hline
+private & ~ & ~ & ~ & $\to$ Standard in einem Typ\newline(z.B. in einer Klasse)\\
+protected & ~ & ~ & ~ & ~\\
+internal & ~ & ~ & ~ & ~\\
+public & ~ & ~ & ~ & ~\\
+\end{tabular}
+
+\section{Casting von Klassen}
+\begin{itemize}
+\item implicit cast in eine Basisklasse: 
+\item explicit cast in Subklasse: 
+\item \emph{as} keyword: 
+\item \emph{is} keyword: 
+\end{itemize}
+%%% TODO
+\section{Properties (Eigenschaft)}
+Property = Member-Variable die in einem Objekt definiert ist und auf die von außen zugegriffen werden soll.\\
+Zugriff auf Eigenschaften: \\
+\begin{tabular}{L{.5} L{.5}}
+C++ Style &  C\#\\
+\begin{lstlisting}[language={[Sharp]C}]
+private int myVariable;
+public int GetMyVariable() {
+	return myVariable;
+}
+private void SetMyVariable(int value) {
+	myVariable = value;
+}
+public void AccessVariables(int a) {
+	int b = GetMyVariable(); SetMyVariable(a);
+} 
+\end{lstlisting} &
+%%% TODO
+\begin{lstlisting}[language={[Sharp]C}]
+
+\end{lstlisting}\\
+\end{tabular}
+
+\begin{itemize}
+\item Schreibaufwand reduziert
+\item Direkter Zugriff im Aufrufer
+\end{itemize}
+
+\subsection{Auto-generated properties}
+Will man nur den schreibenden Zugriff auf eine Variable einschränken, kann man noch kürzer schreiben:\\
+\lstinline$public int MyVariable {get; private set;}$
+\begin{itemize}
+\item Dabei wird die zugrundeliegende Variable (vorher myVariable) nicht mehr benutzt
+\item Intern wird eine eigene Variable angelegt auf die nun kein direkter Zugriff mehr möglich ist
+\end{itemize}
+
+\section{Object initialization Syntax}
+
+Objekte / Felder einer Klasseninstanz können direkt zugewiesen werden, ohne benutzerdefinierten Konstruktor.
+\begin{lstlisting}[language={[Sharp]C}]
+class Person { 
+	public string Nachname { get; set;} 
+	public string Vorname { get; set;} 
+	public Person() {} 
+}
+
+...
+
+Person p1 = new Person() {Nachname = "Hook"}; 
+Person p2 = new Person() {Vorname = "Wendy"}; 
+Person p3 = new Person() {Vorname = "Peter", Nachname =  "Pan"};
+\end{lstlisting}
+
+\section{Anonyme Objekte}
+
+\begin{itemize}
+\item Klasse ohne Bezeichner-Namen
+\item zur schnellen Gruppierung von Elementen 
+\item Der Typ dieser Objekte ist kompliziert -{\textgreater} var keyword benutzen
+\end{itemize}
