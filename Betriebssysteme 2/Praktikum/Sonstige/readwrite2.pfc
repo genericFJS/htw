@@ -1,0 +1,32 @@
+program readerswriters2;
+var
+   mutex, wri : semaphore;
+   rc	      : integer;
+
+process type reader;
+begin
+   wait(mutex);
+   rc := rc + 1;
+   if rc = 1 then 
+      wait(wri);
+   signal(mutex);
+   (* lesender Zugriff *) 
+   wait(mutex);
+   rc := rc - 1; 
+   if rc = 0 then
+      signal(wri);
+   signal(mutex);
+end;  (* reader *)
+ 
+process type writer;
+begin
+   wait(wri);
+   (* schreibender Zugriff *) 
+   signal(wri);
+end;  (* writer *)
+
+begin
+   initial(mutex, 1);
+   initial(wri, 1);
+   rc := 0;
+   ...

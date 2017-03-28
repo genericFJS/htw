@@ -1,0 +1,49 @@
+monitor rw;
+export
+    startread, endread, startwrite, endwrite;
+var 
+   busy		       : boolean;
+   readercount	       : integer;
+   OKtoread, OKtowrite : condition;
+
+procedure startread;
+begin
+   if busy then delay(OKtoread);
+   readercount := readercount + 1;
+   resume(OKtoread);  (* sobald 1 Leser lesen darf, duerfen alle *)
+end; (* startread *)
+
+procedure endread;
+begin
+   readercount := readercount - 1;
+   if readercount = 0 then
+      resume(OKtowrite);
+end; (* endread *)
+
+procedure startwrite;
+begin
+   if busy or (readercount <> 0) then delay(OKtowrite);
+   busy := true;
+end; (* startwrite *)
+
+procedure endwrite;
+begin
+   busy := false;
+   if empty(OKtoread) then
+      resume(OKtowrite)
+   else
+      resume(OKtoread);
+end; (* endwrite *)
+
+begin  (* body of monitor rw *)
+   busy := false;
+   readercount := 0;
+end;  (* monitor rw *)
+
+process type reader (id: integer);
+begin 
+   rw.startread;
+   (* Lesender Zugriff *)
+   rw.endread;
+end;  (* reader *)
+...

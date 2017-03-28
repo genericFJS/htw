@@ -1,0 +1,51 @@
+program readerswriters3;
+var
+   priowriter, wri, rea	: semaphore;
+   mutexrc, mutexwc	: semaphore;
+   rc, wc		: integer;
+
+process type reader;
+begin
+   wait(priowriter);
+   wait(rea);
+   wait(mutexrc);
+   rc := rc + 1;
+   if rc = 1 then 
+      wait(wri);
+   signal(mutexrc);
+   signal(rea);
+   signal(priowriter);
+   (* lesender Zugriff *)
+   wait(mutexrc);
+   rc := rc - 1; 
+   if rc = 0 then
+      signal(wri);
+   signal(mutexrc);
+end;  (* reader *)
+ 
+process type writer;
+begin
+   wait(mutexwc);
+   wc := wc + 1;
+   if wc = 1 then
+      wait(rea);
+   signal(mutexwc);
+   wait(wri);
+   (* schreibender Zugriff *)
+   signal(wri);
+   wait(mutexwc);
+   wc := wc - 1;
+   if wc = 0 then
+      signal(rea);
+   signal(mutexwc);
+end;
+
+begin
+   initial(wri, 1);
+   initial(rea, 1);
+   initial(priowriter, 1);
+   initial(mutexrc, 1);
+   initial(mutexwc, 1);
+   rc := 0;
+   wc := 0;
+   ...

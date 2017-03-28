@@ -1,0 +1,31 @@
+program erzvermp;
+var 
+  link			 : channel of char;
+process producer;
+var 
+   local :  char;
+begin 
+   for local := 'a' to 'z' do
+   begin	
+      (* produce item *)
+      link ! local;
+   end
+end;  (* producer *)
+process consumer;
+var 
+   local :  char;
+begin
+   repeat
+   begin
+      link ? local;
+      (* consume item *)
+      writeln('read: ', local);
+   end
+   until local='z';
+end;  (* consumer *)
+begin
+  cobegin
+    producer;
+    consumer
+  coend
+end.

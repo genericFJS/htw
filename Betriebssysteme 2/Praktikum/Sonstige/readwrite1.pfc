@@ -1,0 +1,20 @@
+program readerswriters1;
+var
+   mutex : semaphore;
+process type reader;
+begin 
+   wait(mutex);
+   (* lesender Zugriff *) 
+   signal(mutex);
+end   (* reader *)
+ 
+process type writer;
+begin
+   wait(mutex);
+   (* schreibender Zugriff *) 
+   signal(mutex);
+end   (* writer *)
+
+begin
+  initial(mutex, 1);
+   ...

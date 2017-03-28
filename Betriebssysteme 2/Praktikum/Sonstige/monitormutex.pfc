@@ -1,0 +1,30 @@
+monitor mutex;
+export
+    enter, leave;
+var 
+   free	: boolean;
+   busy	: condition;   (* Bedingungsvariable *)
+
+procedure enter;
+begin
+   if not free then
+      delay(busy);
+   free := false;
+end; (* enter *)
+
+procedure leave;
+begin
+   free := true;
+   resume(busy);
+end; (* leave *)
+
+begin  (* body of monitor mutex *)
+   free := true;
+end;  (* monitor mutex *)
+
+begin
+   ...
+   mutex.enter;
+   (* kritischer Abschnitt *)
+   mutex.leave;
+   ...

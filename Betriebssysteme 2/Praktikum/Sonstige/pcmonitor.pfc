@@ -1,0 +1,30 @@
+monitor boundedbuffer;
+export
+    append, remove;
+var
+   buffer	     : array [0..N] of integer;
+   lastpointer	     : integer;
+   count	     : integer;
+   nonempty, nonfull : condition;
+
+procedure append(x :integer);
+begin
+   if count = N then delay(nonfull);
+   buffer[lastpointer] := x;
+   lastpointer := (lastpointer + 1) mod N;
+   count := count + 1;
+   resume(nonempty);
+end; (* append *)
+
+procedure remove(VAR x :integer);
+begin
+   if count = 0 then delay(nonempty);
+   x := buffer[(lastpointer-count) mod N];
+   count := count - 1;
+   resume(nonfull);
+end; (* remove *)
+
+begin  (* body of monitor boundedbuffer *)
+   count := 0;
+   lastpointer := 0;
+end;  (* monitor boundedbuffer *)
