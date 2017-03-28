@@ -1,43 +1,55 @@
-\newcommand{\customDir}{../}
-\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw\documentclass{scrreprt}
+\documentclass{scrreprt}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
 
-%\setboolean{twosided}{true}
-%\setCustomDocumentClass{scrartcl}
-%\setCustomDesign{htw}
-\setCustomSlidePath{Vorlesung/VO}
-\setCustomSlideScale{1.5}
+\faculty{Fakultät Informatik/Mathematik}
+%\department{Einrichtung}
+%\institute{Institut}
+\chair{Lehrstuhl für Softwaretechnologie}
+\subject{lecture}
+\title{Software Engineering 2}
+%\subtitle{Untertitel}
+\author{Falk-Jonatan Strube}
+%\thesis{Typisierung Thesis}
+\professor{Prof. Dr. Anna Sabine Hauptmann}
+%\date{Datum}
 
-\setCustomTitle{Software Engineering 2}
-\setCustomSubtitle{Vorlesungsskript}
-\setCustomAuthor{Falk-Jonatan Strube}
-%\setCustomNoteA{TitlepageNoteBeforeAuthor}
-\setCustomNoteB{Vorlesung von Prof. Dr. Hauptmann}
-
-%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
-%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
-
-\input{\customDir _LaTeX_master/LaTeX_master.sty}
-\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
-
-%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
-
+\slidePath{Vorlesung/VO}
 \begin{document}
-
-%\selectlanguage{english}
 \maketitle
-\newpage
 \tableofcontents
-\newpage
-\chapter*{Vorbemerkung}
-Projektarbeit: Protokolle der Gruppentreffen (mindestens 3 Festsetzungsprotokolle -- wer macht was bis wann?)
 
-\chapter{Einführung}
+\chapter*{Einführung}
+\section*{Belegarbeit}
+\slides{01}{3}
+\chapter{Entwurf, Architektur, Risiken}
 \lecdate{21.03.2017}
+\section{Rückblick}
+\slides{01}{7}
+\slides{01}{8}
+\section{Prozess und Produkt}
+\slides{01}{10}
+\section{Struktur}
+\slides{01}{11}
+\section{Grob- und Feinentwurf}
+\slides{01}{12}
+\section{System vs Software-System}
+\slides{01}{13}
+\slides{01}{21}
+\section{Komplexität}
+\slides{01}{14}
+\section{Risiko beim Software-Entwurf}
+\slides{01}{18}
+\section{Fragen bei der Softwarentwicklung}
+\slides{01}{22}
+\section{Zusammenfassung}
+\slides{01}{23}
+
+\chapter{2}
+\lecdate{28.03.2017}
 
 
 
-%\newpage
-
-%\printbibliography
- 
 \end{document}
