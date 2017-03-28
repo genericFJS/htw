@@ -10,8 +10,8 @@ namespace prakt2 {
         static void Main(string[] args) {
             Console.OutputEncoding = Encoding.UTF8; // Eurozeichen usw.
             CultureInfo cultureDE = new CultureInfo("de-DE");   // Kommasymbol
-            CultureInfo.DefaultThreadCurrentCulture= cultureDE;
-            Console.Write("Startkapital in €: ");
+            CultureInfo.DefaultThreadCurrentCulture = cultureDE;
+            Console.Write("Startkapital in {0}: ",cultureDE.NumberFormat.CurrencySymbol);
             double start;
             if (!double.TryParse(Console.ReadLine(), out start)) {
                 Console.WriteLine("Kein gültiges Startkapital!");
