@@ -23,37 +23,207 @@ Was müssen die Funktionen \lstinline$enter_cs()$ und \lstinline$leave_cs()$ tun
 \slides{00-synchronisation}{8}
 \section{Realisierungsvarianten}
 \slides{00-synchronisation}{9}
-\subsection{Versuch dezentral zu koordinieren}
-\subsubsection{Naiver Versuch 1: „Ping-Pong“}
+\section{Dezentrale Lösungsversuche}
+\subsection{Naiver Versuch 1: „Ping-Pong“}
 \slides{00-synchronisation}{11}
 $\Rightarrow$ funktioniert daher nicht vernünftig.
-\subsubsection{Versuch 2: Variable zeigt freien kritischen Abschnitt an}
+\subsection{Versuch 2: Variable zeigt freien kritischen Abschnitt an}
 \slides{00-synchronisation}{12}
-Bewertung:
+\subsubsection*{Bewertung}
 \slides{00-synchronisation}{13}
 $\Rightarrow$ funktioniert gar nicht, da kritischer Abschnitt von beiden betreten werden kann!
-\subsubsection{Versuch 3: Mehrere Variablen zeigen freien kritischen Abschnitt an}
+\subsection{Versuch 3: Mehrere Variablen zeigen freien kritischen Abschnitt an}
 \slides{00-synchronisation}{14}
-Bewertung:
+\subsubsection*{Bewertung}
 \slides{00-synchronisation}{15}
 $\Rightarrow$ funktioniert auch nicht, aus selben Grund wie Versuch 2!
-\subsubsection{Versuch 4: Mehrere Variablen zeigen Wunsch zum Eintreten in kritischen Abschnitt an}
+\subsection{Versuch 4: Mehrere Variablen zeigen Wunsch zum Eintreten in kritischen Abschnitt an}
 \slides{00-synchronisation}{16}
-Bewertung:
+\subsubsection*{Bewertung}
 \slides{00-synchronisation}{17}
 $\Rightarrow$ funktioniert nicht vernünftig, da Deadlock-Risiko.
-\subsubsection{Versuch 5: Mehrere Variablen mit Eintrittswunsch und weiterer Prüfung}
+\subsection{Versuch 5: Mehrere Variablen mit Eintrittswunsch und weiterer Prüfung}
 \slides{00-synchronisation}{18}
-Bewertung:
+\subsubsection*{Bewertung}
 \slides{00-synchronisation}{19}
 $\Rightarrow$ durch zufällige Verzögerung ist diese Lösung schon relativ gut. Statistisch kann trotzdem (bei Mehrprozessorsystemen) noch ein Livelock eintreten.
-\subsubsection{Algorithmus von Peterson}
+\subsection{Algorithmus von Peterson}
 Vergleich auch: Algorithmus von Dekker und Dijkstra.
 \slides{00-synchronisation}{20}
-Bewertung:
+\subsubsection*{Bewertung}
 \slides{00-synchronisation}{21}
 Anmerkung: Bei Implementation kann es passieren, dass es nicht funktioniert $\to$ Der Algorithmus geht davon aus, dass Wertänderungen (bspw. von \lstinline$turn$) sofort von dem anderen Prozess gesehen wird. Tatsächlich passiert das (bei typischen Multiprozessorsystemen) erst zeitverzögert. Dafür müssten Schreibbarrieren eingeführt werden.
+\subsection{Fazit}
+\lecdate{29.03.2017}
+\slides{00-synchronisation}{22}
+„busy waiting“: Prozess verbraucht noch immer Ressourcen (durch \lstinline$while$-Schleife), obwohl er nur warten soll.
 
+\section{Zentrale Lösung: Semaphore}
+\subsubsection*{Motivation}
+\slides{00-synchronisation}{23}
 
+\subsection{Zustände eines Semaphors}
+\slides{00-synchronisation}{24}
 
+\subsection{Operationen eines Semaphors}
+\slides{00-synchronisation}{25}
+\slides{00-synchronisation}{26}
 
+\subsubsection*{Implementierung der P()-Funktion}
+\slides{00-synchronisation}{27}
+
+\subsection{API für Semaphore}
+\subsubsection*{Unter Unix}
+\slides{00-synchronisation}{28}
+\subsubsection*{Weitere}
+\slides{00-synchronisation}{29}
+
+\subsection{Anwendung: Zeitliche Synchronisation von Prozessen}
+\slides{00-synchronisation}{31}
+\subsubsection*{Rendezvous}
+\slides{00-synchronisation}{34}
+Das Vertauschen würde zu einem Deadlock führen.
+\subsection{Weitere Aspekte}
+\slides{00-synchronisation}{35}
+Bekannte anschauliche Probleme:
+\begin{itemize}
+\item Leser-Schreiber-Problem (gleichzeitiges Lesen, nur einer darf immer schreiben)
+\item Erzeuger-Verbraucher-Problem (beschränkter Puffer)
+\item Problem des schlafenden Friseurs (verschieden exklusive Ressourcen)-
+\item Problem der dinierenden Philosophen (Verteilung von begrenzten Ressourcen ohne Verhungern/Deadlock)
+\end{itemize}
+
+\subsubsection{Problem der dinierenden Philosophen}
+\slides{00-synchronisation}{36}
+\subsubsection*{Naive Lösung}
+\begin{lstlisting}[language=C]
+/* Code für den n-ten Philosophen, naive Loesung */
+void philosopher(int n){
+  while(1) {
+    /* denken */
+    take_fork(n);             /* rechte Gabel nehmen */
+    take_fork((n+1)%5);       /* linke Gabel nehmen */
+    /* essen */
+    put_fork((n+1)%5);        /* linke Gabel weglegen */
+    put_fork(n);              /* rechte Gabel weglegen */
+  }
+}
+
+\end{lstlisting}
+Problem: jeder greift nach seiner rechten Gabel $\to$ keiner kann mehr nach der linken greifen (Deadlock)!
+\subsubsection*{Vorsichtiges Greifen nach 2. Gabel}
+\begin{lstlisting}[language=C]
+/* Code für den n-ten Philosophen, 'vorsichtiges' Greifen nach 2. Gabel */
+void philosopher(int n){
+  while(1) {
+    /* denken */
+  again:
+    take_fork(n);             /* rechte Gabel nehmen */
+    if (!available(fork((n+1)%5)) { /* falls linke Gabel nicht verfuegbar ... */
+      put_fork(n);            /* ... rechte Gabel zuruecklegen ... */ 
+      sleep(10);              /* ... eine Weile warten ... */ 
+      goto again;             /* ... und von vorn probieren. */
+    }
+    take_fork((n+1)%5);       /* linke Gabel nehmen */
+    /* essen */
+    put_fork((n+1)%5);        /* linke Gabel weglegen */
+    put_fork(n);              /* rechte Gabel weglegen */
+  }
+}
+\end{lstlisting}
+Problem: Kann zu einem Livelock führen (besser: sleep-Zeit zufällig auswählen).
+
+\subsubsection*{1 Semaphor}
+\begin{lstlisting}[language=C]
+/* Code für den n-ten Philosophen, 1 Semaphor */
+semaphore eat = 1;        /* Init: offen */
+void philosopher(int n){
+  while(1) {
+    /* denken */
+    P(eat);                   /* Erlaubnis zum Aufnehmen der Gabeln einholen */
+    take_fork(n);             /* rechte Gabel nehmen */
+    take_fork((n+1)%5);       /* linke Gabel nehmen */
+    /* essen */
+    put_fork((n+1)%5);        /* linke Gabel weglegen */
+    put_fork(n);              /* rechte Gabel weglegen */
+    V(eat);                   /* Erlaubnis zurückgeben */
+  }
+}
+
+\end{lstlisting}
+Problem: Maximale Anzahl an essenden Philosophen wird auf 1 reduziert!
+
+\subsubsection*{Lösung nach Tanenbaum}
+\begin{lstlisting}[language=C]
+/* Loesung des Philosophenproblems nach Tanenbaum */
+#define N 5
+#define RIGHT(i) (((i)+1) % N)
+#define LEFT(i) (((i)==N) ? 0: (i)+1)
+
+enum phil_state {THINKING, HUNGRY, EATING};
+enum phil_state state[N];     /* geeignet initialisiert */
+
+semaphore mutex = 1;  
+semaphore s[N];               /* müssen geschlossen initialisiert werden */
+
+void test(int i){
+  if ((state[i] == HUNGRY) &&
+      (state[LEFT(i)] != EATING) &&
+      (state[RIGHT(i)] != EATING)) {
+    state[i] = EATING;
+    V(s[i]);
+  }
+}
+
+void get_forks(int i){
+  P(mutex);
+  state[i] = HUNGRY;
+  test(i);
+  V(mutex);
+  P(s[i]);                /* hungrig blockieren oder verlassen, d.h., essen */
+}
+
+void put_forks(int i){
+  P(mutex);
+  state[i] = THINKING;
+  test(LEFT(i));          /* linken Nachbarn ggf. wecken */
+  test(RIGHT(i));         /* rechten Nachbarn ggf. wecken */
+}
+
+void philosopher(int n){
+  while(1) {
+    /* denken */
+    get_forks(n);
+    /* essen */
+    put_forks(n); 
+  }
+}
+\end{lstlisting}
+Achtung: Programme mit vielen Semaphoren sind unübersichtlich!
+
+\subsubsection*{Einfache pragmatische Lösung}
+\begin{lstlisting}[language=C]
+/* alternative Loesung des Philosophenproblems */
+#define N 5
+#define RIGHT(i) (((i)+1) % N)
+#define LEFT(i) (((i)==N) ? 0: (i)+1)
+
+semaphore free = N-1;                    /* nicht-binaerer Semaphor */  
+semaphore fork[N] = { 1, 1, 1, 1, 1};    /* offen initialisiert */
+
+void philosopher(int n){
+  while(1) {
+    /* denken */
+    P(free);
+    P(fork[RIGHT(n)]);
+    P(fork[LEFT(n)]);
+    /* essen */
+    V(fork[LEFT(n)]);
+    V(fork[RIGHT(n)]);
+    V(free);
+  }
+}
+\end{lstlisting}
+
+\section{Fazit}
+\slides{00-synchronisation}{38}
