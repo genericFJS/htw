@@ -1,0 +1,72 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrreprt}
+\gdef\pathtomaster{../../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\faculty{Fakultät Informatik/Mathematik}
+%\department{Einrichtung}
+%\institute{Institut}
+\chair{Lehrstuhl für Künstliche Intelligenz / Theoretische Informatik}
+\subject{lecture}
+\title{Künstliche Intelligenz}
+%\subtitle{Untertitel}
+\author{Falk-Jonatan Strube}
+\professor{Prof. Dr. Boris Hollas}
+%\date{Datum}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\chapter{Praktikum 1: Prädikatenlogik}
+
+\section{Aufgabe 1}
+\begin{anumerate}
+\item\label{1-1-a} Für alle $x$ gilt: Wenn $x$ eine Anfrage ist, gibt es ein $y$ in der entsprechenden Antwort.\\
+Formel ist \emph{wahr}.
+\item Für alle $x$ existiert ein $y$ für das gilt: Wenn $x$ eine Anfrage ist, gibt es eine entsprechende Antwort mit $x$ und $y$ (ist äquivalent mit \ref{1-1-a}).\\
+Formel ist \emph{wahr}.
+\item Es existiert ein $y$ bei dem für alle $x$ gilt: Wenn $x$ eine Anfrage ist, gibt es eine entsprechende Antwort mit $x$ und $y$ (Es gibt ein $y$, das für alle Anfragen die richtige Antwort ist).\\
+Formel ist \emph{falsch}.\\
+Beweis:\\
+Angenommen, es gibt ein $y$, so dass $\forall x\,(anfrage(x) \to antwort(x,y))$ wahr ist. Wegen $(abfahrt, 9:00) \in antwort$ muss dann $y=9:00$ sein. Wegen $(ankunft, 12:00)\in antwort$ muss aber auch $y=12:00$. Widerspruch!
+\end{anumerate}
+
+\section{Aufgabe 2}
+\begin{anumerate}
+\item 
+\begin{itemize}
+\item $F_1$ ist \emph{wahr}:\\
+Für alle Menschen und Fächer gilt: Wenn es die Kombination Mensch-Fach gibt, ist dieser Mensch Student.
+\item $F_2$ ist \emph{falsch}:\\
+Für alle Menschen und Fächer gilt: Die Kombination Mensch-Fach existiert und der Mensch ist Student.
+\item $F_3$ ist \emph{wahr}:\\
+Für alle Menschen existiert ein $y$ für das gilt: Wenn es die Kombination Mensch-$y$(bspw. auch „Toastbrot“) gibt, ist dieser Mensch Student.
+\end{itemize}
+\item 
+\begin{itemize}
+\item $F_1$ ist \emph{falsch}.
+\item $F_2$ ist \emph{falsch}.
+\item $F_3$ ist \emph{wahr}:\\
+Es existiert ein ein Fach für jeden Menschen, das er nicht studiert.
+\end{itemize}
+\end{anumerate}
+\begin{itemize}
+\item $F_2$ bedeutet nicht „Wer ein Fach studiert, ist ein Student“, weil man die Formel umstellen könnte, dass $\forall y\; (\forall \;F(x,y) \wedge \forall x \;S(x))$, was bedeuten würde, dass jeder Mensch Student ist. 
+\item $F_3$ bedeutet nicht „Wer ein Fach studiert, ist ein Student“. Es sagt vielmehr „Es existiert ein ein $y$ für jeden Menschen, das sagt, dass er nicht studiert“.
+\end{itemize}
+$\to$ in 2(a) sind wahre Voraussetzungen angenommen: Dabei sind $F_1$ und $F_3$ korrekter Weise wahr.\\
+in 2(b) sind falsche Voraussetzungen angenommen: Dabei ist $F_1$ korrekter Weise falsch und $F_3$ fälschlicher Weise wahr.
+
+\chapter{Aufgabe 3}
+\begin{anumerate}
+\item $\forall x \; (I(x) \to F(x,inf))$
+\item $  $
+\item $\forall x \; \exists y \; (S(x) \to F(x,y))$
+\item $\forall x \; \forall y \; (F(x,y) \to S(x))$
+\item $\forall y \; \exists x \; (F(x,y) \to S(x))$
+\end{anumerate}
+
+\end{document}
