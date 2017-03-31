@@ -1,0 +1,1 @@
+segment() - Erzeugen eines Semaphore-Sets (und Zugriff darauf erlangen)
