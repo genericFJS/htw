@@ -51,6 +51,88 @@ C\# Shorthand & CLS \newline Compliant? & System Type & Range & Meaning \\\hline
 \includegraphics[width=.7\textwidth]{Vorlesung/a2GrundlagenC-img004.png}
 \end{center}
 
+\begin{itemize}
+\item Object(s) hat Referenztypen Heap
+\item ValueType(s) hat Wertetypen Stack
+\end{itemize}
+
+\subsubsection*{Beispiel}
+\begin{lstlisting}[language={[Sharp]C}]
+static class A{
+	static double d=0;
+}
+
+static void MyMethod (double d){
+	int k=0;
+	A a = new A();
+}
+
+Main(...){
+	double d=0;
+	MyMethod();
+}
+\end{lstlisting}
+
+Die in dem Code befindlichen Daten werden im Stack/Heap abgespeichert:\\
+\mpb[.45]
+Stack\\
+\begin{tabular}{|l |}
+\hline \\ \\ \hline 
+\mpb[.9]
+Stackframe: MyMethod\\
+\lstinline$d: 00000000$ (aus Stackframe Main)\\
+\lstinline$k: 00000000$\\
+\lstinline$a: Referenz auf Heap$
+\mpe\\
+\hline
+\mpb[.9]
+Stackframe: Main\\
+\lstinline$d: 00000000$
+\mpe\\\hline
+\end{tabular}
+\mpe
+\mpb[.45]
+Heap\\
+\begin{tabular}{|l |}
+\hline
+\mpb[.9]
+A:\\
+\lstinline$d: 00000000$\\
+$\vdots$
+\mpe\\\hline\\ \\ \hline
+\end{tabular}
+\mpe\\
+Beim Beenden der Methode \lstinline$MyMethod()$(Scope) wird der entsprechende Stack gelöscht. Der Heap wird erst vom Garbage Collector gelöscht, wenn die Einträge nicht mehr in Verwendung sind.
+
+\subsubsection*{Am Beispiel:}
+\begin{lstlisting}[language={[Sharp]C}]
+static public void setToOne(int a, ref int b, int[] c, int[] d){
+	a = 1;
+	b = 1;
+	c[0] = 1;
+	d = new int[1];
+	d[0] = 1;
+}
+
+static void Main(string[] args){
+	int a = 0;
+	int b = 0;
+	int[] c = new int[1];
+	c[0] = 0;
+	int[] d = new int[1];
+	d[0] = 0;
+	setToOne(a, ref b, c, d);
+	Console.WriteLine("{0} {1} {2} {3}", a, b, c[0], d[0]);
+}
+\end{lstlisting}
+Ergebnis ist 0 1 1 0:
+\begin{itemize}
+\item a wird nicht überschrieben, ist nur lokal
+\item b wird überschrieben, da Referenz übergeben wurde
+\item c wird überschrieben, da das Array eine Referenz (kein ValueType) ist (ähnlich wie in C)
+\item d wird nicht überschrieben, da die Variable neu initialisiert wird
+\end{itemize}
+
 \section{Boxing / Unboxing}
 
 \emph{boxing}: Konvertierung (Einschachteln) eines Wertetyps in ein object (implizit)\\
@@ -60,15 +142,15 @@ C\# Shorthand & CLS \newline Compliant? & System Type & Range & Meaning \\\hline
 
 Boxing:
 \begin{lstlisting}[language={[Sharp]C}]
-Console.WriteLine("12.Equals(23) = \{0\}", 12.Equals(23));
-Console.WriteLine("12.ToString() = \{0\}", 12.ToString());
-Console.WriteLine("12.GetType() = \{0\}", 12.GetType());
+Console.WriteLine("12.Equals(23) = {0}", 12.Equals(23));
+Console.WriteLine("12.ToString() = {0}", 12.ToString());
+Console.WriteLine("12.GetType() = {0}", 12.GetType());
 \end{lstlisting}
 Ausgabe:
 \begin{lstlisting}[language={[Sharp]C}]
-12.Equals(23) =
-12.ToString() =
-12.GetType() = 
+12.Equals(23) = False
+12.ToString() = 12
+12.GetType() = System.Int32
 \end{lstlisting}
 Unboxing:
 \begin{lstlisting}[language={[Sharp]C}]
@@ -173,18 +255,17 @@ Character & Meaning \\\hline
 \subsection{Widening / Narrowing}
 
 Im folgenden Code nimmt die Add Methode nur Argumente vom Typ int, bekommt aber short übergeben. Was passiert? Welcher Teil des Codes könnte Probleme geben?
-%%% TODO
 \begin{lstlisting}[language={[Sharp]C}]
 public static void Main(string[] args){
 	short a = 10, b = 10;	
-	short c = Add(a, b);
+	short c = Add(a, b);	// Fehler: int kann keinem short zugewiesen werden! Müsste gecastet werden. Wenn dann allerdings a+b größer ist als der Wertebereich von short, würde der Overflow eine negative Zahl erzeugen.
 	Console.WriteLine("{0} + {1} = {2}", a, b, c);
 }
 
 public static int Add(int a, int b){
 	return a + b;
 }
-\end{lstlisting}[language={[Sharp]C}]
+\end{lstlisting}
 
 \subsection{Schlüsselwort var}
 Typen werden automatisch aus der anfänglichen Zuweisungen geschlussfolgert.\\

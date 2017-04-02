@@ -70,12 +70,17 @@ int i = myFunction(d);
 Wie viele Fehler finden Sie (angenommen die Signatur der Funktion ist korrekt)?
 \begin{lstlisting}[language={[Sharp]C}]
 public static int myFunction(int a, out int o, ref int r){ 
+	// o muss erst ein Wert zugewiesen werden!
 	int result = a+o+r; 
 	return result; 
 } 
 
 static void Main(string[] args) { 
 	double a; 
-	myFunction(a, 1, 2); 
+	myFunction(a, 1, 2);
+	// a: nicht korrekt, muss erst initialisiert werden und ist falscher Typ (double)
+	// b: nicht möglich, muss eine Variable sein und mit "out" übergeben werden
+	// 2: nicht möglich, muss eine Adresse/Referenz zu einer Variablen sein und mit "ref" übergeben werden
 }
 \end{lstlisting}
+%%% TODO

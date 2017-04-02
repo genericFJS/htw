@@ -12,6 +12,25 @@ Alle Member der Basisklasse werden quasi vom Compiler in die Subklasse kopiert.
 \item \emph{sealed}-Schlüsselwort verhindert Vererbung von dieser Klasse
 \end{itemize}
 
+\subsubsection*{Beispiel}
+\begin{lstlisting}[language={[Sharp] C}]
+class Fahrzeug{
+	int Fahrzeugnummer;
+	...
+}
+
+class Fahrrad : Fahrzeug {
+	int Rahmenhöhe;
+	int Fahrzeugnummer;
+	// Zugriff auf Fahrzeugnummer Fahrzeugnummer der Oberklasse bspw.: base.Fahrzeugnummer
+}
+
+Fahrzeug[] meineFahrzeuge = new Fahrzeug[3];
+meineFahrzeuge[0] = new Fahrrad();	// möglich, da Fahrrad Fahrzeug ist
+meineFahrzeuge[1] = new Fahrrad();
+meineFahrzeuge[2] = new PKW();	// auch möglich, da PKW auch Fahrzeug ist
+\end{lstlisting}
+
 \section{Der Konstruktor}
 
 \begin{itemize}
@@ -37,17 +56,17 @@ class Person {
 
 class Employee : Person {
 	public int id;
-	public Employee() : this("unbekannt", 0) { }
-	public Employee(int id) : this("unbekannt", id) { }  
+	public Employee() : this("unbekannt", 0) { }	// ruft den 3. Konstruktor mit dem Namen "unbekannt" und ID 0 auf.
+	public Employee(int id) : this("unbekannt", id) { }  	// ruft den 3. Konstruktor mit dem Namen "unbekannt" und der übergebenen ID auf
 	public Employee(string name, int id) : base(name) {
 		// perform some checks here
 		this.id = id;
-	}
+	} // ruft den Konstruktor des Parents mit dem übergebenen Namen auf (der den Namen zuweist) und weist dann die übergebene ID zu
 }
 \end{lstlisting}
 
 \section{Polymorphie}
-Auf einer Referenz der Basisklasse kann die spezifische Methode der Sub-klasse aufgerufen werden.\\
+Auf einer Referenz der Basisklasse kann die spezifische Methode der Sub-Klasse aufgerufen werden.\\
 Funktioniert in C\# durch die Schlüsselwörter \lstinline$virtual$ und \lstinline$override$. 
 \begin{lstlisting}[language={[Sharp]C}]
 class Basisklasse { 
@@ -79,6 +98,27 @@ b.test(); // Ausgabe: Sub
 \item \emph{const}: Der Rückgabewert kann nicht verändert werden (Aufruf function()=1 geht nicht)
 \end{itemize}
 
+\subsubsection*{Beispiel}
+\begin{lstlisting}[language={[Sharp]C}]
+class A {
+	public virtual void test() {
+		Console.WriteLine("A");
+	}
+}
+
+class B : A {
+	public sealed override void test() {
+		Console.WriteLine("B");
+	}
+}
+
+class C : B {
+	public override void test() {	// führt zu Fehler, da test() von B "sealed" ist!
+		Console.WriteLine("C");
+	}
+}
+\end{lstlisting}
+
 \section{Optionen für Klassendeklaration}
 
 \begin{itemize}
@@ -101,19 +141,33 @@ b.test(); // Ausgabe: Sub
 \begin{tabular}{L{.15} | L{.15} L{.15} L{.15} L{.4}}
 & Überall & Bibliothek & abgeleitete Klassen & \\\hline
 private & ~ & ~ & ~ & $\to$ Standard in einem Typ\newline(z.B. in einer Klasse)\\
-protected & ~ & ~ & ~ & ~\\
-internal & ~ & ~ & ~ & ~\\
-public & ~ & ~ & ~ & ~\\
+protected & ~ & ~ & X & ~\\
+internal & ~ & X & X & ~\\
+public & X & X & X & ~\\
 \end{tabular}
 
 \section{Casting von Klassen}
 \begin{itemize}
-\item implicit cast in eine Basisklasse: 
-\item explicit cast in Subklasse: 
+\item implicit cast in eine Basisklasse:
+\begin{lstlisting}[language={[Sharp]C}]
+object peter = new Person("Peter");
+\end{lstlisting}
+\item explicit cast in Subklasse:
+\begin{lstlisting}[language={[Sharp]C}]
+Person p = (Person) peter; // braucht cast, da peter erst mal nur object ist.
+\end{lstlisting} 
 \item \emph{as} keyword: 
+\begin{lstlisting}[language={[Sharp]C}]
+string s = peter as string;	// "as-cast" peter auf string möglich, führt nicht zu Laufzeitfehler
+if (s == null) // wenn peter kein string ist, bleibt s null
+	Console.WriteLine("Peter ist kein String");
+\end{lstlisting}
 \item \emph{is} keyword: 
+\begin{lstlisting}[language={[Sharp]C}]
+if (peter is string)	// ähnlich wie "peter as string" mit Abfrage, ob null
+	Console.WriteLine("Peter ist kein String");
+\end{lstlisting}
 \end{itemize}
-%%% TODO
 \section{Properties (Eigenschaft)}
 Property = Member-Variable die in einem Objekt definiert ist und auf die von außen zugegriffen werden soll.\\
 Zugriff auf Eigenschaften: \\

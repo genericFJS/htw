@@ -1,5 +1,5 @@
 \section{Enumeration (Aufzählung)}
-
+\lecdate{31.03.2017}
 \subsubsection*{Beispiel}
 \begin{lstlisting}[language={[Sharp]C}]
 public enum Karte{
@@ -46,15 +46,16 @@ Beispiele: alle primitiven Datentypen
 
 \section{Array}
 
-Arrays erben direkt von \lstinline$System.Object$, sind also Referenztypen!\\
-Was tun die folgenden Zeilen ? 
+Arrays erben direkt von \lstinline$System.Object$, sind also Referenztypen!
 \begin{lstlisting}[language={[Sharp]C}]
 int[] elements = new int[3];
 elements = {23, 9, 7};
 
+// mehrdimensionale Arrays:
 int[,] points = new int[4,3];
 int[,] points = {{1,2,3},{4,5,6}};
 
+// verzweigte Arrays:
 int[][] myArray = new int[3][];
 myArray[0] = new int[3];
 myArray[1] = new int[4];
