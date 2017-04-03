@@ -182,31 +182,6 @@ Grundlegender Aufbau eines Expertensystems:
 \end{tikzpicture}
 \end{center}
 
-\chapter{Prolog-Programmierung}
-Prolog: Programming in Logic\\
-Prolog-Programme sind im Wesentlichen Hornformeln, bei denen alle Variablen allquantisiert sind. Jede Klausel ist dabei eine Zeile eines Prolog-Programmes.
-
-\cparagraph{Beispiel}$ $
-\begin{lstlisting}[language=Prolog]
-katze(feli).
-haustier(X):-katze(X).
-\end{lstlisting}
-Dieses Prolog-Programm stellt die Hornformel $katze(feli) \wedge \forall x \, (katze(x) \to haustier(x))$ dar.\\
-Anfrage an den Prolog-Interpreter:
-\begin{lstlisting}[language=Prolog]
-?-haustier(reni).
-true.
-\end{lstlisting}
-
-\section{Syntax}
-Prädikat: Wort in Kleinbuchstaben.\\
-Konstante: Wort in Kleinbuchstaben.\\
-(Bestimmung ob Prädikat oder Konstante erfolgt über die Position des Wortes: Konstanten treten immer in der Klammer von Prädikaten auf)\\
-Variable: Wort, das mit einem Großbuchstaben beginnt.\\
-"$\leftarrow$": ":-" (wird impliziert von).\\
-"$\wedge$": ",".\\
-Jede Klausel wird mit "." abgeschlossen. Alle Klauseln sind implizit mit $\wedge$ verknüpft.
-
 
 
 
