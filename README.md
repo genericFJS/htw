@@ -27,4 +27,9 @@ Ohne meine explizite Zustimmung ist es nicht erlaubt die von mir erstellten Date
 
 ### Dateien von dritten
 
-Es sollten keine Dateien von dritten in diesem Repository zu findes sein. Falls doch, werde ich sie umgehend daraus entfernen.
+#### Logo der HTW
+
+Das Logo der HTW (zu finden unter _LaTeX_master/HTW.eps) ist nur im direktem Zusammenhang mit der HTW Dresden zu verwenden.
+
+#### Weitere
+Es sollten sonst keine Dateien von dritten in diesem Repository zu findes sein. Falls doch, werde ich sie umgehend daraus entfernen.
