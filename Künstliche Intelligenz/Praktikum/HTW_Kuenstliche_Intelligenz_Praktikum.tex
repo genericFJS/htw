@@ -5,15 +5,16 @@
 \input{\pathtomaster/fjs_packages-macros.sty}
 
 \faculty{Fakultät Informatik/Mathematik}
-%\department{Einrichtung}
-%\institute{Institut}
 \chair{Lehrstuhl für Künstliche Intelligenz / Theoretische Informatik}
-\subject{lecture}
+\subject{Übungsmitschrift}
 \title{Künstliche Intelligenz}
-%\subtitle{Untertitel}
 \author{Falk-Jonatan Strube}
 \professor{Prof. Dr. Boris Hollas}
-%\date{Datum}
+\renewcommand{\professorname}{Übung von}
+\simpledate
+\makeatletter
+\gdef\@islecture{}
+\makeatother
 
 \begin{document}
 
@@ -60,13 +61,31 @@ Es existiert ein ein Fach für jeden Menschen, das er nicht studiert.
 $\to$ in 2(a) sind wahre Voraussetzungen angenommen: Dabei sind $F_1$ und $F_3$ korrekter Weise wahr.\\
 in 2(b) sind falsche Voraussetzungen angenommen: Dabei ist $F_1$ korrekter Weise falsch und $F_3$ fälschlicher Weise wahr.
 
-\chapter{Aufgabe 3}
+\section{Aufgabe 3}
 \begin{anumerate}
-\item $\forall x \; (I(x) \to F(x,inf))$
-\item $  $
-\item $\forall x \; \exists y \; (S(x) \to F(x,y))$
-\item $\forall x \; \forall y \; (F(x,y) \to S(x))$
-\item $\forall y \; \exists x \; (F(x,y) \to S(x))$
+\item Jeder Informatikstudent studiert Informatik.\\
+$\forall x \; (I(x) \to F(x,inf))$
+\item Jeder Informatikstudent ist ein Student, aber nicht jeder Student ist ein Informatikstudent.\\
+$\forall x \; \exists y \; (I(x) \to S(x) \wedge (S(y) \to \neg I(y))  $
+\item Jeder Student studiert ein Fach.\\
+$\forall x \; \exists y \; (S(x) \to F(x,y))$
+\item Wer ein Fach studiert, ist ein Student.\\
+$\forall x \; \exists y \; (F(x,y) \to S(x))$
+\item Es gibt kein Fach, das kein Student studiert.\\
+$\forall y \; \exists x \; (F(x,y) \to S(x))$
 \end{anumerate}
+
+\section{Aufgabe 4}
+\begin{anumerate}
+\item Es gibt ein Haustier, das fliegen kann.\\
+$\exists x\; (haustier(x) \to fliegt (x))$
+\item Katzen können nicht fliegen.\\
+$\forall x\; (katze(x) \to \neg fliegt(x))$
+\item Wenn ein Haustier fliegen kann, dann ist es ein Vogel.\\
+$\forall x\; (haustier(x) \wedge fliegt(x) \to vogel(x))$
+\item  Kein Haustier ist sowohl Katze als auch Vogel.\\
+$\forall x\; ((haustier(x) \to katze(x) \wedge \neg vogel(x)) \vee (haustier(x)\to \neg katze \wedge vogel(x)))$
+\end{anumerate}
+
 
 \end{document}
