@@ -1,0 +1,170 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrreprt}
+\gdef\pathtomaster{../../../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\faculty{Fakultät Informatik/Mathematik}
+\subject{Praktikumsmitschrift}
+\title{Spezielle Themen/Technologien der Informatik}
+\author{Falk-Jonatan Strube}
+\professor{Prof. Dr.-Ing. habil. Peter Sobe}
+\renewcommand{\professorname}{Übung von}
+\simpledate
+\makeatletter
+\gdef\@islecture{}
+\makeatother
+
+\begin{document}
+
+\chapter*{Aufgabe 5}
+\begin{anumerate}
+\item $ $\\
+\begin{tikzpicture}[scale=.7]
+\draw  (-3.5,3) rectangle (-2.5,2) node[pos=.5]{C};
+\draw  (-1.5,3) rectangle (-0.5,2) node[pos=.5]{C};
+\draw  (0.5,3) rectangle (1.5,2) node[pos=.5]{V};
+\draw  (-3.5,1) rectangle (-2.5,0) node[pos=.5]{C};
+\draw  (-1.5,1) rectangle (-0.5,0) node[pos=.5]{C};
+\draw  (0.5,1) rectangle (1.5,0) node[pos=.5]{V};
+\draw  (3.5,2) rectangle (4.5,1) node[pos=.5]{N};
+\draw  (6.5,3) rectangle (7.5,2) node[pos=.5]{S};
+\draw  (6.5,1) rectangle (7.5,0) node[pos=.5]{S};
+\draw (-6,1.5) -- (-4.5,1.5) -- (-4.5,2.5) -- (-3.5,2.5);
+\draw (-4.5,1.5) -- (-4.5,0.5) -- (-3.5,0.5);
+\draw (-2.5,0.5) -- (-1.5,0.5);
+\draw (-0.5,0.5) -- (0.5,0.5);
+\draw (-2.5,2.5) -- (-1.5,2.5);
+\draw (-0.5,2.5) -- (0.5,2.5);
+\draw (1.5,2.5) -- (2.5,2.5) -- (2.5,1.5) -- (3.5,1.5);
+\draw (1.5,0.5) -- (2.5,0.5) -- (2.5,1.5);
+\draw (4.5,1.5) -- (5.5,1.5) -- (5.5,2.5) -- (6.5,2.5);
+\draw (5.5,1.5) -- (5.5,0.5) -- (6.5,0.5);
+\draw (7.5,0.5) -- (9,0.5);
+\draw (7.5,2.5) -- (9,2.5);
+\end{tikzpicture}
+\item $R_{CCV} = R_C^2 \cdot R_V$ (Computer sind 2 of 2, Voter dazu seriell)\\
+$F_{1of2\;CCV}=F_{CCV}\cdot F_{CCV}$\\
+$R_{1of2\;CCV}=1-((1-R_{CCV})\cdot(1-R_{CCV}))$ (nach Formel der VL) bzw. \\
+$R_{1of2\;CCV}=R_{CCV}^2 + 2 R_{CCV}R_{CCV}$(die Fälle, dass beide Funktionieren oder noch einer)\\
+mit $X={1of2\;CCV}$:\\
+$R_{total}=\left( R_X^2 + 2R_XF_X\right) \cdot R_N \cdot \left(R_S^2 + 2 R_SF_S\right)$
+\item Verfügbarkeiten ausrechnen:\\
+$A_C=\frac{MTTF_C}{MTTF_C+MTTR}$\\
+$MTTF_C=\frac{0.5\unit{year}}{0.5\unit{year}+1}$
+$A_C=0,99447$\\
+$A_V$ usw analog:\\
+$A_V=0,99861$\\
+$A_N=0,9972$\\
+$A_S=0,99907$\\
+$A_X=A_C^2 \cdot A_V$\\
+$A_{total}=\left(1-(1-A_X)^2\right) \cdot A_N \cdot \left(1-(1-A_S)^2\right)=0,9984$\\
+Alternative Betrachtung:
+\begin{align*}
+A_{1of2}&=\underbrace{A^2}_{\text{beide Komp. funktionieren}}+\underbrace{2 A (1-A)}_{\text{eine Komp. fällt aus}}\\
+A_{1of2}&= 1-(1-A)^2\\
+A_{1of2}&= A'_{1of2}\\
+&= 2A-A^2
+\end{align*}
+\item $ $\\
+\begin{tikzpicture}[scale=.7]
+\draw (-5,3) rectangle  node[pos=.5]{C1} (-4,2);
+\draw  (-3,3) rectangle node[pos=.5]{C2} (-2,2);
+\draw  (-4.5,0) node{V1} ellipse (0.5 and 0.5);
+\draw  (-2.5,0) node{V2} ellipse (0.5 and 0.5);
+\draw  (0.5,3) rectangle node[pos=.5]{C3} (1.5,2);
+\draw  (2.5,3) rectangle node[pos=.5]{C4} (3.5,2);
+\draw  (1,0) node{V3} ellipse (0.5 and 0.5);
+\draw  (3,0) node{V4} ellipse (0.5 and 0.5);
+\draw  (-7,-2) rectangle node[pos=.5]{N1} (5.5,-2.5);
+\draw  (-7,-3) rectangle node[pos=.5]{N2} (5.5,-3.5);
+\draw  (-5.5,3.5) rectangle (-1.5,-1);
+\draw  (0,3.5) rectangle (4,-1);
+\draw (-4.5,-0.5) -- (-4.5,-2.25);
+\draw (-2.5,-0.5) -- (-2.5,-3.25);
+\draw (1,-0.5) -- (1,-2.25);
+\draw (3,-0.5) -- (3,-3.25);
+\draw  (-4.5,-5) rectangle node[pos=.5]{S1} (-3.5,-6);
+\draw  (-2.25,-5) rectangle node[pos=.5]{S2} (-1.25,-6);
+\draw (-4,-5) -- (-4,-2.25);
+\draw (-1.75,-5) -- (-1.75,-3.25);
+\draw (-4.5,0.5) -- (-4.5,2) -- (-2.5,0.5);
+\draw (-4.5,0.5) -- (-2.5,2) -- (-2.5,0.5);
+\draw (1,0.5) -- (1,2) -- (3,0.5);
+\draw (3,0.5) -- (3,2) -- (1,0.5);
+\end{tikzpicture}\\
+\begin{tikzpicture}[scale=.7]
+\draw  (-3.5,4.5) rectangle (-2.5,3.5) node[pos=.5]{C1};
+\draw  (-1.5,4.5) rectangle (-0.5,3.5) node[pos=.5]{C2};
+\draw  (-3.5,-0.5) rectangle (-2.5,-1.5) node[pos=.5]{C3};
+\draw  (-1.5,-0.5) rectangle (-0.5,-1.5) node[pos=.5]{C4};
+\draw (-6,1.5) -- (-4.5,1.5) -- (-4.5,4) -- (-3.5,4);
+\draw (-4.5,1.5) -- (-4.5,-1) -- (-3.5,-1);
+\draw (-2.5,-1) -- (-1.5,-1);
+\draw (-2.5,4) -- (-1.5,4);
+\draw  (1,4.5) rectangle (2,3.5) node[pos=.5]{V1};
+\draw  (3,4.5) rectangle (4,3.5) node[pos=.5]{N1};
+\draw  (5,4.5) rectangle (6,3.5) node[pos=.5]{S1};
+\draw  (1,2.5) rectangle (2,1.5) node[pos=.5]{V2};
+\draw  (3,2.5) rectangle (4,1.5) node[pos=.5]{N2};
+\draw  (5,2.5) rectangle (6,1.5) node[pos=.5]{S2};
+\draw  (1,-0.5) rectangle (2,-1.5) node[pos=.5]{V3};
+\draw  (3,-0.5) rectangle (4,-1.5) node[pos=.5]{N1};
+\draw  (5,-0.5) rectangle (6,-1.5) node[pos=.5]{S1};
+\draw  (1,-2.5) rectangle (2,-3.5) node[pos=.5]{V4};
+\draw  (3,-2.5) rectangle (4,-3.5) node[pos=.5]{N2};
+\draw  (5,-2.5) rectangle (6,-3.5) node[pos=.5]{S2};
+\draw (-0.5,4) -- (1,4);
+\draw (0.5,4) -- (0.5,2) -- (1,2);
+\draw (2,2) -- (3,2);
+\draw (4,2) -- (5,2);
+\draw (2,4) -- (3,4);
+\draw (4,4) -- (5,4);
+\draw (6,4) -- (6.5,4) -- (6.5,2) -- (6,2);
+\draw (6.5,3) -- (7.5,3) -- (7.5,1.5) -- (9,1.5);
+\draw (-0.5,-1) -- (1,-1);
+\draw (0.5,-1) -- (0.5,-3) -- (1,-3);
+\draw (2,-3) -- (3,-3);
+\draw (4,-3) -- (5,-3);
+\draw (2,-1) -- (3,-1);
+\draw (4,-1) -- (5,-1);
+\draw (6,-1) -- (6.5,-1) -- (6.5,-3) -- (6,-3);
+\draw (6.5,-2) -- (7.5,-2) -- (7.5,1.5);
+\end{tikzpicture}\\
+$A_{VNS}=A_V \cdot A_N \cdot A_S = 0,9949$\\
+$A_{VNS, 1of2}=2_{AVNS} - A_{VNS}^2 = 0,99997$\\
+$A_{HALF}=A_C^2 \cdot A_{VNS,1of2}=0,98894$\\
+$A_{total}=2A_{HALF}-A_{HALF}^2=0,9997$
+\end{anumerate}
+
+\chapter*{Aufgabe 6}
+\section*{EXAMPLE}
+Analytic MTTDL: $MTTF=3345018333.14$\\
+Analytic prob. of failure: $F=2.98903e-04$\\
+Fehlerwahrscheinlichkeit: $F=0,000298903$\\
+Zuverlässigkeit: $R=1-F=0,999701097$
+\section*{EXAMPLE1}
+\section*{SINGLE}
+$t=1\;000\;000$\\
+$F(t)=0,632$\\
+$R(t)=1-F(t)=0,368$\bigskip\\
+$t=500\;000$\\
+$F(t)=0,393$\\
+$R(t)=0,607$
+
+\chapter*{Aufgabe 7}
+\section*{Ohne Reparatur}
+$F(t)=0,693568$\\
+$R(t)=0,306432$
+\section*{Mit Reparatur}
+$F(t)=0,000599460$\\
+$R(t)=0,99940054$
+
+
+
+
+
+
+
+
+\end{document}

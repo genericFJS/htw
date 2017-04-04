@@ -1,0 +1,6 @@
+[num states]
+2
+0 1 lam failure
+[assign]
+lam=0.000001
+[END]
