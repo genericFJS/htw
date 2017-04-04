@@ -187,7 +187,19 @@ public void AccessVariables(int a) {
 \end{lstlisting} &
 %%% TODO
 \begin{lstlisting}[language={[Sharp]C}]
+private int myVariable;
 
+public int MyVariable{
+	get {
+		return myVariable;
+	}
+	set {
+		myVariable = value;
+	}
+}
+
+int b = MyVariable;
+MyVariable = a;
 \end{lstlisting}\\
 \end{tabular}
 
@@ -198,7 +210,10 @@ public void AccessVariables(int a) {
 
 \subsection{Auto-generated properties}
 Will man nur den schreibenden Zugriff auf eine Variable einschränken, kann man noch kürzer schreiben:\\
-\lstinline$public int MyVariable {get; private set;}$
+\begin{lstlisting}[language={[Sharp]C}]
+public int MyVariable {get; private set;}
+// Variable myVariable wird intern angelegt.
+\end{lstlisting}
 \begin{itemize}
 \item Dabei wird die zugrundeliegende Variable (vorher myVariable) nicht mehr benutzt
 \item Intern wird eine eigene Variable angelegt auf die nun kein direkter Zugriff mehr möglich ist
