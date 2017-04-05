@@ -227,3 +227,130 @@ void philosopher(int n){
 
 \section{Fazit}
 \slides{00-synchronisation}{38}
+
+\section{Zusammenfassung Semaphore}
+\lecdate{05.04.2017}
+\slides{02-sync}{2}
+\slides{02-sync}{3}
+\section{Implementation der P()-Operation}
+\slides{02-sync}{4}
+\slides{02-sync}{5}
+\section{Spinlocks (Schlossvariablen)}
+\slides{02-sync}{6}
+Spinlock $\to$ busy waiting
+\subsection{Implementierung Ansatz 1}
+Möglicher Syntax bei x86 (Unterschiede):
+\begin{itemize}
+\item Intel-Syntax:\\
+\lstinline$instruction target, source$\\
+\lstinline$mov$ (allgemein)
+\item AT\&T Syntax\\
+\lstinline$instruction source, target$\\
+\lstinline$movb, movw, movl, movq$ (je nach Länge des Operants: Byte, Word, …)
+\end{itemize}
+Register: A, B, C, D
+\begin{center}
+\begin{tikzpicture}[scale=.7]
+\draw  (0,0) rectangle (16,1) node[above]{0};
+\node at (0,1) [above] {31};
+\draw  (16,0) rectangle (12,1) node[above right]{7} node[above left]{8} node[pos=.5]{AL};
+\draw  (12,0) rectangle (8,1) node[above]{15} node[pos=.5]{AH};
+\node at (12,0.5) {AX};
+\draw  (0,-0.5) rectangle (16,-1.5);
+\node at (17.5,0.5) {EAX};
+\node at (17.5,-1) {EBX};
+\node at (17.5,-2.5) {ECX};
+\node at (17.5,-4) {EDX};
+\end{tikzpicture}
+\end{center}
+\begin{itemize}
+\item ESI: Source Index
+\item EDI: Destination Index
+\item ESP: Stack Pointer (unteres Ende)
+\item EBP: Base Pointer (oberes Ende)
+\end{itemize}
+\slides{02-sync}{7}
+Ablauf:
+\begin{itemize}
+\item globale Funktionen bestimmen
+\item definiere locked=0 und unlocked=1
+\item data-Sektion: setze lock=unlocked(1)
+\item text(Instruktions)-Sektion:
+\begin{itemize}
+\item kopiere lock in EAX
+\item vergleiche, ob EAX gleich mit locked(0)
+\item wenn ja, dann gehe erneut zu enter\_cs
+\item sonst kopiere locked(0) in lock
+\end{itemize}
+\end{itemize}
+\slides{02-sync}{12}
+\subsection{Atomare Lese-Schreib-Instruktionen der IA32 (Intel 32bit Architektur)}
+\slides{02-sync}{13}
+
+\subsection{Implementierung Ansatz 2}
+\slides{02-sync}{14}
+Atomarer Exchange-Befehl wird genutzt, um sicher zu stellen, dass nur 1 Prozess in kritischen Abschnitt kann:\\
+\begin{tabular}{c c | c}
+EAX: & 0 & var\\
+Lock: & var & 0
+\end{tabular}\\
+Also zu: \begin{tabular}{c c | c}
+EAX: & 0 & 0\\
+Lock: & 0 & 0
+\end{tabular} 
+und offen: \begin{tabular}{c c | c}
+EAX: & 0 & 1\\
+Lock: & 1 & 0
+\end{tabular}
+\slides{02-sync}{15}
+
+\subsection{Warum nicht einfach Interrupts verbieten?}
+\slides{02-sync}{16}
+
+\section{API für Semaphore}
+\subsubsection*{Unter Unix}
+\slides{02-sync}{17}
+\subsubsection*{Weitere}
+\slides{02-sync}{18}
+\subsection{Semaphor-API nach System V}
+\slides{02-sync}{19}
+\begin{itemize}
+\item \lstinline$ipcs$: Anzeige der Semaphore (und Shared Memory Segments und Message Queues)
+\item \lstinline$ipcrm$: löscht IPC-Ressource (bspw. Semaphor)
+\end{itemize}
+
+\subsubsection{Erzeuger-Verbraucher-Problem}
+Veranschaulichender Quellcode: \lstinline$erzver-sysv.c$
+
+\section{Identifikation der Semaphore}
+\slides{02-sync}{20}
+Funktion \lstinline$ftok$ kann einen eindeutigen Key für den Semaphor generieren.
+
+\section{Semaphorausgleichswert}
+\slides{02-sync}{21}
+Semaphorausgleichswert ist dafür da, dass beim Beenden eines Prozesses die Manipulation des Semaphores zurück gesetzt wird (wenn Prozess nach dem schließen des Semaphors beendet ohne ihn zu öffnen, schafft der Semaphorausgleichswert dafür, dass der kritische Abschnitt noch von anderen Programmen erreicht werden kann).\\
+Der Semaphorausgleichswert zählt im Prinzip die Anzahl von \lstinline$P()$s und \lstinline$V()$s
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
