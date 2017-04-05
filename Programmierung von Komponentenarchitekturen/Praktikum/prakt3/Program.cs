@@ -11,13 +11,15 @@ namespace prakt3 {
         static void Main(string[] args) {
             // Console.WriteLine(Bomb.defuseBomb(0L));
             long password = 0;  // wahrscheinlich nur positive Zahlen
+            Console.WriteLine("Suche nach Code zum Entschärfen (while-Schleife):");
             while (String.Equals(Bomb.defuseBomb(password), Bomb.defuseBomb(0L))) {
                 password++;
             }
-            Console.WriteLine("Entschärfe mit (durch while-Schleife gefunden): "+password);
+            Console.WriteLine("Entschärfe mit: "+password);
             password = 0;
+            Console.WriteLine("Suche nach Code zum Entschärfen (for-Schleife):");
             for (; String.Equals(Bomb.defuseBomb(password), Bomb.defuseBomb(0L)); password++) { }
-            Console.WriteLine("Entschärfe mit (mit for-Schleife gefunden): " + password);
+            Console.WriteLine("Entschärfe mit: " + password);
         }
     }
 }

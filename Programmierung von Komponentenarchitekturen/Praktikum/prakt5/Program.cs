@@ -37,8 +37,8 @@ namespace prakt5 {
 
         public int CompareTo(object obj) {
             Bruch objBruch = (Bruch)obj;
-            double objVal = (double) objBruch.Zaehler / objBruch.Nenner;
-            double myVal = (double) Zaehler / Nenner;
+            double objVal = (double)objBruch.Zaehler / objBruch.Nenner;
+            double myVal = (double)Zaehler / Nenner;
             if (objVal == myVal) {
                 return 0;
             } else {

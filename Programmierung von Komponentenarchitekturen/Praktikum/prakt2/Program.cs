@@ -32,7 +32,7 @@ namespace prakt2 {
             double end = start;
             for (int i = years; i > 0; i--) {
                 end *= interest+1;
-                Console.Write("Jahr " + i);
+                Console.Write("Jahr " + (years-i+1));
                 Console.Write(": {0:c2}\n",end);
             }
             Console.Write("Das Endkapital beträgt {0:c2}", start*Math.Pow(1+interest,years));

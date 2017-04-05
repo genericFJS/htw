@@ -23,13 +23,14 @@ namespace prakt4 {
             set {
                 DateTime correctValue = value;
                 while (correctValue.Year < 1900) {
-                    Console.WriteLine("Geburtstag vor 1900, bitte erneut eingeben (YYYY-MM-DD):");
+                    Console.WriteLine("Geburtstag vor 1900, bitte erneut eingeben:");
                     correctValue = DateTime.Parse(Console.ReadLine());
                 }
                 birthday = correctValue;
             }
         }
         public Person(String preName, String surName, DateTime birthday) {
+            Console.WriteLine("Erstelle Person "+preName+" "+surName+" (geboren: "+birthday.ToShortDateString()+")");
             PreName = preName;
             SurName = surName;
             Birthday = birthday;
