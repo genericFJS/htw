@@ -1,0 +1,73 @@
+\begin{itemize}
+\item Oft müssen ähnliche Operationen / Funktionalitäten für unterschiedliche Datentypen bereitgestellt werden
+\item Um nicht gleichen Code mehrfach zu schreiben nutzt man Platzhalter (template) für Datentypen
+\item Beispiel: List<T>
+\end{itemize}
+
+\section{Generische Klasse definieren}
+
+\section{Generische Klasse benutzen}
+
+\begin{center}
+\includegraphics{Vorlesung/a7Generik-img001.png}
+\end{center}
+
+Ähnlich für: 
+\begin{itemize}
+\item struct 
+\item interfaces
+\item delegates
+\end{itemize}
+~
+
+\section{Generische Methoden}
+Generik funktioniert genauso für Methoden
+\begin{lstlisting}[language={[Sharp]C}]
+class MyClass {
+	public static void Swap<T>(ref T l, ref T r) { 
+		T temp = r;
+		r = l;
+		l = temp;   
+	}
+}
+
+int a = 3;
+int b = 4;
+MyClass.Swap(ref a, ref b);
+\end{lstlisting}
+
+\section{Template Constraints}
+Constraints = Vorgaben an die Templates
+
+\subsection{Interface Constraint}
+
+\begin{lstlisting}[language={[Sharp]C}]
+public static void Swap<T>(ref T l, ref T r) where T : IComparable{
+	if (l.CompareTo(r) < 0)  {
+		T temp = r;
+		r = l;
+		l = temp;
+	}
+}
+\end{lstlisting}
+
+\subsection{Klassen Constraint}
+\begin{lstlisting}[language={[Sharp]C}]
+class MyGenericClass<T> where T : IComparable{
+
+}
+\end{lstlisting}
+\subsection{Vererbungs Constraints}
+
+\begin{lstlisting}[language={[Sharp]C}]
+class MyGenericClass<T> where T : Random
+
+class MyGenericClass<T, V> where T : List<V>
+
+class MyGenericClass<T, V> where T : List<V> where V : Random
+\end{lstlisting}
+
+\subsection{Instanzierbarkeits Constraint}
+\begin{lstlisting}[language={[Sharp]C}]
+T CreateNew<T>() where T : new() {   return new T();//Works }
+\end{lstlisting}

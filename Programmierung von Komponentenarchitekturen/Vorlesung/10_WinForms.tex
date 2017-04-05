@@ -1,0 +1,133 @@
+Windows Forms ist ein GUI Toolkit für .NET.\\
+Alternative GUI Schnittstelle: Windows Presentation Foundation (schwieriger)
+
+\section{Windows Forms Anwendung erstellen}
+
+New $\to$ Project $\to$ C\# $\to$ Windows Forms Application
+\begin{center}
+\includegraphics[width=.9\textwidth]{Vorlesung/a10WinForms-img001.png} 
+\end{center}
+
+\subsection{Form.cs}
+\begin{lstlisting}[language={[Sharp]C}]
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace MyFirstForm {
+	public partial class Form1 : Form {
+		public Form1() {
+			InitializeComponent();
+		}
+	}
+}
+\end{lstlisting}
+
+\subsection{Form.Designer.cs}
+\begin{lstlisting}[language={[Sharp]C}]
+namespace MyFirstForm {
+	partial class Form1 {
+		// ...
+		private void InitializeComponent() {
+			this.button1 = new System.Windows.Forms.Button();
+			this.SuspendLayout();
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(84, 95);
+			this.button1.Name = {\textquotedbl}button1{\textquotedbl};
+			this.button1.Size = new System.Drawing.Size(75, 23);
+			this.button1.TabIndex = 0;
+			this.button1.Text = {\textquotedbl}button1{\textquotedbl};
+			this.button1.UseVisualStyleBackColor = true;
+			// ...
+		}
+	}
+}
+\end{lstlisting}
+
+\subsection{Program.cs}
+\begin{lstlisting}[language={[Sharp]C}]
+using System;
+using System.Windows.Forms;
+
+namespace MyFirstForm {
+	static class Program {
+		[STAThread]
+		static void Main() {
+				Application.EnableVisualStyles();
+				Application.SetCompatibleTextRenderingDefault(false);
+				Application.Run(new Form1());
+		}
+	}
+}
+\end{lstlisting}
+
+\section{Ein neues Control generieren}
+
+\begin{lstlisting}[language={[Sharp]C}]
+public Form1() {
+	InitializeComponent();
+
+	var myLabel = new Label();
+	//Set some properties
+	myLabel.Text = {\textquotedbl}Some example text{\textquotedbl};
+	myLabel.Location = new Point(100, 60);
+	myLabel.ForeColor = Color.Red;
+	// Without the following line we would see nothing
+	this.Controls.Add(myLabel);
+}
+\end{lstlisting}
+
+\section{Hosting}
+
+\begin{itemize}
+\item alle Controls (außer Form) werden in einem anderen Control gehostet
+\item Sichtbarkeit und Position des Controls sind dann fest mit dem Host verbunden
+\end{itemize}
+
+\section{Auf Events reagieren}
+Beispiele für Events: Click, DragDrop, MouseMove, KeyDown\\
+Beim Auftreten dieser Events können EventHandler aufgerufen werden die Code ausführen. \\
+EventHandler können für jedes Control in den Properties definiert werden
+
+\begin{center}
+\includegraphics[scale=.5]{Vorlesung/a10WinForms-img002.png} 
+\end{center}
+
+\section{Benutzerdefiniertes Zeichnen}
+
+Zentrales Object: \lstinline$System.Drawing.Graphics$
+\begin{lstlisting}[language={[Sharp]C}]
+System.Drawing.Graphics graphics = this.CreateGraphics();
+\end{lstlisting}
+Enthält viele Befehle die mit Draw oder Fill anfangen.\bigskip\\
+Draw-Befehle benötigen einen Pen (definiert Zeichen-Stil und Farbe):
+\begin{lstlisting}[language={[Sharp]C}]
+Pens.Red // einfacher vordefinierter roter Stift
+new Pen(Color.Red, 4f) // Farbe Rot, Stiftdicke 4
+\end{lstlisting}\bigskip
+Fill-Befehle benötigen einen Brush (z.B. SolidBrush, TextureBrush, …):
+\begin{lstlisting}[language={[Sharp]C}]
+Brushes.Yellow // Vordefinierter gelber SolidBrush
+\end{lstlisting}
+
+\subsubsection*{Beispiel}
+\begin{lstlisting}[language={[Sharp]C}]
+System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(100, 100, 200, 200);
+graphics.DrawEllipse(Pens.Black, rectangle);
+graphics.DrawRectangle(Pens.Red, rectangle);
+graphics.FillRectangle(Brushes.Yellow, new Rectangle(200,200, 100, 100));
+\end{lstlisting}
+\begin{center}
+\includegraphics[scale=.5]{Vorlesung/a10WinForms-img003.png}
+\end{center} 
+
+\section{Transformation von Graphikobjekten}
+Graphikobjekte können
+\begin{itemize}
+\item skaliert  (\lstinline$graphics.ScaleTransform(x_factor, y_factor);$)
+\item verschoben (\lstinline$graphics.TranslateTransform(x, y);$)
+\item rotiert  (\lstinline$graphics.RotateTransform(angle);$)
+\end{itemize}
+werden.

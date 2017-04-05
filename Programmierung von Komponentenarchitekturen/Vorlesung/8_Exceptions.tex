@@ -1,0 +1,104 @@
+Ziel: Behandlung von Ausnahmefehlern, Vermeidung von Programmabsturz
+
+\section{Behandlung einer Ausnahme mit try / catch}
+Beispiel:
+\begin{lstlisting}[language={[Sharp]C}]
+using System.IO;
+
+class Program {
+	static void Main(string[] args) {
+		StreamReader stream = new StreamReader(@"C:\Text.txt");
+		Console.WriteLine(stream.ReadToEnd());
+		stream.Close();
+	}
+}
+\end{lstlisting}
+
+\section{Arten von Exceptions}
+Auszug der Vererbungshierarchie:
+
+\begin{center}
+\includegraphics[width=.9\textwidth]{Vorlesung/a8Exceptions-img001.png}
+\end{center}
+Mehrere Exceptions-Typen können abgefangen werden um gesondert auf sie zu reagieren
+
+\begin{lstlisting}[language={[Sharp]C}]
+StreamReader stream = null;
+Console.Write("Welche Datei soll geöffnet werden? ... ");
+string path = Console.ReadLine();
+try {
+	stream = new StreamReader(path);
+	Console.WriteLine(stream.ReadToEnd());
+	stream.Close();
+} catch (FileNotFoundException ex) {
+	Console.WriteLine(ex.Message);
+} catch (DirectoryNotFoundException ex) {
+	Console.WriteLine(ex.Message);
+}	catch (ArgumentException ex) { //Pfadangabe leer
+	Console.WriteLine(ex.Message);
+} catch (Exception ex) {
+	Console.WriteLine(ex.Message);
+}
+// ...
+\end{lstlisting}
+
+\section{Ausnahmen werfen mit throw}
+Zum Test von Code kann man auch selbst ausnahmen erzeugen (werfen)
+\lstinline$throw AbcException;$
+
+\section{Finally Block}
+Falls nach Behandlung einer Exception etwas unbedingt ausgeführt werden muss (z.B. Freigabe einer Datei, Schließen einer Datenbankverbindung,…)
+\begin{lstlisting}[language={[Sharp]C}]
+try {
+	// ...
+} catch {
+	// ...
+} finally {
+	// ...
+}
+\end{lstlisting}
+Der \lstinline$finally$-Block wird immer ausgeführt unabhängig ob:
+\begin{itemize}
+\item Exception geworfen
+\item catch block ein return statement enthielt
+\item in catch noch eine Exception geworfen wurde 
+\end{itemize}
+
+\section{Eigenschaften der Klasse Exception}
+
+\begin{tabular}{L{.25} L{.75}}
+Eigenschaft  & Beschreibung \\\hline
+\lstinline$Data$ & Stellt zusätzliche Informationen zu der Ausnahme bereit.\\
+\lstinline$HelpLink$ & Verweist auf eine Hilfedatei, die diese Ausnahme beschreibt.\\
+\lstinline$InnerException$ & Falls bei der Behandlung einer Ausnahme eine weitere Exception ausgelöst wird, beschreibt diese Eigenschaft die neue (innere) Ausnahme. \\
+\lstinline$Message$ & Liefert eine Zeichenfolge mit der Beschreibung des aktuellen Fehlers. Die Information sollte so formuliert sein, dass sie auch von einem Anwender verstanden werden kann. \\
+\lstinline$Source$ & Liefert einen String zurück, der die Anwendung angibt, in der die Ausnahme ausgelöst worden ist. \\
+\lstinline$StackTrace$ & Beschreibt in einer Zeichenfolge die aktuelle Aufrufreihenfolge aller Methoden.\\
+\lstinline$TargetSite$ & Liefert zahlreiche Informationen zu der Methode, in der die Ausnahme ausgelöst worden ist. \\
+\end{tabular}\\
+Am nützlichsten sind \lstinline$Message$ und \lstinline$StackTrace$, sie liefern beide einen String.
+
+\section{Innere Exceptions}
+Tritt innerhalb einer Ausnahmebehandlung (catch) eine Exception auf so sollte auch diese Behandelt werden (innere Exception)\bigskip\\
+Beispiel: Was passiert hier?  Was passiert wenn der (int) cast in calculateSomething weggelassen wird?
+\begin{lstlisting}[language={[Sharp]C}]
+public static void calculateSomething() {
+	double x = 1 / 2 * 2;
+	int y = 1 / (int) x ;
+}
+
+public static void Main(string[] args) {
+	try{
+		calculateSomething();
+	} catch (Exception ex) {
+		Console.WriteLine(ex.Message);
+		try{
+			StreamWriter file = new StreamWriter("error\_output.txt");
+			file.WriteLine("Fehler beim Aufruf von calculateSomething");
+			file.Close();  
+		} catch {
+			Console.WriteLine("Fehler-Output konnte nicht geschrieben werden.");
+		}
+	}
+}
+\end{lstlisting}

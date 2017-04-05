@@ -1,0 +1,67 @@
+\begin{itemize}
+\item Vertragsvereinbarung für Klassen, welche Pflichten sie erfüllen müssen (welche Member sie implementieren müssen)
+\item Klassen dürfen in C\# nur von einer Basis-Klasse erben, aber beliebig viele Schnittstellen implementieren
+\item Schnittstellen sind wie abstrakte Klassen, definieren nur Member aber spezifizieren keine Werte / Implementierung
+\item erlaubte Member: 
+
+\begin{itemize}
+\item Methoden
+\item Properties
+\item Events
+\end{itemize}
+\end{itemize}
+
+\subsubsection*{Beispiel}
+
+\begin{lstlisting}[language={[Sharp]C}]
+public interface ICopy {
+	string Caption {get; set;}
+	void Copy();
+}
+
+class Document : BaseDocument, ICopy {
+	public void Copy() {
+		...
+	}
+	
+	public string Caption {
+	 get{ ... }
+	 set{ ... }
+	}
+	
+	...
+}
+\end{lstlisting}
+
+\section{Nutzen: Ersatz für fehlende Mehrfachvererbung}
+
+\subsubsection*{Beispiel}
+
+\begin{itemize}
+\item Sie schreiben ein Grafikprogramm und haben viele Objekte die alle eine Methode Draw() implementieren sollen, die das Objekt auf dem Bildschirm zeichnet. 
+\item Sie haben alle instanziierten Objekte in einem Array gespeichert
+\item Dieses Array soll durchlaufen werden um alle Objekte zu zeichnen
+\end{itemize}
+
+Wie muss der folgende Code ergänzt werden, damit man ein Array der mal-baren Objekte durchlaufen und dabei Draw() ausführen kann? 
+
+\begin{lstlisting}[language={[Sharp]C}]
+public class Rectangle : GeometricObject {
+	public void Draw()  {  ...  }
+}
+
+public class Cylinder : GeometricObject {
+	public void Draw()  {  ...  }
+}
+
+public class Transporter : Car {
+	public void Draw()  {  ...  }
+}
+
+___________ [] graphicObjects = new _____________[3];
+graphicObjects[0] = new Rectangle();
+graphicObjects[1] = new Cylinder();
+graphicObjects[2] = new Transporter();
+foreach (_____________ item in graphicObjects)
+	item.Draw();
+\end{lstlisting}
