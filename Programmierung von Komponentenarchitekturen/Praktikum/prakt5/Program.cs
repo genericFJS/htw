@@ -22,8 +22,6 @@ namespace prakt5 {
             Nenner = n;
         }
 
-
-
         public override string ToString() {
             return "" + Zaehler + "/" + Nenner;
         }

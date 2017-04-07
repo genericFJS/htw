@@ -6,7 +6,25 @@
 
 \section{Generische Klasse definieren}
 
+\begin{lstlisting}[language={[Sharp]C}]
+class GenericClass<T> {
+	T myVariable;
+	public GenericClass(T myVar){
+		myVariable = myVar;	
+	}
+	public T MyVariable{
+		get {
+			return myVariable;		
+		}
+	}
+}
+\end{lstlisting}
+
 \section{Generische Klasse benutzen}
+
+\begin{lstlisting}[language={[Sharp]C}]
+GenericClass<int> a = new GenericClass<int>(5);
+\end{lstlisting}
 
 \begin{center}
 \includegraphics{Vorlesung/a7Generik-img001.png}
@@ -25,6 +43,8 @@ Generik funktioniert genauso für Methoden
 \begin{lstlisting}[language={[Sharp]C}]
 class MyClass {
 	public static void Swap<T>(ref T l, ref T r) { 
+	// auch möglich mit mehreren Generiks:
+	// public static void Swap<T1, T2>(ref T1 l, ref T2 r) { 
 		T temp = r;
 		r = l;
 		l = temp;   
@@ -69,5 +89,7 @@ class MyGenericClass<T, V> where T : List<V> where V : Random
 
 \subsection{Instanzierbarkeits Constraint}
 \begin{lstlisting}[language={[Sharp]C}]
-T CreateNew<T>() where T : new() {   return new T();//Works }
+T CreateNew<T>() where T : new() {
+	return new T(); // geht nur wegen " : new()", sonst: Compilerfehler
+}
 \end{lstlisting}

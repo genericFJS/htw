@@ -3,7 +3,6 @@
 \item Klassen dürfen in C\# nur von einer Basis-Klasse erben, aber beliebig viele Schnittstellen implementieren
 \item Schnittstellen sind wie abstrakte Klassen, definieren nur Member aber spezifizieren keine Werte / Implementierung
 \item erlaubte Member: 
-
 \begin{itemize}
 \item Methoden
 \item Properties
@@ -19,17 +18,16 @@ public interface ICopy {
 	void Copy();
 }
 
+// in der Klasse, die das Interface implementiert müssen alle(!) Methoden implementiert sein
 class Document : BaseDocument, ICopy {
 	public void Copy() {
-		...
+		// ...
 	}
-	
 	public string Caption {
-	 get{ ... }
-	 set{ ... }
+	 get{ /* ... */ }
+	 set{ /* ... */ }
 	}
-	
-	...
+	// ...
 }
 \end{lstlisting}
 
@@ -38,30 +36,33 @@ class Document : BaseDocument, ICopy {
 \subsubsection*{Beispiel}
 
 \begin{itemize}
-\item Sie schreiben ein Grafikprogramm und haben viele Objekte die alle eine Methode Draw() implementieren sollen, die das Objekt auf dem Bildschirm zeichnet. 
+\item Sie schreiben ein Grafikprogramm und haben viele Objekte die alle eine Methode \lstinline$Draw()$ implementieren sollen, die das Objekt auf dem Bildschirm zeichnet. 
 \item Sie haben alle instanziierten Objekte in einem Array gespeichert
 \item Dieses Array soll durchlaufen werden um alle Objekte zu zeichnen
 \end{itemize}
-
-Wie muss der folgende Code ergänzt werden, damit man ein Array der mal-baren Objekte durchlaufen und dabei Draw() ausführen kann? 
+Wie muss der folgende Code ergänzt werden, damit man ein Array der mal-baren Objekte durchlaufen und dabei \lstinline$Draw()$ ausführen kann? 
 
 \begin{lstlisting}[language={[Sharp]C}]
-public class Rectangle : GeometricObject {
-	public void Draw()  {  ...  }
+public interface IDrawable {
+	void Draw();
 }
 
-public class Cylinder : GeometricObject {
-	public void Draw()  {  ...  }
+public class Rectangle : GeometricObject, IDrawable {
+	public void Draw()  {  /* ... */  }
 }
 
-public class Transporter : Car {
-	public void Draw()  {  ...  }
+public class Cylinder : GeometricObject, IDrawable {
+	public void Draw()  {  /* ... */  }
 }
 
-___________ [] graphicObjects = new _____________[3];
+public class Transporter : Car, IDrawable {
+	public void Draw()  {  /* ... */  }
+}
+
+IDrawable [] graphicObjects = new IDrawable[3];
 graphicObjects[0] = new Rectangle();
 graphicObjects[1] = new Cylinder();
 graphicObjects[2] = new Transporter();
-foreach (_____________ item in graphicObjects)
+foreach (IDrawable item in graphicObjects)
 	item.Draw();
 \end{lstlisting}

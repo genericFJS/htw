@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 namespace prakt4 {
     class Program {
         static void Main(string[] args) {
-            Person ich = new Person("Falk-Jonatan", "Strube", DateTime.Parse("1800-01-02"));
+            Person ich = new Person() { PreName = "Falk-Jonatan", SurName = "Strube", Birthday = DateTime.Parse("1800-01-02") };
             ich.printPerson();
         }
     }
 
     class Person {
-        public String PreName { get; private set; }
-        public String SurName { get; private set; }
+        public String PreName { get; set; }
+        public String SurName { get; set; }
         public DateTime birthday;
         public DateTime Birthday {
             get {
@@ -29,12 +29,7 @@ namespace prakt4 {
                 birthday = correctValue;
             }
         }
-        public Person(String preName, String surName, DateTime birthday) {
-            Console.WriteLine("Erstelle Person "+preName+" "+surName+" (geboren: "+birthday.ToShortDateString()+")");
-            PreName = preName;
-            SurName = surName;
-            Birthday = birthday;
-        }
+        public Person() {}
 
         public void printPerson() {
             Console.WriteLine("Person " + PreName + " " + SurName + ", Alter: " + Math.Floor((DateTime.Today - Birthday).TotalDays / 365));

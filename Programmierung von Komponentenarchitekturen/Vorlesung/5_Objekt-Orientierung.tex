@@ -168,11 +168,38 @@ if (peter is string)	// ähnlich wie "peter as string" mit Abfrage, ob null
 	Console.WriteLine("Peter ist kein String");
 \end{lstlisting}
 \end{itemize}
+\subsubsection*{Beispiel}
+\lecdate{07.04.2017}
+\begin{lstlisting}[language={[Sharp]C}]
+class MyClass{
+	public virtual void Write(string text){
+		Console.Write(" du bis, {0}", text);
+	}
+}
+class MySubClass : MyClass{
+	public override void Write(string text){
+		Console.Write("{0} Fisch", text);
+	}
+}
+
+public static void Main(string[] args){
+	MyClass a = new MyClass();
+	MyClass b = new MySubClass();
+	b.Write("Egal wie");
+	a.Write("Helene ist");
+	((MyClass) b).Write("");
+	Console.Write("er:");
+	// Text bis hier: "Egal wie Fisch du bist, Helene ist Fischer"
+	((MySubClass) a).Write("Ende");	// funktioniert nicht! Programm stürzt ab.
+}
+\end{lstlisting}
+
 \section{Properties (Eigenschaft)}
 Property = Member-Variable die in einem Objekt definiert ist und auf die von außen zugegriffen werden soll.\\
 Zugriff auf Eigenschaften: \\
 \begin{tabular}{L{.5} L{.5}}
-C++ Style &  C\#\\
+C++ Style: &  C\# Style:\\
+\vspace*{-1.5em}
 \begin{lstlisting}[language={[Sharp]C}]
 private int myVariable;
 public int GetMyVariable() {
@@ -185,7 +212,7 @@ public void AccessVariables(int a) {
 	int b = GetMyVariable(); SetMyVariable(a);
 } 
 \end{lstlisting} &
-%%% TODO
+\vspace*{-1.5em}
 \begin{lstlisting}[language={[Sharp]C}]
 private int myVariable;
 
@@ -193,16 +220,15 @@ public int MyVariable{
 	get {
 		return myVariable;
 	}
-	set {
+	private set {
 		myVariable = value;
 	}
 }
 
 int b = MyVariable;
 MyVariable = a;
-\end{lstlisting}\\
-\end{tabular}
-
+\end{lstlisting}
+\end{tabular}\vspace*{-1.5em}
 \begin{itemize}
 \item Schreibaufwand reduziert
 \item Direkter Zugriff im Aufrufer
@@ -215,7 +241,7 @@ public int MyVariable {get; private set;}
 // Variable myVariable wird intern angelegt.
 \end{lstlisting}
 \begin{itemize}
-\item Dabei wird die zugrundeliegende Variable (vorher myVariable) nicht mehr benutzt
+\item Dabei wird die zugrundeliegende Variable (vorher \lstinline$myVariable$) nicht mehr benutzt
 \item Intern wird eine eigene Variable angelegt auf die nun kein direkter Zugriff mehr möglich ist
 \end{itemize}
 
@@ -243,3 +269,8 @@ Person p3 = new Person() {Vorname = "Peter", Nachname =  "Pan"};
 \item zur schnellen Gruppierung von Elementen 
 \item Der Typ dieser Objekte ist kompliziert -{\textgreater} var keyword benutzen
 \end{itemize}
+
+\begin{lstlisting}[language={[Sharp]C}]
+var anonymous = new { Name = "Florian", Alter = 28 };
+Console.WriteLine(anonymous.Name);
+\end{lstlisting}
