@@ -6,7 +6,7 @@
 
 \faculty{Fakultät Informatik/Mathematik}
 \chair{Lehrstuhl für Künstliche Intelligenz / Theoretische Informatik}
-\subject{Übungsmitschrift}
+\subject{Praktikumsmitschrift}
 \title{Künstliche Intelligenz}
 \author{Falk-Jonatan Strube}
 \professor{Prof. Dr. Boris Hollas}
@@ -66,26 +66,88 @@ in 2(b) sind falsche Voraussetzungen angenommen: Dabei ist $F_1$ korrekter Weise
 \item Jeder Informatikstudent studiert Informatik.\\
 $\forall x \; (I(x) \to F(x,inf))$
 \item Jeder Informatikstudent ist ein Student, aber nicht jeder Student ist ein Informatikstudent.\\
-$\forall x \; \exists y \; (I(x) \to S(x) \wedge (S(y) \to \neg I(y))  $
+$\forall x \; \exists y \; ((I(x) \to S(x)) \wedge S(y) \wedge \neg I(y))  $\\
+Achtung: $\forall x \; \exists y \;((I(x) \to S(x)) \wedge (S(y) \to \neg I(y)))$ geht nicht, da man nun für $y$ „Stuhl“ einsetzen könnte und die Formel richtig wäre da die Prämisse der zweiten Teilformel dann falsch und damit die Konklusion wahr wäre.
 \item Jeder Student studiert ein Fach.\\
 $\forall x \; \exists y \; (S(x) \to F(x,y))$
 \item Wer ein Fach studiert, ist ein Student.\\
-$\forall x \; \exists y \; (F(x,y) \to S(x))$
+$\forall x \; \forall y \; (F(x,y) \to S(x))$\\
+Achtung: $\forall x \; \exists y \; (F(x,y) \to S(x))$ geht nicht, da man nun für $y$ irgendetwas eingeben und die Prämisse wäre falsch, also die Konklusion richtig -- was aber falsch ist.
 \item Es gibt kein Fach, das kein Student studiert.\\
-$\forall y \; \exists x \; (F(x,y) \to S(x))$
+$\forall y \; \exists x \; (F(x,y) \wedge S(x))$\\
+Achtung: $\forall y \; \exists x \; (F(x,y) \to S(x))$ geht nicht, da man nun für $x$ irgendetwas einsetzen kann und dafür bei einem Fach, dem kein Student zugeordnet ist, die Prämisse falsch ist und somit die Aussage fälschlicher Weise wahr.
 \end{anumerate}
 
 \section{Aufgabe 4}
 \begin{anumerate}
 \item Es gibt ein Haustier, das fliegen kann.\\
-$\exists x\; (haustier(x) \to fliegt (x))$
+$\exists x\; (haustier(x) \wedge fliegt (x))$
 \item Katzen können nicht fliegen.\\
 $\forall x\; (katze(x) \to \neg fliegt(x))$
 \item Wenn ein Haustier fliegen kann, dann ist es ein Vogel.\\
 $\forall x\; (haustier(x) \wedge fliegt(x) \to vogel(x))$
 \item  Kein Haustier ist sowohl Katze als auch Vogel.\\
-$\forall x\; ((haustier(x) \to katze(x) \wedge \neg vogel(x)) \vee (haustier(x)\to \neg katze \wedge vogel(x)))$
+$\forall x\; (haustier(x) \to \neg (katze(x) \wedge vogel(x)))$
 \end{anumerate}
+
+\chapter{Praktikum 2: Prädikatenlogik, Prolog}
+\section{Aufgabe 5}
+\begin{align*}
+&\forall x \;\exists y \;P(x,y) &\wedge&\\
+&\forall x \; \forall y \; (P(x,y) \to \neg P(y,x)) &\wedge&\\
+&\forall x \; \forall y \; \forall z \; (P(x,y) \wedge P(y,z) \to P(x,z))&&
+\end{align*}
+\begin{itemize}
+\item $P()$ ist nicht kommutativ
+\item $P()$ ist transitiv
+\end{itemize}
+$P(x,y)$: $x$ ist kleiner als $y$.\\
+$P=\{(x,y) \;|\; x< y\}$\\
+$\Rightarrow$ $x=1,\; y=2,\; z=3$
+
+\section{Aufgabe 6}
+$x$: Straße, $y$: Ort\\
+$\forall x \; \forall y \; ( regnet(x) \wedge strasseinOrt(y,x) \to nass(y) )$\bigskip\\
+$ort(dresden) \wedge regnet(dresden) $\\
+$strasseInOrt(hochschulstrasse,dresden)$
+
+\begin{lstlisting}[language=Prolog]
+ort(dresden).	% nicht nötig
+strasse(hochschulstrasse).	% nicht nötig
+strasseInOrt(hochschulstrasse,dresden).
+regnet(dresden).
+
+nass(Y) :- regnet(X), strasseInOrt(Y,X).
+\end{lstlisting}
+
+\section{Aufgabe 7}
+\input{../Beleg/Hausaufgabe_1.tex}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 \end{document}
