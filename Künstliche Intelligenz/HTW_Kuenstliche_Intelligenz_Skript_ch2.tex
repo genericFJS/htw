@@ -68,7 +68,7 @@ $$P(a)$$
 wobei $a$ eine noch nicht verwendete Konstante ist (Skolemkonstante).\\
 So wird die Abfrage $\exists x\; katze(X)$ beispielsweise durch \lstinline$katze(reni)$ umgesetzt.
 
-\subsection{Auswertstrategie in Prolog}
+\section{Auswertstrategie in Prolog}
 Die Struktur  eines Prolog-Programmes lässt sich durch einen Und-Oder-Baum darstellen:\bigskip\\
 Und-Verknüpfung: \lstinline$a(X) :- b(X) , c(X) , d(X).$\\
 \begin{tabular}{L{.3} L{.7}}
@@ -79,7 +79,8 @@ Und-Verknüpfung: \lstinline$a(X) :- b(X) , c(X) , d(X).$\\
 \node (v3) at (0.5,-0.5) {$d$};
 \draw (v1) -- (v2) -- (v3);
 \draw (v4) -- (v2);
-\draw (-0.25,0.567) arc (-59.9993:-120:0.5);
+\def\wa{-57};\def\wb{-124}\def\rd{.7cm};
+\draw[shift=(\wa : \rd)] (-.5,1) arc (\wa:\wb:\rd);
 \end{tikzpicture} & \mpb[.6]
 Für die Anfrage \lstinline$a(X)$ werden die Zeilziele \lstinline$b(X)$, \lstinline$c(X)$, \lstinline$d(X)$ erzeugt, die alle wahr sein müssen.
 \mpe
@@ -143,6 +144,7 @@ Boolean zug(int x, int y) {
 	return zug(y,x) || (x==1 && y==2);
 }
 \end{lstlisting}
+\subsection{Breitensuche}
 Die Breitensuche würde hier eine Lösung finden:
 \begin{center}
 \begin{tikzpicture}
@@ -161,6 +163,222 @@ Lösung: Die Abbruchbedingung der Rekursion muss die erste Klausel sein damit di
 zug(1,2).
 zug(X,Y) :- zug(Y,X).
 \end{lstlisting}
+
+
+\subsection{Unifizierbarkeit}
+\cparagraph{Definition} Zwei Atome $P,Q$ heißen \emph{unifizierbar}, wenn es eine Ersetzung der in $P,Q$ vorkommenden Variablen gibt, so dass damit $P\equiv Q$.
+
+\cparagraph{Beispiel} Mit $a,\; b,\; c$ … Konstanten, $x,\; y ,\; z$ … Variablen.
+\begin{itemize}
+\item $P(x,a),\; P(a,a)$ sind unifizierbar durch $x/a$.
+\item $Q(a,x,y),\; Q(z,b,c)$ sind unifizierbar durch $z/a,\; x/b,\; y/c$.
+\item $P(x,x)\; P(a,b)$ sind nicht unifizierbar.
+\end{itemize}
+
+$\to$ Auswertstrategie von Prolog:\\
+Für ein Ziel $P$ wird das Prolog-Programm von oben nach unten durchsucht, bis eine linke Seite einer Klausel (das, was hinter der Implikation steht bzw. in Prolog vor \lstinline$:-$) mit $P$ unifiziert. Indem die rechte Seite der Klausel ebenso ersetzt wird, werden neue Teilziele erzeugt.
+
+\cparagraph{Beispiel} $ $
+\begin{lstlisting}[language=Prolog]
+zug(1,2).							% (1)
+zug(X,Y):- zug(Y,X).	% (2)
+\end{lstlisting}
+Für die Anfrage \lstinline$zug(2,1)$ wird folgender Suchbaum erzeugt:
+\begin{center}
+\begin{tikzpicture}
+\node (v1) at (0,3.5) {\lstinline!zug(2,1)!};
+\node (v2) at (0,2) {\lstinline!zug(1,2)!};
+\node[below] at (v2) {wahr (wegen (1))};
+\draw (v1) -- node[right, pos=.5]{\lstinline|X/2, Y/1| (in (2))} (v2);
+\end{tikzpicture}
+\end{center}
+Wenn beispielsweise 
+\begin{lstlisting}[language=Prolog]
+q(X,Y):- (a,b).
+r(Y):- (b).
+p(X):- q(X,Y) , r(Y).
+\end{lstlisting}
+dann:
+\begin{center}
+\begin{tikzpicture}
+\node (v1) at (-1,2.5) {\lstinline|p(a)|};
+\node (v2) at (-1,1) {\lstinline|q(a,Y)|};
+\node (v3) at (-2,-0.5) {\lstinline|q(a,b)|};
+\node (v4) at (0,-0.5) {\lstinline|r(b)|};
+\node[below] at (v3) {wahr};
+\node[below] at (v4) {wahr};
+\draw (v1) -- node[right]{\lstinline|X/a|} (v2) -- node[left]{\lstinline|Y/b|} (v3);
+\draw (v1) -- node[right]{\lstinline|Y/b|} (v4);
+\def\wa{-56};\def\wb{-124}\def\rd{.7cm};
+\draw[shift=(\wa : \rd)] (-1,2.5) arc (\wa:\wb:\rd); %%%TODO
+\end{tikzpicture}
+\end{center}
+
+\subsection{Backtracking}
+Wenn das neue Teilziel \lstinline|false| liefert, wird ein Backtracking ausgeführt und eine andere Alternative gesucht.
+
+\cparagraph{Beispiel}$ $
+\begin{lstlisting}[language=Prolog]
+q(X):- p(X).	% (1)
+q(X):- r(X).	% (2)
+p(a).
+r(b).
+\end{lstlisting}
+Anfrage: \lstinline$q(b)$\\
+Suchbaum:
+\begin{center}
+\begin{tikzpicture}
+\node [align=center] (v1) at (-1,2.5) {\lstinline|q(b)|\\wahr};
+\node [align=center] (v2) at (-2.5,0) {\lstinline|p(b)|\\falsch};
+\node [align=center] (v3) at (.5,0) {\lstinline|r(b)|\\wahr};
+\draw (v1) -- node[left,pos=.5]{\lstinline|X/b| in (1)} (v2);
+\draw (v1) -- node[right, pos=.5]{\lstinline|X/b| in (2)} (v3);
+\end{tikzpicture}
+\end{center}
+Bei einer Und-Verknüpfung im Suchbaum wird zuerst der linke Teilbaum durchsucht, dann die rechten Teilbäume, wobei jeweils die gleichen Ersetzungen von Variablen vorgenommen werden.
+\cparagraph{Beispiel} $ $
+\begin{lstlisting}[language=Prolog]
+p(X):- q(X), r(X).
+\end{lstlisting}
+Anfrage: \lstinline$p(X)$
+Suchbaum:
+\begin{center}
+\begin{tikzpicture}
+\node [align=center] (v1) at (-1,2.5) {\lstinline|p(a)|\\wahr};
+\node [align=center] (v2) at (-2.5,0) {\lstinline|q(a)|\\falsch};
+\node [align=center] (v3) at (.5,0) {\lstinline|r(a)|\\wahr};
+\draw (v1) -- node[left,pos=.5]{\lstinline|X/a|} (v2);
+\draw (v1) -- node[right, pos=.5]{\lstinline|X/a|} (v3);
+\def\wa{-59};\def\wb{-121}\def\rd{1cm};
+\draw[shift=(\wa : \rd)] (-1,2.5) arc (\wa:\wb:\rd);
+\end{tikzpicture}
+\end{center}
+Die Auswertstrategie von oben nach unten lässt sich nutzen, um ein \lstinline$if-else$ zu implementieren.
+\cparagraph{Beispiel}$ $
+\begin{lstlisting}[language=Prolog]
+strassenzustand(regen,nass).
+strassenzustand(X,trocken).
+\end{lstlisting}
+Anfrage 1: 
+\begin{center}
+\begin{tikzpicture}
+\node [align=center] (v1) at (-1,2.5) {\lstinline|strassenszustand(regen,Y)|};
+\node [align=center] (v2) at (-1,0) {\lstinline|strassenzustand(regen,nass)|\\ falsch};
+\draw (v1) -- node[right,pos=.5]{\lstinline|Y/nass|} (v2);
+\end{tikzpicture}
+\end{center}
+Anfrage 2:
+\begin{center}
+\begin{tikzpicture}
+\node [align=center] (v1) at (-1,2.5) {\lstinline|strassenszustand(sonne,Y)|};
+\node [align=center] (v2) at (-1,0) {\lstinline|strassenzustand(sonne,tocken)|\\ wahr};
+\draw (v1) -- node[right,pos=.5]{\lstinline|X/sonne, Y/trocken|} (v2);
+\end{tikzpicture}
+\end{center}
+Um zu verhindern, dass auch \lstinline$strassenzustand(regen, trocken)$ zu wahr auswertet, kann die zweite Zeile zu \lstinline$strassenzustand(X,trocken):- X \== regen$ geändert werden.
+
+\section{Darstellung von Relationen in Prolog}
+Eine endliche Relation kann durch Aufzählung dargestellt werden. Reflexive, transitive und symmetrische Relationen werden durch entsprechende Regeln dargestellt.
+\begin{itemize}
+\item Wenn \lstinline$p(X,Y)$ eine Relation ist, kann deren symmetrische Hülle dargestellt werden durch \lstinline$q(X,Y):- p(X,Y); p(Y,X).$
+\item Die reflexive Hülle von \lstinline$p$ wird erzeugt, indem die Regel \lstinline$p(X,X)$ hinzugefügt wird.
+\item Naiver Versuch Transitivität:
+\begin{lstlisting}[language=Prolog]
+p(X,Y).
+q(X,Z):- p(X,Z); p(X,Y), p(Y,Z).\\
+% Achtung: Funktioniert nur für Wege der Länge 2!
+\end{lstlisting}
+$\to$ Berechnung der transitiven Hülle einer Relation.
+\end{itemize}
+
+\subsection{Transitive Hülle}
+Sei \lstinline$weg/2$ eine binäre Relation, von der wir die transitive Hülle  berechnen wollen. Es gilt:\\
+Es gibt einen Weg von $X$ nach $Y$ genau dann wenn:
+\begin{itemize}
+\item $X=Y$ oder
+\item es gibt einen Knoten $z$ und einen Weg von $X$ nach $Z$ und von $Z$ nach $Y$.
+\end{itemize}
+Wir müssen daher die reflexive und transitive Hülle von \lstinline$weg$ berechnen.\\
+Als Formel:
+\begin{align*}
+&\forall X\; weg(X,X) \wedge\\
+&\forall X \;\forall Y \; ((\exists Z\; weg(X,Z) \wedge weg(Z,Y)) \to weg(X,Y))
+\end{align*}
+Um den Existenzquantor zu beseitigen formen wir die zweite Klausel um:
+\begin{align*}
+&\forall X\; \forall Y\; (\forall Z\; \neg weg(X,Z) \vee \neg weg(Z,Y) \vee weg(X,Y))\\
+\equiv & \forall X\; \forall Y\; \forall Z\;(\neg weg(X,Z) \vee \neg weg(Z,Y) \vee weg(X,Y))\\
+\equiv& \forall X\; \forall Y\; \forall Z\;( weg(X,Z) \wedge weg(Z,Y) \to weg(X,Y))
+\end{align*}
+In Prolog bspw.:
+\begin{lstlisting}[language=Prolog]
+weg(a,b).
+weg(b,c).
+weg(c,d).
+weg(X,X).
+weg(X,Y):- weg(X,Z), weg(Z,Y).
+\end{lstlisting}
+Anfrage 1:
+\begin{center}
+\begin{tikzpicture}
+\node [align=center] (v1) at (-1,2.5) {\lstinline|weg(a,c)|};
+\node [align=center] (v2) at (-2.5,0) {\lstinline|weg(a,Z)|};
+\node [align=center] (v3) at (-2.5,-2) {\lstinline|weg(a,b)|\\wahr};
+\node [align=center] (v4) at (.5,0) {\lstinline|weg(Z,c)|};
+\node [align=center] (v5) at (.5,-2) {\lstinline|weg(b,c)|\\wahr};
+\draw (v1) -- node[left,pos=.5]{\lstinline|X/a|} (v2);
+\draw (v2) -- node[left, pos=.5]{\lstinline|Z/b|} (v3);
+\draw (v1) -- node[right,pos=.5]{\lstinline|Y/c|} (v4);
+\draw (v4) -- node[right, pos=.5]{\lstinline|Z/b|} (v5);
+\def\wa{-59};\def\wb{-121}\def\rd{1cm};
+\draw[shift=(\wa : \rd)] (-1,2.5) arc (\wa:\wb:\rd);
+\end{tikzpicture}
+\end{center}
+Anfrage 2:
+\begin{center}
+\begin{tikzpicture}
+\node [align=center] (v1) at (-1,2.5) {\lstinline|weg(a,d)|};
+\node [align=center] (v2) at (-2.5,0) {\lstinline|weg(a,Z)|};
+\node [align=center] (v3) at (-2.5,-2) {\lstinline|weg(a,b)|\\wahr};
+\node [align=center] (v4) at (.5,0) {\lstinline|weg(Z,c)|};
+\node [align=center] (v5) at (.5,-2) {\lstinline|weg(b,c)|};
+\node [align=center] (v6) at (-1,-4.5) {\lstinline|weg(b,Z)|};
+\node [align=center] (v7) at (-1,-6.5) {\lstinline|weg(b,c)|\\wahr};
+\node [align=center] (v8) at (2,-4.5) {\lstinline|weg(Z,d)|};
+\node [align=center] (v9) at (2,-6.5) {\lstinline|weg(c,d)|\\wahr};
+\draw (v1) -- node[left,pos=.5]{\lstinline|X/a|} (v2);
+\draw (v2) -- node[left, pos=.5]{\lstinline|Z/b|} (v3);
+\draw (v1) -- node[right,pos=.5]{\lstinline|Y/d|} (v4);
+\draw (v4) -- node[right, pos=.5]{\lstinline|Z/b|} (v5);
+\draw (v5) -- node[left, pos=.5]{\lstinline|X/b|} (v6);
+\draw (v6) -- node[left, pos=.5]{\lstinline|Z/c|} (v7);
+\draw (v5) -- node[right, pos=.5]{\lstinline|Y/d|} (v8);
+\draw (v8) -- node[right, pos=.5]{\lstinline|Z/c|} (v9);
+\def\wa{-59};\def\wb{-121}\def\rd{1cm};
+\draw[shift=(\wa : \rd)] (-1,2.5) arc (\wa:\wb:\rd);
+\draw[shift=(\wa : \rd)] (.5,-2) arc (\wa:\wb:\rd);
+\end{tikzpicture}
+\end{center}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
