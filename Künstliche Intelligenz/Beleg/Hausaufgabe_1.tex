@@ -26,19 +26,7 @@ $auto(x)$ & $x$ ist ein Auto
 
 \paragraph*{Teil b}
 Prolog-Programm:
-\begin{lstlisting}[language=Prolog]
-terrorv(Y) :- anf(X,Y), terror(X).
-terror(X) :- mitgl(X,Y) , terrorv(Y).
-terror("Terrorist").
-org("ADAC").
-mitgl("August Meier", "ADAC").
-mitgl("Abul-Hasan Al Muhajir", "IS").
-anf("Terrorist","IS").
-strafbar(X) :- verkauf(X,Y,Z), waffe(Y), terror(Z).
-verkauf("Omar Abdul Al-Hassan", "M16", "Abul-Hasan Al Muhajir").
-verkauf("Bernd Müller", "Auto", "August Meier").
-waffe("M16").
-\end{lstlisting}
+\lstinputlisting[language=Prolog]{../Praktikum/Prolog/aufg7.pl}
 \begin{enumerate}[label=(\roman*)]
 \item Abfrage, ob Omar Abdul Al-Hassan strafbar:
 \begin{lstlisting}[language=Prolog]
