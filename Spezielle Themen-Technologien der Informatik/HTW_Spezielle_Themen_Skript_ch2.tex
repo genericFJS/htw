@@ -1,1 +1,89 @@
 %\slides{STTI_intro_2017}{7}
+\section{Einführung in IoT-Protokolle}
+\lecdate{10.04.2017}
+\slideScale{.65}
+\subsection{Das Szenario}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{2}
+\subsection{Schaltzentrale IoT-Hub}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{3}
+\subsubsection{Dashboards}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{4}
+\subsubsection{Einfache Regeln}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{5}
+
+\subsection{Business Rules via iLog}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{6}
+
+\subsection{IoT-Baukasten -- Node RED}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{7}
+
+\section{Enterprise Integration Pattern}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{8}
+
+Übertragungsoptionen:
+\begin{itemize}
+\item Über Verbindung (bspw. http)\\
+Nachteil: beide Gerät müssen an sein für Kommunkation
+\item Über Datei\\
+Nachteil: Struktur der Datei muss bekannt sein\\
+Vorteil: beide Geräte müssen nicht an sein (bspw. über USB-Stick)
+\item Über Datenbank\\
+Nachteil: zusätzlicher Verwaltungsaufwand nötig\\
+Vorteil: klare Struktur
+\end{itemize}
+
+\subsection{Anwendungsintegration}
+
+\subsubsection{Point-to-Point (P2P)}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{9}
+
+\subsubsection{Message Bus}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{10}
+
+\subsubsection{Publish-Subscribe}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{11}
+
+\subsubsection{P2P versus Publish-Subscribe}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{12}
+
+\subsubsection{Durable Subscriber}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{13}
+(Kombination aus Publish-Subscribe und P2P)
+
+\section{Messaging mit Java = JMS}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{14}
+
+\section{MQTT -- sprachunabhängig und leichtgewichtig}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{15}
+(MQTT: Message Queue Telemetry Transport)
+\subsection{Features}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{16}
+\subsection{Quality of Service}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{17}
+(QoS: Quality of Service)
+\begin{itemize}
+\item QoS 0: Temperatur (nicht schlimm, wenn eine Information fehlt)
+\item QoS 1: Stückzahl Zähler
+\item QoS 2: Überweisung
+\end{itemize}
+
+\subsection{Populäre Broker und Clients}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{18}
+
+\subsection{Java Anwendung}
+\subsubsection{Publisher}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{20}
+\subsubsection{Subscriber}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{21}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{22}
+
+
+
+
+
+
+
+
+
+
+
