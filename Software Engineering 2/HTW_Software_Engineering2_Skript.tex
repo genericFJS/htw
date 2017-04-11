@@ -52,9 +52,70 @@ Im Protokoll (bei Bedarf) nicht vergessen:
 \section{Zusammenfassung}
 \slides{01}{23}
 
-\chapter{Module, Schnittstellen, Prinzipien und Perspektiven des Entwurfs}
+\chapter{Module, Schnittstellen, Entwurf, Architektur}
 \lecdate{28.03.2017}
+\slides{02}{3}
+\section{Komponenten und Module}
+\slides{02}{4}
+\slides{02}{5}
 
+\section{Schnittstellen}
+\slides{02}{8}
+\slides{02}{9}
+
+\section{Entwurf: Prinzipien und Perspektiven}
+\slides{02}{10}
+\slides{02}{17}
+
+\section{Architektur}
+\slides{02}{11}
+\subsection{Drei-Schichten-Architektur versus physische Verteilung}
+\slides{02}{12}
+\slides{02}{13}
+\subsection{Model-View-Control Paradigma}
+\slides{02}{14}
+%\slides{02}{15}
+\subsubsection*{Entkopplung von View und Model}
+\slides{02}{16}
+
+\chapter{Entwurfsprinzipien}
+\lecdate{11.04.2017/1}
+\section{Systemstruktur}
+\slides{03}{2}
+\section{Struktur im Inneren des Systems}
+\slides{03}{3}
+\begin{itemize}
+\item Kopplung: Einfluss von „Außen“
+\item Kohäsion: Einfluss von „Innen“ (untereinander)
+\end{itemize}
+\slides{03}{5}
+\section{Unterstützung von loser Kopplung / innere Bindung}
+\slides{03}{6}
+Vergleich: Aufteilung in Klassen.
+\slides{03}{10}
+\section{Kopplung und Kohäsion}
+\subsection{Kopplung}
+\slides{03}{8}
+\subsection{Kohäsion}
+\slides{03}{9}
+\section{Beschreibung einer Programmierschnittstelle}
+(bspw. Klassenebene)\\
+Jede öffentliche Operation/Funktion braucht:
+\begin{itemize}
+\item Signatur: Syntax -- \lstinline$ ____ name (...)$
+\item Wesen: Semantik -- Was die Operation tut.
+\item Vorbedingungen
+\item Nachbedingungen
+\item Invariante (nicht veränderlich)
+\item Protokoll (synchron/asynchron)
+\item Kosten (Zeit, Rechenleistung, Dienste[$\to$Geld], …)
+\end{itemize}
+$\to$ Anforderungen (funktional [$\to$ Signatur / Wesen], Qualitätsanforderungen [$\to$ Vor-/Nachbed. / Invariant / Protokoll], Rahmenbedingungen [$\to$ Kosten])
+\section{Langlebige Struktur im inneren System}
+\slides{03}{11}
+$\to$ Open/Closed Prinzip
+\section{Grundlegende Entwurfsprinzipien}
+\slides{03}{12}
 
 \part{Praktikum}
 \setcounter{chapter}{0}
