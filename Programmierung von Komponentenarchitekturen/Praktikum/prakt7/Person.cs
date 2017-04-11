@@ -4,15 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace prakt4 {
-    class Program {
-        static void Main(string[] args) {
-            Person ich = new Person() { PreName = "Falk-Jonatan", SurName = "Strube", Birthday = DateTime.Parse("1800-01-02") };
-            ich.printPerson();
-        }
-    }
-
-    class Person {
+namespace prakt7 {
+    abstract class Person { // abstract: Person kann nicht erzeugt werden, sie muss in neuer Klasse durch Vererbung genutzt werden
         public String PreName { get; set; }
         public String SurName { get; set; }
         public DateTime birthday;
@@ -29,7 +22,13 @@ namespace prakt4 {
                 birthday = correctValue;
             }
         }
-        public Person() {}
+        public Person() { }
+
+        public Person (string preName, string surName, DateTime birthday) {
+            this.PreName = preName;
+            this.SurName = surName;
+            this.Birthday = birthday;
+        }
 
         public void printPerson() {
             Console.WriteLine("Person " + PreName + " " + SurName + ", Alter: " + Math.Floor((DateTime.Today - Birthday).TotalDays / 365));

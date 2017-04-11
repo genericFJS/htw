@@ -1,0 +1,28 @@
+﻿<p>Auf Basis der Klasse Person (siehe Aufgabe 4) sollen die Mitglieder einer Hochschule (Studenten, Professoren und Mitarbeiter) modelliert werden. </p> 
+<p>Vorarbeiten:</p> 
+<p>Die Klasse Person und die Klasse mit der Main-Methode sollen jeweils in einer eigenen cs-Datei (Person.cs, Program.cs) abgelegt werden (Rechtsklick --&gt; Hinzufügen/Neues Element/)</p> 
+<p>
+Aufgaben:
+<ol>
+<li>Kennzeichnen Sie die Klasse Person als eine abstrakte Klasse. Welche Konsequenzen hat dies?</li>
+<li>Erstellen Sie eine weitere (abstrakte) Klasse HSMitglied (HSMitglied.cs). Diese erbt von der Klasse Person. </li>
+	<ul>
+	<li>Ein Hochschulmitglied hat eine innerhalb der Hochschule eindeutige ID (uid) vom Typ string, welche über ein get-Property abgefragt werden kann. Ein Setzen der ID (set-Property) soll nicht möglich sein.</li>
+	<li>Der Konstruktor der Klasse HSMitglied soll vier Parameter besitzen. Die ersten drei Parameter sollen für den Vornamen, den Nachnamen und das Geburtsdatum des Hochschulmitgliedes verwendet werden und den entsprechenden Basiskonstruktor der Klasse Person aufrufen. Der vierte Parameter ist für ein Delegate vorgesehen, welches die Generierung der ID beim Instanziieren des Objektes übernimmt.</li>
+	<li>Erstellen Sie auf Basis der Klasse HSMitglied eine Klasse Student (Student.cs) und instantiieren Sie vier Objekte vom Typ "Student". Zwei der vier Studenten sind Studenten der HTW. Die Generierung der ID über das Delegate soll für den ersten Studenten die Zeichenkette "11110" liefern, und für jeden folgenden Studenten die entsprechende nächsthöhere Zahl. Die anderen beiden Studenten sind Studenten der Uni Wien. Ihre Matrikelnummern hat folgenden Aufbau:</li>
+		<ul>
+			<li>YYUXXXX</li>
+			<ul>
+				<li>YY&nbsp;&nbsp;&nbsp; - zweistelliges Jahr, für WS 2016/17 und SS2017 ist der Wert 17, YY für WS 2017/18 und SS 2018 ist 18 usw.</li>
+				<li>U -  1 Ziffer zur Repräsentation der Universität (z.B. 0 f. Universität Wien)</li>
+				<li>XXXX&nbsp; 4 stellig in der Reihenfolge der Immatrikulation, 0000, 0001, 0002, …</li>
+			</ul>
+		</ul>
+	</ul>
+<li>Die erforderlichen Funktionen zur Generierung der ID sollen Member der zu implementierenden Klassen HTW und UniWien sein, die auch einen Zähler für die Anzahl der angelegten Studenten enthalten. Dem Konstruktor der Klasse UniWien soll dabei das Immatrikulationsjahr übergeben werden. </li>
+<li>Die Generierung der ID hätte auch über die Implementierung einer abstrakten Methode generateUID in der Klasse HSMitglied erfolgen können. Was spricht für oder gegen die Verwendung dieses Lösungsvorschlages?</li>
+<li>Schreiben Sie eine weitere Klasse Klasse Mitarbeiter, die ähnlich zu wie die Klasse Student ist und ebenfalls von HSMitglied erbt. </li>
+<li>Überschreiben Sie die Methode print() von Person polymorph in jeder ihrer Klassen, so dass anstelle von der aktuelle Status (z.B. Student oder Hochschulmitglied) angezeigt wird. Legen Ihre im Hauptprogramm erzeugten Studenten, zusammen mit einem Mitarbeiter in einem einzelnen Array ab.<br>
+Testen Sie Ihr Programm durch durchlaufen dieses Arrays in einer Schleife und aufrufen der Methode print() auf jedem Element. </li>
+</ol>
+</p> 

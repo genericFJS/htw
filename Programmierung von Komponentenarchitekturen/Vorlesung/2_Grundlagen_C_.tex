@@ -334,3 +334,11 @@ Garbage Collector wird ausgelöst:
 \item bei Programmende
 \item manuell mit \lstinline$GC.collect();$
 \end{enumerate}
+
+\section{Operatorüberladung}
+Beispiel: a+b ist nun a-b:
+\begin{lstlisting}[language={[Sharp]C}]
+public static int operator +(int a, int b){
+	return a-b;
+}
+\end{lstlisting}

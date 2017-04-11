@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace prakt5 {
-    class Program {
+    class Frac {
         static void Main(string[] args) {
             Bruch b1 = new Bruch(1, 2);
             Bruch b2 = new Bruch(1, 3);

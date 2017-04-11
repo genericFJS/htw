@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace prakt2 {
-    class Program {
+    class Interest {
         static void Main(string[] args) {
             Console.OutputEncoding = Encoding.UTF8; // Eurozeichen usw.
             CultureInfo cultureDE = new CultureInfo("de-DE");   // Kommasymbol

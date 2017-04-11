@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Praktikum1 {
-    class Program {
+    class intro {
         static void Main(string[] args) {
             Console.WriteLine("Hello World");
             // Aufgabe 1

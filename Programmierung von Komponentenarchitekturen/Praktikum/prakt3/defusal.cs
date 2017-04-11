@@ -7,7 +7,7 @@ using BombLibrary;
 
 
 namespace prakt3 {
-    class Program {
+    class Defusal {
         static void Main(string[] args) {
             // Console.WriteLine(Bomb.defuseBomb(0L));
             long password = 0;  // wahrscheinlich nur positive Zahlen
