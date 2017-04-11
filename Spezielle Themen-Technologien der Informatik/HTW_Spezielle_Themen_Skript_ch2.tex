@@ -61,11 +61,6 @@ Vorteil: klare Struktur
 \subsection{Quality of Service}
 \slides{IoT/STTI_SoSe2017_CloudMQTT}{17}
 (QoS: Quality of Service)
-\begin{itemize}
-\item QoS 0: Temperatur (nicht schlimm, wenn eine Information fehlt)
-\item QoS 1: Stückzahl Zähler
-\item QoS 2: Überweisung
-\end{itemize}
 
 \subsection{Populäre Broker und Clients}
 \slides{IoT/STTI_SoSe2017_CloudMQTT}{18}
@@ -76,6 +71,22 @@ Vorteil: klare Struktur
 \subsubsection{Subscriber}
 \slides{IoT/STTI_SoSe2017_CloudMQTT}{21}
 \slides{IoT/STTI_SoSe2017_CloudMQTT}{22}
+
+\section{Aufgaben}
+\slides{IoT/STTI_SoSe2017_CloudMQTT}{25}
+\begin{enumerate}
+\item Siehe Java-files
+\item Siehe Java-files
+\item Siehe Java-files
+\item \begin{itemize}
+\item QoS 0: Temperatur (nicht schlimm, wenn eine Nachricht verloren geht)
+\item QoS 1: Stückzahl Zähler (Mehrfachempfang von Nachricht ist nicht relevant)
+\item QoS 2: Überweisung (Nachricht muss \emph{genau} ein Mal empfangen werden)
+\end{itemize}
+\item „Persistent Sessions“ setzt das „Durable Subscriber Pattern“ um:\\
+Bei häufigen Verbindungsabbrüchen von Clients kann der Broker eine persistente Session vorhalten. Wenn ein Client sich erneut verbindet schickt der Broker alle verpassten Nachrichten für seine Subscriptions an den Client.\\
+Dafür muss \lstinline$cleanSessions$ auf \lstinline$false$ gesetzt werden.
+\end{enumerate}
 
 
 
