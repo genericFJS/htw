@@ -319,8 +319,11 @@ Lock: & 1 & 0
 \item \lstinline$ipcrm$: löscht IPC-Ressource (bspw. Semaphor)
 \end{itemize}
 
-\subsubsection{Erzeuger-Verbraucher-Problem}
+\subsubsection*{Erzeuger-Verbraucher-Problem}
 Veranschaulichender Quellcode: \lstinline$erzver-sysv.c$
+
+\subsection*{Weiter Aspekte}
+\slides{02-sync}{22}
 
 \section{Identifikation der Semaphore}
 \slides{02-sync}{20}
@@ -329,28 +332,132 @@ Funktion \lstinline$ftok$ kann einen eindeutigen Key für den Semaphor generiere
 \section{Semaphorausgleichswert}
 \slides{02-sync}{21}
 Semaphorausgleichswert ist dafür da, dass beim Beenden eines Prozesses die Manipulation des Semaphores zurück gesetzt wird (wenn Prozess nach dem schließen des Semaphors beendet ohne ihn zu öffnen, schafft der Semaphorausgleichswert dafür, dass der kritische Abschnitt noch von anderen Programmen erreicht werden kann).\\
-Der Semaphorausgleichswert zählt im Prinzip die Anzahl von \lstinline$P()$s und \lstinline$V()$s
+Der Semaphorausgleichswert zählt im Prinzip die Anzahl von \lstinline$P()$s und \lstinline$V()$s.
 
 
+\section{Das Leser-Schreiber-Problem}
+\lecdate{12.04.2017/1}
+\slides{02-sync}{23}
 
+\subsection{Triviallösung}
+\slides{02-sync}{24}
 
+\subsection{Standardlösung}
+%\lstinputlisting[language=Pascal]{Vorlesung/Vorlesungsbeispiele/readwrite2.pfc}
+\slides{02-sync}{26}
+Im Pseudocode:
+\begin{lstlisting}[language=C]
+// Schreiben: 
+P(wri)
+/* schreibt */
+V(wri)
 
+// Lesen:
+P(mutex)	// verhindert, dass mehre gleichzeitig Abfrage des P(wri) machen.
+rc++	// zählt Leseprozesse
+if (rc==1)
+	P(wri)
+V(mutex)
+/* liest */
+P(mutex)	// wie P(mutex) oben
+rc--
+if (rc==0)
+	V(wri)
+V(mutex)
+\end{lstlisting}
+\begin{itemize}
+\item[$\checkmark$] exklusives Schreiben
+\item[$\checkmark$] parallel Lesen möglich
+\item[$\checkmark$] kein Lesen, wenn geschrieben wird
+\item[$\times$] Lösung bevorzugt (ggf.) Leseprozesse
+\end{itemize}
 
+\subsection{Analoge bevorzugt Schreiber}
+\slides{02-sync}{27}
 
+\subsection{Umsetzung mit PEARL und Bolt-Variablen}
+Bolt-Variablen in RTOS-UH und der EZ-Programmiersprache PEARL
+\begin{itemize}
+\item Boltvariable
+\item Leser-Schreibe-\emph{Semaphore}
+\begin{lstlisting}
+„P“(n,Lesen)
+„V“(n,Lesen)
+„P“(n,Schreiben)
+„V“(n,Schreiben)
+\end{lstlisting}
+\end{itemize}
+\slides{02-sync}{28}
+\subsubsection{Zustandsdiagramm einer Boltvariable}
+\slides{02-sync}{29}
+\subsubsection{Leser-Schreiber-Problem in PEARL}
+\slides{02-sync}{30}
 
+\subsection{Datenstrukturen im Linux-Kern}
+\slides{02-sync}{31}
+\slides{02-sync}{32}
 
+\subsection{Leser-Schreiber-Spinlocks}
+\slides{02-sync}{33}
+Erläuterung:
+\begin{lstlisting}
+1:	rwlp++
+		jump 3(forward), if sign bit not set
+		rwlp--	(weil Schreiber anwesend)
+2:	wenn rwlp noch nicht 0, dann
+		jump 2(backward). Sonst:
+		jumb 1(backward)	(vor vorn probieren)
+3:
+\end{lstlisting}
+\lecdate{12.04.2017/2}
+\slides{02-sync}{34}
+Erläuterung:
+\begin{lstlisting}
+1:	btsl (bit test and set: aktueller Wert des referenzierten Bits geht ins Carry Flag(C), danach Bit auf 1 setzen) => Bit 31 von rwlp ins Carry-Flag C
+		wenn C==1, Sprung nach 2 (wenn also schon Schreiber da war)
+		testl: Operanden mit logischem UND verknüpfen (und prüfen, ob null ist)
+		je 3(forward) wenn testl 0 ergibt, also die Anzahl Leser 0 ist. Sonst:
+		btrl (bit test and reset: wie btsl, nur dass Bit auf 0 gesetzt wird) => Bit 31 von rwlp auf 0 setzen
+2:	wenn rwlp noch nicht 0, dann
+		jump 2(backward). Sonst:
+		jump 1(backward)	(von vorn probieren)
+3:
+\end{lstlisting}
 
+\subsection{Zwischenfazit}
+\slides{02-sync}{35}
 
+\section{Monitore}
+\subsection{Idee}
+\slides{02-sync}{36}
+\subsection{Bedingungsvariablen}
+\slides{02-sync}{37}
+Bedingungsvariable = Prozesswarteschlange\\
+delay $\to$ Prozess wird in (betreffende) Warteschlange eingeordnet\\
+resume $\to$ (anderer) Prozess wird aus betreffender Warteschlange entfernt und fortgesetzt
+\slides{02-sync}{38}
+\subsubsection{Semantik von resume()}
+\slides{02-sync}{39}
+\slides{02-sync}{40}
+\subsubsection{Bedingungsvariablen in Pthreads}
+\slides{02-sync}{41}
+\subsection{Struktur}
+\slides{02-sync}{43}
+\slides{02-sync}{42}
+\subsection{Anwendungen}
+\slides{02-sync}{44}
+zu 1.:
+%\lstinputlisting[language=Pascal]{Vorlesung/Vorlesungsbeispiele/monitormutex.pfc}
+Von \lstinline$monitor mutex;$ bis \lstinline$end; (* monitor mutex *)$ sind die proceduren Monitor-Prozeduren. Daher kann bspw. die Prozedur \lstinline$enter$ nur von einem Prozess auf einmal ausgeführt werden.
+\unimptnt{\slides{02-sync}{45}}
 
+\subsection{Bewertung}
+\slides{02-sync}{46}
 
-
-
-
-
-
-
-
-
-
-
-
+\section{Prüfungsfragen}
+\begin{itemize}
+\item Semaphore Erklären (P/V)
+\item P/V programmieren können
+\item Abläufe erkennen (wer kommt zuerst dran)
+\item Monitor als Theorie (nicht programmiertechnisch)
+\end{itemize}
