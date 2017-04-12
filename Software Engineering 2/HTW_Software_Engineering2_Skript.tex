@@ -5,16 +5,11 @@
 \input{\pathtomaster/fjs_packages-macros.sty}
 
 \faculty{Fakultät Informatik/Mathematik}
-%\department{Einrichtung}
-%\institute{Institut}
 \chair{Lehrstuhl für Softwaretechnologie}
 \subject{lecture}
 \title{Software Engineering 2}
-%\subtitle{Untertitel}
 \author{Falk-Jonatan Strube}
-%\thesis{Typisierung Thesis}
 \professor{Prof. Dr. Anna Sabine Hauptmann}
-%\date{Datum}
 
 \slidePath{Vorlesung/VO}
 \begin{document}
@@ -72,6 +67,7 @@ Im Protokoll (bei Bedarf) nicht vergessen:
 \subsection{Drei-Schichten-Architektur versus physische Verteilung}
 \slides{02}{12}
 \slides{02}{13}
+$\to$ Die Drei-Schichten-Architektur sagt nichts über die physische Verteilung der Schichten aus.
 \subsection{Model-View-Control Paradigma}
 \slides{02}{14}
 %\slides{02}{15}
@@ -116,6 +112,41 @@ $\to$ Anforderungen (funktional [$\to$ Signatur / Wesen], Qualitätsanforderunge
 $\to$ Open/Closed Prinzip
 \section{Grundlegende Entwurfsprinzipien}
 \slides{03}{12}
+
+\chapter{VL} %%% TODO
+\lecdate{11.04.2017/2}
+\section{Muster}
+%%% Folie
+Kategorien von Mustern:
+\begin{itemize}
+\item Architektur-Unabhängig:
+\begin{itemize}
+\item Architektur-Muster (im Grobentwurf)
+\item Entwurfs-Muster (im Feinentwurf, näher an der Implementierung)
+\end{itemize}
+\item Für bestimmte Implementierungen (abhängig von der Sprache):
+\begin{itemize}
+\item Idiom
+\end{itemize}
+\end{itemize}
+
+\section{Grundlegende Architekturen}
+\subsection{Schichten / Layer}
+%%% Folie 14
+
+\subsection{Datenfluss und Filter / Pipes-and-Filters}
+Daten fließen durch Filter-Komponenten (Beispiele: Compiler, Converter, …).
+
+\subsection{Depot-Architektur}
+In einem Depot sind Informationen, in Anwendungen/Teilsystemen werden diese dargestellt oder verarbeitet (Vergleich: objectiF/case4.0 … Klassendiagramm und Sequenzdiagramm greifen auf Objekte zurück [beim Löschen ist bspw. dann die Frage: Soll die Representation oder das Objekt im Depot gelöscht werden]).
+
+\subsection{Client-Server-Architektur}
+Weiterentwicklung der Depot-Architektur: Das Depot verarbeitet nun auch Informationen (bekommt Funktionalität).
+
+\subsection{Peer-to-Peer-Architektur}
+Spezielle Client-Server-Architektur, wo der Client und Server eine Komponente sind.
+
+%\lecdate{18.04.2017}
 
 \part{Praktikum}
 \setcounter{chapter}{0}
