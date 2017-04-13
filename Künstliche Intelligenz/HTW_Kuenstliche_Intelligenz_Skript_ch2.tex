@@ -68,6 +68,13 @@ $$P(a)$$
 wobei $a$ eine noch nicht verwendete Konstante ist (Skolemkonstante).\\
 So wird die Abfrage $\exists x\; katze(X)$ beispielsweise durch \lstinline$katze(reni)$ umgesetzt.
 
+\subsection{Weiter Syntax}
+\begin{tabular}{L{.3} L{.7}}
+\lstinline$test(X,_)$ & \lstinline$_$ ist anonyme Variable / Platzhalter, falls Variable im Kontext nicht relevant ist.\\
+\lstinline$not(X=Y)$ oder \lstinline$X\=Y$ & Prüfung, ob \lstinline$X$ ungleich \lstinline$Y$.\\
+\lstinline$\+ (...)$ & Aussage \lstinline$...$ wird negiert (ähnlich wie die Prüfung \lstinline$not(...)$).
+\end{tabular}
+
 \section{Auswertstrategie in Prolog}
 Die Struktur  eines Prolog-Programmes lässt sich durch einen Und-Oder-Baum darstellen:\bigskip\\
 Und-Verknüpfung: \lstinline$a(X) :- b(X) , c(X) , d(X).$\\

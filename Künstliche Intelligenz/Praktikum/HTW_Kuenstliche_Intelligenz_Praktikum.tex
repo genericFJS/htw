@@ -123,9 +123,99 @@ nass(Y) :- regnet(X), strasseInOrt(Y,X).
 \section{Aufgabe 7}
 \input{../Beleg/Hausaufgabe_1.tex}
 
+\section{Aufgabe 8}
+$a,f(a)$ … Konstanten
+$x,y$ … Variablen
+\begin{anumerate}
+\item $P(x,y,a),\; P(x,x,x)$ sind unifizierbar durch $x/a,\; y/a$
+\item $P(f(a),x,y),\; P(x,a,a)$ sind nicht unifizierbar, da $x$ sowohl mit $f(a)$ und $a$ ersetzt werden müsste (ersten beiden Positionen)
+\item $P(f(a),a,x),\; P(x,x,a)$ sind nicht unifizierbar,  da $x$ sowohl mit $f(a)$ und $a$ ersetzt werden müsste (ersten beiden Positionen)
+\end{anumerate}
 
+\section{Aufgabe 9}
+\lstinputlisting[language=Prolog]{Prolog/aufg9.pl}
+Stammbaum:
+\begin{center}
+\begin{tikzpicture}
+\node (v1) at (-9.5,-6.5) {Tim};
+\node (v2) at (-10.5,-5) {Jens};
+\node (v3) at (-8.5,-5) {Heike};
+\node (v4) at (-12,-5) {Jutta};
+\node (v5) at (-13.5,-5) {Julia};
+\node (v6) at (-7,-5) {Jan};
+\node (v7) at (-5,-5) {Eva};
+\node (v8) at (-7,-6.5) {Anne};
+\node (v9) at (-5,-6.5) {Anke};
+\node (v10) at (-11,-3.5) {Robert};
+\node (v11) at (-9,-3.5) {Sandra};
+\node (v12) at (-14,-2) {Wilhelm};
+\node (v13) at (-12,-2) {Frieda};
+\node (v14) at (-10,-2) {Kurt};
+\node (v15) at (-8,-2) {Lisa};
+\node (v16) at (-4.5,-3.5) {Thomas};
+\node (v17) at (-1.5,-3.5) {Christine};
+\node (v18) at (-6,-2) {Winfried};
+\node (v19) at (-3,-2) {Elke};
+\node (v20) at (-1.5,-2) {Hans};
+\node (v21) at (0.5,-2) {Paula};
+\node (v22) at (-13,-2) {};
+\node (v24) at (-9,-2) {};
+\node (v23) at (-10,-3.5) {};
+\node (v25) at (-9.5,-5) {};
+\node (v26) at (-6,-5) {};
+\node (v27) at (-3,-3.5) {};
+\node (v28) at (-4.5,-2) {};
+\node (v29) at (-0.5,-2) {};
+\draw (v12) -- (v13);
+\draw (v14) -- (v15);
+\draw (v18) -- (v19);
+\draw (v20) -- (v21);
+\draw (v16) -- (v17);
+\draw (v10) -- (v11);
+\draw (v2) -- (v3);
+\draw (v6) -- (v7);
+\draw (v5) -- (v23);
+\draw (v4) -- (v23);
+\draw (v2) -- (v23);
+\draw (v1) -- (v25);
+\draw (v8) -- (v26);
+\draw (v9) -- (v26);
+\draw (v6) -- (v23);
+\draw (v7) -- (v27);
+\draw (v16) -- (v28);
+\draw (v17) -- (v29);
+\draw (v10) -- (v22);
+\draw (v11) -- (v24);
+\end{tikzpicture}
+\end{center}
+Beispiel-Abfragen:
+\begin{lstlisting}[language=Prolog]
+?- bruder(X, julia).
+X = jan ;
+X = jens .
 
+?- schwester(X,jens).
+X = julia ;
+X = jutta .
 
+?- bruder(jens, X).
+X = jan ;
+X = julia ;
+X = jutta .
+
+?- enkel(X,robert).
+X = anne ;
+X = anke ;
+X = tim .
+
+?- tante(X,tim).
+X = julia ;
+X = jutta.
+
+?- tante(X,tim).
+X = julia ;
+X = jutta . % es fehlt eva?!
+\end{lstlisting}
 
 
 
