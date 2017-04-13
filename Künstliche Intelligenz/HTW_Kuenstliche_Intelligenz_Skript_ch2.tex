@@ -209,14 +209,14 @@ dann:
 \begin{center}
 \begin{tikzpicture}
 \node (v1) at (-1,2.5) {\lstinline|p(a)|};
-\node (v2) at (-1,1) {\lstinline|q(a,Y)|};
-\node (v3) at (-2,-0.5) {\lstinline|q(a,b)|};
-\node (v4) at (0,-0.5) {\lstinline|r(b)|};
+\node (v2) at (-3,1) {\lstinline|q(a,Y)|};
+\node (v3) at (-3,-0.5) {\lstinline|q(a,b)|};
+\node (v4) at (1,-0.5) {\lstinline|r(b)|};
 \node[below] at (v3) {wahr};
 \node[below] at (v4) {wahr};
-\draw (v1) -- node[right]{\lstinline|X/a|} (v2) -- node[left]{\lstinline|Y/b|} (v3);
+\draw (v1) -- node[left]{\lstinline|X/a|} (v2) -- node[left]{\lstinline|Y/b|} (v3);
 \draw (v1) -- node[right]{\lstinline|Y/b|} (v4);
-\def\wa{-56};\def\wb{-124}\def\rd{.7cm};
+\def\wa{-56};\def\wb{-143}\def\rd{.7cm};
 \draw[shift=(\wa : \rd)] (-1,2.5) arc (\wa:\wb:\rd); %%%TODO
 \end{tikzpicture}
 \end{center}
