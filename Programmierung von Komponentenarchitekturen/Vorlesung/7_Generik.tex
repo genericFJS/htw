@@ -93,3 +93,61 @@ T CreateNew<T>() where T : new() {
 	return new T(); // geht nur wegen " : new()", sonst: Compilerfehler
 }
 \end{lstlisting}
+
+\section{Beispiel}
+\subsection{Aufgabe}
+
+Zur Verwaltung der Fahrzeuge eines Konzerns existiert die Klasse \lstinline$Car$, die alle Daten eines Fahrzeuges enthält.
+\begin{lstlisting}[language={[Sharp]C}]
+public class Car {
+	private int gewicht;		// in kg
+	public int Gewicht{
+		get {return gewicht; }
+		private set {gewicht = value;}
+	}
+	// ...
+}
+\end{lstlisting}
+
+Sie möchten nun alle Fahrzeuge des Konzerns in einer Liste Sammeln. C\# stellt dafür den generischen Typ \lstinline$List<T>$ zur Verfügung. Auf einem Objekt des Typs \lstinline$List$ kann die Methode \lstinline$Add(T element)$ aufgerufen werden um Objekte hinzuzufügen. Außerdem wollen Sie alle Fahrzeuge der Liste automatisch nach ihrem Gewicht sortieren lassen, ohne etwas an der sensiblen Klasse \lstinline$Car$ zu ändern. Sie finden dazu die Methode \lstinline$Sort$ der Klasse \lstinline$List$:
+\begin{lstlisting}[language={[Sharp]C}]
+public void Sort(IComparer<T> comparer);
+\end{lstlisting}
+Sie suchen nach dem Interface IComparer und finden folgende Definition:
+\begin{lstlisting}[language={[Sharp]C}]
+public interface IComparer<in T> {
+	// Returns:	1		if y>x
+	//					-1	if y<x 
+	int Compare(T x, T y);
+}
+\end{lstlisting}
+Was müssen sie schreiben um…
+\begin{enumerate}
+\item … eine Liste anzulegen und die bereits erzeugten Autos \lstinline$ferrari, trabbi, tesla$ einzufügen?
+\item … die Liste automatisch sortieren zu lassen?
+\item Was ist der Vorteil der Generik in \lstinline$List<T>$? Was wäre schlecht daran, wenn die \lstinline$List$ nicht generisch wäre?
+\end{enumerate}
+
+\subsection{Antwort}
+\begin{enumerate}
+\item $ $
+\begin{lstlisting}[language={[Sharp]C}]
+List<Car> list = new List<Car>();
+list.Add(ferarri);
+list.Add(trabbi);
+list.Add(tesla);
+\end{lstlisting}
+\item $ $
+\begin{lstlisting}[language={[Sharp]C}]
+class Comparer : IComparer<Car> {
+	int Compare(Car x, Car y){
+		if (x.Gewicht < y.Gewicht)
+			return 1;
+		else
+			return -1;
+	}
+}
+list.Sort(new Comparer());
+\end{lstlisting}
+\item Die Liste weiß, was sie für einen Datentyp enthält. Sonst wäre es nur eine Liste von Objekten. Damit könnten auch „fremde“ Objekte (Tiere, Fahrräder, Strings, Zahl, …) eingefügt werden. Diese könnten beispielsweise nicht mehr so einfach verglichen werden.
+\end{enumerate}

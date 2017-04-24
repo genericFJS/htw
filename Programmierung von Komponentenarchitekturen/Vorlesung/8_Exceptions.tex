@@ -8,9 +8,13 @@ using System.IO;
 
 class Program {
 	static void Main(string[] args) {
-		StreamReader stream = new StreamReader(@"C:\Text.txt");
-		Console.WriteLine(stream.ReadToEnd());
-		stream.Close();
+		try {	// erzeugt ggf. Ausnahme
+			StreamReader stream = new StreamReader(@"C:\Text.txt");
+			Console.WriteLine(stream.ReadToEnd());
+			stream.Close();
+		} catch (Exception e){	// behandelt Ausnahme
+			Console.WriteLine(e.Message); 
+		}
 	}
 }
 \end{lstlisting}
@@ -56,6 +60,7 @@ try {
 	// ...
 } finally {
 	// ...
+	// wird auch noch behandelt, wenn im catch schon ein return steht.
 }
 \end{lstlisting}
 Der \lstinline$finally$-Block wird immer ausgeführt unabhängig ob:
@@ -84,8 +89,8 @@ Tritt innerhalb einer Ausnahmebehandlung (catch) eine Exception auf so sollte au
 Beispiel: Was passiert hier?  Was passiert wenn der (int) cast in calculateSomething weggelassen wird?
 \begin{lstlisting}[language={[Sharp]C}]
 public static void calculateSomething() {
-	double x = 1 / 2 * 2;
-	int y = 1 / (int) x ;
+	double x = 1 / 2 * 2;		// 1/2 = 0, 0*2 = 0
+	int y = 1 / (int) x ;	// 1/0 => Exception
 }
 
 public static void Main(string[] args) {

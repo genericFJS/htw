@@ -1,0 +1,240 @@
+Synchronisation von Threads
+
+Donnerstag, 2. Februar 2017
+
+17:06
+
+Synchronisation von Threads
+
+Problem: Mehrere Threads können auf gleiche Daten zugreifen
+
+~
+
+Bsp: 2 Threads, jeder soll die Variable V um 1 erhöhen
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{m{6.736cm}m{5.762cm}}
+Thread A &
+Thread B\\
+1A: Read variable V &
+1B: Read variable V\\
+2A: Add 1 to variable V &
+2B: Add 1 to variable V\\
+3A: Write back to variable V &
+3B: Write back to variable V\\
+\end{supertabular}
+\end{flushleft}
+~
+
+Sei anfänglich V = 0. Was passiert bei folgenden Abläufen ? 
+
+1A, 2A, 3A, 1B, 2B, 3B
+
+1A, 1B, 2A, 2B, 3A, 3B
+
+1A, 2A, 1B, 3A, 2B, 3B
+
+~
+
+~
+
+~
+
+Datenabhängigkeiten
+
+einige Berechnungen beruhen auf vorher berechneten Daten -{\textgreater} können erst ausgeführt werden wenn diese Daten berechnet sind
+
+~
+
+Bernstein conditions: 2 Prozesse Pi, Pj sind unabhängig und können parallel ausgeführt werden, wenn alle Input (I) und Output (O) Variablen die folgenden Bedingungen erfüllen:
+
+\begin{itemize}
+\item  \includegraphics{a132ParallelSynchronisation-img001.png} 
+\item  \includegraphics{a132ParallelSynchronisation-img002.png} 
+\item  \includegraphics{a132ParallelSynchronisation-img003.png} 
+\end{itemize}
+Bsp: Können diese beiden Zeilen parallel ausgeführt werden ? 
+
+c = func1(a, b) \{ … \};  d = func2(a, b) \{ … \};
+
+c = func1(a, b) \{ … \};  a = func2(a, b) \{ … \};
+
+c = func1(a, b) \{ … \};  c = func2(a, b) \{ … \};
+
+~
+
+~
+
+Race Condition (Wettlaufsituation)
+
+Das Ergebnis der Anwendung ist abhängig vom Timing der Threads -{\textgreater} zufälliges, falsches Ergebnis
+
+Treten auf, wenn datenabhängige Threads gleichzeitig ausgeführt werden
+
+Fun Fact: Gibt es Studien zufolge auch im menschlichen Gehirn … Grund für Zufälligkeiten 
+
+~
+
+Race Conditions vermeiden: Der kritische Codeblock darf nur betreten werden wenn kein anderer Prozess darauf zugreift. (= mutual exclusion)
+
+~
+
+Funktioniert das vielleicht wie folgt ? 
+
+Was passiert wenn 2 Threads (fast) gleichzeitig addOne() aufrufen ? 
+
+~
+
+static int flag = 0; 
+
+static int V = 0; 
+
+~
+
+// thread-safe execution of V = V + 1
+
+public void addOne() \{ 
+
+ do \{ 
+
+ if (flag == 0) \{ 
+
+ // lock the code section by setting a flag 
+
+ flag = Thread.CurrentThread.ManagedThreadId; 
+
+ V = V + 1; 
+
+ flag = 0; 
+
+ return;  
+
+ \} 
+
+ \} while (true); 
+
+\}
+
+~
+
+~
+
+Atomare Operationen
+
+\begin{itemize}
+\item unzerteilbare Operation die nicht durch Ende der Zeitscheibe eines Threads auf der CPU unterbrochen werden können. 
+\item können nur vollständig oder gar nicht stattfinden kann
+\item kleinste atomare Operation: Maschinenbefehl
+\item Hochsprachenbefehle sind nicht atomar, Bsp i++ (lesen, inkrementieren, schreiben)
+\item Bsp: Was wird ausgegeben ? 
+\end{itemize}
+ static void Main(string[] args)
+
+ \{
+
+ long counter = 0;
+
+ Thread a = new Thread( () ={\textgreater}  \{
+
+ for (long i = 0; i {\textless} 100000; i++) counter++;  \} );
+
+ Thread b = new Thread( () ={\textgreater}  \{
+
+ for (long i = 0; i {\textless} 100; i++) counter++;  \} );
+
+ a.Start(); b.Start();
+
+ a.Join(); b.Join();
+
+ Console.WriteLine({\textquotedbl}\{0\}{\textquotedbl}, counter);
+
+ \}
+
+~
+
+Mutual exclusion (Mutex) = gegenseitiger Ausschluss
+
+Race conditions werden vermieden dadurch dass zu jedem Zeitpunkt nur 1 Thread eine kritischen Codeabschnitt abarbeiten darf, der andere Thread muss solange warten bis der eine Thread fertig ist
+
+Realisierungen:
+
+\begin{itemize}
+\item lock
+\item semaphore
+\item monitor
+\item message passing
+\end{itemize}
+Monitor
+
+~
+
+\begin{itemize}
+\item Definiert kritische Codeabschnitte, die nur von einem Thread betreten 
+\end{itemize}
+werden dürfen. 
+
+\begin{itemize}
+\item Ein kritischer Codeabschnitt wird durch eine Speicheradresse identifiziert, dazu kann ein Referenztyp (z.B. ein Object) verwendet werden, z.B. das object, wessen Zugriff kritisch ist
+\item Monitor.Enter(object) = Beginn des kritischen Abschnitts 
+\item Monitor.Exit(object)  = Ende des kritischen Abschnitts 
+\end{itemize}
+~
+
+Beispiel: Was passiert nun wenn addOne() von 2 Threads gleichzeitig aufgerufen wird ? 
+
+~
+
+static object lockObject = new object(); 
+
+static int V = 0; 
+
+~
+
+// thread-safe execution of V = V + 1 
+
+public void addOne() \{ 
+
+ Monitor.Enter(lockObject); 
+
+ V = V + 1; 
+
+ Monitor.Exit(lockObject); 
+
+\}
+
+~
+
+Lock
+
+~
+
+lock (x)
+
+\{
+
+ //....  ist äquivalent zu 
+
+\}
+
+Monitor.Enter(x);
+
+try
+
+\{
+
+ //...
+
+\}
+
+finally
+
+\{
+
+ Monitor.Exit(x);
+
+\}
+\endinput

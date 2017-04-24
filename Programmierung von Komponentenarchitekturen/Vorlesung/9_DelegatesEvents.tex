@@ -1,7 +1,7 @@
 \section{Delegate}
 Delegate (Delegierter = Weiterleiter eines Auftrags) ist ein Typ der den Zeiger auf eine Methode beschreibt
 \begin{lstlisting}[language={[Sharp]C}]
-	public delegate double CalculateHandler(double value1, double value2); 
+public delegate double CalculateHandler(double value1, double value2); 
 \end{lstlisting}
 Danach kann eine Variable vom Typ des Delegate deklariert werden:\\
 \lstinline$CalculateHandler calculate;$\\
@@ -9,7 +9,7 @@ Diese ist ein Zeiger auf eine beliebige Methode die in Argumentliste und Rückga
 Der Zeiger kann wie folgt auf eine vorhandene Methode gesetzt werden:\\
 \lstinline$calculate = someMatchingFunction;$\\
 Danach wird die zugewiesene Methode aufgerufen durch :\\
-\lstinline$calculate(value1, value2)$
+\lstinline$calculate(value1, value2)$ $\Rightarrow$ ruft dann \lstinline$someMatchingFunction(value1, value2)$ auf.
 
 \subsubsection*{Beispiel}
 
@@ -17,8 +17,8 @@ Danach wird die zugewiesene Methode aufgerufen durch :\\
 public delegate double CalculateHandler(double value1, double value2);
 
 class Functions {
-	public static double Add(double x, double y)  {  return x + y;  }
-	public static double Subtract(double x, double y)  {  return x {}- y;  }
+	public static double Add(double x, double y) {return x + y;}
+	public static double Subtract(double x, double y) {return x - y;}
 }
 // ...
 static void Main(string[] args) {
@@ -53,13 +53,13 @@ else if(wahl == "S")
 
 Nur mit dem Unterschied das die Ausführung der Funktion innerhalb der if-Abfrage steht. 
 
-\section{Multicast Delegates}
+\subsection{Multicast Delegates}
 Mehrere Delegates werden in einem kombiniert.\\
 Aufruf des Delegates führt also mehrere Funktionen hintereinander aus:
 \begin{lstlisting}[language={[Sharp]C}]
 	calculate = Functions.Subtract;
 	calculate += Functions.Add;
-	double result = calculate(input1, input2);
+	double result = calculate(input1, input2);	// nur der return-Wert der letzten Delegate-Funktion (hier: Add) wird übergeben. In diesem Fall ist der Multicast also sinnfrei, man könnte ihn aber sehen, wenn in den beiden Funktionen noch etwas auf die Konsole geschrieben wird.
 \end{lstlisting}
 
 \subsection{Generische Delegates}
@@ -74,8 +74,11 @@ delegate TReturn Func<TArg1, TArg2, TReturn>(TArg1 arg1, TArg2 arg2);
 Diese sind vordefiniert und können überall benutzt werden.\\
 Man könnte also auf die Deklaration von CalculateHandler verzichten und diesen überall ersetzen durch:
 
-%%% TODO
-
+\begin{lstlisting}[language={[Sharp]C}]
+CalculateHandler calculate;
+// kann damit ersetzt werden:
+Func<double, double, double> calculate;
+\end{lstlisting}
 \subsection{Lambda Funktionen}
 (anonyme Funktionen)\\
 Syntax:  (Argumente) => Funktionsaufruf
@@ -85,7 +88,7 @@ Syntax:  (Argumente) => Funktionsaufruf
 if (wahl == "A")
 	calculate = (x, y) => x+y;
 else if (wahl == "S")
-	calculate = (x, y) => x+y;
+	calculate = (x, y) => x-y;
 \end{lstlisting}
 
 Einschränkungen für lambda Funktionen:
@@ -95,20 +98,20 @@ Einschränkungen für lambda Funktionen:
 \end{itemize}
 
 \subsubsection*{Weitere Beispiele}
-\begin{lstlisting}[language={[Sharp]C}]
-x => x * x;
-
-() => 42;
-
-() => Console.WriteLine("Hallo");
-
-() => { 
-	Console.WriteLine("Hallo");
-	return 42;
-}
-\end{lstlisting}
-
 Was ist der Typ dieser Funktionen? 
+\begin{lstlisting}[language={[Sharp]C}]
+Func<double, double> square =	// Typ
+	x => x * x;
+Func<double> answer = // Typ
+	() => 42;
+Action sayHello =	// Typ
+	() => Console.WriteLine("Hallo");
+Func<double> helloAnswer =	// Typ
+	() => { 
+		Console.WriteLine("Hallo");
+		return 42;
+	}
+\end{lstlisting}
 
 \section{Ereignisse}
 

@@ -1,0 +1,210 @@
+asynch / await
+
+~
+
+Donnerstag, 9. Februar 2017
+
+09:33
+
+neu im .NET Framework 4.5
+
+~
+
+Modifizierer async
+
+\begin{itemize}
+\item müssen ein await enthalten, ermöglichen dem Aufrufer an dieser stelle seine Arbeit fortzusetzen
+\item zulässige Rückgabewerte: void, Task oder Task{\textless}TResult{\textgreater}
+\item zulässige Parameter: kein ref, kein out
+\end{itemize}
+~
+
+~
+
+Schlüsselwort await
+
+\begin{itemize}
+\item Wartet auf Ausführung von Tasks
+\item Aufruf: await TaskName
+\item Ausdruck ist vom void wenn einfacher Task erwartet wird, vom Typ TResult wenn Task{\textless}TResult{\textgreater} erwartet wird
+\item kann nur in einer Asynchronen Methode aufgerufen werden
+\item während des Wartens wird zum Aufrufer der asynchronen Methode zurückgekehrt
+\item ist der erwartete (await) Task fertig wird die asynchrone Methode über einen Rückruf an der Stelle der Unterbrechung fortgesetzt
+\end{itemize}
+~
+
+Beispiel
+
+static void Main(string[] args) \{ 
+
+DoSomethingAsync(); 
+
+for (int i = 0; i {\textless} 1000; i++) Console.Write({\textquotedbl}.{\textquotedbl}); Console.ReadLine(); 
+
+\} 
+
+~
+
+static async void DoSomethingAsync()\{ 
+
+Console.Write({\textquotedbl}Start{\textbackslash}n{\textquotedbl}); 
+
+Console.Write(await TestAsync()); Console.WriteLine({\textquotedbl}Fertig{\textbackslash}n{\textquotedbl}); 
+
+\} 
+
+~
+
+static Task{\textless}string{\textgreater} TestAsync() \{ 
+
+Task{\textless}string{\textgreater} t = new Task{\textless}string{\textgreater}(() ={\textgreater} \{ 
+
+Thread.Sleep(20); // lang dauernde Berechnung 
+
+return {\textquotedbl}{\textbackslash}n Das Ergebnis ist 42{\textbackslash}n{\textquotedbl}; \}); 
+
+t.Start(); 
+
+return t; 
+
+\}
+
+~
+
+Ausgabe:
+
+~
+
+Rückgabewerte:
+
+~
+
+Eine async Methode kann nur einen der folgenden Rückgabewerte haben
+
+\begin{itemize}
+\item void
+\item Task
+\item Task{\textless}T{\textgreater}
+\end{itemize}
+~
+
+Dabei wird einzig für Task{\textless}T{\textgreater} ein return erwartet, dass einen Objekt vom Typ T zurückgibt. Es wird also kein Task explizit mit return zurückgegeben!
+
+~
+
+Der Aufrufer der async Methode erhält jedoch ein Task Objekt, dass genutzt werden kann um auf das Ergebnis der Methode zuzugreifen (es ist nicht der gleiche Task wie innerhalb der Methode!)
+
+~
+
+static void Main(string[] args) \{ 
+
+Task{\textless}string{\textgreater} t = DoSomethingAsync(); 
+
+for (int i = 0; i {\textless} 1000; i++) Console.Write({\textquotedbl}.{\textquotedbl}); 
+
+Console.WriteLine(t.Result); // wartet auf DoSomethingAsync()
+
+\} 
+
+~
+
+static async Task{\textless}string{\textgreater} DoSomethingAsync() \{ 
+
+Task{\textless}int{\textgreater} t = new Task{\textless}int{\textgreater}(() ={\textgreater} \{ 
+
+Thread.Sleep(2000); // lang dauernde Berechnung 
+
+return 42; 
+
+\}); 
+
+t.Start(); 
+
+int result = await t; 
+
+string s = {\textquotedbl}Das Ergebnis ist{\textquotedbl} + result; 
+
+return s; 
+
+\} 
+
+~
+
+Rückgabewerte mit Tupel
+
+Tupel = generische Klasse, die Elemente in einer bestimmten Reihenfolge kapselt
+
+~
+
+Beispiel: Wir wollen einen string und einen int zurückgeben:
+
+~
+
+ static async Task{\textless}Tuple{\textless}string, int{\textgreater}{\textgreater} TestAsync()
+
+ \{
+
+ …
+
+ return new Tuple{\textless}string, int{\textgreater}({\textquotedbl}Fertig{\textquotedbl},1);
+
+ \}
+
+~
+
+~
+
+~
+
+Es gibt in .NET viele vordefinierte erwartbare (await-able) Methoden, z.B. für
+
+\begin{itemize}
+\item Internetzugriff
+\item Lesen und Schreiben von Dateien
+\end{itemize}
+~
+
+ class program \{
+
+  static bool finished = false;
+
+~
+
+ static async void ReadFromNetwork(string url)  \{  
+
+ HttpClient client = new HttpClient();
+
+ Console.WriteLine({\textquotedbl}Requesting the data . . .{\textquotedbl});
+
+ var sw = Stopwatch.StartNew();
+
+ string result = await client.GetStringAsync(url);  
+
+ finished = true;
+
+ Console.WriteLine({\textquotedbl}\{0\}{\textquotedbl}, result);  
+
+ Console.WriteLine({\textquotedbl}Finished in {\textquotedbl} + sw.ElapsedMilliseconds + {\textquotedbl}ms .{\textquotedbl});  
+
+ sw.Stop();
+
+ \}
+
+ static void Main(string[] args)  \{
+
+ var  t = ReadFromNetwork({\textquotedbl}http://www.textfiles.com/music/kurt.txt{\textquotedbl});
+
+ while (!finished) Console.Write({\textquotedbl}.{\textquotedbl});  
+
+ Console.ReadLine();  
+
+ \}
+
+ \}
+
+~
+
+Ausgabe:
+
+ \includegraphics{a136ParallelAsyncAwait-img001.png} 
+\endinput

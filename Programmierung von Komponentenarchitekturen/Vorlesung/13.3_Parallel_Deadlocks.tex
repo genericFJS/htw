@@ -1,0 +1,75 @@
+Deadlock, Starvation
+
+Mittwoch, 8. Februar 2017
+
+14:40
+
+~
+
+Deadlock = Verklemmungssituation die bei ungünstiger Anwendung von Sperren (Locks, Barriers) auftreten kann
+
+~
+
+Chinese Chopstick Problem - Dining Philosophers Problem
+
+~
+
+\begin{itemize}
+\item jeder Philosoph braucht 2 Gabeln zum Essen
+\item Philosophen denken über die Probleme der Welt nach und essen wenn sie hungrig sind
+\item sie greifen zuerst nach der linken Gabel, dann nach der rechten, essen dann und legen die Gabeln danach zurück
+\item Problem: Was passiert wenn alle 5 gleichzeitig essen wollen ? 
+\end{itemize}
+~
+
+~
+
+ \includegraphics{a133ParallelDeadlocks-img001.png} 
+
+Aus {\textless}\url{https://en.wikipedia.org/wiki/Dining_philosophers_problem}{\textgreater} 
+
+~
+
+Visualisierung im Wartegraph (ressource dependency graph)
+
+\begin{itemize}
+\item statischer Graph stellt Zustand zu einem konkreten Zeitpunkt des Programmablaufs dar
+\item gerichteter Graph mit Threads als Knoten, Sperren als Kanten, Richtung: Besitzer der Sperre
+\item Zyklen im Graph bedeuten einen Deadlock
+\end{itemize}
+ \includegraphics{a133ParallelDeadlocks-img002.png} 
+
+ \includegraphics{a133ParallelDeadlocks-img003.png} 
+
+y
+
+~
+
+ \includegraphics{a133ParallelDeadlocks-img004.png} 
+
+„
+
+a
+
+~
+
+Verhindern von Deadlocks
+
+\begin{itemize}
+\item Reihenfolge von Sperranweisungen geschickter wählen
+\item stets gleiche Reihenfolge für Sperren
+\item Beispiel:
+\end{itemize}
+~
+
+~
+
+Starvation (Verhungern)
+
+\begin{itemize}
+\item Eine Aufgabe wird nie abgearbeitet (verhungert)
+\item Ursache: niedrige Priorität der Aufgabe, schnelle Erzeugung von neuen Aufgaben höherer Priorität
+\item z.B. immer neue Aufgaben werden generiert und in LIFO Queue abgelegt, nur die obersten werden abgearbeitet, die untersten verhungern
+\item Lösung: Prioritäts-management der Aufgaben, FIFO Queue, … 
+\end{itemize}
+\endinput

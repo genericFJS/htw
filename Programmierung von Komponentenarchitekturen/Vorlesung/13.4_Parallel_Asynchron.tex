@@ -1,0 +1,44 @@
+Asynchrone Methoden
+
+Mittwoch, 8. Februar 2017
+
+21:08
+
+~
+
+Abgrenzung zu Multithreading
+
+~
+
+Beim Threading geht es um Arbeiter, bei Asynchronität um Aufgaben (Tasks)
+
+~
+
+Analogie: Sie kochen in einem Restaurant, es werden Eier und Toast bestellt
+
+Sie haben die Wahl wie Sie diese Bestellung ausführen:
+
+\begin{itemize}
+\item Synchron: Sie kochen die Eier, wenn diese fertig sind machen Sie den Toast
+\item Asynchron, einzelner Thread: Sie kochen die Eier und starten eine Eieruhr, Sie schieben den Toast in den Toaster, während Sie warten reinigen Sie die Küche. Wenn die Wecker klingeln, nehmen Sie die Eier, bzw. den Toast raus
+\item Asynchron, Multithread: Sie besorgen sich 2 weitere Köche, einer kocht die Eier der andere macht den Toast. Sie müssen die Köche koordinieren, damit sie in der Küche nicht die gleichen Küchengeräte gleichzeitig verwenden und sie bezahlen
+\end{itemize}
+~
+
+Viele Tasks belegen den Prozessor nicht dauerhaft mit Arbeit
+
+\begin{itemize}
+\item I/O Aufgaben
+\item Zugriffe auf Datenbanken, Internet
+\item Zugriff auf Peripherie
+\end{itemize}
+~
+
+Für Prozessor-gebundene Aufgaben macht es Sinn Multithreading zu verwenden,
+
+für andere Aufgaben sind mehrere Threads nicht nötig, solange in der Wartezeit andere Aufgaben erledigt werden können.
+
+~
+
+ \includegraphics{a134ParallelAsynchron-img001.png}  \includegraphics{a134ParallelAsynchron-img002.png}  \includegraphics{a134ParallelAsynchron-img003.png} 
+\endinput

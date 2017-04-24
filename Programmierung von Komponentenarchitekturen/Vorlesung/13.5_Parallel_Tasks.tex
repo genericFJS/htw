@@ -1,0 +1,287 @@
+Task Parallel Library
+
+Donnerstag, 9. Februar 2017
+
+11:35
+
+~
+
+\begin{itemize}
+\item neu in .NET 4.0
+\item Im Zentrum steht die neue Klasse Task
+\end{itemize}
+~
+
+Tasks vs Threads
+
+\begin{itemize}
+\item zu viele Threads sind schlecht
+
+\begin{itemize}
+\item OS ist beschäftigt mit Scheduling
+\item jeder Thread bindet Speicher (im MB Bereich)
+\end{itemize}
+\item Tasks können Threads erzeugen (max 1 Thread pro Task), wenn sie es für notwendig erachten, Concurrency Runtime sorgt für optimale Lastverteilung
+\item Typische Probleme beim gleichzeitigen Zugriff auf Ressourcen (Race Conditions, Deadlock, …) bleiben bestehen, müssen umgangen werden
+\end{itemize}
+~
+
+Laufzeitvergleich Task / Thread:
+
+Aufgabe: 64 Listen mit 2,000,000 Elementen sortieren
+
+\begin{itemize}
+\item 64 Threads: 14 sec (CPU Auslastung 60 \%)
+\item 64 Tasks: 3 sec (CPU Auslastung 99 \%)
+\end{itemize}
+~
+
+Neue thread-sichere Datenstrukturen:
+
+\begin{itemize}
+\item ConcurrentStack{\textless}T{\textgreater}
+\item ConcurrentQueue{\textless}T{\textgreater}
+\item BlockingCollection{\textless}T{\textgreater}
+\end{itemize}
+~
+
+~
+
+Die Klasse Task
+
+\begin{itemize}
+\item Anlegen und Verwendung ähnlich wie Thread
+\item wichtigste Zustände eines Task:
+\end{itemize}
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{m{6.3700004cm}m{1.4929999cm}m{1.0699999cm}}
+Task definieren &
+{}-{\textgreater} &
+~\\
+Task starten   &
+{}-{\textgreater} &
+~\\
+.NET startet den Task &
+{}-{\textgreater} &
+~\\
+Task ohne Fehler abgearbeitet &
+{}-{\textgreater}  &
+~\\
+\end{supertabular}
+\end{flushleft}
+~
+
+Task anlegen
+
+\begin{itemize}
+\item mit lambda Functionen
+\end{itemize}
+~
+
+~
+
+~
+
+\begin{itemize}
+\item ohne lambda Funktion
+\end{itemize}
+~
+
+Tast starten
+
+Task.Start();
+
+~
+
+Task.Factory
+
+Task.Factory.StartNew( gleiche Parameter wie Konstruktor von Task );  
+
+startet den Task auch gleich, funktioniert ohne Konstruktor
+
+~
+
+Rückgabewert eines Tasks
+
+~
+
+~
+
+Task{\textless}int{\textgreater} t = Task.Factory.StartNew(() ={\textgreater} \{ 
+
+Thread.Sleep(2000); 
+
+return 13; 
+
+\}); 
+
+int i = t.Result;
+
+~
+
+~
+
+auf einen Task warten:
+
+t1.Wait();
+
+~
+
+auf mehrere Tasks warten:
+
+Task.WaitAll(Task[]);
+
+Task.WaitAny(Task[]);
+
+z.B. warten auf einen Task: Task.WaitAny(new Task[] \{ t1, t2 \} );
+
+~
+
+Parallele Schleifen
+
+~
+
+\begin{itemize}
+\item Die TPL stellt die Methoden Parallel.For und Parallel.ForEach zur Verfügung
+\item intelligenter Aufteilungs-Algorithmus zerlegt Datenmenge, bzw. Schleifen-Interationen und erstellt selbstständig Tasks
+\end{itemize}
+~
+
+Beispiel:
+
+~
+
+ Parallel.For(0,  5,  i ={\textgreater} \{
+
+ Console.WriteLine({\textquotedbl}Durchlauf mit i = \{0\}{\textquotedbl}, i);
+
+ Thread.Sleep(1000);
+
+ \});
+
+~
+
+ Parallel.ForEach(new int[] \{1, 2, 3, 4, 5\}, item ={\textgreater} \{
+
+ Console.WriteLine({\textquotedbl}Durchlauf mit i = \{0\}{\textquotedbl}, item);
+
+ Thread.Sleep(1000);
+
+ \});
+
+~
+
+~
+
+Wie könnte man die folgende Schleife parallelisieren ? 
+
+~
+
+~~~~~~~~double result = 0;
+
+ for (int i = 0; i {\textless} vec1.GetLength(0) ; i++)
+
+ \{
+
+ result += vec1[i] * vec2[i];
+
+ \}
+
+~
+
+~
+
+Lokale Schleifenvariablen
+
+Jeder einzelne Thread hat eine eigene Instanz der Variable
+
+\begin{itemize}
+\item keine Sperre nötig
+\item am Ende können die lokalen Variablen zusammengeführt werden
+\end{itemize}
+~
+
+Parallel.For{\textless}TLocal{\textgreater} (
+
+Int32, 
+
+Int32, 
+
+Func{\textless}TLocal{\textgreater}, 
+
+Func{\textless}Int32, ParallelLoopState, TLocal, TLocal{\textgreater}, 
+
+Action{\textless}TLocal{\textgreater}) 
+
+~
+
+Beispiel: 
+
+~
+
+ Object myLock = new Object();
+
+ Parallel.For{\textless}double{\textgreater}(0, n, () ={\textgreater} \{ return 0; \}, 
+
+(i, pls, localSum) ={\textgreater}  \{
+
+ localSum += vec1[i] * vec2[i];
+
+ return localSum;
+
+ \},
+
+ x ={\textgreater}  \{
+
+ lock (myLock) result += x;
+
+ \});
+
+~
+
+Schleife abbrechen: nutzt das ParallelLoopState Objekt das übergeben wird
+
+\begin{itemize}
+\item pls.Break(); 
+\end{itemize}
+Abbruch nachdem alle Iterationen bis zur aktuellen durchgeführt wruden
+
+\begin{itemize}
+\item pls.Stop(); 
+\end{itemize}
+sofortiger Abbruch
+
+~
+
+Parallelisierung von GUI Aktivitäten
+
+\begin{itemize}
+\item Die Controls der GUI gehört zu genau einem Thread, andere Threads haben keinen Zugriff auf GUI Aktivitäten
+\item wird ein Teil eines Programms auf einen anderen Thread ausgelagert, so müssen darin enthaltene GUI-Aktivitäten zurück an den GUI-Thread gegeben werden. 
+\item Dies geschieht mit der Methode Invoke, die auf einem GUI Control aufgerufen wird
+\item Bsp: 
+\end{itemize}
+Task.Factory.StartNew( () ={\textgreater} \{
+
+~~~~~~~~ // aufwendige Berechnung hier
+
+~~~~~~~~ this.Invoke(new Action(() ={\textgreater} \{
+
+~~~~~~~~~~~~~~~~  label.Location = new Point(200,200);
+
+~~~~~~~~~~~~~~~~  \}));
+
+\}
+
+~
+
+~
+
+~
+
+~
+\endinput

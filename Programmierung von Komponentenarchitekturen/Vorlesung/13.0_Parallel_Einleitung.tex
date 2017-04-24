@@ -1,0 +1,152 @@
+Parallele Programmierung - Einleitung
+
+Donnerstag, 2. Februar 2017
+
+17:06
+
+~
+
+\href{https://www.google.de/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=0ahUKEwibrNLm0oXSAhVHkRQKHYuFDUYQjRwIBw&url=https%3A%2F%2Fwww.karlrupp.net%2F2015%2F06%2F40-years-of-microprocessor-trend-data%2F&bvm=bv.146496531,d.d24&psig=AFQjCNFaA57rF0uDvjQsXBVqwea_SudE3w&ust=1486820116391051&cad=rjt}{ \includegraphics{a130ParallelEinleitung-img001.png} }
+
+~
+
+CPU Entwicklung
+
+\begin{itemize}
+\item Moore's law: alle 2 Jahre verdoppelt sich die Anzahl von Transistoren
+\item früher ging damit verdopplung der Taktfrequenz einher
+\item heute Taktfrequenz stagniert weil höhere Frequenz zu viel Hitze in der CPU erzeugt
+\item Performancesteigerung nur durch mehr Kerne möglich
+\item Neue Technologien wie Intel Hyper-Threading bilden auf jedem physikalischen Core noch 2 oder mehr virtuelle Cores
+\item Anzahl von physikalischen und virtuellen Kernen steigt rasant
+\end{itemize}
+~
+
+Traditionelle Sequentielle Programmierung
+
+\begin{itemize}
+\item Software läuft sequentiell (nicht parallel) ab
+\item ein Algorithmus besteht aus einer Kette von Anweisungen, die nacheinander ablaufen
+\item ein einzelner CPU verarbeitet die Befehle
+\item mit mehreren Prozessoren wird die Software nicht schneller oder besser, dazu ist parallele Programmierung nötig
+\end{itemize}
+~
+
+Parallele Programmierung
+
+\begin{itemize}
+\item mehrere Befehle werden parallel (simultan) abgearbeitet
+\item durch mehrere Threads, mehrere Prozessoren oder mehrere Rechner
+\item Parallel Programmierung
+
+\begin{itemize}
+\item beschleunigt moderne Anwendungen oder ermöglicht sie erst
+\item ermöglicht simultane Ausführung mehrer Anwendungsteile
+\end{itemize}
+\item ist komplexer als sequentielle Programmierung
+\end{itemize}
+\href{https://www.google.de/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwjLtLGp_v_RAhVHPRoKHXjNA9gQjRwIBw&url=http%3A%2F%2Fjournal.frontiersin.org%2Farticle%2F10.3389%2Ffnhum.2014.00641%2Ffull&psig=AFQjCNHgQ2DVjdUqSOTj0NvUhKtlPXa1pQ&ust=1486625606749381}{ \includegraphics{a130ParallelEinleitung-img002.jpg} }
+
+~
+
+Anwendungen paralleler Programmierung
+
+\begin{itemize}
+\item Bildverarbeitung, Computergraphik
+\item Aufwendige Berechnungen (Data-Mining)
+\item Webroboter (Indizierung des Internets)
+\item Künstliche Intelligenz
+\item Simulationen (Wetterprognose, Physikalische Simulationen)
+\item … 
+\end{itemize}
+ \includegraphics{a130ParallelEinleitung-img003.png}  \includegraphics{a130ParallelEinleitung-img004.jpg}  \includegraphics{a130ParallelEinleitung-img005.png}  \includegraphics{a130ParallelEinleitung-img006.png}  \includegraphics{a130ParallelEinleitung-img007.jpg}  \includegraphics{a130ParallelEinleitung-img008.jpg} 
+
+~
+
+Moderne supercomputer
+
+ \includegraphics{a130ParallelEinleitung-img009.jpg} 
+
+~
+
+Aus {\textless}\url{https://de.wikipedia.org/wiki/Supercomputer}{\textgreater} 
+
+~
+
+~
+
+ \includegraphics{a130ParallelEinleitung-img010.jpg} 
+
+ Aus {\textless}\url{http://www.digitaleng.news/de/wp-content/uploads/2016/11/BtN5.jpg}{\textgreater} 
+
+~
+
+Deutsche Supercomputer
+
+~
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{m{1.8280001cm}m{2.68cm}m{2.386cm}m{4.9680004cm}m{1.7579999cm}m{2.404cm}m{2.9559999cm}}
+Name &
+Standort &
+Tera\href{https://de.wikipedia.org/wiki/FLOPS}{FLOPS} &
+Konfiguration &
+TB RAM &
+Energiebedarf &
+Zweck\\
+\href{https://de.wikipedia.org/w/index.php?title=Hazel_Hen&action=edit&redlink=1}{Hazel Hen}\href{https://de.wikipedia.org/wiki/Supercomputer#cite_note-HazelHen-6}{[6]} &
+\href{https://de.wikipedia.org/wiki/H%C3%B6chstleistungsrechenzentrum_Stuttgart}{Höchstleistungsrechenzentrum Stuttgart} &
+\raggedleft 7.420,00 &
+Cray Aries Netzwerk; 7712 Nodes mit je 24 Kernen (Intel Xeon E5-2680 v3, 30M Cache, 2,50 GHz) &
+\raggedleft 987 &
+\~{}3.200 kW &
+~\\
+\href{https://de.wikipedia.org/wiki/JUQUEEN}{JUQUEEN}\href{https://de.wikipedia.org/wiki/Supercomputer#cite_note-JUQUEEN-7}{[7]} &
+\href{https://de.wikipedia.org/wiki/Forschungszentrum_J%C3%BClich}{Forschungszentrum Jülich} (\href{https://de.wikipedia.org/wiki/Deutschland}{Deutschland}) &
+\raggedleft 5.900,00 &
+IBM BlueGene/Q, 28.672 Power BQC-Prozessoren (16 Kerne, 1,60 GHz) &
+\raggedleft 448 &
+2.301 kW &
+Materialwissenschaften, theoretische Chemie, Elementarteilchenphysik, Umwelt, Astrophysik\\
+\href{https://de.wikipedia.org/wiki/SuperMUC}{SuperMUC }\href{https://de.wikipedia.org/wiki/IBM}{IBM}\href{https://de.wikipedia.org/wiki/Supercomputer#cite_note-heise1619629-9}{[9]}\href{https://de.wikipedia.org/wiki/Supercomputer#cite_note-LRZ-14}{[14]} &
+\href{https://de.wikipedia.org/wiki/Leibniz-Rechenzentrum}{Leibniz-Rechenzentrum} (LRZ) (\href{https://de.wikipedia.org/wiki/Garching_bei_M%C3%BCnchen}{Garching bei München}, \href{https://de.wikipedia.org/wiki/Deutschland}{Deutschland}) &
+\raggedleft 2.897,00 &
+18.432 \href{https://de.wikipedia.org/wiki/Xeon}{Xeon} E5-2680 CPUs (8 Kerne, 2,7 GHz), 820 Xeon E7-4870 CPUs (10 Kerne, 2,4 GHz) &
+\raggedleft 340 &
+3.423 kW &
+Kosmologie über die Entstehung des Universums, Seismologie und Erdbebenvorhersage\\
+HRSK-II \href{https://de.wikipedia.org/wiki/Supercomputer#cite_note-15}{[15]}\href{https://de.wikipedia.org/wiki/Supercomputer#cite_note-16}{[16]} &
+\href{https://de.wikipedia.org/wiki/Zentrum_f%C3%BCr_Informationsdienste_und_Hochleistungsrechnen}{ZI}H, \href{https://de.wikipedia.org/wiki/TU_Dresden}{TU Dresden} &
+\raggedleft 1.600,00 &
+43.866 CPU Kerne, Intel Haswell-EP-CPUs (Xeon E5 2680v3), 216 Nvidia Tesla-GPUs &
+\raggedleft 130 &
+~ &
+Wissenschaftliche Anwendungen\\
+\href{https://de.wikipedia.org/wiki/HLRE-3}{HLRE-3 {\textquotedbl}Mistral{\textquotedbl}}\href{https://de.wikipedia.org/wiki/Supercomputer#cite_note-17}{[17]}\href{https://de.wikipedia.org/wiki/Supercomputer#cite_note-18}{[18]} &
+\href{https://de.wikipedia.org/wiki/Deutsches_Klimarechenzentrum}{Deutsches Klimarechenzentrum} Hamburg &
+\raggedleft 1.400,00 &
+1. Ausbaustufe (Juli 2015): 1.500 Knoten bullx B700 DLC, 36.000 Kerne (Haswell), 20 PB Lustre-Festplattensystem, 12 Visualisierungsknoten (je 2 Nvidia Tesla K80 GPUs), Warmwasserkühlung &
+\raggedleft 120 &
+~ &
+Klimamodellierung\\
+Cray XC40 &
+\href{https://de.wikipedia.org/wiki/Deutscher_Wetterdienst}{Deutscher Wetterdienst} (Offenbach) &
+\raggedleft 1.100,00 &
+Cray Aries Netzwerk; 1.952 CPUs Intel Xeon E5-2680v3/E5-2695v4 &
+\raggedleft 122 &
+407 kW &
+Numerische Wettervorhersage und Klimasimulationen\\
+\end{supertabular}
+\end{flushleft}
+Aus {\textless}\url{https://de.wikipedia.org/wiki/Supercomputer}{\textgreater} 
+
+~
+
+Supercomputer nach Ländern
+
+ \includegraphics{a130ParallelEinleitung-img011.png} 
+\endinput
