@@ -147,7 +147,134 @@ Weiterentwicklung der Depot-Architektur: Das Depot verarbeitet nun auch Informat
 \subsection{Peer-to-Peer-Architektur}
 Spezielle Client-Server-Architektur, wo der Client und Server eine Komponente sind.
 
-%\lecdate{18.04.2017}
+\subsection{Proxy-Pattern (Vermittler/Broker)}
+\lecdate{18.04.2017}
+\paragraph{Kontext, Problem} Netzwerk von Clients und Servern, die Informationen austauschen sollen.
+\paragraph{Lösungsstrategie} Eine spezielle Komponente übernimmt die \emph{Vermittlung} zwischen Clients und Server(n)
+\paragraph{Konsequenzen}
+\begin{itemize}
+\item Effizienz sinkt $\downarrow$
+\item Fehleranfälligkeit steigt $\uparrow$\\
+$\Rightarrow$Fehlertoleranzmaßnahmen (redundant, Prüf-Funktionalitäten)
+\item Kommunikationsaufwand steigt $\uparrow$
+\end{itemize}
+\begin{center}
+\begin{tikzpicture}
+\draw  (4.0,-1.5) rectangle node [] {Server}(6.5,-2.5) ;
+\draw  (4,0) rectangle node [] {Server Proxy}(6.5,-1) ;
+\draw  (0.5,0) rectangle node [] {Broker}(3,-1) ;
+\draw  (-3.0,-1.5) rectangle node [] {Client}(-.5,-2.5) ;
+\draw  (-3,0) rectangle node [] {Client Proxy}(-.5,-1);
+
+\draw [-latex](-1.5,-1.5) -- (-1.5,-1);
+\draw [latex-latex](-0.5,-0.5) -- (0.5,-0.5);
+
+\draw [latex-latex](3,-0.5) -- (4,-0.5);
+
+\draw [latex-] (5.5,-1) -- (5.5,-1.5);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Säulenarchitektur}
+Client (Benutzerschnittstelle) $\longleftrightarrow$ Anwendungslogik $\longleftrightarrow$ Server (Datenbank-Server)
+
+\subsubsection{3-Säulen-Architektur}
+Client $\longleftrightarrow$ Applikationsserver (Anwendungsserver) $\longleftrightarrow$ DB-Server
+
+\subsubsection{4-Säulen-Architektur}
+Client $\longleftrightarrow$ Formularerstellung $\longleftrightarrow$ Applikationsserver (Anwendungsserver) $\longleftrightarrow$ DB-Server
+
+\begin{center}
+\begin{tikzpicture}[scale=.9]
+
+\draw  (-2.5,0) rectangle (-1.5,-3);
+\draw  [htworange](-1.5,0) rectangle (-0.5,-1.5);
+\node at (-2,-3.5) [align=center]{Client\\Benutzerschnittstelle};
+\draw  [htworange](2.5,-3) node (v1) {} rectangle (1.5,-1.5);
+\draw  (v1) rectangle (3.5,0);
+\node at (2.5,-3.8) [align=center]{Server\\Datenbank-Server\\(zentrale Datenhaltung)};
+\draw [latex-](-1,-2.5) -- (-0.5,-2.5);
+\draw [-latex](0.5,-2.5) -- (1,-2.5);
+\node at (0,-2.5) [align=center]{Anwendungs-\\logik};
+
+\node [scale=2.5]at (5,-1.5) {$\Rightarrow$};
+\draw  (6,0) rectangle (7,-3);
+\draw  [red](8.5,0) rectangle (9.5,-3);
+\draw  (11,0) rectangle (12,-3);
+\draw [latex-latex](7,-1) -- (8.5,-1);
+\draw [latex-latex](9.5,-1) -- (11,-1);
+\draw [-latex](7,-2) -- (8.5,-2);
+\draw [-latex](9.5,-2) -- (11,-2);
+\node at (6.5,0) [align=center, above]{Client};
+\node at (9,-3) [align=center, below]{Applikationsserver\\(Anwendungsserver)};
+\node at (11.5,0)[align=center, above] {DB-Server};
+\end{tikzpicture}
+\end{center}
+\subsection{Reflection}
+\paragraph{Kontext, Problem} \emph{reflexives System}, d.h. dynamische Veränderung von Struktur + Verhalten
+\paragraph{Lösungsstrategie}
+\begin{itemize}
+\item Metaebene $\rightarrow$ Informationen über spezielle Systemeigenschaften
+\item Basisebene $\rightarrow$ Anwendungslogik
+\end{itemize}
+$\rightsquigarrow$ Veränderung in der Metaebene beeinflussen die Basisebene
+
+\subsection{Quasar}
+\lecdate{25.04.2017}
+Referenzarchitektur\\
+Wurde entwickelt bei der Firma „sd\&m“ (1982-2001, seit 2001 bei „Capgemini“).
+\paragraph{Ziel}
+\begin{itemize}
+\item Trennung von Zuständigkeiten realisieren
+\item Programmierung gegen Schnittstellen realisieren
+\item Denken in Komponenten fördern
+\end{itemize}
+\paragraph{Trennung von Zuständigkeiten}
+Ansatz bei Quasar: SW-Komponenten klassifizieren durch Definition von \emph{SW-Kategorien}
+\subparagraph{SW-Kategorien} $\to $ Trennung von \emph{Anwendung} und \emph{Technik}
+\begin{itemize}
+\item Kategorie A-Software\\
+von fachlicher Anwendung bestimmt
+\item Kategorie T-Software\\
+technische Komponenten, von mindestens einer API bestimmt (DB-anschluss, Technologie der Oberflächenprogrammierung, …)
+\end{itemize}
+weitere:
+\begin{itemize}
+\item Kategorie AT-Software (möglichst vermeiden!)\\
+Mischung aus A- und T-Komponenten
+\item Kategorie R-Softwaree\\
+reserviert für Bausteine, die als Transformator zwischen A- und T-Software  liegen
+\end{itemize}
+\begin{center}
+\begin{tikzpicture}[scale=.9]
+\draw [red] (-3,1.5) rectangle node[align=center]{Anwendungskern\\ A-Software} (2,-0.5);
+\draw [blue] (-3,-0.5) rectangle node[align=center]{R-Software} (2,-1.5);
+\draw [orange] (-3,-2.5) rectangle node[align=center]{Persistenz-\\framework\\T-Software} (2,-4.5);
+\draw  (-0.5,-6) node[]{DB} ellipse (1 and .5);
+\draw (-0.5,-5.5) -- (-0.5,-4.5);
+\draw (-0.5,-2.5) -- (-0.5,-1.5);
+\draw (-2,1.5) -- (-2,2.5) node[rotate=90]{$\circ)$};
+\draw (-1,1.5) -- (-1,2.5) node{$\circ$};
+\draw (0.5,1.5) -- (0.5,2.5) node{$\circ$};
+\node at (-0.5,-2)  [rotate=90]{$\circ)$};
+\draw (-2,3.5) -- (-2,2.5);
+\draw  (-3,4.5) rectangle node{UI1} (-1,3.5);
+\draw [green] (-3.5,5) rectangle (2.5,-5);
+\draw (-3,1) -- (-5,1) node{)};
+\draw (-3,0) -- (-5,0) node{)};
+\node [left, align=center] at (-8,0.5) {Nachbar-\\systeme};
+\node [right] at (-1,4) {…};
+\draw (-8,1.5) -- (-7,1.5) node{$\circ$};
+\draw (-8,-0.5) -- (-7,-0.5)node{$\circ$};
+\node at (-6,0.5) {Adapter};
+\draw [dashed, green] (-6.5,2.5) rectangle (-3.5,-1.5);
+\draw (2,0.5) -- (5,0.5) -- (5,1.5) node[above]{Authorisierung};
+\draw (2,0) -- (5,0) -- (5,-1) node[below]{Regelinterpreter};
+\node at (3.5,0.5) {$(\circ$};
+\node at (3.5,0) {$(\circ$};
+\end{tikzpicture}
+\end{center}
+
 
 \part{Praktikum}
 \setcounter{chapter}{0}
