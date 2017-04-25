@@ -69,8 +69,10 @@
 
 %%% Definition der Fußzeilen
 \usepackage{scrlayer-scrpage}
+\@ifclassloaded{scrreprt}{%
 \renewcommand*{\partpagestyle}{scrheadings}
-\renewcommand*{\chapterpagestyle}{scrheadings}
+\renewcommand*{\chapterpagestyle}{scrheadings}%
+}{}
 \pagestyle{scrheadings}
 \cfoot{\vfill\pagemark}
 
@@ -81,10 +83,14 @@
 %%% Einiges erst zu Beginn des Dokumentes ausführen, um Einstellungen zu berücksichtigen
 \AtBeginDocument{
 %%% Sektionen usw. ggf. in Großbuchstaben:
+\providecommand{\chapterlinesformat}[3]{}	% compatibility
+\providecommand{\chapterlineswithprefixformat}[3]{}	% compatibility
 \ifdefined\@nouppercase\relax\else
 \renewcommand\sectionlinesformat[4]{\@hangfrom{\hskip#2 #3}{\MakeUppercase{#4}}}
+\@ifclassloaded{scrreprt}{%
 \renewcommand\chapterlinesformat[3]{\@hangfrom{#2}{\MakeUppercase{#3}}}
-\renewcommand\chapterlineswithprefixformat[3]{\MakeUppercase{#2#3}}
+\renewcommand\chapterlineswithprefixformat[3]{\MakeUppercase{#2#3}}%
+}{}
 \fi
 %%% Anpassung der Part-Seite
 \renewcommand*{\partheadstartvskip}{\@htwheader\vspace*{30mm}}
@@ -210,10 +216,10 @@
 \@graduation{} \ifdefined\@graduationshort(\@graduationshort{})\fi
 \ifdefined\@nouppercase\relax\else}\fi\strut}\fi\fi
 \vfill\noindent
+\ifdefined\@islecture\\[1mm]{\lectureauthorname{}\strut}\\[.7mm]{\Large\@author{}\strut}\fi
 \ifdefined\@referee{\refereename{}\strut}\\[.7mm]{\Large\@referee{}\strut}\fi
 \ifdefined\@advisor\\[1mm]{\advisorname{}\strut}\\[.7mm]{\Large\@advisor{}\strut}\fi
 \ifdefined\@supervisor\\[1mm]{\supervisorname{}\strut}\\[.7mm]{\Large\@supervisor{}\strut}\fi
-\ifdefined\@islecture\\[1mm]{\lectureauthorname{}\strut}\\[.7mm]{\Large\@author{}\strut}\fi
 \ifdefined\@professor\\[1mm]{\professorname{}\strut}\\[.7mm]{\Large\@professor{}\strut}\fi
 \ifdefempty{\@date}{}{\ifdefined\@simpledate\\[6mm]\relax\else\\[3mm]\datename{}~\fi\@date{}\strut}
 \ifdefempty{\@publishers}{}{\\[4.5mm]{\Large\@publishers{}\strut}}%
