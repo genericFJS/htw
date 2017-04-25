@@ -30,7 +30,7 @@ namespace prakt7 {
             this.Birthday = birthday;
         }
 
-        public void printPerson() {
+        public virtual void printPerson() {
             Console.WriteLine("Person " + PreName + " " + SurName + ", Alter: " + Math.Floor((DateTime.Today - Birthday).TotalDays / 365));
         }
     }

@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mitarbeiter.cs" />
     <Compile Include="HSMitglied.cs" />
     <Compile Include="HTW.cs" />
     <Compile Include="Inheritance.cs" />
