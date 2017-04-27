@@ -1,0 +1,87 @@
+\lecdate{26.04.2017}
+Mechanismen:
+\begin{itemize}
+\item Message Passing
+\item Shared Memory Segment
+\item Datei
+\item Signale
+\item Pipe (unbenannt)
+\begin{itemize}
+\item unidirektional
+\item nur zwischen verwandten Prozessen möglich
+\end{itemize}
+\item Pipe (benannt)
+\item Socket
+\end{itemize}
+\section{Message Passing}
+\slides{03-ipc}{2}
+
+\subsection{Synchronisation mit Nachrichten}
+\slides{03-ipc}{3}
+\subsection{Adressierung}
+\slides{03-ipc}{4}
+\subsection{Praxisbeispiele}
+\subsubsection{Message Passing Interface (MPI)}
+\slides{03-ipc}{5}
+\subsubsection*{Beispiel 2 Knoten, FORTRAN}
+\slides{03-ipc}{6}
+\slides{03-ipc}{7}
+\subsubsection{Mikrokern L4}
+\slides{03-ipc}{8}
+\subsubsection{Pascal-FC}
+\slides{03-ipc}{9}
+\slides{03-ipc}{10}
+\subsubsection{Nachrichtenwarteschlangen in der System-V-IPC}
+System-V-IPC:
+\begin{itemize}
+\item Semaphore
+\item Message Queues
+\item Shared-Memory-Signale
+\end{itemize}
+\slides{03-ipc}{11}
+Details: \lstinline$msgserver.c$ und \lstinline$msgclient.c$.
+
+\section{Benannte Pipes}
+\begin{itemize}
+\item „sieht aus“ wie eine Datei, d.h. hat einen Eintrag in Dateisystem
+\item syscall: \lstinline$mkfifo()$ -- legt FIFO (benutzt Pipe) in Dateisystem an
+\item zugehöriges Unix-Kommando: \lstinline$mkfifo$
+\item Kommandos: \lstinline$open(), read(), write(), close()$ (kein \lstinline$lseek$!)
+\item Löschen mittels \lstinline$rmlink()$ bzw \lstinline$rm$-Kommando
+\end{itemize}
+
+\section{Shared Memory}
+\slides{03-ipc}{12}
+\subsection{Systemrufe in der System-V-API}
+\slides{03-ipc}{13}
+\slides{03-ipc}{14}
+\subsection{POSIX-API}
+\slides{03-ipc}{15}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
