@@ -123,6 +123,8 @@ nass(Y) :- regnet(X), strasseInOrt(Y,X).
 \section{Aufgabe 7}
 \input{../Beleg/Hausaufgabe_1.tex}
 
+\chapter{Praktikum 3: Unifizierung, Prolog}
+
 \section{Aufgabe 8}
 $a,f(a)$ … Konstanten
 $x,y$ … Variablen
@@ -217,12 +219,19 @@ X = julia ;
 X = jutta . % es fehlt eva?!
 \end{lstlisting}
 
+\chapter{Praktikum 4: Transitive Hülle, Prolog}
 
+\section{Aufgabe 11}
+Der Suchbaum würde sich in einer Rekursion aufhängen: beim erste \lstinline$weg()$.\\
+Lösung: Eine extra Funktion für die transitive Hülle einführen, die die Rekursion auf den rechten Zweig verschiebt, wo sie sich auflösen oder zu einem Fehler führen kann.
+\begin{lstlisting}[language=Prolog]
+tweg(X,Y) :- weg(X,Y); weg(X,Z), tweg(Z,Y).
+\end{lstlisting}
 
+\section{Aufgabe 12}
+???
 
-
-
-
+\chapter{Praktikum 5: Vereinfachung Prolog}
 
 
 
