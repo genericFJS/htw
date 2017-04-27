@@ -1,23 +1,20 @@
-\newcommand{\customDir}{../}
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrreprt}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
 
-\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
-\setCustomTitle{Angewandte Sensorik}
-\setCustomSubtitle{Vorlesungsskript}
-\setCustomAuthor{Falk-Jonatan Strube}
-\setCustomNoteA{oder: „Vodka Gorbunoff: Der Sensorik reinster Seele“\\ oder: „Wieso sollte ich meine Studenten ernst nehmen?“}
-\setCustomNoteB{Vorlesung von Prof. Dr.-Ing. habil. Gorbunoff}
-\input{\customDir _LaTeX_master/LaTeX_master.sty}
-\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
+\faculty{Fakultät Informatik/Mathematik}
+\chair{Lehrstuhl für Technische Physik}
+\subject{lecture}
+\title{Angewandte Sensorik}
+\author{Falk-Jonatan Strube}
+\professor{Prof. Dr.-Ing. habil. André Gorbunoff}
 
-%\input{\customDir _LaTeX_master/LuaLaTeX_master.sty}
 \renewcommand{\imptnt}[1]{#1}
-
 \begin{document}
-
 \maketitle
-\newpage
 \tableofcontents
-\newpage
 
 \chapter*{Vorbemerkung}
 Prüfung: Keine Rechnung, kein Programmieren. Reine Wissensabfrage (Welche Sensoren für diesen Zweck, Vergleich, Vorteil/Nachteil, …)\\
@@ -135,8 +132,10 @@ $\Rightarrow \boxed{M = f^{-1}(A)}$
 \item Kennlinie (Übertragungsfunktion) des Messgerätes muss bekannt sein
 \item starker Einfluss von Störgrößen
 \end{itemize}
-\item \emph{Kompensationsmethode}: Messgerät erzeugt eine bekannte variable Vergleichsgröße, um die Differenz zwischen beiden Größen gegen Null streben zu lassen.\\
-ABB AS1\\
+\item \emph{Kompensationsmethode}: Messgerät erzeugt eine bekannte variable Vergleichsgröße, um die Differenz zwischen beiden Größen gegen Null streben zu lassen.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB1}
+\end{center}
 $M=S$\\
 (Vergleich: alte Küchenwaage mit Schieberegler/Ausgleichsgewichten)
 \begin{itemize}[label=$+$]
@@ -156,11 +155,15 @@ $M=S$\\
 \end{itemize}
 \paragraph{Beispiel Spannungsmessung}
 \begin{itemize}
-\item Ausschlagmethode\\
-ABB AS2\\
+\item Ausschlagmethode
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB2}
+\end{center}
 Problem: braucht unendlich großen Widerstand, sonst verfälscht es die Messung
-\item Kompensationsmethode\\
-ABB AS3\\
+\item Kompensationsmethode
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB3}
+\end{center}
 Mit bekannter Spannung $U_{ref}$.\\
 Strommessgerät: Ist Strom gleich 0? Dann sind beide Spannungen gleich.
 \end{itemize}
@@ -172,10 +175,14 @@ weitere Methoden:
 
 \subsection{Methoden nach Zeitablauf}
 \begin{itemize}
-\item \emph{kontinuierliche Messmethode}: die Größe wird ohne zeitliche Unterbrechung erfasst und auch angezeigt. (Vgl. Thermometer mit Flüssigkeit verändert sich stets/kontinuierlich)\\
-ABB AS4
-\item \emph{diskontinuierliche Messmethode}: die Messgröße wird nur zu bestimmten (diskreten) Zeitpunkten erfasst (abgetastet) und/oder angezeigt.\\
-ABB AS5\\
+\item \emph{kontinuierliche Messmethode}: die Größe wird ohne zeitliche Unterbrechung erfasst und auch angezeigt. (Vgl. Thermometer mit Flüssigkeit verändert sich stets/kontinuierlich)
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB4}
+\end{center}
+\item \emph{diskontinuierliche Messmethode}: die Messgröße wird nur zu bestimmten (diskreten) Zeitpunkten erfasst (abgetastet) und/oder angezeigt.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB5}
+\end{center}
 Informationen werden begrenzt (aufs wesentliche), Zeit muss diskretisiert werden (in vernünftigen Maß: Nyquist-Shannon-Abtasttheorem $f_{Abtast}\geq f_{max}$)
 \end{itemize}
 
@@ -480,42 +487,60 @@ Sensitivität abhängig von Steigung der Funktion:
 \item mittlere Steigung: mittlere Sensitivität
 \item niedrige Steigung: niedrige Sensitivität
 \end{itemize}
-\subsection{Linearität} (Nichtlinearität)\\
+\subsection{Linearität} (Nichtlinearität)
 Betrachtet wird die maximale Abweichung zwischen einer linearen Näherung einer nicht-linearen Funktion ($\Delta y_{\text{max}}$).\\
-$\epsilon_{\text{max}}=\frac{\Delta y_{\text{max}}}{FSO}\cdot 100 \%$\\
-ABB AS9
+$\epsilon_{\text{max}}=\frac{\Delta y_{\text{max}}}{FSO}\cdot 100 \%$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB9}
+\end{center}
 
 \subsection{Ansprechschwelle}
-$x_{\text{min}}$\\
-ABB AS6
+$x_{\text{min}}$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB6}
+\end{center}
 \subsection{Totband}
-ABB AS7
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB7}
+\end{center}
 \subsection{Sättigung}
-ABB AS8
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB8}
+\end{center}
 
 \subsection{Wiederholgenauigkeit}
 \subsubsection{Reproduzierbarkeit}
-Maximales Intervall des Stimulus, bei welchem sich unter gleichen Laborbedingungen das Ausgangssignal nicht gleich ist.\\
-ABB AS10\\
+Maximales Intervall des Stimulus, bei welchem sich unter gleichen Laborbedingungen das Ausgangssignal nicht gleich ist.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB10}
+\end{center}
 $\delta_R = \frac{\Delta x_{\text{max}}}{FSI}$
 
 \subsubsection{Hysterese}
-(Wenn man die Messung zwei mal von unterschiedlichen Richtungen ausführt $\to$ Abweichung in $y$-Wert abhängig von der Richtung)\\
-ABB AS11
+(Wenn man die Messung zwei mal von unterschiedlichen Richtungen ausführt $\to$ Abweichung in $y$-Wert abhängig von der Richtung)
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB11}
+\end{center}
 
 \subsection{Selektivität}
 (Querempfindlichkeit)\\
 Empfindlichkeit des Messwertes auf andere Größen
 \begin{itemize}
-\item Empfindlichkeitsänderung\\
-ABB AS12
-\item Nullpunktdrift\\
-ABB AS13
+\item Empfindlichkeitsänderung
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB12}
+\end{center}
+\item Nullpunktdrift
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB13}
+\end{center}
 \end{itemize}
 Behebung: Kompensationssensor einsetzen.
 
 \subsection{Rauschen}
-ABB AS14
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB14}
+\end{center}
 
 \subsection{Weitere}
 \begin{itemize}
@@ -552,18 +577,25 @@ Energiespeicher
 Sprunganregung: $x(t) =\begin{cases}
 0 &(t>0)\\
 x_0 & (t \geq 0)
-\end{cases}$\\
-ABB AS15
+\end{cases}$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB15}
+\end{center}
 \begin{itemize}
 \item 0. Ordnung: $y(t\geq 0) = S(x_0)$
 \item 1. Ordnung: (bspw. Kapazität, die auf-/entladen wird) $U_C(t) = U_0 \cdot \left\lbrace 1- \exp \left(-\frac{t}{\tau}\right)\right\rbrace$\\
-$\tau = R \cdot C$ (Zeitkonstante)\\
-ABB AS16\\
+$\tau = R \cdot C$ (Zeitkonstante)
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB16}
+\end{center}
 Halbwertszeit: $t_{0,5}$\\
 Anstiegszeit (rise time): $t_r = t_{0,9}$ (also $t_{90\%}$, wann $y_{st}$ zu $90\%$ erreicht ist)\\
 Einstellzeit: $t_E = 3 \tau$
 \end{itemize}
 \subsubsection{Dämpfung}
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB17}
+\end{center}
 \begin{itemize}
 \item $\delta$ Dämpfungskonstante
 \item $\omega_0$ Eigenkreisfrequenz
@@ -574,7 +606,9 @@ Dämpfungsgrade:
 \item $\frac{\delta}{\omega_0}<1$: Schwingfall
 \item $\frac{\delta}{\omega_0}\geq 1$: Kriechfall (stationärer Wert wird ohne Überschwingung erreicht)
 \end{itemize}
-ABB AS18
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB18}
+\end{center}
 \begin{itemize}
 \item Totzeit $t_T$
 \item Verzögerungszeit $t_V$
@@ -596,7 +630,9 @@ Nicht alle spektralen Komponenten (Frequenzen) können amplituden- und phasentre
 Sensoren 0. Ordnung: amplitudentreu bei $M=1$, phasentreu bei $\varphi = 0$
 \end{itemize}
 \subsubsection{Frequenzkenngrößen von Sensoren 1. Ordnung}
-ABB AS19\\
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB19}
+\end{center}
 Grenzfrequenz: $\omega_G$\\
 $M=0,707$ \quad $\varphi=45^\circ$\\
 Grenzfrequenz wird so angelegt, dass $\omega/\omega_G=1$
@@ -611,7 +647,9 @@ $\varphi \to 90^\circ$
 Bandbreite: Frequenzbereich mit $M$ zwischen $0,707\dots 1,414 (\pm 3dB)$
 
 \subsubsection{Frequenzkenngrößen von Sensoren 2. Ordnung}
-ABB 20\\
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB20}
+\end{center}
 $\zeta = \frac{\delta}{\omega_0}$
 \begin{itemize}
 \item quasistatische Anregung:\\
@@ -655,7 +693,9 @@ Die für uns wichtigsten Kontaktthermometer sind:
 \item Halbleiterfühler verschiedener Art (Sperrstrom oder Schwellspannung)
 \end{itemize}
 \section{Zeitverhalten eines Widerstandsensors}
-ABB AS21\\
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB21}
+\end{center}
 (Verhalten wie Sensor 1. Ordnung)
 \begin{itemize}
 \item Verzögerungszeit $t_V$
@@ -669,7 +709,9 @@ Flüssigkeit: schnellere Anpassung (ca. 10 mal schneller als Luft)\\
 Festkörper: etwas langsamere Anpassung
 
 \section{Thermoresistive Sensoren}
-ABB AS 22\\
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB22}
+\end{center}
 Temperaturkoeffizient des Widerstands:
 $$TK_R=\frac{1}{R}\cdot \frac{\diffd{R}}{\diffd{T}}$$
 Unterscheidung der Sensoren:
@@ -788,8 +830,10 @@ Widerstand steigt mit Temperatur $\to$ Kaltleiter.
 \end{itemize}
 
 \subsubsection{Spreading-Resistance-Sensor}
-$R=\frac{\varrho(T)}{\pi \cdot d}$\\
-ABB AS23 (Ersatzschaldbild)
+$R=\frac{\varrho(T)}{\pi \cdot d}$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB23}
+\end{center} (Ersatzschaldbild)
 
 \subsubsection{Temperatur IC}
 Diodengleichung: $I=I_0\cdot \left[ \exp\left(\frac{e \cdot U}{k \cdot T}\right) -1 \right]$ mit $I_0$: Sperrstrom
@@ -808,11 +852,15 @@ Diodengleichung: $I=I_0\cdot \left[ \exp\left(\frac{e \cdot U}{k \cdot T}\right)
 \end{itemize}
 
 \subsubsection{Thermoelemente}
-ABB AS24\\
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB24}
+\end{center}
 Beispiel: Draht führt durch zu Eis/Kerze (Kupfer), dazwischen ist dann Konstantan. Der Spannungsunterschied wird gemessen.\\
 Seebeck-Effekt: $U_{th}=\alpha_{th} \cdot \Delta T$ mit $U_{th}$: Thermospannung und $\alpha_{th}$: Thermokraft
 
 \subsubsection{Genormte Thermoelemente}
+\begin{center}
+\resizebox{.99\textwidth}{!}{
 \begin{tabular}{L{0.2} | l L{0.1} | l | L{0.3}}
 Thermopaar & Kurzzeichen & lin. Thermosp., $\mu V/K$ & T-Bereich ($^\circ C$) & Eigenschaften\\ \hline 
 Eisen-Konstantan (Fe-CuNi) & Typ J (Typ L) & 53 & -250 bis 700 (900) & billig, rostet, empfindlich gegen schwefel- und kohlenwasserstoffhaltige Luft\\\hline
@@ -823,6 +871,8 @@ Platinrhodium-Platinum (PtRh-Pt; Pt/Rh=90/10) & Typ S & 6,5 & -50 bis 1500 & wie
 PtRh-Schenkel mit verschiedenem Rh-Gehalt (70/30 - 94/6) & Typ B & 6,3 & 0 bis 1600 (1800) & unempfindlich gegen Verunreinigungen, T der Vergleichsstelle muss nicht konstant sein\\\hline
 WRh-Schenkel mit verschiedenem Rh-Gehalt (75/25 - 97/3) & Typ G & 15 & 0 bis 2200 & T der Vergleichsstelle muss nicht konstant sein, nur in neutraler und reduzierender Atmosphäre
 \end{tabular}
+}
+\end{center}
 
 \subsubsection{Aufbau von Thermoelementen}
 \begin{itemize}
@@ -1870,7 +1920,7 @@ $\text{Funktionsreserve}=\frac{\text{Lichtintensität auf Empfänger}}{\text{Sch
 \item aufwändige Justierung bei größeren Überwachungsstrecken
 \item unsicheres Erkennen von transparenten Gegenständen
 \end{itemize}
-Anwendungen:\\
+Anwendungen:
 \begin{itemize}
 \item Papierstau in Drucker
 \item Einfahrt in Garage
