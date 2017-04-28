@@ -1,0 +1,137 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrartcl}
+\gdef\pathtomaster{../../../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\makeatletter
+\gdef\@islecture{\relax}
+\makeatother
+
+\faculty{Fakultät Informatik/Mathematik}
+%\chair{Lehrstuhl}
+\thesis{Belegarbeit, Variante 5}
+\title{Dependiability of Computer Systems}
+\author{Falk-Jonatan Strube}
+\professor{Prof. Dr.-Ing. habil. Peter Sobe}
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section*{Aufgaben}
+\addcontentsline{toc}{section}{Aufgaben}
+\begin{center}
+\resizebox{.99\textwidth}{!}{
+\includegraphics[trim={2.5cm 4cm 2.5cm 3.3cm},clip]{Beleg_Variante5.pdf}
+}
+\end{center}
+
+\section{Aufgabe 1}
+$x$ … Anzahl der Computerknoten in einem seriellen System.\\
+Berechnung der Anzahl, die nicht überschritten werden darf:
+\begin{align*}
+1-(0,99999)^x &\geq 0,0005\\
+(0,99999)^x &\leq 0,9995 &|\; \log(...)\\
+x\cdot \log(0,99999) &\leq \log(0,9995)\\
+x &\leq \frac{\log(0,9995)}{\log(0,99999)}\\
+x &\leq 50,01225411
+\end{align*}
+Antwort: Die maximale Anzahl von Computerknoten beträgt $50$.
+
+\section{Aufgabe 2}
+\begin{enumerate}[label=Q\arabic*:]
+\item Das System A ist zuverlässiger. \\
+Wenn eine Komponente ausfällt sind beide System noch läuffähig.\\
+Bei zwei Komponenten dürfen bei System A 4 Kombinationen ausfallen (die „Diagonalen“ [\textit{C1 und C4} und \textit{C2 und C3}] und die „Senkrechten“ [\textit{C1 und C3} und \textit{C2 und C4}]). Bei System B dürfen nur die „Senkrechten“ (also nur zwei Kombinationen) gleichzeitig ausfallen.\\
+Wenn drei Komponenten ausfallen sind beide Systeme nicht mehr lauffähig.
+\item Gesamtzuverlässigkeit:\\
+System A, zwei \tred{parallele} Komponenten in \tgreen{Reihe}:
+$$R_A = \underbrace{(\underbrace{1-(1-R)^{\tred{2}}}_{\text{Parallel}})^{\tgreen{2}}}_{\text{Reihe}}$$
+System B, zwei Komponenten in \tgreen{Reihe} \tred{parallel} zueinander:
+$$R_B = \underbrace{1-(1-\underbrace{R^{\tgreen{2}}}_{\text{Reihe}})^{\tred{2}}}_{\text{Parallel}}$$
+Zu prüfen ist, ob Zuverlässigkeit $R_A$ stets größer ist als $R_B$ (mit $0<R<1$):
+\begin{align*}
+R_A &> R_B\\
+(1-(1-R)^2)^2 &> 1-(1-R^2)^2\\
+1-2 (1-R)^2 +(1-R)^4 &> 1-(1-2 R^2 + R^4) &&| -1\\
+(1-R)^4 - 2(1-R)^2 &> - 1+2R^2-R^4\\
+(1-2R+R^2)^2 - 2(1-2R+R^2) &>- 1+2R^2-R^4\\
+1-4R+6R^2-4R^3+R^4-2+4R-2R^2 &> - 1+2R^2-R^4\\
+-1+4R^2-4R^3+R^4 &> - 1+2R^2-R^4 &&| + 1-2R^2+R^4\\
+2R^2-4R^3+2R^4&>0 &&|/2\\
+R^2(1-2R+R^2) &> 0\\
+R^2(R-1)^2 &> 0
+\end{align*}
+Diese Gleichung ist für alle $\RR\setminus\{0,1\}$ wahr:
+\begin{center}
+\begin{tikzpicture}[yscale=15,xscale=5]
+\draw [orange, thick, domain=-0.2:1.2] plot[smooth] (\x,{\x*\x-2*\x*\x*\x+\x*\x*\x*\x}) node[above]{$f(R)=R^2(R-1)^2 $};
+\draw[->, black!80] (-0.6,0) -- (1.4,0) node[right] {$R$};
+\draw[->, black!80] (0,-.01) node[below]{$0$} -- (0,0.3) node[above right] {$f(R)$};
+\draw[black!80] (1,.01) -- (1,-.01) node[below]{$1$};
+\end{tikzpicture}
+\end{center}
+Demnach ist die Entscheidung, dass System A zuverlässiger ist als System B für alle Zuverlässigkeiten $R\in (0,1)$ wahr.
+\end{enumerate}
+
+\section{Aufgabe 3}
+\begin{enumerate}[label=Q\arabic*:]
+\item Markov Model ohne Reperatur:
+\begin{center}
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=10em]
+\node[state] (z0) {fehlerfrei};
+\node[state] (z1) [right of=z0] {1 Fehler};
+\node[state] (z2) [right of=z1] {2 Fehler};
+\node[state] (z3) [right of=z2] {3+ Fehler};
+\path (z0) edge [bend left=20] node{$6\lambda$} (z1);
+%\path (z1) edge [bend left=20] node{$\mu$} (z0);
+\path (z1) edge [bend left=20] node{$5\lambda$} (z2);
+%\path (z2) edge [bend left=20] node{$2\mu$} (z1);
+\path (z2) edge [bend left=20] node{$4\lambda$} (z3);
+\node [above left = 5em and 2em of z0] (x1){};
+\node [below right = 3em and 2em of z2] (x2){};
+\node [above left = 5em and 2em of z3] (x3){};
+\node [below right = 3em and 2em of z3] (x4){};
+\draw [dashed] (x1) node[below right]{lauffähig} rectangle (x2);
+\draw [dashed] (x3) node[below right]{versagt} rectangle (x4);
+\end{tikzpicture}
+\end{center}
+\paragraph{Bonus}
+\begin{itemize}
+\item Werte für $R$ und $F$:\\
+$F=1,77467\cdot 10^{-09}$\\
+$R=1-F\approx0,9999999982$
+\item Model Datei:
+\lstinputlisting{Beleg3_1.model}
+\end{itemize}
+\item Markov Model mit Reperatur:
+\begin{center}
+\begin{tikzpicture}[-latex,shorten >= .3em,shorten <= .3em,auto,node distance=10em]
+\node[state] (z0) {fehlerfrei};
+\node[state] (z1) [right of=z0] {1 Fehler};
+\node[state] (z2) [right of=z1] {2 Fehler};
+\node[state] (z3) [right of=z2] {3+ Fehler};
+\path (z0) edge [bend left=20] node{$6\lambda$} (z1);
+\path (z1) edge [bend left=20] node{$\mu$} (z0);
+\path (z1) edge [bend left=20] node{$5\lambda$} (z2);
+\path (z2) edge [bend left=20] node{$2\mu$} (z1);
+\path (z2) edge [bend left=20] node{$4\lambda$} (z3);
+\node [above left = 5em and 2em of z0] (x1){};
+\node [below right = 3em and 2em of z2] (x2){};
+\node [above left = 5em and 2em of z3] (x3){};
+\node [below right = 3em and 2em of z3] (x4){};
+\draw [dashed] (x1) node[below right]{lauffähig} rectangle (x2);
+\draw [dashed] (x3) node[below right]{versagt} rectangle (x4);
+\end{tikzpicture}
+\end{center}
+\paragraph{Bonus}
+\begin{itemize}
+\item Werte für $R$ und $F$:\\
+$F=8,68786\cdot 10^{-14}$\\
+$R=1-F\approx1$
+\item Model Datei:
+\lstinputlisting{Beleg3_2.model}
+\end{itemize}
+\end{enumerate}
+
+
+\end{document}

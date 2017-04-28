@@ -1,0 +1,11 @@
+[num states]
+4
+0 1 a failure
+1 2 b failure
+2 3 c failure
+[assign]
+a=6*lam
+b=5*lam
+c=4*lam
+lam=0.000001
+[END]
