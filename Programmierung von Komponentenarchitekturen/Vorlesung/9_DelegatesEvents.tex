@@ -113,12 +113,61 @@ Func<double> helloAnswer =	// Typ
 	}
 \end{lstlisting}
 
+\subsection{Beispiele}
+\lecdate{28.04.2017}
+\subsubsection*{Beispiel 1}
+Was für Methoden beschreibt del?
+\begin{lstlisting}[language={[Sharp]C}]
+public delegate int del(int x, int y);
+
+del summe = (x,y) => x+y;
+int result = summe(1,2); // result = 3
+summe = (x,y) => x-y;
+result = summe(1,2);	// result = -1
+del bxy; 
+{	// lokaler Scope 
+	double b = 1;
+	bxy = (x,y) => {return b*x+y;};
+	b = 2;
+}
+// b=1; // würde zu Compiler-Fehler führen (b existiert nicht mehr)
+// double b=1;	// Compiler-Fehler, obwohl sie eigentlich nicht mehr existiert
+
+Console.WriteLine(bxy(1,0));	// output: 2
+\end{lstlisting}
+
+\subsubsection*{Beispiel 2}
+Sie haben ein int-Array \lstinline[language={[Sharp]C}]$int[] myArray =  new int[]{ 13, 39, 42, 53, 72, 23, 65};$ und wollen alle Werte finden, die größer als 60 sind.\\
+Dafür gibt es die statische Methode \lstinline$Array.FindAll$, die alle Werte eines Arrays findet die eine bestimmte gegebene Bedingung erfüllen und als neues Array zurückgegeben:\\
+\lstinline[language={[Sharp]C}]$T[] Array.FindAll(T[] array, Predicate<T> match);	//hier: T=int$\\
+Die Find-Methode bekommt ein Objekt des Delegate \lstinline$Predicate$ übergeben der wie folgt definiert ist:\\
+\lstinline[language={[Sharp]C}]$delegate bool Predicate<T>(T obj);$
+\begin{enumerate}
+\item Was für eine Funktion beschreibt \lstinline$Predicate$?
+\item Was müssen wir schreiben um mit \lstinline$Array.FindAll$ alle Werte zu finden, die größer als 60 sind?
+\end{enumerate}
+Antwort:
+\begin{enumerate}
+\item Ein Delegate das überprüft, ob das Objekt im Array einer Bedingung entspricht.
+\item \begin{lstlisting}[language={[Sharp]C}]
+int[] values2 = Array.FindAll(myArray, isGreater60 );
+public bool isGreater60(int x){
+	return (x>60);
+}
+// alternativ mit Lambda:
+int[] values = Array.FindAll(myArray, (x) => x>60 );
+\end{lstlisting}
+\end{enumerate}
+
 \section{Ereignisse}
 
 \begin{center}
-\begin{tabular}{L{.3}L{.3}}
-Aufrufer\newline (Client) &  Objekt\newline (Server)
-\end{tabular}
+\begin{tikzpicture}
+\node [align=center] at (0,0) {Aufrufer\\(Client)};
+\node [align=center] at (5,0) {Objekt\\(Server)};
+\draw [-latex](0.5,0.5) -- node[above]{klassischer Methodenaufruf} (4.5,0.5);
+\draw [-latex](4.5,-0.5) -- node[below]{Ereignis} (0.5,-0.5);
+\end{tikzpicture}
 \end{center}
 Ereignis: Aufruf einer Methode im Client\\
 $\to$herausragende Rolle bei GUI Programmierung
@@ -209,7 +258,7 @@ public class Circle {
 			if (value >= 0)
 				radius = value;
 			else 
-				InvalidRadius(  );
+				InvalidRadius( this, new InvalidRadiusEventArgs(value) );
 		}
 	}
 }
@@ -224,4 +273,6 @@ public class InvalidRadiusEventArgs : EventArgs {
 
 Frage: Was passiert wenn nach einem falschen Radius, bei Neueingabe wieder etwas negatives eingegeben wird?
 
-%%% TODO
+\begin{itemize}
+\item Das Event wird immer wieder im \lstinline$set$ aufgerufen.
+\end{itemize}
