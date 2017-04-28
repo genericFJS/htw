@@ -1,0 +1,441 @@
+/*********************************************************************
+ * 0. Vokabeltrainer spezifisches
+ *
+ */
+
+
+/* Das Feld für die Vokabelabfrage */
+.voc {
+	float: left;
+	padding: 15px;
+	height: 250px;
+	border: 0px solid hsl(50, 50%, 95%);
+	background: hsl(50, 50%, 95%);
+}
+
+/* Fehlermeldung bei keiner Lektion */
+.notify{
+	padding: 1em;
+	font-size: 200%;
+}
+
+/* Schaltflächen für die Richtung der Vokabelabfrage */
+
+#direction {
+	clear: both;
+	text-align: center;
+}
+#direction div {
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+}
+#direction div {
+	margin: 5px;
+	margin-right: 1em;
+}
+#direction div a {
+	padding: 0.15em 0.5em;
+	text-decoration: none;
+	font-size: 120%;
+	display: block;
+	border: 0px solid hsl(75, 50%, 95%);
+	background: hsl(75, 50%, 95%);
+	color: hsl(75, 25%, 5%);
+}
+#direction div a:hover {
+	background: hsl(75, 45%, 90%);
+	color: hsl(75, 50%, 5%);
+}
+#direction div.current a {
+	background: hsl(75, 45%, 90%);
+	color: hsl(75, 50%, 5%);
+	border: 3px solid hsl(75, 50%, 30%);
+}
+
+/* Variable Größen  je nach Anzahl der Elemente pro Zeile */
+
+.one,
+.two,
+.three {
+	text-align: center;
+	font-size: 125%;
+	margin: 1% !important;
+}
+
+.one {
+	width: 98%;
+}
+.two {
+	width: 48%;
+}
+.three {
+	width: 31%;
+}
+
+/* Blocksatz für Fließtext */
+
+.justified {
+	width: 100%;
+	text-align: justify;
+	text-justify: inter-word;
+	padding: 20px;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}
+
+/* Seitentitel im Header-Band */
+
+.hblock h2 {
+	text-align: center;
+}
+
+/* Ermittlung der Funktionalitäten */
+
+.tasktext {
+	color: darkblue;
+}
+.taskimg {
+	color: darkgreen;
+}
+.taskimpl {
+	color: darkmagenta;
+}
+
+/* Eigene Buttons */
+.wichtelB {
+	padding: 10px;
+	margin: 5px;
+	background: hsl(75, 25%, 85%);
+	color: hsl(50, 50%, 5%);
+	border: none;
+	display: inline-block;
+}
+.wichtelB:focus,
+.wichtelB:active {
+	outline-color: hsl(75, 25%, 50%);
+}
+.wichtelB:disabled {
+	cursor: not-allowed;
+	opacity: 0.7;
+}
+.bigB {
+	display: block;
+	padding: 20px;
+	width: 500px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/** 
+ * main.css
+ * 
+ * 1. General HTML tags
+ * 2. Masthead area
+ * 3. Main content and sidebar
+ * 4. Footer
+ * 
+ */
+
+.hblock img{
+	float: left;
+	padding: 5px;
+	height: 70px;
+}
+
+
+/*********************************************************************
+ * 1. General HTML tags
+ *
+ */
+
+* {
+	box-sizing: border-box;
+}
+body {
+	/*padding: 2% 2%;*/
+	/*	max-width: 1600px; */
+	margin: 0 auto;
+}
+body,
+td,
+input[type=text],
+input[type=email],
+input[type=number],
+textarea {
+	font-family: 'NimbusSansLRegular', 'Roboto', "Helvetica Neue", HelveticaNeue, Helvetica, Arial sans-serif;
+	font-variant-ligatures: no-common-ligatures;
+	font-feature-settings: unset;
+	/* font-family: 'Quattrocento', serif; */
+	font-size: 105%;
+	line-height: 1.8em;
+	color: hsl(50, 50%, 5%);
+	background: hsl(50, 50%, 95%);
+}
+img {
+	max-width: 100%;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+	font-family: 'NimbusSansLReguCond', 'Roboto Condensed';
+}
+h2 {
+	font-weight: normal;
+}
+h3 {
+	border-top: 1px solid hsl(75, 25%, 85%);
+	padding-top: 1em;
+	color: hsl(50, 50%, 10%);
+}
+a {
+	color: hsl(50, 50%, 15%);
+	text-decoration: none;
+	/*border-bottom: 1px solid hsl(50, 20%, 70%);*/
+}
+a:hover,
+.nav a:hover {
+	color: hsl(50, 50%, 5%);
+	border-color: hsl(50, 20%, 55%);
+}
+blockquote {
+	margin-left: 0;
+	padding-left: 1.5em;
+	padding-right: 2em;
+	border-left: 4px solid hsl(75, 25%, 85%);
+	font-style: italic;
+	color: hsl(50, 50%, 10%);
+}
+pre,
+code {
+	background: hsla(75, 25%, 85%, .3);
+	border: 1px solid hsl(75, 25%, 85%);
+	padding: 5px;
+}
+pre {
+	font-size: 14px;
+	line-height: 1.4em;
+	padding: 1em;
+	border-left: 4px solid hsl(75, 25%, 85%);
+}
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+textarea {
+	border: none;
+	margin: 5px 0;
+	margin-right: 5px;
+	padding: 5px;
+	/*
+	background: hsl(75, 25%, 75%);
+	color: hsl(50, 50%, 98%);
+*/
+}
+input:focus,
+textarea:focus {
+	outline: 2px solid hsl(75, 25%, 65%);
+}
+::-webkit-input-placeholder {
+	/* Chrome/Opera/Safari */
+	color: hsl(75, 25%, 65%);
+}
+::-moz-placeholder {
+	/* Firefox 19+ */
+	color: hsl(75, 25%, 65%);
+}
+:-ms-input-placeholder {
+	/* IE 10+ */
+	color: hsl(75, 25%, 65%);
+}
+:-moz-placeholder {
+	/* Firefox 18- */
+	color: hsl(75, 25%, 65%);
+}
+
+/*********************************************************************
+ * 2. Masthead area
+ *
+ */
+
+header {
+	padding: .5em;
+}
+header img {
+	height: 75px;
+	float: left;
+}
+header h1 {
+	display: inline-block;
+	margin: 0;
+	padding: 0.7em 0.9em 0;
+	font-size: 150%;
+	bottom: 0px;
+	font-weight: normal;
+	float: left;
+	font-family: 'NimbusSansLRegular', 'Roboto';
+}
+.topnav,
+.topnav li {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.topnav li {
+	float: left;
+	margin: 5px 0;
+	margin-right: 1em;
+}
+.topnav a {
+	padding: 0.15em 0.5em;
+	text-decoration: none;
+	display: block;
+	border: 0px solid hsl(50, 50%, 95%);
+	background: hsl(50, 50%, 95%);
+	color: hsl(75, 25%, 5%);
+}
+.topnav a:hover {
+	background: hsl(50, 45%, 90%);
+	/*		border-color: hsl(75, 25%, 90%);*/
+	color: hsl(50, 50%, 5%);
+}
+.topnav li.current a {
+	/*		border-color: hsl(50, 40%, 75%);*/
+	background: hsl(50, 45%, 90%);
+	color: hsl(50, 50%, 5%);
+}
+.topnav li.edit a {
+	background: hsl(50, 50%, 90%);
+}
+
+/*********************************************************************
+ * 3. Main content and sidebar
+ *
+ */
+
+#main,
+header,
+nav,
+footer {
+	clear: both;
+	position: relative;
+	max-width: 1600px;
+	margin: 0 auto;
+}
+nav,
+footer {
+	padding: .8em;
+}
+.hblock {
+	background: hsl(75, 25%, 85%);
+	color: hsl(50, 50%, 5%);
+	width: 100%;
+	bottom: 0px;
+	padding: 0 10px;
+}
+#main,
+nav,
+header,
+footer,
+.hblock {
+	height: auto;
+	overflow: auto;
+}
+#main {
+	align-content: center;
+	text-align: center;
+	min-height: 100px;
+	background: hsl(75, 25%, 99%);
+	border-left: solid 3px hsl(75, 25%, 85%);
+	border-right: solid 3px hsl(75, 25%, 85%);
+	padding: 5px 0;
+}
+#content {
+	width: 100%;
+}
+.nav {
+	margin-left: 0;
+	padding-left: 0;
+	list-style: none;
+}
+.nav .nav {
+	padding-left: 1.5em;
+	list-style: disc;
+}
+.nav li {
+	margin: 1em 0;
+}
+.nav-tree li {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+.nav a {
+	font-weight: bold;
+}
+.nav-tree li a {
+	color: hsl(75, 15%, 40%);
+}
+.nav .current > a {
+	color: hsl(75, 15%, 20%);
+}
+.align_left {
+	/* for images placed in rich text editor */
+	float: left;
+	margin: 0 1em 0.5em 0;
+	position: relative;
+	top: 0.5em;
+	max-width: 50%;
+}
+.align_right {
+	/* for images placed in rich text editor */
+	float: right;
+	margin: 0 0 0.5em 1em;
+	max-width: 50%;
+}
+.align_center {
+	/* for images placed in rich text editor */
+	display: block;
+	margin: 1em auto;
+	position: relative;
+	top: 0.5em;
+}
+figure {
+	display: table;
+	width: 1px;
+	margin: 1em 0;
+}
+figure img {
+	display: table-row;
+	margin-bottom: 0.5em;
+}
+figure figcaption {
+	display: table-row;
+	font-size: smaller;
+	color: #777;
+	line-height: 1.4em;
+}
+
+/*********************************************************************
+ * 4. Footer
+ *
+ */
+
+#footer {
+	font-size: 80%;
+}
+#footer p {
+	display: block;
+}
+#footer p:nth-child(1) {
+	float: left;
+}
+#footer p:nth-child(2) {
+	float: right;
+}
+#footer p:nth-child(2) a {
+	border-bottom: none;
+	color: hsl(75, 25%, 65%);
+}

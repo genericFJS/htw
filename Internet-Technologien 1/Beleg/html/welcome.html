@@ -1,0 +1,54 @@
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../styles/main.css">
+<div class="justified">
+	<h1>Vokabeltrainer s74053</h1>
+	<p>Dieser Vokabeltrainer ist die Belegaufgabe des Moduls „Internet-Technologien 1“ vom Sommersemester 2017.</p>
+	<p>Es wurden folgende Anforderungen aus der Aufgabenstellung erarbeitet, die aus den gekennzeichneten Quellen abgeleitet wurden:</p>
+		<ul style='list-style-type: none; padding-left: .5em;'>
+			<li><span class='tasktext'>Anforderung</span> … Anforderung ergibt sich aus Aufgabentext</li>
+			<li><span class='taskimg'>Anforderung</span> … Anforderung ergibt sich aus dem Aufgabentext angehängten Bildern</li>
+			<li><span class='taskimpl'>Anforderung</span> … Anforderung ergibt sich implizit / wurde eigenverantwortlich festgelegt</li>
+		</ul>
+	<h2>Allgemeine Funktionalität:</h2>
+	<ul>
+		<li class='tasktext'>Vokabellisten liegen in einer Textdatei im UTF-8 Format vor. Jede Zeile enthält per Tab getrennt „Sprache 1“, „Sprache 2“ und ggf. „Aussprache“. <span class='taskimpl'>In dieser Implementation hat die Textdatei demnach folgende Struktur:</span>
+			<br>
+			<code class='taskimpl'>Wort in Sprache 1 &#8614; [Aussprache Wort in Sprache 1] &#8614; Übersetzung in Sprache 2</code>
+		</li>
+		<li class='tasktext'>Vokabellisten können per Fileupload über den Bereich Setup hinzugefügt werden. Es dürfen nur .txt-Dateien hoch geladen werden, die keine HTML-Tags haben. <span class='taskimpl'>Es dürfen nur Dateien hochgeladen werden, die dem Schema entsprechen (Prüfkriterium: 2 Tabs / 3 Einträge pro Zeile)</span>
+			<br> Optional: Bearbeiten der (hochgeladenen) Vokabellisten.</li>
+		<li class='tasktext'>Übergabe von Werten erfolgt über POST (bei Ajax wird GET verwendet).</li>
+		<li class='tasktext'><span class='taskimpl'>Für die Navigation (Lektion, Statistik, …) wird GET verwendet.</span> Die Navigationsleiste befindet sich am unteren Rand. <span class='taskimg'>Aktive Elemente werden ausgeblendet.</span></li>
+		<li class='taskimg'>Die aktive Lektion/Seite wird in einer Titelleiste und als HTML-Meta-Information gesetzt.</li>
+		<li class='tasktext'>Es wird jQuery Mobile verwendet.</li>
+		<li class='tasktext'>Es wird auf ein responsive Design geachtet. <span class='taskimg'>Die Felder für die Vokabelabfrage (Gefragte Vokabel, Auswählfeld) werden je nach Breite des Browser-Fensters untereinander oder nebeneinander auf der vollen Breite dargestellt.</span></li>
+		<li class='tasktext'>Es wird HTML, PHP5, Javascript, CSS und Ajax verwendet.</li>
+		<li class='tasktext'>Das Ergebnis muss unter Mozilla Firefox lauffähig sein. <span class='taskimpl'>Es wird nur auf Desktop-Browsern getestet. Internetverbindung muss vorhanden sein.</span></li>
+		<li class='tasktext'>Die Seite ist auf eine Bedienung durch einen einzelnen Nutzer ausgelegt. Es existiert keine Nutzereverwaltung. <span class='taskimpl'>Es wird davon ausgegangen, dass nur ein Nutzer gleichzeitig auf die Dateien (Vokabellisten/Statistik) zugreift. Fehler durch mehrfachen (Schreib-)Zugriff werden nicht behandelt.</span></li>
+		<li class='tasktext'>Leere Eingaben und mögliche Fehlerzustände werden abgefangen.</li>
+		<li class='tasktext'>Der Code wird verständlich und sinnvoll kommentiert. <span class='taskimpl'>Da der CSS Code teilweise aus einer eigens erstellten Vorlage besteht, sind nur die Elemente, die explizit für diesen Beleg erstellt wurden besonders kommentiert.</span></li>
+	</ul>
+	<h2>Seitenspezifische Anforderungen:</h2>
+	<h3>Vokabelabfrage:</h3>
+	<ul>
+		<li class='tasktext'>Bei dem Vokabeltest werden 5 unterschiedliche Übersetzungen angezeigt, die Auswahl erfolgt per Radio-Button (Single Choice). Keine Antwort gilt als falsche Antwort. <span class='taskimg'>Mit einem Button „senden“ wird die Auswahl bestätigt.</span></li>
+		<li class='tasktext'>Die Abfragerichtung soll während des Tests geändert werden. Dies soll ohne neu laden geschehen (&rArr; Ajax). Die aktive Abfragerichtung soll durch die Elemente für die Änderung der Abfragerichtung visualisiert sein. </li>
+		<li class='tasktext'>Beim Absenden der Antwort erscheint die Ergebnisseite, wo richtige/falsche Antworten grün/rot hinterlegt werden. <span class='taskimg'>Es wird die Abgefragte Vokabel, ggf. die entsprechende Lautschrift und die richtige Antwort angezeigt (bei falscher Antwort, wird die falsche Antwort durchgestrichen vor der richtigen dargestellt).</span>  Mit der Schaltfläche „weiter“ geht es zur nächsten Abfrage.</li>
+		<li class='taskimpl'>Es ist nicht gefordert, dass eine „Session“ existieren soll, in der gespeichert werden, welche Vokabeln in dieser bereits abgefragt wurden. Daher wird die nächste Vokabel nach dem Beantworten zufällig ausgewählt (und kann sich im Ernstfall wiederholen).</li>
+	</ul>
+	<h3>Stastik:</h3>
+	<ul>
+		<li class='tasktext'>Für jede Vokabelliste (Datei) wird eine Statistik in einer dazugehörigen Datei geführt. Existiert die Datei nicht (mehr), wird auch keine Statistik (mehr) für sie angezeigt.</li>
+		<li class='tasktext'>Die Statistik besteht aus der Anzahl der richtigen/falschen Antworten.</li>
+		<li class='taskimg'>Der Bereich Statistik listet die Statistiken für alle (aktive) Vokabelliste auf.</li>
+	</ul>
+	<h3>Lektionsauswahl</h3>
+	<ul>
+		<li class='taskimg'>Alle vorhandenen Lektionen/Dateien werden aufgelistet.</li>
+		<li class='taskimpl'>Die aufgelisteten Elemente sind nach den Dateien benannt.</li>
+	</ul>
+	<h3>Setup-Seite</h3>
+	<ul>
+		<li class='taskimg'>Die Setup-Seite besteht aus einem „Datei hochladen“ Feld (im einfachsten Fall).</li>
+	</ul>
+</div>
