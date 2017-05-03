@@ -1,0 +1,55 @@
+\section{Grundlagen}
+\subsection{Motivation}
+\slides{04-mem}{2}
+\subsection{Probleme}
+\slides{04-mem}{3}
+Prüfungsfrage: Welche Arten von Fragmentierung gibt es?
+\begin{itemize}
+\item intern: Segmentgröße „zu groß“ $\to$ kleinere Segmente belegen trotzdem ganzes Segment
+\item extern: Stichwort „defragmentierung“ $\to$ Segmente sind verteilt mit Lücken dazwischen
+\end{itemize}
+
+\section{Bitmap}
+\slides{04-mem}{4}
+\subsection*{Blockungsfaktor}
+\slides{04-mem}{5}
+
+\section{Freispeicherliste}
+\slides{04-mem}{6}
+Nachteil: Verteilungsaufwand (Pflege der Liste, Folgen der Pointer in der Liste usw., Finden von freien Listenelementen)!
+\subsection{Implementierung: Blöcke mit integrierten Headern}
+\slides{04-mem}{7}
+$\to$ Liste wird im Speicher integriert.\\
+Nachteil: noch ineffizienterer Zugriff (generiert viel Cache-misses/pagefaults).\\
+Vorteil: ist fehlertoleranter (Liste kann nicht überschrieben werden, da sie im Hauptspeicher integriert ist).
+\subsection{Suchstrategien}
+\slides{04-mem}{8}
+First/Next Fit: beste Strategien, dabei First Fit das bessere (Daumenregel: da schneller, die Fragmentierung ist zweitrangig).
+\slides{04-mem}{9}
+Best Fit: es hat sich gezeigt, dass es sich nicht lohnt.\\
+Wort Fit: nur „akademischer Natur“
+\subsection{Techniken zur Effizienzsteigerung}
+\slides{04-mem}{10}
+\slides{04-mem}{11}
+\subsection{Getrennte Freispeicherliste (Segregated Fits)}
+\slides{04-mem}{12}
+\slides{04-mem}{13}
+Vereinigung benachbarter freier Segmente kostet wieder Geschwindigkeit!
+\subsection{Buddy-Verfahren}
+\slides{04-mem}{14}
+Teilung passiert rekursiv:\\
+Wenn nur ein 1MiB Block frei ist und 78KiB gefordert sind, wird des 1MiB zerstückelt:
+\begin{itemize}
+\item 2*512KiB (davon eins wieder zerstückelt)
+\item 2*256KiB (davon eins wieder zerstückelt)
+\item 2*128KiB (davon wird eins ausgeliefert).
+\end{itemize}
+Resultiert in freien Blöcken:\\
+1*512KiB, 1*256KiB, 1*128KiB
+\subsubsection*{Beurteilung}
+\slides{04-mem}{15}
+
+
+
+
+
