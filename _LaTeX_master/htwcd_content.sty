@@ -82,6 +82,7 @@
 
 %%% Einiges erst zu Beginn des Dokumentes ausführen, um Einstellungen zu berücksichtigen
 \AtBeginDocument{
+\renewcommand\SS{SS}	% fix big ß
 %%% Sektionen usw. ggf. in Großbuchstaben:
 \providecommand{\chapterlinesformat}[3]{}	% compatibility
 \providecommand{\chapterlineswithprefixformat}[3]{}	% compatibility
@@ -91,7 +92,6 @@
 \@ifclassloaded{scrreprt}{%
 \renewcommand\chapterlinesformat[3]{\@hangfrom{#2}{\MakeUppercase{#3}}}
 \renewcommand\chapterlineswithprefixformat[3]{\MakeUppercase{#2#3}}%
-\renewcommand\SS{SS}	% fix big ß
 }{}
 \fi
 %%% Anpassung der Part-Seite
