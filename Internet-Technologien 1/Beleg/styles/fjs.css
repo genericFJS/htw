@@ -1,0 +1,66 @@
+/* Responsive Design der Vokabelabfrage */
+.voc {
+	float: left;
+	width: 100% !important;
+	display: block;
+}
+
+@media all and (min-width: 480px) {
+	.voc {
+		width: 100% !important;
+	}
+}
+
+@media all and (min-width: 768px) {
+	.voc {
+		width: 49% !important;
+		margin: 1em;
+	}
+	.foreign {
+		height: 217.875px;
+	}
+	.vocLeft {
+		margin: 0 1% 0 0;
+	}
+	.vocRight {
+		margin: 0 0 0 1%;
+	}
+}
+
+.foreign {
+	box-sizing: border-box;
+	margin: 16px 0;
+	text-align: center;
+	font-size: 175%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* Button der Vokabelabfrage */
+#okButton {
+	margin: 0;
+	display: inline-block;
+	width: 10em;
+	display: inline-block;
+}
+
+/* Wrapper für die Auswahl der Abfragerichtung  */
+#selection {
+	width: 150px;
+	display: inline-block;
+	margin: 0;
+}
+
+/* Wrapper für Elemente, die mittig dargestellt werden sollen */
+.centered {
+	width: 100%;
+	text-align: center;
+}
+
+/* Override jQuery Mobile standards */
+@media ( min-width :28em) {
+	.ui-field-contain>label ~[class*=ui-], .ui-field-contain .ui-controlgroup-controls {
+		width: 100%;
+	}
+}
