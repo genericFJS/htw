@@ -1,0 +1,665 @@
+\section{Der Integralbegriff}
+\subsection{Das bestimmte Integral}
+\paragraph{Problem:} \parskp
+\emph{Gegeben:} Kurve $y=f(x), \;x\in [a,b]$ und $f(x) \geq 0$.\\
+\emph{Gesucht:} Flächeninhalt $I$ unter der Kurve
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB80}
+\end{center}
+\emph{Vorgehen:} 
+\begin{itemize}
+\item Zerlegung $Z$ des Intervalls $[a,b]$:\\
+$a=x_0<x_1<x_2<x_3<\dotsb<x_{n-1}<n_n=b$
+\item In jedem Teilintervall Zwischenstelle $\xi_i\in [x_{in}, x_i]$ wählen. Dies ergibt die Zerlegung $Z^*$ ($Z$ mit Zwischenstellen).
+\item $\Delta (Z^*):= \max_{i=1,\dots, n}(x_i-x_{i-1}=$ … Länge des größten Teilintervalls
+\item Approximation von $I$ durch die Summe von Rechteckflächen: $$S(Z^*,f):=\sum_{i=1}^n f(\xi_i)(x_i-x_{i-1})$$
+$S(Z^*,f)$ heißt Riemann-Summe. Sie ist abhängig von der Zerlegung $Z^*$.
+\end{itemize}
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB81}
+\end{center}
+\paragraph{Def. 1} Die Funtkion $f$ heißt (Riemann-)integrierbar über $[a,b]$ falls für jede Zerlegungsfolge $Z^*_\mu$ von $[a,b]$ mit $\lim_{\mu\to \infty}\Delta (Z^*_\mu)=0$ gilt: $\lim_{\mu\to\infty}S(Z^*_\mu, f) = I$. Die Zahl $I$ heißt dann bestimmtes Integral von $f$ über $[a,b]$. Bezeichnung: $i=\int_a^bf(x)\intd{x}$.
+\subparagraph{Diskussion:}
+\begin{itemize}
+\item Def. 1 basiert auf der Forderung $f(x)\geq 0$. Falls $f(x)<0$ für alle $x\in [a,b]$, so gilt im Falle der Integrierbarkeit $\int_a^bf(x)\intd{x}<0$:
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB82}
+\end{center}
+$\Rightarrow$ Flächeninhalt $F=\int_a^b|f(x)|\intd{x}=-\int_a^bf(x)\intd{x}$.
+\item Man definiert:\\
+$\int_a^af(x)\intd{x}:=0$\\
+$\int_b^af(x)\intd{x}:= - \int_a^bf(x)\intd{x} \quad (b>a)$
+\item Eigenschaften des bestimmten Integrals:\\
+$\int_a^bf(x)\intd{x}=\int_a^cf(x)\intd{x}+\int_c^bf(x)\intd{x}$\\
+für beliebige $a, b, c \in \RR$.
+\item $\int_a^bc_1 u(x) + c_2 v(x) \intd{x} = c_1 \int_a^bu(x)\intd{x}+c_2 \int_a^b v(x) \intd{x}$ für $c_1, c_2 \in \RR$
+\end{itemize}
+\paragraph{Satz 1:} Es sei $f: [a,b] \to \RR$ stetig. Dann ist $f$ auf $[a,b]$ integrierbar. 
+\subparagraph{Diskussion:} 
+\begin{itemize}
+\item Falls $f$ stückweise stetig ist, mit endlich vielen Sprungstellen, so ist $f$ ebenfalls integrierbar (Integration von Sprungstelle zu Sprungstelle).
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB93}
+\end{center}
+\item Nicht integrierbar ist bspw. $f: [0,1] \to \RR, \; f(x) = \begin{cases}
+1 & x \text{ irrational}\\
+0 & x \text{ rational}
+\end{cases}$
+\end{itemize}
+\subsection{Stammfunktion und unbestimmtes Integral}
+\paragraph{Satz 2:} (Mittelwertsatz der Integralrechnung)\\
+Sei $f: [a,b]\to \RR$ stetig. Dann existiert (mindestens) ein $\xi \in (a,b)$ mit: 
+\[\int_a^b f(x)\intd{x}= f(\xi) (b-a)\]
+Anschaulich:
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB94}
+\end{center}
+Wir nennen $m=\frac{1}{b-a}\int_a^b f(x) \intd{x}$ den Integralmittelwert von $f$ auf $[a,b]$.\\
+\emph{Integral mit variabler oberer Grenze:}\\
+Wir betrachten $\int_a^x f(t) \intd{t} =: F(x)$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB95}
+\end{center}
+\paragraph{Satz 3:} Sei $f:[a,b]\to \RR$ stetig. Dann ist $F(x)=\int_a^x f(t)\intd{t}$ auf $[a,b]$ differenzierbar und es gilt:
+\[F'(x)=f(x)\]
+Beweis:\\
+$\frac{F(x+h)-F(x)}{h}=\frac{\int_x^{x+h} f(t) \intd{t}}{h}\overset{\substack{\text{Satz 2}\\\text{(mit }\xi\in (x,x+h))}}{=}\frac{f(\xi)\cdot (x+h-x)}{h}=f(\xi)\overset{h\to 0}{\longrightarrow} f(x)$ da $f$ stetig.\\
+$\Rightarrow F'(x) = f(x)$
+\paragraph{Def. 2:} Die Funktion $F$ heißt \emph{Stammfunktion} von $f$ (auf $[a,b]$), wenn gilt $F'(x)=f(x)$.
+\subparagraph{Diskussion:} Ist $F$ eine Stammfunktion, so ist auch $\tilde{F}$ mit $\tilde{F}(x)=F(x)+C$ eine Stammfunktion.
+\paragraph{Def. 3:} Die Menge $\{F(x)+C|C\in \RR$ aller Stammfunktionen von $f$, wobei $F$ beliebige Stammfunktion von $f$ ist, heißt unbestimmtes Integral von $f$.\\
+Bezeichunung: $\int f(x) \intd{x}=F(x)+C$
+\subsection{Hauptsatz der Differential- und Integralrechnung (HDI)}
+\paragraph{Satz 4:} Sei $f:[a,b]\to \RR$ stetig und $F$ beliebige Stammfunktion von $f$.
+\[\int_a^b f(x) \intd{x}=\big[F(x)\big]_a^b=F(b)-F(a)\]
+Beweis: Satz 3 liefert $F_1(x):=\int_a^x f(t) \intd{t}$ ist Stammfunktion von $f$. Also gilt $F(x)=F_1(x)+k$\\
+$\Rightarrow F(b)-F(a)=F_1(b)+k-\underbrace{F_1(a)}_{=0}-k = \int_a^bf(t)\intd{t}$
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item $\underbrace{\int_a^b f(x) \intd{x}}_{\substack{\text{Flächeninhaltsproblem,}\\\text{ Integralrechnung}}}=\underbrace{F(b)-F(a)}_{\substack{\text{Stammfunktion,}\\\text{Umkehrung der Differentialrechnung}}}$\\
+Dieser Term ist also der Zusammenhang zwischen der Differential- und der Integralrechnung.
+\item Symbolik: $\frac{\mathrm{d}F(x)}{\mathrm{d}x}=f(x) \Leftrightarrow \underbrace{\int \intd{F(x)}}_{F(x)+C}=\int f(x) \intd{x}$
+\item Aus Tabellen zur Differentiation lassen sich Integrationsregeln ableiten.
+\end{enumerate}
+\subparagraph{Beispiele:}
+\begin{anumerate}
+\item $\frac{\intd{}}{\intd{x}}\cos x = - \sin x \\
+\Leftrightarrow \int -\sin x \intd{x}=\cos x + C^* \quad |\cdot (-1)\\
+\int \sin x \intd{x}= - \cos x + \underbrace{C}_{=-C^*}$
+\item $\frac{\intd{}}{\intd{x}}x^{\alpha+1}=(\alpha+1)x^\alpha\\
+\Leftrightarrow \int x^\alpha \intd{x} = \frac{1}{\alpha +1} x^{\alpha +1} + C$ (falls $\alpha \not = -1$)
+\end{anumerate}
+\section{Integrationsmethoden}
+\subsection{Substitution}
+Zu berechnen ist $\int f\big(g(x)\big)\cdot g'(x) \intd{x}$. Bekannt sei dabei die Stammfunktion $F$ von $f$. Dann gilt:
+\[\int f\big( g(x) \big) g'(x) \intd{x}\overset{\substack{\text{Subst.}\\ u=g(x)}}{=}\int f(u) \intd{u}=F(u) + C =\overset{u=g(x)}{=}F\big(g(x)\big)+C \]
+Substitution $u=g(x)$ impliziert $\frac{\intd{u}}{\intd{x}}=g'(x) \Rightarrow \intd{u}=g'(x) \intd{x}$.\\
+\emph{Merke:} Anwendung dieser Methode ist zweckmäßig, wenn der Integrand das Produkt eine Verknüpfung zweier Funktionen mit der Ableitung der inneren Funktion ist und eine Stammfunktion für die äußere Funktion bekannt ist.
+\paragraph{Bsp. 1:} $\int \frac{1}{x}\sqrt[3]{\ln x}\intd{x}\overset{\substack{u=\ln x\\\intd{x}=\tfrac{1}{x}\intd{u}}}{=}\int \underbrace{\sqrt[3]{u}}_{u^{\tfrac{1}{3}}}\intd{u}=\frac{3}{4}u^{\frac{4}{3}}+C=\frac{3}{4}(\ln x)^{\tfrac{4}{3}}+C$
+\paragraph{Bsp. 2:}$\int x e^{-x^2}\intd{x}\overset{\substack{u=-x^2\\\intd{x}=-\tfrac{\intd{u}}{2x}}}{=}\int x e^u\frac{\intd{u}}{-2x}=-\frac{1}{2}\int e^u \intd{u}=-\frac{1}{2}e^u+C=-\frac{1}{2}e^{-x^2}+C$
+\paragraph{Bsp. 3:} (Substitution bei bestimmten Integral)
+\begin{itemize}
+\item 1. Variante: Grenzen ersetzen\\
+$I=\int_0^{\sqrt{8}}x\sqrt{1+x^2}\intd{x}\overset{\substack{u=1+x^2\\dx=\tfrac{\intd{u}}{2x}}}{=}\int_1^9 x \sqrt{u} \frac{\intd{u}}{2x}=\frac{1}{2}\int u^{\tfrac{1}{2}}\intd{u}= \left[\frac{1}{3}u^{\tfrac{3}{2}}\right]_1^9=\frac{1}{3}(27-1)=\frac{26}{3}$\\
+Grenzen in Substitution einsetzen $u=1+x^2\Rightarrow u_{unt}=1+0^2=1 \quad u_{ob}=1+\sqrt{8}^2=9$
+\item 2. Variante: Erst unbestimmtes Integral  lösen\\
+$I=\int_0^{\sqrt{8}}x\sqrt{1+x^2}\intd{x}=\frac{1}{3}(1+x^2)^{\tfrac{3}{2}}+C$\\
+Dann Grenzen einsetzen:\\
+$I=\left[\frac{1}{3}(1+x^2)^{\tfrac{3}{2}}\right]_0^{\sqrt{8}}=\frac{1}{3}(27-1)=\frac{26}{3}$
+\end{itemize}
+\subparagraph{Bsp. 4:} $\int \frac{f'(x)}{f(x)}\intd{x}=\ln |f(x)|+C$\\
+(Zähler = Ableitung des Nenners)\\
+Nutze dazu die Substitution $u=f(x), \; \intd{x}=\frac{\intd{u}}{f'(x)}$\\
+$\Rightarrow \int \dots = \int \frac{1}{u} \intd{u}=\ln | u| + C = \ln | f(x) | + C$
+\paragraph{Bsp. 5:}(lineare Substitution)\\
+Allgemein: $\int f(ax+b) \intd{x} \overset{\substack{u=ax+b\\\tfrac{du}{dx}=a}}{=} \int f(u) \frac{\intd{u}}{a}\overset{\substack{F: \text{ Stammfkt.}\\ \text{von } f}}{=}\frac{1}{a}\cdot F(u) + C$
+\begin{anumerate}
+\item $\int \cos (3x) = \frac{1}{3}\sin (3x) + C$
+\item $\int e^{-2x} \intd{x}=\frac{1}{-2}e^{-2x}+C$
+\item $\int (3x+4)^6 \intd{x}=\frac{1}{3}\cdot \frac{1}{7}(3x+4)^7+C$
+\item $\int \sin \left( \frac{x}{2}+\pi\right) \intd{x}=2 \cdot  -\cos\left(\frac{x}{2}+\pi\right)+C$
+\end{anumerate}
+
+\subparagraph{Diskussion:} Neben diesen „natürlichen“ und leicht erkennbaren Substitutionen sind weiter Substitutionen durch die Einführung von „künstlichen“ Variablen möglich:\\
+$\int f(x) \intd{x}\overset{\substack{x=f(t)\\\tfrac{\diffd{x}}{\diffd{t}}=\dot{\varphi}(t)}}{=}\int f(\varphi(t)) \cdot \dot{\varphi}(t) \intd{t}$\\
+Dies entsprecht der Substitutionsregel, von rechts nach links gelesen. Falls die rechte Seite davon integrierbar ist (mit Stammfunktion $H$), dann:\\
+$\int f(x) \intd{x}=H(t) + C = H\big(\varphi^{-1}(t)\big) + C$ \qquad (falls $\varphi^{-1}$ existiert)
+\subparagraph{Bsp. 6:} \parskp
+$\int \frac{1}{\sqrt{1+x^2}}\intd{x}\overset{\substack{x=\sinh(t)\\\tfrac{\diffd{x}}{\diffd{t}}=\cosh(t)\\\cosh^2(t)-\sinh^2(t)=1}}{=}\int \frac{1}{\cosh(t)}\cosh(t)\intd{t}=\int \intd{t}=t+C = \arcsinh (x) + C$\\
+Für weitere geeignete Substitutionen siehe Integrationstabelle.
+
+\subsection{Partielle Integration}
+Produktregel der Differentiation:\\
+$\frac{\diffd{}}{\diffd{x}}\big(u(x)\cdot v(x)\big) = u'(x)\cdot v(x)+u(x)\cdot v'(x)$\\
+$\Rightarrow u(x) v(x) \int u'(x) v(x) \intd{x} + \int u(x) v'(x) \intd{x}$\\
+$\Rightarrow \boxed{\int u(x)v'(x)\intd{x}=u(x)v(x)- \int u'(x) v(x) \intd{x} }$
+
+\subparagraph{Bsp. 7:}
+\begin{anumerate}
+\item $\int \underbrace{x}_{u(x)} \underbrace{\sin(2x)}_{v'(x)} \intd{x}=\underbrace{x}_{u}\cdot \underbrace{-\frac{1}{2}\cos(2x)}_{v} - \int \underbrace{1}_{u'}\cdot \underbrace{-\frac{1}{2}\cos (2x)}_{v}\intd{x}=-\frac{x}{2}\cos(2x)+\frac{1}{4}\sin(2x) + C $\\
+$u'(x) = 1 \qquad v(x) = -\frac{1}{2}\cos (2x)$
+\item $\int \underbrace{x^3}_{v'}\underbrace{\ln x}_{u} = \frac{1}{4}x^4 \ln x - \int \frac{1}{x}\cdot \frac{1}{4}x^4 \intd{x} = \frac{1}{4} x^4 \ln x - \frac{1}{16} x^4 + C = \frac{1}{4}x^4 \left(\ln x - \frac{1}{4} \right) ++C$
+\end{anumerate}
+\emph{Merke:} Typische Anwendungsfälle für partielle Integration (mit $p(x)$ jeweils als $u$):
+\begin{itemize}
+\item $\int p(x) e^{ax} \intd{x}$
+\item $\int p(x) \cos (ax) \intd{x}$
+\item $\int p(x) \sin (ax) \intd{x}$
+\end{itemize}
+aber (mit $\ln(x)$ jeweils als $u$):
+\begin{itemize}
+\item $\int p(x) \cdot \ln (x) \intd{x}$
+\item $\int x^\alpha \cdot \ln(x) \intd{x}$
+\end{itemize}
+\subparagraph{Bsp. 8:} \parskp
+$\int \arctan (x ) \intd{x} \overset{\substack{u=\arctan(x)\\ v'=1}}{=}x \cdot \arctan
+(x) - \int x \cdot \frac{1}{1+x^2}\intd{x}=x \cdot \arctan (x) - \frac{1}{2}\ln(|x^2+1|)+C$\\
+$u'=\frac{1}{1+x^2} \qquad v = x$
+\subsection{Integration gebrochen rationaler Funktionen}
+Gegeben: Gebrochen rationale Funktion $f(x)=\frac{p(x)}{q(x)}$\\
+Integration erfolgt in 5 Schritten:
+\begin{enumerate}
+\item Falls $f$ unecht gebrochen: Polynomdivision erhalten dann $f(x) =\underbrace{a(x)}_{\text{Polynom}} + \underbrace{\frac{r(x)}{q(x)}}_{\text{echt gebrochen}}$
+\item Nullstellen von $q$ ermitteln. Dann Zerlegung $q$: \\
+$q(x) = (x-\alpha_1)^{k_1}\cdot (x-\alpha_2)^{k_2}\cdot \dots \cdot (x^2+p_1x+q_1)^{m_1}\cdot (x^2+p_2x+q_2)^{m_2}\cdot \dots$\\
+$k_i$: reelle Nullstellen \qquad $m_i$: nicht reell zerlegbar\\
+Dabei kürzt man eventuelle gemeinsame Faktoren in $r$ und $q$ heraus.
+\item \emph{Ansatz für die Partialbruchzerlegung}\\
+$\frac{r(x)}{q(x)}= $Summe von Partialbrüchen\\
+Jeden Faktor der Form $\begin{cases}
+(x-\alpha)^k\\
+(x^2+px+q)^m
+\end{cases}$ der Gleichung entspricht der Anteil \\
+$\begin{cases}
+\frac{A_1}{x-\alpha}+\frac{A_2}{(x-\alpha)^2}+\dots + \frac{A_2}{(x-\alpha)^k}\\
+\frac{B_1x+C_1}{x^2+px+q}+\frac{B_2 x + C_2}{(x^2+px+q)^2}+\dots + \frac{B_m x + C_m}{(x^2+px+q)^m}
+\end{cases}$ in dieser Summe.
+\subparagraph{Bsp. 9:}
+\begin{align*}
+f(x) &= \frac{x^2+4}{(x-1)^3(x+5)(x^2+2x+2)^2}\\
+&=\frac{A}{x-1}+\frac{B}{(x-1)^2}+\frac{C}{(x-1)^3}+ \frac{D}{x+5}+ \frac{Ex+F}{x^2+2x+2}+\frac{Gx+H}{(x^2+2x+2)^2}
+\end{align*}
+Beachte: $x^2+2x+2$ ist reell nicht weiter zerlegbar, Nullstelle: $1\pm i$.
+\item Ermittlung der Koeffizienten durch 
+\begin{itemize}
+\item Multiplikation des Ansatzes der Partialbruchzerlegung mit $q(x)$
+\item Kombination der folgenden beiden Methoden
+\begin{anumerate}
+\item Einsetzen der reellen Nullstellen
+\item Koeffizientenvergleich
+\end{anumerate}
+(falls $q$ nur reelle Nullstellen hat, recht Methode a.)
+\end{itemize}
+\item Integration der Partialbrüche
+\begin{anumerate}
+\item $\int \frac{1}{(x-\alpha)^j} \intd{x}=\begin{cases}
+\ln(|x-\alpha|)+C & j=1\\
+\frac{1}{1-j}(x-\alpha)^{1-j}+C & j=2,3,4,\dots
+\end{cases}$
+\item $\int \frac{3x+C}{(x^2+px+q)^j}\intd{x}=\int \frac{\tfrac{B}{2}(2x+q)}{(x^2+px+q)^j}+\frac{C-\tfrac{Bp}{2}}{(x^2+px+q)^j}\intd{x}$
+\begin{itemize}
+\item $\int \frac{2x+p}{(x^2+px+q)^2}\intd{x}$: Nutze Substitution.
+\item $\int \frac{1}{(x^2+px+q)^j}\overset{\substack{\text{quadratische}\\\text{Ergänzung}}}{=}\int \frac{1}{\left(\left(x+\frac{p}{2}\right)^2+q-\frac{p^2}{4}\right)^j}\intd{x}\overset{u=x+\frac{p}{2}}{=}\int \frac{1}{\left(u^2+a^2\right)^j}\intd{x}$\\
+$\begin{cases}
+j=1 & \text{Stammfunktion siehe Merkblatt}\\
+j>1 & \text{siehe weitere Formelsammlung (selten)}
+\end{cases}$
+\end{itemize}
+\end{anumerate}
+\end{enumerate}
+\subparagraph{Bsp. 10:} $I=\int \frac{3x+4}{x^2+2x-3}\intd{x}$
+\begin{itemize}
+\item echt gebrochen
+\item Nullstellen des Nenners: $x_1=-3, \; x_2 = 1$\\
+$\Rightarrow x^2+2x-3=(x+3)(x-1)$
+\end{itemize}
+Ansatz für PBZ:
+\begin{align*}
+\frac{3x+4}{(x+3)(x-1)}&=\frac{A}{x+3}+\frac{B}{x-1} \qquad |\cdot (x+3)(x-1)\\
+3x+4 &= A(x-1)+B(x+3)
+\end{align*}
+Einsetzen der NS: \\
+$x_1: \qquad -5 = A\cdot (-4) \Rightarrow A = \frac{5}{4}$\\
+$x_2: \qquad 7 = B \cdot 4 \Rightarrow B=\frac{7}{4}$
+\begin{align*}
+\Rightarrow I &= \int \frac{\frac{5}{4}}{x+3}\intd{x}+\int \frac{\frac{7}{4}}{x-1}\intd{x}\\
+ &= \frac{5}{4} \ln (|x+3|) + \frac{7}{4}\ln(|x-1|)+C
+\end{align*}
+\subparagraph{Bsp. 11:} $I=\int \frac{7x^2-10x+37}{(x+1)(x^2-4x+13)}\intd{x}$
+\begin{itemize}
+\item echt gebrochen
+\item Nenner reell nicht weiter zerlegbar (denn Nullstellen von $x^2-4x+13$ sind $x_{1/2}=2\pm3i$)
+\item Partialbruchzerlegung:
+\begin{align*}
+\frac{7x^2-10x+37}{(x+1)(x^2-4x+13)}&=\frac{A}{x+1}+\frac{Bx+C}{x^2-4x+13} \quad |\cdot \text{Nenner}\\
+7x^2-10x+37&=A(x^2-4x+13)+(Bx+C)(x+1)\\
+&= (A+B)x^2+(-4A+B+C)x+(13A+C)
+\end{align*}
+\begin{tabular}{l l l}
+Einsetzen der Nullstelle $x=-1$: & $54=18 A$ & $\Rightarrow A=3$\\
+Koeffizientenvergleich $x^2$: & $7=A+B $ & $\Rightarrow B=4$\\
+ $x^0$ & $13A+C)$ & $\Rightarrow C=-2$ 
+\end{tabular}\\
+$\Rightarrow \int \frac{7x^2-10x+37}{(x+1)(x^2-4x+13)}\intd{x}=\int \underbrace{\frac{3}{x+1}}_{a}+ \underbrace{\frac{4x-2}{x^2-4x+13}}_{b}\intd{x} $\\
+$a: \; \int \frac{3}{x+1} \intd{x} = 3 \ln|x+1| +C_1$\\
+$b: \; \int \frac{4x-2}{x^2-4x+13}\intd{x}=\int\frac{2(2x-4)-2+8}{x^2-4x+13}=2\underbrace{\int \frac{2x-4}{x^2-4x+13}}_{I_1}+\underbrace{\frac{6}{x^2-4x+13}}_{I_2}\intd{x}$\\
+$I_1 = \int \frac{2x-4}{x^2-4x+13}\intd{x}\overset{\text{Subst.}}{=}\ln|x^2-4x+13| + C_2$\\
+$I_2 = 6\int \frac{\intd{x}}{(x-2)^2+9}=6\int \frac{\intd{u}}{u^2+3^2}=6\cdot \frac{1}{3}\arctan\left(\frac{u}{3}\right)+C_3=2\cdot\arctan\left(\frac{x-2}{3}\right)+C_3$\medskip\\
+$\Rightarrow I = 3\ln|x+1| + 2 \ln\left(x^2-4x+13\right)+2\arctan\left(\frac{x-2}{3}\right)+C_4$
+\end{itemize}
+
+\subsection{Integration von Potenzreihen}
+\paragraph{Satz 1:} Es sei $f:(x_0-r, x_0+r)\to \RR$, $f(x)=\sum_{n=0}^\infty a_n (x-x_0)^n$ die Grenzfunktion der Potenzreihe (mit Konvergenzradius $r$). Dann ist $F: (x_0-r,x_0+r)\to \RR$, $F(x)=\sum_{n=0}^\infty \frac{a_n}{n+1}(x-x_0)^{n+1}$ eine Stammfunktion von $f$ (gliedweises Integrieren im Konvergenzintervall).
+\subparagraph{Bsp. 12:} \parskp
+$f(x)=\frac{1}{1+x^2}=1-x^2+x^4-x^6+\dots \quad |x|<1$ (siehe Übung, nutze geometrische Reihe)\\
+$\Rightarrow \int \frac{1}{1+x^2}\intd{x}=x-\frac{x^3}{3}+\frac{x^5}{5}-\frac{x^7}{7}+\dots + C_1$\\
+Wir wissen aber auch: $\int \frac{1}{1+x^2}\intd{x}=\arctan (x) + C_2$\\
+$\Rightarrow \arctan(x) = x-\frac{x^3}{3}+\frac{x^5}{5}-\frac{x^7}{7}+\dots + C_3$ \quad mit $C_3=0$ (setze $x=0$ ein) und $|x|<1$.
+\subparagraph{Bsp. 13:} Gesucht ist Stammfunktion zu $f(x)=e^{-x^2}$
+\begin{align*}
+F(x)&=\int_0^x e^{-t^2}\intd{t}=\int_0^x\left(1-t^2+\frac{(t^2)^2}{2!}-\frac{(t^2)^3}{3!}+\dots\right)\intd{t}\\
+&= x - \frac{x^3}{3}+\frac{x^5}{5\cdot 2!}-\frac{x^7}{7\cdot 3!}+\frac{x^9}{9\cdot 4!}-\cdots 
+\quad (x\in \RR)
+\end{align*}
+\subparagraph{Diskussion:} 
+\begin{itemize}
+\item $\int e^{-t^2}\intd{t}$ nicht geschlossen auswertbar.
+\item Für nicht zu große $x$ ist die Reihendarstellung zur Auswertung von $F$ gut geeignet.\\
+z.B. $\int_0^1 e^{-x^2}\intd{x}=\underbrace{1-\frac{1}{3}+\frac{1}{5\cdot 2!}-\frac{1}{7\cdot 3!}+\frac{1}{9\cdot 4!}-\frac{1}{11\cdot 5!}+\frac{1}{13\cdot 6!}-\frac{1}{15\cdot 7!}+\frac{1}{17\cdot 8!}}_{0,746824\cdots}-\dots$\\
+$\left|\text{Fehler}\right| < \frac{1}{19\cdot 9!}=1,4504\cdot 10^{-7}$ (vgl. Satz über Leibnitz-Kriterium)
+\end{itemize}
+
+\section{Numerische Integration}
+\emph{Ziel:} Berechne $I=\int_a^b f(x) \intd{x}$ falls Stammfunktion „kompliziert“ oder nicht elementar angebbar.\\
+\emph{Prinzip:} 
+\begin{anumerate}
+\item Zerlegung von $[a,b]$ in $n$ gleichlange Teilintervalle der Länge $h=\frac{1}{n}(b-a)$\\
+$\Rightarrow$ Teilpunkte sind $x_k=a+k\cdot h \quad (k=0,1,\dots,n)$, $y_k=f(x_k)$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB101}
+\end{center}
+\item Ersetze $f(x)$ über den Teilintervallen durch einfachere Funktionen.\\
+z.B.: \begin{itemize}
+\item lineare Funktionen \quad $\rightsquigarrow$ Trapez Regel
+\item quadratische Funktionen \quad$\rightsquigarrow$ SIMPSON-Regel
+\end{itemize}
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB102}
+\includegraphics[scale=.75]{Vorlesung/ABB103}
+\end{center}
+Als Näherung für $I$ ergibt sich für die Simpson-Regel: \\
+$I \approx S_n(h)=\frac{h}{3}\left(\tblue{(y_0+y_n)}+4\tgreen{(y_1+y_3+\dots+y_{n-1})}+2\tred{(y_2+y_4+\dots+y_{n-2})}\right)$\\
+falls $n$ gerade ist.
+\end{anumerate}
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Fehlerabschätzung:\\
+$I=S_n(h)-\frac{h^4(b-a)}{180}f^{(4)}(\xi) \quad a < \xi < b$\\
+(falls $f^{(4)}$ stetig in $[a,b]$)
+\item Simpson-Regel ist für Polynome einschließlich Grad 3 exakt.
+\item Praktische Durchführung: Schrittweitenhalbierung\\
+Startwert: $S^{(1)}=S_n(h)$ für geeignetes $h$. $S^{(2)}=S_{2n}\left(\frac{h}{2}\right)$, $S^{(3)}=S_{4n}\left(\frac{h}{4}\right)$, usw. bis sich die Ziffern in gewünschter Genauigkeit nicht mehr ändern.
+\end{enumerate}
+\subparagraph{Bsp.:} $\int_0^1 e^{-x^2}\intd{x}$\\
+$n=4, \; h=0,25$\\
+\begin{tabular}{l l l l l}
+$k$ & $x_k$ & \tblue{$y_0, y_n$} & \tgreen{$y_{2j+1}$} & \tred{$y_{2j}$}\\
+\hline
+0 & 0		& 1	&\\
+1 & 0,25& 	&0,939413\\
+2 & 0,5	&		&					& 0,778801\\
+3 & 0,75&		&0,569783\\
+4 & 1		& 0,367879\\
+\hline 
+ & &		1,367879 & 1,509196 & 0,778801
+\end{tabular}\\
+$S_4(0,25)=\frac{0,25}{3}\left(1,367879 + 4\cdot 1,509196 + 2\cdot 0,778801\right)$
+
+\section{Uneigentliche Integrale}
+\begin{itemize}
+\item Vorbetrachtung:\\
+Bisher $\int_a^b f(x) \intd{x}$ wobei $[a,b]$ endliches Integral auf $f$ stückweise stetig auf $[a,b]$ (daher beschränkt)
+\item 2 Erweiterungen:
+\begin{enumerate}
+\item unendliches Intervall $(-\infty, b]$, $[a,\infty)$ oder $(-\infty, \infty)$
+\item Funktion $f$ unbeschränkt (Unendlichkeits- bzw. Polstellen)
+\end{enumerate}
+\end{itemize}
+\paragraph{Unendliches Intervall} (zu 1.)
+\begin{anumerate}
+\item $\int_{-\infty}^b f(x) \intd{x}:= \lim_{A\to \infty} \int_A^b f(x) \intd{x}$\\
+analog:\\
+$\int_a^{\infty} f(x) \intd{x} := \lim_{B \to \infty} \int_a^{B} f(x) \intd{x}$
+\item $\int_{-\infty}^{\infty} f(x) \intd{x} := \int_{-\infty}^c f(x) \intd{x} + \int_c^{\infty} f(x) \intd{x}$ für beliebiges $c \in \RR$ (bspw. $c=0$).
+\end{anumerate}
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Falls die Grenzwerte existieren, so heißt das Integral konvergent, sonst divergent.
+\item Ein berühmtes Beispiel ist die $\Gamma$-Funktion:\\
+$\Gamma (x) = \int_0^{\infty} e^{-t} t^{x-1} \intd{t} \qquad (x >0 )$\\
+Eigenschaft: $\Gamma (n) = (n-1)!$ falls $n \in \NN$
+\end{enumerate}
+\subparagraph{Bsp. 1:} 
+\begin{anumerate}
+\item $\int_0^{\infty} e^{-x} \intd{x} = \lim_{A \to \infty} \int_0^A e^{-x} \intd{x} = \lim_{A \to \infty} \left[ -e^{-x}\right]_0^A = \lim_{A \to \infty} \left( -e^{-A}+e^0\right) =1$
+\item $\int_0^{\infty} \cos x \intd{x}= \lim_{A\to \infty} \int_0^A \cos x \intd{x} = \lim_{a\to \infty} \left[ \sin (x) \right]_0^A = \lim_{A\to \infty} \left( \sin A - \underbrace{\sin 0}_{=0}\right)$\\
+Grenzwert existiert nicht $\Rightarrow$ Integral unbestimmt divergent.
+\item $\int_1^{\infty} = \lim_{A\to \infty} \int_1^A \frac{1}{x} \intd{x} = \lim_{A\to \infty} \left[ \ln | x| \right]_1^A = \lim_{A\to \infty} \left( \ln A - \underbrace{\ln 1}_{0}\right) = \infty$\\
+$\Rightarrow$ bestimmt divergent
+\end{anumerate}
+\paragraph{Unbeschränkter Integrand} (zu 2.)
+\begin{anumerate}
+\item bspw. Unendlichkeitsstellen bei $b$:\\
+$\int_a^b f(x) \intd{x} := \lim_{\varepsilon \searrow 0} \int_a^{b-\varepsilon} f(x) \intd{x}$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB104}
+\end{center}
+\item falls Unendlichkeitsstelle $x_0$ im Inneren von $[a,b]$ liegt:\\
+$\int_a^b f(x) \intd{x} := \int_a^{x_0} f(x) \intd{x} + \int_{x_0}^b f(x) \intd{x}$\\
+… und nutzen nun a.):\\
+$\lim_{\varepsilon\searrow 0} \int_a^{x_0-\varepsilon} f(x) \intd{x} + \lim_{\varepsilon\searrow 0} \int_{x_0 + \varepsilon}^b f(x) \intd{x}$
+\end{anumerate}
+\subparagraph{Bsp. 2:} \parskp
+$\int_0^4 \frac{1}{\sqrt{x}}\intd{x} = \lim_{\varepsilon\searrow0} \left[2\sqrt{x}\right]_{\varepsilon}^4 = \lim_{\varepsilon \searrow 0} \left( 2 \sqrt{4}-2 \sqrt{\varepsilon}\right) = 4$
+\paragraph{Unendliches Intervall und unbeschränkter Integrand} (Kombination von 1. und 2.)
+\subparagraph{Bsp. 3} \parskp
+$I = \int_1^{\infty} \frac{\intd{x}}{x \sqrt{x-1}}= \int_1^2 \frac{\intd{x}}{x\sqrt{x-1}}+ \int_2^{\infty} \frac{\intd{x}}{x\sqrt{x-1}}$\\
+mit $\int \frac{\intd{x}}{x\sqrt{x-1}}= \underbrace{\dots}_{\text{Subst. }t=\sqrt{x-1}} = 2 \arctan \sqrt{x-1} + C$:
+\begin{align*}
+I &= \lim_{\varepsilon \searrow 0} \int_{1+\varepsilon}^2 \frac{\intd{x}}{x \sqrt{x-1}}+ \lim_{a\to \infty} \int_2^A \frac{\intd{x}}{x\sqrt{x-1}}\\
+&= \lim_{\varepsilon\searrow0} \left[ 2\arctan \sqrt{x-1}\right]_{1+\varepsilon}^2 + \lim_{A\to \infty} \left[ 2 \arctan\sqrt{x-1}\right]_2^A\\
+&= \lim_{\varepsilon\searrow 0} ( 2 \arctan 1 - 2 \arctan \sqrt{\varepsilon}) + \lim_{A\to\infty} (2 \arctan \sqrt{A-1}-2\arctan 1 )\\
+&= \underbrace{\lim_{A \to \infty} 2 \arctan \sqrt{A-1}}_{\pi} - \underbrace{\lim_{\varepsilon \searrow} 2 \arctan \sqrt{\varepsilon}}_{0}\\
+&= \pi
+\end{align*}
+
+\section{Anwendungen}
+\subsection{Geometrische Anwendungen}
+\subsubsection{Inhalte ebener Flächen}
+\begin{itemize}
+\item \begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB105}
+\end{center}
+mit $a<b$ und $f(x) \geq 0$:\\
+$F=\int_a^b f(x) \intd{x}$
+\item \begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB106}
+\end{center}
+mit $a<b<c$:\\
+$F=\int_a^c |f(x)| \intd{x}=\left| \int_a^b f(x) \intd{x}\right| + \left| \int_b^c f(x) \intd{x}\right|= \int_a^b f(x) \intd{x} + \int_c^b f(x) \intd{x}$
+\item \begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB107}
+\end{center}
+mit $f(x)$: obere Funktion und $g(x)$: untere Funktion:\\
+$F=\int_{x_1}^{x_2} f(x) - g(x) \intd{x}$
+\end{itemize}
+\subparagraph{Bsp. 1:} Gesucht ist der Flächeninhalt $F$ des von der Ellipse $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1 \quad (a>0, \; b>0)$ begrenzten Bereichs.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB108}
+\end{center}
+$y= \pm b\sqrt{a-\frac{x^2}{a2}}$
+\begin{align*}
+F&=4 \cdot \int_0^a b \sqrt{1-\frac{x^2}{a}}\intd{x}=\frac{4b}{a}\int_0^a\sqrt{a^2-x^2}\intd{x}\overset{\substack{\text{Subst.}\\x=a\sin t}}{=}\frac{4b}{a}\left[\frac{1}{2}\left(x\sqrt{a^2-x^2}+a^2 \arcsin\frac{x}{a}\right)\right]_0^a\\
+&=\frac{4b}{a}\frac{1}{2}a^2\underbrace{\arcsin 1}_{\frac{\pi}{2}}=\pi \cdot ab
+\end{align*}
+
+\subsubsection{Bogenlänge}
+\paragraph{Bogenlänge ebener Kurven}
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB109}
+\end{center}
+Kurve $K$ mit Parameterdarstellung. $x=x(t) \quad y = y(t) \quad t \in [\alpha, \beta]$
+\begin{itemize}
+\item Vorgehen: Approximieren durch Streckenzug, dann Verfeinerung\\
+Länge des Streckenzugs: $\sum_{i=1}^n \overline{P_{i-1}P_i}=\sum_{i=1}^n \sqrt{(\Delta x_i)^2+(\Delta y_i)^2}$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB110}
+\end{center}
+$\Rightarrow \text{(Mittelwertsatz der Differentialrechnung} \sum_{i=1}^n \overline{P_{i-1}P_i}= \sum_{i=1}^n \sqrt{(\dot{x}(u_i))^2 + (\dot{y}(v_i))^2}\cdot \Delta t_i$\\
+mit $u_i, v_i\in (t_{i-1},t_i)$\\
+Verfeinerung:\\
+$\int_{\alpha}^{\beta} \sqrt{(\dot{x}(t))^2 + (\dot{y}(t))^2}\intd{t}$
+\end{itemize}
+\subparagraph{Diskussion:}
+\begin{itemize}
+\item Bogenlänge der Kurve $\vec{r} = \vec{r}(t) = \mtr{x(t) \\ y(t)}$ zwischen $\alpha$ und $t$ ist\\
+$s=\int_{\alpha}^t \underbrace{\sqrt{(\dot{x}(u))^2 + (\dot{y}(u))^2}}_{|\dot{r}(u)|}\intd{u} =: f(t)$\\
+$\Rightarrow \frac{\diffd{s}}{\diffd{s}}= |\dot{r}(t)| \Rightarrow \diffd{s}=|\dot{r}(t)| \intd{t}=\sqrt{\dot{x}^2+\dot{y}^2}\intd{t}$ (heißt Bogenelement)
+\item Tabelle (Bogenlänge ebener Kurven)\\
+\begin{tabular}{l | l}
+Kurvendarstellung & Bogenlänge $s$, Bogenelement $\diffd{s}$\\ 
+\hline
+$x=x(t),\; y=y(t),\; t \in [\alpha,\beta]$ & $s= \int_{\alpha}^{\beta} \underbrace{\sqrt{(\dot{x}(t))^2+(\dot{y}(t))^2}\intd{t}}_{\diffd{s}}$\\
+$y =f(x),\; x\in [a,b]$ & $s=\int_a^b\underbrace{\sqrt{1+(f'(x))^2}\intd{x}}_{\diffd{s}}$\\
+$x= g(y), \; y \in [c,d] $ & $s=\int_c^d\underbrace{\sqrt{1+(g'(y))^2}\intd{y}}_{\diffd{s}}$\\
+$r=r(\varphi), \; \varphi\in [\alpha, \beta]$ & $s=\int_{\alpha}^{\beta}\underbrace{\sqrt{(r(\varphi))^2+(r'(\varphi))^2}\intd{\varphi}}_{\diffd{s}}$
+\end{tabular}
+\end{itemize}
+\paragraph{Bogenlänge von Raumkurven} \parskp
+Gegeben sei Kurve $K $mit Parameterdarstellung $x=x(t), \; y=y(t), \; z=z(t), \; t \in [\alpha
+, \beta]$.\\
+Die Bogenlänge berechnet sich dann mittels\\
+$s=\int_{\alpha}^{\beta} \sqrt{(\dot{x}(t))^2+(\dot{y}(t))^2+(\dot{z}(t))^2}\intd{t}$
+\subparagraph{Bsp. 2} (Schraubenlinie)\\
+$\vec{r}= \vec{r}(t)=\mtr{a \cos t \\ a \sin t \\ \frac{h}{2\pi}t}, \; t \in [0,2\pi]$\\
+$\dot{r}(t) = \mtr{-a \sin t \\ a \cos t \\ \frac{h}{2\pi}}$
+\begin{align*}
+s&= \int_0^{2\pi} \sqrt{\dot{x}^2+\dot{y}^2+\dot{z}^2}\intd{t}\\
+&= \int_0^{2\pi} \sqrt{\underbrace{a^2 \sin^2t - a^2 \cos^2t}_{a^2}+\frac{h^2}{(2\pi)^2}}\intd{t}\\
+&= 2\pi \sqrt{a^2+\frac{h^2}{4\pi^2}}\\
+&= \sqrt{4\pi^2a^2+h^2}
+\end{align*}
+\subsubsection{Volumen von Rotationskörpern}
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB118}
+\end{center}
+\begin{anumerate}
+\item Gegeben:
+\begin{itemize}
+\item Kurve $K$ mit $y=f(x), \; x \in [a,b]$
+\item Das Flächenstück $F_x$ zwischen Kurve und $x$-Achse rotiere um die $x$-Achse.
+\end{itemize}
+Gesucht:
+\begin{itemize}
+\item Volumen $V_x$ des dabei erzeugten Körpers
+\end{itemize}
+Es gilt: $V_x = \pi \cdot \int_a^b(f(x))^2\intd{x}$\\
+(Idee: Approximation von $F_x$ durch Rechteckflächen \\
+$\overset{Rotation}{\rightsquigarrow}$ Zylinderscheiben $V_{\alpha}\approx \sum_i \pi (f(\xi_i))^2\Delta x_i$\\
+Grenzübergang: $V_x=\pi \int_a^b (f(x))^2\intd{x}$)
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Allgemein gilt $V_x=\pi \int_a^b y^2\intd{x} \quad (a<b)$
+\item Falls K in Parameterform gegeben $x=x(t),\; y=y(t), \; \alpha ... t ... \beta$, dann ergibt sich \\
+$V_x=\pi \int_{\alpha}^{\beta} (y(t))^2\cdot \underbrace{\dot{x}(t) \intd{t}}_{\diffd{x}}$, wobei $...$ (die Orientierung) so zu wählen ist, dass $a:= x(\alpha) < x(\beta) = b$ gilt. Unter Umständen kann $\alpha<\beta$ sein.
+\end{enumerate}
+\item Gegeben: Kurve $x=g(y), \; y\in [c,d]$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB119}
+\end{center}
+Gesucht: Volumen $V_y$ bei Rotation von $F_y$ um $y$-Achse.\\
+$V_y=\pi \int_c^d x^2\intd{y} = \pi \int_c^d (g(y))^2\intd{y}$\\
+Für Parameterdarstellung:\\
+$V_y=\pi \int_{\alpha}^{\beta}(x(t))^2\cdot \underbrace{\dot{y}(t) \intd{t}}_{\diffd{y}}$, wobei $c=y(\alpha)<y(\beta)=d$
+\subparagraph{Bsp. 3:} Gesucht ist das Volumen eines Rotationsparaboloids der Höhe $h$ und mit Basisradius $R$.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB120}
+\end{center}
+Kurve: $y=ax^2, \; h=aR^2 \Rightarrow a =\frac{h}{R^2}$
+\begin{align*}
+V_y&=\pi\int_0^h x^2\intd{y}=\pi\int_0^h \frac{y}{a}\intd{y} = \pi\int_0^h \frac{R^2}{h}y  \intd{y}\\
+&= \frac{\pi R^2}{h}\int_0^h y \intd{y}=\frac{\pi R^2}{h}\left[\frac{1}{2}y^2\right]_0^h\\
+&= \frac{\pi R^2}{h}\cdot \frac{1}{2}h^2=\frac{\pi R^2 h}{2}
+\end{align*}
+\end{anumerate}
+
+\subsubsection{Mantelflächen von Rotationskörpern}
+\begin{anumerate}
+\item Gegeben: Kurve $K$ mit $y=f(x)\geq 0, \; x \in [a,b]$\\
+Gesucht: Die von der Kurve $K$, bei Rotation um $x$-Achse erzeugte Rotationsfläche $M_x$.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB121}
+\end{center}
+$M_x=2\pi \int_a^b f(x) \sqrt{1+(f'(x))^2}\intd{x}$\\
+(Approximation der Kurve $K$ durch Polygonzug\\
+$\overset{Rotation}{\rightsquigarrow}$ Kegelstumpffläche\\
+$M_x\approx \sum_i 2\pi f(\xi_i)\Delta s_i\\
+\to 2\pi \int_a^b f(x)\underbrace{\sqrt{1+(f'(x))^2}\intd{x}}_{\diffd{s}}$ (Bogenelement))\\
+Allgemein gilt: $M_x=2\pi \int_a^by\intd{s}$
+\item Gegeben: Kurve $x=g(y) \geq 0, \; y\in [c,d]$\\
+Gesucht: Mantelfläche bei Rotation um die $y$-Achse.\\
+$M_y=2\pi \int_K x \intd{s}=2\pi \int_c^d g(y) \sqrt{1+(g'(y))^2}\intd{y}$\\
+Für Parameterdarstellung:\\
+$M_y=2\pi \int_{\alpha}^{\beta} x(t) \sqrt{(\dot{x}(t))^2+(\dot{y}(t))^2}\intd{t}$ mit $\alpha \leq t \leq \beta$
+\subparagraph{Bsp. 4:} Kugeloberfläche
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB122}
+\end{center}
+Halbkreis $K$ soll um $x$-Achse rotiert werden.\\
+$x=R\cdot \cos t\\
+y = R \cdot \sin t\\
+t \in [0,\pi]$\\
+$\dot{x}(t) = -R \sin t \qquad \dot{y}(t) = R \cos t$
+\begin{align*}
+M_x&= 2\pi \int_K y\intd{s}=2\pi \int_0^{\pi} y(t) \sqrt{\dot{x}^2+\dot{y}^2}\intd{t}\\
+&= 2\pi \int_0^{\pi} R \sin t \cdot R \intd{t} = 2\pi R^2 \left[-\cos t\right]_0^{\pi}\\
+&= 4\pi R^2
+\end{align*}
+\end{anumerate}
+\subsubsection{Fourier-Reihen}
+Gegeben: Funktion $f(x), \; x \in [0,T]$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB123}
+\end{center}
+Gesucht: Reihendarstellung mit trigonometrischen Funktionen der Periode $T, \; \frac{T}{2}, \; \frac{T}{3}, \dots$\\
+d.h. (mit $\omega= \frac{2\pi}{T}$):\\
+$\cos (\omega x), \; \cos (2 \omega x) ,\; \cos (3 \omega x) , \dots$\\
+$\sin (\omega x), \; \sin (2 \omega x) ,\; \sin (3 \omega x), \dots$\\
+Ansatz ist daher:\\
+$f(x) = \frac{a_0}{2}+\sum_{k=1}^a \left( a_k \cos (k\omega x) + b_k \sin (k\omega x) \right)$, wobei die Koeffizienten $a_k, \; b_k,\; k\geq 0$ zu ermitteln sind.\\
+Motivation ist: Approximation von $f$ zum Zwecke der Speicherplatzreduzierung (Abgespeichert werden i.A. nur wenige der Koeffizienten $a_k$ und $b_k$. Das gilt auch dann, wenn $f$ in diskreter Form vorliegt, d.h. in Form von Messwerten $y_k$ an vielen Messstellen $x_k$.)\\
+Vorgehensweise:
+\begin{enumerate}
+\item Betrachte zunächst die endliche Reihe $f_n(x):= \frac{a_0}{2}+\sum_{k=1}^n a_k \cos (k\omega x) + b_k \sin (k \omega x )$.\\
+Ziel ist: $a_k$ und $b_k$ so wählen, dass $f_n$ möglichst gute Approximation von $f$ ist.
+\item Approximation in Vektorräumen mit Skalarprodukt
+\begin{itemize}
+\item Es sei $V$ ein Vektorraum. Das Skalarprodukt $(f,g)$ ist eine Abbildung von $V\times V$ nach $\RR$ mit den Eigenschaften 
+\begin{anumerate}
+\item $(f,f) > 0$ für alle $f \not = 0$
+\item $(f,g) = (g,f)$ für alle $f,g \in V$ (Symmetrie)
+\item $(\alpha f+\beta g,h) = \alpha (f,h) + \beta (g.h.)$ für $f,g,h \in V, \; \alpha, \beta \in \RR$ (Linearität)
+\end{anumerate}
+\item Die Norm von $f$ (oder Betrag von $f$) ist $\|f\|:= \sqrt{(f,f)}$ für $f\in V$
+\item $f$ und $g$ orthogonal $:\Leftrightarrow$ $(f,g) = 0$
+\item Beispiele:
+\begin{anumerate}
+\item $V=\RR^n, \; (\vec{x}, \vec{y}) = \sum_{i=1}^n x_i y_i$
+\item $C(a,b)$ … Menge der auf $[a,b]$ stetigen reellwertigen Funktionen mit Skalarprodukt: $(f,g) = \int_a^b f(x) g(x) \intd{x}$
+\end{anumerate} 
+\item Aufgabe: Approximation von $f\in V$ durch $f^*\in V^*$ wobei $V^*\subseteq V$ ein $m$-dimensionaler Unterraum ist, mit orthogonaler Basis $e_1,\dots,e_m$ (d.h. $(e_i, e_j) = 0 $ falls $i\not = j$). Gesucht ist also dasjenige $f^* \in V^*$, für welches $\| f - f^* \|$ minimal wird.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB126}
+\end{center}
+d.h. $f^*$ ist die orthogonale Projektion von $f$ auf $V^*$
+\paragraph{Satz 1:} Die orthogonale Projektion $f^*$ von $f$ auf $V^*$ ist gegeben durch: $f^* = \sum_{i=1}^m \alpha_i e_i$, wobei $\alpha_i=\frac{(f,e_i)}{(e_i,e_i)}, \; i=1,..,n$
+\end{itemize}
+\item Übertragung auf $C(O,T), \; T=\frac{2\pi}{\omega} \to \omega = \frac{2\pi}{T}$
+\begin{itemize}
+\item Man kann zeigen, dass die Funktion\\
+$\underbrace{1}_{g_0},\; \underbrace{\cos(\omega x)}_{g_1},\; \underbrace{\cos(2\omega x)}_{g_2},\; \cos (2\omega x) ,\; \dots ,\; \underbrace{\sin (\omega x)}_{h_1},\; \underbrace{\sin(2\omega x)}_{h_2},\; \sin(2\omega x ),\; \dots$\\
+in $C(O,T)$ orthogonal sind.\\
+z.B. $(g_0, g_1) = \int_0^T 1 \cdot \cos (\omega x) \intd{x}=\left[ \frac{1}{\omega }\sin (\omega x) \right]_0^T=0$
+\item Außerdem gilt $(g_0, g_0) = T ,\; (g_k, g_k) = \frac{T}{2}=(h_k, h_k)$ mit $k\in \NN$
+\end{itemize}
+\item Damit ergibt die Projektion von $f \in C(0,T)$ in $V^*=L(g_0,g_1, \dots, g_n, h_1, \dots, h_n)$ folgende Koeffizienten:\\
+$a_k = \frac{(f, g_k)}{(g_k, g_k)}=\frac{2}{T}\int_0^T f(x) \cos(k \omega x) \intd{x}$\\
+$b_k = \frac{(f, h_k)}{(h_k, h_k)}=\frac{2}{T}\int_0^T f(x) \sin(k \omega x) \intd{x}$\\
+(bei der Approximation in der Ausgangsgleichung $f_n$)
+\item Frage: $f_n\to f$ falls $n\to \infty$?
+\paragraph{Satz 2:} Seien $f$ und $f'$ auf $[0,T]$ stückweise stetig mit höchstens endlich vielen, endlichen Sprungquellen, dann gilt an allen Stetigkeitsstellen von $f$: \\
+$f(x) = \underbrace{\frac{a_0}{2}+\sum_{k=1}^{\infty} (a_k \cos (k\omega x) + b_k \sin (k \omega x) )}_{\lim_{n\to\infty} f_n(x)}$ mit\\
+ $a_0 = \frac{2}{T}\int_0^T f(x) \intd{x},\\
+a_k = \frac{2}{T}\int_0^T f(x) \cos (k \omega x) \intd{x}, \\
+b_k = \frac{2}{T} \int_0^T f(x) \sin (k \omega x) \intd{x}$ \qquad ($k\in \NN$)\\
+Für die Sprungstellen $x_S$ gilt $\lim_{n\to\infty} f_n(x_S) = \frac{1}{2}\left( \lim_{x\nearrow x_s} f(x) + \lim_{x \searrow x_S} f(x)\right)$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB127}
+\end{center}
+Also: Ja, $f_n\to f$ falls $n\to \infty$.
+\subparagraph{Bemerkung:} 
+\begin{enumerate}
+\item Die Vorstehenden Ausführungen gelten automatisch für die periodische Fortsetzung $\tilde f$ einer zunächst auf $[0,T]$ definierten Funktion $f$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB128}
+\end{center}
+\item Im Fall der periodischen Fortsetzung kann das Integrationsintervall $[0,T]$ durch beliebiges Intervall der Länge $T$ ersetzt werden, z.B. $\left[-\frac{T}{2}, \frac{T}{2}\right]$
+\item Ist $f$ symmetrisch gilt (vereinfachend):\\
+\begin{tabular}{l | l l l }
+$f$ gerade & $a_0 = \frac{4}{T}\int_0^{\frac{T}{2}}f(x) \intd{x}$, $ a_k = \frac{4}{T}\int_0^{\frac{T}{2}}f(x) \cos (k\omega x) \intd{x}$, $ b_k =0$\\
+\hline
+$f$ ungerade & $a_0=0$, $a_k = 0$, $b_k = \frac{4}{T}\int_0^{\frac{T}{2}}f(x) \sin (k\omega x) \intd{x}$
+\end{tabular}  
+\item Amplitudenspektrum\\
+$A_k := \sqrt{a_k^2+b_k^2}\quad k=1,2,3,\dots$\\
+… Amplituden der Schwingungen, die sich durch Zusammenfassung der Sinus- und Cosinusanteile gleicher Frequenz ergeben.\\
+(Möglichkeit der Verstärkung/Dämpfung der Schwingung)\\
+Die Fourier Reihe lässt sich mit diesem $A_k$ auf folgende Form bringen:\\
+$f(x)=\frac{A_0}{2}+\sum_{k=1}^{\infty} A_k \cos (k x - \varphi_k)$ mit $A_0=a_0$ und $\varphi_k = \arccos \left( \frac{a_k}{A_k}\right) \quad k\geq 1$
+\end{enumerate}
+\end{enumerate}
+\subparagraph{Bsp. 6:} $f(x) = \begin{cases}
+0 & -1 \leq x < 0\\
+1 & 0 \leq x <1
+\end{cases}$, $\tilde f$ periodische Fortsetzung
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB129}
+\end{center}
+Gesucht: Fourier Reihe zu $f$ mit $T=2, \; \omega = \frac{2\pi}{2}= \pi$\\
+$a_0 = \frac{2}{2} \int_{-1}^1 f(x) \intd{x} = \int_0^1 1 \intd{x} = 1$\\
+$a_k = \frac{2}{2} \int_{-1}^1 f(x) \cos (k \pi x) \intd{x} = \int_0^1 \cos (k \pi x) = \frac{1}{k\pi}\left[\sin (k\pi x) \right]_0^1=0$\\
+$b_k = \frac{2}{2} \int_{-1}^1 f(x) \sin (k\pi x) \intd{x} = \int_0^1 \sin (k\pi x) \intd{x} = -\frac{1}{k\pi} \left[ \cos (k \pi x)\right]_0^1 = -\frac{1}{k\pi}(cos(k\pi)-1) \\
+\Rightarrow b_k=\begin{cases}
+0 & k \text{ gerade}\\
+\frac{2}{k\pi} & k \text{ ungerade}\\
+\end{cases}$\\
+$\tilde f ( x) = \frac{1}{2}+ \frac{2}{\pi} \left(\sin (\pi x) + \frac{1}{3} \sin (3\pi x) + \frac{1}{5} \sin (5 \pi x) + \dots\right) \quad x \in RR\setminus \ZZ$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB130}
+\end{center}
+
+\paragraph{Diskreter Fall:} Gegeben $y=f(x), \; x\in [0,T]$ ausgewertet (gemessen) an $N$ Messstellen (wobei $N$ gerade) z.B. Messung alle $\frac{1}{100}\mathrm{sec}=\text{Samplingrate }100\; \mathrm{Hz}$ (bei Audio CDs $44,1\; \mathrm{kHz}$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB131}
+\end{center}
+$x_j = j\cdot h = j \cdot \frac{T}{N}$ für $j=0, \dots, N-1$\\
+$y_j = f(x_j)$
+\begin{itemize}
+\item Mit Ansatz von stetigen Funktionen für $n\leq \frac{N}{2}$ führt im Vektorraum $\RR^N$ mittels Satz 1 auf: \\
+$a_0=\frac{2}{N}\sum_{j=0}^{N-1} y_j, \; \\
+a_k = \frac{2}{N}\sum_{j=0}^{N-1} y_j \cdot \cos (k \omega x_j), \; \\
+b_k = \frac{2}{N} \sum_{j=0}^{N-1} y_j \cdot \sin (k \omega x_j)$
+\item Im Fall $2n = N$ ergibt sich keine Approximation, sondern eine exakte Darstellung des Vektors $\vec{y}=\left(y_j\right)_{j=0}^{N-1}$ mit einer anderen Basis.\\
+Mit Hilfe der Eulerschen Formel $e^{i\varphi}=\cos \varphi + i \sin \varphi$ lässt sich der Ansatz mit komplexen Koeffizienten $c_k$ umschreiben:\\
+$f(x)=\sum_{k=0}^{N-1} c_k e^{i\omega k x}$ und damit $y_j=f(x_j) = \sum_{k=0}^{N-1} c-k e^{i\frac{2\pi}{N}j\cdot k} \quad (j=0,1,\dots, N-1)$\\
+In Matrix-Schreibweise:\\
+Sei $ w:= e^{i\frac{2\pi}{N}}s$ (eine von $N$ Lösungen der Kreisgleichung $Z^N=1$)\\
+$\vec{F}=\left( w^{jk}\right)_{j,k=0}^{N-1}$\\
+$\Rightarrow \vec{y}=\vec{F}\, \vec{c}$ (inverse diskrete Fourier Transformation \emph{IDFT})
+\item Man kann zeigen, dass $\vec{F}$ regulär ist mit $\vec{F}^{-1}=\frac{1}{N}F^*$, wobei $F^*=\left(\overline{w}^{kj}\right)_{k,j=0}^{N-1}$ und $\overline{w}=e^{i\frac{2\pi}{N}}$ (konjugiert komplex). Damit $\vec{c}=\frac{1}{N}F^*\vec{y}$. D.h. $\boxed{c_k = \frac{1}{N}\sum_{j=0}^{N-1} y_j e^{-i\frac{2\pi}{N}k\cdot j}}$ (diskrete Fourier Transformation \emph{DFT})
+\item Fast Fourier Transformation \emph{FFT}\\
+Wenn $N=2^m$, lässt sich die Rechenzeit stark verkürzen.
+\item Diskrete Cosinus Transformation \emph{DCT}\\
+$y=f(x) , \; x \in [0,T], \; N$ gleiche Intervalle (meist $N=2^m$). Die Abtastpunkte sind hier die \emph{Mitten der Intervalle}.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB132}
+\end{center}
+$x_j=\frac{h}{2}+j\cdot h=T\cdot \frac{2j+1}{2N} \quad (j=0,\dots, N-1)$\\
+Ansatz: $y=\sum_{k=0}^n a_k \cos (k\frac{\omega}{k}x)$ (stetiger Fall)\\
+$y_j=\sum_{k=0}^{N-1} a_k \cos\left(\frac{k\pi (2j+1)}{2N}\right)$ (diskreter Fall)\\
+Matrixform: $\vec{y}=\vec{C}\vec{a}$\\
+Die Spalte von $\vec{C}$ bilden orthogonale Basis von $\RR^N$ (entsprechende Normierung führt zu \emph{orthonormaler Basis}). Daher können wir wie bei der Fourier-Transformation vorgehen:\\
+$\vec{a}=\vec{C}^{-1}y$ … DCT\\
+$\vec{y}=C \vec{a}$ … IDCT\\
+Anwendung: Audio und Videokompression (MP3, JPEG). Die Komprimierung erfolgt dabei im Frequenzbereich. kleine Amplituden $a_k\to 0$ $\rightsquigarrow$ Datenreduktion
+\end{itemize}

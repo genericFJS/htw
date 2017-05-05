@@ -1,0 +1,543 @@
+\section{Funktionen mehrerer reeller Veränderlicher}
+Betrachte Funktion $f: Db(f) \to \RR$ mit $Db(f)\subseteq \RR^n$ wobei $n\in \NN, \; n\geq 2$. Wir schreiben dann $Z=f(x_1, x_2, \dots, x_n)$ wobei $x_1, \dots, x_n$ unabhängige Variablen und $z$ die abhängige Variable heißen.
+\paragraph{Geometrische Veranschaulichung für $n=2$} Meist schreibt man hier $x,y$ statt $x_1, x_2$.\\
+$z=f(x,y) \quad (x,y) \in Db(f) \subseteq \RR^2$\\
+$\Rightarrow \{(x,y,z) | (x,y) \in Db(f) \wedge z = f(x,y)\}$ ist i.A. eine Fläche in $\RR^3$
+\subsection{Flächen in \texorpdfstring{$\RR^3$}{}}
+\begin{enumerate}
+\item Darstellung eines Punktes $(x,y,z)$ in $\RR^3$
+\begin{itemize}
+\item $x,y,z$ … karthesische Koordinaten
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB133}
+\end{center}
+\item $r, \varphi, z$ … Zylinderkoordinaten\\
+$x=r\cdot \cos \varphi$ (ebene Polarkoordinate)\\
+$y= r \cdot \cos \varphi$ (ebene Polarkoordinate)\\
+$z=z$\\
+Umrechnung: $x^2+y^2=r^2$, …
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB134}
+\end{center}
+\item $r, \varphi, \vartheta$ … Kugelkoordinaten (sphärische Polarkoordinaten)\\
+$x=r\sin(\vartheta) \cos (\varphi)$\\
+$x=r\sin(\vartheta) \sin(\varphi)$\\
+$z=r\cos (\vartheta)$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB135}
+\end{center}
+Beachte: $r$ hat hier andere Bedeutung als bei Zylinderkoordinaten.
+\end{itemize}
+\item Flächendarstellung:
+\begin{itemize}
+\item Explizite karthesische Koordinaten\\
+$z=f(x,y) \quad x,y \in Db(f) \subseteq \RR^2$
+\item Implizite karthesische Darstellung\\
+$F(x,y,z) = 0$
+\item Parameter-Darstellung\\
+$x=x(u,v)$\\
+$y=y(u,v)$\\
+$z=z(u,v)$, \quad $u,v \in B\subseteq \RR^2$ bzw.\\
+$\vec{r}=\vec{r}(u,v) = \mtr{x(u,v)\\ y(u,v)\\ z(u,v)a}$ \quad mit $(u,v) \in B \subseteq \RR^2$\\
+Koordinatenlinien: \\
+$v=v_0$ fest $\Rightarrow \vec{r}=r(u,v_0)$ … Kurvenschar mit Parameter $u$ auf der Fläche.\\
+$u=u_0$ fest $\Rightarrow \vec{r}=r(u_0, v)$ … Kurvenschar mit Parameter $v$ auf der Fläche.
+\end{itemize}
+\end{enumerate}
+\subparagraph{Bsp. 1:} (Kugel, Mittelpunkt $O$, Radius $R$)\\
+$x= R \sin \vartheta \cos \varphi$\\
+$y=R \sin \vartheta \sin \varphi$\\
+$z = R \cos \vartheta$ \qquad $\varphi \in [0,2\pi], \; \vartheta \in [0,\pi]$\\
+$\varphi$ geographische Länge\\
+$\vartheta$ geographische Breite
+\paragraph{Koordinatenlinien:}\parskp
+$\vartheta =$const. … Breitenlinien\\
+$\varphi =$const. … Meridian
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB140}
+\end{center}
+Parameterfreie Darstellung:\\
+$x^2+y^2+z^2=R^2$ (implizite Darstellung)\\
+$z=\pm\sqrt{R^2-x^2-y^2}$ (explizite Darstellung. $+$ für obere, $-$ für untere Halbkugel)\\
+Explizite Darstellung in Zylinderkoordinaten:\\
+$z=f(r,\varphi), \; (r,\varphi) \in B \subseteq [0,\infty) \times \RR$\\
+$r$ und $\varphi$ sind ebene Polarkoordinaten
+\paragraph{Spezialfall A} $z=f(r,\varphi)\underset{\substack{\text{hängt nicht}\\\text{von }\varphi\text{ ab}}}{=} g(r), \; r\in I\subseteq [0,\infty), \; \varphi \in [0,2\pi]$\\
+$\Rightarrow$ Rotationsfläche um Rotationsachse: $z$-Achse
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB141}
+\end{center}
+In karthesischen Koordinaten:\\
+$r=\sqrt{x^2+y^2}$\\
+$z=g\left(\sqrt{x^2+y^2}\right) =: h(x^2+y^2)$
+\subparagraph{Bsp. 2:} $z=x^2+y^2 \quad (=h(x^2+y^2))$\\
+$x^2+y^2=r^2\Rightarrow z = f(x,y) = r^2 =: g(r)$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB142}
+\end{center}
+\paragraph{Spezialfall B} $z=f(r,\varphi)\underset{\substack{\text{hängt nicht}\\\text{von }r\text{ ab}}}{=}g(\varphi)\quad ,\;r\in I_1\in[0,\infty), \; \varphi \in I-2 \subseteq \RR$\\
+$\Rightarrow$ Wendelfläche um $z$-Achse
+\subparagraph{Bsp. 3:} $z=f(r,\varphi) = \frac{h}{2\pi}\varphi =: g(\varphi) \quad \varphi\in [0,\pi], \; r \in [0,R]$\\
+in Parameterdarstellung:\\
+$x=r\cos \varphi$\\
+$y=r\sin \varphi$\\
+$z=\frac{h}{2\pi}\varphi$ \quad $\varphi \in [0,\pi], \; r \in [0,R]$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB143}
+\end{center}
+\paragraph{Koordinatenlinien}\parskp
+$r=$ const. … Schraubenlinien \quad ($\varphi \in [0,\pi]$)\\
+$\varphi=$ const. … Strecken der Länge $R$, parallel zur $x-y$ Ebene \quad ($r\in [0,R]$)
+
+\subsection{Grenzwerte und Stetigkeit}
+\paragraph{Einige Begriffe}\parskp
+Wir betrachten hier nur den Fall $n=2$. Für beliebige $n\in \NN$ gelten die Definitionen analog.
+\begin{itemize}
+\item \emph{$\varepsilon$-Umgebung von $P_0=(x_0, y_0)$} (bzw. offene $\varepsilon$-Kugel um $P_0$):\\
+$U_\varepsilon (x_0, y_0) =\left\lbrace (x,y)| \sqrt{x^2+y^2}<\varepsilon\right\rbrace$ wobei $\varepsilon>0$
+\item \emph{Umgebung}: \\
+Eine Menge $U \subseteq \RR^2$ heißt Umgebung von $P_0=(x_0,y_0)$, falls ein $\varepsilon>0$ existiert mit $U_\varepsilon(x_0,y_0) \subseteq U$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB144}
+\end{center}
+U ist Umgebung von $P_0$ aber keine Umgebung von $P_1$ (es lässt sich von $P_1$ kein Radius finden, der komplett innerhalb von $U$ liegt).
+\item \emph{Offen in (bezüglich) einer Menge}:\\
+Sei $A\subseteq B \subseteq \RR^2$. Die Menge $A$ heißt offen in (bezüglich) $B$, falls für alle $(x,y) \in A$ ein $\varepsilon>0$ existiert mit $B \cap U_\varepsilon (x,y) \subseteq A$.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB145}
+\end{center}
+\item \emph{Offen}:\\
+Eine Menge $U \subseteq \RR^2$ heißt offen, falls eine der folgenden äquivalenten Bedingungen gilt:
+\begin{enumerate}
+\item $U$ ist offen bezüglich $\RR^2$
+\item $U$ ist Umgebung jedes seiner Punkte
+\item Für jeden Punkt $(x,y) \in U$ existiert $\varepsilon > 0$ mit $U_\varepsilon (x,y) \subseteq U$
+\end{enumerate}
+Veranschaulichung:
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB146}
+\end{center}
+\item \emph{Abgeschlossen}:\\
+Eine Menge $A \subseteq \RR^2$ heißt abgeschlossen, falls ihr Komplement offen ist. D.h. $A^C=\RR^2\setminus A$ ist offen.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB147}
+\end{center}
+$(0,1]$ ist weder offen noch abgeschlossen.\\
+$[0,1]\times[0,1]$ ist abgeschlossen.
+\item \emph{innerer Punkt}\\
+Der Punkt $(x,y)\in \RR^2$ heißt innerer Punkt von $A \subseteq \RR^2$ falls:
+\begin{enumerate}
+\item $(x,y) \in A$
+\item $A$ ist Umgebung von $(x,y)$
+\end{enumerate}
+\item \emph{Häufungspunkt}:\\
+$(x,y) \in \RR^2$ heißt Häufungspunkt der Menge $A\subseteq \RR^2$ falls jede Umgebung von $(x,y)$ mindestens einen Punkt aus $A$ enthält.\\
+Bspw. ist $0$ ein ist HP der Menge $(0,1)$.
+\item \emph{Zusammenhängend}:\\
+Die Menge $A\subseteq \RR^2$ heißt zusammenhängend, falls es keine Zerlegung $A=B\cup C$ gibt mit 
+\begin{itemize}
+\item $B$ und $C$ sind disjunkt
+\item $B$ und $C$ sind offen in $A$
+\item $B \not = \emptyset$ und $C\not = \emptyset$
+\end{itemize} 
+\item \emph{Randpunkte}:\\
+$(x,y) \in \RR^2$ heißt Randpunkt der Menge $A \subseteq \RR^2$ falls jede Umgebung von $(x,y)$ sowohl Punkte aus $A$, als auch Punkte aus $A^{\mathrm{C}}=\RR^2 \setminus A$ enthält ($A^c$: Komplement).
+\item \emph{Menge aller Randpunkte}:\\
+Die Menge aller Randpunkte von $A\subseteq \RR^2$ bezeichnen wir mit $\partial A$ („Rand von $A$“). 
+\item \emph{Abschluss von $A$}:\\
+$\overline{A}=A \cup \partial A$. Es gilt $\overline{A}=\{ (x,y) \;|\; (x,y) \text{ ist Häufungspunkt von }A\}$
+\item \emph{Das Innere von $A$}: \\
+$A^\circ:= A \setminus \partial A$
+\item \emph{Gebiet}:\\
+Eine zusammenhängende offene Menge heißt Gebiet.
+\subparagraph{Bsp. 1:} $A=(0,1)$, dann:\\
+$\partial A = \{ 0,1\}$\\
+$A^\circ = (0,1)$\\
+$\overline{A}=[0,1]$
+\subparagraph{Bsp. 2:} $A=(0,1) \times [0,1] = \{ (x,y) \mid x\in (0,1), \; y\in [0,1]\}$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB149}
+\end{center}
+\begin{itemize}
+\item $A$ weder offen noch abgeschlossen.
+\item $\partial A=([0,1]\times [0,1])\setminus ((0,1) \times (0,1) )$ (alle 4 Linien der Zeichnung)
+\item $\overline{A}=[0,1]\times [0,1]$
+\item $A^\circ = (0,1) \times (0,1)$
+\end{itemize}
+\end{itemize}
+\paragraph{Def. 1:} Gegeben sei $z=f(x,y), \; (x,y) \in Db(f)$ und es sei $(x_0|y_0) \in \RR^2$ und es existiert eine Umgebung $U(x_0, y_0)$ mit $U(x_0, y_0) \setminus \{(x_0,y_0)\} \subseteq Db(f)$\\
+$\lim_{(x,y) \to (x_0, y_0)} f(x,y) = a : \Leftrightarrow $ Für jede Folge $(x_n, y_n)$ mit $(x_n, y_n) \in Db(f)$, $(x_n, y_n) \not = (x_0, y_0)$ und $\lim_{n\to \infty} x_n =x_0$ und $\lim_{n\to \infty} y_n = y_0$ gilt $\lim_{n\to \infty} f(x_n,y_n) = a$.
+\subparagraph{Bemerkung:} Für \emph{jede} Annäherung an $(x_0,y_0)$ muss die vorhergehende Formel gelten. Es genügt nicht eine geradlinige Näherung zu betrachten.
+\paragraph{Def. 2:} Es gelte $U(x_0,y_0) \subseteq Db(f)$. Dann heißt $f$ stetig an der Stelle $(x_0,y_0)$, falls \\
+$\lim_{(x,y)\to (x_0,y_0)} f(x,y) = f(x_0,y_0)$ (vgl. Def. 3 aus Kapitel 2.2). 
+
+\section{Partielle Ableitungen}
+\paragraph{Def. 1:} Die Funktion $z=f(x,y), \; (x_0,y_0) \in Db(f) \subseteq \RR^2$ heißt an der Stelle $(x_0,y_0)$ partiell nach $x$ differenzierbar, falls der Grenzwert \\
+$\boxed{f_x(x_0, y_0) := \lim_{h\to 0} \frac{f(x_0+h,y_0) - f(x_0,y_0)}{h}}$ existiert.\\
+Analog: $f$ an der Stelle $(x_0,y_0)$ partiell nach $y$ differenzierbar, falls \\
+$\boxed{f_y(x_0,y_0)=\lim_{h\to 0} \frac{f(x_0,y_0+h) - f(x_0,y_0)}{h}}$ existiert.
+
+\subparagraph{Diskussion:} 
+\begin{enumerate}
+\item Es sei $g(x):= f(x,y_0)$ d.h. $y_i$ ist fest gewählt. Dann ist $g'(x_0)=f_x(x_0,y_0)$ ($g'$: gewöhnliche Ableitung einer Funktion von $\RR$ nach $\RR$). $\Rightarrow$ Ableitungsregeln aus Abschnitt 3.2 sind sinngemäß zu übertragen
+\item $f$ heißt in dem Gebiet $G$ partiell differenzierbar, wenn $f$ für alle $(x_0, y_0) \in G$ partiell differenzierbar ist.
+\item $f$ heißt im Gebiet $G$ stetig partiell differenzierbar, falls $f$ auf $G$ partiell differenzierbar und alle partiellen Ableitungen stetig sind.
+\item Analog: Funktionen von mehr als 2 Veränderlichen $z=f(x_1 ,x_2, \dots, x_n)$: hält man die Variablen $x_2, \dots, x_n$ fest, und differenziert nach $x_1$, so ergibt sich $f_{x_1}$. Analoges Vorgehen für $f_{x_2}, f_{x_3}, \dots$
+\item Bezeichnungen:\\
+$f_x=\frac{\partial f}{\partial x}=\frac{\partial}{\partial x}f = z_x=\frac{\partial z}{\partial x}$\\
+$f_y=\frac{\partial f}{\partial y}=\dots$
+\item Höhere Ableitungen:\\
+$f_{xx}=\frac{\partial}{\partial x} \left( \frac{\partial}{\partial x}f\right) = \frac{\partial^2 f}{\partial x^2}$\\
+$f_{xy}=\frac{\partial}{\partial y}\left(\frac{\partial}{\partial x}f\right) = \frac{\partial^2 f}{\partial y \partial x}$ usw.\\
+Frage: $f_{xy}=f_{yx}$?
+\end{enumerate}
+\paragraph{Satz 1:} Die Funktionen $f, f_x, f_y, f_{xy}$ und $f_{yx}$ seien in einer Umgebung $U(x_0,y_0)$ einer Stelle \\
+$(x_0,y_0) \in Db(f)$ erklärt. Außerdem sei  $f_{xy}$ an der Stelle $(x_0,y_0)$ stetig. Dann gilt: $$\boxed{f_{xy}(x_0,y_0)=f_{yx}(x_0,y_0)}$$
+\subparagraph{Bemerkung:} Satz 1 heißt Satz von Schwarz.
+\subparagraph{Bsp. :} $f(x,y) = \frac{x^2}{y^3}+y^2-x$ \quad $y\not = 0$
+\begin{itemize}
+\item $\frac{\partial}{\partial x}$: $f_x=\frac{2x}{y^3}-1$
+\begin{itemize}
+\item $\frac{\partial}{\partial x}$: $f_{xx}=\frac{2}{y^3}$
+\item $\frac{\partial}{\partial y}$: $f_{xy}=\frac{-6x}{y^4}$
+\end{itemize}
+\item $\frac{\partial}{\partial y}$: $f_y=-\frac{3x^2}{y^4}+2y$
+\begin{itemize}
+\item $\frac{\partial}{\partial x}$: $f_{yy}=-\frac{6x}{y^4}$
+\item $\frac{\partial}{\partial y}$: $f_{yx}=\frac{-6x}{y^4}$
+\end{itemize}
+\end{itemize}
+Man sieht: $f_{xy}=f_{yx}$.
+
+\paragraph{Satz 2:} (Verallgemeinerte Kettenregel)\\
+Die Funktionen $z=f(u,v), \; u=g(x,y), \; v=h(x,y)$ seien stetig partiell differenzierbar (nach allen Variablen). Dann ist die Funktion $z=f^*(x,y)=f(g(x,y), h(x,y))$ partiell nach $x$ und $y$ differenzierbar. Und es gilt:\\
+$z_x=z_u\cdot u_x + z_v \cdot v_x\\
+z_y=z_u \cdot u_y + z_v \cdot v_y$
+
+\subparagraph{Bsp.:} $z=(x^2+3y^2)^{x+2y}$ ist nach $x$ und $y$ zu differenzieren.\\
+$u=x^2+3y^2, \; v=x+2y \;\Rightarrow\; z=f(u,v)=u^v$\\
+$z_x=z_u\cdot u_x + z_v \cdot v_x = v \cdot u ^{v-1} \cdot 2x + u^v \cdot \ln (u) \cdot 1=u^v\left(\frac{v}{u}\cdot 2x + \ln u \right)$\\
+$\Rightarrow z_x = (x^2+3y^2)^{x+2y} \left( \frac{x+2y}{x^2+3y^2e}\cdot 2x + \ln \left(x^2+3y^3\right)\right)$\\
+$z_y=z_u \cdot u_y + z_v \cdot v_y = v\cdot u^{v-1} \cdot 6y + u^v \ln (u) \cdot 2 = u^v\left(\frac{v}{u}\cdot 6y+2\ln u\right)$\\
+$\Rightarrow z_y = (x^2+3y^2)^{x+2y}\left(\frac{x+2y}{x^2+3y^2}\cdot 6y+2\ln\left(x^2+3y^2\right)\right)$
+\subparagraph{Bemerkung:} Verallgemeinerung auf mehr als 2 Variablen:\\
+$z=f(u_1,\dots, u_m), \; u_i = g_i(x_1, \dots , x_n) \quad i=1,\dots,m$\\
+$\Rightarrow\frac{\partial z}{\partial x_k}=\sum_{i=1}^m\frac{\partial z}{\partial u_i}\cdot \frac{\partial u_i}{\partial x_k} \quad , \; k=1,\dots, n$
+
+\paragraph{Satz 3:} (Satz über implizite Funktionen)\\
+Sei $F(x,y)$ in eine einer Umgebung von $(x_0, y_0)$ stetig partiell nach $x$ und $y$ differenzierbar und sei $F(x_0,y_0)=0$ und $F_y(x_0,y_0)\not = 0$. Dann existiert eine Umgebung $U(x_0)$, so dass die Gleichung $F(x,y)=0$ eindeutig eine Funktion $f: U(x_0) \to \RR$ erklärt, mit $F(x,f(x)) = 0 \forall x \in U(x_0)$. Außerdem gilt dann:\\
+$\boxed{f'(x)=-\frac{F_x}{F_y}} \quad \forall x \in U(x_0)$
+
+\subparagraph{Beweis der Ableitungsregel} \parskp
+$F(\underbrace{x}_u, \underbrace{y}_v)=F(x,f(x))=0$ differenzieren wir nach $x$:\\
+$F_u\cdot u_x + F_v \cdot v_x=F_x\cdot 1 + F_y \cdot f'(x) = 0$ durch Umformen erhält man dann:\\
+$\Rightarrow f'(x) = -\frac{F_x}{F_y}$
+
+\subparagraph{Diskussion:} Mittels Satz 3 ist eine Kurvendiskussion für implizit gegebene Kurven $F(x,y)=0$ möglich, ohne die Gleichung explizit aufzulösen. Für die 2. Ableitung ergibt sich:\\
+$f''(x) = -\frac{(F_{xx} \cdot 1 + F_{xy} \cdot y')\cdot F_y - F_x (F_{yx}\cdot 1 + F_{yy} \cdot y')}{F_y^2}$\\
+$\overset{y'=-\frac{F_x}{F_y}}{\Longrightarrow} \boxed{f''(x)=-\frac{F_{xx}F_y^2-2F_{xy}F_xF_y+F_{yy}F_x^2}{F_y^3}}$
+
+\paragraph{Def. 2:} Gegeben sei $f:Db(f) \to \RR, \; Db(f) \subseteq \RR^2$. Die vektorwertige Funktion (Vektorfeld) $\nabla f: Db(f) \to \RR^2$ $\nabla f(x,y) := \mtr{f_x(x,y)\\ f_y(x,y)}$ heißt \emph{Gradient} von $f$.\\
+Ist $f: Db(f) \to \RR$ mit $Db(f) \subseteq \RR^n$, so ist $\nabla f: Db(f)\to \RR^n$ $\nabla f(x_1,\dots, x_n)=\mtr{f_{x_1}(x_1,\dots, x_n)\\ \vdots \\ f_{x_n}(x_1,\dots, x_n)}$ der Gradient.
+
+\subparagraph{Bemerkung:} Häufig schreibt man auch $\mathrm{grad}f$ statt $\nabla f$.
+
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Eigenschaften des Gradienten und Anwendungen besprechen wir in Kapitel 5.4.1.
+\item Umkehrung: \\
+Gegeben: Vektorfeld $\vec{v}=\mtr{P(x,y)\\Q(x,y)}$\\
+Gesucht: Funktion $F$ mit $\vec{v}=\nabla F$ (d.h. die Ableitung ist vorgegeben, gesucht ist $F$)\\
+$F$ heißt dann Stammfunktion oder Potential von $\vec{v}$. Es existiert genau dann eine Stammfunktion $F(x,y)$ mit $F_x=P(x,y)$ und $F_y=Q(x,y)$, wenn 
+\begin{itemize}
+\item $F$ in einem \emph{einfach zusammenhängenden Gebiet} $G \subseteq \RR^2$ liegt und
+\item die sogenannten \emph{Integrabilitätsbedingungen} erfüllt: $P_y=Q_x$.
+\end{itemize}
+Ein Gebiet $G$ heißt einfach zusammenhängend, genau dann wenn jede geschlossene, doppelpunktfreie Kurve eindeutig auf einen Punkt zusammengezogen werden kann.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB151}
+\end{center}
+\end{enumerate}
+
+\section{Totale Differenzierbarkeit und Fehlerrechnung}
+\paragraph{Def. 1:} Die Funktion $f: Db(f) \to \RR, \; Db(f) \subseteq \RR^2$ heißt an der Stelle $(x_0,y_0)\in Db(f)$ total differenzierbar, falls es Konstanten $\alpha$ und $\beta$ gibt, so dass die lineare Abbildung $(h,k) \mapsto L(h,k) = \alpha h + \beta k$ die Abbildung $(h,k) \mapsto f(x_0 +h, y_0 + k) - f(x_0,y_0) $ approximiert. D.h. wenn für $R(h,k):= f(x_0+h, y_0 +k) - f(x_0,y_0) - L(h,k)$ der Grenzwert $\lim_{(h,k)\to (0,0)} \frac{R(h,k)}{\sqrt{h^2+k^2}}=0$ gilt.
+
+\paragraph{Satz 1:}
+\begin{anumerate}
+\item $f$ sei in Umgebung von $(x_0, y_0)$ stetig partiell nach $x$ und $y$ differenzierbar. Dann ist $f$ an der Stelle $(x_0,y_0)$ auch total differenzierbar.
+\item $f$ sei bei $(x_0,y_0)$ total differenzierbar. Dann ist $f$ an der Stelle $(x_0,y_0)$ partiell differenzierbar und es gilt $\alpha = f_x(x_0,y_0), \; \beta = f_y(x_0,y_0)$.
+\end{anumerate}
+
+\paragraph{Def. 2:} $\diffd{f}(x_0,y_0):=f_x(x_0,y_0)h+f_y(x_0,y_0)k$ heißt das zur Stelle $(x_0,y_0)$ und den Zuwächsen $h=\Delta x = \diffd{x}$ und $k=\Delta y = \diffd{y}$ gehörende \emph{totale Differential} von $f$. Die Summanden heißen partielle Differentiale.\\
+Schreibweise: $\diffd{f}=f_x \diffd{x}+f_y\diffd{y}$
+\subparagraph{Diskussion:} 
+\begin{enumerate}
+\item Es gilt $\Delta f := f(x_0+h, y_0+k) - f(x_0,y_0) = \diffd{f}+R(h,k)$.\\
+$\Rightarrow \Delta f \approx \diffd{y}$ (falls $|h|, \; |k|$ klein)\\
+$\Rightarrow$ Anwendung in der Fehlerrechnung: Absoluter Fehler\\
+$|\Delta f| \approx | \diffd{f}| \leq |f_x(x_0,y_0)| \cdot |\Delta h| + |f_y(x_0,y_0)|\cdot |\Delta y|$\\
+Mit den Fehlerschranken $S_f:=\max|\Delta f|$, $S_x:=\max|\Delta x|$, $S_y:=\max|\Delta y|$ gilt daher $S_f\approx |f_x(x_0,y_0)| \cdot  S_x + |f_y(x_0,y_0)| \cdot  S_y$ (lineares Fehlerfortpflanzungsgesetz)
+\item Geometrische Veranschaulichung
+\begin{itemize}
+\item $\Delta f$ ist Zuwachs der Funktion wenn $(x,y)$ von $(x_0,y_0)$ in $(x_0+\diffd{x}, y_0 + \diffd{y})$ übergeht
+\item $\diffd{f}$ ist der entsprechende Zuwachs der Tangentialebene (TE) an die Fläche $z=f(x,y)$ in $(x_0,y_0, z_0)$.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB152}
+\end{center}
+\end{itemize}
+\item Anwendung für die Fehlerrechnung: Übung
+\end{enumerate}
+
+\section{Weitere Begriffe, Anwendungen}
+\subsection{Richtungsableitung, Tangentialebenen}
+\paragraph{Def. 1:} $f(x,y)$ besitze in $(x_0,y_0)$ stetige partielle Ableitungen 1. Ordnung. Für jeden Vektor $\vec{s}=\mtr{s_1\\s_2}=|\vec{s}| \cdot \left(\cos (\alpha)\cdot \mtr{1\\0}+ \sin (\alpha) \mtr{0 \\ 1}\right)$ heißt \\
+$\frac{\partial f}{\partial s}(x_0,y_0):= \lim_{h\to 0} \frac{f(x_0+h \cos (\alpha) , y+h\sin (\alpha))-f(x_0,y_0)}{h}$ Richtungsableitung von $f$ an der Stelle $(x_0,y_0)$ in Richtung $\vec{s}$ (bzw. in Richtung $\alpha$).
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB153}
+\end{center}
+
+\subparagraph{Diskussion:} 
+\begin{enumerate}
+\item $\frac{\partial f}{\partial s}(x_0,y_0)$ ist der Flächenanstieg in Richtung $\vec{s}$.
+\item Speziell: \\
+$\vec{s}=\mtr{1\\0}$, d.h. $\alpha=0 \Rightarrow \frac{\partial f}{\partial s}=f_x$\\
+$\vec{s}=\mtr{0\\1}$, d.h. $\alpha=90^\circ \Rightarrow \frac{\partial f}{\partial s}=f_y$
+\end{enumerate}
+
+\paragraph{Satz 1:} (Berechnung der Richtungsableitung)\\
+Es gilt 
+\begin{align*}
+\frac{\partial f}{\partial s} (x_0,y_0) &= f_x(x_0,y_0) \cdot \cos \alpha + f_y (x_0,y_0) \cdot \sin \alpha \\
+&= \frac{f_x(x_0,y_0) \cdot s_1+f_y (x_0,y_0) \cdot s_2}{\sqrt{s_1^2+s_2^2}}\\
+&= \left( \nabla f(x_0,y_0) , \vec{s}^\circ \right)	\qquad \text{(das Skalarprodukt)}
+\end{align*}
+wobei $\vec{s}^\circ = \frac{s}{\sqrt{s_1^2+s_2^2}}$ die auf Länge 1 normierte Version von $s$ ist.
+
+\paragraph{Satz 2:} (Eigenschaften des Gradienten im Fall $z=f(x,y)$)\\
+Der Vektor $\nabla f(x_0,y_0)$
+\begin{anumerate}
+\item steht senkrecht auf (der Projektion in die x-y-Ebene) der Höhenlinie $f(x,y)=c$ zum Niveau $z=c=f(x_0,y_0)$.
+\item zeigt in die Richtung des stärksten Funktionszuwachses. Dieser ergibt sich mittels\\
+$\max_{\vec{s}} \frac{\partial f}{\partial s} (x_0,y_0) = | \nabla f(x_0,y_0)|$
+\end{anumerate}
+Anschaulich: $z=f(x,y)$
+
+\subparagraph{Diskussion:} Anwendung Tangentialebenengleichungen (TE)
+\begin{itemize}
+\item TE an die Fläche $F(x,y,z) = 0$ im Punkt $(x_0,y_0,z_0)$:\\
+$F_x(x_0,y_0,z_0) (x-x_0) + F_y(\dots)(y-y_0) + F_z(\dots)(z-z_0)=0$\\
+Denn: Fläche $F(x,y,z)=0$ ist eine Niveaufläche von $u=F(x,y,z)$ zum Niveau $0$.\\
+$\Rightarrow n:= \nabla F(x_0,y_0,z_0)$ ist ein Normalenvektor dieser Fläche\\
+$\Rightarrow$ Tangentialebene ist gegeben durch $\left(\vec{n}, \vec{r}-\vec{r}_0\right)=0$ (Skalarprodukt).\\
+D.h. $\left(\mtr{F_x(x_0,y_0,z_0)\\F_y(\dots)\\F_z(\dots)}, \mtr{x-x_0\\y-y_0\\z-z_0}\right) = 0$
+\item Speziell: $z=f(x,y) \Rightarrow$ TE in $(x_0,y_0,z_0)$.\\
+$z=z_0+f_x(x_0,y_0)(x-x_0) + f_y(x_0,y_0)(y-y_0)$\\
+Denn: $z=f(x,y) \Leftrightarrow 0 = f(x,y) -z =: F(x,y,z)$\\
+$\Rightarrow F_x=f_x, \; F_y=f_y,\; F_z = -1$
+\end{itemize}
+
+\subparagraph{Bsp. 1:} $z=f(x,y)=4-\frac{1}{9}(x^2+y^2), \; P_0=(3,-3)$ $\Rightarrow$ $z_0=2$
+\begin{anumerate}
+\item Gradient : $\nabla f = \mtr{-\tfrac{2}{9}x\\-\tfrac{2}{9}y}$\\
+$\nabla f(x_0,y_0)=\mtr{-\tfrac{2}{3}\\-\tfrac{2}{3}}$
+\item max. Funktionsanstieg in $(x_0,y_0)$:\\
+$|\nabla f(x_0,y_0)|=\sqrt{\tfrac{8}{9}}=0,9428$
+\item Tantentialebene in $(x_0,y_0,z_0)$:\\
+$z=2+(-\tfrac{2}{3})(x-3)+\tfrac{2}{3}(y+3)$\\
+$\Leftrightarrow 2x-2y+3z-18=0 \Leftrightarrow \frac{x}{9}-\frac{y}{9}+\frac{z}{6}=1$
+\end{anumerate}
+
+\subsection{Lokale Extrema (ohne Nebenbedingungen) von Funktionen zweier Veränderlicher}
+\paragraph{Def. 2:} $f: \RR^2\to \RR$ heißt in $(x_0,y_0)$ lokal $\begin{cases}
+\text{minimal}\\
+\text{maximal}
+\end{cases}$, wenn es eine Umgebung $U(x_0,y_0)$ gibt, so dass für alle $(x,y)\in U(x_0,y_0)\setminus (x_0,y_0)$ gilt $\begin{cases}
+f(x,y) > f(x_0,y_0)\\
+f(x,y) < f(x_0,y_0)
+\end{cases}$
+\subparagraph{Diskussion:} Anschaulich:
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB154}
+\end{center}
+TE liegt parallel zur x-y-Ebene.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB155}
+\end{center}
+Bezeichnungen: 
+\begin{itemize}
+\item $(x_0,y_0)$ … Extremstelle
+\item $z_0=f(x_0,y_0)$ … Extremwert
+\item $(x_0,y_0,z_0)$ … Extrempunkt
+\end{itemize}
+Offensichtlich ist der Funktionsanstieg (Richtungsableitung) für alle Richtungen $=0$. Daher auch $f_x(x_0,y_0)=0=f_y(x_0,y_0)$.
+\paragraph{Satz 3:} (Notwendige Bedingungen für lokale Extrema)\\
+$f: \RR^2\to \RR$ sei an der Stelle $(x_0,y_0)$ lokal und partiell differenzierbar. Dann gilt :\\
+$f_x(x_0,y_0)=0$\\
+$f_y(x_0,y_0)=0$
+\paragraph{Satz 4:} (Hinreichende Bedingung für lokale Extrema)
+\begin{enumerate}
+\item $f(x,y)$ besitze in $U(x_0,y_0)$ stetige partielle Ableitungen bis zur 2. Ordnung.
+\item Die notwendige Bedingung $f_x(x_0,y_0)=0=f_y(x_0,y_0)$ sei erfüllt.
+\end{enumerate}
+Dann gilt mit $D(x,y):= f_{xx}f_{yy}-f_{xy}^2=\dtr{f_{xx} & f_{xy}\\f_{yx} & f_{yy}}$\\
+$\boxed{D(x_0,y_0)>0} \Rightarrow$ $f$ in $(x_0,y_0)$ lokal extremal und insbesondere 
+\begin{itemize}
+\item lokal minimal, falls zusätzlich $f_{xx}(x_0,y_0) >0$.
+\item lokal maximal, falls zusätzlich $f_{xx}(x_0,y_0) <0$.
+\end{itemize}
+Beachte: $D(x,y)$ wird Diskriminante genannt.
+
+\subparagraph{Diskussion:} 
+\begin{enumerate}
+\item $D(x_0,y_0)>0 \Rightarrow f_{xx}(x_0,y_0)$ und $f_{yy}(x_0,y_0)$ haben beide das gleiche Vorzeichen.\\
+Daher kann die Bedingung an $f_{xx}$ durch die gleiche Bedingung an $f_{yy}$ ersetzt werden.
+\item Allgemeine Vorgehensweise zur Bestimmung von lokalen Extrema von $f(x,y)=z$:
+\begin{anumerate}
+\item Gleichungssystem $f_x=0$, $f_y=0$ lösen.\\
+$\rightsquigarrow$ liefert extremwertverdächtige Stellen $P_E=(x_E, y_E)$
+\item Für diese Stellen $P_E=(x_E,y_E)$ Diskriminante berechnen.\\
+1. Fall: $D(x_E,y_E)>0 \Rightarrow$ Extremum $f_{xx}\begin{cases}
+>0 & \text{… Minimum}\\
+<0 & \text{… Maximum}
+\end{cases}$\\
+2. Fall: $D(x_E, y_E)=0 \Rightarrow$ gesonderte Untersuchung notwendig\\
+3. Fall: $D(x_E,y_E)<0 \Rightarrow$ kein Extremum, sondern ein Sattelpunkt (im engeren Sinn).
+\end{anumerate}
+Allgemein: Stationäre Stellen, die keine Extrema sind werden als Sattelstellen bezeichnet.
+\subparagraph{Bsp. 2:} $z=f(x,y)=2xy^2-2x^2-y^2+4$
+\begin{anumerate}
+\item $f_x(x,y)=2y^2-4x\overset{!}{=}0$\\
+$f_y(x,y)=4xy-2y \overset{!}{=}0$\\
+aus $f_y$: $\Rightarrow 0 = \underset{y=0}{2y}\underset{x=\tfrac{1}{2}}{(2x-1)}$\\
+aus $f_x$: $\Rightarrow x=0, y=\pm 1$\\
+$\Rightarrow$ Extremwertverdächtige Stellen: $P_1(0,0), \; P_2=(\tfrac{1}{2},1), \; P_3=(\tfrac{1}{2},-1)$
+\item $f_{xx}=-4$, $f_{yy}=4x-2$, $f_{xy}=4y$\\
+$\Rightarrow D(x,y) = -4(4x-2-(4y)^2$\\
+Nun die Punkte einsetzen:\\
+$P_1:$ $D(0,0)=8>0$ $\Rightarrow$ Extremum $f_{xx}<0$ $\Rightarrow$ Maximum\\
+$P_2:$ $D(\tfrac{1}{2},-1)=-16<0$ $\Rightarrow$ Sattelpunkt\\
+$P_3:$ $D(\tfrac{1}{2},-1)=-16<0$ $\Rightarrow$ Sattelpunkt
+\end{anumerate}
+\item Sattelstellen anschaulich:
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB156}
+\end{center}
+\item Im Falle $D(x_E, y_E)=0$ ist eine gesonderte Untersuchung notwendig.\\
+Bspw. Einschränkung des Definitionsbereichs auf Kurven , die durch $(x_E, y_E)$ verlaufen. Genau dann, wenn \emph{alle} diese Einschränkungen ein Maximum bei $(x_E, y_E)$ aufweisen ist $(x_E, y_E)$ eine Maximumstelle von $f$.
+
+\subparagraph{Bsp. 3:} $z=f(x,y)=x^4-y^4$\\
+$f_x=4x^3\overset{!}{=}0$\\
+$f_y=-4y^3 = 0$\\
+$\Rightarrow x=0, \; y=0 \to P_E=(0,0)$\\
+$f_{xx}=12x^2, \; f_{yy}=-12y^2, \; f_{xy}=0$\\
+$\Rightarrow D(0,0)=0$\\
+Einschränkung auf Gerade $x=0 \Rightarrow z=-y^4$ $\to$ hat Maximum (Parabel unten offen)\\
+Einschränknug auf Gerade $y=0 \Rightarrow z = x^4$ $\to$ hat Minimum (Parabel oben offen)\\
+$\Rightarrow$ keine Extremstelle
+\item $z=f(x_1, \dots, x_n), \; \vec{x} \in B \subseteq \RR^4$
+\begin{itemize}
+\item notwendige Bedingung $\frac{\partial f}{\partial x}=0$ für alle $i=1,\dots, n$\\
+$\rightsquigarrow$ liefert mögliche Extremstelle $x_E$
+\item hinreichende Bedingung: \\
+Definiere die Hesse Matrix: $\vec{H}(\vec{x})=\left(\frac{\partial ^2 f}{\partial_x\partial_y}\right)_{i,j=1}^n$ (alle möglichen Ableitung von 2 Variablen)
+\begin{anumerate}
+\item Alle Eigenwerte von $\vec{H}(\vec{x})$ sind positiv $\Rightarrow x_E$ ist lokales Minimum
+\item Alle Eigenwerte von $\vec{H}(\vec{x})$ sind negativ $\Rightarrow x_E$ ist lokales Maximum
+\item Eigenwerte von $\vec{H}(\vec{x})$ sind sowohl positiv als auch negativ $\Rightarrow x_E$ ist Sattelpunkt (keine Extremstelle)
+\item Wenigstens ein $EW = 0$ ($\Leftrightarrow \det \vec{H}(\vec{x_E})=0$) $\Rightarrow$ gesonderte Betrachtung notwendig (außer es gilt gleichzeitig c.))\\
+Beachte für $n=2$:\\
+$\det (\vec{H}(\vec{x_E})-\lambda \vec{E})=(\lambda - \lambda_1)(\lambda-\lambda_2)$\\
+$\overset{\lambda = 0}{\Rightarrow} \det (\vec{H}(\vec{x_E}))=\lambda_1 \cdot \lambda_2 = D(x_E)$\\
+$\lambda_1 + \lambda_2=f_{xx}(x_E)+f_{yy}(x_E)$\\
+Damit ist diese Vorgehensweise für hinreichende Bedingung identisch mit der Fallunterscheidung in Diskussion aus 2.).
+\end{anumerate}
+\end{itemize}
+\end{enumerate}
+
+\subsection{Lokale Extrema mit Nebenbedingungen}
+Problem: Gesucht sind lokale Extrema von $z=f(x,y)$ unter der Nebenbedingung (NB) $g(x,y)=0$.\\
+Anschaulich:
+\begin{itemize}
+\item Fläche $z=f(x,y)$ wird mit Zylinderfläche $g(x,y)=0$ geschnitten.\\
+$\rightsquigarrow$ Schnittkurve $C$
+\item Gesucht sind Stellen $(x_0,y_0)$ auf der Kurve $g(x,y)=0$ an denen $C$ extremale Höhe über der x-y-Ebene besitzt.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB157}
+\end{center}
+\end{itemize}
+
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item $g(x,y)=0$ ist auffassbar…
+\begin{anumerate}
+\item als Kurve in x-y-Ebene $K=\{(x,y)\;|\; g(x,y)=0\}$
+\item als Zylinderfläche $\bot$ x-y-Ebene (Zylinderfläche wird erzeugt von einer ebenen Kurve $K$. Entlang dieser wird eine Gerade, die senkrecht auf der x-y-Ebene steht verschoben).
+\end{anumerate}
+\item Falls $g_y\not = 0 \Rightarrow g(x,y) = 0$ ist nach $y$ auflösbar, d.h. $y=y(x)$, damit $z=f(x,y(x)) \to$ Extrema berechnen. Notwendige Bedingung ist als $\frac{\diffd{z}}{\diffd{x}}=f_x+f_yy'=0$. Außerdem gilt $g(x,y(x))=0 \Rightarrow g_x+g_y y'=0$ mit $\vec{a}:= \mtr{ 1 \\ y'}\not =0, \; \vec{b}=\mtr{f_x\\f_y}, \; \vec{c}=\mtr{g_x\\g_y}$ gilt $(\vec{a}, \vec{b})=0$ und $(\vec{a}, \vec{c})=0$.\\
+$\Rightarrow \vec{b}+\lambda \vec{c}=0$ (mit geeignetem $\lambda \in \RR$)\\
+$\Leftrightarrow \boxed{f_x+\lambda g_x =0 \quad f_y+\lambda g_y=0}$ (falls $g_x\not =0$, analoges vorgehen)\\
+Dies ergibt die \emph{Lagrange-Methode}:
+\begin{anumerate}
+\item Bilde Lagrange Funktion:\\
+$F(x,y,\lambda)=f(x,y)+\lambda g(x,y)$\\
+unter Verwendung des Hilfsparameters $\lambda$.\\
+Beachte: NB muss in Form $g(x,y)=0$ gegeben sein.
+\item Es sei $(x_E, y_E)$ eine lokale Extremstelle von $z=f(x,y)$ unter der NB $g(x,y)=0$. Außerdem sollen $f$ und $g$ stetige partielle Ableitungen 1. Ordnung besitzen (in $U(x_0,y_0)$) und es gelte $\nabla g (x_E, y_E)\not = 0$ (d.h. $g_x(x_E,y_E)\not = 0 \vee g_y(x_E,y_E)\not =0$, denn dann kann NB nach $x$ oder $y$ aufgelöst werden). \emph{Dann} gibt es eine Lösung des Gleichungssystems 
+\begin{align*}
+F_x=0\\
+F_y=0\\
+F_z=0
+\end{align*}
+der Gestalt $(x_E, y_E, \lambda_E)$.
+D.h. die Lösungen des Gleichungssystems liefern stationäre Stellen (mögliche Extremstellen).\\
+\emph{Sonderfall}: Eventuell vorhandene Stellen $(x_0,y_0)$ mit $g(x_0,y_0)=g_x(x_0,y_0)=g_y(x_0,y_0)=0$ (sogenannte singuläre Punkte der Kurve $K$ $g(x,y)=0$) können Extremstellen sein, ohne dass sie sich aus dem Gleichungssystem ergeben. Diese müssen daher gesondert betrachtet werden.
+\item Untersuchung der stationären Stellen bspw. mittels
+\begin{itemize}
+\item Höhenlinienbild
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB158a}\\
+oder:
+\includegraphics[scale=.75]{Vorlesung/ABB158b}
+\end{center}
+\item geometrische Überlegung
+\item die hinreichende Bedingung:\\
+$D:= F_{xx}g_y^2-2F_{xy}g_xg_y+F_{yy}g_x^2$ mit $F=f+\lambda g$.\\
+Dann $D(x_E,y_E,\lambda_E)\begin{cases}
+<0 & \text{Maximum}\\
+>0 & \text{Minimum}
+\end{cases}$
+\end{itemize}
+\end{anumerate}
+\subparagraph{Bsp. 4:} $z=f(x,y)=x^2+y^2$ mit NB $x^2+\frac{y^2}{4}=1$
+\begin{anumerate}
+\item $F(x,y,\lambda) = \underbrace{x^2+y^2}_{f(x,y)}+\lambda \underbrace{\left(x^2+\frac{y^2}{4}-1\right)}_{g(x,y)}$
+\item \begin{align*}
+F_x &= 2x + 2\lambda x = 0\\
+F_y &= 2y + \frac{1}{2}\lambda y = 0\\
+F_\lambda &= x^2 + \frac{y^2}{4}-1=0
+\end{align*}
+Aus erster Gleichung: $\underbrace{2x}_{\to x=0} \underbrace{(1+\lambda)}_{\to \lambda = -1}=0$\\
+Fall $x=0$: $\overset{\text{3. Gl.}}{\Rightarrow} y=\pm 2, \; \lambda = \dots$\\
+Fall $\lambda = -1$: $\overset{\text{2. Gl.}}{\Rightarrow} 2y-\frac{1}{2}y=0 \Rightarrow y = 0 \overset{\text{3. Gl.}}{\Rightarrow} x=\pm 1$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB159}
+\end{center}
+Koordinaten für lokale Extrma sind also $P_1=(0,2), \; P_2=(0,-2), \;P_3=(-1,0),\; P_4=(1,0)$. Im Höhenlinienbild wird klar: $P_1$ und $P_2$ sind Maxima (mit Funktionswert $4$), $P_3$ und $P_4$ sind Minima (mit Funktionswert $1$).\\
+Beachte: Alternativ nutzt man das hinreichende Kriterium aus c.) (mit $D(x_E, y_E, \lambda_E)$).\\
+Also: Wenn möglich Bild Zeichen und als hinreichendes Kriterium nutzen oder das Kriterium aus c.) nutzen.
+\end{anumerate}
+\end{enumerate}
+
+\subparagraph{Bemerkung:} 
+\begin{enumerate}
+\item Für Funktionen $f(x_1,\dots, ,x_n)$ mit $n>2$ Veränderlichen und $k<n$ Nebenbedingungen $g:(x_1, \dots, x_n)=0$ analoges Vorgehen:\\
+Lagrange Funktion:\\
+$F(x_1,\dots, x_n, \lambda_1, \dots, \lambda_k)=f(x_1,\dots, x_n)+\lambda_1g_1(x_1,\dots,x_n)+\dots+\lambda_kg_k(x_1,\dots,x_n)$\\
+Die Bedingung 1.) wird dann zu \\
+$rang\left(\frac{\partial g_i}{\partial x_j}\right)_{\substack{i=1,\dots,k\\j=1,\dots,n}}=k$
+\item Falls NB eindeutig nach $k$ Veränderlichen auflösbar, dann Rückführung auf Problem \emph{ohne} NB mit $n-k$ Veränderlichen möglich.\\
+Vorsicht: in Bsp. 4 lösen wir nach $y$ auf: $y^2=4(1-x^2) \; \Rightarrow \; y=\pm\sqrt{4(1-x^2)}$\\
+Einsetzen liefert: $z=x^2+y^2=4-3x^2$\\
+$\frac{\diffd{z}}{\diffd{x}}=-6x \overset{!}{=} 0 \Rightarrow x=0$\\
+Es ergeben sich somit nur $P_1$ und $P_2$ und nicht alle Lösungen, da $y$ nicht eindeutig!
+\end{enumerate}

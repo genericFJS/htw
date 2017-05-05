@@ -1,0 +1,635 @@
+\section{Integrale über ebene Bereiche}
+\subsection{Begriff}
+\begin{itemize}
+\item Geg.: 
+\begin{enumerate}
+\item Beschränkter, abgeschlossener Bereich $B\subseteq \RR^2$
+\item Fläche $z=f(x,y) \geq 0$, $f$ stetig
+\end{enumerate}
+\item Ges.: Volumen $V$ des Körpers $K$ unter der Fläche über dem Bereich $B$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB160}
+\end{center}
+\item Idee: Zerlegung der Fläche $b$ in Teilbereiche $\Delta b$ $\rightsquigarrow$ Zerlegung von $K$ in Säulen mit dem Volumen $\Delta V $: $\Rightarrow V = \sum \Delta V_i \approx \sum f(\xi_i, \eta_i)\Delta b_i$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB161}
+\end{center}
+\item $f$ stetig, Verfeinerung, Grenzübergang $\rightsquigarrow$ Grenzwert $V$ existiert unabhängig von Zerlegungssäulen.
+\item Schreibweise: $\iint_B f(x,y)\intd{b}$ … Bereichsintegral
+\end{itemize}
+
+\subparagraph{Diskussion}
+\begin{enumerate}
+\item Einteilung von $B$ durch achsenparallele Geraden
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB162}
+\end{center}
+$\Rightarrow \diffd{b}=\diffd{x}\cdot \diffd{y}$\\
+$\Rightarrow$ Schreibweise: $\iint_B f(x,y)\intd{b}=\iint_B f(x,y)\intd{x}\intd{y}$
+\item Unabhängig von der geometrischen Bedeutung wird das Bereichsintegral auch für Funktionen mit negativen Funktionswerten definiert.
+\end{enumerate}
+
+\subsection{Reduktion auf Doppelintegrale}
+Gegeben seien zwei stetige Funktionen $\varphi_1(x)$ und $\varphi_2(x)$ mit $\varphi_1(x) \leq \varphi_2(x)$ für alle $ x \in [a,b]$.\\
+Der Bereich $B=\{(x,y)\;|\; a\leq x \leq b, \; \varphi_1(x)\leq y \leq \varphi_2(xy)\}$ heißt Normalbereich bezüglich der $x$-Achse.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB163}
+\end{center}
+Dann gilt:\\
+$\boxed{\iint_B f(x,y) \intd{b}=\int_a^b\left( \int_{\varphi_1(x)}^{\varphi_2(x)} f(x,y) \intd{y}\right) \intd{x}}$ (Klammern lässt man oft weg)
+
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Normalbereich bezüglich der $x$-Achse wird links und rechts begrenzt durch Koordinatenlinie $x=a, \; x=b$. Diese Begrenzungen können zu Punkten entarten.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB164}
+\end{center}
+Das Intervall $[a,b]$ ergibt sich durch Orthogonalprojektion von $B$ auf die $x$-Achse. Daraus ergeben sich die stets konstanten Grenzen $a$ und $b$ für die äußere Integration. Dagegen läuft $y$ in Abhängigkeit von $x$ nur von $\varphi_1(x)$ bis $\varphi_2(x)$ und nicht von $c$ bis $d$. Grenzen für das innere Integral hängen also im Allgemeinen von der äußeren Integrationsvariablen ab.
+\item Analog: Gegeben $\psi_1(y)\leq \psi_2(y), \; y\in [c,d]$ liefert Normalbereich bezüglich der $y$-Achse $B=\{(x,y)\;|\; c\leq y \leq d, \; \psi_1(y) \leq x  \leq \psi_2(y)\}$.\\
+Dann $\iint_B f(x,y)\intd{b}=\int_c^d\int_{\psi_1(y)}^{\psi_2(y)} f(x,y) \intd{x}\intd{y}$.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB165}
+\end{center}
+\item Oft sind beide Varianten möglich. Manchmal ist eine Zerlegung nötig.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB166}
+\end{center}
+\item Spezialfall: außen und innen konstante Grenzen $\Leftrightarrow$ $B$ ist achsenparalleles Rechteck. Hier ist die Integrationsreihenfolge egal. 
+\end{enumerate}
+
+\subparagraph{Bsp. 1:} Zu berechnen ist $I=\iint_B \frac{x}{y} \intd{b}$. $B$ werde begrenzt durch $y=x^2, \; x=2$ und $y=1$.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB167}
+\end{center}
+Variante 1: $B=\{(x,y)\;|\; 1\leq x \leq 2,\; 1\leq y \leq x^2\}$\\
+Variante 2: $B=\{(x,y)\;|\; 1\leq y \leq 4,\; \sqrt{y}\leq x \leq 2\}$\\
+Berechnen mit Variante 2:
+\begin{align*}
+I &= \int_1^4\int_y^2 \frac{x}{y}\intd{x}\intd{y}=\int_1^4\left[ \frac{x^2}{2y}\right]_{\sqrt{y}}^2\intd{y}\\
+&=\int_1^4\frac{2^2}{2y}-\frac{y}{2y}\intd{y}=\int_1^4 \frac{2}{y}-\frac{1}{2}\intd{y}\\
+&=\left[ 2 \ln|y| - \frac{1}{2}y\right]_1^4=2\ln(4)-2-2\ln(1)+\frac{1}{2}\\
+&= 2 \ln 4- \frac{3}{2}=1,2726
+\end{align*}
+
+\subsection{Anwendungen}
+\begin{tabular}{L{0.5} | L{0.4}}
+Volumen $V$ unter $z=f(x,y)\geq 0$ über $B$ & $V=\iint_B f(x,y) \intd{b}$\\
+\hline
+Flächeninhalt $[B]$ von $B$ & $[B]=\iint_B 1 \intd{b} = \iint_b \intd{b}$\\
+\hline
+geometrischer Schwerpunkt $(x_s, y_s)$ von $B$ & $x_s=\frac{1}{[B]}\iint_B x \intd{b}, \; y_s=\frac{1}{[B]}\iint_B y \intd{b}$\\
+\hline 
+Integralmittelwert $m$ von $f$ auf $B$ & $m=\frac{1}{[B]}\iint f(x,y) \intd{b}$
+\end{tabular}
+
+\subsection{Koordinatentransformation}
+\begin{itemize}
+\item Ziel: Durch neue Koordinaten (z.B. $u$ und $v$) möglichst einfache Grenzen erzeugen. Günstig ist es, wenn möglichst viele Begrenzungen von $B$ auf Koordinatenlinien liegen ($u=cost$ oder $v=const$).
+\item Besonders wichtig: Polarkoordinaten $x=r\cos \varphi,\; y=r\sin \varphi$. Koordinatenlinien sind dann $r=const, \; \varphi = const$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB168}
+\end{center}
+Anwendung falls $B$ Kreisbereich, Kreissektor, Kreisring, … mit Mittelpunkt $0$ ist.\\
+Das Bereichselement ist dann ebenfalls durch die neuen Koordinaten auszudrücken:\\
+$\boxed{\diffd{b}=r\intd{r}\intd{\varphi}}$
+\end{itemize}
+
+\subparagraph{Bsp. 2:} Gesucht ist das Volumen $V$ des Körpers begrenzt durch den Rotationsparaboloid $z=4-(x^2+y^2)$ und der x-y-Ebene ($z=0$).\\
+Schnittkurve $(z=0)$: $4=x^2+y^2$ (Kreis in x-y-Ebene)
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB169}
+\end{center}
+$B$ in Polarkoordinaten: $x=r\cos \varphi, \; y=r\sin\varphi$ mit $r\in[0,2], \; \varphi \in [0,2\pi)$
+\begin{align*}
+\Rightarrow V &= \iint_B 4-(x^2+y^2)\intd{b}= \int_0^2 \int_0^{2\pi} (4-r^2)\underbrace{r \intd{\varphi} \intd{r}}_{\diffd{b}}\\
+&= \int_0^2 \int_2^{2\pi} (4r-r^3) \intd{\varphi}\intd{r}=\int_0^2(4r-r^2)[\varphi]_0^{2\pi} \intd{r}\\
+&= 2\pi \int_0^2 4r-r^3\intd{r}=2\pi [2r^2-r^4]_0^2\\
+&= 8 \pi
+\end{align*}
+\subsubsection{Allgemeine Koordinatentransformationen}
+geg.: $\boxed{x=x(u,v) ,\; y=y(u,v)}$
+\paragraph{Def.:} $\frac{\partial (x,y)}{\partial (u,v)} := \dtr{x_u & x_v\\ y_u & y_v}$ heißt \emph{Funktionaldeterminante} der gegebenen Transformation.\\
+Es ergibt sich für das Bereichsintegral $\intd{b}=|\dtr{x_u & x_v\\ y_u & y_v}| \intd{u} \intd{v}$. Falls $\frac{\partial (x,y)}{\partial (x,y)}$ erhält man durch das gegebene eine umkehrbare Abbildung $(x,y) \in B \leftrightarrow (u,v) \in B'$. Für das Bereichsintegral gilt in den neuen Koordinaten $\boxed{I=\iint_B f(x,y) \intd{b}= \iint_{B'}f(x(u,v), y(u,v)) \left| \frac{\partial (x,y)}{\partial (u,v)}\right| \intd{u}\intd{v}}$
+
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Funktionaldeterminante bei Polarkoordinaten $x=r\cos \varphi, \; y=r\sin \varphi$:\\
+$\frac{\partial (x,y)}{\partial (x,y)}=\dtr{x_r & x_\varphi \\ y_r & y_\varphi}=\dtr{\cos \varphi & - r \sin \varphi \\ \sin \varphi & r \cos \varphi} = r \cos ^2\varphi + r \sin^2 \varphi = r$\\
+$\intd{b}=r\intd{r}\intd{\varphi}$
+\item Bei Kreisbereichen mit Mittelpunkt $(x_0,y_0)$ verwendet man sogenannte allgemeine Polarkoordinaten mit Pol $(x_0,y_0)$: $x=x_0+r\cos \varphi,\; y=y_0+r\sin\varphi$\\
+Dann gilt: $\boxed{\intd{b}=r\intd{r}\intd{\varphi}}$
+\end{enumerate}
+
+\subparagraph{Bsp. 3:} Gesucht: Geometrischer Schwerpunkt $S$ der Kreishalbfläche begrenzt von $x^2+y^2=R^2$ ($y\geq 0$).
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB173}
+\end{center}
+Polarkoordinaten:\\
+$x=r\cos \varphi\\
+y=r\sin \varphi\\
+r\in [0,R]\\
+\varphi\in[0,\pi]$
+\begin{itemize}
+\item Flächeninhalt: $[B]=\iint_B \intd{b} = \int_0^R \int_0^{\pi} r \intd{\varphi}\intd{r}= \pi\int_0^R r \intd{r}=\pi\frac{R^2}{2}$
+\item $x_s=0$ (aus Symmetriegründen)
+\item $y_s=\iint_B y \intd{b}=\int_0^R\int_0^\pi \underbrace{r \sin \varphi}_{y}\cdot r \intd{\varphi} \intd{r}=\int_0^R r^2[-\cos \varphi]_0^\pi \intd{r}=2\frac{R^3}{3}$\\
+$\Rightarrow y_s=\frac{\frac{2}{3}R^2}{\frac{\pi}{2}R^2}=\frac{4}{3}\pi R = 0,424 R$
+\end{itemize}
+$\Rightarrow (x_s,y_s)=\left(0,\frac{4}{3\pi}R\right)$ ist der Schwerpunkt.
+
+\subparagraph{Bsp. 4:} Gesucht: Flächeninhalt innerhalb einer Ellipse $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB174}
+\end{center}
+Parameterdarstellung:\\
+$x=a\cos v\\
+y=b\sin v\\
+v\in [0,2\pi]$
+\begin{itemize}
+\item elliptische Polarkoordinaten:\\
+$x=x(u,v)=a\cdot u \cdot \cos v\\
+y=y(u,v) = b\cdot u \cdot \sin v$
+$\Rightarrow B=\{(x,y)\;|\; x=a\,u\cos v,\; y = b\, u \sin v,\; u\in[0,1], \; v \in [0,2\pi]\}$
+\item Funktionaldeterminante:\\
+$\frac{\partial (x,y)}{\partial (u,v)}=\dtr{x_u& x_v \\ y_u & y_v}=\dtr{a \cos v & - a\,u \sin v\\ b \sin v & b \, u \cos v}=a\,b\,u$\\
+$\Rightarrow \intd{b}=a\,b\,u\intd{u}\intd{v}\\
+\Rightarrow [B]=\iint_B \intd{b}=\int_0^1\int_0^{2\pi} a \, b \, u \intd{v}\intd{u}=\pi \, a \, b$
+\end{itemize}
+
+\section{Oberflächenintegrale}
+\subsection{Flächen im Raum}
+Erinnerung:
+\begin{itemize}
+\item $x,y,z$ … karthesische Koordinaten
+\item $r, \varphi, z$ … Zylinderkoordinaten ($r$: Abstand von z-Achse, $x=r\cos \varphi$, $y=r\sin \varphi$)
+\item $r, \varphi, \vartheta$ … ($r$: Abstand vom Koordinatenursprung, $x=r\sin \vartheta \cos \varphi, \;y=r\sin\vartheta\sin\varphi, \;z=r\cos\vartheta$)
+\end{itemize}
+Flächendarstellungen:
+\begin{itemize}
+\item $z=f(x,y)$ … explizite karthesische Darstellung
+\item $F(x,y,z)=0$ … implizite karthesische Darstellung
+\item $x=x(u,v), \; y=y(u,v), \; z=z(u,v)$ … Parameterdarstellung
+\item $z=f(r,\varphi)$ … explizite Darstellung in Zylinderkoordinaten\\
+speziell:
+\begin{itemize}
+\item $z=f(r,\varphi)=g(r), \; r\in I\subset [0,\infty], \; \varphi\in[0,2\pi]$\\
+Rotationsfläche um z-Achse
+\item $z=f(r,\varphi)=g(\varphi), \; r \in I_1\subseteq[0,\infty], \; \varphi \in I_2\subseteq \RR$\\
+Wendelflächen
+\end{itemize}
+\end{itemize}
+
+\subsection{Oberflächenelement, Berechnung und Anwendung}
+\begin{itemize}
+\item geg.: Fläche $\vec{r}=\mtr{x(u,v)\\y(u,v)\\z(u,v)}, \; (u,v) \in B$.\\
+Analog zu ebenen Bereichsintegralen ergibt sich $\diffd{F}=|\vec{r}_u\times \vec{r}_v| \intd{u}\intd{v}$ (skalares Oberflächenelement)
+\item Oberflächenintegral (über Skalarfeld):\\
+$\iint_F f(x,y,z)\intd{F}=\iint_B f(x(u,v),y(u,v),z(u,v))\cdot |\vec{r}_u\times \vec{r}_v| \intd{u}\intd{v}$
+\item Anwendung(analog zu Bereichsintegralen)\\
+\begin{tabular}{L{0.5} | L{0.4}}
+Flächeninhalt $[F]$ von $F$ & $[F]=\iint_F \intd{F}$\\
+\hline
+geometrischer Schwerpunkt $(x_s,y_s,z_s)$ & $x_s = \frac{1}{[F]}\iint_F x \intd{F}$\\&$y_s = \frac{1}{[F]}\iint_F y \intd{F}$\\&$z_s=\frac{1}{[F]}\iint_F z \intd{F}$\\
+\hline
+Integralmittelwert $m$ von $f$ auf $F$ & $m=\frac{1}{[F]}\iint_F f(x,y,z) \intd{F}$
+\end{tabular}
+\end{itemize}
+\subsubsection{Berechnung von dF für spezielle Flächenelemente}
+\begin{itemize}
+\item $z=f(\underbrace{x}_u,\underbrace{y}_v) \Rightarrow$ Parameterdarstellung: \\
+$\vec{r}=\mtr{x\\y\\z}=\mtr{u\\v\\f(u,v)}$\\
+$\vec{r}_u=\mtr{1\\0\\f_u}$\\
+$\vec{r}_v=\mtr{0\\1\\f_v}$\\
+$|r_u\times r_v| = | \dtr{\vec{i} & 1 & 0\\\vec{j} & 0 &1\\\vec{k} & f_u & f_v}|=|\mtr{-f_u\\-f_v\\1}|=\sqrt{f_u^2+f_v^2+1}=\sqrt{1+f_x^2+f_y^2}$\\
+wobei $\vec{i}=\mtr{1\\0\\0}, \; \vec{j}=\mtr{0\\1\\0}, \; \vec{k}=\mtr{0\\0\\1}$
+\item $z=f(\underbrace{u}_u, \underbrace{\varphi}_v) \Rightarrow$ Parameterdarstellung:\\
+$\vec{r}=\mtr{x\\y\\z}=\mtr{u \cos v\\u\sin v \\ f(u,v)}$\\
+$\vec{r}_u=\mtr{\cos v\\\sin v\\f_u}$\\
+$\vec{r}_v=\mtr{-u\sin v\\ u \cos v \\ f_v}$\\
+$\Rightarrow |r_u\times r_v| = | \dtr{\vec{i} & \cos v & -u\sin v\\\vec{j} & \sin v &u\cos v\\\vec{k} & f_u & f_v}|=\sqrt{u^2(1+f_u^2)+f_v^2}=\sqrt{r^2(1+f_r^2)+f_\varphi^2}$
+\item Kugel mit MP $0$ und Radius $R$\\
+Kugelkoordinaten: $r=R=const$\\
+Parameterdarstellung: \\
+$x=R \sin \vartheta \cos \varphi$\\
+$y=R \sin \vartheta \sin \varphi$\\
+$z=R \cos \vartheta$\\
+$\varphi \in [0,2\pi], \; \vartheta\in [0,\pi]$\\
+$\Rightarrow \vec{r}=\mtr{x=R \sin \vartheta \cos \varphi\\
+y=R \sin \vartheta \sin \varphi\\
+z=R \cos \vartheta}$\\
+$\vec{r}_\vartheta=\mtr{R \cos \vartheta \cos \varphi\\r\cos\vartheta \sin \varphi\\-R\sin\vartheta}$\\
+$\vec{r}_\varphi = \mtr{-R \sin \vartheta \sin \varphi \\ R \sin\vartheta \cos \varphi\\0}$\\
+$\Rightarrow|r_\vartheta \times r\varphi|=\dots = \sqrt{R^4\sin^4\vartheta + R^4\cos^2\vartheta \sin^2 \vartheta}=R^2\sin\vartheta$
+\end{itemize}
+\paragraph{Zusammenfassung:}\parskp
+\begin{tabular}{L{0.5} | L{0.4}}
+Fläche & $\diffd{F}$\\
+$z=f(x,y)$ … expl. karth. Darstellung & $\diffd{F}=\sqrt{1+f_x^2+f_y^2}\intd{x}\intd{y}$\\
+$z=f(r,\varphi)$ … expl. zyl. Darstellung & $\diffd{F}=\sqrt{r^2(1+f_r^2)+f_\varphi^2}\intd{r}\intd{\varphi}$\\
+Speziell für Rotationsflächen $z=f(r,\varphi)=g(r), \; \varphi \in [0,2\pi]$ & $\diffd{F}=r\sqrt{1+(g'(r))^2}\intd{r}\intd{\varphi}$\\
+Kugel MP $0$, Radius $R$ & $\diffd{F}=R^2\sin \vartheta \intd{\varphi}\intd{\vartheta}$
+\end{tabular}
+\subparagraph{Bsp. 1:} Man berechne den Schwerpunkt der Kugelteilfläche $x^2+y^2+z^2=R^2, \; z\geq \frac{R}{2}$ (Kugelkappe)
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB175}
+\end{center}
+$\cos \vartheta_1=\frac{1}{2}\Rightarrow \vartheta_1=60^\circ = \frac{\pi}{3}$
+\\
+$\Rightarrow $ Parameterdarstellung:\\
+$x=R \sin\vartheta \cos \varphi$\\
+$x=R \sin\vartheta \sin \varphi$\\
+$z=R\cos \vartheta$\\
+$0\leq \varphi \leq 2\pi,\; 0 \leq \vartheta \leq \frac{\pi}{3}$
+\begin{itemize}
+\item Inhalt von F: $[F]=\iint_F \intd{F}=\int_0^{\frac{\pi}{3}}\int_0^{2\pi}R^2\sin\vartheta\intd{\varphi}\intd{\vartheta}\\
+=2\pi\int_0^{\frac{\pi}{3}}R^2\sin\vartheta \intd{\vartheta}=2\pi R^2[-\cos\vartheta]_0^{\frac{\pi}{3}}=\pi R^2$
+\item Aus Symmetriegründen gilt $x_s=y_s=0$
+\item $z_s=\frac{1}{[F]}\iint_F z \intd{F}=\frac{1}{[F]}\int_0^{\frac{\pi}{3}}\int_0^{2\pi}\underbrace{R \cos \vartheta}_{z} \underbrace{R^2 \sin \vartheta \intd{\varphi}\intd{\vartheta}}_{\intd{F}}$\\
+$=\frac{1}{\pi R^2}2\pi R^3\int_0^{\frac{\pi}{3}}\sin\vartheta \cos \vartheta\intd{\vartheta}$\\
+$=2R\left[\frac{\sin^2\vartheta}{3}\right]_0^{\frac{\pi}{3}}=\frac{3}{4}R$
+\end{itemize}
+$\Rightarrow (x_s,y_s,z_s)=\left(0,0,\frac{3}{4}R\right)$ ist der Schwerpunkt.
+
+\chapter{Gewöhnliche Differentialgleichungen}
+\section{Grundbegriffe}
+Vorbetrachtung:
+\subparagraph{Bsp. 1:}
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB182}
+\end{center}
+Lassen wir die Feder los, so kommt es zur Schwingung;
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB183}
+\end{center}
+Gesucht ist Zeitverlauf $y=y(t)$ der Bewegung der Punktmasse. Dazu nutzen wir das Grundgesetz der Mechanik:
+\begin{align*}
+\text{Kraft} &= \text{Masse} \cdot \text{Beschleunigung}& \\
+K &= m \cdot \ddot{y}
+\end{align*}
+bspw. freie (d.h. ohne äußere Kraft) und ungedämpfte (d.h. ohne Reibung) Schwingung:\\
+$K=-C_F \cdot y$ (Hooksches Gesetz)\\
+$\Rightarrow m \cdot \ddot{y}=-C_f \cdot y$ ($\leftarrow$ Differentialgleichung)\\
+mit $y(0)=y_0$ (Startpunkt $y_0$) und $\dot{y}(0)=0$ (Startgeschwindigkeit $0$) ($\leftarrow$ Anfangsbedingungen).\\
+Begriffe:\\
+Eine Differentialgleichung (DGL) ist eine Bestimmungsgleichung für eine unbekannte Funktion, die mindestens eine Ableitung der gesuchten Funktion enthält.\\
+2 Grundarten:
+\begin{enumerate}
+\item Gesuchte Funktion $y=y(x)$, d.h. \emph{eine} unabhängige Veränderliche $\Rightarrow$ \emph{gewöhnliche DGL}
+\item Gesuchte Funktion $u=u(x,y)$ bzw. $u=u(x_1, x_2,\dots, x_n)$ d.h. mindestens 2 unabhängige Veränderliche $\Rightarrow$ Ableitungen sind partielle Ableitungen $\Rightarrow$ \emph{Partielle DGL}
+\end{enumerate}
+\subparagraph{Bsp. 2:} $y'=x^2$, gewöhnliche DGL für die Funktion $y=y(x)$.\\
+Lösung: $y=\int x^2 \intd{x}=\frac{1}{3}x^3+C$ d.h. die Lösung ist eine Kurvenschar mit einem freien Parameter $C$.
+\subparagraph{Bsp. 3:} $u_x=x\cdot y$ … partielle DGL\\
+Lösung: $u=\frac{x^2}{2}y+C(y)$\\
+Bemerkung: Im folgenden nur gewöhnliche DGL.\medskip\\
+Allgemeine Form einer gewöhnlichen DGL $n$-ter Ordnung:
+\begin{itemize}
+\item implizit: $F(x,y,y',\dots,y^{(n)}=0$ (höchste vorkommende Ableitung $\Rightarrow$ Ordnung $n$)
+\item explizit: $y^{(n)}=f(x,y,y',\dots,y^{(n-1)})$ (aufgelöst nach der höchsten Ableitung)
+\end{itemize}
+\begin{itemize}
+\item Die \emph{allgemeine Lösung} ist eine Kurvenschar \emph{mit $n$ Paramtern} (Integrationskonstanten)
+\item Anfangswertproblem (AWP): $n$ zusätzliche Bedingungen: \\
+$y(x_0)=a_0, \; y'(x_0)=a_1, \dots, y^{(n-1)}(x_0)=a_{n-1}$ (Anfangsbedingungen: Funktionswert und Ableitung an fester Stelle $x_0$ vorgegeben, siehe Bsp. 1)
+\end{itemize}
+\section{Differentialgleichungen 1. Ordnung}
+Allgemeine Form: $F(x,y,y')=0$ (implizit) bzw. $y'=f(x,y)$ (explizit)
+\subsection{Geometrische Interpretation}
+Gegeben $y'=f(x,y), \; (x,y) \in B$\\
+Richtungsfeld: In jedem Punkt $(x,y)\in B$ wird die Richtung mit dem Anstieg $f(x,y)=\tan \alpha$ markiert.
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB184}
+\end{center}
+Gesucht: Kurven $y=y(x)$, die sich diesem Richtungsfeld anpassen, d.h. in jedem Punkt $(x,y)$ den vorgegebenen Anstieg von $f(x,y)$ haben, also $y'=f(x,y)$.\\
+(\emph{Lösungskurven der DGL})
+
+\subsection{DGL mit trennbaren Variablen}
+\begin{tabular}{L{0.49} L{0.49}}
+Typ: $y'=f(x) \cdot g(y)$ & Bsp. 1: $y'=x\cdot y^2$, $y(1)=-2$\\
+\hline
+Lösungsmethode &\\
+1. Gleichung aufstellen & \\
+$\frac{\diffd{y}}{\diffd{x}}=f(x) \cdot g(y)$ & $\frac{\diffd{y}}{\diffd{x}}=x\cdot y^2$\\\hline
+2. Trennung der Veränderlichen & \\
+$\frac{\diffd{y}}{g(y)}= f(x) \intd{x}$ & $\frac{\diffd{y}}{y^2}= x \intd{x}$\\\hline
+3. beide Seiten integrieren:&\\
+$\int\frac{\diffd{y}}{g(y)}=\int f(x) \intd{x}$ & $\int\frac{\diffd{y}}{y^2}=\int x \intd{x}$\\
+$G(y) = F(x)+C$ ($G(y)$: Stammfunktion von $\frac{1}{g(y)}$)& $-\frac{1}{y}=\frac{x^2}{2}+C$\\
+(allgemeine Lösung, implizit)\\\hline
+4. Falls möglich: Auflösen nach $y$&\\
+$y=y(x)=\varphi(x,C)$ & $y=-\frac{1}{\frac{x^2}{2}+C}$\\
+(allgemeine Lösung, explizit)\\\hline
+5. Untersuchen von $g(y)=0$ (Nebenlösungen)&\\
+& $y^2=0 \Leftrightarrow y=0$ (erfüllt ebenfalls die DGL: Nebenlösung)\\
+6. Bei AWP: AB erfüllen & \\
+& $x=1, \; y=-2$ einsetzen in DGL\\
+& $\frac{1}{2}=\frac{1}{2}+C \Rightarrow C=0$\\
+& Lösung des AWP: $y=-\frac{2}{x^2}$
+\end{tabular}
+
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Rechtfertigung des Lösungsschritts 3: \\
+$G(y)=F(x)+C$ nach $x$ Ableiten liefert:\\
+$\frac{\diffd{G}}{\diffd{y}}=\frac{\diffd{y}}{\diffd{x}}=\frac{\diffd{F}}{\diffd{x}}$\\
+$\Rightarrow \frac{1}{g(y)}\cdot y'=f(x)$\\
+$\Rightarrow y'=f(x) \cdot g(y)$\\
+$\Rightarrow G(y)=F(x)+C$ erfüllt die DGL 
+\item Spezialfälle:\\
+\begin{tabular}{l l l}
+$y'=f(x)$ & , d.h. & $g(y)=1$\\
+$y'=g(y)$ & , d.h. & $f(x)=1$\\
+$y'=\frac{f(x)}{h(x)}$ & , d.h. & $g(y)=\frac{1}{h(y)}$
+\end{tabular}
+\end{enumerate}
+\subparagraph{Bsp. 2:} Ein Körper habe zum Zeitpunkt $t=0$ die Temperatur $T_0=100^\circ \mathrm{C}$. Die Temperatur der umgebenen Luft sei $T_L=20^\circ\mathrm{C}$ (=const.). Zur Zeit $t_1=10$ (min) hat sich der Körper auf $T_1=60^\circ\mathrm{C}$ abgekühlt.
+\begin{anumerate}
+\item Man ermittle die Temperatur $T$ als Funktion der Zeit $t$.
+\item Zu welchem Zeitpunkt $t_2$ beträgt die Temperatur des Körpers $25^\circ \mathrm{C}$?
+\end{anumerate}
+Lösung:
+\begin{anumerate}
+\item Newtonsches Abkühlungsgesetz:\\
+\emph{Geschwindigkeit der Abkühlung} ist proportional zur \emph{Temperaturdifferenz zu Medium}\\
+$T=T(t)$ … Temperatur [in $^\circ \mathrm{C}$]\\
+$t$ … Zeit [in min]\\
+$\frac{\diffd{T}}{\diffd{t}}=\alpha\cdot (T-T_L)$ mit $T(t)=T_0$ und $T(10)=T_1$\\
+TdV, integrieren $\Rightarrow  \int \frac{\diffd{T}}{T-T_L}= \int\alpha \intd{t}$\\
+$\Rightarrow \ln|T-T_L| = \alpha t + C^*$\\
+$\Rightarrow |T-T_L| = e^{\alpha t}\cdot e^{C^*}$\\
+$\Rightarrow T-T_L = C \cdot e^{\alpha t}$ mit $C=\pm e^{C^*}$\\
+Beachte: $C$ ist zunächst $\not = 0$, da vorhandene NB $T-T_L=0$ ergibt sich, wenn man $C=0$ zulässt. Sie muss daher nicht extra angegeben werden.\\
+Also ist die allgemeine Lösung: $T=T_L+C\cdot e^{\alpha t}$\\
+AB liefern: $t=0, \; T=100$ $\Rightarrow C=80$\\
+Bestimmen von $\alpha$: $t=10, \; T=60$\\
+$60=20+80\cdot e^{\alpha 10}$\\
+$\Rightarrow \alpha = \frac{1}{10}\ln\frac{1}{2}<0$\\
+$\Rightarrow$ Lösung: $T=20+80e^{-t\frac{1}{10}\ln 2}$
+\item Auflösung nach $t$ liefert:\\
+$t=-10\frac{ln\frac{T-20}{80}}{\ln 2}$\\
+$\overset{T=T_2=25}{=}-10\frac{\ln\frac{5}{80}}{\ln 2}=40 [\mathrm{min}]$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB185}
+\end{center}
+\end{anumerate}
+
+\subsection{Lineare DGL 1. Ordnung}
+Normalform: $y'+a(x)y=h(x)$
+\begin{itemize}
+\item Falls $h(x)=0$: homogen
+\item Falls $h(x) \not = 0$: inhomogen
+\end{itemize}
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Linear bezieht sich auf $y$ und $y'$ (1. Potenz: die Faktoren hängen höchstens von $x$ ab. $x$, muss nicht linear sein). Nicht immer liegt die Normalform vor.\\
+Bsp.:
+\begin{itemize}
+\item $y'+x^2y-\sin x = 0$: linear, inhomogen ($h(x)=\sin x$)
+\item $x^2y' = y$: linear, homogen
+\item $y'+e^{xy}y=\cos x$: nicht linear
+\item $y'\cdot y = e^x$: nicht linear (Umstellen würde zu $y'-\tfrac{1}{y}e^x$ führen)
+\end{itemize}
+\item $h(x)$ heißt auch Störfunktion
+\item Lösungsmethode
+\begin{enumerate}
+\item Bestimmung der allgemeinen Lösung $y_h $ der zugehörigen homogenen DGL $y'+a(x)y=0$ mittels Trennung der Variablen.
+\item Bestimmung \emph{einer} partikulären Lösung $y_p$ der inhomogenen Gleichung mittels Variation der Konstanten.
+\item Allgemeine Lösung der inhomogenen DGL: $y=y_h+y_p$
+\item Falls AWP vorliegt: AB einsetzen.
+\end{enumerate}
+\end{enumerate}
+\subparagraph{Bsp. 3:} $y'+\frac{1}{x}y=x$ ist linear und inhomogen
+\begin{anumerate}
+\item zugehörige homogene DGL:\\
+$y'+\frac{1}{x}y=0 \Rightarrow \frac{\diffd{y}}{\diffd{x}}=-\frac{1}{x}y$\\
+$\overset{TdV}{\Rightarrow} \int \frac{\diffd{y}}{y}=\int - \frac{\diffd{x}}{x}$\\
+$\Rightarrow \ln |y| = - \ln | x | + C^*$\\
+$\Rightarrow |y| = e^{-\ln |x|}\cdot e^{C^*}=\frac{1}{|x|}\cdot e^{C^*}$\\
+$\Rightarrow y_h = C\cdot \frac{1}{x}$ mit $C = \pm e^{C^*}$\\
+wie in Bsp. 2 zunächst $C\not = 0$, Nebenlösung $y_h=0$ ergibt sich für $C=0$. Also $C\in \RR$ (beliebig).\\
+$y_h$ hat stets die Gestalt $\boxed{y_h=C\cdot \dots}$
+\item Ansatz: $y_p=C(x) \cdot \frac{1}{x}$ (heißt Variation der Konstanten $C \rightsquigarrow C(x)$)\\
+Damit $y_p'=C'(x)\frac{1}{x}-C(x) \frac{1}{x^2}$.\\
+Einsetzen des Ansatzes (einschließlich $y_p'$) in die inhomogene DGL:\\
+$C'(x)\frac{1}{x}\underbrace{-C(x)\frac{1}{x^2}+\frac{1}{x}C(x)\frac{1}{x}}_{=0}=x$\\
+$\Rightarrow C'(x)=x^2$\\
+$\Rightarrow C(x) = \frac{1}{3}x^3+K$ (setzen aber $K=0$)\\
+$\Rightarrow C(x) = \frac{1}{3}x^3$\\
+$\Rightarrow y_p = \frac{1}{3}x^3\cdot \frac{1}{x}=\frac{1}{3}x^2$
+\item $y=y_h+y_p=\frac{C}{x}+\frac{1}{3}x^2$
+\end{anumerate}
+
+\subsection{Weiter DGLn 1. Ordnung}
+\subsubsection{Ähnlichkeitsdifferentialgleichungen}
+\begin{anumerate}
+\item Typ $\boxed{y'=f\left(\frac{y}{x}\right)}$\\
+Lösung: Substitution $\frac{y}{x}=u=u(x)$, d.h. $y=u\cdot x$.\\
+Also $y'=u'x+u$.\\
+$\Rightarrow $ DGL mit trennbaren Variablen für $u=u(x)$\\
+$\rightsquigarrow$ Lösen $\rightsquigarrow$ Rücksubstitution
+\item Typ $\boxed{y'=y(ax+by+c)}$\\
+Lösung: Substitution $ax+by+c=u(x)$, d.h. $u'=a+by'$.\\
+Also $y'=\frac{1}{b}(u'-a)$.\\
+Dann weiteres vorgehen wie bei a.)
+\end{anumerate}
+\subparagraph{Bsp. 4:} Gesucht sind Kurven $y=y(x)$, die alle vom Ursprung ausgehende Strahlen unter dem gleichen Winkel $\alpha$ schneiden (isogonale Trajektionen).
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB186}
+\includegraphics[scale=.75]{Vorlesung/ABB187}
+\end{center}
+$y'=\tan (\varphi+\alpha)=\frac{\tan \varphi + \tan \alpha}{1-\tan \varphi \tan \alpha}=\frac{\frac{y}{x}+\tan \alpha}{1-\frac{y}{x}\tan \alpha}=:f\left(\frac{y}{x}\right)$\\
+Substitution: $u=\frac{y}{x}$, $y'=u'x+u=\frac{u+\tan \alpha}{1-u\tan \alpha}$\\
+$\Rightarrow u'x=\frac{u+\tan \alpha}{1-u\tan \alpha}-u=\frac{u^2\tan \alpha + \tan \alpha}{1-u\tan \alpha}$\\
+$\Rightarrow \frac{\diffd{u}}{\diffd{x}}\cdot x = \frac{u^2+1}{\cot \alpha -u}$\\
+$\overset{TdV}{\Rightarrow} \int \frac{\cot \alpha -u}{u^2+1}\intd{u}=\int \frac{\diffd{x}}{x}$\\
+$\Rightarrow \cot \alpha \cdot \arctan u - \frac{1}{2}\ln(u^2+1)=\ln|x| + C_1$\\
+Rücksubstitution: $\cot \alpha \cdot \arctan \frac{y}{x}=\frac{1}{2}\ln\left(\left(\frac{y}{x}\right)^2+1\right) + \ln|x| + C_1=\ln \sqrt{x^2+y^2}+C_1$\\
+Polarkoordinaten: $r=\sqrt{x^2+y^2}$\\
+$\tan \alpha = \frac{y}{x}$, d.h. $\varphi = \arctan \left( \frac{y}{x}\right)+k\pi$\\
+$\Rightarrow \cot \alpha \cdot \varphi = \ln r + C_2$\\
+$\Rightarrow r = C\cdot e^{\varphi \cot\alpha}$ mit $C=e^{-C_2}$\\
+… ist die logarithmische Spirale
+\subsubsection{Exakte Differentialgleichungen}
+Die DGL $P(x,y)+Q(x,y)y'=0$ mit $P_x=Q_y$ (in einem einfach zusammenhängenden Gebiet) heißt exakte DGL.\\
+Lösung:\\
+Unter den sogenannten Integrabilitätsbedingungen $P_y=Q_x$ existiert eine Stammfunktion $F(x,y)$ mit $F_x=P$ und $F_y=Q$ ($F$ ist bis auf eine additive Konstante eindeutig bestimmt). Die allgemeine Lösung der exakten DGL ist dann die Kurvenschar $\boxed{F(x,y)=C}$ (Höhenlinien von $F$).
+\subparagraph{Bemerkung:} Ist eine DGL in obiger Gestalt nicht exakt (d.h. $P_y\not = Q_x$), so gibt es oft einen integrierenden Faktor $M=M(x,y)$, so dass die DGL $P\cdot M+Q\cdot M\cdot y'=0$ exakt wird.
+
+\section{Lineare DGLn höherer Ordnung mit konstanten Koeffizienten}
+Allgemeine Form: $L(y):= y^{(n)}+a_{n-1}y^{(n-1)}+\dots + a_1y' + a_0 y = h(x)$
+\subsection*{Bestimmung einer allgemeinen Lösung} … $y_h$ der zugehörigen homogenen DGL $L(y)=0$.
+\paragraph{Satz 1:} Die Gleichung $L(y)=0$ besitzt $n$ linear unabhängige Lösungen $y_1(x),\dots, y_n(x)$. Die allgemeine Lösung der Gleichung ist dann $y_h=C_1y_1(x)+\dots + C_ny_n(x)$
+\subparagraph{Diskussion:} 
+\begin{enumerate}
+\item Die Menge $\{y_1,\dots,y_n\}$ heißt (ein) Fundamentalsystem (FS) von Lösungen der homogenen DGL.
+\item Mit dem Ansatz $y_h=e^{\lambda x}$ erhält man die charakteristische Gleichung $\lambda^n + a_{n-1}\lambda^{n-1}+\dots + a_1\lambda + a_0 = 0$
+\end{enumerate}
+\paragraph{Satz 2:} Jede $f$-fache Nullstelle $\lambda_0$ des charakteristischen Polynoms liefert die folgenden Funktionen des FS:\\
+$\lambda_0$ reell:\medskip\\
+$e^{\lambda_0 x}, x\cdot e^{\lambda_0x},x^2e^{\lambda_0x},\dots,x^{m-1}e^{\lambda_0x}$ ($m$ Funktionen)\\
+$\lambda_0=\alpha + i\beta$ ($\beta \not = 0$) komplex (dann ist auch $\lambda - i\beta$ eine $m$-fache Nullstelle):\medskip\\
+$e^{\lambda x }\cos (\beta x), xe^{\lambda x}\cos (\beta x), \dots, x^{m-1}e^{\lambda x} \cos (\beta x)$\\
+$e^{\lambda x} \sin (\beta x), xe^{\lambda x}\sin (\beta x), \dots, x^{m-1}e^{\lambda x} \sin (\beta x)$ ($2m$ Funktionen)
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Beispiele für die Zuordnung der Lösung der charakteristischen Gleichung $\to$ FS\\
+\begin{tabular}{l | l}
+Lösungen $\lambda_k$ der char. Gl. & FS\\
+$\lambda_1=0,\lambda_2=2, \lambda_3 = -1$ & $\{1, e^{2x},e^{-x}\}$\\
+\hline 
+$\lambda_{1,2}=0, \lambda_{3,4,5}=3$& $\{1, x, e^{3x}, xe^{3x},x^2e^{3x}\}$\\
+\hline
+$\lambda_{1,2}=2\pm 3i$ & $\{e^{2x}\cos (3x), e^{2x} \sin (3x) \}$\\
+\hline
+$\lambda_{1,2}=\pm i, \lambda_{3,4}=\pm i$ & $\{ \cos x, x \cos x, \sin x, x \sin x \}$
+\end{tabular}
+\item $\lambda_{1,2}=\alpha + i \beta$\\
+$\Rightarrow C_1 e^{(\lambda + i \beta)x }+C_2e^{(\alpha - i \beta)x}$\\
+$=C_1 e^{\alpha x} (\cos (\beta x) + i \sin (\beta x) ) + C_2 e^{\alpha x}(\cos (\beta x) - i \sin (\beta x))$\\
+$=\underbrace{(C_1+C_2)}_{C_1^*} e^{\alpha x} \cos (\beta x) + \underbrace{(C_1 - C_2)}_{C_2^*} i e^{\alpha x} \sin (\beta x)$\\
+(Dies erläutert die komplexe Lösung in Satz 2)
+\end{enumerate}
+\subsection*{Bestimmung einer partikulären Lösung} … der inhomogenen DGL\\
+\emph{1. Möglichkeit}: Variation der Konstanten (stets möglich)\\
+\emph{2. Möglichkeit}: Spezieller Ansatz mit unbestimmten Koeffizienten für häufig vorkommende Störfunktionen $\to$ Koeffizientenvergleich
+\paragraph{Satz 3:} 
+\begin{enumerate}
+\item Die Störfunktion $h$ habe die Gestalt $h(x) = e^{\alpha x}(p_1(x) \cos (\beta x) + p_2 (x) \sin (\beta x))$ wobei $p_1$  und $p_2$ Polynome mit maximalem Grad $r$ sind. 
+\item Sei $\varrho \geq 0$ die Vielfachheit von $\alpha + i \beta$ als Nullstelle des charakteristischen Polynoms $P(\lambda)$\\
+\emph{Fall 1:} $\varrho=0$ ($\Leftrightarrow \alpha + i \beta$ ist keine Nullstelle)\\
+$\Rightarrow L(y)=h(x)$ besitzt Partikulärlösung der Form\\
+$\boxed{y_p=e^{\lambda x} (Q_1 (x) \cos (\beta x) + Q_2(x) \sin (\beta x))}$\\
+wobei $Q_1, Q_2$ Polynome vom Grad $r$ mit unbestimmten Koeffizienten sind.\\
+\emph{Fall 2:} $\varrho >0$ (Resonanzfall)\\
+Dann hat $y_p$ die Form\\
+$\boxed{y_p=e^{\alpha x}(Q_1(x) \cos (\beta x) + Q_2(x) \sin (\beta x)) \cdot x^\varrho}$
+\end{enumerate}
+\subparagraph{Diskussion:}
+\begin{enumerate}
+\item Beispiel für die Zuordnung $h(x) \rightsquigarrow$ Ansatz für $y_p$\\
+\resizebox{.9\textwidth}{!}{
+\begin{tabular}{l | c | c | c | c | c | c | l }
+Lösung $\lambda_i$ der char. Gl. & $h(x)$ & $\alpha$ & $\beta$ & $\alpha + i\beta$ & $\varrho$  & $r$& Ansatz für $y_p$\\
+\hline
+$\lambda_{1,2,3}=0, \lambda_4=-1$ & $x^2+1$ & $0$ & $0$ & $0$ & $3$ & $2$ & $\underbrace{(Ax^2+Bx+C)}_{Q_1(x)}x^3=Ax^5+Bx^4+Cx^3$ \\
+$\lambda_1, \lambda_2 = 3$ & $4e^{-x}$ & $-1$ & $0$ & $-1$ & $0$ & $0$ & $Ae^{-x}$\\
+$\lambda_{1,2}=\pm 2 i , \lambda_3=3$ & $\sin(3x)$ & $0$ & $3$ & $3i$ & $0$ & $0$ & $A \cos (3x)+B\sin(3x)$\\
+$\lambda_1 = -2, \lambda_{2,3}=0$ & $x^3e^{-2x}$ & $-2$ & $0$ & $-2$ & $1$ & $3$ & $(Ax^3+Bx^2+Cx+D)e^{-2x} x$
+\end{tabular}
+}
+\item Falls die Störfunktion die Form $h(x)=h_1(x) + h_2(x) + \dots $ hat, so wählt man den Ansatz $y_p=y_{p_1}+y_{p_2}+\dots$ mit $y_{p_i}$ ist Partikulärlösung von $L(y)=h_i(x)$, $i=1,2,\dots$
+\end{enumerate}
+\subsection*{Lösung der DGL}
+$\boxed{y=y_h+y_p}$
+
+\subparagraph{Bsp. 1:} $y''-3y'=-\sin (3x)$
+\begin{anumerate}
+\item allgemeine Lösung:\\
+char. Gleichung: $\lambda^2-3\lambda = 0$\\
+$\Rightarrow \lambda_1=0, \; \lambda_2=3$\\
+$\Rightarrow$ FS ist $\{1,e^{3x}\}$\\
+$\Rightarrow y_h=C_1+C_2 e^{3x}$
+\item partikuläre Lösung:\\
+$h(x)=-\sin (3x) \Rightarrow \alpha = 0,\; \beta =3 \Rightarrow \alpha + i\beta = 3i \Rightarrow \varrho = 0, \; r=0$ ($3i$ keine Lösung der char. Gl.)\\
+Ansatz:\\
+$y_p=A\cos (3x) + B\sin (3x)$\\
+$y'_p=-3A\sin (3x) + 3B \cos (3x)$\\
+$y''_p=-9A\cos (3x) - 9B \sin (3x)$\\
+Einsetzen in inhomogene DGL:\\
+$-9A\cos (3x) - 9 B\sin (3x) + 9A\sin(3x) - 9 B \cos (3x) = -\sin (3x)$\\
+Koeffizientenvergleich:\\
+$\cos (3x)$: $-9A-9B=0$ $\Rightarrow A = -B$\\
+$\sin (3x)$: $-9B+9A=-1$ $\Rightarrow -18B=-1 \Rightarrow B = \frac{1}{18}, \; A=-\frac{1}{18}$\\
+$\Rightarrow y_p = -\frac{1}{18}\cos(3x) + \frac{1}{18} \sin (3x)$
+\item $y=y_h+y_p=C_1+C_2e^{3x}-\frac{1}{18} \cos (3x) + \frac{1}{18}\sin (3x)$
+\end{anumerate}
+
+\subparagraph{Bsp. 2:} $y^{(4)}-3y'''=36x^2-5$
+\begin{anumerate}
+\item char. Gleichung: $\lambda^4-3\lambda^3=0$\\
+$\Rightarrow \lambda_{1,2,3} = 0, \lambda_4 = 3$\\
+$\Rightarrow FS=\{1,x,x^2,e^{3x}\}$\\
+$y_h=C_1+C_2x+C_3x^2+C_4e^3x$
+\item $h(x) = 36x^2-5$\\
+$\Rightarrow \alpha = 0, \beta = 0 \Rightarrow \alpha + i \beta = 0 \Rightarrow \varrho = 3$\\
+Ansatz:\\
+$y_p=(Ax^2+Bx+C) \underbrace{x^3}_{x^\varrho}$\\
+$= A x^5 + Bx^4 + Cx^3$\\
+$y'_p=5Ax^4+4Bx^3+3Cx^2$\\
+$y''_p = 20 Ax^3+12Bx^2+6Cx$\\
+$y'''_p = 60Ax^2+24Bx+6C$\\
+$y^{(4)}_p=120Ax+24B$\\
+Einsetzen:\\
+$120Ax + 24B - 180 Ax^2 - 72Bx - 18 C = 36x^2-5$\\
+Koeffizientenvergleich:\\
+$x^2$: $-180A = 36 \Rightarrow A = - \frac{1}{5}$\\
+$x^1$: $120A-72B = 0 \Rightarrow B = - \frac{1}{3}$\\
+$x^0$: $24B-18C = -5 \Rightarrow C = - \frac{1}{6}$\\
+$\Rightarrow y_p = -\frac{1}{5}x^5-\frac{1}{3}x^4-\frac{1}{6}x^3$
+\item $y=y_h+y_p=C_1+C_2x+C_3x^2+C_4e^3x-\frac{1}{5}x^5-\frac{1}{3}x^4-\frac{1}{6}x^3$
+\end{anumerate}
+\subparagraph{Bsp. 3:} Anwendung: Federschwingungsgleichung
+\begin{center}
+\includegraphics[scale=.4]{Vorlesung/ABB182}
+\end{center}
+Grundgesetz der Mechanik: $m \ddot{y}=K=K(y, \dot{y}, t)$\\
+$m\ddot{y}=-\underbrace{\alpha \dot{y}}_{\substack{\text{Reibungskraft}\\ \text{proportional}\\\text{zur Geschw. }\dot{y}}}-\underbrace{c_F y}_{\substack{\text{Rückzugskraft}\\\text{proportional}\\\text{zur Auslenkung }y}}+ \underbrace{F(t)}_{\text{äußere Kraft}}$\\
+mit $\gamma:= \frac{\alpha}{2m}>0$ wobei $\omega_0^2:= \frac{c_F}{m}$ und $h(t)=\frac{F(t)}{m}$\\
+$\Rightarrow \boxed{\ddot{y}+2\gamma \dot{y}+\omega_0^2y=h(t)}$ mit AB $y(0)=y_0, \; \dot{y}(0)=v_0$
+\begin{itemize}
+\item \emph{Fall 1:} $h(t) = 0$ (keine äußere Kraft, freie Schwingung)\\
+DGL: $\ddot{y}+2\gamma \dot{y}+\omega_0^2y=0$ (ist homogen, d.h. allgemeine Lösung $y=y_h$)\\
+$\lambda^2+2\gamma \lambda + \omega_0^2=0$\\
+$\Rightarrow \lambda_{1,2}= -\gamma \pm \sqrt{\gamma^2-\omega_0^2}$
+\begin{itemize}
+\item \emph{Fall 1a:} $\gamma = 0$ (keine Reibung, freie und ungedämpfte Schwingung)\\
+$\Rightarrow \lambda_{1,2}=\pm \omega_0 i$\\
+$\Rightarrow FS=\{\cos (\omega_0 t) , \sin (\omega_0t)\}$\\
+$\Rightarrow y= y_h = C_1 \cos (\omega_0 t)+C_2 \sin (\omega_0 t)$ mit
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB191}
+\end{center}
+$C_1=A \cos \varphi, \; C_2=A \sin \varphi$ folgt:\\
+$y=A\cos(\omega_0 t - \varphi)$\\
+Mit AB lassen sich $C_1$ und $C_2$ (bzw. $A$ und $\varphi$) berechnen, z.B. $v_0=0 \Rightarrow C_1=y_0, \; C_2=0$\\
+$\Rightarrow y=y_0 \cos (\omega_0 t)$\\
+$T:= \frac{2\pi}{\omega_0}$ … Schwingdauer, $\omega_0$ … Eigenfrequenz
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB192}
+\end{center}
+\item \emph{Fall 1b:} $0 < \gamma < \omega_0$ (kleine Dämpfung, freie gedämpfte Schwingung)\\
+$\lambda_{1,2}=-\gamma \pm \underbrace{\sqrt{\omega_0^2-\gamma^2}}_{\omega_1}i$\\
+$\Rightarrow FS = \{ e^{-\gamma t} \cos {\omega_1 t}, e^{-\gamma t} \sin (\omega_1 t)\}$\\
+$y=y_h = (C_1 \cos (\omega_1 t) + C_2 \sin (\omega_1 t))e^{-\gamma t}$\\
+$\omega_1<\omega 0 \Rightarrow T_1 = \frac{2\pi}{\omega_1}>T_0$:
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB193}
+\end{center}
+\item \emph{Fall 1c:} $\gamma \geq \omega_0$ (starke Dämpfung)\\
+$\lambda_{1,2}$ reell und negativ:
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB194}
+\end{center}
+(z. B. möglich, wenn $sgn(v_0y_0)<0$ [Anm.: $sgn(x)$: Vorzeichen von $x$])
+\end{itemize}
+\emph{Fall 2:} äußere Kraft $F(t)$ existiert $\Rightarrow$ erzwungene Schwingung\\
+hier nur Fall $\gamma = 0$, $h(t) = a \sin (\omega_0 t)$:\\
+DGL: $\ddot{y}+\omega_0^2y=a\sin (\omega_0 t)$\\
+keine Dämpfung, periodische Kraft mit Frequenz = Eigenfrequenz $\omega_0$
+\begin{anumerate}
+\item $\lambda_{1,2}=\pm \omega_0 i$\\
+$\Rightarrow y_h = C_1 \cos (\omega_0 t) + C_2 \sin (\omega_0 t)$ (wie in 1a)
+\item $y_p$ ermitteln:\\
+$h(t) = a \sin (\omega_0 t)$\\
+$\Rightarrow \alpha = 0, \beta = \omega_0 \Rightarrow \alpha + i\beta = i\omega_0 \Rightarrow \varrho = 1$ (Resonanzfall)\\
+Ansatz:\\
+$y_p=(A_1\cos (\omega_0 t) + A_2 \sin (\omega_0 t))t$\\
+Setzen wir dies in die inhomogene DGL ein und nutzen den Koeffizientenvergleich, ergibt sich $A_1 = -\frac{a}{2\omega_0}$, $A_2=0$.\\
+$\Rightarrow y_p = -\frac{a t }{2 \omega_0}\cos(\omega_0 t)$
+\item Allgemeine Lösung: $y=y_h+y_p=C_1 \cos (\omega_0 t) + C_2 \sin (\omega_0 t)-\frac{a t }{2 \omega_0}\cos(\omega_0 t)$
+\end{anumerate}
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB195}
+\end{center}
+Resonanz! Wachsende Amplitude mit $\frac{a t }{2 \omega_0}$ $\Rightarrow$ Resonanzkatastrophe!
+\end{itemize}
