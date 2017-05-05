@@ -1,35 +1,23 @@
 \newcommand{\customDir}{../}
-\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrreprt}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
 
-%\setboolean{twosided}{true}
-%\setCustomDocumentClass{scrartcl}
-%\setCustomDesign{htw}
-%\setCustomSlidePath{Folien}
-
-\setCustomTitle{Stochastik}
-\setCustomSubtitle{Vorlesungsskript}
-\setCustomAuthor{Falk-Jonatan Strube}
-%\setCustomNoteA{TitlepageNoteBeforeAuthor}
-\setCustomNoteB{Vorlesung von Prof. Dr. Schwarzenberger}
-
-%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
-%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
-
-\input{\customDir _LaTeX_master/LaTeX_master.sty}
-\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
+\faculty{Fakultät Informatik/Mathematik}
+\chair{Lehrstuhl für Stochastik}
+\subject{lecture}
+\title{Stochastik}
+\author{Falk-Jonatan Strube}
+\professor{Prof. Dr. Fabian Schwarzenberger}
 
 \setlist[enumerate,1]{label=(\arabic*)}
 \renewenvironment{anumerate}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}} % Alphabetische Aufzählung
 
-
-%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
 \begin{document}
-
-%\selectlanguage{english}
 \maketitle
-\newpage
 \tableofcontents
-\newpage
 
 \chapter*{Vorbemerkung}
 Lernraum: Dienstag 17:00 S327, S329
@@ -82,7 +70,8 @@ $\Omega:=$ Ergebnismenge (oder Ergebnisraum) ist die Menge aller möglichen Erge
 \item Anzahl der Anrufe im Call-Center zwischen 8:00 und 9:00
 \begin{enumerate}
 \item Möglichkeit 1: $\Omega = \{0,1,2,\dots\}=\NN_0$
-\item Möglichkeit 2: $\Omega = \{\omega_1,\omega_2,\dots, \omega_{100}\}$ mit $w_i =\begin{cases}
+\item Möglichkeit 2: $\Omega = \{\omega_1,\omega_2,\dots, \omega_{100}\}$ mit \\
+$w_i =\begin{cases}
 i \text{ Anrufe, falls }i\leq 99\\
 100 \text{ oder mehr Anrufe, falls }i=100
 \end{cases}$
@@ -199,7 +188,7 @@ $\PP(A_1 \cup \dots \cup A_n)=\sum_{i=1}^n \PP(A_i)-\sum_{i<j} \PP(A_i \cap A_j)
 
 \subsection{Laplacesches Modell}
 Nun wollen wir ein spezielles, einfaches, aber oft sehr nützliches WK-Maß einführen.
-\cparagraph{Definition} Ein WK-Modell $(\Omega, \cA, \PP)$ heißt \emph{Laplacesches Modell}, falls $\Omega = \{\omega_1, \omega_2, \dots , \omega_n\}$ endlich ist, $\cA = \cP ( \Omega)$ und $\PP(\{\omega_1\})=P(\{\omega_2\})=\dots = \PP(\{\omega_n\})=\frac{1}{n}$ gilt.
+\cparagraph{Definition} Ein WK-Modell $(\Omega, \cA, \PP)$ heißt \emph{Laplacesches Modell}, falls \\$\Omega = \{\omega_1, \omega_2, \dots , \omega_n\}$ endlich ist, $\cA = \cP ( \Omega)$ und $\PP(\{\omega_1\})=P(\{\omega_2\})=\dots = \PP(\{\omega_n\})=\frac{1}{n}$ gilt.
 
 \cparagraph{Bemerkung} für beliebiges $A \in \cA$ gilt im Laplaceschen Modell:\\
 $\PP(A) = \frac{|A|}{|\Omega|}=\frac{m}{n}$, wobei $m=|A|$ die Anzahl der Elemente in $A$ ist (und $|\Omega|=n$).\\
@@ -325,7 +314,7 @@ $W$ … Gewinnende Person ist weiblich\\
 \draw (v2) -- node[right, pos =.5]{$0,4$}(v5);
 \draw (v3) -- node[left, pos =.5]{$0,35$}(v6);
 \draw (v3) -- node[right, pos =.5]{$0,65$}(v7);
-\end{tikzpicture}% ABB S1
+\end{tikzpicture}
 \\
 gegeben: \\
 $\PP(\{(S,M)\})=0,33$\\
@@ -396,8 +385,10 @@ Sei $(\Omega, \cA, \PP)$ ein WK-Raum und seien $B_1,\dots,B_n \in \cA$ mit
 \item $\PP (B_i) >0$ für alle $i=1,\dots,n$
 \end{itemize}
 Dann gilt:
-$$\PP(A) = \sum_{i=1}^n \PP(A|B_i) \cdot \PP (B_i)$$\\
-ABB S2
+$$\PP(A) = \sum_{i=1}^n \PP(A|B_i) \cdot \PP (B_i)$$
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB2}
+\end{center}
 
 \cparagraph{Beispiel} (Prävalenz von HIV)
 \begin{itemize}
@@ -438,8 +429,10 @@ Formel von Bayes dreht also die Bedingung um.
 
 \cparagraph{Beispiel} (Ziegenproblem)\\
 In einer Spielshow steht der Kandidat vor $3$ verschlossenen Türen. Eine Türe verbirgt den Hauptgewinn, ein Auto. Hinter den beiden anderen Türen sind Ziegen. Der Kandidat zeigt auf eine der Türen, der Spielleiter (der weiß, wo das Auto steht) öffnet gemäß der Spielregeln eine der beiden anderen Türen um eine Ziege zu präsentieren. \\
-Der Kandidat darf nun seine Wahl ändern. Sollte er das tun?\\
-ABB S3\\
+Der Kandidat darf nun seine Wahl ändern. Sollte er das tun?
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB3}
+\end{center}
 Lösung: \\
 Wir legen uns fest, dass der Kandidat Tor 1 gewählt hat und Moderator Tor 3 öffnet(ohne Beschränkung der Allgemeinheit(oBdA): sonst Umnummerieren).\\
 Ergebnismenge: $\Omega = \{(i,j)\;|\; i,j=1,2,3\}$ mit $(i,j)$ … Gewinn ist hinter Tor $i$, Moderator öffnet Tor $j$.\\
@@ -699,8 +692,10 @@ Werte & $x_1$ & $x_2$ & $x_3$& …\\
 \hline
 WK $f(x_i)$ & $p_1$ & $p_2$ & $p_3$ & …
 \end{tabular}
-\item Darstellung als Stabdiagramm:\\
-ABB S4
+\item Darstellung als Stabdiagramm:
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB4}
+\end{center}
 \end{anumerate}
 
 \cparagraph{Beispiel} Betrachte unfaire Münze, die mit WK $0,6$ auf Zahl fällt. Dann
@@ -713,8 +708,10 @@ ABB S4
 Wert $x_i$ & 0 & 1\\
 \hline 
 WK $f(x_i)$ & 0,4 & 0,6
-\end{tabular}\\
-ABB S5
+\end{tabular}
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB5}
+\end{center}
 
 \cparagraph{Beispiel} Betrachten Wurf mit 2 Würfeln: $\Omega=\{(i,j)\;|\; i,j=1,\dots,6\}$. Augensumme soll als ZV dargestellt werden: $X((i,j)):=i+j$ für $i,j=1,\dots,6$\\
 Verteilungstabelle:\\
@@ -740,8 +737,11 @@ In dieser Vorlesung betrachten wir nur stetige ZV, bei denen $F_X$ differenzierb
 \item Ist $f$ die Dichtefunktion zur VF $F_X$, so gilt
 $$F_X(x) = \int_{-a}^x f(t) \intd{t} \qquad \text{(Hauptsatz der Differential und Integralrechnung)}$$
 \item Nicht jede stetige Funktion $F$ kann als Integral einer Dichtefunktion geschrieben werden.
-\item Bilder:\\
-ABB S6
+\item Bilder:
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB6a}
+\includegraphics[scale=.75]{Vorlesung/ABB6b}
+\end{center}
 \begin{align*}
 \PP(X\leq 1)&=F_X(1)\\
 &=\PP(\{\omega \in \Omega \;|\; X(\omega)\leq 1 \}) \\
@@ -769,8 +769,10 @@ Dann ist $f$ die Dichte einer Zufallsvariablen $X$. Die zugehörige VF $F_X:\RR\
 $$F_X(x):=\int\limits_{-\infty}^{\infty} f(t) \intd{t}$$
 
 \cparagraph{Beispiel} Wir kommen zu einer zufälligen Zeit an der Bushaltestelle an. Der Bus fährt alle 10 Minuten. Die ZV $X$ beschreibe die Wartezeit auf den nächsten Bus, d.h. $X$ kann alle Wert zwischen 0 und 10 annehmen wobei jede Wartezeit gleich-wahrscheinlich sein soll.\\
-Die zugehörige Dichtefunktion ist daher:\\
-ABB S7\\
+Die zugehörige Dichtefunktion ist daher:
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB7}
+\end{center}
 $f(x):=\begin{cases}
 h & 0 < x < 10\\
 0 & \text{sonst}
@@ -778,8 +780,10 @@ h & 0 < x < 10\\
 \begin{anumerate}
 \item Wie ist $h$ zu wählen?\\
 Es muss gelten $1\overset{!}{=}\int\limits_{-\infty}^{\infty}f(x)\intd{x}=\int\limits_0^{10}h\intd{x}=\left[ h\cdot x\right]_0^{10}=10\cdot h \Rightarrow h = \frac{1}{10}$
-\item Wie sieht $F_X$ aus?\\
-ABB S8\\
+\item Wie sieht $F_X$ aus?
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB8}
+\end{center}
 $F_X(x)=\int\limits_{-\infty}^x f(t) \intd{t}=\begin{cases}
 0 & x\leq 0\\
 \tfrac{1}{10} x & 0 < x < 10\\
@@ -889,8 +893,10 @@ $\EE(X^2) = 0^2 \cdot 0,6  + 1^2 \cdot 0,3 + 2^2 \cdot 0,1 = 0,7$\\
 $\var(X)=\EE(X^2) - (\EE(X))^2 = 0,7-0,5^2 = 0,45$\\
 $\sigma_X= \sqrt{0,45}=0,671$\bigskip\\
 Wir betrachten nun eine ZV $X$ und fragen uns: Welchen Wert $m\in \RR$ muss man wählen, damit $\PP(X\leq m)\geq \frac{1}{2}$ und $\PP(X\geq m) \geq \frac{1}{2}$ gilt?\\
-Problem: Antwort nicht eindeutig!\\
-ABB S9\\
+Problem: Antwort nicht eindeutig!
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB9}
+\end{center}
 Hier erfüllt jedes $m\in [1,3)$ diese Bedingung! Welchen dieser Werte wählen wir? Den kleinsten (und nennen ihn \emph{Median})!
 
 \cparagraph{Definition} Ist $F_X$ die Verteilungsfunktion einer ZV $X$, so heißt
@@ -1081,7 +1087,10 @@ Die Vorstellung einer (un-)fairen Münze liefert eine sehr einfache Zufallsvaria
 \item Varianz: $\var (X) = \EE(X^2) - (\EE(X))^2 = 0^2 \cdot q + 1^2 \cdot p - p^2 = pq$
 \item Standardabweichung: $\sigma_X=\sqrt{pq}$
 \end{itemize}
-ABB Skript
+\begin{center}
+\includegraphics[trim={6.2cm 12cm 5.2cm 10.5cm},clip,page=1, scale=.7]{Vorlesung/Skript/01_diskrete_verteilungen.pdf}
+\includegraphics[trim={6.2cm 3.3cm 5.2cm 19.2cm},clip,page=1, scale=.7]{Vorlesung/Skript/01_diskrete_verteilungen.pdf}
+\end{center}
 \cparagraph{Beispiel} Seien $X,Y \sim \mathrm{Ber}(p)$. Setze $Z_1:= X+Y$, $Z_2=X-Y$ unabhängig.
 \begin{anumerate}
 \item Wie sind $Z_1$ und $Z_2$ verteilt?
@@ -1126,7 +1135,10 @@ annimmt.
 \item Erwartungswert: $\EE(X)=np$
 \item Varianz: $\var (X) = np (1-p)$
 \end{itemize}
-ABB Skript
+\begin{center}
+\includegraphics[trim={6.2cm 11.9cm 5.2cm 10.7cm},clip,page=2, scale=.7]{Vorlesung/Skript/01_diskrete_verteilungen.pdf}
+\includegraphics[trim={6.2cm 3.2cm 5.2cm 19.3cm},clip,page=2, scale=.7]{Vorlesung/Skript/01_diskrete_verteilungen.pdf}
+\end{center}
 \cparagraph{Satz} Sind $X_1, \dots , X_n$ unabhängige Bernoulliverteilte ZVen (alle mit Parameter $p$), dann 
 $$X_1+X_2+\dots + X_n \sim \mathrm{Bin}(n,p)$$
 
@@ -1160,7 +1172,10 @@ gilt.
 \item Varianz: $\var(X)=\EE(X^2)-(\EE(X))^2 = \frac{1}{n} \sum_{i=1}^n x_i^2+\left(\frac{1}{n}\sum_{i=1}^n x_i\right)^2$
 \item Beispiel: faire Münze, fairer Würfel, …
 \end{itemize}
-ABB Skript
+\begin{center}
+\includegraphics[trim={6.2cm 11.4cm 5.2cm 11.2cm},clip,page=3, scale=.7]{Vorlesung/Skript/01_diskrete_verteilungen.pdf}
+\includegraphics[trim={6.2cm 3cm 5.2cm 19.5cm},clip,page=3, scale=.7]{Vorlesung/Skript/01_diskrete_verteilungen.pdf}
+\end{center}
 
 \cparagraph{Bemerkung} (Beziehung zum Laplace-Experiment)
 \begin{itemize}
@@ -1188,7 +1203,10 @@ $$p_m:=\PP(X=m)=\frac{\binom{M}{n}\binom{N-M}{n-m}}{\binom{N}{n}}$$
 $$\Rightarrow X\sim \mathrm{Hyp}(N,M,n)$$
 \end{itemize}
 \end{itemize}
-ABB Skript
+\begin{center}
+\includegraphics[trim={6.2cm 10.2cm 5.2cm 13.3cm},clip,page=4, scale=.7]{Vorlesung/Skript/01_diskrete_verteilungen.pdf}
+\includegraphics[trim={6.2cm 2.8cm 5.2cm 20.7cm},clip,page=4, scale=.7]{Vorlesung/Skript/01_diskrete_verteilungen.pdf}
+\end{center}
 
 \cparagraph{Beispiel} In einer Lostrommel befinden sich $20$ Lose, davon $5$ Gewinnlose. Jemand zieht $3$ Lose (ohne Zurücklegen). Wie groß ist die WK, dass sich darunter genau 2 Gewinnlose befinden?\\
 Lösung:\\
@@ -1213,7 +1231,10 @@ gilt.
 \item Varianz: $\var(X)=\frac{1-p}{p^2}$
 \item Anwendung: Anzahl der Versuche bis der erste Erfolg eintritt, bei hintereinander ausführen von unabhängigen identischen Bernoulli Zufallsexperimenten.
 \end{itemize}
-ABB Skript
+\begin{center}
+\includegraphics[trim={6.2cm 11.3cm 5.2cm 11.3cm},clip,page=5, scale=.7]{Vorlesung/Skript/01_diskrete_verteilungen.pdf}
+\includegraphics[trim={6.2cm 2.8cm 5.2cm 19.7cm},clip,page=5, scale=.7]{Vorlesung/Skript/01_diskrete_verteilungen.pdf}
+\end{center}
 
 \cparagraph{Beispiel} Der Postbote hat ein Paket für Petra bei ihrem Nachbarn abgegeben. Petra klopft jeden Nachmittag an seine Tür. Leider ist er nur mit WK $0,3$ zu Hause. Annahme: Anwesenheiten des Nachbarn an verschiedenen Tagen sind unabhängig voneinander. 
 \begin{anumerate}
@@ -1283,6 +1304,11 @@ $X$… Anzahl der Störungen in 8 Stunden
 \end{align*}
 \end{itemize}
 
+\begin{center}
+\includegraphics[trim={6.2cm 11.2cm 5.2cm 11.2cm},clip,page=6, scale=.7]{Vorlesung/Skript/01_diskrete_verteilungen.pdf}
+\includegraphics[trim={6.2cm 2.8cm 5.2cm 19.7cm},clip,page=6, scale=.7]{Vorlesung/Skript/01_diskrete_verteilungen.pdf}
+\end{center}
+
 \subsection{Spezielle stetige Verteilungen}
 
 \begin{enumerate}[label=(D\arabic*)]
@@ -1312,7 +1338,10 @@ $$f(x)=\begin{cases}
 1 & x \geq b
 \end{cases}$$
 \end{itemize}
-ABB Skript
+\begin{center}
+\includegraphics[trim={6.2cm 10.6cm 5.2cm 12.9cm},clip,page=1, scale=.7]{Vorlesung/Skript/02_stetige_verteilungen.pdf}
+\includegraphics[trim={6.2cm 2.6cm 5.2cm 20.3cm},clip,page=1, scale=.7]{Vorlesung/Skript/02_stetige_verteilungen.pdf}
+\end{center}
 \subsubsection{Normalverteilung}
 \cparagraph{Definition} Eine ZV $X$ heißt normalverteilt mit den Parametern $\mu$ und $\sigma^2$, ($\mu \in \RR, \; \sigma > 0$, wenn sie die Dichte
 $$f: \RR\to \RR, \qquad f(x)=\frac{1}{\sqrt{2\pi\sigma}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
@@ -1325,7 +1354,12 @@ besitzt.
 \item $\var(X) = \sigma^2$
 \item Verteilungsfunktion nicht in geschlossener Form angebbar (nur als Integraldarstellung oder unendliche Reihe)
 \end{itemize}
-ABB Skript
+\begin{center}
+\includegraphics[trim={1.5cm 11cm 11.3cm 11cm},clip,page=2, scale=.7]{Vorlesung/Skript/02_stetige_verteilungen.pdf}
+\includegraphics[trim={10.2cm 11cm 2.2cm 11cm},clip,page=2, scale=.7]{Vorlesung/Skript/02_stetige_verteilungen.pdf}
+\includegraphics[trim={1.5cm 3cm 11.3cm 18.8cm},clip,page=2, scale=.7]{Vorlesung/Skript/02_stetige_verteilungen.pdf}
+\includegraphics[trim={10.2cm 3cm 2.2cm 18.8cm},clip,page=2, scale=.7]{Vorlesung/Skript/02_stetige_verteilungen.pdf}
+\end{center}
 
 \cparagraph{Satz} Gilt $X\sim \cN(\mu, \sigma^2)$, dann gilt für die transformierte ZV
 $$Y=\frac{X-\mu}{\sigma} \sim \cN (0,1)$$
@@ -1428,6 +1462,11 @@ $$F(x)=\begin{cases}
 \item Anwendung: Bedientheorie, Zuverlässigkeitstheorie, Verteilung von Zeitdauern wie Lebenszeiten, Reperaturzeiten, Wartezeiten, …
 \end{itemize}
 
+\begin{center}
+\includegraphics[trim={6cm 10.5cm 5.3cm 11.8cm},clip,page=3, scale=.7]{Vorlesung/Skript/02_stetige_verteilungen.pdf}
+\includegraphics[trim={6cm 2.4cm 5.3cm 19.9cm},clip,page=3, scale=.7]{Vorlesung/Skript/02_stetige_verteilungen.pdf}
+\end{center}
+
 \cparagraph{Beispiel} (Parallelschaltung) Ein System besteht aus 3 unabhängig voneinander arbeitenden, parallel geschalteten Elementen. Es sei bekannt, dass die Lebensdauer der einzelnen Elemente exponentialverteilt ist. Die mittlere Lebensdauer eines Elementes ist $ 1000\unit{[h]} $
 \begin{anumerate}
 	\item Wie groß ist die WK, dass Element 1 höchstens $ 500\unit{Std.} $ funktioniert?
@@ -1481,7 +1520,11 @@ besitzt. Hier ist $\Gamma$ die Gammafunktion, d.h. $\Gamma(x):= \int\limits_{0}^
 	\item Quantile: Ist $\alpha\in (0,1)$ und $F_X$ die Verteilungsfunktion zu $X \sim \chi^{2}(n)$, so bezeichnen wir das $\alpha$-Quantil $q_\alpha$ mit $\chi^{2}_{n,\alpha}=q_{\alpha}=F_X^{-1}(\alpha)$
 	\item Anwendung: Statistik, insbesondere Testtheorie
 \end{itemize}
-%todo Abb Skript
+
+\begin{center}
+\includegraphics[trim={6cm 10.2cm 5.3cm 12.2cm},clip,page=4, scale=.7]{Vorlesung/Skript/02_stetige_verteilungen.pdf}
+\includegraphics[trim={6cm 2.4cm 5.3cm 20.2cm},clip,page=4, scale=.7]{Vorlesung/Skript/02_stetige_verteilungen.pdf}
+\end{center}
 
 Ein Grund für die große Bedeutung der $ \chi^2 $-Verteilung (in der Statistik) ist:
 \cparagraph{Satz} Seien $ X_1, X_2, \ldots, X_n $ unabhängige standard-normalverteilte ZVen. Dann ist 
@@ -1504,6 +1547,11 @@ besitzt. Hier ist $\Gamma$ wieder die Gammafunktion.
 	\item Anwendung: Statistik, insbesondere Testtheorie
 \end{itemize}
 
+\begin{center}
+\includegraphics[trim={6cm 10.3cm 5.3cm 12.3cm},clip,page=5, scale=.7]{Vorlesung/Skript/02_stetige_verteilungen.pdf}
+\includegraphics[trim={6cm 2.4cm 5.3cm 20.2cm},clip,page=5, scale=.7]{Vorlesung/Skript/02_stetige_verteilungen.pdf}
+\end{center}
+
 Ein Grund für die große Bedeutung der $ t $-Verteilung (in der Statistik) ist:
 \cparagraph{Satz} Seien $ Y $ und $ Z $ unabhängige ZVen mit $ Y\sim \chi^{2} (n) $ und $ Z \sim \cN(0,1) $. Dann ist 
 \[ X=\frac{Z}{\sqrt{\frac{Y}{n}}} \]
@@ -1525,6 +1573,11 @@ besitzt. Hier ist $\Gamma$ wieder die Gammafunktion.
 	\item Quantile: Ist $F_X$ die Verteilungsfunktion zu $X\sim F(m,n)$, so bezeichnen wir das $\alpha$-Quantil $q_\alpha$ mit $F_{m,n,\alpha}=q_\alpha=F_{X}^{-1}(\alpha)$
 	\item Anwendung: Statistik, insbesondere Testtheorie
 \end{itemize}
+
+\begin{center}
+\includegraphics[trim={6cm 10.2cm 5.3cm 12.5cm},clip,page=6, scale=.7]{Vorlesung/Skript/02_stetige_verteilungen.pdf}
+\includegraphics[trim={6cm 2.4cm 5.3cm 20.2cm},clip,page=6, scale=.7]{Vorlesung/Skript/02_stetige_verteilungen.pdf}
+\end{center}
 
 Ein Grund für die große Bedeutung der $ F $-Verteilung (in der Statistik) ist:
 \cparagraph{Satz} Seien $ Y $ und $ Z $ unabhängige ZVen mit $ Y\sim \chi^{2} (m) $ und $ Z \sim \chi^{2}(n) $. Dann ist 
@@ -1915,8 +1968,7 @@ Ausprägung $a_j$ & Abs. Häufigkeit $h_j$ & Summen der abs. Häufigkeiten $\sum
 \end{tabular}\\
 Beachte: bei metrisch oder ordinal skalierten Merkmalen ordnet man die Ausprägungen der Größe nach.\\
 Summen sind auch nur für metrisch oder ordinal skalierte Merkmale sinnvoll.
-\item Graphische Dartellung mittels Stabdiagramm:\\
-ABB R
+\item Graphische Dartellung mittels Stabdiagramm:
 \begin{itemize}
 \item absolute/relative Häufung $h_j$/$w_j$ auf $y$-Achse
 \item Ausprägung $a_j$ auf $x$-Achse
@@ -1970,15 +2022,21 @@ Ausprägungen $a_j$ & absolute Häufigkeiten $h_j$ & Summe der absoluten Häufig
 \paragraph{Beachte:} bei metrischen oder ordinal skaliertem Merkmal ordnet man die Ausprägungen der Größe nach. Summen (Spalte 3 und 5) sind auch nir für metrische oder ordinal skalierte Merkmale sinnvoll.
 \item Graphische Darstellung mittels Stabdiagramm
 \begin{itemize}
-\item ABB Skript 5.1\\
-absolute Häufigkeit $h_j$ auf $y$-Achse\\
+\item absolute Häufigkeit $h_j$ auf $y$-Achse\\
 Ausprägung $a_j$ auf $x$-Achse
-\item ABB Skript 5.2\\
-relative Häufigkeit $w_j$ auf $y$-Achse\\
+\begin{center}
+\includegraphics[trim={7.8cm 2.4cm 7.3cm 21.8cm},clip,page=1, scale=1]{Vorlesung/Skript/05_deskriptive_statistik_beispiel_diskrete_daten.pdf}
+\end{center}
+\item relative Häufigkeit $w_j$ auf $y$-Achse\\
 Ausprägung $a_j$ auf $x$-Achse
+\begin{center}
+\includegraphics[trim={7.8cm 18.7cm 7.3cm 5.6cm},clip,page=2, scale=1]{Vorlesung/Skript/05_deskriptive_statistik_beispiel_diskrete_daten.pdf}
+\end{center}
 \end{itemize}
-\item Graphische Darstellung mittels Kreisdiagramm\\
-ABB Skript 5.3\\
+\item Graphische Darstellung mittels Kreisdiagramm
+\begin{center}
+\includegraphics[trim={13.3cm 8.8cm 2.2cm 15.1cm},clip,page=2, scale=1]{Vorlesung/Skript/05_deskriptive_statistik_beispiel_diskrete_daten.pdf}
+\end{center}
 Abgetragen: Anzahl der Störungen\\
 Winkel $\varphi_j$ proportional zur relativen Häufigkeit $w_j$\\
 $\varphi_j = 360^\circ \cdot w_j$\\
@@ -2013,8 +2071,10 @@ $$\tilde x _{0,5} = \frac{1}{2}(x_{(0,5\cdot 20)} + x_{(0,5\cdot 20 + 1)}) = \fr
 Genauso werden die Quantile $\tilde x_q$ für beliebiges $q \in (0,1)$ bestimmt.\\
 Für ungerade Anzahl von Stichproben: 
 $$\tilde x_{0,5}=x_{(0,5 \cdot n\;[\mathrm{aufgerundet}])}$$
-\item Graphische Darstellung mittels Boxplot\\
-ABB Skript 5.4\\
+\item Graphische Darstellung mittels Boxplot
+\begin{center}
+\includegraphics[trim={13cm 7cm 3.9cm 15.6cm},clip,page=3, scale=1]{Vorlesung/Skript/05_deskriptive_statistik_beispiel_diskrete_daten.pdf}
+\end{center}
 $y$-Achse: Anzahl der Störungen\\
 Graphische Darstellung von 
 \begin{itemize}
@@ -2030,7 +2090,9 @@ $$s_n(x) = \begin{cases}
 s_j & \text{falls }a_j \leq x < a_{j+1} \quad s_n(j_j) = s_j\\
 1 & \text{falls }x\geq a_k
 \end{cases}$$
-ABB Skript 5.5
+\begin{center}
+\includegraphics[trim={6.7cm 19.4cm 6.8cm 3.5cm},clip,page=4, scale=1]{Vorlesung/Skript/05_deskriptive_statistik_beispiel_diskrete_daten.pdf}
+\end{center}
 \end{itemize}
 
 \cparagraph{Beispiel} (stetige bzw. metrische Daten)
@@ -2044,15 +2106,19 @@ Jeder Wert kommt nur einmal vor.
 \item Stabdiagramm
 \item Kreisdiagramm
 \end{itemize}
-sehr ungünstig\\
-ABB Skript 6.1
+sehr ungünstig
+\begin{center}
+\includegraphics[trim={6.9cm 17.3cm 2cm 7.4cm},clip,page=1, scale=1]{Vorlesung/Skript/06_deskriptive_statistik_beispiel_metrische_daten.pdf}
+\end{center}
 \item Besser geeignet:
 \begin{itemize}
 \item Boxplot (übersichtlich, aber Informationsverlust)
 \item Verteilungsfunktion (übersichtlich, ohne Informationsverlust)
 \item Klassierung der Daten (und anschließend Histogramm, Häufigkeitstabelle, Kreisdiagramm, …)
 \end{itemize}
-ABB Skrit 6.2
+\begin{center}
+\includegraphics[trim={3.9cm 4.3cm 3.9cm 17.8cm},clip,page=1, scale=1]{Vorlesung/Skript/06_deskriptive_statistik_beispiel_metrische_daten.pdf}
+\end{center}
 \item \emph{Klassierung der Daten}\\
 Um auf für stetige Merkmale Häufigkeitstabellen und Säulendiagramme zu nutzen, fassen wir „ähnliche“ Daten in Klassen zusammen. Genauer:\\
 Wir unterteilen das Intervall $x_{min},x_{max})$ in $k$ Intervalle auf und betrachten dann diese gruppierten Daten in Häufigkeitstabelle und Diagrammen.\\
@@ -2079,12 +2145,16 @@ $j$ & Klasse $K_j$ & absolute Klassenhäufigkeit $h_j$ & Klassenmitte $m_j$ & re
 8 & [7000,8000) & 1 & 7500 & 0,01 & 0,99\\
 9 & [8000,9000) & 1 & 8500 & 0,01 & 1\\
 \end{tabular}
-\item Histogramm mit konstanter Klassenbreite\\
-ABB Skript 6.3\\
+\item Histogramm mit konstanter Klassenbreite
+\begin{center}
+\includegraphics[trim={2.4cm 2.2cm 11.3cm 20.5cm},clip,page=2, scale=1]{Vorlesung/Skript/06_deskriptive_statistik_beispiel_metrische_daten.pdf}
+\end{center}
 Säulenfläche proportional zur absoluten Häufigkeit $h_j$\\
 Bei konstanter Klassenbreite ist auch Säulenhöhe proportional zur absoluten Häufigkeit $h_j$
-\item Histogramm mit unterschiedlicher Klassenbreite\\
-ABB Skript 6.4\\
+\item Histogramm mit unterschiedlicher Klassenbreite
+\begin{center}
+\includegraphics[trim={2.9cm 18.2cm 11.3cm 4.6cm},clip,page=3, scale=1]{Vorlesung/Skript/06_deskriptive_statistik_beispiel_metrische_daten.pdf}
+\end{center}
 Säulenfläche proportional zur absoluten Häufigkeit $h_j$\\
 Bei unterschiedlicher Klassenbreite ist die $y$-Achse so skaliert, dass gilt:
 $$\sum_{j=1}^k d_j \cdot l_j = 1$$
@@ -2094,8 +2164,10 @@ wobei $d_j$ … Klassenbreite, $l_j$ … Säulenhöhe
 \cparagraph{Beispiel} Uns liegt eine Stichprobe der Größe $116$ von (gleichzeitigen) Messungen des Ozongehaltes $X$ der Luft (in 1/1Mio Teilchen) und der Temperatur $Y$ (in Grad Fahrenheit)) vor:
 $$((x_1,y_1),(x_2,y_2), \ldots, (x_{150},y_{150}))=((41,67),(36,72),(115,79),\ldots, (18,62))$$
 \begin{itemize}
-\item Streudiagramm\\
-ABB Skript 7.1
+\item Streudiagramm
+\begin{center}
+\includegraphics[trim={7.1cm 15.8cm 7.1cm 7.7cm},clip,page=1, scale=1]{Vorlesung/Skript/07_deskriptive_statistik_beispiel_2d_daten.pdf}
+\end{center}
 \item \emph{Klassierung und Kontingenztafel}\\
 Wir stellen uns vor die Daten liegen uns nur in klassierter Form vor:
 \begin{itemize}
@@ -2115,13 +2187,17 @@ Kontingenztafel und Streudiagramm\\
 $X=1$ & 40 & 41\\
 $X=2$ & 0 & 28\\
 $X=3$ & 0 & 7
-\end{tabular}\\
-ABB Skript 7.2
+\end{tabular}
+\begin{center}
+\includegraphics[trim={12.4cm 2cm 3.8cm 23.1cm},clip,page=1, scale=1]{Vorlesung/Skript/07_deskriptive_statistik_beispiel_2d_daten.pdf}
+\end{center}
 \item Regressionsgerade:
 $$a_1=r_{xy}\frac{s_y}{s_x}=\frac{s_{xy}}{s_x \cdot s_y}\cdot \frac{s_y}{s_x}=\frac{s_{xy}}{s_x^2}=0,2$$
 und $a_0=\overline{y}-a_1 \cdot \overline{x}=77,87 - 0,2 \cdot 42,13 = 69,4$ also 
 $$y=0,2 x + 69,4$$
-ABB Skript 7.3
+\begin{center}
+\includegraphics[trim={8.2cm 17.6cm 8cm 7.6cm},clip,page=2, scale=1]{Vorlesung/Skript/07_deskriptive_statistik_beispiel_2d_daten.pdf}
+\end{center}
 \end{itemize}
 
 \subsubsection{Stichprobenfunktionen für 2-dimensionale Merkmale}
@@ -2319,7 +2395,9 @@ $$\PP(S \in [s_1, s_2]) \geq 1-\alpha$$
 \item Wähle zuerst $\alpha_1$ und $\alpha_2$ mit $\alpha = \alpha_1 + \alpha_2$.
 \item Wähle $s_1$ und $s_2$ so, dass $\PP(S\leq s_1) \leq \alpha$ und $\PP(S\geq s_2) \leq \alpha_2$
 \end{itemize}
-ABB SX1\\
+\begin{center}
+\includegraphics[scale=.75]{Vorlesung/ABB10}
+\end{center}
 Also $s_1=z_{\alpha_1} = -z_{1-\alpha_1}$ und $s_2 = z_{1-\alpha_2}$. Dann:
 $$\PP\left( - z_{1-\alpha_1} \leq \frac{\overline{X}-\mu}{\sigma}\sqrt{n} \leq z_{1-\alpha_2}\right) \geq 1-\alpha$$
 \item Umstellen liefert:
@@ -2677,7 +2755,7 @@ $K=(z_{1-\alpha}, \infty) = (z_{0,95}, \infty) = (1,645\;,\;\infty)$
 \end{enumerate}
 
 \subsection{Parameterfreie Tests}
-Vorgehensweise ist fast wie bei parametrischen Tests, mit dem Unterschied, dass hier nicht nur die Parameterwerte in die Hypothesen eingehen. Wir lernen hier „nur“ den $\chi^2$-Unabhängigkeitstest kennen.
+Vorgehensweise ist fast wie bei parametrischen Tests, mit dem Unterschied, dass hier nicht nur die Parameterwerte in die Hypothesen eingehen. Wir lernen hier „nur“ den $\chi^2$-Un\-ab\-häng\-ig\-keits\-test kennen.
 
 \subsubsection[chi-quadrat-Unabhängigkeitstest]{$\chi^2$-Unabhängigkeitstest}
 Aufgabenstellung: Zu überprüfen ist, ob zwei diskrete Merkmale $X$ und $Y$ unabhängig sind. Dafür liegt eine 2-dimensionale SP vor.
