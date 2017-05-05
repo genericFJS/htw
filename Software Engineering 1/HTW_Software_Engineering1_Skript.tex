@@ -1,33 +1,23 @@
-\newcommand{\customDir}{../}
-\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrreprt}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
 
-%\setboolean{twosided}{true}
-%\setCustomDocumentClass{scrartcl}
-%\setCustomDesign{htw}
-\setCustomSlidePath{Vorlesung/VO}
-\setCustomSlideScale{1.5}
-
-\setCustomTitle{Software Engineering 1}
-\setCustomSubtitle{Vorlesungsskript}
-\setCustomAuthor{Falk-Jonatan Strube}
-%\setCustomNoteA{TitlepageNoteBeforeAuthor}
-\setCustomNoteB{Vorlesung von Prof. Dr. Hauptmann}
-
-%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
-%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
-
-\input{\customDir _LaTeX_master/LaTeX_master.sty}
-\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
-
-%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
+\faculty{Fakultät Informatik/Mathematik}
+\chair{Lehrstuhl für Softwaretechnologie}
+\subject{lecture}
+\title{Software Engineering 1}
+\author{Falk-Jonatan Strube}
+\professor{Prof. Dr. Anna Sabine Hauptmann}
 
 \begin{document}
-
-%\selectlanguage{english}
 \maketitle
-\newpage
 \tableofcontents
-\newpage
+
+\slidePath{Vorlesung/VO}
+\slideScale{1.5}
+
 \chapter*{Vorbemerkung}
 2 Teile (jeweils 50 Punkte)
 \begin{itemize}
@@ -70,11 +60,11 @@ Also: Analyse ist Grundvoraussetzung für erfolgreiche Softwareentwicklung.
 
 Veranschaulichung:
 \slides{1}{20}
-Warum haben Analyse und Definition von Anforderungen an das SW‐System große Bedeutung
+Warum haben Analyse und Definition von Anforderungen an das SW-System große Bedeutung
 im Entwicklungsprozess?
 \begin{itemize}
-\item Auch heute noch werden nur die Hälfte aller SW‐Projekte wie geplant realisiert.
-\item 60\% der Fehler im SW‐System resultieren aus Fehlern in der Analysephase, d.h. aus Fehlern bei der Definition der Anforderungen.
+\item Auch heute noch werden nur die Hälfte aller SW-Projekte wie geplant realisiert.
+\item 60\% der Fehler im SW-System resultieren aus Fehlern in der Analysephase, d.h. aus Fehlern bei der Definition der Anforderungen.
 \item Die Behebung von Fehlern aus der Analysephase sind vergleichsweise sehr teuer.
 \end{itemize}
 
@@ -103,7 +93,7 @@ oder Vergleich:
 \item „Wenn's nicht funktioniert, ist man immer wieder damit beschäftigt die gleichen Fehler zu bearbeiten.“
 \end{itemize}
 
-\setCustomSlideScale{.95}
+\slideScale{.95}
 \slides{1}{26}
 
 \chapter{System}
@@ -115,28 +105,28 @@ oder Vergleich:
 \item Erst dann beginnt die Implementierung.
 \item Dabei begleiten ständig Tests und Dokumentation die Arbeit.
 \end{itemize}
-\paragraph{Was ist „Software‐Engineering“?} (siehe weitere Definitionen)\\
-Software‐Engineering ist:
+\paragraph{Was ist „Software-Engineering“?} (siehe weitere Definitionen)\\
+Software-Engineering ist:
 \begin{itemize}
 \item die effektive und effiziente Entwicklung und Weiterentwicklung \emph{komplexer} SW-Systeme
 \item sowie \emph{begleitender Dokumente}
 \item in einem bewusst arbeitsteilig gestalteten \emph{Prozess}
 \item unter Anwendung bewährter \emph{Prinzipien, Methoden und Modellen}.
 \end{itemize}
-\paragraph{Warum haben Analyse und Definition von Anforderungen an das SW‐System große Bedeutung
+\paragraph{Warum haben Analyse und Definition von Anforderungen an das SW-System große Bedeutung
 im Entwicklungsprozess?}
 \begin{itemize}
-\item Auch heute noch werden nur die Hälfte aller SW‐Projekte wie geplant realisiert.
-\item 60\% der Fehler im SW‐system resultieren aus Fehlern in der Analysephase, d.h. aus Fehlern in der Definition der Anforderungen.
+\item Auch heute noch werden nur die Hälfte aller SW-Projekte wie geplant realisiert.
+\item 60\% der Fehler im SW-system resultieren aus Fehlern in der Analysephase, d.h. aus Fehlern in der Definition der Anforderungen.
 \item Die Behebung von Fehlern aus der Analysephase sind vergleichsweise sehr teuer.
 \end{itemize}
 
 % Vorlesung 20.10.2016
-\setCustomSlideScale{.5}
+\slideScale{.5}
 % \slides{2}{1}
 
 \section{Entwicklung von SW-Entwicklungsstrategien}
-Problem der SW-Entwicklung am Ende der 60‐ziger Jahre:\\
+Problem der SW-Entwicklung am Ende der 60-ziger Jahre:\\
 veränderte Rahmenbedingungen beim Einsatz und der Entwicklung von Software-Systemen\\
 Also: Strategien bei der SW-Entwicklung ändern
 
@@ -343,7 +333,7 @@ Achtung: Subjektiv (es gibt auch objektive Regeln); gestützt durch Oberflächen
 \item Frühausfälle durch Produktionsfehler $t_1$
 \item Spätausfälle durch physischen Verschleiß $t_2$
 \end{itemize}
-
+\resizebox{.99\textwidth}{!}{
 \begin{tikzpicture}[scale=.5]
 \draw [-latex] (0,0) -- (0,10) node[left]{$\lambda$ (Ausfallrate)};
 \draw [-latex] (0,0) -- (10,0) node[below]{$t$};
@@ -358,6 +348,7 @@ Achtung: Subjektiv (es gibt auch objektive Regeln); gestützt durch Oberflächen
 \draw [orange] (1,7) -- (3,5) -- (5,6);
 \draw [orange] (3,5) -- (5,4);
 \end{tikzpicture}
+}
 
 \subsection{Sicherheit}
 \begin{itemize}
@@ -577,7 +568,7 @@ ihren Rollen und Interessen zu kennen.
 \item Kreavitätstechniken (Brainstorming, Wechsel der Perspektive, …)
 \item Befragungstechniken (Fragebogen, Interview, …)
 \item artefaktbasierte Techniken (Eingabe-, Ausgabedokumente, $\to$ Wiederverwendung)
-\item Audio‐, Videoaufzeichnungen
+\item Audio-, Videoaufzeichnungen
 \item Anwendungsfallmodellierung, Essenzbildung (das wichtige heraus filtern)
 \end{itemize}
 
@@ -1006,7 +997,7 @@ Vertragscharakter
 \end{itemize}
 
 \subsection{Pflichtenheft muss enthalten}
-Alle Anforderungen an das zu entwickelnde SW‐(Teil‐)System, die (zu dieser Zeit) erkennbar sind.\\
+Alle Anforderungen an das zu entwickelnde SW-(Teil-)System, die (zu dieser Zeit) erkennbar sind.\\
 D.h. funktionale und Qualitätsanforderungen ebenso wie einschränkende Rahmenbedingungen (organisatorische, rechtliche und technische/technologische).\\
 Da es in der Regel zwei Adressaten (AG/AN) und quasi Vertragscharakter hat,
 muss es analog zur Anforderungsanalyse folgende Eigenschaften haben:
@@ -1145,7 +1136,7 @@ Unified Process $\to$ Rational Unified Process (RUP) (Booch, Jakobsen, Rumbaugh)
 \subsection{Iterativ-inkrementelles Vorgehen}
 \paragraph{Wesen} 
 \begin{itemize}
-\item Gesamtfunktionalität wird in Teilfunktionalitäten aufgeteilt (Inkremente), die iterative entwickelt werden\\
+\item Gesamtfunktionalität wird in Teilfunktionalitäten aufgeteilt (Inkremente), die iterative entwickelt werden
 \item[]$\to$ evolutionärer Prototyp
 \end{itemize}
 

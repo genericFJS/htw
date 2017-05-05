@@ -1,33 +1,22 @@
-\newcommand{\customDir}{../}
-\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrreprt}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
 
-%\setboolean{twosided}{true}
-%\setCustomDocumentClass{scrartcl}
-%\setCustomDesign{htw}
-\setCustomSlidePath{Vorlesung/oneperpage/DBII_Kap}
-\setCustomSlideScale{1}
-
-\setCustomTitle{Datenbanksysteme II}
-\setCustomSubtitle{Vorlesungsskript}
-\setCustomAuthor{Falk-Jonatan Strube}
-%\setCustomNoteA{TitlepageNoteBeforeAuthor}
-\setCustomNoteB{Vorlesung von Prof. Dr.-Ing. Toll}
-
-%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
-%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
-
-\input{\customDir _LaTeX_master/LaTeX_master.sty}
-\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
-
-%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
+\faculty{Fakultät Informatik/Mathematik}
+\chair{Lehrstuhl für Betriebliche Informations- und Kommunikationssysteme/Datenbanksysteme}
+\subject{lecture}
+\title{Datenbanksysteme 2}
+\author{Falk-Jonatan Strube}
+\professor{Prof. Dr.-Ing. Axel Toll}
 
 \begin{document}
-
-%\selectlanguage{english}
 \maketitle
-\newpage
 \tableofcontents
-\newpage
+
+\slidePath{Vorlesung/oneperpage/DBII_Kap}
+\slideScale{1}
 \chapter*{Vorbemerkungen}
 \section*{Prüfung}
 SP: 90 min\\
@@ -223,10 +212,10 @@ $\Rightarrow$ Aufbau des C-Programms (Ablauf):
 \end{itemize}
 \end{itemize}
 \subsection{Beschreibung der wichtigsten CLI-Funktionen in ODBC}
-\setCustomSlideScale{0.8}
+\slideScale{0.8}
 \slides{1B}{1}
 \slides{1B}{2}
-\setCustomSlideScale{1}
+\slideScale{1}
 Achtung: mit konstanten Bezeichnungen anstatt mit numerischen Werten arbeiten:
 \begin{lstlisting}[language=C]
 // Headerdatei sql.h
@@ -237,10 +226,10 @@ Achtung: mit konstanten Bezeichnungen anstatt mit numerischen Werten arbeiten:
 \end{lstlisting}
 
 \subsection{Minimalbeispiel ODBC}
-\setCustomSlideScale{0.7}
+\slideScale{0.7}
 \slides{1B}{3}
 \slides{1B}{4}
-\setCustomSlideScale{1}
+\slideScale{1}
 Achtung: Variable muss ein Zeichen größer sein als SQL-Eintrag ($\to$ Nullterminiert)
 \subsection{Programmausschnitt ODBC}
 \slides{1}{10}
@@ -248,16 +237,17 @@ Achtung: Variable muss ein Zeichen größer sein als SQL-Eintrag ($\to$ Nullterm
 \subsection{Ergebnistypen ODBC}
 \slides{1}{11}
 \newpage\paragraph{Beispiel Datentypen}
-\setCustomSlideScale{0.7}
+\slideScale{0.7}
 \slides{1C}{1}
 $\Rightarrow$ FETCH liest immer einen Datensatz (Zeilenweise)\\
 Achtung: Zeilen retcode braucht als 4. Argument ein @…
 
 \chapter{Datensicherheit/Zugriffsschutz}
 \section{Übersicht Datensicherheit/Transaktionen}
-\setCustomSlideScale{0.5}
+\slideScale{0.5}
 \slides{2}{1}
 \subsection{Datensicherheit in Datenbanksystemen}
+\resizebox{.99\textwidth}{!}{
 \begin{tabular}{l | l | l}
 & höhere Gewalt & Ausfall technischer Mittel\\
 \hline 
@@ -279,7 +269,7 @@ Maßnahmen & \mpb \begin{itemize}[leftmargin=*]
 \item Backup / Spiegelung
 \item sichere HW/SW
 \end{itemize} \mpe
-\end{tabular}\\
+\end{tabular}}\\
 \begin{tabular}{l | l | l}
 unbewusste menschliche Fehler & parallele Datennutzung & Computerkriminalität\\
 \hline 
@@ -1033,7 +1023,7 @@ Aufruf der fehlerhaften stored procedure vie SQL-Injektion
 exec logintest('A'OR'x'='x','A'OR'x'='x')
 \end{lstlisting}
 \chapter{Logische Datenmodelle}
-\setCustomSlideScale{1}
+\slideScale{1}
 Datenmodellierung ist ein zweistufiger Abstraktionsprozess:
 \slides{3}{15}
 \section{Logische und physische Datenorganisation / Überblick über Datenmodelle}
@@ -1302,7 +1292,7 @@ CREATE OR REPLACE TRIGGER CheckKunde
 \end{lstlisting}
 
 \slides{3}{13}
-\paragraph{Zeilen} :NEW :OLD nur im Row-Trigger
+\paragraph{Zeilen} :NEW :OLD nur im Row-Trigger\\
 \begin{tabular}{l | l | l}
 Operation & :OLD & :NEW\\\hline
 INSERT & NULL & einzufügende Tupel\\
@@ -1346,13 +1336,13 @@ create or replace trigger tr_artikel
 \slides{3}{14}
 
 \subsection{Unterschiedliche Strategien beim Umgang mit dem Transaktion-Log in Triggern}
-\begin{tabular}{L{0.18} | l | l}
+\resizebox{.99\textwidth}{!}{\begin{tabular}{L{0.18} | l | l}
 & MS SQL-Server/Sybase & Oracle\\\hline
 Ansatz & Tabellen-orientiert & Datensatz-orientiert\\
 Umsetzung & „magic“ \emph{tables}: deleted, inserted & \emph{tupel} (einzelne Datensätze!): :OLD, :NEW\\
 Verwendung & in jedem Trigger & nur im ROW-Trigger\\
 Transaktion zurücksetzen & ROLLBACK TRAN & RAISE\_APPLICATION\_ERROR(…)
-\end{tabular}\bigskip\\
+\end{tabular}}\bigskip\\
 Beispiel:
 \begin{lstlisting}[language=SQL]
 UPDATE Kauf SET vPreis = vPreis * 1.1 WHERE Kunr=123
@@ -1619,14 +1609,15 @@ Datenbank-Anwendungssystem:
 \item Wartung
 \end{itemize}
 \subsection{Diskussion ausgewählter Problemfelder}
+\resizebox{.99\textwidth}{!}{
 \begin{tabular}{l | l | l | l | l | l | l}
 & Analyse & Entwurf & Implem. & Test & Installation & Nutzung\\\hline
 Fehlerkosten & 0,2 & 0,5 & 1 & 2 & 5 & 10-20\\
 Fehlerentdeckung & bei Nutzung & im Test & in Impl. & & \\
 Aufwand (soll) & hoch & hoch & hoch & sehr hoch & hoch & gering\\
 Aufwand (oft) &  sehr gering & gering & mittel & hoch & sehr hoch & extrem hoch\\
-
 \end{tabular}
+}
 \subsection{Mitarbeiteranzahl und Bearbeitungsdauer}
 Eigentlich: mit steigender Anzahl der Mitarbeiter sollte die Bearbeitungsdauer linear sinken.\\
 Aber: Kommunikationswege heben die Dauer wieder. Zusammen mit den Kommunikationswegen schaffen zu viele Mitarbeiter wieder mehr Aufwand als dass sie die Dauer senken $\to$ Badewannenkurve. Die optimale Anzahl an Mitarbeitern ist wichtig.
@@ -1652,7 +1643,7 @@ Aber: Kommunikationswege heben die Dauer wieder. Zusammen mit den Kommunikations
 \item soziale Kompetenz
 \end{itemize}
 \section{Phasen des Entwurfsprozesses}
-\setCustomSlideScale{.7}
+\slideScale{.7}
 \slides{5_1}{1}
 \begin{enumerate}
 \item Anforderungsanalyse/-spezifikation

@@ -1,34 +1,21 @@
-\newcommand{\customDir}{../}
-\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrreprt}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
 
-%\setboolean{twosided}{true}
-%\setCustomDocumentClass{scrartcl}
-%\setCustomDesign{htw}
-\setCustomSlidePath{Vorlesung/rn-}
-\setCustomSlideScale{1}
-
-\setCustomTitle{\texorpdfstring{Rechnernetze /\\ Kommunikationssysteme}{Rechnernetze / Kommunikationssysteme}}
-\setCustomSubtitle{Vorlesungsskript}
-\setCustomAuthor{Falk-Jonatan Strube}
-%\setCustomNoteA{TitlepageNoteBeforeAuthor}
-\setCustomNoteB{Vorlesung von Prof. Dr.-Ing. Vogt}
-
-%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
-%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
-
-\input{\customDir _LaTeX_master/LaTeX_master.sty}
-\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
-
-%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
-\setlength{\headheight}{10mm}	% default: ca. 8mm
+\faculty{Fakultät Informatik/Mathematik}
+\chair{Lehrstuhl für Rechnernetze / Kommunikationssysteme}
+\subject{lecture}
+\title{Rechnernetze / Kommunikationssysteme}
+\author{Falk-Jonatan Strube}
+\professor{Prof. Dr. Jörg Vogt}
 
 \begin{document}
-
-%\selectlanguage{english}
 \maketitle
-\newpage
 \tableofcontents
-\newpage
+\slidePath{Vorlesung/rn-}
+\slideScale{1}
 
 \chapter*{Vorbemerkung}
 
@@ -38,11 +25,11 @@ Zur Prüfung: alles erlaubt (Taschenrechner, Unterlagen, …)
 Prüfung: TCP (repeat), IP-Protokoll (subnetting, … bspw. wie viele hosts können unterstützt werden?), routing (wegesuche deixtra), schiebefensterprotokolle usw (bsw. maximale datenrate mit go-back-n), zugriffsverfahren, fehlerschutz (korrektur)
 
 \chapter{Einführung}
-\setCustomSlideScale{.5}
+\slideScale{.5}
 \input{HTW_RNKN_Skript_ch1}
 
 \chapter{Sockets}
-\setCustomSlideScale{1}
+\slideScale{1}
 \input{HTW_RNKN_Skript_ch2}
 
 \chapter{Grundlagen OSI}

@@ -1,30 +1,20 @@
-\newcommand{\customDir}{../}
-\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrreprt}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
 
-%\setboolean{twosided}{true}
-%\setCustomDocumentClass{scrartcl}
-%\setCustomDesign{htw}
-\setCustomTitle{Betriebssysteme I}
-\setCustomSubtitle{Vorlesungs- und Praktikumsnotizen}
-\setCustomAuthor{Falk-Jonatan Strube}
-%\setCustomNoteA{Titlepage Note before Author}
-\setCustomNoteB{Vorlesung und Praktikum von \\Prof. Dr.-Ing. Baumgartl}
+\faculty{Fakultät Informatik/Mathematik}
+\chair{Lehrstuhl für Betriebssysteme}
+\subject{lecture}
+\title{Betriebssysteme 1}
+\author{Falk-Jonatan Strube}
+\professor{Prof. Dr.-Ing. Robert Baumgartl}
 
-%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
-%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
-
-\input{\customDir _LaTeX_master/LaTeX_master.sty}
-\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
-
-%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
-
+\renewcommand{\imptnt}[1]{#1}
 \begin{document}
-
-%\selectlanguage{english}
 \maketitle
-\newpage
 \tableofcontents
-\newpage
 
 \chapter*{Hinweise}
 Bei der Klausur sind keine Hilfsmittel zugelassen.
@@ -80,7 +70,7 @@ Hardware\\
 \chapter{Shell}
 
 \section{Wichtige Shell-Befehle}
-\begin{longtable}[l]{ l | l } 
+\begin{longtable}[l]{ p{.2\textwidth} | p{.7\textwidth} } 
 Befehl & Wirkung\\
 \hline
 \imptnt{ls} & Dateien in Ordner auflisten (-l: detailliert)\\
@@ -126,8 +116,8 @@ pgrep & Suche nach Prozess anhand von regexp.\\
 nice & Setze Prozess-Priorität
 \end{longtable}
 
-\section[Weiterleitung]{\imptnt{Weiterleitung}}
-\begin{tabular}{l l}
+\section{Weiterleitung}
+\begin{tabular}{p{.15\textwidth} p{.69\textwidth}}
 ls > ls.txt & Ausgabe von ls in Datei ls.txt (neu erstellt)\\
 ls >> ls.txt & Ausgabe von ls in Datei ls.txt (ergänzend, hängt an)\\
 foo < ls.txt & Datei ls in Eingabe von Prozess foo\\
@@ -179,7 +169,7 @@ x = '...' $\Leftrightarrow$ x = |\$|(...)			|\$|(...) weißt stdout einer Fkt ei
 let x = |\$|a + |\$|b $\Leftrightarrow$ (( x = |\$|a + |\$|b ))
 \end{lstlisting}
 
-\section[Regex]{\imptnt{Regex}}
+\section{Regex}
 \begin{tabular}{c l}
 . & beliebiges Zeichen\\
 * & beliebig viele des vorhergehenden Zeichens\\
@@ -241,6 +231,7 @@ Aufbau einer Festplatte:
 \item Dateipositions-Zeiger
 \item Typ ($\Rightarrow$ \imptnt{Magic Word} an Beginn der Datei)
 \end{itemize}
+\resizebox{.99\textwidth}{!}{
 \begin{tabular}{l | c | l | l}
 \label{tab:syscalls}
 Dateifktn C & & Systemruf Unix & … über Verzeichnis\\
@@ -263,6 +254,7 @@ flock() & Sperren der Datei &\\
 & Suche nach Einträgen&& scandir()\\
 & Zurücksetzen Eintragszeiger & & rewinddir()
 \end{tabular}
+}
 \paragraph{Rechteverwaltung} verschieden Möglichkeiten:\\
 \imptnt{Zugriffsmatrix}\\
 \begin{tabular}{l | l l }
@@ -431,7 +423,7 @@ Text (Code)\\
 \end{itemize}
 \end{itemize}
 
-\section[Fork]{\imptnt{Fork}}
+\section{Fork}
 \begin{lstlisting}[language=C]
 pid_t fork(void);
 \end{lstlisting}
@@ -466,7 +458,7 @@ if ( ret == 0 ) {
 	puts(ret);
 }
 \end{lstlisting}
-\section[Exec]{\imptnt{Exec}}
+\section{Exec}
 \begin{lstlisting}[language=C]
 int execl("Programmpfad", "Argumente...");
 \end{lstlisting}
@@ -488,7 +480,7 @@ int system("Kommando");
 \item kehrt erst zurück, wenn Kommando abgearbeitet ist
 \end{itemize}
 \end{itemize}
-\section[Wait]{\imptnt{Wait}}
+\section{Wait}
 \begin{lstlisting}[language=C]
 pid_t wait (int *status);
 \end{lstlisting}
@@ -539,14 +531,14 @@ $1-1$ & unicast\\
 $1-x_i$ & multicast\\
 $1-all$ & broadcast (bpsw. in Subnetz)
 \end{tabular}
-\section[Übertragung über Datei]{Übertragung \imptnt{über Datei}}
+\section{über Datei}
 Schlecht, da:
 \begin{itemize}
 \item doppelter Zugriff auf langsame HDD (nur gut, wenn Dateisystem im RAM)
 \item überlappender Zugriff muss mit lockf() geregelt wender $\Rightarrow$ fehleranfällig
 \end{itemize}
 
-\section[Übertragung über Pipe]{Übertragung über \imptnt{Pipe}}
+\section{Übertragung über Pipe}
 \begin{lstlisting}[language=C]
 int pipe ( int filedes[2] );
 \end{lstlisting}
@@ -608,7 +600,7 @@ r: stdout vom Kommando zeigt auf Pipe $\Rightarrow$ Kommando schreibt
 \item pclose() $\Rightarrow$ wieder schließen
 \end{itemize}
 
-\section[Signale]{\imptnt{Signale}}
+\section{Signale}
 \begin{itemize}
 \item Informationsübertragung (in der Form von Anweisungen) ohne nötige Vererbung
 \end{itemize}
@@ -642,7 +634,7 @@ main (){
 }
 \end{lstlisting}
 
-\subsection[kill]{\imptnt{kill}}
+\subsection{kill}
 Signal senden
 \begin{lstlisting}[language=C]
 int kill (pid_t pid, int sig);
@@ -701,7 +693,7 @@ Zielgrößen Prozess(or)-Verteilung:
 \item Ausschluss des Verhungerns
 \end{itemize}
 
-\section[Off-Line Scheduling]{\imptnt{Off-Line Scheduling}}
+\section{Off-Line Scheduling}
 \begin{itemize}
 \item Ermittlung Abarbeitungsreihenfolge und Prozessorzuteilung vor Laufzeit
 \begin{itemize}[label=$\to$]
@@ -740,7 +732,7 @@ $\Rightarrow$ \imptnt{Gantt-Diagramm}:\\
 \end{itemize}
 \end{itemize}
 
-\subsection[Zeitgesteuertes Scheduling]{\imptnt{Zeitgesteuertes Scheduling}}
+\subsection{Zeitgesteuertes Scheduling}
 \begin{itemize}
 \item Abläufe periodisch
 \item keine Interrupts
@@ -751,7 +743,7 @@ $\Rightarrow$ \imptnt{Gantt-Diagramm}:\\
 $\Rightarrow$ keine Kollision möglich
 \end{itemize}
 
-\subsection[Ereignisgesteuertes Scheduling]{\imptnt{Ereignisgesteuertes Scheduling}}
+\subsection{Ereignisgesteuertes Scheduling}
 \begin{itemize}
 \item reagiert auf Einflüsse von außen
 \item keine Garantie von Ausführungszeiten möglich, da Interrupts unvorhersehbar
@@ -771,7 +763,7 @@ Freiwilliges Unterbrechen durch Prozess, bpsw. durch Systemaufrufe
 \item oder wenn Aktivität komplett (run-to-completion)
 \end{itemize}
 
-\subsection[Priorisierung]{\imptnt{Priorisierung}}
+\subsection{Priorisierung}
 Prozesse besitzen unterschiedliche Wichtigkeiten (unfair)
 \begin{itemize}
 \item \imptnt{statische Priorität}
@@ -805,19 +797,19 @@ Priorität basiert auf bspw.:
 \item wo wird Prozess abgearbeitet (am besten unbeschäftigter Prozessor oder Prozessor auf dem Prozess zuvor lief)
 \end{itemize}
 
-\subsection[Round-Robin]{\imptnt{Round-Robin}}
+\subsection{Round-Robin}
 Kenngrößen:\\
 \imptnt{$t_q$} \quad Prozesszeit (Quantum)\\
 \imptnt{$t_{cs}$} \quad Umschaltzeit
 
 Je größer die Prozesszeit ist, desto träger kann das System werden (lange Reaktionszeit). Bei kurzer Prozesszeit ist die Umschaltzeit im vergleich relativ groß $\Rightarrow$ ineffizient (aber schnelle Reaktionszeit)
 
-\subsection[FIFO/FCFS]{\imptnt{FIFO/FCFS}}
+\subsection{FIFO/FCFS}
 fair, leicht zu analysieren ($\to$ Warteschlange)
 \begin{itemize}
 \item Prozesse werden in Reihenfolge des Eintreffens vollständig abgearbeitet
 \end{itemize}
-\subsection[Shortest Job Next (SJN)]{\imptnt{Shortest Job Next (SJN)}}
+\subsection{Shortest Job Next (SJN)}
 \begin{itemize}
 \item kleine Prozesse werden immer vor großen abgearbeitet\\
 $\Rightarrow$ kann zum \imptnt{verhungern} führen, unfair!
@@ -839,6 +831,6 @@ $\Rightarrow$ kann zum \imptnt{verhungern} führen, unfair!
 \item Prioritäten + Zeitscheiben (Prioritäten von 19 (niedrigste) über 0 (normal) bis -20 (höchste))
 \end{itemize}
 
-\section[Priority Boost]{\imptnt{Priority Boost}}
+\section{Priority Boost}
 Priorität wird durch langes Warten erhöht und durch Abarbeiten schrittweise verringert.
 \end{document}

@@ -1,38 +1,25 @@
-\newcommand{\customDir}{../}
-\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrreprt}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
 
-%\setboolean{twosided}{true}
-%\setCustomDocumentClass{scrartcl}
-%\setCustomDesign{htw}
-\setCustomSlidePath{Vorlesung/RA_043_}
-\setCustomSlideScale{0.7}
-
-\setCustomTitle{Rechnerarchitektur}
-\setCustomSubtitle{Vorlesungsskript}
-\setCustomAuthor{Falk-Jonatan Strube}
-\setCustomNoteA{oder: „…aber das ist eine andere Geschichte“\vspace*{2em}}
-\setCustomNoteB{Vorlesung von Prof. Dr.-Ing. Schönthier}
-
-%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
-%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
-
-\input{\customDir _LaTeX_master/LaTeX_master.sty}
-\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
-
-%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
-%\renewcommand{\unimptnt}[1]{}
+\faculty{Fakultät Informatik/Mathematik}
+\chair{Lehrstuhl für Medientechnik / Audio- und Videosysteme}
+\subject{lecture}
+\title{Rechnerarchitektur}
+\author{Falk-Jonatan Strube}
+\professor{Prof. Dr. Jens Schönthier}
 
 \makeatletter
 \@addtoreset{chapter}{part}
-\makeatother  
+\makeatother
+\slidePath{Vorlesung/RA_043_}
+\slideScale{0.7}
 
 \begin{document}
-
-%\selectlanguage{english}
 \maketitle
-\newpage
 \tableofcontents
-\newpage
 
 %\chapter*{Vorbemerkung}
 %Passwort Folien: \\% mi043##
