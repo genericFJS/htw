@@ -8,9 +8,9 @@
 	</ul>
 	<h2>Allgemeine Funktionalität:</h2>
 	<ul>
-		<li class='tasktext'>Vokabellisten liegen in einer Textdatei im UTF-8 Format vor. Jede Zeile enthält per Tab getrennt „Sprache 1“, „Sprache 2“ und ggf. „Aussprache“. <span class='taskimpl'>In dieser Implementation hat die Textdatei demnach folgende Struktur:</span> <br> <code class='taskimpl'>Wort in Sprache 1 &#8614; [Aussprache Wort in Sprache 1] &#8614; Übersetzung in Sprache 2</code>
+		<li class='tasktext'>Vokabellisten liegen in einer Textdatei im UTF-8 Format vor. Jede Zeile enthält per Tab getrennt „Sprache 1“, „Sprache 2“ und ggf. „Aussprache“. <span class='taskimpl'>In dieser Implementation hat die Textdatei demnach folgende Struktur:</span> <br> <code class='taskimpl'>Wort in Sprache 1 &#8614; [Aussprache Wort in Sprache 1] &#8614; Übersetzung in Sprache 2 &#8614; [Aussprache Wort in Sprache 2]</code>
 		</li>
-		<li class='tasktext'>Vokabellisten können per Fileupload über den Bereich Setup hinzugefügt werden. Es dürfen nur <span class='taskimpl'><span style='text-decoration: line-through;'>.txt</span> .csv</span>-Dateien hoch geladen werden, die keine HTML-Tags haben. <span class='taskimpl'>Da die zuvor erwähnte Syntax eine .csv-Datei beschreibt, werden statt .txt Dateien nur .csv Dateien angenommen. Es dürfen nur Dateien hochgeladen werden, die dem Schema entsprechen (Prüfkriterium: 2 Tabs / 3 Einträge pro Zeile).</span> <br> Optional: Bearbeiten der (hochgeladenen) Vokabellisten.
+		<li class='tasktext'>Vokabellisten können per Fileupload über den Bereich Setup hinzugefügt werden. Es dürfen nur .txt-Dateien hoch geladen werden, die keine HTML-Tags haben. <span class='taskimpl'>Es dürfen nur Dateien hochgeladen werden, die dem Schema entsprechen (Prüfkriterium: 3 Tabs / 4 Einträge pro Zeile).</span> <br> Optional: Bearbeiten der (hochgeladenen) Vokabellisten.
 		</li>
 		<li class='tasktext'>Übergabe von Werten erfolgt über POST (bei Ajax wird GET verwendet).</li>
 		<li class='tasktext'><span class='taskimpl'>Für die Navigation (Lektion, Statistik, …) wird GET verwendet.</span> Die Navigationsleiste befindet sich am unteren Rand. <span class='taskimg'>Aktive Elemente werden ausgeblendet.</span></li>
@@ -20,7 +20,7 @@
 		<li class='tasktext'>Es wird HTML, PHP5, Javascript, CSS und Ajax verwendet.</li>
 		<li class='tasktext'>Das Ergebnis muss unter Mozilla Firefox lauffähig sein. <span class='taskimpl'>Es wird nur auf Desktop-Browsern getestet. Internetverbindung muss vorhanden sein.</span></li>
 		<li class='tasktext'>Die Seite ist auf eine Bedienung durch einen einzelnen Nutzer ausgelegt. Es existiert keine Nutzereverwaltung. <span class='taskimpl'>Es wird davon ausgegangen, dass nur ein Nutzer gleichzeitig auf die Dateien (Vokabellisten/Statistik) zugreift. Fehler durch mehrfachen/gleichzeitigen (Schreib-)Zugriff werden nicht behandelt.</span></li>
-		<li class='tasktext'>Leere Eingaben und mögliche Fehlerzustände werden abgefangen.</li>
+		<li class='tasktext'>Leere Eingaben und mögliche Fehlerzustände werden abgefangen. <span class='taskimpl'>Es wird davon ausgegangen, dass der Nutzer Dateien nur über die Oberfläche bearbeiten (lässt). Es wird nicht auf manuelle Verfälschungen geprüft (bspw. in der Statistik mehr Richtige als Gesamtabfragen).</span></li>
 		<li class='tasktext'>Der Code wird verständlich und sinnvoll kommentiert. <span class='taskimpl'>Die Teile des CSS-Codes, die aus dem jQuery Theme bestehen sind nicht kommentiert. Nur die Elemente, die explizit für diesen Beleg erstellt wurden, sind besonders kommentiert.</span></li>
 	</ul>
 	<h2>Seitenspezifische Anforderungen:</h2>
@@ -46,5 +46,6 @@
 	<h3>Setup-Seite</h3>
 	<ul>
 		<li class='taskimg'>Die Setup-Seite besteht aus einem „Datei hochladen“ Feld (im einfachsten Fall).</li>
+		<li class='taskimpl'>Wenn der Dateiname beim Hochladen Sonderzeichen enthält, stellt das Dateisystem diese gebenenfalls dort nicht richtig dar.</li>
 	</ul>
 </div>

@@ -48,8 +48,7 @@ class PageState extends BasicEnum {
 	const Lesson = 40;
 	const NoLesson = 41;
 	const WrongLesson = 42;
-	const LessonRightAnswer = 43;
-	const LessonWrongAnswer = 44;
+	const LessonAnswer = 43;
 }
 
 class LessonState extends BasicEnum {

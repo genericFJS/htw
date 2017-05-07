@@ -18,6 +18,7 @@ $page = new Page ();
 	<div>
 		<div class="ui-header ui-bar-a" data-form="ui-bar-a" data-role="header" role="banner">
 			<a class="ui-btn-left ui-btn ui-btn-icon-notext ui-icon-home ui-btn-corner-all" title=" Home " data-form="ui-icon" href="?q=start"> Home </a>
+			<img id="header-logo" alt="FJS" src="https://www.fj-strube.de/site/templates/media/FJS-logo_black.svg">
 			<h1 class="ui-title" tabindex="0" role="heading" aria-level="1"><?php	$page->printTitle ();	?></h1>
 		</div>
 
@@ -31,7 +32,7 @@ $page = new Page ();
     	</div>
 		</div>
 
-		<div id="debug"></div>
+		<div id="debug"><?php echo $page->debug;?></div>
 	</div>
 
 </body>

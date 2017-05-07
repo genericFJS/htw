@@ -41,13 +41,13 @@
 #okButton {
 	margin: 0;
 	display: inline-block;
-	width: 10em;
+	width: 13em;
 	display: inline-block;
 }
 
 /* Wrapper für die Auswahl der Abfragerichtung  */
 #selection {
-	width: 150px;
+	width: 165px;
 	display: inline-block;
 	margin: 0;
 }
@@ -55,7 +55,41 @@
 /* Wrapper für Elemente, die mittig dargestellt werden sollen */
 .centered {
 	width: 100%;
+	text-align: center !important;
+}
+
+/* Feld für das Antwor-Feedback */
+.rightAnswer, .wrongAnswer {
+	margin-bottom: 1em;
 	text-align: center;
+	font-size: 125%;
+}
+
+.rightAnswer p:first-child, .wrongAnswer p:first-child {
+	font-size: 150%;
+}
+
+.rightAnswer p:nth-child(2), .wrongAnswer p:nth-child(2) {
+	font-style: italic;
+	color: grey;
+}
+
+.rightAnswer {
+	background: hsl(90, 50%, 85%);
+}
+
+.wrongAnswer {
+	background: hsl(0, 50%, 85%);
+}
+
+.wrongTranslation {
+	text-decoration: line-through;
+}
+
+/* Verstecke die Korrekte Antwort */
+#hiddenCorrectAnswer {
+	display: none;
+	z-index: -1;
 }
 
 /* Override jQuery Mobile standards */
@@ -63,4 +97,25 @@
 	.ui-field-contain>label ~[class*=ui-], .ui-field-contain .ui-controlgroup-controls {
 		width: 100%;
 	}
+}
+
+/* FJS Logo */
+#header-logo {
+	height: 28px;
+	position: absolute;
+	right: .3125em;
+	top: .3125em;
+}
+
+/* Ermittlung der Funktionalitäten */
+.tasktext {
+	color: darkblue;
+}
+
+.taskimg {
+	color: darkgreen;
+}
+
+.taskimpl {
+	color: darkmagenta;
 }

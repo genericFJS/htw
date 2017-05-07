@@ -1,4 +1,4 @@
-var minVocSize = 250;
+/*var minVocSize = 250;
 var minNavSize = 100;
 
 // Anpassung der Größe von Objekten je nach Fensterbreite
@@ -23,4 +23,4 @@ function resizeDivs() {
 	//$("#debug", $.mobile.activePage).html("test");
 }
 
-$(window).on("resize pagebeforeshow", resizeDivs);
+$(window).on("resize pagebeforeshow", resizeDivs);*/
