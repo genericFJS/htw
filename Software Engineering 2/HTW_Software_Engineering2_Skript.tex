@@ -296,6 +296,7 @@ $\to$ Zusammenführung von Daten und Methoden.
 \subsection{Vererbung}
 \slides{06}{8}
 \slides{06}{9}
+$\to$ Polymorphie (mit früher/\emph{später} Bindung)
 \subsubsection{Substitutionsprinzip}
 \slides{06}{10}
 \subsubsection{Chancen und Gefahren der Vererbung}
@@ -307,7 +308,50 @@ $\to$ Zusammenführung von Daten und Methoden.
 \slides{06}{15}
 \subsection{Erzeugermuster}
 \slides{06}{16}
+\lecdate{09.05.2017}
+\paragraph{Problem} Komplexe Objekte erstellen. 
+\paragraph{Kontext} Erzeugung und Darstellung eines Objektes getrennt (Methode der Erzeugung interessiert Client nicht): Konvertierung von Zeichenketten, Erzeugung von Fensteranordnungen [bspw. in Eclipse].
+\paragraph{Lösungsstrategie} Ein „Direktor“ delegiert das Erbauen an einen „Erbauer“, der das Produkt dann ausgibt.\\
+$\to $ einfache Erweiterung und gute Kapselung
 
+\subsection{Singleton}
+\paragraph{Problem} absichern, dass nur ein Objekt instanziiert wird
+\paragraph{Kontext} Zugriff auf zentrale HW-Ressourcen (z.B. eine Instanz einer Drucker-Warteschlange)
+\paragraph{Lösungsstrategie} Anzahl von Instanzen zählen ( wenn 0, dann instanziieren -- sonst nicht).
+\begin{itemize}
+\item Variable, die den Wert aufnimmt
+\item Kontrollierte Instanziierung
+\begin{itemize}
+\item im Standardkonstruktor prüfen
+\item 
+\begin{lstlisting}
+Standardkonstruktor privat
+GibInstanz(){
+	// prüfen
+	// Aufruf des Standardkonstruktors, abhängig vom Prüfergebnis
+}
+\end{lstlisting}
+\end{itemize}
+\end{itemize}
+\begin{tikzpicture}
+\draw  (-2.5,2.5)node[below right]{\lstinline"Singleton"} rectangle (3,2);
+\draw  (-2.5,2) node[below right]{\lstinline"- instanz: singleton"} rectangle (3,0.5);
+\draw  (-2.5,0.5) node[below right, align=left]{\lstinline"- singleton();"\\\lstinline"+ GibInstanz(): singleton;"} rectangle (3,-0.5);
+\end{tikzpicture}
+
+\subsection{Prototyp}
+\paragraph{Problem} Ein Sachverhalt $\to$ viele Ausprägungen.
+\paragraph{Kontext} Erzeugung eines neuen Dokuments in Word $\to$ Dokument wird nach Prototyp (Vorlage) erzeugt $\to$ Vorlage zur Serienfertigung. 
+\paragraph{Lösung} Nur eine Klasse $\to$ eine Instanz gespeichert $\to$ beliebig viele Kopien davon können erstellt werden.
+\begin{tikzpicture}
+\draw  (-2.5,2.5)node[below right]{\lstinline"Prototyp"} rectangle (3,2);
+\draw  (-2.5,2) node[below right]{\lstinline""} rectangle (3,1);
+\draw  (-2.5,1) node[below right, align=left]{\lstinline"+ clone();"} rectangle (3,0);
+\end{tikzpicture}
+
+\subsection{Fabrikmethode}
+\paragraph{Problem} verschieden Produkte mit ähnlichem Aufbau
+\paragraph{Lösung} (abstrakte) Klasse, die einen Grundaufbau für alle Produkte enthält.
 
 \part{Praktikum}
 \setcounter{chapter}{0}
