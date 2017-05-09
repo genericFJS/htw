@@ -453,3 +453,7 @@ Software Engineering 2/ledleuchturm
 *.lck
 Internet-Technologien 1/Beleg/lessons/*-stat.txt
 *.tif
+*.mat
+*.sift
+*.nvm.cmvs/
+*.nvm
