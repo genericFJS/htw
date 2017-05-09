@@ -8,7 +8,7 @@
 	</ul>
 	<h2>Allgemeine Funktionalität:</h2>
 	<ul>
-		<li class='tasktext'>Vokabellisten liegen in einer Textdatei im UTF-8 Format vor. Jede Zeile enthält per Tab getrennt „Sprache 1“, „Sprache 2“ und ggf. „Aussprache“. <span class='taskimpl'>In dieser Implementation hat die Textdatei demnach folgende Struktur:</span> <br> <code class='taskimpl'>Wort in Sprache 1 &#8614; [Aussprache Wort in Sprache 1] &#8614; Übersetzung in Sprache 2 &#8614; [Aussprache Wort in Sprache 2]</code>
+		<li class='tasktext'>Vokabellisten liegen in einer Textdatei im UTF-8 Format vor. Jede Zeile enthält per Tab getrennt „Sprache 1“, „Sprache 2“ und ggf. „Aussprache“. <span class='taskimpl'>In dieser Implementation hat die Textdatei in der ersten Zeile den Titel der Lektion stehen, in allen weiteren Zeilen folgende Struktur:</span> <br> <code class='taskimpl'>Wort in Sprache 1 &#8614; [Aussprache Wort in Sprache 1] &#8614; Übersetzung in Sprache 2 &#8614; [Aussprache Wort in Sprache 2]</code>
 		</li>
 		<li class='tasktext'>Vokabellisten können per Fileupload über den Bereich Setup hinzugefügt werden. Es dürfen nur .txt-Dateien hoch geladen werden, die keine HTML-Tags haben. <span class='taskimpl'>Es dürfen nur Dateien hochgeladen werden, die dem Schema entsprechen (Prüfkriterium: 3 Tabs / 4 Einträge pro Zeile).</span> <br> Optional: Bearbeiten der (hochgeladenen) Vokabellisten.
 		</li>

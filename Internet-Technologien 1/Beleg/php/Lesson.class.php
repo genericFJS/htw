@@ -3,6 +3,7 @@ include_once 'Enums.php';
 class Lesson {
 	private $lessonStatus;
 	private $lessonName;
+	private $lessonFileName;
 	/**
 	 * Array, dass die Arrays von den Vokabeln speichert.
 	 * Die Vokabel-Arrays haben die Form (Fremdwort, Lautschrift des Fremdwortes, Vokabel, Lautschrift der Vokabel, Zeilennummer).
@@ -24,6 +25,7 @@ class Lesson {
 	 */
 	public function __construct($lessonName, $reverse, $answerLines) {
 		$lessonFilePath = Lesson::filePath . $lessonName . Lesson::fileExtension;
+		$this->lessonFileName = $lessonName;
 		if (file_exists ( $lessonFilePath )) {
 			$handle = @fopen ( $lessonFilePath, "r" );
 			if ($handle) {
@@ -149,6 +151,9 @@ class Lesson {
 	}
 	public function getLessonName() {
 		return $this->lessonName;
+	}
+	public function getLessonFileName(){
+		return $this->lessonFileName;
 	}
 	public function getForeignVocabulary($entryNumber) {
 		return $this->vocabulary [$entryNumber] [0];

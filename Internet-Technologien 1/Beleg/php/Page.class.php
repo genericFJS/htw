@@ -8,6 +8,7 @@ class page {
 	private $lesson;
 	const filesPath = 'lessons/';
 	const statisticsExtension = '-stat.txt';
+	const fileFormatHTML = '<p>Format der Datei: </p><p><code>Titel der Lektion <br> Wort in Sprache 1 &#8614; [Aussprache Wort in Sprache 1] &#8614; Übersetzung in Sprache 2 &#8614; [Aussprache Wort in Sprache 2]<br>... (mindestens 5 Einträge)</code></p>';
 	public $debug = "";
 	
 	/**
@@ -149,7 +150,7 @@ class page {
 				$fileName = pathinfo ( $fileinfo->getFilename (), PATHINFO_FILENAME );
 				$lection = fgets ( fopen ( $fileinfo->getPath () . '/' . $fileinfo, 'r' ) );
 				if (strcmp ( "-stat", substr ( $fileName, - 5 ) ) != 0) {
-					$stats = $this->getStatsFromFile ( $fileinfo->getPath () . '\\' . $lection . $this::statisticsExtension );
+					$stats = $this->getStatsFromFile ( $fileinfo->getPath () . '\\' . $fileName . $this::statisticsExtension );
 					array_push ( $statistics, array (
 							$lection,
 							$stats 
@@ -229,7 +230,7 @@ class page {
 				foreach ( $dir as $fileinfo ) {
 					if (! $fileinfo->isDot ()) {
 						$lection = fgets ( fopen ( $fileinfo->getPath () . '/' . $fileinfo, 'r' ) );
-						if (strcmp ( $lection, fgets ( fopen ( $_FILES ['upfile'] ['tmp_name'], 'r' ) ) ))
+						if (strcmp ( $lection, fgets ( fopen ( $_FILES ['upfile'] ['tmp_name'], 'r' ) ) ) == 0)
 							throw new RuntimeException ( 'Es existiert bereits eine Lektion mit einem gleichen Namen.' );
 					}
 				}
@@ -237,16 +238,18 @@ class page {
 			// Check file
 			$handle = @fopen ( $_FILES ['upfile'] ['tmp_name'], 'r' );
 			if ($handle) {
-				$firstline = true;
+				$lines = 0;
 				while ( ($buffer = fgets ( $handle, 4096 )) !== false ) {
 					if (strcmp ( $buffer, $this->stripHTMLChars ( $buffer ) ) != 0)
 						throw new RuntimeException ( 'Datei enthält unerlaubte Zeichenfolgen.' );
-					if (! $firstline && sizeof ( str_getcsv ( $buffer, "	" ) ) < 4)
-						throw new RuntimeException ( 'Datei ist nicht nach dem benötigten Schema formatiert oder enthält Leerzeilen.' );
-					if ($firstline && sizeof ( str_getcsv ( $buffer, "	" ) ) > 1)
-						throw new RuntimeException ( 'Datei ist nicht nach dem benötigten Schema formatiert (enthält Tabs im Titel/der ersten Zeile).' );
-					$firstline = false;
+					if ($lines != 0 && sizeof ( str_getcsv ( $buffer, "	" ) ) < 4)
+						throw new RuntimeException ( 'Datei ist nicht nach dem benötigten Schema formatiert oder enthält Leerzeilen.' . $this::fileFormatHTML );
+					if ($lines == 0 && sizeof ( str_getcsv ( $buffer, "	" ) ) > 1)
+						throw new RuntimeException ( 'Datei ist nicht nach dem benötigten Schema formatiert (enthält Tabs im Titel/der ersten Zeile).' . $this::fileFormatHTML );
+					$lines ++;
 				}
+				if ($lines < 7)
+					throw new RuntimeExcetpion ( 'Datei enthält nicht genung Vokabel-Einträge.' . $this::fileFormatHTML );
 				fclose ( $handle );
 			} else {
 				throw new RuntimeException ( 'Fehler beim öffnen der Datei zum Überprüfen der Dateistruktur.' );
@@ -333,7 +336,7 @@ class page {
 		echo '</ul>';
 	}
 	private function logAnswer() {
-		$fileName = $this::filesPath . $this->lesson->getLessonName () . $this::statisticsExtension;
+		$fileName = $this::filesPath . $this->lesson->getLessonFileName () . $this::statisticsExtension;
 		// lese Statistik ein
 		$stats = $this->getStatsFromFile ( $fileName );
 		// aktualisiere Statistik
