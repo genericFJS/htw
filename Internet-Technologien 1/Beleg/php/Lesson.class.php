@@ -24,13 +24,12 @@ class Lesson {
 	 */
 	public function __construct($lessonName, $reverse, $answerLines) {
 		$lessonFilePath = Lesson::filePath . $lessonName . Lesson::fileExtension;
-		$this->lessonName = $lessonName;
 		if (file_exists ( $lessonFilePath )) {
 			$handle = @fopen ( $lessonFilePath, "r" );
 			if ($handle) {
 				if ($answerLines [0] < 0) {
 					// Berechne die Anzahl der Zeilen in der Datei und wähle 5 zufällige Zeilen aus. Speichere die Zeilennummern in einem Array.
-					$totalRows = 0;
+					$totalRows = -1;
 					while ( ($buffer = fgets ( $handle, 4096 )) !== false ) {
 						$totalRows ++;
 					}
@@ -43,6 +42,7 @@ class Lesson {
 					// Speichere die Einträge der zufällig ausgewählten Zeilen in der Vokabelliste.
 					$currentVocabularyFileLine = 0;
 					$vocabularyFound = 0;
+					$this->lessonName = fgets ( $handle, 4096 );
 					while ( ($buffer = fgets ( $handle, 4096 )) !== false && $vocabularyFound < 5 ) {
 						$entryBuffer = str_getcsv ( $buffer, "	" );
 						$entryAdded = - 1;
@@ -96,6 +96,7 @@ class Lesson {
 							$linesToRead = 2;
 						}
 					}
+					$this->lessonName = fgets ( $handle, 4096 );
 					while ( ($buffer = fgets ( $handle, 4096 )) !== false && $linesToRead > 0 ) {
 						if ($row == $answerLines [0] || $row == $answerLines [1]) {
 							$index = 1;
@@ -118,7 +119,6 @@ class Lesson {
 						$row ++;
 					}
 				}
-				
 				$this->lessonStatus = LessonState::Valid;
 				fclose ( $handle );
 			}

@@ -132,9 +132,10 @@ class page {
 		$dir = new DirectoryIterator ( 'lessons/' );
 		foreach ( $dir as $fileinfo ) {
 			if (! $fileinfo->isDot ()) {
-				$lection = pathinfo ( $fileinfo->getFilename (), PATHINFO_FILENAME );
-				if (strcmp ( "-stat", substr ( $lection, - 5 ) ) != 0)
-					echo '<li><a  data-ajax="false" class="ui-btn-a ui-btn ui-btn-icon-right ui-icon-carat-r" data-form="ui-btn-up-a" href="?q=lesson&l=', $lection, '">', $lection, '</a></li>';
+				$fileName = pathinfo ( $fileinfo->getFilename (), PATHINFO_FILENAME );
+				$lection = fgets ( fopen ( $fileinfo->getPath () . '/' . $fileinfo, 'r' ) );
+				if (strcmp ( "-stat", substr ( $fileName, - 5 ) ) != 0)
+					echo '<li><a  data-ajax="false" class="ui-btn-a ui-btn ui-btn-icon-right ui-icon-carat-r" data-form="ui-btn-up-a" href="?q=lesson&l=', $fileName, '">', $lection, '</a></li>';
 			}
 		}
 		echo '</ul>';
@@ -145,8 +146,9 @@ class page {
 		$dir = new DirectoryIterator ( 'lessons/' );
 		foreach ( $dir as $fileinfo ) {
 			if (! $fileinfo->isDot ()) {
-				$lection = pathinfo ( $fileinfo->getFilename (), PATHINFO_FILENAME );
-				if (strcmp ( "-stat", substr ( $lection, - 5 ) ) != 0) {
+				$fileName = pathinfo ( $fileinfo->getFilename (), PATHINFO_FILENAME );
+				$lection = fgets ( fopen ( $fileinfo->getPath () . '/' . $fileinfo, 'r' ) );
+				if (strcmp ( "-stat", substr ( $fileName, - 5 ) ) != 0) {
 					$stats = $this->getStatsFromFile ( $fileinfo->getPath () . '\\' . $lection . $this::statisticsExtension );
 					array_push ( $statistics, array (
 							$lection,
@@ -218,17 +220,32 @@ class page {
 				throw new RuntimeException ( 'Falsches Dateiformat. Es sind nur txt-Dateien erlaubt.' );
 			}
 			// Check if file exists.
-			if (file_exists ( $this::filesPath . basename ( $_FILES ["upfile"] ["name"] ) )) {
+			$fileName = sprintf ( '%s/%s%s', $this::filesPath, sha1_file ( $_FILES ['upfile'] ['tmp_name'] ), Lesson::fileExtension );
+			if (file_exists ( $fileName )) {
 				throw new RuntimeException ( 'Datei existiert bereits.' );
+			} else {
+				// ... or if a Lesson with the same title exists.
+				$dir = new DirectoryIterator ( 'lessons/' );
+				foreach ( $dir as $fileinfo ) {
+					if (! $fileinfo->isDot ()) {
+						$lection = fgets ( fopen ( $fileinfo->getPath () . '/' . $fileinfo, 'r' ) );
+						if (strcmp ( $lection, fgets ( fopen ( $_FILES ['upfile'] ['tmp_name'], 'r' ) ) ))
+							throw new RuntimeException ( 'Es existiert bereits eine Lektion mit einem gleichen Namen.' );
+					}
+				}
 			}
 			// Check file
 			$handle = @fopen ( $_FILES ['upfile'] ['tmp_name'], 'r' );
 			if ($handle) {
+				$firstline = true;
 				while ( ($buffer = fgets ( $handle, 4096 )) !== false ) {
 					if (strcmp ( $buffer, $this->stripHTMLChars ( $buffer ) ) != 0)
 						throw new RuntimeException ( 'Datei enthält unerlaubte Zeichenfolgen.' );
-					if (sizeof ( str_getcsv ( $buffer, "	" ) ) < 4)
+					if (! $firstline && sizeof ( str_getcsv ( $buffer, "	" ) ) < 4)
 						throw new RuntimeException ( 'Datei ist nicht nach dem benötigten Schema formatiert oder enthält Leerzeilen.' );
+					if ($firstline && sizeof ( str_getcsv ( $buffer, "	" ) ) > 1)
+						throw new RuntimeException ( 'Datei ist nicht nach dem benötigten Schema formatiert (enthält Tabs im Titel/der ersten Zeile).' );
+					$firstline = false;
 				}
 				fclose ( $handle );
 			} else {
@@ -236,7 +253,7 @@ class page {
 			}
 			// Save file.
 			// iconv("utf-8", "cp936", $filename)
-			if (! move_uploaded_file ( $_FILES ['upfile'] ['tmp_name'], $this::filesPath . basename ( $_FILES ["upfile"] ["name"] ) )) {
+			if (! move_uploaded_file ( $_FILES ['upfile'] ['tmp_name'], $fileName )) {
 				throw new RuntimeException ( 'Hochgeladen Datei konnte nicht gespeichert werden.' );
 			}
 			echo 'Datei erfolgreich hochgeladen.';
