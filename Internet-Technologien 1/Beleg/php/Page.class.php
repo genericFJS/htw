@@ -203,10 +203,18 @@ class page {
 				throw new RuntimeException ( 'Datei zu groß.' );
 			}
 			// Check MIME Type.
-			$finfo = new finfo ( FILEINFO_MIME_TYPE );
-			if (false === array_search ( $finfo->file ( $_FILES ['upfile'] ['tmp_name'] ), array (
-					'txt' => 'text/plain' 
-			), true )) {
+			/*
+			 * nicht lauffähig auf HTW Server
+			 * $finfo = new finfo ( FILEINFO_MIME_TYPE );
+			 * if (false === array_search ( $finfo->file ( $_FILES ['upfile'] ['tmp_name'] ), array (
+			 * 'txt' => 'text/plain'
+			 * ), true )) {
+			 */
+			/*
+			 * Ebenfalls nicht auf HTW Server lauffähig
+			 * if (strcmp ( mime_content_type ( $_FILES ['upfile'] ['tmp_name']), 'text/plain' ) != 0 ) {
+			 */
+			if (strcmp ( pathinfo ( basename ( $_FILES ["upfile"] ["name"] ) ) ['extension'], 'txt' ) != 0) {
 				throw new RuntimeException ( 'Falsches Dateiformat. Es sind nur txt-Dateien erlaubt.' );
 			}
 			// Check if file exists.
@@ -239,7 +247,7 @@ class page {
 	
 	/**
 	 * aus: https://stackoverflow.com/a/7128879
-	 * 
+	 *
 	 * @param string $des
 	 *        	Zeichenkette mit potentiellen HTML-Zeichen
 	 * @return string Zeichenkette ohne HTML-Zeichen
@@ -247,18 +255,20 @@ class page {
 	 */
 	private function stripHTMLChars($des) {
 		// Strip HTML Tags
-		$clear = strip_tags($des);
+		$clear = strip_tags ( $des );
 		// weiteres wird nicht benötigt:
-		/* // Clean up things like &amp;
-		$clear = html_entity_decode($clear);
-		// Strip out any url-encoded stuff
-		$clear = urldecode($clear);
-		// Replace non-AlNum characters with space
-		$clear = preg_replace('/[^A-Za-z0-9]/', ' ', $clear);
-		// Replace Multiple spaces with single space
-		$clear = preg_replace('/ +/', ' ', $clear);
-		// Trim the string of leading/trailing space
-		$clear = trim($clear); */
+		/*
+		 * // Clean up things like &amp;
+		 * $clear = html_entity_decode($clear);
+		 * // Strip out any url-encoded stuff
+		 * $clear = urldecode($clear);
+		 * // Replace non-AlNum characters with space
+		 * $clear = preg_replace('/[^A-Za-z0-9]/', ' ', $clear);
+		 * // Replace Multiple spaces with single space
+		 * $clear = preg_replace('/ +/', ' ', $clear);
+		 * // Trim the string of leading/trailing space
+		 * $clear = trim($clear);
+		 */
 		return $clear;
 	}
 	private function printWrongLessonPage() {

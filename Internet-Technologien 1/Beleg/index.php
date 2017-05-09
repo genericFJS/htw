@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="de">
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 include_once 'php/Page.class.php';
 
 $page = new Page ();
