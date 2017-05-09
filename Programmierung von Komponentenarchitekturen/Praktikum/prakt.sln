@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.12
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "prakt1", "prakt1\prakt1.csproj", "{506BF94E-50C0-46F5-95A9-5F8CB1802F51}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "prakt6", "prakt6\prakt6.csproj", "{54B5E626-EF44-4488-8F4C-2CEEB3B14F84}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "prakt7", "prakt7\prakt7.csproj", "{735EC634-4C6B-400D-B551-91581F30CE70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "prakt8", "prakt8\prakt8.csproj", "{4F687279-4CC9-4764-8B01-F58B97148458}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{735EC634-4C6B-400D-B551-91581F30CE70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{735EC634-4C6B-400D-B551-91581F30CE70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{735EC634-4C6B-400D-B551-91581F30CE70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F687279-4CC9-4764-8B01-F58B97148458}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F687279-4CC9-4764-8B01-F58B97148458}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F687279-4CC9-4764-8B01-F58B97148458}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F687279-4CC9-4764-8B01-F58B97148458}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
