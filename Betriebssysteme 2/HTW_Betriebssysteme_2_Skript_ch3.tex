@@ -49,6 +49,62 @@ Resultiert in freien Blöcken:\\
 \subsubsection*{Beurteilung}
 \slides{04-mem}{15}
 
+\section{Virtueller Speicher}
+\lecdate{10.05.2017}
+\subsection{Motivation}
+\slides{04-mem}{16}
+\subsection{Seiten vs Kacheln}
+\slides{04-mem}{17}
+\slides{04-mem}{18}
+Kacheln/Seitenrahmen: Segmente im physischen Speicher\\
+(virtuelle/logische)Seiten: Segmente im virtuellen Speicher\\
+MMU+OS: Memory Management Unit (im Prozessor) + Betriebssystem (Prozessor muss es unterstützen und Betriebssystem muss es nutzen)
+\subsection{Gestreute Speicherung}
+Umsetzung virtueller in physische Adresse
+\slides{04-mem}{19}
+Seitentabelle existiert für jeden Prozess.
+\subsection{Seitentabelleneintrag/Page Table Entry (PTE)}
+\slides{04-mem}{20}
+\subsubsection{Größe der Seitentabelle}
+\slides{04-mem}{21}
+\slides{04-mem}{22}
+Zugriffe: Immer eins mehr als die Hierarchiestufe.
+\subsubsection{Beispiel: Zweistufige Seitentabelle i386}
+\slides{04-mem}{23}
+\subsection{Demand Paging}
+\slides{04-mem}{24}
+\subsection{Seitenfehler/Pagefault}
+\slides{04-mem}{25}
+\subsection{Einlagerungstrategien}
+\slides{04-mem}{26}
+\subsection{Seitenaustauschverfahren}
+\slides{04-mem}{27}
+\subsubsection{Optimales Verfahren, LRU}
+\slides{04-mem}{28}
+\subsubsection{Not Recently Used (NRU)}
+\slides{04-mem}{29}
+\slides{04-mem}{30}
+\subsubsection{FIFO, Second Chance}
+\slides{04-mem}{31}
+Second Chance Lazy Evaluation: Im „Uhrzeigersinn“ durch die (Ring-)Liste gehen und alle R-Bits auf 0 setzen wenn 1 war oder Eintrag löschen, falls R-Bit 0.
+\subsubsection{NFU, Aging}
+\slides{04-mem}{32}
+\slides{04-mem}{33}
+(Hier würde also 3. rausfliegen)
+\subsection{Arbeitsmenge (Working Set)}
+(nur geringfügig relevant für Klausur)
+\slides{04-mem}{34}
+\slides{04-mem}{35}
+\slides{04-mem}{36}
+\subsubsection{Abhängigkeit der Größe der Arbeitsmenge von Delta}
+\slides{04-mem}{37}
+\slides{04-mem}{38}
+\subsection{Idee für Ersetzungsstrategie}
+\slides{04-mem}{39}
+
+\subsection{Beladys Anomalie}
+\slides{04-mem}{40}
+\slides{04-mem}{41}
 
 
 
