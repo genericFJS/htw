@@ -10,42 +10,43 @@
 	<ul>
 		<li class='tasktext'>Vokabellisten liegen in einer Textdatei im UTF-8 Format vor. Jede Zeile enthält per Tab getrennt „Sprache 1“, „Sprache 2“ und ggf. „Aussprache“. <span class='taskimpl'>In dieser Implementation hat die Textdatei in der ersten Zeile den Titel der Lektion stehen, in allen weiteren Zeilen folgende Struktur:</span> <br> <code class='taskimpl'>Wort in Sprache 1 &#8614; [Aussprache Wort in Sprache 1] &#8614; Übersetzung in Sprache 2 &#8614; [Aussprache Wort in Sprache 2]</code>
 		</li>
-		<li class='tasktext'>Vokabellisten können per Fileupload über den Bereich Setup hinzugefügt werden. Es dürfen nur .txt-Dateien hoch geladen werden, die keine HTML-Tags haben. <span class='taskimpl'>Es dürfen nur Dateien hochgeladen werden, die dem Schema entsprechen (Prüfkriterium: 3 Tabs / 4 Einträge pro Zeile).</span> <br> Optional: Bearbeiten der (hochgeladenen) Vokabellisten.
+		<li class='tasktext'>Vokabellisten können per Fileupload über den Bereich Setup hinzugefügt werden. Es dürfen nur .txt-Dateien hoch geladen werden, die keine HTML-Tags haben. <span class='taskimpl'>Es dürfen nur Dateien hochgeladen werden, die dem Schema entsprechen.</span> <br> Optional: <span class='taskimpl'>Runterladen und Löschen der Dateien.</span>
 		</li>
-		<li class='tasktext'>Übergabe von Werten erfolgt über POST (bei Ajax wird GET verwendet).</li>
+		<li class='tasktext'>Übergabe von Werten erfolgt über POST (bei Ajax wird GET verwendet). Die Lektion <span class='taskimpl'>und weitere statische Informationen wie bspw. die Abfragerichtung</span> werden als GET übergeben.</li>
 		<li class='tasktext'><span class='taskimpl'>Für die Navigation (Lektion, Statistik, …) wird GET verwendet.</span> Die Navigationsleiste befindet sich am unteren Rand. <span class='taskimg'>Aktive Elemente werden ausgeblendet.</span></li>
 		<li class='taskimg'>Die aktive Lektion/Seite wird in einer Titelleiste und als HTML-Meta-Information gesetzt.</li>
-		<li class='tasktext'>Es wird jQuery Mobile verwendet.</li>
+		<li class='tasktext'>Es wird jQuery Mobile verwendet. <span class='taskimpl'>Die Seitenübergänge über das AJAX des jQuery Mobile wurden weitestgehend ausgeschaltet, da sie ihm Chrome-Browser gelegentlich zu Fehlern in der UTF-8 Darstellung führten.</span></li>
 		<li class='tasktext'>Es wird auf ein responsive Design geachtet. <span class='taskimg'>Die Felder für die Vokabelabfrage (Gefragte Vokabel, Auswählfeld) werden je nach Breite des Browser-Fensters untereinander oder nebeneinander auf der vollen Breite dargestellt.</span></li>
 		<li class='tasktext'>Es wird HTML, PHP5, Javascript, CSS und Ajax verwendet.</li>
-		<li class='tasktext'>Das Ergebnis muss unter Mozilla Firefox lauffähig sein. <span class='taskimpl'>Es wird nur auf Desktop-Browsern getestet. Internetverbindung muss vorhanden sein.</span></li>
+		<li class='tasktext'>Das Ergebnis muss unter Mozilla Firefox auf dem Server der HTW Dresden lauffähig sein. <span class='taskimpl'>Es wird nur auf Desktop-Browsern getestet. Internetverbindung muss vorhanden sein.</span></li>
 		<li class='tasktext'>Die Seite ist auf eine Bedienung durch einen einzelnen Nutzer ausgelegt. Es existiert keine Nutzereverwaltung. <span class='taskimpl'>Es wird davon ausgegangen, dass nur ein Nutzer gleichzeitig auf die Dateien (Vokabellisten/Statistik) zugreift. Fehler durch mehrfachen/gleichzeitigen (Schreib-)Zugriff werden nicht behandelt.</span></li>
-		<li class='tasktext'>Leere Eingaben und mögliche Fehlerzustände werden abgefangen. <span class='taskimpl'>Es wird davon ausgegangen, dass der Nutzer Dateien nur über die Oberfläche bearbeiten (lässt). Es wird nicht auf manuelle Verfälschungen geprüft (bspw. in der Statistik mehr Richtige als Gesamtabfragen).</span></li>
-		<li class='tasktext'>Der Code wird verständlich und sinnvoll kommentiert. <span class='taskimpl'>Die Teile des CSS-Codes, die aus dem jQuery Theme bestehen sind nicht kommentiert. Nur die Elemente, die explizit für diesen Beleg erstellt wurden, sind besonders kommentiert.</span></li>
+		<li class='tasktext'>Leere Eingaben und mögliche Fehlerzustände<span class='taskimpl'>, die vor allem beim Hochladen entstehen können,</span> werden abgefangen. <span class='taskimpl'>Es wird davon ausgegangen, dass der Nutzer Dateien nur über die Oberfläche bearbeitet (bzw. bearbeiten lässt). Es wird nicht auf manuelle Verfälschungen geprüft (bspw. in der Statistik mehr Richtige als Gesamtabfragen).</span></li>
+		<li class='tasktext'>Der Code wird verständlich und sinnvoll kommentiert. <span class='taskimpl'>Die Teile des CSS-Codes, die aus dem jQuery Theme bestehen sind nicht kommentiert. Nur die CSS-Elemente, die explizit für diesen Beleg erstellt wurden, sind besonders kommentiert.</span></li>
+		<li class='taskimpl'>Die Auswahl der Lektion findet nicht auf der Startseite statt. Die Startseite wird für einführende Worte verwendet.</li>
 	</ul>
 	<h2>Seitenspezifische Anforderungen:</h2>
 	<h3>Vokabelabfrage:</h3>
 	<ul>
 		<li class='tasktext'>Bei dem Vokabeltest werden 5 unterschiedliche Übersetzungen angezeigt, die Auswahl erfolgt per Radio-Button (Single Choice). Keine Antwort gilt als falsche Antwort. <span class='taskimg'>Mit einem Button „senden“ wird die Auswahl bestätigt.</span></li>
-		<li class='tasktext'>Die Abfragerichtung soll während des Tests geändert werden. Dies soll ohne neu laden geschehen (&rArr; Ajax). Die aktive Abfragerichtung soll durch die Elemente für die Änderung der Abfragerichtung visualisiert sein.</li>
+		<li class='tasktext'>Die Abfragerichtung soll während des Tests geändert werden. Dies soll ohne neu laden geschehen (&rArr; Ajax). Die aktive Abfragerichtung soll durch die Elemente für die Änderung der Abfragerichtung visualisiert sein. Die Abfragerichtung bleibt beim weiter-Abfragen erhalten.</li>
 		<li class='tasktext'>Beim Absenden der Antwort erscheint die Ergebnisseite, wo richtige/falsche Antworten grün/rot hinterlegt werden. <span class='taskimg'>Es wird die Abgefragte Vokabel, ggf. die entsprechende Lautschrift und die richtige Antwort angezeigt (bei falscher Antwort, wird die falsche Antwort durchgestrichen vor der richtigen dargestellt).</span> Mit der Schaltfläche „weiter“ geht es zur nächsten Abfrage.
 		</li>
-		<li class='taskimpl'>Es ist nicht gefordert, dass eine „Session“ existieren soll, in der gespeichert werden, welche Vokabeln in dieser bereits abgefragt wurden. Daher wird die nächste Vokabel nach dem Beantworten zufällig ausgewählt (und kann sich im Ernstfall wiederholen).</li>
+		<li class='tasktext'>Es ist gefordert, dass der Weiter-Button auf der Ergebnisseite zur „nächsten“ Frage der Lektion führt. Es ist nicht vorgegeben, dass die Abfragereihenfolge chronologisch sein soll. <span class='taskimpl'>Die Abfragereihenfolge ist zufällig (um einen gleichmäßigen Lernerfolg sicherzustellen). Es ist nicht gefordert, dass eine „Session“ existieren soll, in der gespeichert werden, welche Vokabeln in dieser Lektion bereits abgefragt wurden. Daher wird die nächste Vokabel komplett zufällig ausgewählt (und kann sich im Ernstfall wiederholen).</span></li>
 	</ul>
-	<h3>Stastik:</h3>
+	<h3>Statistik:</h3>
 	<ul>
 		<li class='tasktext'>Für jede Vokabelliste (Datei) wird eine Statistik in einer dazugehörigen Datei geführt. Existiert die Datei nicht (mehr), wird auch keine Statistik (mehr) für sie angezeigt.</li>
-		<li class='tasktext'>Die Statistik besteht aus der Anzahl der richtigen/falschen Antworten.</li>
+		<li class='tasktext'>Die Statistik besteht aus der Anzahl der richtigen/gesamten Antworten.</li>
 		<li class='taskimg'>Der Bereich Statistik listet die Statistiken für alle (aktive) Vokabelliste auf.</li>
 	</ul>
 	<h3>Lektionsauswahl</h3>
 	<ul>
 		<li class='taskimg'>Alle vorhandenen Lektionen/Dateien werden aufgelistet.</li>
-		<li class='taskimpl'>Die aufgelisteten Elemente sind nach den Dateien benannt.</li>
+		<li class='taskimpl'>Die aufgelisteten Elemente sind nach der ersten Zeile der Datei benannt (siehe Vorgaben zum Format oberhalb).</li>
 	</ul>
 	<h3>Setup-Seite</h3>
 	<ul>
-		<li class='taskimg'>Die Setup-Seite besteht aus einem „Datei hochladen“ Feld (im einfachsten Fall).</li>
-		<li class='taskimpl'>Wenn der Dateiname beim Hochladen Sonderzeichen enthält, stellt das Dateisystem diese gebenenfalls dort nicht richtig dar.</li>
+		<li class='taskimg'>Die Setup-Seite besteht aus einem „Datei hochladen“ Feld. <span class='taskimpl'>Außerdem kann man die vorhandene Dateien löschen oder herunterladen.</span></li>
+		<li class='taskimpl'>Dateinamen hochgeladener Dateien bleiben nicht erhalten.</li>
 	</ul>
 </div>

@@ -9,5 +9,5 @@
 	<p><?php echo $this->lesson->getTranslation($correctVocabulary); ?></p>
 </div>
 <div class="centered">
-	<a data-ajax="false" id="okButton" class="ui-btn ui-icon-forward ui-btn-icon-left" href="<?php echo $_SERVER['REQUEST_URI']?>">Weiter</a>
+	<a id="okButton" class="ui-btn ui-icon-forward ui-btn-icon-left" href="<?php echo $_SERVER['REQUEST_URI']?>">Weiter</a>
 </div>

@@ -1,3 +1,7 @@
+body{
+	font-family: Arial, sans-serif;
+}
+
 /* Responsive Design der Vokabelabfrage */
 .voc {
 	float: left;
@@ -90,6 +94,17 @@
 #hiddenCorrectAnswer {
 	display: none;
 	z-index: -1;
+}
+
+/* Datei-Auswahl im Setup */
+#setupSelect {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#setupSelect tr:nth-child(even) {
+	background: rgba(222,226,207,0.3);
+	background-opacity: 0.5;
 }
 
 /* Override jQuery Mobile standards */

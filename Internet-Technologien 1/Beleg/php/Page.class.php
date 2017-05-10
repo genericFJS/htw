@@ -10,6 +10,7 @@ class page {
 	const statisticsExtension = '-stat.txt';
 	const fileFormatHTML = '<p>Format der Datei: </p><p><code>Titel der Lektion <br> Wort in Sprache 1 &#8614; [Aussprache Wort in Sprache 1] &#8614; Übersetzung in Sprache 2 &#8614; [Aussprache Wort in Sprache 2]<br>... (mindestens 5 Einträge)</code></p>';
 	public $debug = "";
+	public $errorMessage = "";
 	
 	/**
 	 * Der Konstruktor bearbeitet die GET-Variablen und speichert sie in $pageState.
@@ -134,12 +135,40 @@ class page {
 		foreach ( $dir as $fileinfo ) {
 			if (! $fileinfo->isDot ()) {
 				$fileName = pathinfo ( $fileinfo->getFilename (), PATHINFO_FILENAME );
-				$lection = fgets ( fopen ( $fileinfo->getPath () . '/' . $fileinfo, 'r' ) );
-				if (strcmp ( "-stat", substr ( $fileName, - 5 ) ) != 0)
-					echo '<li><a  data-ajax="false" class="ui-btn-a ui-btn ui-btn-icon-right ui-icon-carat-r" data-form="ui-btn-up-a" href="?q=lesson&l=', $fileName, '">', $lection, '</a></li>';
+				$fileFullPath = $fileinfo->getPath () . '/' . $fileinfo;
+				$lection = fgets ( fopen ( $fileFullPath, 'r' ) );
+				if (strcmp ( "-stat", substr ( $fileName, - 5 ) ) != 0) {
+					echo '<li>
+						<a  class="ui-btn ui-btn-icon-right ui-icon-carat-r" data-form="ui-btn-up-a" href="?q=lesson&l=', $fileName, '">', $lection, '</a>
+						</li>';
+				}
 			}
 		}
 		echo '</ul>';
+	}
+	private function printSetupSelectionPage() {
+		echo '<div data-form="ui-body" class="ui-body ui-body-a ui-corner-all"><table id="setupSelect"><tbody>';
+		$dir = new DirectoryIterator ( 'lessons/' );
+		foreach ( $dir as $fileinfo ) {
+			if (! $fileinfo->isDot ()) {
+				$fileName = pathinfo ( $fileinfo->getFilename (), PATHINFO_FILENAME );
+				$fileFullPath = $fileinfo->getPath () . '/' . $fileinfo;
+				$lection = fgets ( fopen ( $fileFullPath, 'r' ) );
+				if (strcmp ( "-stat", substr ( $fileName, - 5 ) ) != 0) {
+					echo '<tr id="', $fileName, '">
+						<td>', $lection, '</td>
+						<td><a href="', $fileFullPath, '" class="ui-btn ui-corner-all ui-icon-arrow-d ui-btn-icon-notext" download  data-role="button" data-inline="true">Lektion herunterladen</a></td>
+						<td>';
+					if (strlen ( $fileName ) > 10)
+						echo '<a class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext" data-role="button" data-inline="true" onClick="deleteLesson(\'', $fileFullPath, '\', \'', $fileName, '\')">Lektion löschen</a>';
+						else
+							echo '&nbsp;';
+					echo '</td>
+					</tr>';
+				}
+			}
+		}
+		echo '</tbody></table></div><div id="errorDelete"></div>';
 	}
 	private function printStatisticsPage() {
 		echo '<ul data-role="listview" data-inset="true">';
@@ -150,7 +179,7 @@ class page {
 				$fileName = pathinfo ( $fileinfo->getFilename (), PATHINFO_FILENAME );
 				$lection = fgets ( fopen ( $fileinfo->getPath () . '/' . $fileinfo, 'r' ) );
 				if (strcmp ( "-stat", substr ( $fileName, - 5 ) ) != 0) {
-					$stats = $this->getStatsFromFile ( $fileinfo->getPath () . '\\' . $fileName . $this::statisticsExtension );
+					$stats = $this->getStatsFromFile ( $fileinfo->getPath () . '/' . $fileName . $this::statisticsExtension );
 					array_push ( $statistics, array (
 							$lection,
 							$stats 
@@ -169,13 +198,17 @@ class page {
 		}
 		
 		echo '
-		<form data-ajax="false" action="', $_SERVER ['REQUEST_URI'], '" method="post" enctype="multipart/form-data">
+		<h2>Datei hochladen</h2>
+		<form action="', $_SERVER ['REQUEST_URI'], '" method="post" enctype="multipart/form-data">
   	  <input type="file" name="upfile">
 			<div class="centered">
 				<button data-icon="plus" data-form="ui-btn-up-a" id="okButton" type="submit">Datei hochladen</button>
 			</div>
+			<div id="errorUp">', $this->errorMessage, '</div>
 		</form>
+		<h2>Datei runterladen / löschen</h2>
 		';
+		$this->printSetupSelectionPage ( true );
 	}
 	
 	/**
@@ -241,27 +274,34 @@ class page {
 				$lines = 0;
 				while ( ($buffer = fgets ( $handle, 4096 )) !== false ) {
 					if (strcmp ( $buffer, $this->stripHTMLChars ( $buffer ) ) != 0)
-						throw new RuntimeException ( 'Datei enthält unerlaubte Zeichenfolgen.' );
-					if ($lines != 0 && sizeof ( str_getcsv ( $buffer, "	" ) ) < 4)
-						throw new RuntimeException ( 'Datei ist nicht nach dem benötigten Schema formatiert oder enthält Leerzeilen.' . $this::fileFormatHTML );
-					if ($lines == 0 && sizeof ( str_getcsv ( $buffer, "	" ) ) > 1)
-						throw new RuntimeException ( 'Datei ist nicht nach dem benötigten Schema formatiert (enthält Tabs im Titel/der ersten Zeile).' . $this::fileFormatHTML );
+						throw new RuntimeException ( 'Fehler in Zeile ' . ++ $lines . ': Datei enthält unerlaubte Zeichenfolgen.' );
+					$bufferArray = str_getcsv ( $buffer, "	" );
+					if ($lines == 0 && sizeof ( $bufferArray ) > 1)
+						throw new RuntimeException ( 'Fehler in Zeile ' . ++ $lines . ': Datei enthalt Tabs im Titel.' . $this::fileFormatHTML );
+					if ($lines != 0 && sizeof ( $bufferArray ) < 4)
+						throw new RuntimeException ( 'Fehler in Zeile ' . ++ $lines . ': Datei ist nicht nach dem benötigten Schema formatiert oder enthält Leerzeilen.' . $this::fileFormatHTML );
+					foreach ( $bufferArray as $element ) {
+						if (strcmp ( trim ( $element ), "" ) == 0) {
+							if ($lines == 0)
+								throw new RuntimeException ( 'Fehler in Zeile ' . ++ $lines . ': Titel darf nicht leer sein.' . $this::fileFormatHTML );
+							else
+								throw new RuntimeException ( 'Fehler in Zeile ' . ++ $lines . ': Felder für Vokabeln dürfen nicht leer sein.' );
+						}
+					}
 					$lines ++;
 				}
-				if ($lines < 7)
-					throw new RuntimeExcetpion ( 'Datei enthält nicht genung Vokabel-Einträge.' . $this::fileFormatHTML );
+				if ($lines < 6)
+					throw new RuntimeException ( 'Datei enthält nicht genung Vokabel-Einträge.' );
 				fclose ( $handle );
 			} else {
 				throw new RuntimeException ( 'Fehler beim öffnen der Datei zum Überprüfen der Dateistruktur.' );
 			}
-			// Save file.
-			// iconv("utf-8", "cp936", $filename)
 			if (! move_uploaded_file ( $_FILES ['upfile'] ['tmp_name'], $fileName )) {
 				throw new RuntimeException ( 'Hochgeladen Datei konnte nicht gespeichert werden.' );
 			}
 			echo 'Datei erfolgreich hochgeladen.';
 		} catch ( RuntimeException $e ) {
-			echo $e->getMessage ();
+			$this->errorMessage = $e->getMessage ();
 		}
 	}
 	

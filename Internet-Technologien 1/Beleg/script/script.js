@@ -35,6 +35,21 @@ function switchLanguage(id) {
 	xmlhttp.send();
 }
 
+function deleteLesson(path, id){
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			if (this.responseText == "true"){
+				document.getElementById(id).innerHTML = "<td> Datei wurde gelöscht! </td>";
+			} else {
+				document.getElementById("errorDelete").innerHTML = "Datei konnte nicht gelöscht werden!";
+			}
+		}
+	};
+	xmlhttp.open("GET", "ajaxDeleteLesson.php?f=" + path, true);
+	xmlhttp.send();
+}
+
 // von https://css-tricks.com/snippets/javascript/get-url-variables/
 function getQueryVariable(variable) {
 	var query = window.location.search.substring(1);
