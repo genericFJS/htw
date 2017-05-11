@@ -12,11 +12,11 @@ stammF(C, X, C*X) :- number(C).
 % x
 stammF(X, X, 0.5*X^2).
 % c*x
-stammF(C*X, X, C2*X^2) :- C2 is (C*0.5).
+stammF(C*X, X, C2*X^2) :- number(C), C2 is (C*0.5).
 % x^n
 stammF(X^N, X, C2*X^N2) :- N2 is (N+1), C2 is (1/N2).
 % c*x^n
-stammF(C*X^N, X, C2*X^N2) :- N2 is (N+1), C2 is (C*(1/N2)).
+stammF(C*X^N, X, C2*X^N2) :- number(C), N2 is (N+1), C2 is (C*(1/N2)).
 % --------------------
 % Setze Grenze in Stammfunktion ein grenzStammF(Funktion, Variable, Grenze, Ergebnis)
 % --------------------
