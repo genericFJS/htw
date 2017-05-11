@@ -2,9 +2,25 @@
 include_once 'Enums.php';
 include_once 'Lesson.class.php';
 class page {
+	/**
+	 *
+	 * @var PageState ist der Status der Seite
+	 */
 	private $state = PageState::__default;
+	/**
+	 *
+	 * @var bool ist der zusätliche Status, ob die Abfrage umgekehrt geschehen soll.
+	 */
 	private $reverse = false;
+	/**
+	 *
+	 * @var string speichert den Titel der Seite.
+	 */
 	private $title = 'Vokabeltrainer';
+	/**
+	 *
+	 * @var Lesson speichert die aktuelle Lektion.
+	 */
 	private $lesson;
 	const filesPath = 'lessons/';
 	const statisticsExtension = '-stat.txt';
@@ -46,6 +62,7 @@ class page {
 							$this->state = PageState::LessonAnswer;
 							$answerLines = $this->getPostAnswers ();
 						}
+						// erstelle neue Lektion
 						$this->lesson = new Lesson ( $_GET ['l'], $this->reverse, $answerLines );
 						if ($answerLines [0] < 0) {
 							// Wenn es keine Antwort ist, prüfe ob Lektion ok ist.
@@ -57,6 +74,7 @@ class page {
 								$this->setTitle ( 'Falsche Auswahl' );
 							}
 						} else {
+							// Wenn es eine Antwort ist, protokolliere die Antwort
 							$this->setTitle ( 'lesson' );
 							$this->logAnswer ();
 						}
@@ -79,6 +97,12 @@ class page {
 	public function printTitle() {
 		echo $this->title;
 	}
+	/**
+	 * Setzt den Titel direkt oder über den Namen der Lektion.
+	 *
+	 * @param string $title
+	 *        	ist der Titel oder 'lesson', wenn der Titel über den Namen der Lektion gesetzt werden soll.
+	 */
 	private function setTitle($title) {
 		if (strcmp ( 'lesson', $title ) == 0) {
 			// TODO lesson title (ggf. Kürzung des Titels per Javascript)
@@ -89,7 +113,7 @@ class page {
 	}
 	
 	/**
-	 * Stellt den Inhalt des Main-Contents der Webseite dar.
+	 * Stellt den Inhalt des Main-Contents abhängig vom Status der Webseite dar.
 	 */
 	public function printMainContent() {
 		switch ($this->state) {
@@ -129,9 +153,13 @@ class page {
 	private function printStartPage() {
 		readfile ( 'html/start.html' );
 	}
+	
+	/**
+	 * Stellt den Inhalt der Auswahlseite dar, indem er alle Dateien im Ordner der Lektionen auflistet, die nicht mit "-stat" enden.
+	 */
 	private function printSelectionPage() {
 		echo '<ul  data-role="listview" data-inset="true">';
-		$dir = new DirectoryIterator ( 'lessons/' );
+		$dir = new DirectoryIterator ( $this::filesPath );
 		foreach ( $dir as $fileinfo ) {
 			if (! $fileinfo->isDot ()) {
 				$fileName = pathinfo ( $fileinfo->getFilename (), PATHINFO_FILENAME );
@@ -146,6 +174,11 @@ class page {
 		}
 		echo '</ul>';
 	}
+	
+	/**
+	 * Stellt eine Auswahlseite zum runterladen/löschen von Lektionen dar.
+	 * Standardlektionen (die nicht hochgeladen wurden, erkennbar an einem kürzeren Dateinamen) können nicht gelöscht werden.
+	 */
 	private function printSetupSelectionPage() {
 		echo '<div data-form="ui-body" class="ui-body ui-body-a ui-corner-all"><table id="setupSelect"><tbody>';
 		$dir = new DirectoryIterator ( 'lessons/' );
@@ -161,8 +194,8 @@ class page {
 						<td>';
 					if (strlen ( $fileName ) > 10)
 						echo '<a class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext" data-role="button" data-inline="true" onClick="deleteLesson(\'', $fileFullPath, '\', \'', $fileName, '\')">Lektion löschen</a>';
-						else
-							echo '&nbsp;';
+					else
+						echo '&nbsp;';
 					echo '</td>
 					</tr>';
 				}
@@ -170,6 +203,11 @@ class page {
 		}
 		echo '</tbody></table></div><div id="errorDelete"></div>';
 	}
+	
+	/**
+	 * Stellt die Statistikseite dar.
+	 * Dazu wird zu jeder Lektion eine entsprechende stats-Datei gesucht. Wenn keine Datei vorhanden ist, wird 0/0 angezeigt.
+	 */
 	private function printStatisticsPage() {
 		echo '<ul data-role="listview" data-inset="true">';
 		$statistics = array ();
@@ -192,11 +230,15 @@ class page {
 		}
 		echo '</ul>';
 	}
+	
+	/**
+	 * Stellt die Setupseite dar.
+	 * Diese beinhaltet zum einen den Dateiupload als auch (für Aufgabenstellung optional) das runterladen und löschen von Dateien.
+	 */
 	private function printSetupPage() {
 		if ($_SERVER ['REQUEST_METHOD'] === 'POST') {
 			$this->processUploadFile ();
 		}
-		
 		echo '
 		<h2>Datei hochladen</h2>
 		<form action="', $_SERVER ['REQUEST_URI'], '" method="post" enctype="multipart/form-data">
@@ -208,13 +250,15 @@ class page {
 		</form>
 		<h2>Datei runterladen / löschen</h2>
 		';
-		$this->printSetupSelectionPage ( true );
+		$this->printSetupSelectionPage ();
 	}
 	
 	/**
 	 * Nutzt: https://php.net/manual/de/features.file-upload.php#114004
+	 * Fängt alle möglichen Fehlerzustände beim Hochladen der Datei ab.
+	 * Wenn ein Fehler auftritt wird die Fehlermeldung in einer Variablen gespeichert und später ausgegeben.
 	 *
-	 * @throws RuntimeException
+	 * @throws RuntimeException gibt mit einem Text aus, was schief gelaufen ist.
 	 */
 	private function processUploadFile() {
 		try {
@@ -309,8 +353,8 @@ class page {
 	 * aus: https://stackoverflow.com/a/7128879
 	 *
 	 * @param string $des
-	 *        	Zeichenkette mit potentiellen HTML-Zeichen
-	 * @return string Zeichenkette ohne HTML-Zeichen
+	 *        	Zeichenkette mit potentiellen HTML-Zeichen.
+	 * @return string Zeichenkette ohne HTML-Zeichen.
 	 * @author Mez
 	 */
 	private function stripHTMLChars($des) {
@@ -331,6 +375,10 @@ class page {
 		 */
 		return $clear;
 	}
+	
+	/**
+	 * Stellt die Seite dar, die anzeigt, dass die Lektion die mit GET übergeben wurde nicht gefunden werden konnte.
+	 */
 	private function printWrongLessonPage() {
 		echo '
 		<div data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all">
@@ -338,6 +386,10 @@ class page {
 			<p>Die Lektion konnte nicht gefunden werden.</p>
 		</div>';
 	}
+	
+	/**
+	 * Stellt die Seite dar, die anzeigt, dass über GET zwar eine Vokabelabfrage angekündigt wurde, aber keine Lektion ausgewählt wurde.
+	 */
 	private function printNoLessonPage() {
 		echo '
 		<div data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all">
@@ -345,10 +397,18 @@ class page {
 			<p>Es wurde keine Lektion ausgewählt.</p>
 		</div>';
 	}
+	
+	/**
+	 * Stellt die Seite der Vokabelabfrage dar (vocabularyTest.php).
+	 */
 	private function printLessonPage() {
 		$correctVocabulary = mt_rand ( 0, 4 );
 		include ('html/vocabularyTest.php');
 	}
+	
+	/**
+	 * Stellt die Seite einer beantworteten Vokabelabfrage dar (vocabularyAnswer.php).
+	 */
 	private function printAnswerPage() {
 		$correctVocabulary = 0;
 		$wrongVocabulary = 1;
@@ -364,6 +424,7 @@ class page {
 	
 	/**
 	 * Stellt den Inhalt des Footers dar.
+	 * Aktive Navigationselemente werden nicht angezeigt.
 	 */
 	public function printFooterContent() {
 		echo '<ul>';
@@ -375,6 +436,10 @@ class page {
 			echo '<li class="', $class, '"><a href="?q=setup">Setup</a></li>';
 		echo '</ul>';
 	}
+	
+	/**
+	 * Protokolliere die Antwort einer Vokabelabfrage in der entsprechenden Datei.
+	 */
 	private function logAnswer() {
 		$fileName = $this::filesPath . $this->lesson->getLessonFileName () . $this::statisticsExtension;
 		// lese Statistik ein
@@ -383,9 +448,21 @@ class page {
 		$stats [1] ++;
 		if ($this->lesson->isCorrectAnswer ())
 			$stats [0] ++;
-		// schreibe Statistik in Datei
-		file_put_contents ( $fileName, $stats [0] . "\t" . $stats [1] );
+		// versuche Statistik in Datei zu schreiben
+		try {
+			if (!is_writable ( $fileName ))
+				throw new RuntimeException ( 'Statistik konnte nicht gespeichert werden. Stelle sicher, dass entsprechende Dateien und Ordner auf dem Webserver mit den nötigen Schreibrechten eingerichtet sind.' );
+			file_put_contents ( $fileName, $stats [0] . "\t" . $stats [1] );
+		} catch ( RuntimeException $e ) {
+			$this->errorMessage = $e->getMessage ();
+		}
 	}
+	
+	/**
+	 * Gib die die gePOSTeten Antworten aus.
+	 *
+	 * @return string[] sind die Antworten (bzw. nur die richtige Antwort, wenn keine Antwort ausgewählt wurde).
+	 */
 	private function getPostAnswers() {
 		$returnArray = array (
 				$_POST ["lessonCorrectAnswer"] 
@@ -394,6 +471,13 @@ class page {
 			array_push ( $returnArray, $_POST ["lesson"] );
 		return $returnArray;
 	}
+	
+	/**
+	 *
+	 * @param string $fileName
+	 *        	ist der Name der Statistikdatei einer Lektion.
+	 * @return number[] gibt die Statistik richtige/alle Vokabeln aus.
+	 */
 	private function getStatsFromFile($fileName) {
 		$stats = array (
 				0,

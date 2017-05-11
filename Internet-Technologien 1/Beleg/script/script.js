@@ -1,9 +1,14 @@
+/**
+ * Ändert die Abfragerichtung der Sprache, indem die entsprechenden Felder ausgetauscht werden und die Adresszeile korrigiert wird.
+ * @param id ist die ID der Schaltfläche, die diese Funktion aufruft.
+ * @returns true/false wenn es die Sprache geändert hat oder nicht.
+ */
 function switchLanguage(id) {
 	var reverse = '';
 	if (getQueryVariable('r') != 'false' && id == 'BtoA')
-		return;
+		return false;
 	if (getQueryVariable('r') == 'false' && id == 'AtoB')
-		return;
+		return false;
 	if (id == 'BtoA')
 		reverse = '&r';
 	var link = "?q=" + getQueryVariable('q') + "&l=" + getQueryVariable('l') + reverse;
@@ -33,8 +38,15 @@ function switchLanguage(id) {
 	};
 	xmlhttp.open("GET", "ajaxVocabulary.php" + link, true);
 	xmlhttp.send();
+	return true;
 }
 
+/**
+ * Löscht eine Lektion bzw. deren Datei
+ * @param path ist der Pfad zu der Datei der Lektion, die gelöscht werden soll.
+ * @param id ist die ID der Tabellenzeile, deren Datei gelöscht werden soll.
+ * @returns nichts
+ */
 function deleteLesson(path, id){
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -50,7 +62,11 @@ function deleteLesson(path, id){
 	xmlhttp.send();
 }
 
-// von https://css-tricks.com/snippets/javascript/get-url-variables/
+/**
+ * von https://css-tricks.com/snippets/javascript/get-url-variables/
+ * @param variable ist die GET Variable, deren Wert benötigt wird.
+ * @returns entweder den Wert der GET Variable (ggf. undefined) oder false.
+ */
 function getQueryVariable(variable) {
 	var query = window.location.search.substring(1);
 	var vars = query.split("&");

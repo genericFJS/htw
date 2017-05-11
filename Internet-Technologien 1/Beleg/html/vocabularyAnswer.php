@@ -1,3 +1,4 @@
+<div id="errorChange"> <?php echo $this->errorMessage; ?></div>
 <div data-form="ui-body-a" class="<?php if ($this->lesson->isCorrectAnswer()) echo 'rightAnswer'; else echo 'wrongAnswer';?> ui-body ui-body-a ui-corner-all">
 	<p><?php echo $this->lesson->getForeignVocabulary ( $correctVocabulary ); ?></p>
 	<p><?php echo $this->lesson->getForeignIPA ( $correctVocabulary ); ?></p>

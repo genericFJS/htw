@@ -1,27 +1,41 @@
 <?php
 include_once 'Enums.php';
 class Lesson {
+	/**
+	 * @var LessonState ist der Status der Lektion.
+	 */
 	private $lessonStatus;
+	/**
+	 * @var string speichert den Namen der Lektion.
+	 */
 	private $lessonName;
+	/**
+	 * @var string speichert den Dateinamen der Lektion
+	 */
 	private $lessonFileName;
 	/**
-	 * Array, dass die Arrays von den Vokabeln speichert.
 	 * Die Vokabel-Arrays haben die Form (Fremdwort, Lautschrift des Fremdwortes, Vokabel, Lautschrift der Vokabel, Zeilennummer).
 	 * Wenn das Objekt als Antwort erstellt wurde, ist das 1. Element die richtige Antwort und (falls falsch) das zweite die falsche.
-	 *
-	 * @var unknown
+	 * @var array[] Array, dass die Arrays von den Vokabeln speichert.
 	 */
 	private $vocabulary;
+	/**
+	 * @var bool speichert, ob die Antwort korrekt ist.
+	 */
 	private $correctAnswer;
+	/**
+	 * @var bool speichert, ob eine Antwort angegeben wurde.
+	 */
 	private $answerGiven;
 	const filePath = 'lessons/';
 	const fileExtension = '.txt';
 	
 	/**
-	 * Der Konstruktor holt die abzufragende Vokabel (inklusive Lautschrift) und die fünf möglichen Antworten aus der übergebenen Datei.
+	 * Der Konstruktor holt die nötigen Vokabeln.
+	 * Wenn die Lektion als Abfrage erstellt wurde, werden abzufragende Vokabel (inklusive Lautschrift) und die fünf möglichen Antworten aus der übergebenen Datei geholt.
+	 * Wenn die Lektion als Antwort erstellt wurde, werden die richtige/falsche Antwort geholt.
 	 *
-	 * @param string $lessonName
-	 *        	Der Dateiname der Lektion.
+	 * @param string $lessonName ist der Dateiname der Lektion.
 	 */
 	public function __construct($lessonName, $reverse, $answerLines) {
 		$lessonFilePath = Lesson::filePath . $lessonName . Lesson::fileExtension;
@@ -143,33 +157,68 @@ class Lesson {
 		shuffle ( $numbers );
 		return array_slice ( $numbers, 0, $quantity );
 	}
-	public function isValidLesson() {
-		return ($this->lessonStatus == LessonState::Valid);
-	}
+	
+	/**
+	 * @return LessonState gibt den Status der Lektion aus.
+	 */
 	public function getLessonStatus() {
 		return $this->lessonStatus;
 	}
+	/**
+	 * @return string gibt den Namen der Lektion aus.
+	 */
 	public function getLessonName() {
 		return $this->lessonName;
 	}
+	/**
+	 * @return string gibt den Dateinamen der Lektion aus.
+	 */
 	public function getLessonFileName(){
 		return $this->lessonFileName;
 	}
+	/**
+	 * @param int $entryNumber ist die Nummer der Position des Vokabeleintrags im $vocabulary Array.
+	 * @return string gibt die Vokabel in der Fremdsprache aus.
+	 */
 	public function getForeignVocabulary($entryNumber) {
 		return $this->vocabulary [$entryNumber] [0];
 	}
+	/**
+	 * @param int $entryNumber ist die Nummer der Position des Vokabeleintrags im $vocabulary Array.
+	 * @return string gibt die Lautschrift der Vokabel der Fremdsprache aus.
+	 */
 	public function getForeignIPA($entryNumber) {
 		return $this->vocabulary [$entryNumber] [1];
 	}
+	/**
+	 * @param int $entryNumber ist die Nummer der Position des Vokabeleintrags im $vocabulary Array.
+	 * @return string gibt die Übersetzung der Vokbale aus.
+	 */
 	public function getTranslation($entryNumber) {
 		return $this->vocabulary [$entryNumber] [2];
 	}
+	/**
+	 * @param int $entryNumber ist die Nummer der Position des Vokabeleintrags im $vocabulary Array.
+	 * @return string gibt die Zeilennummer des Vokabeleintrags aus.
+	 */
 	public function getVocabularyLine($entryNumber) {
 		return $this->vocabulary [$entryNumber] [4];
 	}
+	/**
+	 * @return boolean Gibt aus, ob die Lektion valid ist.
+	 */
+	public function isValidLesson() {
+		return ($this->lessonStatus == LessonState::Valid);
+	}
+	/**
+	 * @return boolean gibt aus, ob die Vokabel korrekt beantwortet wurde.
+	 */
 	public function isCorrectAnswer() {
 		return $this->correctAnswer;
 	}
+	/**
+	 * @return boolean gibt aus, ob eine Antwort bei der Vokabelabfrage angegeben wurde.
+	 */
 	public function isAnswerGiven(){
 		return $this->answerGiven;
 	}

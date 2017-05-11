@@ -20,8 +20,8 @@ $page = new Page ();
 include ('html/head.html'); 
 ?>
 
-<!-- Dummy für (Ajax-)Skript:  -->
-<script src="script/script2_dummy.js"></script>
+<!-- Zusätzliches (Ajax-)Skript:  -->
+<script src="script/script2.js"></script>
 
 </head>
 <body>

@@ -31,6 +31,8 @@ body{
 	}
 }
 
+/* Format Vokabelabfrage */
+
 .foreign {
 	box-sizing: border-box;
 	margin: 16px 0;
@@ -41,28 +43,6 @@ body{
 	align-items: center;
 }
 
-/* Button der Vokabelabfrage */
-#okButton {
-	margin: 0;
-	display: inline-block;
-	width: 13em;
-	display: inline-block;
-}
-
-/* Wrapper für die Auswahl der Abfragerichtung  */
-#selection {
-	width: 165px;
-	display: inline-block;
-	margin: 0;
-}
-
-/* Wrapper für Elemente, die mittig dargestellt werden sollen */
-.centered {
-	width: 100%;
-	text-align: center !important;
-}
-
-/* Feld für das Antwor-Feedback */
 .rightAnswer, .wrongAnswer {
 	margin-bottom: 1em;
 	text-align: center;
@@ -90,10 +70,29 @@ body{
 	text-decoration: line-through;
 }
 
-/* Verstecke die Korrekte Antwort */
 #hiddenCorrectAnswer {
 	display: none;
 	z-index: -1;
+}
+
+#okButton {
+	margin: 0;
+	display: inline-block;
+	width: 13em;
+	display: inline-block;
+}
+
+/* Wrapper für die Auswahl der Abfragerichtung  */
+#selection {
+	width: 165px;
+	display: inline-block;
+	margin: 0;
+}
+
+/* Wrapper für Elemente, die mittig dargestellt werden sollen */
+.centered {
+	width: 100%;
+	text-align: center !important;
 }
 
 /* Datei-Auswahl im Setup */
@@ -105,6 +104,12 @@ body{
 #setupSelect tr:nth-child(even) {
 	background: rgba(222,226,207,0.3);
 	background-opacity: 0.5;
+}
+
+/* Fehlermeldungen */
+[id^=error]{
+	font-size: 125%;
+	color: red;
 }
 
 /* Override jQuery Mobile standards */

@@ -51,6 +51,11 @@ class PageState extends BasicEnum {
 	const LessonAnswer = 43;
 }
 
+/**
+ * Beschreibt die möglichen Zustände einer Lektion.
+ * @author jonatan
+ *
+ */
 class LessonState extends BasicEnum {
 	const __default = self::FileNotFound;
 	const FileNotFound = 0;
