@@ -100,8 +100,7 @@ class page {
 	/**
 	 * Setzt den Titel direkt oder über den Namen der Lektion.
 	 *
-	 * @param string $title
-	 *        	ist der Titel oder 'lesson', wenn der Titel über den Namen der Lektion gesetzt werden soll.
+	 * @param string $title ist der Titel oder 'lesson', wenn der Titel über den Namen der Lektion gesetzt werden soll.
 	 */
 	private function setTitle($title) {
 		if (strcmp ( 'lesson', $title ) == 0) {
@@ -352,8 +351,7 @@ class page {
 	/**
 	 * aus: https://stackoverflow.com/a/7128879
 	 *
-	 * @param string $des
-	 *        	Zeichenkette mit potentiellen HTML-Zeichen.
+	 * @param string $des Zeichenkette mit potentiellen HTML-Zeichen.
 	 * @return string Zeichenkette ohne HTML-Zeichen.
 	 * @author Mez
 	 */
@@ -450,7 +448,7 @@ class page {
 			$stats [0] ++;
 		// versuche Statistik in Datei zu schreiben
 		try {
-			if (!is_writable ( $fileName ))
+			if (! is_writable ( $fileName ))
 				throw new RuntimeException ( 'Statistik konnte nicht gespeichert werden. Stelle sicher, dass entsprechende Dateien und Ordner auf dem Webserver mit den nötigen Schreibrechten eingerichtet sind.' );
 			file_put_contents ( $fileName, $stats [0] . "\t" . $stats [1] );
 		} catch ( RuntimeException $e ) {
@@ -474,8 +472,7 @@ class page {
 	
 	/**
 	 *
-	 * @param string $fileName
-	 *        	ist der Name der Statistikdatei einer Lektion.
+	 * @param string $fileName ist der Name der Statistikdatei einer Lektion.
 	 * @return number[] gibt die Statistik richtige/alle Vokabeln aus.
 	 */
 	private function getStatsFromFile($fileName) {
@@ -499,8 +496,7 @@ class page {
 	/**
 	 * Gibt aus, ob der übergeben Status aktiv ist.
 	 *
-	 * @param $state Status
-	 *        	(in der Regel aus dem Enum PageState)
+	 * @param $state Status (in der Regel aus dem Enum PageState)
 	 * @return boolean Wahr, wenn Status aktiv ist. Sonst falsch.
 	 */
 	private function isActive($state) {

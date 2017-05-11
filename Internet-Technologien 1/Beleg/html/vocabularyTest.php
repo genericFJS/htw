@@ -22,8 +22,8 @@
 				<fieldset data-role="controlgroup">
 					<?php
 					for($i = 0; $i < 5; $i ++) {
-						echo '<input type="radio" name="lesson" id="answer',$i,'" value="', $this->lesson->getVocabularyLine ( $i ), '"/>';
-						echo '<label id="answerLabel',$i,'" for="answer',$i,'" data-form="ui-btn-up-a">', $this->lesson->getTranslation ( $i ), '</label>';
+						echo '<input type="radio" name="lesson" id="answer', $i, '" value="', $this->lesson->getVocabularyLine ( $i ), '"/>';
+						echo '<label id="answerLabel', $i, '" for="answer', $i, '" data-form="ui-btn-up-a">', $this->lesson->getTranslation ( $i ), '</label>';
 					}
 					echo '<input checked="checked" id="hiddenCorrectAnswer" type="radio" name="lessonCorrectAnswer" value="', $this->lesson->getVocabularyLine ( $correctVocabulary ), '"/>';
 					?>					

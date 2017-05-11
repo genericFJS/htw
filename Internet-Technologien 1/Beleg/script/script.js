@@ -1,5 +1,6 @@
 /**
  * Ändert die Abfragerichtung der Sprache, indem die entsprechenden Felder ausgetauscht werden und die Adresszeile korrigiert wird.
+ * 
  * @param id ist die ID der Schaltfläche, die diese Funktion aufruft.
  * @returns true/false wenn es die Sprache geändert hat oder nicht.
  */
@@ -43,15 +44,16 @@ function switchLanguage(id) {
 
 /**
  * Löscht eine Lektion bzw. deren Datei
+ * 
  * @param path ist der Pfad zu der Datei der Lektion, die gelöscht werden soll.
  * @param id ist die ID der Tabellenzeile, deren Datei gelöscht werden soll.
  * @returns nichts
  */
-function deleteLesson(path, id){
+function deleteLesson(path, id) {
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			if (this.responseText == "true"){
+			if (this.responseText == "true") {
 				document.getElementById(id).innerHTML = "<td> Datei wurde gelöscht! </td>";
 			} else {
 				document.getElementById("errorDelete").innerHTML = "Datei konnte nicht gelöscht werden!";
@@ -64,6 +66,7 @@ function deleteLesson(path, id){
 
 /**
  * von https://css-tricks.com/snippets/javascript/get-url-variables/
+ * 
  * @param variable ist die GET Variable, deren Wert benötigt wird.
  * @returns entweder den Wert der GET Variable (ggf. undefined) oder false.
  */
