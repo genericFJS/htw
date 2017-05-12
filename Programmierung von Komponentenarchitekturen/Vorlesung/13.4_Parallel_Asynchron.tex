@@ -1,44 +1,56 @@
-Asynchrone Methoden
-
-Mittwoch, 8. Februar 2017
-
-21:08
-
-~
-
-Abgrenzung zu Multithreading
-
-~
-
-Beim Threading geht es um Arbeiter, bei Asynchronität um Aufgaben (Tasks)
-
-~
-
-Analogie: Sie kochen in einem Restaurant, es werden Eier und Toast bestellt
-
+\subsection{Abgrenzung zu Multithreading}
+Beim Threading geht es um Arbeiter, bei Asynchronität um Aufgaben (Tasks)\bigskip\\
+\emph{Analogie}: Sie kochen in einem Restaurant, es werden Eier und Toast bestellt\\
 Sie haben die Wahl wie Sie diese Bestellung ausführen:
-
 \begin{itemize}
-\item Synchron: Sie kochen die Eier, wenn diese fertig sind machen Sie den Toast
-\item Asynchron, einzelner Thread: Sie kochen die Eier und starten eine Eieruhr, Sie schieben den Toast in den Toaster, während Sie warten reinigen Sie die Küche. Wenn die Wecker klingeln, nehmen Sie die Eier, bzw. den Toast raus
-\item Asynchron, Multithread: Sie besorgen sich 2 weitere Köche, einer kocht die Eier der andere macht den Toast. Sie müssen die Köche koordinieren, damit sie in der Küche nicht die gleichen Küchengeräte gleichzeitig verwenden und sie bezahlen
+\item \emph{Synchron}: Sie kochen die Eier, wenn diese fertig sind machen Sie den Toast
+\item \emph{Asynchron, einzelner Thread}: Sie kochen die Eier und starten eine Eieruhr, Sie schieben den Toast in den Toaster, während Sie warten reinigen Sie die Küche. Wenn die Wecker klingeln, nehmen Sie die Eier, bzw. den Toast raus
+\item \emph{Asynchron, Multithread}: Sie besorgen sich 2 weitere Köche, einer kocht die Eier der andere macht den Toast. Sie müssen die Köche koordinieren, damit sie in der Küche nicht die gleichen Küchengeräte gleichzeitig verwenden und sie bezahlen
 \end{itemize}
-~
-
 Viele Tasks belegen den Prozessor nicht dauerhaft mit Arbeit
-
 \begin{itemize}
 \item I/O Aufgaben
 \item Zugriffe auf Datenbanken, Internet
 \item Zugriff auf Peripherie
 \end{itemize}
-~
+Für Prozessor-gebundene Aufgaben macht es Sinn Multithreading zu verwenden, für andere Aufgaben sind mehrere Threads nicht nötig, solange in der Wartezeit andere Aufgaben erledigt werden können.
 
-Für Prozessor-gebundene Aufgaben macht es Sinn Multithreading zu verwenden,
-
-für andere Aufgaben sind mehrere Threads nicht nötig, solange in der Wartezeit andere Aufgaben erledigt werden können.
-
-~
-
- \includegraphics{a134ParallelAsynchron-img001.png}  \includegraphics{a134ParallelAsynchron-img002.png}  \includegraphics{a134ParallelAsynchron-img003.png} 
-\endinput
+\subsection{Async Patterns}
+\begin{center}
+	\includegraphics[width=.5\textwidth]{Vorlesung/a134ParallelAsynchron-img001.png} 
+\end{center}
+\subsubsection{Event-based Asynchronous Programming Design Pattern (EAP)}
+Das NET Framework stellt drei Muster zum Ausführen von
+asynchronen Vorgangen bereit:
+\begin{itemize}
+\item Das \emph{APM (Asynchronous Programming Model)}-Muster (auch als IAsyncResult-Muster bezeichnet), bei dem asynchrone Vorgange die Begin-Methode und die End-Methode erfordern (z. B. BeginWrite und EndWrite für asynchrone Schreibvorgange). Dieses Muster wird für Neuentwicklungen nicht mehr empfohlen.
+\item Das \emph{ereignisbasierte asynchrone Muster (Event-based Asynchronous Pattern, EAP)}, das eine Methode mit dem Async-Suffix sowie ein oder mehrere Ereignisse, Ereignishandlerdelegattypen und von EventArg abgeleitete Typen erfordert. EAP wurde in .NET Framework 2.0 eingefuhrt. Es wird für Neuentwicklungen nicht mehr empfohlen.
+\item Das \emph{aufgabenbasierte asynchrone Muster (Task-based Asynchronous Pattern, TAP)} stellt die Initiierung und den Abschluss eines asynchronen V organgs mit einer einzelnen Methode dar. TAP wurde in .NET Framework 4 eingeführt. Dieses ist das empfohlene Muster für die asynchrone Programmierung in .NET Framework.
+\end{itemize}
+\subsubsection{Vergleichen von Mustern}
+Für einen schnellen Vergleich der Modellierung von asynchronen Vorgängen durch die drei Muster betrachtet man eine Read-Methode, die eine angegebene Menge von Daten ab einem angegebenen Offset in einen bereitgestellten Puffer liest:
+\begin{lstlisting}[language={[Sharp]C}]
+public class MyClass{
+	public int Read(byte [] buffer, int offset, int count);
+}
+\end{lstlisting}
+Die APM-Entsprechung dieser Methode macht die BeginRead-Methode und die EndRead-Methode verfügbar:
+\begin{lstlisting}[language={[Sharp]C}]
+public class MyClass{
+	public IAsyncResult BeginRead(byte [] buffer, int offset, int count, AsyncCallback callback, object state) ;
+	public int EndRead(IAsyncResult asyncResult);
+}
+\end{lstlisting}
+Die EAP-Entsprechung macht den folgenden Satz von Typen und Membern verfügbar:
+\begin{lstlisting}[language={[Sharp]C}]
+public class MyClass {
+	public void ReadAsync(byte [] buffer, int offset, int count);
+	public event ReadCompletedEventHandler ReadCompleted;
+}
+\end{lstlisting}
+Die TAP-Entsprechung macht die folgende einzelne ReadAsync-Methode verfügbar:
+\begin{lstlisting}[language={[Sharp]C}]
+public class MyClass {
+	public Task<int> ReadAsync(byte [] buffer, int offset, int count) ;
+}
+\end{lstlisting}

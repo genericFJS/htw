@@ -1,149 +1,113 @@
-Multithreading
-
-Donnerstag, 2. Februar 2017
-
-17:06
-
-~
-
-Verschiedene Methoden zur Parallelisierung: 
+\section{Multithreading}
+\lecdate{12.05.2017}
+\subsection{Verschiedene Methoden zur Parallelisierung:}
 
 \begin{itemize}
-\item Hochleistungsrechner: Verteilter Speicher, Kommunikation zwischen Rechnern durch Nachrichten (Message Passing, MPI)
-\item Einzelrechner/Smartphones: gemeinsamer Speicher, Aufteilung des Programmablauf in Threads
+\item \emph{Hochleistungsrechner}: Verteilter Speicher, Kommunikation zwischen Rechnern durch Nachrichten (Message Passing, MPI)
+\item \emph{Einzelrechner/Smartphones}: gemeinsamer Speicher, Aufteilung des Programmablauf in Threads
 \end{itemize}
-~
+Wir beschränken uns auf letzteres!
 
-wir beschränken uns auf letzteres!
-
-Anwendung
-
-{}-
-
-Prozess (Task)
-
-Thread Threadl Threadb
-
- \includegraphics{a131ParallelMultithreading-img001.png}  \includegraphics{a131ParallelMultithreading-img002.png}  \includegraphics{a131ParallelMultithreading-img003.png} 
-
-~
-
+\subsection{Thread}
+\begin{itemize}
+\item Anwendung
+\begin{itemize}
+\item Prozess (Task)
+\begin{itemize}
+\item Thread 1
+\item Thread 2
+\item Thread 3
+\end{itemize}
+\end{itemize}
+\end{itemize}
 Thread (Faden) = Teilprozess
-
 \begin{itemize}
 \item zum Start des Programms: 1 Thread (Masterthread)
 \item serielle Programmierung: es gibt nur diesen einen Thread
 \item Multithreading: es werden neue Threads gebildet die parallel abgearbeitet werden können
 \end{itemize}
-~
 
- \includegraphics{a131ParallelMultithreading-img004.png}  \includegraphics{a131ParallelMultithreading-img005.png}  \includegraphics{a131ParallelMultithreading-img006.png}  \includegraphics{a131ParallelMultithreading-img007.png} 
-
-joinzusannnenführen)
-
-fork (verzweigen)
+\begin{center}
+\includegraphics[width=.9\textwidth]{Vorlesung/a131ParallelMultithreading-img004.png} 
+\end{center}
+veranschaulicht:
+\begin{itemize}[label=$\to$]
+\item fork (verzweigen)
+\item join (zusammenführen)
+\end{itemize}
 
 \begin{itemize}
 \item In einem Prozessor kann zu jedem Zeitpunkt nur 1 Thread bearbeitet werden
 \item sind mehrere Threads -{\textgreater} Warteschlange, Austausch in kurzen Zeitintervallen (Standard: 20ms), Scheduling durch das System
 \item Threads haben verschiedene Prioritätsstufen (Windows: 1..31) die beim Scheduling berücksichtigt werden
 \end{itemize}
-~
 
-Threadzustände (die wichtigsten 3)
+\subsection{Threadzustände}
 
 \begin{itemize}
-\item laufend (running) - läuft gerade in der CPU
-\item bereit (ready) - wartet in der Warteschlange auf CPU-Zeit
-\item wartend (waiting) - im Leerlauf, benötigt im Moment keine CPU-Zeit, kann erst durch einen anderen Thread wieder in den Zustand bereit 
+\item \emph{laufend} (running) - läuft gerade in der CPU
+\item \emph{bereit} (ready) - wartet in der Warteschlange auf CPU-Zeit
+\item \emph{wartend} (waiting) - im Leerlauf, benötigt im Moment keine CPU-Zeit, kann erst durch einen anderen Thread wieder in den Zustand \emph{bereit}
 \end{itemize}
-~
 
-Threads starten
+\subsection{Threads starten}
 
-eine gegebene Methode TestMethod, soll nebenläufig in einem neuen Thread abgearbeitet werden:
+Eine gegebene Methode TestMethod, soll nebenläufig in einem neuen Thread abgearbeitet werden:
 
-~
-
+\begin{lstlisting}[language={[Sharp]C}]
 using System.Threading;
-
-…
-
+// ...
 ThreadStart del = new ThreadStart(TestMethod);
-
 Thread thread = new Thread(del);
-
 thread.Start();
-
-~
+\end{lstlisting}
 
 Alternativ: Thread starten mit Lambda-Expressions
 
-~
-
+\begin{lstlisting}[language={[Sharp]C}]
 Thread thread = new Thread( () ={\textgreater} TestMethod() );
-
-Thread thread = new Thread( () ={\textgreater} TestMethod(param1, param2, …) );
-
+Thread thread = new Thread( () ={\textgreater} TestMethod(param1, param2, ...) );
 // Achtung: Parameter werden erst zum Start des Threads ausgewertet und dürfen sich bis dahin nicht ändern 
+\end{lstlisting}
 
-~
-
-Ein einfaches Beispiel:
-
+\subsection{Beispiel}
+\begin{lstlisting}[language={[Sharp]C}]
 using System.Threading;
 
-~
+class Program {
+	static void Main(string[] args) {
+		Thread thread = new Thread(new ThreadStart(TestMethod));
+		thread.Start();
+		for(int i = 0; i {\textless}= 100; i++) {
+			for(int k = 1; k {\textless}= 5; k++)
+				Console.Write(".");
+			Console.WriteLine("Primär-Thread " + i);
+		}
+	}
 
-class Program \{
+	public static void TestMethod() {
+		for(int i = 0; i {\textless}= 100; i++) {
+			for(int k = 1; k {\textless}= 5; k++)
+			Console.Write("X");
+			Console.WriteLine("Sekundär-Thread " + i);
+		}
+	}
+}
+\end{lstlisting}
 
- static void Main(string[] args) \{
+Ausgabe (Beispiel):
 
- Thread thread = new Thread(new ThreadStart(TestMethod));
+\begin{lstlisting}[language={[Sharp]C}]
+...XXXXXXSekundär-Thread 0
+XX..Primär-Thread 0
+.XXXSekundär-Thread 1
+XX.. \\ usw.
+\end{lstlisting}
 
- thread.Start();
-
- for(int i = 0; i {\textless}= 100; i++) \{
-
- for(int k = 1; k {\textless}= 5; k++)
-
- Console.Write({\textquotedbl}.{\textquotedbl});
-
- Console.WriteLine({\textquotedbl}Primär-Thread {\textquotedbl} + i);
-
- \}
-
- \}
-
-~
-
- public static void TestMethod() \{
-
- for(int i = 0; i {\textless}= 100; i++) \{
-
- for(int k = 1; k {\textless}= 5; k++)
-
- Console.Write({\textquotedbl}X{\textquotedbl});
-
- Console.WriteLine({\textquotedbl}Sekundär-Thread {\textquotedbl} + i);
-
- \}
-
- \}
-
-\}
-
-~
-
-Ausgabebeispiel:
-
-~
-
-Weitere Methoden von Thread
+\subsection{Weitere Methoden von Thread}
 
 \begin{itemize}
-\item Thread.Sleep(int time)  // Thread schläft für time Millisekunden
-\item thread.Abort() // Thread bricht ab, nicht mehr unterstützt in .Net Core
-\item thread.Join() // Blockiert den aufrufenden Thread (!=thread), bis der Thread thread beendet ist 
+\item \lstinline[language={[Sharp]C}]!Thread.Sleep(int time)! Thread schläft für time Millisekunden
+\item \lstinline[language={[Sharp]C}]!thread.Abort()! Thread bricht ab, nicht mehr unterstützt in .Net Core
+\item \lstinline[language={[Sharp]C}]!thread.Join()! Blockiert den aufrufenden Thread (!=thread), bis der Thread thread beendet ist
 \end{itemize}
-\endinput

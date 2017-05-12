@@ -1,75 +1,78 @@
-Deadlock, Starvation
-
-Mittwoch, 8. Februar 2017
-
-14:40
-
-~
-
-Deadlock = Verklemmungssituation die bei ungünstiger Anwendung von Sperren (Locks, Barriers) auftreten kann
-
-~
-
-Chinese Chopstick Problem - Dining Philosophers Problem
-
-~
-
+Deadlock = Verklemmungssituation die bei ungünstiger Anwendung von Sperren (Locks, Barriers) auftreten kann\\
+Chinese Chopstick Problem -- Dining Philosophers Problem
 \begin{itemize}
 \item jeder Philosoph braucht 2 Gabeln zum Essen
 \item Philosophen denken über die Probleme der Welt nach und essen wenn sie hungrig sind
 \item sie greifen zuerst nach der linken Gabel, dann nach der rechten, essen dann und legen die Gabeln danach zurück
-\item Problem: Was passiert wenn alle 5 gleichzeitig essen wollen ? 
+\item Problem: Was passiert wenn alle 5 gleichzeitig essen wollen? 
 \end{itemize}
-~
+\begin{center}
+\includegraphics[scale=.7]{Vorlesung/a133ParallelDeadlocks-img001.png}
+\end{center} 
+Aus \url{https://en.wikipedia.org/wiki/Dining_philosophers_problem}
 
-~
-
- \includegraphics{a133ParallelDeadlocks-img001.png} 
-
-Aus {\textless}\url{https://en.wikipedia.org/wiki/Dining_philosophers_problem}{\textgreater} 
-
-~
-
-Visualisierung im Wartegraph (ressource dependency graph)
-
+\subsection{Visualisierung im Wartegraph (ressource dependency graph)}
 \begin{itemize}
 \item statischer Graph stellt Zustand zu einem konkreten Zeitpunkt des Programmablaufs dar
 \item gerichteter Graph mit Threads als Knoten, Sperren als Kanten, Richtung: Besitzer der Sperre
 \item Zyklen im Graph bedeuten einen Deadlock
 \end{itemize}
- \includegraphics{a133ParallelDeadlocks-img002.png} 
+T1 … T5: Philosophen/Threads\\
+G1 … G5: Gabeln/Ressourcen\\
+Deadlock, wenn jeder seine linke Gabel nimmt und auf die rechte wartet:
+\begin{center}
+\begin{tikzpicture}[-latex, scale= .5,shorten >= .3em,shorten <= .3em,auto]
+\node [state] (t1) at (0,0) {T1};
+\node [state] (t2) at (5,0) {T2};
+\node [state] (t3) at (7,4) {T3};
+\node [state] (t4) at (2.5,7) {T4};
+\node [state] (t5) at (-2,4) {T5};
+\draw (t1) -- node{G1} (t2);
+\draw (t2) -- node{G2} (t3);
+\draw (t3) -- node{G3} (t4);
+\draw (t4) -- node{G4} (t5);
+\draw (t5) -- node{G5} (t1);
+\end{tikzpicture}
+\end{center}
+Beispielcode für T1:
+\begin{lstlisting}[language={[Sharp]C}]
+Monitor.Enter(G5);
+Monitor.Enter(G1);
+// essen
+Monitor.Exit(G1);
+Monitor.Exit(G5);
+\end{lstlisting}
 
- \includegraphics{a133ParallelDeadlocks-img003.png} 
-
-y
-
-~
-
- \includegraphics{a133ParallelDeadlocks-img004.png} 
-
-„
-
-a
-
-~
-
-Verhindern von Deadlocks
-
+\subsection{Verhindern von Deadlocks}
 \begin{itemize}
 \item Reihenfolge von Sperranweisungen geschickter wählen
 \item stets gleiche Reihenfolge für Sperren
-\item Beispiel:
+\item Beispiel:\\
+Aufnahmepriorisierung: G1>G2>G3>G4>G5 (jeder Thread nimmt linke Gabel zuerst, außer Thread 1).
+\begin{center}
+\begin{tikzpicture}[-latex, scale= .5,shorten >= .3em,shorten <= .3em,auto]
+\node [state] (t1) at (0,0) {T1};
+\node [state] (t2) at (5,0) {T2};
+\node [state] (t3) at (7,4) {T3};
+\node [state] (t4) at (2.5,7) {T4};
+\node [state] (t5) at (-2,4) {T5};
+\draw (t1) -- node{G1} (t2);
+\draw (t2) -- node{G2} (t3);
+\draw (t3) -- node{G3} (t4);
+\draw (t4) -- node{G4} (t5);
+%\draw (t5) -- node{G5} (t1);
+\node (v1) at (0.5,2.5) {G5};
+\draw (t5) -- (0,4.5);
+\draw (t5) -- (v1);
+\node at (-4,3) {isst};
+\end{tikzpicture}
+\end{center}
 \end{itemize}
-~
 
-~
-
-Starvation (Verhungern)
-
+\subsection{Starvation (Verhungern)}
 \begin{itemize}
 \item Eine Aufgabe wird nie abgearbeitet (verhungert)
 \item Ursache: niedrige Priorität der Aufgabe, schnelle Erzeugung von neuen Aufgaben höherer Priorität
 \item z.B. immer neue Aufgaben werden generiert und in LIFO Queue abgelegt, nur die obersten werden abgearbeitet, die untersten verhungern
-\item Lösung: Prioritäts-management der Aufgaben, FIFO Queue, … 
+\item Lösung: Prioritäts-Management der Aufgaben, FIFO Queue, … 
 \end{itemize}
-\endinput
