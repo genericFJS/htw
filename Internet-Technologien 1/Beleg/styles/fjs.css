@@ -91,7 +91,7 @@ body{
 
 /* Wrapper für Elemente, die mittig dargestellt werden sollen */
 .centered {
-	width: 100%;
+	//width: 100%;
 	text-align: center !important;
 }
 
@@ -102,7 +102,7 @@ body{
 }
 
 #setupSelect tr:nth-child(even) {
-	background: rgba(222,226,207,0.3);
+	background: rgba(222,226,207,0.15);
 	background-opacity: 0.5;
 }
 

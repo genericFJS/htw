@@ -2,9 +2,9 @@
 	<div data-role="fieldcontain" id="selection">
 		<fieldset data-role="controlgroup" data-type="horizontal">
 			<input type="radio" name="select" id="AtoB" value="AtoB" <?php if(!$this->reverse){ echo 'checked="checked"';} ?> onClick="switchLanguage(this.id)" />
-			<label for="AtoB" data-form="ui-btn-up-a">A &#9658; B</label>
+			<label for="AtoB" data-form="ui-btn-up-a">A &rarr; B</label>
 			<input type="radio" name="select" id="BtoA" value="BtoA" <?php if($this->reverse){ echo 'checked="checked"';} ?> onClick="switchLanguage(this.id)" />
-			<label for="BtoA" data-form="ui-btn-up-a">A &#9664; B</label>
+			<label for="BtoA" data-form="ui-btn-up-a">A &larr; B</label>
 		</fieldset>
 	</div>
 </div>

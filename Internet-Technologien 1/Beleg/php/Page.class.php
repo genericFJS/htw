@@ -448,7 +448,7 @@ class page {
 			$stats [0] ++;
 		// versuche Statistik in Datei zu schreiben
 		try {
-			if (! is_writable ( $fileName ))
+			if (file_exists ( $fileName ) && ! is_writable ( $fileName ) || ! is_writable ( $this::filesPath ))
 				throw new RuntimeException ( 'Statistik konnte nicht gespeichert werden. Stelle sicher, dass entsprechende Dateien und Ordner auf dem Webserver mit den nötigen Schreibrechten eingerichtet sind.' );
 			file_put_contents ( $fileName, $stats [0] . "\t" . $stats [1] );
 		} catch ( RuntimeException $e ) {
