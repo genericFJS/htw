@@ -72,6 +72,15 @@ match(X, [X|Rest], Rest).
 In der vorherigen Katze-Maus Grammatik können grammatikalisch falsche Sätze erzeugt werden, zum Beispiel \lstinline`[die, kater, jagt, die maus]`.\\
 Lösung: In der Nominalphrase müssen Artikel und Nomen in Genus und Kasus übereinstimmen. Wir führen Parameter \lstinline`Genus` und \lstinline`Kasus` in \lstinline`nominal_phrase` ein, die an \lstinline`artikel` und \lstinline`nomen` weitergeleitet werden. 
 
+\subsection{Wertigkeit von Verben}
+\lecdate{15.05.2017}
+Zwei wichtige Klassen von Verben sind
+\begin{itemize}
+\item intransitives Verben: Diese führen kein Objekt nach sich (z.B. laufen, schlafen)
+\item transitive Verben: Diese benötigen ein Objekt (z.B. (etwas) sehen, (etwas) fangen).
+\end{itemize}
+Das Verb bestimmt den Kasus des zugehörigen Objektes, z.B. jagen, fangen, sehen benötigen ein Akkusativobjekt (das Subjekt sieht wen oder was?).
+
 \cparagraph{Beispiel} $ $
 \begin{lstlisting}[language=Prolog]
 satz(In, Rest) :- 
