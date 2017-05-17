@@ -1,0 +1,73 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrartcl}
+\gdef\pathtomaster{../../../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\makeatletter
+\gdef\@islecture{\relax}
+\bilingual{\lectureauthorname}{Beleg von}{}
+%\bilingual{\professorname}{}{}
+\makeatother
+
+\faculty{Fakultät Informatik/Mathematik}
+\chair{Lehrstuhl für Computergrafik}
+\thesis{Belegarbeit}
+\title{VisualSFM Scan einer Pflanze}
+\author{Falk-Jonatan Strube (s74053)}
+\professor{Prof. Dr. Marco Block-Berlitz}
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Auswahl der Bilder}
+Es wurden etwa 600 Bilder aufgenommen. Davon wurden 124 Dateien ausgewählt.
+
+Hier eine Auswahl dieser Auswahl:
+\begin{center}
+\includegraphics[width=.2\textwidth]{fotos/IMG_4520.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_4554.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_4584.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_4614.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_4644.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_4674.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_4704.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_4734.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_4764.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_4800.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_4830.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_4864.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_4894.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_4924.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_4954.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_4990.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_5030.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_5060.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_5090.JPG}
+\includegraphics[width=.2\textwidth]{fotos/IMG_5114.JPG}
+\end{center}
+
+\section{Ergebnis}
+
+\subsection{Originalbild}
+\begin{center}
+\includegraphics[width=.9\textwidth]{0Pflanze_original.jpg}
+\end{center}
+\subsection{Punkte nach Berechnung in VisualSFM}
+\begin{center}
+\includegraphics[width=.9\textwidth]{1Pflanze_punkte_roh.PNG}
+\end{center}
+\subsection{Überflüssige Punkte grob in MeshLab entfernt}
+\begin{center}
+\includegraphics[width=.9\textwidth]{2Pflanze_point_beschnitten.PNG}
+\end{center}
+\subsection{Normals in MeshLab berechnet}
+\begin{center}
+\includegraphics[width=.9\textwidth]{3Pflanze_point_normal.PNG}
+\end{center}
+\subsection{Mesh in MeshLab erzeugt}
+\begin{center}
+\includegraphics[width=.9\textwidth]{4Pflanze_mesh.PNG}
+\end{center}
+
+
+\end{document}
