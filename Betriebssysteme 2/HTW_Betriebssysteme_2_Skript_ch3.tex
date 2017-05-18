@@ -105,7 +105,52 @@ Second Chance Lazy Evaluation: Im „Uhrzeigersinn“ durch die (Ring-)Liste geh
 \subsection{Beladys Anomalie}
 \slides{04-mem}{40}
 \slides{04-mem}{41}
+\lecdate{17.05.2017}
+Bei bestimmten Prozess gibt es bestimmte Anzahl von Seiten. Dabei gibt es eine bestimmte Anzahl von Pagefaults. Die Annahme wäre, dass die Pagefaults bei mehr Seiten sinken würde (anders herum müsste sie weiter steigen). Beladys Annomalie besagt, dass das unter bestimmten Systemkonfigurationen auch anders sein kann (dass also Pagefaults mit mehr verfügbaren Seiten steigt).
 
+\subsection{Weitere Aspekte zur Seitenersetzung}
+\slides{04-mem}{42}
+\begin{itemize}
+\item lokale vs globale Ersetzung: global erleichtert Entscheidung, weil Auswahl der Seiten größer ist. Lokal hat weniger Entscheidungen und verdrängt damit vielleicht eigentlich noch benötigte Seiten. Im globalen können Seiten also besser verteilt werden. Im Ernstfall können aber Prozesse verdrängt werden ($\to$ Thrashing) -- das kann im lokalen nicht passieren. Im lokalen können die benötigten Seiten ggf. schneller gefunden werden.
+\item variable vs konstante Größe: variable zwar flexibler, aber höherer Verwaltungsaufwand.
+\end{itemize}
 
+\section{Schnittstelle zu UNIX}
+\slides{04-mem}{43}
+\subsection{Speicherabbild}
+\slides{04-mem}{44}
+\subsection{Systembruf brk()}
+\slides{04-mem}{45}
+\subsection{Stackanfordernug alloca()}
+\slides{04-mem}{46}
+Keine Rückgabefunktion: Stack ist in Rahmen eingeteilt. Wenn die Funktion betreten wird wird ein Rahmen mit der Größe für die lokalen Variablen erstellt. Wird innerhalb dieser Funktion eine weitere Funktion (mit lokalen Variablen) aufgerufen wird, wird ein weiterer Stack-Rahmen erstellt. Sobald eine Funktion beendet ist (bspw. durch return), wird dieser Stack-Rahmen wieder gelöscht.\\
+alloca verschiebt einfach den Stackpointer $\to$ keine Rückgabe nötig. Wenn Funktion beendet wird, wird Stackframe inkl. dem mit alloca vergrößerten Bereich gelöscht (daher kein free nötig).\\
+(Praktisch wenig relevant)
+\subsection{Ausschaltung des Pagings (Pinning)}
+\slides{04-mem}{47}
+Ausschaltung bei sicherheitskritischen Prozessen: wird beispielsweise in Passwort in die Pagefile geschrieben, wäre er persistent unverschlüsselt gespeichert!
+\subsection{Memory-Mapped Files}
+\slides{04-mem}{48}
+(„speichereingeblendete Dateien“)\\
+\subsubsection*{open/read/write/close}
+\begin{itemize}
+\item Quell- und Zieldatei eröffnen: 2 mal \lstinline`open()`
+\item Speicherbereich „besorgen“: \lstinline`malloc()`
+\item Quelldatei einlesen: x mal \lstinline`read()`
+\item Zieldatei schreiben: x mal \lstinline`write()`
+\item Speicher zurückgeben: \lstinline`free()`
+\item 2 mal \lstinline`close()` (in der Regel werden Dateien erst jetzt tatsächlich in die Datei geschrieben)
+\end{itemize}
+\subsubsection*{mmap}
+\begin{itemize}
+\item Quell- und Zieldatei eröffnen: 2 mal \lstinline`open()`
+\item Quelldatei abbilden: \lstinline`mmap()`
+\item Zieldatei auf Länge Quelldatei „aufblasen“: \lstinline`lseek()`, 1 mal \lstinline`write()`
+\item Zieldatei abbilden: \lstinline`mmap()`
+\item Kopiervorgang: \lstinline`memcpy()`
+\item 2 mal \lstinline`close()`
+\end{itemize}
+$\to$ 1 mal \lstinline`memcpy` deutlich schneller als x mal \lstinline`read/write`!
 
-
+\section{Zusammenfassung}
+\slides{04-mem}{49}
