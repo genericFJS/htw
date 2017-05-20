@@ -24,7 +24,7 @@ changePos(POSA, left, POSB) :- xCoord(POSA, X), yCoord(POSA, Y), XB is (X-1), PO
 changePos(POSA, right, POSB) :- xCoord(POSA, X), yCoord(POSA, Y), XB is (X+1), POSB = (XB, Y).
 % Gebe korrekte Position aus (verrückte, wenn Prüfung ok, sonst Originalposition): validPos(zu prüfende Position, Originalposition, Position der anderen Figur, Rückgabeposition).
 validPos(POSA, _, POSB, POSA) :- onPlan(POSA), POSA \== POSB.
-validPos(_, POSAo, _, POSAo).
+validPos(POSA, POSAo, POSB, POSAo) :- not(onPlan(POSA)); POSA == POSB.
 % Prüfe ob Position auf dem Plan ist:
 onPlan(POS) :- xCoord(POS, X), X < 9, X > 0, yCoord(POS, Y), Y < 9, Y > 0.
 % Gebe Position von Argumenten aus:
