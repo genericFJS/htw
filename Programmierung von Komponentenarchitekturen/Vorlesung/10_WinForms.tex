@@ -131,3 +131,7 @@ Graphikobjekte können
 \item rotiert  (\lstinline$graphics.RotateTransform(angle);$)
 \end{itemize}
 werden.
+
+\section{Persistenz}
+Graphikobjekte, die mit einfach bei einer Aktion gemalt werden, können wieder verschwinden, wenn das Fenster verkleinert und wieder vergrößert wird, das Fenster aus dem Bildschirm raus und wieder rein geschoben wird usw.\\
+Damit sie persistent bleiben, müssen sie in der Funktion \lstinline`OnPoint()` gezeichnet werden.

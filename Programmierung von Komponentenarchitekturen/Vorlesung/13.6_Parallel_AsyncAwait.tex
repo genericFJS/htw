@@ -1,210 +1,133 @@
-asynch / await
-
-~
-
-Donnerstag, 9. Februar 2017
-
-09:33
-
 neu im .NET Framework 4.5
 
-~
-
-Modifizierer async
+\subsection{Modifizierer async}
 
 \begin{itemize}
 \item müssen ein await enthalten, ermöglichen dem Aufrufer an dieser stelle seine Arbeit fortzusetzen
-\item zulässige Rückgabewerte: void, Task oder Task{\textless}TResult{\textgreater}
-\item zulässige Parameter: kein ref, kein out
+\item zulässige Rückgabewerte: \lstinline$void$, \lstinline$Task$ oder \lstinline$Task<TResult>$
+\item zulässige Parameter: kein \lstinline$ref$, kein \lstinline$out$
 \end{itemize}
-~
 
-~
-
-Schlüsselwort await
+\subsection{Schlüsselwort await}
 
 \begin{itemize}
 \item Wartet auf Ausführung von Tasks
-\item Aufruf: await TaskName
-\item Ausdruck ist vom void wenn einfacher Task erwartet wird, vom Typ TResult wenn Task{\textless}TResult{\textgreater} erwartet wird
+\item Aufruf: \lstinline$await TaskName$
+\item Ausdruck ist vom \lstinline`void` wenn einfacher Task erwartet wird, vom Typ \lstinline`TResult`, wenn \lstinline`Task<TResult>` erwartet wird
 \item kann nur in einer Asynchronen Methode aufgerufen werden
 \item während des Wartens wird zum Aufrufer der asynchronen Methode zurückgekehrt
 \item ist der erwartete (await) Task fertig wird die asynchrone Methode über einen Rückruf an der Stelle der Unterbrechung fortgesetzt
 \end{itemize}
-~
+Beispiel:
+\begin{lstlisting}[language={[Sharp]C}]
+static void Main(string[] args) { 
+	DoSomethingAsync(); 
+	for (int i = 0; i < 1000; i++)
+		Console.Write(".");
+	Console.ReadLine(); 
+} 
 
-Beispiel
+static async void DoSomethingAsync(){ 
+	Console.Write("Start\n"); 
+	Console.Write(await TestAsync());
+	Console.WriteLine("Fertig\n"); 
+} 
 
-static void Main(string[] args) \{ 
-
-DoSomethingAsync(); 
-
-for (int i = 0; i {\textless} 1000; i++) Console.Write({\textquotedbl}.{\textquotedbl}); Console.ReadLine(); 
-
-\} 
-
-~
-
-static async void DoSomethingAsync()\{ 
-
-Console.Write({\textquotedbl}Start{\textbackslash}n{\textquotedbl}); 
-
-Console.Write(await TestAsync()); Console.WriteLine({\textquotedbl}Fertig{\textbackslash}n{\textquotedbl}); 
-
-\} 
-
-~
-
-static Task{\textless}string{\textgreater} TestAsync() \{ 
-
-Task{\textless}string{\textgreater} t = new Task{\textless}string{\textgreater}(() ={\textgreater} \{ 
-
-Thread.Sleep(20); // lang dauernde Berechnung 
-
-return {\textquotedbl}{\textbackslash}n Das Ergebnis ist 42{\textbackslash}n{\textquotedbl}; \}); 
-
-t.Start(); 
-
-return t; 
-
-\}
-
-~
+static Task<string> TestAsync() { 
+	Task<string> t = new Task<string>(() => { 
+		Thread.Sleep(20); // lang dauernde Berechnung 
+		return "\n Das Ergebnis ist 42\n"; }
+	); 
+	t.Start(); 
+	return t; 
+}
+\end{lstlisting}
 
 Ausgabe:
+\begin{lstlisting}[language=C]
+Start
+........................ // viele Punkte
+Das Ergebnis ist 42
+Fertig
+........................ // viele Punkte
+\end{lstlisting}
 
-~
-
-Rückgabewerte:
-
-~
+\subsection{Rückgabewerte}
 
 Eine async Methode kann nur einen der folgenden Rückgabewerte haben
 
 \begin{itemize}
-\item void
-\item Task
-\item Task{\textless}T{\textgreater}
+\item \lstinline`void`
+\item \lstinline`Task`
+\item \lstinline`Task<T>`
 \end{itemize}
-~
+Dabei wird einzig für \lstinline`Task<T>` ein return erwartet, dass einen Objekt vom Typ \lstinline`T` zurückgibt. Es wird also kein Task explizit mit \lstinline$return$ zurückgegeben!
 
-Dabei wird einzig für Task{\textless}T{\textgreater} ein return erwartet, dass einen Objekt vom Typ T zurückgibt. Es wird also kein Task explizit mit return zurückgegeben!
+Der Aufrufer der async Methode erhält jedoch ein Task Objekt, dass genutzt werden kann um auf das Ergebnis der Methode zuzugreifen (es ist nicht der gleiche Task wie innerhalb der Methode!).
 
-~
+\begin{lstlisting}[language={[Sharp]C}]
 
-Der Aufrufer der async Methode erhält jedoch ein Task Objekt, dass genutzt werden kann um auf das Ergebnis der Methode zuzugreifen (es ist nicht der gleiche Task wie innerhalb der Methode!)
+static void Main(string[] args) { 
+	Task<string> t = DoSomethingAsync(); 
+	for (int i = 0; i < 1000; i++) 
+		Console.Write("."); 
+	Console.WriteLine(t.Result); // wartet auf DoSomethingAsync()
+} 
 
-~
+static async Task<string> DoSomethingAsync() { 
+	Task<int> t = new Task<int>(() => { 
+		Thread.Sleep(2000); // lang dauernde Berechnung 
+		return 42; 
+	}); 
+	t.Start(); 
+	int result = await t; 
+	string s = "Das Ergebnis ist" + result; 
+	return s; 
+} 
+\end{lstlisting}
 
-static void Main(string[] args) \{ 
-
-Task{\textless}string{\textgreater} t = DoSomethingAsync(); 
-
-for (int i = 0; i {\textless} 1000; i++) Console.Write({\textquotedbl}.{\textquotedbl}); 
-
-Console.WriteLine(t.Result); // wartet auf DoSomethingAsync()
-
-\} 
-
-~
-
-static async Task{\textless}string{\textgreater} DoSomethingAsync() \{ 
-
-Task{\textless}int{\textgreater} t = new Task{\textless}int{\textgreater}(() ={\textgreater} \{ 
-
-Thread.Sleep(2000); // lang dauernde Berechnung 
-
-return 42; 
-
-\}); 
-
-t.Start(); 
-
-int result = await t; 
-
-string s = {\textquotedbl}Das Ergebnis ist{\textquotedbl} + result; 
-
-return s; 
-
-\} 
-
-~
-
-Rückgabewerte mit Tupel
+\subsection{Rückgabewerte mit Tupel}
 
 Tupel = generische Klasse, die Elemente in einer bestimmten Reihenfolge kapselt
 
-~
-
 Beispiel: Wir wollen einen string und einen int zurückgeben:
-
-~
-
- static async Task{\textless}Tuple{\textless}string, int{\textgreater}{\textgreater} TestAsync()
-
- \{
-
- …
-
- return new Tuple{\textless}string, int{\textgreater}({\textquotedbl}Fertig{\textquotedbl},1);
-
- \}
-
-~
-
-~
-
-~
+\begin{lstlisting}[language={[Sharp]C}]
+static async Task<Tuple<string, int>> TestAsync() {
+	// ...
+	return new Tuple<string, int>("Fertig",1);
+}
+\end{lstlisting}
 
 Es gibt in .NET viele vordefinierte erwartbare (await-able) Methoden, z.B. für
-
 \begin{itemize}
 \item Internetzugriff
 \item Lesen und Schreiben von Dateien
 \end{itemize}
-~
 
- class program \{
+\begin{lstlisting}[language={[Sharp]C}]
+class program {
+	static bool finished = false;
+	
+	static async void ReadFromNetwork(string url)  {  
+		HttpClient client = new HttpClient();
+		Console.WriteLine("Requesting the data . . .");
+		var sw = Stopwatch.StartNew();
+		string result = await client.GetStringAsync(url);  
+		finished = true;
+		Console.WriteLine("{0}", result);  
+		Console.WriteLine("Finished in " + sw.ElapsedMilliseconds + "ms .");  
+		sw.Stop();
+	}
 
-  static bool finished = false;
-
-~
-
- static async void ReadFromNetwork(string url)  \{  
-
- HttpClient client = new HttpClient();
-
- Console.WriteLine({\textquotedbl}Requesting the data . . .{\textquotedbl});
-
- var sw = Stopwatch.StartNew();
-
- string result = await client.GetStringAsync(url);  
-
- finished = true;
-
- Console.WriteLine({\textquotedbl}\{0\}{\textquotedbl}, result);  
-
- Console.WriteLine({\textquotedbl}Finished in {\textquotedbl} + sw.ElapsedMilliseconds + {\textquotedbl}ms .{\textquotedbl});  
-
- sw.Stop();
-
- \}
-
- static void Main(string[] args)  \{
-
- var  t = ReadFromNetwork({\textquotedbl}http://www.textfiles.com/music/kurt.txt{\textquotedbl});
-
- while (!finished) Console.Write({\textquotedbl}.{\textquotedbl});  
-
- Console.ReadLine();  
-
- \}
-
- \}
-
-~
-
+	static void Main(string[] args)  {
+		var  t = ReadFromNetwork("http://www.textfiles.com/music/kurt.txt");
+		while (!finished) 
+			Console.Write(".");  
+		Console.ReadLine();  
+	}
+}
+\end{lstlisting}
 Ausgabe:
-
- \includegraphics{a136ParallelAsyncAwait-img001.png} 
-\endinput
+\begin{center}
+\includegraphics[width=.9\textwidth]{Vorlesung/a136ParallelAsyncAwait-img001.png}
+\end{center}

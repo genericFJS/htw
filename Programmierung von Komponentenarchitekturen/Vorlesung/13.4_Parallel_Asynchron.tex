@@ -54,3 +54,115 @@ public class MyClass {
 	public Task<int> ReadAsync(byte [] buffer, int offset, int count) ;
 }
 \end{lstlisting}
+
+\subsection{Zusammenfassendes Beispiel}
+\lecdate{19.05.2017}
+Sei \lstinline`double[] vec` ein gegebenes Array von Double Werten. Sie möchten gern die Summe aller Werte in \lstinline`vec` berechnen.\\
+Schreiben Sie ein Programm, dass diese Summel \emph{parallel} berechnet. Teilen Sie dafür die notwendige Schleife auf 2 Threads auf.\\
+Idee: Schleife in der Mitte aufspalten: \lstinline`i = 0,1,2, ..., n/2, n/2+1, ..., n-1, n`.
+\begin{lstlisting}[language={[Sharp]C}]
+double summe = 0;
+int n = vec.Length;
+
+Thread t1  = new Thread(() => {
+	for (long i=0; i < n/2; i++)
+		summe += vec[i];
+	}
+);
+Thread t2 = new Thread(() => {
+	for (long i= n/2; i < n; i++)
+		summe += vec[i];
+	}
+);
+
+t1.Start();
+t2.Start();
+Console.WriteLine("Summe = {0} \n", summe);
+\end{lstlisting}
+2 Fehler:
+\begin{itemize}
+\item Summe muss zum Schreiben gelockt werden.
+\item Ausgabe passiert, bevor sichergestellt ist, dass Threads fertig sind.
+\end{itemize}
+Also:
+\begin{lstlisting}[language={[Sharp]C}]
+double summe = 0;
+object lockobj = new object();
+int n = vec.Length;
+
+Thread t1  = new Thread(() => {
+	for (long i=0; i < n/2; i++)
+		lock(lockobj) {
+			summe += vec[i];
+		}
+	}
+);
+Thread t2 = new Thread(() => {
+	for (long i= n/2; i < n; i++)
+		lock(lockobj) {
+			summe += vec[i];
+		}
+	}
+);
+
+t1.Start();
+t2.Start();
+t1.Join();
+t2.Join();
+Console.WriteLine("Summe = {0} \n", summe);
+\end{lstlisting}
+Fehler:
+\begin{itemize}
+\item Beide Threads tun nie etwas gleichzeitig, da der Lock auf Summe besteht.\\
+$\Rightarrow$ Programm sogar langsamer!
+\end{itemize}
+Lösung:
+\begin{lstlisting}[language={[Sharp]C}]
+double summe = 0, summe1 = 0, summe2 = 0;
+int n = vec.Length;
+
+Thread t1  = new Thread(() => {
+	for (long i=0; i < n/2; i++)
+		summe1 += vec[i];
+	}
+);
+Thread t2 = new Thread(() => {
+	for (long i= n/2; i < n; i++)
+		summe2 += vec[i];
+	}
+);
+
+t1.Start();
+t2.Start();
+t1.Join();
+t2.Join();
+summe = summe1 + summe2;
+Console.WriteLine("Summe = {0} \n", summe);
+\end{lstlisting}
+Oder alternativ:
+\begin{lstlisting}[language={[Sharp]C}]
+double summe = 0;
+object lockobj = new object();
+int n = vec.Length;
+
+Thread t1  = new Thread(() => {
+	summe1 = 0;
+	for (long i=0; i < n/2; i++)
+		summe1 += vec[i];
+	lock (lockobj) {summe += summe1;}
+	}
+);
+Thread t2 = new Thread(() => {
+	summe2 = 0;
+	for (long i= n/2; i < n; i++)
+		summe2 += vec[i];
+	lock (lockobj) {summe += summe2;}
+	}
+);
+
+t1.Start();
+t2.Start();
+t1.Join();
+t2.Join();
+Console.WriteLine("Summe = {0} \n", summe);
+\end{lstlisting}

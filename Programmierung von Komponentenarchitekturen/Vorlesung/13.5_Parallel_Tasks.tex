@@ -1,201 +1,142 @@
-Task Parallel Library
-
-Donnerstag, 9. Februar 2017
-
-11:35
-
-~
-
 \begin{itemize}
 \item neu in .NET 4.0
 \item Im Zentrum steht die neue Klasse Task
 \end{itemize}
-~
 
-Tasks vs Threads
-
-\begin{itemize}
-\item zu viele Threads sind schlecht
+\subsection{Tasks vs Threads}
 
 \begin{itemize}
-\item OS ist beschäftigt mit Scheduling
-\item jeder Thread bindet Speicher (im MB Bereich)
+\item zu viele Threads sind schlecht:
+\begin{itemize}
+\item OS ist beschäftigt mit Scheduling.
+\item jeder Thread bindet Speicher (im MB Bereich).
 \end{itemize}
-\item Tasks können Threads erzeugen (max 1 Thread pro Task), wenn sie es für notwendig erachten, Concurrency Runtime sorgt für optimale Lastverteilung
-\item Typische Probleme beim gleichzeitigen Zugriff auf Ressourcen (Race Conditions, Deadlock, …) bleiben bestehen, müssen umgangen werden
+\item Tasks können Threads erzeugen (max 1 Thread pro Task), wenn sie es für notwendig erachten, Concurrency Runtime sorgt für optimale Lastverteilung.
+\item Typische Probleme beim gleichzeitigen Zugriff auf Ressourcen (Race Conditions, Deadlock, …) bleiben bestehen, müssen umgangen werden.
 \end{itemize}
-~
 
-Laufzeitvergleich Task / Thread:
+\subsection{Laufzeitvergleich Task / Thread}
 
-Aufgabe: 64 Listen mit 2,000,000 Elementen sortieren
+Aufgabe: 64 Listen mit 2\,000\,000 Elementen sortieren
 
 \begin{itemize}
 \item 64 Threads: 14 sec (CPU Auslastung 60 \%)
 \item 64 Tasks: 3 sec (CPU Auslastung 99 \%)
 \end{itemize}
-~
+%%% TODO
 
 Neue thread-sichere Datenstrukturen:
 
 \begin{itemize}
-\item ConcurrentStack{\textless}T{\textgreater}
-\item ConcurrentQueue{\textless}T{\textgreater}
-\item BlockingCollection{\textless}T{\textgreater}
+\item \lstinline`ConcurrentStack<T>`
+\item \lstinline`ConcurrentQueue<T>`
+\item \lstinline`BlockingCollection<T>`
 \end{itemize}
-~
 
-~
+%%% TODO
 
-Die Klasse Task
+\subsection{Die Klasse Task}
 
 \begin{itemize}
 \item Anlegen und Verwendung ähnlich wie Thread
 \item wichtigste Zustände eines Task:
 \end{itemize}
-\begin{flushleft}
-\tablefirsthead{}
-\tablehead{}
-\tabletail{}
-\tablelasttail{}
-\begin{supertabular}{m{6.3700004cm}m{1.4929999cm}m{1.0699999cm}}
+\begin{tabular}{l l l}
 Task definieren &
-{}-{\textgreater} &
-~\\
+$\to$ &
+\lstinline`Created`\\
 Task starten   &
-{}-{\textgreater} &
-~\\
+$\to$ &
+\lstinline`WaitingToRun`\\
 .NET startet den Task &
-{}-{\textgreater} &
-~\\
+$\to$ &
+\lstinline`Running`\\
 Task ohne Fehler abgearbeitet &
-{}-{\textgreater}  &
-~\\
-\end{supertabular}
-\end{flushleft}
-~
+$\to$  &
+\lstinline`RanToCompletion`\\
+\end{tabular}
 
-Task anlegen
+\subsubsection{Task anlegen}
 
 \begin{itemize}
 \item mit lambda Functionen
-\end{itemize}
-~
-
-~
-
-~
-
-\begin{itemize}
+\begin{lstlisting}[language={[Sharp]C}]
+Task t = new Task ( ()=> { /* ... */ } );
+Task t = new Task ( (o) => { /* ... use o here */ }, /* value for o */ );
+\end{lstlisting}
 \item ohne lambda Funktion
+\begin{lstlisting}[language={[Sharp]C}]
+Task t = new Task( action );
+
+Action<object> delegate = new Action<object>(DoWork);
+Task t = new Task ( delegate, objectValue );
+
+void DoWork( object o ){ /* ... */ }
+\end{lstlisting}
 \end{itemize}
-~
 
-Tast starten
+\subsubsection{Task starten}
 
-Task.Start();
+\lstinline`Task.Start();`
 
-~
+\subsubsection{Task.Factory}
 
-Task.Factory
+\lstinline`Task.Factory.StartNew( gleiche Parameter wie Konstruktor von Task ); `\\
+(startet den Task auch gleich, funktioniert ohne Konstruktor)
 
-Task.Factory.StartNew( gleiche Parameter wie Konstruktor von Task );  
+\subsubsection{Rückgabewert eines Tasks}
 
-startet den Task auch gleich, funktioniert ohne Konstruktor
-
-~
-
-Rückgabewert eines Tasks
-
-~
-
-~
-
-Task{\textless}int{\textgreater} t = Task.Factory.StartNew(() ={\textgreater} \{ 
-
-Thread.Sleep(2000); 
-
-return 13; 
-
-\}); 
-
+\begin{lstlisting}[language={[Sharp]C}]
+// <int> ist der Typ des Rückgabewerts
+Task<int> t = Task.Factory.StartNew(() => {
+	Thread.Sleep(2000); 
+	return 13; 
+}); 
 int i = t.Result;
+// Code wartet, bis Task fertig ist und Zugriff auf Result möglich ist.
+\end{lstlisting}
 
-~
+\subsubsection{Auf einen Task warten}
+\lstinline`t1.Wait();`
 
-~
+\subsubsection{Auf mehrere Tasks warten}
+\lstinline`Task.WaitAll(Task[]);` \lstinline`Task.WaitAny(Task[]);`\\
+z.B. warten auf einen Task: \lstinline`Task.WaitAny(new Task[] {t1, t2 } );`
 
-auf einen Task warten:
-
-t1.Wait();
-
-~
-
-auf mehrere Tasks warten:
-
-Task.WaitAll(Task[]);
-
-Task.WaitAny(Task[]);
-
-z.B. warten auf einen Task: Task.WaitAny(new Task[] \{ t1, t2 \} );
-
-~
-
-Parallele Schleifen
-
-~
+\subsubsection{Parallele Schleifen}
 
 \begin{itemize}
-\item Die TPL stellt die Methoden Parallel.For und Parallel.ForEach zur Verfügung
-\item intelligenter Aufteilungs-Algorithmus zerlegt Datenmenge, bzw. Schleifen-Interationen und erstellt selbstständig Tasks
+\item Die TPL stellt die Methoden \lstinline`Parallel.For` und \lstinline`Parallel.ForEach` zur Verfügung.
+\item intelligenter Aufteilungs-Algorithmus zerlegt Datenmenge, bzw. Schleifen-Interationen und erstellt selbstständig Tasks.
 \end{itemize}
-~
-
 Beispiel:
+\begin{lstlisting}[language={[Sharp]C}]
+// wie for (int i=0; i<5; i++):
+Parallel.For(0,  5,  i => {
+	Console.WriteLine("Durchlauf mit i = {0}", i);
+	Thread.Sleep(1000);
+});
 
-~
-
- Parallel.For(0,  5,  i ={\textgreater} \{
-
- Console.WriteLine({\textquotedbl}Durchlauf mit i = \{0\}{\textquotedbl}, i);
-
- Thread.Sleep(1000);
-
- \});
-
-~
-
- Parallel.ForEach(new int[] \{1, 2, 3, 4, 5\}, item ={\textgreater} \{
-
- Console.WriteLine({\textquotedbl}Durchlauf mit i = \{0\}{\textquotedbl}, item);
-
- Thread.Sleep(1000);
-
- \});
-
-~
-
-~
-
+Parallel.ForEach(new int[] {1, 2, 3, 4, 5}, item => {
+	Console.WriteLine("Durchlauf mit i = {0}", item);
+	Thread.Sleep(1000);
+});
+\end{lstlisting}
 Wie könnte man die folgende Schleife parallelisieren ? 
-
-~
-
-~~~~~~~~double result = 0;
-
- for (int i = 0; i {\textless} vec1.GetLength(0) ; i++)
-
- \{
-
- result += vec1[i] * vec2[i];
-
- \}
-
-~
-
-~
-
-Lokale Schleifenvariablen
+\begin{lstlisting}[language={[Sharp]C}]
+double result = 0;
+for (int i = 0; i < vec1.GetLength(0) ; i++) {
+	result += vec1[i] * vec2[i];
+}
+\end{lstlisting}
+Lösung:
+\begin{lstlisting}[language={[Sharp]C}]
+Parallel.For(0, vec.GetLength(0), i=> {
+	result += vec1[i] * vec2[i];
+});
+\end{lstlisting}
+Problem wieder ähnlich wie zuvor, dass Variable gelockt werden muss. Dafür gibt es dann besser lokale Schleifenvariablen: 
+\subsubsection{Lokale Schleifenvariablen}
 
 Jeder einzelne Thread hat eine eigene Instanz der Variable
 
@@ -203,85 +144,54 @@ Jeder einzelne Thread hat eine eigene Instanz der Variable
 \item keine Sperre nötig
 \item am Ende können die lokalen Variablen zusammengeführt werden
 \end{itemize}
-~
 
-Parallel.For{\textless}TLocal{\textgreater} (
-
-Int32, 
-
-Int32, 
-
-Func{\textless}TLocal{\textgreater}, 
-
-Func{\textless}Int32, ParallelLoopState, TLocal, TLocal{\textgreater}, 
-
-Action{\textless}TLocal{\textgreater}) 
-
-~
-
+\begin{lstlisting}[language={[Sharp]C}]
+// <TLocal>: Typ der lokalen Schleifenvariable
+Parallel.For<TLocal> (
+	Int32, // Startwert
+	Int32, // Endwert
+	Func<TLocal>,	// Initialisierung der lokalen Schleifenvariable
+	Func<Int32, ParallelLoopState, TLocal, TLocal>,	// Iterationsvorschrift
+	Action<TLocal> // Abschluss, nutze lokale Variable um globale Variable zu updaten
+) 
+\end{lstlisting}
 Beispiel: 
+\begin{lstlisting}[language={[Sharp]C}]
+Object myLock = new Object();
+Parallel.For<double>(0, n, () => {return 0; }, 
+	(i, pls, localSum) =>  {
+		localSum += vec1[i] * vec2[i];
+		return localSum;
+	},
+	x =>  {
+		lock (myLock) result += x;
+	}
+);
+\end{lstlisting}
 
-~
-
- Object myLock = new Object();
-
- Parallel.For{\textless}double{\textgreater}(0, n, () ={\textgreater} \{ return 0; \}, 
-
-(i, pls, localSum) ={\textgreater}  \{
-
- localSum += vec1[i] * vec2[i];
-
- return localSum;
-
- \},
-
- x ={\textgreater}  \{
-
- lock (myLock) result += x;
-
- \});
-
-~
-
-Schleife abbrechen: nutzt das ParallelLoopState Objekt das übergeben wird
+\subsubsection{Schleife abbrechen}
+Nutzt das \lstinline`ParallelLoopState` Objekt das übergeben wird
 
 \begin{itemize}
-\item pls.Break(); 
-\end{itemize}
+\item \lstinline`pls.Break();`\\
 Abbruch nachdem alle Iterationen bis zur aktuellen durchgeführt wruden
-
-\begin{itemize}
-\item pls.Stop(); 
-\end{itemize}
+\item \lstinline`pls.Stop();`\\
 sofortiger Abbruch
+\end{itemize}
 
-~
-
-Parallelisierung von GUI Aktivitäten
+\subsubsection{Parallelisierung von GUI Aktivitäten}
 
 \begin{itemize}
 \item Die Controls der GUI gehört zu genau einem Thread, andere Threads haben keinen Zugriff auf GUI Aktivitäten
 \item wird ein Teil eines Programms auf einen anderen Thread ausgelagert, so müssen darin enthaltene GUI-Aktivitäten zurück an den GUI-Thread gegeben werden. 
 \item Dies geschieht mit der Methode Invoke, die auf einem GUI Control aufgerufen wird
-\item Bsp: 
 \end{itemize}
-Task.Factory.StartNew( () ={\textgreater} \{
-
-~~~~~~~~ // aufwendige Berechnung hier
-
-~~~~~~~~ this.Invoke(new Action(() ={\textgreater} \{
-
-~~~~~~~~~~~~~~~~  label.Location = new Point(200,200);
-
-~~~~~~~~~~~~~~~~  \}));
-
-\}
-
-~
-
-~
-
-~
-
-~
-\endinput
+Beispiel:
+\begin{lstlisting}[language={[Sharp]C}]
+Task.Factory.StartNew( () => {
+	// aufwendige Berechnung hier
+	this.Invoke(new Action(() => {
+		label.Location = new Point(200,200);
+	}));
+}
+\end{lstlisting}
