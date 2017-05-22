@@ -22,6 +22,7 @@
     <ProjectGuid>{78637E50-C3E0-401B-B01D-383615D4E2F7}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>OpenSG_test</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -83,7 +84,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_CONSOLE;_LIB;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;OSGVIEWER_LIBRARY;CMAKE_INTDIR="Debug";osgViewer_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\test\OpenSceneGraph-3.4.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Apps\OpenGL\OpenSG\OpenSceneGraph-3.4.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -94,7 +95,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\test\OpenSceneGraph-3.4.0\lib;C:\test\OpenSceneGraph-3.4.0\lib\osgPlugins-3.4.0;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\Apps\OpenGL\OpenSG\OpenSceneGraph-3.4.0\lib;D:\Apps\OpenGL\OpenSG\OpenSceneGraph-3.4.0\lib\osgPlugins-3.4.0;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>osgPresentationd.lib;osgWidgetd.lib;osgManipulatord.lib;osgAnimationd.lib;osgVolumed.lib;osgViewerd.lib;osgSimd.lib;osgTextd.lib;osgShadowd.lib;osgParticled.lib;osgGAd.lib;osgFXd.lib;osgTerraind.lib;osgDBd.lib;osgUtild.lib;osgd.lib;OpenThreadsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
