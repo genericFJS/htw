@@ -1,1 +1,135 @@
 \slides{STTI_intro_2017}{9}
+
+% Folie 9-10
+E: Vorsatz für 32-bit Prozessoren (R für 64-bit).\\
+A-DX: Universalregister\\
+SI: Source Index\\
+DI: Destination Index\\
+BP: Base Pointer\\
+SP: Stack Pointer (TOS: Top of Stack)\\
+IP: Instruction Pointer\\
+FLAGS: Flags (Zeigen Situationen an [wenn bspw. 0 aus Operation kommt: zero-flag])
+
+% Folie 12
+\begin{itemize}
+\item \lstinline`mov`: kopiere Wert von A nach B (nicht bewegen/verschieben). 
+\item \lstinline`mul`: Multiplizieren (\lstinline`mul %eax, %ebx`$\to ebx = ebx \cdot eax$)
+\item \lstinline`add`: Addieren
+\item \lstinline`sub`: Subtrahieren
+\item \lstinline`inc`: Inkrementieren
+\item \lstinline`dec`: Dekrementieren
+\item \lstinline`push`: Schreibe in Stack
+\item \lstinline`pop`: Hole vom Stack
+\item \lstinline`call`: Rufe Programm auf (und merke, wo man war)
+\item \lstinline`ret`: springt zurück wo man vorher war (nach \lstinline`call`)
+\item \lstinline`jmp`: Sprung
+\item \lstinline`jcc`: Sprung mit Condition Code (siehe Folie 11)
+\item \lstinline`cmp`:  Vergleiche
+\item \lstinline`test`:
+\end{itemize}
+
+%Folie 20
+Ausführen: \lstinline`gdb applicationName`\\
+Dann: \lstinline`disas main`\\
+Alternativ: \lstinline`objdump -d applicationName`
+\begin{lstlisting}[language={[x86masm]Assembler}]
+0x080483fb 	<+0>: lea 0x4(%esp),%ecx
+0x080483ff 	<+4>: and $0xfffffff0,%esp
+0x08048402 	<+7>: pushl -0x4(%ecx)
+0x08048405 <+10>: push %ebp
+; Schreibe Stack-Pointer in Base-Pointer:
+0x08048406 <+11>: mov %esp,%ebp
+0x08048408 <+13>: push %ecx
+; Subtrahiere 20 von ESP (Platz für lokale Variablen wird reserviert):
+0x08048409 <+14>: sub $0x14,%esp
+; Initialisiere Variablen; Schreibe 1 in EBP-12 (Variable b):
+0x0804840c <+17>: movl $0x1,-0xc(%ebp)
+; Vergleiche 42 mit b:
+0x08048413 <+24>: cmpl $0x2a,-0xc(%ebp)
+; (Über-)springe, wenn 42!=1:
+0x08048417 <+28>: jne 0x8048422 <main+39>
+; Schreibe 23 in EBP-16 (Variable a):
+0x08048419 <+30>: movl $0x17,-0x10(%ebp)
+; (Über-)springe:
+0x08048420 <+37>: jmp 0x8048429 <main+46>
+; Schreibe 42 in ESP-16 (Variable a):
+0x08048422 <+39>: movl $0x2a,-0x10(%ebp)
+; Vergrößere Etack (nicht nötig?):
+0x08048429 <+46>: sub $0xc,%esp
+; Ende des Stacks auf 0 setzen (als Übergabeparameter für exit):
+0x0804842c <+49>: push $0x0
+; Rufe exit
+0x0804842e <+51>: call 0x80482e0 <exit@plt>
+\end{lstlisting}
+
+% Folie 23
+\begin{lstlisting}[language={[x86masm]Assembler}]
+0x0804842b 	<+0>: lea 0x4(%esp),%ecx
+0x0804842f 	<+4>: and $0xfffffff0,%esp
+0x08048432 	<+7>: pushl -0x4(%ecx)
+0x08048435 <+10>: push %ebp
+0x08048436 <+11>: mov %esp,%ebp
+0x08048438 <+13>: push %ecx
+0x08048439 <+14>: sub $0x14,%esp
+; Setze c=0 (Hinweis: negativer Offset im lokale Variable):
+0x0804843c <+17>: movl $0x0,-0xc(%ebp)
+; Springe zu main+49:
+0x08048443 <+24>: jmp 0x804845c <main+49>
+; Erweitere Stack um 8 Bit:
+0x08048445 <+26>: sub $0x8,%esp
+; Schreibe Wert der Variablen auf Stack:
+0x08048448 <+29>: pushl -0xc(%ebp)
+; Schreibe konstante Adresse (Formatstring für printf):
+0x0804844b <+32>: push $0x8048500
+; Rufe printf auf:
+0x08048450 <+37>: call 0x80482f0 <printf@plt>
+; Verkleinere Stack wieder um 16 Bit (8 erzeugte und 8 gepushte):
+0x08048455 <+42>: add $0x10,%esp
+; Addiere 1 auf b:
+0x08048458 <+45>: addl $0x1,-0xc(%ebp)
+; Vergleiche mit 23: 
+0x0804845c <+49>: cmpl $0x16,-0xc(%ebp)
+; Wenn kleiner/gleich 22 (also kleiner 23), springe zurück zu main+26.
+0x08048460 <+53>: jle 0x8048445 <main+26>
+0x08048462 <+55>: sub $0xc,%esp
+; Wieder 0 auf Stack pushen...
+0x08048465 <+58>: push $0x0
+; ...und exit(0):
+0x08048467 <+60>: call 0x8048310 <exit@plt>
+\end{lstlisting}
+
+% Folie 27
+\begin{lstlisting}[language={[x86masm]Assembler}]
+(gdb) disas main
+...
+0x0804844b <+11>: mov %esp,%ebp ; neuer Stackframe
+0x0804844d <+13>: push %ecx
+0x0804844e <+14>: sub $0x14,%esp ; Platz fuer lokale Variablen
+0x08048451 <+17>: movl $0x17,-0xc(%ebp) ; a=23
+0x08048458 <+24>: movl $0x2a,-0x10(%ebp) ; b=42
+0x0804845f <+31>: pushl -0x10(%ebp) ; push b
+0x08048462 <+34>: pushl -0xc(%ebp) ; push a
+0x08048465 <+37>: call 0x804842b <mul>
+0x0804846a <+42>: add $0x8,%esp ; Parameter vom Stack
+0x0804846d <+45>: mov %eax,-0x14(%ebp) ; erg=mul(a,b);
+0x08048470 <+48>: sub $0x8,%esp
+0x08048473 <+51>: pushl -0x14(%ebp) ; push erg
+0x08048476 <+54>: push $0x8048520 ; push &"Ergebnis: %d\n"
+0x0804847b <+59>: call 0x80482f0 <printf@plt>
+0x08048480 <+64>: add $0x10,%esp ; Parameter vom Stack
+0x08048483 <+67>: sub $0xc,%esp
+0x08048486 <+70>: push $0x0 ; push 0
+0x08048488 <+72>: call 0x8048310 <exit@plt> ; exit(0)
+(gdb) disas mul
+0x0804842b 	<+0>: push %ebp ; akt. Stackframe sichern
+0x0804842c  <+1>: mov %esp,%ebp ; neuer Stackframe
+0x0804842e  <+3>: sub $0x10,%esp ; Platz fuer lokale Variablen
+0x08048431  <+6>: mov 0x8(%ebp),%eax ; eax:=a (Parameter)
+0x08048434  <+9>: imul 0xc(%ebp),%eax ; eax:=a*b
+0x08048438 <+13>: mov %eax,-0x4(%ebp) ; result=a*b
+0x0804843b <+16>: mov -0x4(%ebp),%eax ; Resultat in eax
+0x0804843e <+19>: leave ; esp:=ebp; pop ebp
+0x0804843f <+20>: ret ; pop eip
+\end{lstlisting}
+
+
