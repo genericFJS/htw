@@ -209,11 +209,75 @@ adj(X,Y) :- adj0(X,Y); adj0(Y,X).
 solution(Path) :- Start = [tuer, mitte, fenster, f], goal(Goal), idDfs(Start,Goal,Path).
 \end{lstlisting}
 
+\section{Informierte Suche (heuristische Suche)}
+\lecdate{29.05.2017}
+Ziel: Information über das Suchproblem nutzen, um gute Pfade zuerst zu verfolgen. Dabei wird eine Bewertungsfunktion für die Knoten verwendet.\\
+Die heuristische Suche verwendet eine heuristische Bewertungsfunktion $f: V\to \RR_0^+$. Für den Zielknoten $v$ gilt $f(v)=0$. Die Knoten mit der niedrigsten Bewertung werden zuerst verfolgt.
+\subsection{Gierige Suche} Verwendet in jedem Schritt den Knoten, der dem Ziel am nächsten liegt.
 
+\cparagraph{Beispiel} Suche nach kürzestem Weg zu einem Ort $f(v)=\text{Luftlinienentfernung zum Ziel}$
+\begin{center}
+\begin{tikzpicture}[scale=.7]
+\draw  (-2.5,2.5) node{A} ellipse (0.5 and 0.5);
+\draw  (-4.5,-0.5) node{C} ellipse (0.5 and 0.5);
+\draw  (0,0) node{B} ellipse (0.5 and 0.5);
+\draw  (-3,-1.5) node{Z} ellipse (0.5 and 0.5);
+\draw (-3,2.5) -- node[left]{110 km} (-4.5,0);
+\draw (-4.5,-1) -- node[below left]{1 km} (-3.5,-1.5);
+\draw (-2,2.5) -- node[right]{90 km} (0,0.5);
+\draw (-2.5,-1.5) -- node[below right]{10 km} (-0.5,0);
+\end{tikzpicture}
+\end{center}
+Die gierige Suche verfolgt den Weg A--C--Z (111 km). Dabei ist A--B--Z (100 km) kürzer.
 
+\subsection{A*-Suche}
+Die gierige Suche berücksichtigt nicht die Kosten, die bis zum Knoten $v$ bereits entstanden sind. Wir führen daher eine Funktion $g$ ein, die die Kosten bis $v$ angibt und eine Funktion $h$, die die Kosten bis zum Ziel schätzt.\\
+Daher definieren wir die heuristische Bewertungsfunktion $f$ durch:
+$$f(v)=g(v)+h(v)$$
+Der A*-Algorithmus verwendet eine Bewertungsfunktion $f$, die die Summe der Kosten bis $v$ und die geschätzten Kosten bis zum Ziel sind. Dabei muss $h$ zulässig sein.
+\cparagraph{Definition} Eine heuristische Kostenschätzfunktion $h$ heißt \emph{zulässig}, wenn $h$ die Kosten bis zum Ziel nie überschätzt.
+\cparagraph{Beispiel}
+\begin{itemize}
+\item Die Luftlinienentfernung bis zum Ziel ist eine zulässige Kostenschätzfunktion.
+\item $0$ (aber nicht nützlich, $\to$ gierige Suche).
+\end{itemize}
+\bigskip
 
+\subsubsection{Implementierung durch Liste (ineffizient)}
+Für jeden aktuellen Konten $u$ werden die noch unbesuchten Nachbarn $v$ bestimmt und diese entsprechend ihrer $f$-Werte sortiert in eine Liste der nach zu besuchenden Knoten eingefügt. Wenn die Liste dabei in jedem Schritt neu sortiert wird, entsteht jeweils ein Aufwand von $O(n \log n)$.
+\subsubsection{Implementierung durch Min-Heap}
+Eine effiziente Implementierung verwendet einen \emph{Min-Heap}.\\
+Ein Min-Heap ist ein Binärbaum, in dem jeder Knoten, der kein Blatt ist, einen kleineren oder maximal gleichen Wert besitzt als alle Nachfolger.
+\cparagraph{Beispiel}
+\begin{center}
+\begin{tikzpicture}[scale=.7]
+\draw  (-1,3.5) node{1} ellipse (0.5 and 0.5);
+\draw  (-3,2) node{3} ellipse (0.5 and 0.5);
+\draw  (1,2) node{4} ellipse (0.5 and 0.5);
+\draw  (-4,0.5) node{5} ellipse (0.5 and 0.5);
+\draw  (-2,0.5) node{7} ellipse (0.5 and 0.5);
+\draw  (0,0.5) node{6} ellipse (0.5 and 0.5);
+\draw  (2,0.5) node{8} ellipse (0.5 and 0.5);
+\draw (-1.5,3.5) -- (-3,2.5);
+\draw (-3.5,2) -- (-4,1);
+\draw (-2.5,2) -- (-2,1);
+\draw (-0.5,3.5) -- (1,2.5);
+\draw (0.5,2) -- (0,1);
+\draw (1.5,2) -- (2,1);
+\end{tikzpicture}
+\end{center}
+Alle wichtigen Heap-Operationen (\lstinline`readMin, add`) können in der Zeit $O(\log n)$ ausgeführt werden.\\
+Eine effiziente A*-Suche verwendet einen Min-Heap, um die Knoten entsprechend ihrer $f$-werte zu verwalten. Dadurch fällt in jedem Schritt nur noch ein zusätzlicher Aufwand von $O(\log n)$ an.\bigskip\\
+Die A*-Suche ist optimal, d.h., sie findet einen kürzesten Weg.
 
+\subsubsection{Vor-/Nachteile}
+\begin{itemize}
+\item[$+$] Bei guter Heuristik wird das Ziel oft wesentlich schneller gefunden als mit einer uninformierten Suche.
+\item[$-$] Hoher Speicherbedarf, weil im worst-Case alle Knoten gespeichert werden müssen.
+\item[$-$] (wie bei Breitensuche:) es ist nicht einfach möglich den gefundenen Pfad zurückzugeben. 
+\end{itemize}
 
+%%% TODO Quellcode einfügen
 
 
 
