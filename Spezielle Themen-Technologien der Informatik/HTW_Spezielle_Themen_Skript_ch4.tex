@@ -132,4 +132,43 @@ Alternativ: \lstinline`objdump -d applicationName`
 0x0804843f <+20>: ret ; pop eip
 \end{lstlisting}
 
+% Folie 33
+\begin{lstlisting}[language={[x86masm]Assembler}]
+.text
+.global _start
+_start:
+movl $0, %eax
+xorl %ebx, %ebx	; setze ebx und edx=0 .. xor macht es sicherer als es direkt auf 0 zu setzen!
+xorl %edx, %edx
+jmp string
+code:
+pop %ecx	; Speicher Adresse des Strings in %ecx (%c: addr von write)
+movb $01, %bl	; stdout (%b: filedesc von write)
+movb $15, %dl	; string (%d: lgth von write)
+movb $04, %al	; 'write(stdout, addr, lgth)'
+int $0x80
+decb %bl
+movb $01,%al	; 'exit(0)'
+int $0x80
+string:
+call code ; call ermittelt die Adresse des folgenden Strings durch das implizite push
+.ascii "Hello, world!\x0a\x00"
+\end{lstlisting}
+Äquivalent dazu das C-Programm:
+\begin{lstlisting}[language=C]
+int man(void) {
+	printf("Hello, world!\n");
+	exit 0;
+}
+\end{lstlisting}
 
+
+gdb Kommandos:
+\begin{itemize}
+\item \lstinline`disas Funktion`
+\item \lstinline`br Adresse` (Breakpoint) bps.: \lstinline`br *0x08048b4`
+\item \lstinline`run` (läuft [bis zum Breakpoint])
+\item \lstinline`cont` (setzt [nach Breakpoint] fort)
+\item \lstinline`inf reg` (Informationen über vorhandene Register)
+\item \lstinline`x/bx 0xbffff638` (Information zu Inhalt von Register[$\to$durch \lstinline`inf reg` in Erfahrung bringen], mit Enter die folgenden Adressen)
+\end{itemize}

