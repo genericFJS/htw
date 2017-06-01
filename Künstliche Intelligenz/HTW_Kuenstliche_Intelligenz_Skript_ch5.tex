@@ -231,7 +231,7 @@ Die heuristische Suche verwendet eine heuristische Bewertungsfunktion $f: V\to \
 Die gierige Suche verfolgt den Weg A--C--Z (111 km). Dabei ist A--B--Z (100 km) kürzer.
 
 \subsection{A*-Suche}
-Die gierige Suche berücksichtigt nicht die Kosten, die bis zum Knoten $v$ bereits entstanden sind. Wir führen daher eine Funktion $g$ ein, die die Kosten bis $v$ angibt und eine Funktion $h$, die die Kosten bis zum Ziel schätzt.\\
+Die gierige Suche berücksichtigt nicht die Kosten, die bis zum Knoten $v$ bereits entstanden sind. Wir führen daher eine Funktion $g$ ein, die die Kosten vom Startknoten bis $v$ angibt (also der bereits zurückgelegte Weg) und eine Funktion $h$, die die (verbleibenden) Kosten bis zum Ziel schätzt.\\
 Daher definieren wir die heuristische Bewertungsfunktion $f$ durch:
 $$f(v)=g(v)+h(v)$$
 Der A*-Algorithmus verwendet eine Bewertungsfunktion $f$, die die Summe der Kosten bis $v$ und die geschätzten Kosten bis zum Ziel sind. Dabei muss $h$ zulässig sein.
