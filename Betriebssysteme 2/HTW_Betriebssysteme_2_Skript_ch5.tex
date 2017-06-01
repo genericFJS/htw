@@ -1,0 +1,51 @@
+\lecdate{24.05.2017}
+%\section{Überblick}
+%\slides{06-filesystems}{2}
+
+\section{Implementierungen von Dateisystemen}
+\subsection{Kontinuierliche Allokation}
+\slides{06-filesystems}{3}
+
+\subsection{Verkettete Liste}
+\slides{06-filesystems}{4}
+Beispiel ist nicht so schnell, da gesprungen werden muss (0015$\to$FFFF$\to$0014).\\
+\subsubsection{Nachteile}
+\slides{06-filesystems}{5}
+Wichtiger konzeptioneller Nachteil: Dadurch, dass in jedem Nutzdatenblock eine Verwaltungsinformation gespeichert ist, ist der Netto-Nutzdatenblock keine 2er-Potenz mehr!
+\subsubsection{Liste mit Zuordnungstabelle}
+\slides{06-filesystems}{6}
+Größe bspw. FAT16: $2^{16}\cdot 32 \unit{KiB}$ ($32\unit{KiB}$: Clustergröße)
+
+\subsection{Indizierte Speicherung}
+\slides{06-filesystems}{7}
+\subsubsection{Speicherung mit variablen Indexblocks}
+\slides{06-filesystems}{8}
+\subsubsection{Indirekt-indizierte Speicherung}
+\slides{06-filesystems}{9}
+\slides{06-filesystems}{10}
+
+%\subsubsection{Beispiel ISO 9660 (1988)}
+%\slides{06-filesystems}{11}
+%\slides{06-filesystems}{12}
+
+\subsubsection{Beispiel Unix Dateisystem}
+\slides{06-filesystems}{13}
+\subsubsection*{Dateiadressierung mittels Inodes}
+\slides{06-filesystems}{14}
+(graue Datenblöcke sind gleich groß wie die weiß gezeichneten Datenblöcke!)
+\slides{06-filesystems}{15}
+
+\subsection{Journaling}
+
+\section{I/O-Scheduling}
+\subsection{FCFS, SSTF}
+
+\subsection{SCAN (Elevator) und Varianten}
+
+\subsection{Shortest Access Time First (SATF)}
+
+\subsection{Verfahren im Linux-Kernel}
+
+
+
+

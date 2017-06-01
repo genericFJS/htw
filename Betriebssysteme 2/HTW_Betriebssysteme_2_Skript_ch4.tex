@@ -61,10 +61,13 @@ Entzug einer Ressource Beispiel: Speicherblock auf Festplatte zwischenspeichern,
 Rollback mit Checkpointing: Wie ein Auto-/Quicksave im FPS 
 
 \subsection{Dynamisches Vermeiden}
+\lecdate{31.05.2017}
 \slides{05-deadlocks}{18}
 \subsubsection*{Beispiel}
 \slides{05-deadlocks}{19}
+N fordert max. 5, hat schon 2, braucht also noch 3 -- die sind noch frei. Daher kann N durchlaufen und mit den freigegebenen Ressourcen kann auch M durchlaufen $\to$ ist also sicher.
 \slides{05-deadlocks}{20}
+Das ist nicht mehr sicher, da kein Prozess beendet werden kann (beide brauchen noch 3, können aber maximal 2 bekommen).
 \subsubsection{Realisierungsverfahren}
 \slides{05-deadlocks}{21}
 
@@ -73,6 +76,6 @@ Rollback mit Checkpointing: Wie ein Auto-/Quicksave im FPS
 \slides{05-deadlocks}{23}
 
 \section{Ausblick}
-\slides{05-deadlocks}{18}
+\slides{05-deadlocks}{24}
 
 
