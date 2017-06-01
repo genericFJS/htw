@@ -419,6 +419,10 @@ Mathe 2/Vorlesung
 Software Engineering 1/HTWSEI-Beleg/.git*
 Rechnernetze-Kommunikationssysteme/Beleg/s74053/src/rnbeleg
 Programmierung von Komponentenarchitekturen/Vorlesung/Vorlesungsbeispiele/*
+Spezielle Themen-Technologien der Informatik/Praktikum/IoT/VM/*
+Betriebssysteme 2/Praktikum/prakt1/zahl.dat
+Software Engineering 2/ledleuchturm
+Internet-Technologien 1/Beleg/lessons/*-stat.txt
 # ignoriere Dateien
 *.pdf
 *.psd
@@ -447,11 +451,8 @@ Programmierung von Komponentenarchitekturen/Vorlesung/Vorlesungsbeispiele/*
 *.stackdump
 *.bmp
 *.max
-Betriebssysteme 2/Praktikum/prakt1/zahl.dat
-Software Engineering 2/ledleuchturm
 *.dll
 *.lck
-Internet-Technologien 1/Beleg/lessons/*-stat.txt
 *.tif
 *.mat
 *.sift
