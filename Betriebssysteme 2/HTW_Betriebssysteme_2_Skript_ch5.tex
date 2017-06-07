@@ -8,7 +8,7 @@
 
 \subsection{Verkettete Liste}
 \slides{06-filesystems}{4}
-Beispiel ist nicht so schnell, da gesprungen werden muss (0015$\to$FFFF$\to$0014).\\
+Beispiel ist nicht so schnell, da gesprungen werden muss (0015$\to$FFFF$\to$0014).
 \subsubsection{Nachteile}
 \slides{06-filesystems}{5}
 Wichtiger konzeptioneller Nachteil: Dadurch, dass in jedem Nutzdatenblock eine Verwaltungsinformation gespeichert ist, ist der Netto-Nutzdatenblock keine 2er-Potenz mehr!
@@ -34,10 +34,54 @@ Größe bspw. FAT16: $2^{16}\cdot 32 \unit{KiB}$ ($32\unit{KiB}$: Clustergröße
 \slides{06-filesystems}{14}
 (graue Datenblöcke sind gleich groß wie die weiß gezeichneten Datenblöcke!)
 \slides{06-filesystems}{15}
+\paragraph{Klausurfrage} Zwischen welchen Parametern wird im Unix-Dateisystem ein Kompromiss gefunden:
+\begin{itemize}
+\item kurze Zugriffszeit auf kleine Dateien
+\item große Dateien realisierbar
+\end{itemize}
+
+\subsection{Verweise (Links)}
+\begin{itemize}
+\item \emph{Hard Links}\\
+Link auf Adresse wird erstellt. Wenn „Original“ gelöscht wird, bleibt Datei durch Link erhalten (Löschen ist viel mehr \lstinline`unlink()`, wo geprüft wird, ob noch ein Verweis auf Adresse besteht ($\to$ Link-Counter, Info über \lstinline`stat Datei`). Nur wenn kein Verweis mehr besteht, werden Daten gelöscht, sonst nur der Verweis).\\
+Alle Attribute (Änderungsdatum usw.) sind gleich.\\
+Im Prinzip wird nur ein neuer Name für die Datei erstellt.\\
+Es kann nicht mehr herausgefunden werden, welches das „Original“ ist: Beide Dateien/Verweise sind gleichberechtigt.\\
+Funktioniert nur auf gleicher Partition.
+\item \emph{Soft/Symbolic Links}\\
+Link auf Datei wird erstellt. Dieser Link ist eine Textdatei, die die Pfadangabe enthält.\\
+Funktioniert über Dateisystem-Grenzen hinweg.
+\end{itemize}
 
 \subsection{Journaling}
+\subsubsection{Nachteil traditioneller Dateisysteme}
+\slides{06-filesystems}{16}
+\subsubsection{Idee des Journals}
+\slides{06-filesystems}{17}
+$\to$ nach Absturtz muss nicht (mit \lstinline`fsck`) das gesamte Dateisystem überprüft werden, sondern nur das Journal erneut erstellt werden.
+\subsubsection{Betriebsmodi}
+\slides{06-filesystems}{18}
+\subsubsection{Zusammenfassung}
+\slides{06-filesystems}{19}
+\subsubsection{Erweiterte Attribute}
+\slides{06-filesystems}{20}
+\subsubsection*{… in Linux-Dateisystemen}
+\slides{06-filesystems}{21}
+\subsubsection*{Benötigte Systemrufe}
+\slides{06-filesystems}{22}
 
 \section{I/O-Scheduling}
+\subsubsection*{Prinzip der Festplatte}
+\slides{06-filesystems}{31}
+Zwei Komponenten, die Zugriffszeiten beeinflussen:
+\begin{itemize}
+\item Seek: Zeit, die der Lesekopf braucht, um auf die richtige Spur zu kommen.
+\item Rot: Zeit, die die Platte zur Rotation braucht. Rotationslatenz liegt zwischen $0$ (Sektor zufällig unter Lesekopf), und $\frac{1}{f}$ (Sektor gerade am Lesekopf vorbei).
+\end{itemize}
+
+\subsubsection*{Optimierung von Massenspeicherzugriffen}
+\slides{06-filesystems}{23}
+
 \subsection{FCFS, SSTF}
 
 \subsection{SCAN (Elevator) und Varianten}
