@@ -1,0 +1,135 @@
+Ziel: Durchlaufen von Elementen mit einer foreach Schleife\\
+Im Programm soll aber eine einfache foreach Schleife definiert werden können bei der irgendeine Sammlung von Daten durchlaufen wird. 
+
+
+\subsubsection*{Beispiel}
+\begin{lstlisting}[language={[Sharp]C}]
+foreach (string s in StringList) { 
+	Console.WriteLine(s); 
+} 
+\end{lstlisting}
+
+Die Sammlung der Daten die zu Durchlaufen sind, soll in StringList enthalten sein.\\
+Welche möglichen Datentypen für StringList kennen Sie bis jetzt?\\
+Nun wollen wir das erweitern: StringList soll z.B. 
+\begin{itemize}
+\item aus einer Datenbank 
+\item aus einer Datei
+\item aus dem Internet
+\end{itemize}
+lesen, und zwar dynamisch (erst bei Abfrage des nächsten Wertes)\\
+Vorteil, sie brauchen das Auslesen nicht in ihrer Schleife implementieren, sondern in StringList (Trennung von Daten und Iteration)
+\bigskip\\
+Frage: Was muss StringList erfüllen damit das funktioniert?\\
+Antwort: Es muss das Interface IEnumerable implementieren!
+\section{IEnumerable/IEnumerator}
+IEnumerable liefert die Methode GetEnumerator, die benutzt werden kann um eine Auflistung zu durchlaufen
+\begin{lstlisting}[language={[Sharp]C}]
+public interface IEnumerable {
+	IEnumerator GetEnumerator();
+}
+\end{lstlisting}
+
+IEnumerator steuert das durchlaufen einer Aufzählung (entspricht einem Iterator in C++/Java)
+
+\begin{lstlisting}[language={[Sharp]C}]
+public interface IEnumerator {
+	T Current { get; }  
+	// Ruft das aktuelle Element in der Auflistung ab.
+	bool MoveNext();
+	// Setzt den Enumerator auf das nächste Element der Auflistung.
+	// Rückgabewerte:
+	// true, wenn der Enumerator erfolgreich auf das nächste Element gesetzt wurde,
+	// false, wenn der Enumerator das Ende der Auflistung überschritten hat.
+
+	void Reset();
+	// Setzt den Enumerator auf seine anfängliche Position vor dem ersten Element
+	// in der Auflistung.
+}
+\end{lstlisting}
+
+Wie bekommt man so einen Iterator (IEnumerator)? 
+\begin{itemize}
+\item Man schreib ihn selbst
+\item Man nutzt yield return
+\end{itemize}
+
+\section{yield return}
+yield return funktioniert ähnlich wie return in einer Methode
+\begin{itemize}
+\item Wird verwendet um jedes Element einer Auflistung einzeln zurück zu geben
+\item Der Rückgabewert der Methode ist damit automatisch ein Iterator (IEnumerator)
+\item Wenn eine yield return-Anweisung erreicht wird, wird ein Wert zurückgegeben, und die aktuelle Position im Code wird gespeichert. Wenn die Iteratorfunktion das nächste Mal aufgerufen wird, wird die Ausführung von dieser Position fortgesetzt
+\end{itemize}
+
+Beispiel: 
+\begin{lstlisting}[language={[Sharp]C}]
+static void Main(string[] args) { 
+	DayList daylist = new DayList(); 
+	foreach (string s in daylist) { Console.WriteLine(s); } 
+}
+
+public class DayList { 
+	public IEnumerator GetEnumerator() { 
+		yield return "Montag"; 
+		yield return "Dienstag"; 
+		yield return "Mittwoch"; 
+		yield return "Donnerstag"; 
+		yield return "Freitag"; 
+	} 
+}
+
+// oder äquivalent dazu:
+public class DayList { 
+	string[] tage = { "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag" };
+	public IEnumerator GetEnumerator() { 
+		for (int i = 0; i < tage.Length; i++) 
+		yield return tage[i]; 
+	} 
+} 
+\end{lstlisting}
+Verständnistest: Wie würde man die Klasse DayList ohne yield return definieren? \\
+$\to$ Enumerator muss selbst erstellt werden:
+\begin{lstlisting}[language={[Sharp]C}]
+public class Daylist : IEnumerator{
+	int i = -1;
+	string[] tage = { "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag" };
+	
+	public object Current { 
+		get {
+			return tage[i]; 
+		} 
+	}
+	
+	public bool MoveNext() {
+		i++; 
+		if (i>4) 
+			return false; 
+		return true;
+	}
+	
+	public void Reset() {
+		i = -1;
+	}
+	
+	public IEnumerator GetEnumerator(){
+		return this;
+	}
+}
+
+static void Main(string[] args){
+	Daylist daylist = new Daylist();
+	foreach (string s in daylist) Console.WritLine(s);
+}
+\end{lstlisting}
+\subsection{Generischer IEnumerator}
+IEnumerator und IEnumerable gibt es auch als generische Typen \lstinline`IEnumerator<T>, IEnumerable<T>`
+
+\subsubsection*{Beispiel}
+Sie wollen eine Datei in einer foreach-Schleife Zeile für Zeile durchlaufen.\\
+Dabei sollen nur Zeilen mit Inhalt (Length>1) berücksichtigt werden
+\begin{lstlisting}[language={[Sharp]C}]
+int i = 0; 
+foreach (string line in new ExtractLinesFromFile(@"C:\eula.1028.txt"))
+	Console.WriteLine("Zeile " + i++ +": " + line + "\n"); 
+\end{lstlisting}

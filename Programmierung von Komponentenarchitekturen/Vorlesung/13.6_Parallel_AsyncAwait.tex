@@ -66,7 +66,6 @@ Dabei wird einzig für \lstinline`Task<T>` ein return erwartet, dass einen Objek
 Der Aufrufer der async Methode erhält jedoch ein Task Objekt, dass genutzt werden kann um auf das Ergebnis der Methode zuzugreifen (es ist nicht der gleiche Task wie innerhalb der Methode!).
 
 \begin{lstlisting}[language={[Sharp]C}]
-
 static void Main(string[] args) { 
 	Task<string> t = DoSomethingAsync(); 
 	for (int i = 0; i < 1000; i++) 

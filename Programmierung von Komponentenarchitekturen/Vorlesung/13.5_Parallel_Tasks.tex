@@ -195,3 +195,50 @@ Task.Factory.StartNew( () => {
 	}));
 }
 \end{lstlisting}
+
+\subsubsection{Wiederholung Parallel.For mit lokalen Schleifenvariablen}
+\lecdate{02.06.2017}
+Allgemeine Definition:
+\begin{lstlisting}[language={[Sharp]C}]
+Parallel.For<T>(from, to, initialize, iterate, finalize)
+\end{lstlisting}
+Daraus macht der Compiler quasi den folgenden Code und führt ihn parallel(!) aus und spaltet die Schleife auf die Tasks auf:
+\begin{lstlisting}[language={[Sharp]C}]
+T localResult = initialize();
+for (long i=from; i<to; i++) {
+	localResult = iterate(i, pls, localResult);
+}
+finalize(localResult);
+\end{lstlisting}
+
+Danach ist alles wieder seriell. Folglich ist auch \lstinline`localResult` nicht mehr verfügbar.
+
+\subsubsection*{Beispiel}
+Addiere Zahlen 1 bis 100:
+\begin{lstlisting}[language={[Sharp]C}]
+int sum = 0;
+Parallel.For<int>(1,101, () => 0,
+	(i, pls, localSum) => localSum + i, 
+	(localSum) => lock(lockObj) { sum += localSum; }
+);
+\end{lstlisting}
+
+\subsubsection*{Verständnistest}
+Welchen Wert hat \lstinline`result` am Ende?
+\begin{lstlisting}[language={[Sharp]C}]
+Object myLock = new Object();
+int result = 1;
+Parallel.For<int>(10, 100, ()=> { return 0;}, % Initialisierung => x=0
+	(i, pls, x) => {
+		x += (int)i % 2;
+		return x;
+	},
+	z => {
+		lock (myLock) result = (result + z) % 42;
+	}
+);
+\end{lstlisting}
+
+Lösung: 4 (result=1 + z=45 [45 gerade Zahlen]) \% 42
+
+

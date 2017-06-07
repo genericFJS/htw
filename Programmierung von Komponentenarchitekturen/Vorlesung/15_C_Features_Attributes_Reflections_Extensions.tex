@@ -1,0 +1,241 @@
+C\# Features: Attribute, Reflections, Extension methods
+
+Dienstag, 16. Mai 2017
+
+12:39
+
+~
+
+Attribute: 
+
+\begin{itemize}
+\item sind Zusatzinformationen (Metadaten) zu Klassen, Methoden und Eigenschaften
+\item können zur Laufzeit ausgelesen werden mit einem Verfahren, dass Reflection heißt
+\item Syntax: 
+\end{itemize}
+[Attributname]
+
+Typ, Klasse, Methode, Eigenschaft
+
+~
+
+Beispiel: 
+
+~
+
+Attribut definieren 
+
+~
+
+public class Author : System.Attribute \{ 
+
+public string Name \{ get; set; \} 
+
+public Author(string name = {\textquotedbl}anonymous{\textquotedbl}) \{
+
+Name = name; 
+
+\} 
+
+\} 
+
+~
+
+~
+
+Attribut nutzen
+
+~
+
+[Author({\textquotedbl}S.Aland{\textquotedbl})] 
+
+class MyClass \{ 
+
+ . . . 
+
+\} 
+
+~
+
+~
+
+Reflection (Attribute abfragen)
+
+~
+
+Attribute[] attrs = Attribute.GetCustomAttributes(typeof(MyClass));
+
+foreach (System.Attribute attr in attrs) \{ 
+
+if (attr is Author) \{ 
+
+Author a = (Author)attr; 
+
+Console.WriteLine({\textquotedbl}Author: {\textquotedbl} + a.Name); 
+
+\} 
+
+\}
+
+~
+
+\HRule
+
+Extension methods: fügen Methoden zu bestehenden Typen hinzu
+
+~
+
+Beispiel: Sie möchten die Reihenfolge der Einträge einer Liste umkehren können, also eine neue Methode Invert() hinzufügen.
+
+~
+
+Wie machen Sie das ?
+
+~
+
+\begin{tabular}{l l l}
+\hline
+1.
+
+~ &
+~
+
+~
+
+~
+
+~
+
+~ &
+~\\\hline
+2. &
+~
+
+~
+
+~
+
+~
+
+~ &
+~\\\hline
+3. &
+~
+
+~
+
+~
+
+~
+
+~ &
+~\\\hline
+4. &
+~
+
+~
+
+~
+
+~
+
+~ &
+~\\\hline
+\end{tabular}
+~
+
+Aufruf:
+
+~
+
+List{\textless}int{\textgreater} myList = new List{\textless}int{\textgreater}() \{ 1, 2, 7, 8 \}; 
+
+myList.Invert(); 
+
+for (int i = 0; i {\textless} tlist.Count; i++)  
+
+ Console.WriteLine(tlist[i]); // writes 8 7 2 1 
+
+…
+
+~
+
+~
+
+Funktioniert durch Hinzufügen von
+
+~
+
+static class Extension \{ 
+
+public static void Invert{\textless}T{\textgreater}(this List{\textless}T{\textgreater} list)\{
+
+ for (int i = 0; i {\textless} list.Count / 2; i++) \{ 
+
+ T temp = list[i]; 
+
+ list[i] = list[list.Count {}- i {}- 1];  
+
+ list[list.Count {}- i {}- 1] = temp; 
+
+ \} 
+
+\}
+
+\}
+
+~
+
+Definition von Extension Methods: 
+
+\begin{itemize}
+\item statische Methode in einer statischen Klasse
+\item erstes Argument: this … gibt den Typ an, auf den die Extension Methode aufgerufen wird
+\item Name der Klasse die die Extension method definiert ist egal, die Klasse wird nie benutzt
+\end{itemize}
+~
+
+Beispiel 2: eine Zahl auf jedes Element eines Arrays addieren
+
+~
+
+Aufruf: 
+
+~
+
+int[] a = new int[] \{ 1, 2, 3 \}; 
+
+a = a.Add(2); 
+
+for (int i=0; i{\textless}a.Length; i++) 
+
+Console.WriteLine(a[i]); // writes: 3 4 5 
+
+~
+
+~
+
+Funktioniert durch Hinzufügen von: 
+
+~
+
+public static class Extension \{ 
+
+ public static int[] Add(this int[] a, int b) \{ 
+
+ for (int i = 0; i {\textless} a.Length; i++) 
+
+ a[i] += b; 
+
+ return a; 
+
+ \}
+
+\} 
+
+~
+
+~
+
+Fazit: Cooles Feature, Hauptvorteil: Lesbarkeit, Klarheit
+\endinput
