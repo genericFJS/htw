@@ -265,15 +265,46 @@ Man nutze die Zeit $\frac{\text{Länge}}{\text{Höchstgeschwindigkeit}}$ als Pfa
 Man nutze die Zeit $\frac{\text{Luftlinie}}{\max(\text{Höchstgeschwindigkeit})}$ als Heuristik $h$.
 
 \section{Aufgabe 19}
-Sei $h_x$ die größtmögliche gültige Heuristik, also die tatsächlichen Kosten bis zum Ziel.\\
-Dann gilt, dass $h_1\leq h_x$ und $h_2\leq h_x$ ist, wenn $h_1$ und $h_2$ gültig sind.\\
-$\max (h_1, h_2)$ gibt entweder $h_1$ oder $h_2$ aus, die beide $\leq h_x$.\\
-Somit ist auch $\max (h_1, h_2)$ zulässig.
+Anmerkung: $\max\{f,g\}=x\mapsto \{f(x), g(x)\}$, also für jeden $x$-Wert das Maximum.\\
+Sei $\max\{h_1, h_2\}=x \mapsto \max\{h_1(x), h_2(x)\}$ zulässig. Da $\max\{h_1(x), h_2(x)\}\in h_1(x) \cup h_2(x)$ ist, wird $x$ nie überschätzt.\bigskip\\
+Musterlösung:\\
+Seien $K(x)$ die Kosten bis zum Ziel. Aus $h_1, h_2$ zulässig folgt $h_1(x)\leq K(x), h_2(x)\leq K(x)$ für alle $x$. Daraus folgt $\max\{h_1, h_2\} \leq K(x)$ für alle $x$, woraus die Behauptung folgt. 
+
 
 \section{Aufgabe 20}
 %%% TODO
 
+\chapter{Praktikum 10: Problemlösung}
+\section{Aufgabe 20}
+Aufstellung des ok:
+\begin{align*}
+&Z=W \vee Z=K \to Z=F\\
+\equiv& (Z \not = W \cap Z \not = K) \vee Z=F
+\end{align*}
+Daraus kann man bilden:
+\begin{lstlisting}[language=Prolog]
+sicher([F,F,_,_]).	 % rechts vom oder
+sicher([_,Z,K,W]) :- Z \== K, Z \== W.	% links vom oder
+\end{lstlisting}
+Musterlösung:
+\begin{lstlisting}[language=Prolog]
+%				f z k w
+sicher([F,F,_,_]).
+sicher([_,Z,K,W]) :- Z \== K, Z \== W.
 
+%     f z k w
+adj0([0,0,K,W], [1,1,K,W]).	% Ziege übersetzen
+adj0([0,Z,0,W], [1,Z,1,W]).	% Kohl übersetzen
+adj0([0,Z,K,0], [1,Z,K,1]).	% Wolf übersetzen
+adj0([0,Z,K,W], [1,Z,K,W]).	% Leerfahrt
+
+adj(X,Y) :- (adj0(X,Y); adj0(Y,X)), sicher(X), sicher(Y).
+
+solution(P) :- X = [0,0,0,0], Y = [1,1,1,1], idDfs(X,Y,P).
+:- [idDfs].
+\end{lstlisting}
+Eigene Lösung:
+\lstinputlisting[language=Prolog]{Prolog/aufg20_10.pl}
 
 
 
