@@ -1,241 +1,132 @@
-C\# Features: Attribute, Reflections, Extension methods
-
-Dienstag, 16. Mai 2017
-
-12:39
-
-~
-
-Attribute: 
+\lecdate{09.06.2017}
+\section{Attribute}
 
 \begin{itemize}
 \item sind Zusatzinformationen (Metadaten) zu Klassen, Methoden und Eigenschaften
 \item können zur Laufzeit ausgelesen werden mit einem Verfahren, dass Reflection heißt
-\item Syntax: 
+\item Syntax:\\
+\lstinline`[Attributname]`\\
+\lstinline`Typ, Klasse, Methode, Eigenschaft`
 \end{itemize}
-[Attributname]
+Beispiel für Attribute:
+\begin{itemize}
+\item \lstinline`[Obsolete]`
+\item \lstinline`[Obsolete("Nutzen Sie die neue Methode newMethod()")]`
+\end{itemize}
+\subsection{Attribut definieren}
+\begin{lstlisting}[language={[Sharp]C}]
+public class Author : System.Attribute { 	
+	public string Name { get; set; } 
+	public Author(string name = "anonymous") {
+		Name = name; 
+	} 
+} 
+\end{lstlisting}
 
-Typ, Klasse, Methode, Eigenschaft
+\subsection{Attribut nutzen}
 
-~
+\begin{lstlisting}[language={[Sharp]C}]
+[Author("S.Aland")] 
+class MyClass { 
+	// ...
+}
+\end{lstlisting}
 
-Beispiel: 
-
-~
-
-Attribut definieren 
-
-~
-
-public class Author : System.Attribute \{ 
-
-public string Name \{ get; set; \} 
-
-public Author(string name = {\textquotedbl}anonymous{\textquotedbl}) \{
-
-Name = name; 
-
-\} 
-
-\} 
-
-~
-
-~
-
-Attribut nutzen
-
-~
-
-[Author({\textquotedbl}S.Aland{\textquotedbl})] 
-
-class MyClass \{ 
-
- . . . 
-
-\} 
-
-~
-
-~
-
-Reflection (Attribute abfragen)
-
-~
-
+\subsection{Reflection (Attribute abfragen)}
+\begin{lstlisting}[language={[Sharp]C}]
 Attribute[] attrs = Attribute.GetCustomAttributes(typeof(MyClass));
+foreach (System.Attribute attr in attrs) { 
+	if (attr is Author) { 
+		Author a = (Author)attr; 
+		Console.WriteLine("Author: " + a.Name); 
+	} 
+}
+\end{lstlisting}
 
-foreach (System.Attribute attr in attrs) \{ 
+\section{Extension methods}
+fügen Methoden zu bestehenden Typen hinzu
+\paragraph{Beispiel} Sie möchten die Reihenfolge der Einträge einer Liste umkehren können, also eine neue Methode \lstinline`Invert()` hinzufügen.
+\subsection{Verfahren}
+\begin{enumerate}
+\item Hilfsklasse erstellen, Liste übergeben
+\begin{lstlisting}[language={[Sharp]C}]
+List list;
 
-if (attr is Author) \{ 
+Helpers.Invert(list);
+\end{lstlisting}
+Bewertung: umständliche Hilfsklasse
+\item Von der Klasse erben
+\begin{lstlisting}[language={[Sharp]C}]
+class MyList : List
 
-Author a = (Author)attr; 
+MyList list = ...
+list.Invert();
+\end{lstlisting}
+Bewertung: umständliche Vererbung, teils Vererbung nicht möglich (bei versiegelten Klassen, von denen nicht geerbt werden darf, bspw. \lstinline`string`)
+\item Methode direkt in Klasse List implementieren
+\begin{lstlisting}[language={[Sharp]C}]
+List list;
 
-Console.WriteLine({\textquotedbl}Author: {\textquotedbl} + a.Name); 
+list.Invert();
+\end{lstlisting}
+unschön vorgegebene Klasse zu ändern!
+\item $\Rightarrow$ Extensions Methods nutzen, um \lstinline`Invert()` zur Klasse List hinzuzufügen ohne List direkt zu ändern
+\begin{lstlisting}[language={[Sharp]C}]
+List list;
 
-\} 
-
-\}
-
-~
-
-\HRule
-
-Extension methods: fügen Methoden zu bestehenden Typen hinzu
-
-~
-
-Beispiel: Sie möchten die Reihenfolge der Einträge einer Liste umkehren können, also eine neue Methode Invert() hinzufügen.
-
-~
-
-Wie machen Sie das ?
-
-~
-
-\begin{tabular}{l l l}
-\hline
-1.
-
-~ &
-~
-
-~
-
-~
-
-~
-
-~ &
-~\\\hline
-2. &
-~
-
-~
-
-~
-
-~
-
-~ &
-~\\\hline
-3. &
-~
-
-~
-
-~
-
-~
-
-~ &
-~\\\hline
-4. &
-~
-
-~
-
-~
-
-~
-
-~ &
-~\\\hline
-\end{tabular}
-~
-
+list.Invert();
+\end{lstlisting}
+Bewertung: gute Lösung
+\end{enumerate}
+Am „schönsten“ ist also die letzte Methode mit einer Extension Methode\\
 Aufruf:
-
-~
-
-List{\textless}int{\textgreater} myList = new List{\textless}int{\textgreater}() \{ 1, 2, 7, 8 \}; 
-
+\begin{lstlisting}[language={[Sharp]C}]
+List<int> myList = new List<int>() { 1, 2, 7, 8 }; 
 myList.Invert(); 
 
-for (int i = 0; i {\textless} tlist.Count; i++)  
-
- Console.WriteLine(tlist[i]); // writes 8 7 2 1 
-
-…
-
-~
-
-~
-
+for (int i = 0; i < tlist.Count; i++)  
+	Console.WriteLine(tlist[i]); // writes 8 7 2 1 
+// ...
+\end{lstlisting}
 Funktioniert durch Hinzufügen von
+\begin{lstlisting}[language={[Sharp]C}]
+// um eine Extension Method zu finden, werden alle statischen Klassen mit statischen Funktionen durchsucht und geguckt, was passt
+static class Extension { // statische Klasse mit statischer Methode! Name egal.
+	public static void Invert<T>(this List<T> list){	// this als erstes Argument: Indikator, dass es sich um eine Extension Method handelt
+		for (int i = 0; i < list.Count / 2; i++) { 
+			T temp = list[i]; 
+			list[i] = list[list.Count {}- i {}- 1];  
+			list[list.Count {}- i {}- 1] = temp; 
+		} 
+	}
+}
+\end{lstlisting}
 
-~
 
-static class Extension \{ 
-
-public static void Invert{\textless}T{\textgreater}(this List{\textless}T{\textgreater} list)\{
-
- for (int i = 0; i {\textless} list.Count / 2; i++) \{ 
-
- T temp = list[i]; 
-
- list[i] = list[list.Count {}- i {}- 1];  
-
- list[list.Count {}- i {}- 1] = temp; 
-
- \} 
-
-\}
-
-\}
-
-~
-
-Definition von Extension Methods: 
+\subsection{Definition}
 
 \begin{itemize}
 \item statische Methode in einer statischen Klasse
 \item erstes Argument: this … gibt den Typ an, auf den die Extension Methode aufgerufen wird
 \item Name der Klasse die die Extension method definiert ist egal, die Klasse wird nie benutzt
 \end{itemize}
-~
 
-Beispiel 2: eine Zahl auf jedes Element eines Arrays addieren
-
-~
-
+\paragraph{Beispiel} eine Zahl auf jedes Element eines Arrays addieren\\
 Aufruf: 
-
-~
-
-int[] a = new int[] \{ 1, 2, 3 \}; 
-
+\begin{lstlisting}[language={[Sharp]C}]
+int[] a = new int[] { 1, 2, 3 }; 
 a = a.Add(2); 
-
-for (int i=0; i{\textless}a.Length; i++) 
-
-Console.WriteLine(a[i]); // writes: 3 4 5 
-
-~
-
-~
-
+for (int i=0; i<a.Length; i++) 
+	Console.WriteLine(a[i]); // writes: 3 4 5 
+\end{lstlisting}
 Funktioniert durch Hinzufügen von: 
-
-~
-
-public static class Extension \{ 
-
- public static int[] Add(this int[] a, int b) \{ 
-
- for (int i = 0; i {\textless} a.Length; i++) 
-
- a[i] += b; 
-
- return a; 
-
- \}
-
-\} 
-
-~
-
-~
-
+\begin{lstlisting}[language={[Sharp]C}]
+public static class Extension { 
+	public static int[] Add(this int[] a, int b) { 
+		for (int i = 0; i < a.Length; i++) 
+		a[i] += b; 
+		return a; 
+	}
+} 
+\end{lstlisting}
 Fazit: Cooles Feature, Hauptvorteil: Lesbarkeit, Klarheit
-\endinput

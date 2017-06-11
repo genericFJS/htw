@@ -130,6 +130,15 @@ Sie wollen eine Datei in einer foreach-Schleife Zeile für Zeile durchlaufen.\\
 Dabei sollen nur Zeilen mit Inhalt (Length>1) berücksichtigt werden
 \begin{lstlisting}[language={[Sharp]C}]
 int i = 0; 
-foreach (string line in new ExtractLinesFromFile(@"C:\eula.1028.txt"))
+foreach (string line in new ExtractLinesFromFile(@"C:\eula.1028.txt"))	// @: es werden keine Escape-Charaktere behandelt (bspw. \n)
 	Console.WriteLine("Zeile " + i++ +": " + line + "\n"); 
+
+public static IEnumerable<string> ExtractLinesFromFile(string filename){
+	StreamReader reader = new StreamReader(filename);
+	string line = null;	
+	while ((line = reader.ReadLine()) != null){
+		if (line.length > 1)
+			yield return line;
+	}
+}
 \end{lstlisting}
