@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Flexbox-Layout</title>
+  <!-- ************ CSS-Struktur *************** -->
+  <!-- Die verschiedenen Stylsheets können im Firefox über Ansicht -> Webseiten-Stil ausgewählt werden -->
+	<style type="text/css" title="demo">
+/* select the top-element in the document tree -> (html) */
+		:root {
+			max-width: 65em;
+			margin: 0 auto;          
+		}
+    ::first-line {
+        font-weight: bold;
+    }
+
+    body {background-color: lightgrey;}
+
+    /* Fley-Container für Flex-Items: article, nav, aside  */
+		main {
+			min-height: 25em;
+			display: flex;
+      background-color: grey;
+		}
+
+		header, article, nav, aside, footer {
+			margin: 0.25em;
+			padding: 0.5em;
+			border: 1px solid #ccc;
+			border-radius: 0.5em;
+		}
+
+		article {
+			background: LightYellow;
+			flex: 1 3 35em;
+			order: 2;
+		}
+
+		nav {
+			background: SkyBlue;
+			flex: 0 2 10em;
+			order: 1;
+		}
+
+		aside {
+			background: yellowgreen;
+			flex: 0 2 10em;
+			order: 3;
+		}
+
+    header {
+      background: #000000 url(dresden.jpg) no-repeat left top;
+      background-size: 100%; 
+			min-height: 6em; 
+    }
+
+		footer {
+			min-height: 5em;
+			background: Wheat;
+		}
+
+		@media all and (max-width: 35em) {
+			main {
+				flex-direction: column;
+			}
+      /* Änderung der Reihenfolge für Kinder in Folge lt. html*/
+			main > * {
+				order: 0;
+			}
+		}
+
+    @media all and (min-width: 50em) {
+    /* article wird 2.5x so breit wie die beiden asides */
+
+    }
+
+    nav ul {
+        list-style-type: none;
+        text-decoration: none;
+    }
+
+    nav ul a {
+        text-decoration: none;
+    }
+	</style>
+
+	<style type="text/css" title="min">
+    body > ::first-line, main > ::first-line {
+        font-weight: bold;
+    }
+	</style>
+
+	<style type="text/css" title="test">
+
+	</style>
+  <!-- ************ HTML-Struktur *************** -->
+</head>
+<body>
+	<header>(1) header</header>
+	<main>
+  <article>article<br/>Lorem Ipsum ist ein einfacher Demo-Text für die Print- und Schriftindustrie. Lorem Ipsum ist in der Industrie bereits der Standard Demo-Text seit 1500, als ein unbekannter Schriftsteller eine Hand voll Wörter nahm und diese durcheinander warf um ein Musterbuch zu erstellen. Es hat nicht nur 5 Jahrhunderte überlebt, sondern auch in Spruch in die elektronische Schriftbearbeitung geschafft (bemerke, nahezu unverändert). Bekannt wurde es 1960, mit dem erscheinen von "Letraset", welches Passagen von Lorem Ipsum enhielt, so wie Desktop Software wie "Aldus PageMaker" - ebenfalls mit Lorem Ipsum.</article>
+		<nav>nav
+    <ul id="menu">
+    <li><a href="index.html" >Willkommen</a></li>
+    <li><a href="leistungen.html" >Leistungen</a></li>
+    <li><a href="preise.html" >Preise</a></li>
+    <li></li>
+    <li><a href="impressum.html" >Kontakt</a></li>
+    <li><a href="agb.html" >AGB</a></li>
+  </ul>
+    </nav>
+		<aside>aside</aside>
+	</main>
+	<footer>footer</footer>
+</body>
+</html>
