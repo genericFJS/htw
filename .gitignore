@@ -425,8 +425,8 @@ Software Engineering 2/ledleuchturm
 Internet-Technologien 1/Beleg/lessons/*-stat.txt
 Spezielle Themen-Technologien der Informatik/Praktikum/reverseEngineering/2016/bar
 Spezielle Themen-Technologien der Informatik/Praktikum/reverseEngineering/2016/foo
-Spezielle Themen-Technologien der Informatik/Praktikum/reverseEngineering/foo-beleg
-Spezielle Themen-Technologien der Informatik/Praktikum/reverseEngineering/foo-prakt1
+Spezielle Themen-Technologien der Informatik/Praktikum/reverseEngineering/bar
+Spezielle Themen-Technologien der Informatik/Praktikum/reverseEngineering/foo
 # ignoriere Dateien
 *.pdf
 *.psd
