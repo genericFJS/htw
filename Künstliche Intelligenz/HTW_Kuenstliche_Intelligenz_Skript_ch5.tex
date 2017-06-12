@@ -277,15 +277,216 @@ Die A*-Suche ist optimal, d.h., sie findet einen kürzesten Weg.
 \item[$-$] (wie bei Breitensuche:) es ist nicht einfach möglich den gefundenen Pfad zurückzugeben. 
 \end{itemize}
 
-%%% TODO Quellcode einfügen
+\begin{lstlisting}[language=Prolog]
+% Heuristische Bewertungsfunktion
+% [H|T]: Pfad zum aktuellen Knoten H
+f([H|T],Y) :- g([H|T],Y1), h(H,Y2), Y is Y1+Y2.
+g(L,Y) :- length(L,Y1), Y is Y1-1.
+h(X,Y) :- Y is 0. % Ändern! Hier muß eine Kostenschätzfunktion angegeben werden.
 
+% A*-Suche
+% [H|T]: Sortierte Liste der noch zu untersuchenden Knoten
+% Closed: Liste der Knoten, die bereits untersucht wurden
+% Die Knoten müssen hier Pfade zum aktuellen, eigentlichen Knoten sein, damit f dessen Bewertung berechnen kann.
+hs([H|T], Closed) :-
+	goal(H);
+	Cl = [H|Closed],
+	findall(Node, (adj(H, Node), not(member(Node, Cl))), NewNeighbors),
+	append(T, NewNeighbors, Queue),
+	fsort(Queue, SortedQ),
+	hs(SortedQ, Cl).
+	
+% Sortieren der Liste gemäß der Werte von f
+fsort(List, Sorted) :- 
+        map_list_to_pairs(f, List, Pairs), 
+        keysort(Pairs, SortedPairs), 
+        pairs_values(SortedPairs, Sorted). 
+\end{lstlisting}
 
+\subsection{IDA*-Suche}
+\lecdate{12.06.2017}
+Die IDA*-Suche kombiniert die Vorteile der A*-Suche mit denen der iterativen Tiefensuche. Anstelle der Tiefenschranke der iterativen Tiefensuche verwenden wir eine Schranke für die Werte der Bewertungsfunktion. Der Speicherbedarf der IDA*-Suche entspricht dem der Tiefensuche.
 
+\begin{lstlisting}[language=Prolog]
+% f: Heuristische Bewertungsfunktion
+% h: Heuristische Kostenschätzfunktion
+% [Head|Tail]: Aktueller Pfad, Head: aktueller Knoten 
+f([Head|Tail], F) :- 
+	length(Tail, G),
+	h(Head, H),
+	F is G+H. 
 
+% Node: aktueller Knoten
+% Goal: Zielknoten
+% Path: Liste der Knoten auf dem Pfad bis Node
+% ReturnPath: Rückgabe, wenn ein Pfad zum Ziel gefunden wurde
+% adj: Adjazenz eines Knotens
+flDfs(Node, Goal, Path, FLimit, ReturnPath) :-
+	Node == Goal, reverse(Path, ReturnPath);
+	adj(Node,NewNeighbor), not(member(NewNeighbor,Path)),
+	f([NewNeighbor|Path], F), F =< FLimit,
+	flDfs(NewNeighbor, Goal, [NewNeighbor|Path], FLimit, ReturnPath).
 
+idasLoop(Start, Goal, FLimit, ReturnPath) :-
+	flDfs(Start, Goal, [Start], FLimit, ReturnPath);
+	% Schranke für f wird um kleinstmögliche Schrittweite erhöht (einfach zu programmieren). Sie wird also erhöht, wenn Ziel noch nicht gefunden wurde, um den Radius zu erhöhen.
+	idasLoop(Start, Goal, FLimit+1, ReturnPath).
 
+idas(Start, Goal, ReturnPath) :-
+	% Da f zulässig ist, sind die Kosten bis zum Ziel mindestens FL
+	f([Start], FLimit),
+	idasLoop(Start, Goal, FLimit, ReturnPath).
+\end{lstlisting}
 
+\paragraph{Anwendung} 8-Punkte\\
+Ziel: Plättchen in folgende Stellung zu bringen:
+\begin{center}
+\begin{tikzpicture}[scale=.7]
+\draw  (0,0) rectangle node{1} (1,-1);
+\draw  (1,0) rectangle node{2} (2,-1);
+\draw  (2,0) rectangle node{3} (3,-1);
+\draw  (0,-1) rectangle node{4} (1,-2);
+\draw  (1,-1) rectangle node{5} (2,-2);
+\draw  (2,-1) rectangle node{6} (3,-2);
+\draw  (0,-2) rectangle node{7} (1,-3);
+\draw  (1,-2) rectangle node{8} (2,-3);
+\draw  (2,-2) rectangle node{} (3,-3);
+\end{tikzpicture}
+\end{center}
+Darstellung als Graph:
+\begin{itemize}
+\item Knoten: Brettstellungen
+\item Kanten: Übergänge, die durch das Verschieben eines Plättchen möglich sind.
+\end{itemize}
+Beispiel:
+\begin{center}
+\begin{tikzpicture}[scale=.7]
+\draw  (0,0) rectangle node{1} (1,-1);
+\draw  (1,0) rectangle node{2} (2,-1);
+\draw  (2,0) rectangle node{3} (3,-1);
+\draw  (0,-1) rectangle node{4} (1,-2);
+\draw  (1,-1) rectangle node{5} (2,-2);
+\draw  (2,-1) rectangle node{6} (3,-2);
+\draw  (0,-2) rectangle node{7} (1,-3);
+\draw  (1,-2) rectangle node{8} (2,-3);
+\draw  (2,-2) rectangle node{} (3,-3);
 
+\draw  (4,-4) rectangle node{1} (5,-5);
+\draw  (5,-4) rectangle node{2} (6,-5);
+\draw  (6,-4) rectangle node{3} (7,-5);
+\draw  (4,-5) rectangle node{4} (5,-6);
+\draw  (5,-5) rectangle node{5} (6,-6);
+\draw  (6,-5) rectangle node{} (7,-6);
+\draw  (4,-6) rectangle node{7} (5,-7);
+\draw  (5,-6) rectangle node{8} (6,-7);
+\draw  (6,-6) rectangle node{6} (7,-7);
+
+\draw  (-4,-4) rectangle node{1} (-3,-5);
+\draw  (-3,-4) rectangle node{2} (-2,-5);
+\draw  (-2,-4) rectangle node {3} (-1,-5);
+\draw  (-4,-5) rectangle node{4} (-3,-6);
+\draw  (-3,-5) rectangle node{5} (-2,-6);
+\draw  (-2,-5) rectangle node{6} (-1,-6);
+\draw  (-4,-6) rectangle node{7} (-3,-7);
+\draw  (-3,-6) rectangle node{} (-2,-7);
+\draw  (-2,-6) rectangle node{8} (-1,-7);
+
+\draw (0.5,-3) -- (-1.5,-4);
+\draw (2.5,-3) -- (4.5,-4);
+\end{tikzpicture}
+\end{center}
+Geeignete heuristische Kostenschätzfunktionen $h$:
+\begin{enumerate}
+\item Hamming-Distanz bis zum Ziel:\\
+Die Hamming-Distanz zweier Plättchen ist die Anzahl der Plättchen, in denen sich die Stellungen unterscheiden.\\
+Beispiel:
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\draw  (0,0) rectangle node{8} (1,-1);
+\draw  (1,0) rectangle node{1} (2,-1);
+\draw  (2,0) rectangle node{3} (3,-1);
+\draw  (0,-1) rectangle node{4} (1,-2);
+\draw  (1,-1) rectangle node{5} (2,-2);
+\draw  (2,-1) rectangle node{7} (3,-2);
+\draw  (0,-2) rectangle node{6} (1,-3);
+\draw  (1,-2) rectangle node{2} (2,-3);
+\draw  (2,-2) rectangle node{} (3,-3);
+\end{tikzpicture}
+\end{center}
+$$h=1+1+0+0+0+1+1+1=5$$
+Diese Heuristik ist zulässig, weil mindestens so viele Verschiebungen von Plättchen nötig sind, wie Plättchen falsch stehen.
+\item Manhatten- oder Cityblock-Distanz:\\
+Anzahl der Verschiebungen, die nötig sind, um ein Plättchen auf direktem Weg zur Zielposition zu schieben, summiert über alle Plättchen.\\
+Beispiel:
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\draw  (0,0) rectangle node{8} (1,-1);
+\draw  (1,0) rectangle node{1} (2,-1);
+\draw  (2,0) rectangle node{3} (3,-1);
+\draw  (0,-1) rectangle node{4} (1,-2);
+\draw  (1,-1) rectangle node{5} (2,-2);
+\draw  (2,-1) rectangle node{7} (3,-2);
+\draw  (0,-2) rectangle node{6} (1,-3);
+\draw  (1,-2) rectangle node{2} (2,-3);
+\draw  (2,-2) rectangle node{} (3,-3);
+\end{tikzpicture}
+\end{center}
+$$h=3+1+0+0+0+3+3+2=12$$
+Diese Heuristik ist zulässig, weil für jedes Plättchen mindestens diese Anzahl Verschiebungen (auf direktem Weg) nötig sind.
+\end{enumerate}
+Anmerkung: Da jeder Knoten nicht eine Plättchen, sondern eine Stellung der Plättchen ist, entspricht diese berechnete Heuristik einem Knoten, also einer Stellung der Plättchen.
+\subparagraph{Implementierung} Die Brettstellungen werden durch verschachtelte Listen dargestellt.\\
+Beispiel:
+\begin{center}
+\begin{tikzpicture}[scale=.7]
+\draw  (0,0) rectangle node{1} (1,-1);
+\draw  (1,0) rectangle node{2} (2,-1);
+\draw  (2,0) rectangle node{3} (3,-1);
+\draw  (0,-1) rectangle node{4} (1,-2);
+\draw  (1,-1) rectangle node{5} (2,-2);
+\draw  (2,-1) rectangle node{6} (3,-2);
+\draw  (0,-2) rectangle node{7} (1,-3);
+\draw  (1,-2) rectangle node{8} (2,-3);
+\draw  (2,-2) rectangle node{} (3,-3);
+\end{tikzpicture}
+\end{center}
+wird dargestellt durch:
+\begin{lstlisting}
+[ [1,2,3], 
+  [4,5,6], 
+  [7,8,9] ]	% 9 steht für ein leeres Feld
+\end{lstlisting}
+Implementierung:
+\begin{lstlisting}[language=Prolog]
+% Leerstelle in Zeile verschieben
+sr( [9,A,B], [A,9,B]).
+sr( [A,9,B], [A,B,9]).
+shiftr(X,Y) :- sr(X,Y); sr(Y,X).	% findet mögliche Zeilenverschiebungen.
+ 
+adjr( [X,  R2, R3], [Y,  R2, R3]) :- shiftr(X, Y).	% Verschiebe 1. Zeile, wenn sie Leerstelle enthält.
+adjr( [R1, X,  R3], [R1, Y,  R3]) :- shiftr(X, Y).	% Verschiebe 2.
+adjr( [R1, R2,  X], [R1, R2,  Y]) :- shiftr(X, Y).	% Verschiebe 3.
+
+% Leerstelle in Spalte verschieben (Matrix transponieren, Spalten -> Zeilen. Damit Zeilenverschiebung durchführen)
+adjc( [[A1,B1,C1], [D1,E1,F1], [G1,H1,I1]], 
+      [[A2,B2,C2], [D2,E2,F2], [G2,H2,I2]] ) :-
+	adjr( [[A1,D1,G1], [B1,E1,H1], [C1,F1,I1]],
+	      [[A2,D2,G2], [B2,E2,H2], [C2,F2,I2]] ).  
+ 
+% Leerstelle in Zeile oder Spalte verschieben
+adj(Board1, Board2) :-
+	adjr(Board1, Board2);
+	adjc(Board1, Board2).
+	
+% Zielstellung
+goal( [[1,2,3],
+       [4,5,6],
+       [7,8,9]] ).
+
+% Pretty-Printer
+printB(Board) :- maplist(writeln, Board), write('\n').
+print(Boards) :- maplist(printB, Boards).
+\end{lstlisting}
 
 
 
