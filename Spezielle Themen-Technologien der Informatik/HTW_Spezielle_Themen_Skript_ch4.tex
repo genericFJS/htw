@@ -1,6 +1,20 @@
-\slides{STTI_intro_2017}{9}
-
-% Folie 9-10
+%\slides{STTI_intro_2017}{9}
+\slideScale{1}
+\section{Einführung}
+\slides{reverseEngineering/stti-01-einfuehrung}{2}
+\subsection{Zweck}
+\slides{reverseEngineering/stti-01-einfuehrung}{4}
+\subsection{Rechtliche Aspekte}
+\slides{reverseEngineering/stti-01-einfuehrung}{5}
+\subsection{Beschränkung}
+\slides{reverseEngineering/stti-01-einfuehrung}{6}
+\section{Werkzeuge}
+\slides{reverseEngineering/stti-01-einfuehrung}{7}
+\section{Assembler}
+\subsection{IA-32 CPU}
+\subsubsection{Wichtige Register}
+\slides{reverseEngineering/stti-01-einfuehrung}{9}
+\slides{reverseEngineering/stti-01-einfuehrung}{10}
 E: Vorsatz für 32-bit Prozessoren (R für 64-bit).\\
 A-DX: Universalregister\\
 SI: Source Index\\
@@ -9,8 +23,10 @@ BP: Base Pointer\\
 SP: Stack Pointer (TOS: Top of Stack)\\
 IP: Instruction Pointer\\
 FLAGS: Flags (Zeigen Situationen an [wenn bspw. 0 aus Operation kommt: zero-flag])
-
-% Folie 12
+\subsubsection{EFLAGS}
+\slides{reverseEngineering/stti-01-einfuehrung}{11}
+\subsection{Instruktionen}
+\slides{reverseEngineering/stti-01-einfuehrung}{12}
 \begin{itemize}
 \item \lstinline`mov`: kopiere Wert von A nach B (nicht bewegen/verschieben). 
 \item \lstinline`mul`: Multiplizieren (\lstinline`mul %eax, %ebx`$\to ebx = ebx \cdot eax$)
@@ -28,7 +44,24 @@ FLAGS: Flags (Zeigen Situationen an [wenn bspw. 0 aus Operation kommt: zero-flag
 \item \lstinline`test`:
 \end{itemize}
 
-%Folie 20
+\subsection{Stack}
+\slides{reverseEngineering/stti-01-einfuehrung}{13}
+\subsubsection*{Stackframe}
+\slides{reverseEngineering/stti-01-einfuehrung}{14}
+\subsubsection{push und pop}
+\slides{reverseEngineering/stti-01-einfuehrung}{15}
+\subsubsection*{Aufbau}
+\slides{reverseEngineering/stti-01-einfuehrung}{16}
+
+\subsection{Calling Conventions}
+\slides{reverseEngineering/stti-01-einfuehrung}{17}
+
+\section{Konstrukte in C}
+\slides{reverseEngineering/stti-01-einfuehrung}{18}
+
+\subsection{if-else-Statement}
+\slides{reverseEngineering/stti-01-einfuehrung}{19}
+%\slides{reverseEngineering/stti-01-einfuehrung}{20}
 Ausführen: \lstinline`gdb applicationName`\\
 Dann: \lstinline`disas main`\\
 Alternativ: \lstinline`objdump -d applicationName`
@@ -97,8 +130,18 @@ Alternativ: \lstinline`objdump -d applicationName`
 ; ...und exit(0):
 0x08048467 <+60>: call 0x8048310 <exit@plt>
 \end{lstlisting}
+\slides{reverseEngineering/stti-01-einfuehrung}{21}
 
-% Folie 27
+\subsection{for-Schleife}
+\slides{reverseEngineering/stti-01-einfuehrung}{22}
+\slides{reverseEngineering/stti-01-einfuehrung}{23}
+\slides{reverseEngineering/stti-01-einfuehrung}{24}
+\subsubsection{goto-Statement}
+\slides{reverseEngineering/stti-01-einfuehrung}{25}
+
+\subsection{Funktionsaufrufe}
+\slides{reverseEngineering/stti-01-einfuehrung}{26}
+%\slides{reverseEngineering/stti-01-einfuehrung}{27}
 \begin{lstlisting}[language={[x86masm]Assembler}]
 (gdb) disas main
 ...
@@ -131,7 +174,15 @@ Alternativ: \lstinline`objdump -d applicationName`
 0x0804843e <+19>: leave ; esp:=ebp; pop ebp
 0x0804843f <+20>: ret ; pop eip
 \end{lstlisting}
+\subsubsection{Parameter- und Ergebniskommunikation}
+\slides{reverseEngineering/stti-01-einfuehrung}{28}
+\subsubsection{Struktur}
+\slides{reverseEngineering/stti-01-einfuehrung}{29}
 
+\subsection{Systemrufe}
+\slides{reverseEngineering/stti-01-einfuehrung}{30}
+\subsubsection*{Aufrufkonvention Systemruf Linux}
+\slides{reverseEngineering/stti-01-einfuehrung}{31}
 % Folie 33
 \begin{lstlisting}[language={[x86masm]Assembler}]
 .text
@@ -162,7 +213,7 @@ int man(void) {
 }
 \end{lstlisting}
 
-
+\section{gdb}
 gdb Kommandos:
 \begin{itemize}
 \item \lstinline`disas Funktion`
@@ -172,3 +223,4 @@ gdb Kommandos:
 \item \lstinline`inf reg` (Informationen über vorhandene Register)
 \item \lstinline`x/bx 0xbffff638` (Information zu Inhalt von Register[$\to$durch \lstinline`inf reg` in Erfahrung bringen], mit Enter die folgenden Adressen)
 \end{itemize}
+\slideScale{.5}

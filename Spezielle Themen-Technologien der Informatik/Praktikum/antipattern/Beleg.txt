@@ -1,0 +1,1 @@
+Objektorientiert geschriebenen Quellcode anschauen, wo Verbesserungspotential ist (Symptome -> Beseitigung). Quellcode, Symptome und Beseitigung beschreiben. Auszüge aus Klassendiagramme sind erwünscht (aus Kontext)
