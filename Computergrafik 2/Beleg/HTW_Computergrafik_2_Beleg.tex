@@ -1,0 +1,54 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrreprt}
+\gdef\pathtomaster{../../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\bibliography{HTW_Computergrafik_2_Beleg.bib}
+\makeatletter
+\gdef\@islecture{\relax}
+\bilingual{\lectureauthorname}{Beleg von}{}
+%\bilingual{\professorname}{}{}
+\makeatother
+
+\faculty{Fakultät Informatik/Mathematik}
+%\department{Einrichtung}
+%\institute{Institut}
+\chair{Lehrstuhl für Computergrafik}
+\thesis{Belegarbeit}
+\title{Computergrafik 2}
+%\subtitle{Untertitel}
+\author{Falk-Jonatan Strube (s74053)}
+\professor{Prof. Dr. Wolfgang Oertel}
+%\date{Datum}
+
+\slidePath{Vorlesung/CG2-01-15}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\chapter{Aufgabenbeschreibung}
+\chapter{Verwendete Vorlagen}
+\cite{Strube2017yt}
+\cite{Strube2017web}
+\cite{Wiebusch2017}
+\cite{cgtextures2017}
+\cite{Autodesk2017}
+
+\chapter{Lösung}
+\section{Ansatz}
+
+\section{Umsetzung}
+
+\section{Aufgetretene Probleme}
+\section{Erreichte Ergebnisse}
+
+
+
+%!!!! Literatur- und Quellenverzeichnis enthält.
+
+\renewcommand{\emph}[1]{\textit{#1}}
+\newpage
+\printbibliography
+
+\end{document}
