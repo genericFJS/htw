@@ -423,6 +423,10 @@ Spezielle Themen-Technologien der Informatik/Praktikum/IoT/VM/*
 Betriebssysteme 2/Praktikum/prakt1/zahl.dat
 Software Engineering 2/ledleuchturm
 Internet-Technologien 1/Beleg/lessons/*-stat.txt
+Spezielle Themen-Technologien der Informatik/Praktikum/reverseEngineering/2016/bar
+Spezielle Themen-Technologien der Informatik/Praktikum/reverseEngineering/2016/foo
+Spezielle Themen-Technologien der Informatik/Praktikum/reverseEngineering/foo-beleg
+Spezielle Themen-Technologien der Informatik/Praktikum/reverseEngineering/foo-prakt1
 # ignoriere Dateien
 *.pdf
 *.psd
@@ -459,3 +463,7 @@ Internet-Technologien 1/Beleg/lessons/*-stat.txt
 *.nvm.cmvs/
 *.nvm
 *.ply
+*.wav
+*.stl
+*.ttf
+*.tga
