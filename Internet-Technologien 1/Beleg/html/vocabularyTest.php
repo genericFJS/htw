@@ -8,7 +8,7 @@
 		</fieldset>
 	</div>
 </div>
-<form method="post" id="formAjax" action=<?php echo $_SERVER['REQUEST_URI']?>>
+<form method="post" id="formAjax" action="<?php echo $_SERVER['REQUEST_URI']?>">
 	<div>
 		<div class="voc vocLeft">
 			<div data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all foreign">
