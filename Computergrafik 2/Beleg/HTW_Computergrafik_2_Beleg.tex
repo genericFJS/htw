@@ -21,34 +21,363 @@
 \professor{Prof. Dr. Wolfgang Oertel}
 %\date{Datum}
 
-\slidePath{Vorlesung/CG2-01-15}
+\usepackage{chngcntr}
+\counterwithout{figure}{chapter}
 \begin{document}
 
 \maketitle
 \tableofcontents
 
 \chapter{Aufgabenbeschreibung}
+
+Der Beleg im Fach \emph{Computergrafik 2} im Sommersemester 2017 umfasst folgende Aufgabenbereiche\footcite{Oertel2017}:
+\begin{enumerate}
+\item Modellierung:\label{aufg:model}\\
+Es ist eine hinreichend komplexe reale raumzeitliche Szene mittels 3dsMax grafisch zu modellieren. Dabei sollen die wesentlichen Technologien der Praktika 1 bis 4 zum Einsatz kommen.
+\item Rendern:\label{aufg:render}\\
+Erzeugen Sie auf Basis des erstellten 3dsMax-Modells durch Rendern der räumlich festen bzw. zeitlich animierten Szene einige fotorealistische Bilder sowie ein flüssiges Video von einer Minute Länge.
+\item Dokumentation:\label{aufg:doc}\\
+Fertigen Sie eine Systemdokumentation in Form eines pdf-Dokumentes von etwa 10 Seiten an, die Deckblatt, Gliederung, Aufgabenbeschreibung, verwendete Vorlagen, Lösungsansatz, Lösungsumsetzung, aufgetretene Probleme, erreichte Ergebnisse, Literatur- und Quellenverzeichnis enthält.
+\item Demonstration:\\
+Die Ergebnisse der Modellierung, des Renderns und der Dokumentation sind an einem Computer des Praktikumslabors zu demonstrieren.
+\item Abgabe:\\
+Abschließend sind alle Dokumente (3dsMax-, Bild-, Video- und pdf-Dateien) in einem Verzeichnis zu übergeben.
+\end{enumerate}
+
+Als zusätzliche Einschränkung gilt, dass die Szene Steine, Mineralien oder ähnlichen Objekte präsentieren soll.\bigskip
+
+Durch dieses Dokument wird der Aufgabenteil \ref{aufg:doc} umgesetzt und dadurch Aufgabenteile \ref{aufg:model} und \ref{aufg:render} erläutert.
+
+
 \chapter{Verwendete Vorlagen}
-\cite{Strube2017yt}
-\cite{Strube2017web}
-\cite{Wiebusch2017}
-\cite{cgtextures2017}
-\cite{Autodesk2017}
+
+Da die Aufgabenstellung vorgibt, dass die Szene Steine und/oder Mineralien in irgendeiner Form darstellen soll, stellt sich die Frage, welche Objekte diesen Anforderungen entsprechen. 
+
+Es werden Überlegungen zu folgenden Objekten angestellt:
+\begin{itemize}
+\item Diamanten: Einfache (semi-)durchsichtige Gebilde, die stark reflektieren und Licht brechen.
+\item Andere Edelsteine (beispielsweise Rubine): Ähnlich wie Diamant mit unterschiedlichen Farben und teils anderen Eigenschaften.
+\item Geode: Hohler Stein mit Mineralien im Inneren.
+\end{itemize}
+
+Die Option der \emph{Geode} scheint letztendlich am vielseitigsten. Mit ihr kann man zum einen einen Stein mit seinen Rundungen und zum anderen die scharfkantigen Mineralien modellieren.
+
+Verschiedene Bilder aus dem Internet werden dabei als Inspirationsquelle genutzt (beispielsweise \autoref{geode_src}).
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.8\textwidth]{Bilder/Geode_inside_outside}
+\caption[Inspiration für die Gestaltung der Geode.]{Inspiration für die Gestaltung der Geode\protect\footnotemark .}
+\label{geode_src}
+\end{figure}
+\footnotetext{\cite{Heyde2007}}
+
+Da die Aufgabenstellung als solche sehr trocken wirkt, wird sie mit eigenen Ideen und Ansprüchen erweitert, um die Motivation zu steigern. So wird sie als Anlass genommen eine neue Folge der vor vielen Jahren produzierte Mini-Serie „Peter und Bob“\footcite{Strube2017yt} zu erstellen, die schon damals als Erprobung neuer Animations- und Zeichenmöglichkeiten genutzt wurde.
 
 \chapter{Lösung}
 \section{Ansatz}
 
+Für das Video gilt es mehrere Bereiche zu planen:
+\begin{enumerate}
+\item Die Geode:
+
+Die Geode soll aus einer steinernen Hülle bestehen (geplant als ausgehöhlte Halbkugel). Dafür müssen Texturen herausgesucht werden. Dort drin sollen die Mineralien sichtbar sein, die neben der Geometrie hauptsächlich aus Shadern bestehen.
+\item Die Szene:
+
+Die Szene soll, da sie als „Peter und Bob“-Schauplatz gedacht ist, ein Schreibtisch sein. Auf diesem liegt zum einen die Geode und zum anderen das Papier mit den Namensgebenden Figuren „Peter“ und „Bob“.
+
+Zusätzlich soll ein kleines Intro gezeigt werden, dass das Video mit ihren verwendeten Quellen und Tools einführt.
+
+Der Schreibtisch mit allen relevanten Inhalten soll sich in einem Raum befinden, der entsprechend beleuchtet sein muss.
+
+Texturen für die Figuren, Papier, Schreibtisch und Raum werden größtenteils aus vergangenen eigenen Projekten wieder verwendet.
+\item Der dramatische Inhalt/Animationen:
+
+Als „Peter und Bob“-Folge muss eine kurze (potentiell witzige und leicht selbstironische) Handlung erdacht werden. Die Figuren und gegebenenfalls das Umfeld müssen entsprechend animiert werden. Dazu müssen einige neue (Animations-) Texturen erstellt werden.
+\end{enumerate}
+
 \section{Umsetzung}
 
+\subsection{Geode}
+\subsubsection{Hülle}
+
+Für die Hülle wird wie geplant eine Kugel erstellt, die $32$ Segmente hat. Um eine Halbkugel zu erzeugen gibt es zwei Optionen:
+\begin{itemize}
+\item Die Kugel wird zwischen zwei Winkeln (beispielsweise $0^\circ$ bis $180^\circ$) abgeschnitten.
+\item Die Kugel wird nur in einer halben Hemisphäre erstellt.
+\end{itemize}
+
+Die Winkel-Schneide-Methode wird ausprobiert, jedoch für diese Zwecke als ungünstig bewertet: Die kleinen Polygone, die schwieriger zu texturieren sind, befinden sich an der Schnittfläche des Halbkreises, welche öfter im Fokus stehen soll.
+
+Mit der Hemisphären-Option wird eine Halbugel erstellt, dessen „Polygon-Rosette“ sich am Pol der Kugel befindet. Dort fällt die nicht optimale Texturierung weniger ins Gewicht.
+
+Diese Halbkugel wird kopiert, um $90\%$ skaliert und von der größeren abgezogen ($\to$ Boolean) um eine ausgehöhlte Kugel zu erhalten.
+
+Damit die Form etwas natürlicher wirkt, wird diese Halbkugel noch mit einer leichten Biegung und einem Rauschen versehen (siehe \autoref{schale_modifier}).
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=1]{Bilder/3dsmax_schale_modifier}
+\caption{Modifikatoren der „Schale“ der Geode.}
+\label{schale_modifier}
+\end{figure}
+
+Eine passende Textur inklusive Bumpmapping und weiteren erweiterten Texturen wurde im Internet gefunden\footcite{cgtextures2017}.
+
+\subsubsection{Mineralien}
+
+Die Mineralien zu erstellen ist nicht ganz so einfach, wie die steinerne Hülle. 
+
+Es wird zunächst probiert, eine Kugelfläche mit einem Rauschen zu versehen, um eine kristalline Oberfläche zu erzeugen. Die Ergebnisse sind allerdings nicht zufriedenstellend. Des weiteren wird versucht ein Tool aus dem Internet zu benutzen, das Kristalle erzeugt. Auch das erzeugt in diesem Zusammenhang keine guten Ergebnisse. Schließlich wird entdeckt, dass es die Möglichkeit gibt Objekte mit Variation in Rotation und Skalierung auf eine Fläche zu „malen“. 
+
+Dafür werden zuerst die zu malenden Objekte erstellt: Ein grobes Mineralfeld als Hintergrund-Füller und einige detaillierte Mineralien zum Fokussieren (siehe \autoref{mineral_prefabs}).
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.7\textwidth]{Bilder/3dsmax_mineral_prefabs}
+\caption{Die Vorlagen der „gemalten“ Hintergrund- und Detail-Mineralien.}
+\label{mineral_prefabs}
+\end{figure}
+
+Die Hintergrund-Mineralien bestehen aus einigen gedrehten und verschobenen Hedras, genau genommen Octaeder. Die Detail-Mineralien werden aus einem Zylinder mit wenigen Kanten erstellt, dessen Polygonstruktur manuell editiert wird (siehe \autoref{mineral_settings}).
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=.7]{Bilder/3dsmax_mineral_small}
+\includegraphics[scale=.7]{Bilder/3dsmax_mineral_base}
+\caption{Modifikatoren eines Teils des Hintergrund-Minerals und eines Mineral-Stifts der Detail-Mineralien.}
+\label{mineral_settings}
+\end{figure}
+
+Beide Mineralientypen werden mit einer Farbe versehen und Textureigenschaften wie Glanz, Spiegelung und Transparenz zugewiesen. Da die Spiegelung beim berechnen sehr viel Zeit beanspruchen würde, wenn man sie in jedem Frame dynamisch berechnen würde, wird eine Cubemap, die als Spiegelung genutzt wird, erstellt.
+
+Mit diesen Vorlagen kann die Innenseite der ausgehöhlten Kugel bemalt werden. Dazu werden zuerst die Detail-Mineralien in großen Abständen gemalt. Schließlich werden die Hintergrund-Mineralien so gemalt, dass die innere Mantelfläche fast ausschließlich bedeckt ist (siehe \autoref{geode}).
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.31\textwidth]{Bilder/3dsmax_geode_schale}
+\includegraphics[width=0.31\textwidth]{Bilder/3dsmax_geode_special}
+\includegraphics[width=0.31\textwidth]{Bilder/3dsmax_geode_complete}
+\caption{Geoden-Schale ohne Mineralien, nur mit Detail-Mineralien und mit allen Mineralien.}
+\label{geode}
+\end{figure}
+
+Um der Geode im gerenderten Bild noch mehr Atmosphäre zu verschaffen, werden noch einige schwache, grüne Lichter eingefügt (siehe \autoref{geode_lights}, Lichter als gelbe Octaeder sichtbar).
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=.7]{Bilder/3dsmax_geode_lights}
+\caption{Geode mit Lichtern im Innenraum.}
+\label{geode_lights}
+\end{figure}
+
+\subsection{Szene}
+
+\subsubsection{Schreibtisch}
+
+Um den Stein (und den Inhalt des Videos) in Szene zu setzen wird ein texturiertes Rechteck erstellt, das eine Schreibtischplatte darstellt. Die Platte selber befindet sich innerhalb eines Quaders (dessen Flächennormalen invertiert sind, also nach innen zeigen), der einen Raum (mit Raufasertapete) darstellt. Die entsprechenden Texturen sind selber erstellt worden.
+
+Das für den Inhalt des Videos nötig Blatt Papier mit den Zeichnungen der Figuren (auch jeweils selbst erstellt/gezeichnet; Ausnahme: Skimaske\footcite{Pinterest2017}) wird zusammen mit der Geode auf dieser Schreibtischplatte positioniert.
+
+Auf dem Schreibtisch sind weiterhin schwebende Textzeilen und das FJS-Logo\footcite{Strube2017web} zu finden, die in einer Kamerafahrt zu Beginn also Intro gezeigt werden.
+
+Alles zusammen ergibt die Szene (siehe \autoref{desk}).
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.98\textwidth]{Bilder/3dsmax_desk}
+\caption{Übersicht der „Schreibtisches“ mit Papier, Geode, Intro-Schriftzügen im „Raum“.}
+\label{desk}
+\end{figure}
+
+\subsubsection{Intro}
+
+Für das Intro werden einige Zeilen Intro-Text und Credits in 3dsmax durch ein \texttt{TextPlus}-Objekt dargestellt. Durch das extrudieren der Schriftfläche(-Vektoren) werden 3D-Objekte erzeugt, die durch einen Schatten in Szene gesetzt werden (siehe \autoref{frame464-credits}). 
+
+Es bestand zusätzlich noch der Anspruch das FJS-Logo, das als Vektorgraphik vorliegt, in 3D darzustellen. Nach verschiedenen Methoden der Konvertierung von Vektorgraphiken in 3D-Objekte (inklusive verschiedener Tools und unter Verwendung von Splines), die alle nicht zu einem gewünschten Ergebnis führen, wird wieder etwas getrickst: Indem der Logo-Vektor in eine Schriftart gepackt wird, kann 3dsmax durch das bekannte \texttt{TextPlus}-Objekt die Vektorgraphik optimal darstellen (siehe \autoref{frame144-logo}).
+
+
+\subsection{Inhalt/Animation}
+
+\subsubsection{Inhalt}
+Um dem Video einen „Sinn“ zu geben, wird im Rahmen der Serie „Peter und Bob“ eine kleine (relativ sinnfreie) Story gesponnen. Um die gesprochenen Zeilen zu animieren werden verschieden Variationen für den Mund erstellt: Damit kann der Mund grob anhand der Aussprache animiert werden.
+
+Die kurze „Story“ wird durch das Intro und die Kamerafahrt um die Geode gerahmt. Dabei läuft theatralische Musik\footcite{Wiebusch2017}. Die Sprachaufnahmen der Protagonisten werden mit einem einfachen Mikrofon amateurhaft aufgenommen. 
+
+Alle Elemente werden zu einem Audio-Track zusammengeschnitten, die auch in 3dsmax eingefügt wird und zur Orientierung beim Animieren dient.
+
+\subsubsection{Animation}
+
+Da 3dsmax (auf den ersten Blick) keine einfache Möglichkeit bietet Animationen durch Austauschen von verschiedenen Layern zu erstellen und die Steuerung der Sichtbarkeit von Objekten über Keyframes nicht ohne Aufwand zu regeln ist, wird ein kleiner Trick verwendet. Anstatt die Objekte durch Ein-/Ausblenden zu animieren, werden die Objekte zum Ausblenden nach unten (in die Tischplatte hinein) und zum Einblenden wieder heraus verschoben. So werden alle Animationen durch Veränderung der Z-Position der Objekte erreicht (siehe \autoref{animation_mund}: Zu sehen ist die Animation des geschlossenen Mundes -- immer wenn die Kurve der Z-Position unten ist, wird gesprochen [der Mund ist also nicht geschlossen]).
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.98\textwidth]{Bilder/3dsmax_animation_mund}
+\caption{Graph der Animation eines Mund-Bildes (Z-Position).}
+\label{animation_mund}
+\end{figure}
+
+\subsubsection{Kamerafahrt}
+
+Eines der wichtigsten Elemente des Videos ist die Kamerafahrt. Sie umfasst:
+\begin{itemize}
+\item Das Intro mit den Credits.
+\item Die erste „Peter und Bob“ Szene.
+\item Die Kamerafahrt um die Geode.
+\item Die abschließende „Peter und Bob“ Szene.
+\end{itemize}
+
+Die Kamerfahrt wird größtenteils durch das Verschieben/Rotieren der Kamera und dem setzen von automatischen Keyframes erstellt. Wenn die Übergänge nicht so sind, wie gewünscht, wird die Kurve durch das manipulieren der erstellten Keyframes beeinflusst (alle Keyframes der Kamera sind in \autoref{animation_camera} zu sehen).
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.98\textwidth]{Bilder/3dsmax_animation_camera}
+\caption{Graph der Animation der Kamera (Positionen und Winkel).}
+\label{animation_camera}
+\end{figure}
+
+Da die Szene bis auf die Animation, die nur aus wechselnden Bildern besteht, relativ statisch wirkt, wird die Kamera noch um ein Licht erweitert. Dieses Punktlicht ist stets unterhalb der Kamera und erzeugt somit einen interessanten dynamischen Schatten, der die Szene lebendiger erscheinen lässt (siehe \autoref{camera_and_light}).
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=1]{Bilder/3dsmax_camera_and_light}
+\caption{Die Kamera mit einem Licht-Spot unterhalb.}
+\label{camera_and_light}
+\end{figure}
+
+Um die Kamerafahrten interessanter zu gestalten wurde weiterhin in zwei Fällen Tiefenunschärfe verwendet: Einmal beim FJS-Logo zu Beginn (siehe \autoref{frame144-logo}) und einmal bei der Kamerafahrt, die die Mineralien zur Schau stellt (siehe \autoref{frame1632-detail}, \autoref{frame1670-detail-DoF1} und \autoref{frame1722-detail-DoF2}).
+
 \section{Aufgetretene Probleme}
+
+Beim Erstellen des Beleges sind einige Probleme aufgetaucht, die teilweise schon in anderen Sektionen angedeutet sind.
+
+Weitere Probleme waren:
+\begin{itemize}
+\item Licht:
+
+Licht impliziert Schatten -- nicht so in 3dsmax, wo die Schatten manuell eingestellt werden müssen. Sonst werden auch eigentlich verdeckte Teile eines Objektes beleuchtet. Zu sehen ist das auch in der finalen Version noch: Die Atmosphäre-Lichter der Geode werfen keine Schatten und sind auch unter der Geode sichtbar (siehe \autoref{frame822-rock}).
+
+Weiterhin werfen anscheinend auch unsichtbare Flächen (die mit den Zeichnungen der Protagonisten) einen soliden Schatten (siehe \autoref{frame2277-errors}: Auf der rechten Seite des Papiers sieht man einen schwarzen Rand dort, wo die Fläche des Protagonisten ist).
+
+Da vergessen wurde die Schrift auf dem Papier von dem Kamera-Licht ignorieren zu lassen, ist dieses ungewollt deutlich heller als die Protagonisten. Aufgrund der langen Renderzeiten wird dieser Fehler allerdings ignoriert (siehe \autoref{frame2277-errors}) und die Frames nicht erneut berechnet.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.98\textwidth]{Bilder/geode-Frame-2277}
+\caption{Frame 2277 -- Auffällige Fehler.}
+\label{frame2277-errors}
+\end{figure}
+\item Mineralien:
+
+Wie schon angedeutet ist es nicht einfach eine Schar von Objekten zu erstellen, die die Mineralien gut darstellen. Letztlich wurde doch eine ausreichende Lösung gefunden.
+\item Bedienung 3dsmax:
+
+3dsmax verhält sich teilweise nicht wie erwartet. So funktioniert das „Rückgängig machen“ teilweise nicht, beispielsweise bei der Arbeit mit Keyframes. Auch ist es nicht ganz einfach die durch einen Boolean erzeugte Objekte wieder zurück zu bekommen.
+\item Materialien:
+
+Wie in späteren Kapiteln aufgeführt, dauert das Rendern eines Bildes unverschämt lange. Obwohl die graphische Naturtreue nicht besonders hoch ist, wird gefühlt ewig an einem Bild gerechnet -- obwohl eine moderne Spiele-Engine ein vergleichbares Bild in einem Bruchteil einer Sekunde berechnen würde.
+
+Aus diesem Grund wird auch die Entscheidung gegen eine „physische Textur“ für die Mineralien getroffen -- das Rendern dauert zu lange! Ein ähnliches Ergebnis wird mit kürzerer Berechnungszeit durch Spiegelungen und Reflektionen erzeugt.
+\end{itemize}
+
 \section{Erreichte Ergebnisse}
 
+\subsection{Renderzeit}
+Die Bilder werden als einzelne \texttt{png}-Dateien in Full-HD gerendert. Das Rendern der Frames in separate Dateien ermöglicht das spontane Abbrechen und Fortsetzen des sehr lange andauernden Renderverfahrens. Die in 3dsmax eingebaute Funktion des Renderns in ein Video ist aufgrund der mangelhaften Auswahl an Formaten nur für eine schnelle Vorschau geeignet.
 
+Die Frames mit Tiefenunschärfe werden mit 24 Durchläufen berechnet (Standard sind 12 -- trotzdem ist das Ergebnis teilweise nicht optimal).
 
-%!!!! Literatur- und Quellenverzeichnis enthält.
+Für das Rendern wird insgesamt folgende Zeit benötigt:
+\begin{center}{
+\def\arraystretch{2}
+\begin{tabular}{l l l l}
+Frames & & gerechnete Zeit & $\unit{\frac{min}{frame}}$\\\hline
+0-144 (145)& Tiefenunschärfe am FJS-Logo & $\sim 6,5\unit{h}$ & $\sim 2,7$\\
+144-1632 (1489)& Intro, erste Szene und Mineral & $\sim 11 \unit{h}$ & $ \sim 0,5$\\
+1632-1752 (121)& Tiefenunschärfe Mineral & $\sim 26,5 \unit{h}$ & $\sim 13$ \\
+1752-2448 (697)& Mineral und Schluss & $\sim 7,25\unit{h}$ & $\sim 0,45$\\\hline
+2452 & & $\sim 51 \unit{h}\;15\unit{min}$ &
+\end{tabular}
+}\end{center}
 
+Zu beobachten ist, dass die Tiefenunschärfe verständlicher Weise signifikant mehr Zeit pro Frame benötigt. Auch das, was in der Szene dargestellt wird, beeinflusst die Renderzeit erheblich: So dauert das Rendern von Frames mit Mineralien und deren komplexeren Shadern länger als ein Frame in dem nur das Logo zu sehen ist.
+
+Inklusive dem Rendern zur Vorschau in niedrigerer Auflösung und dem Rendern von Frames, bei denen erst später Mängel in der Szene festgestellt wurden und deswegen verworfen wurden, kommen mindestens $60 \unit{h}$ Renderzeit zusammen.
+
+Für das finale Video werden die Frames als Bilderfolge in einem Video-Editor eingefügt, mit der vorbereiteten Tonspur versehen und als \texttt{mkv}-Video gerendert.
+
+\subsection{Ausgewählte Frames}
+
+Das finale Ergebnis ist ein Video mit $2452$ Frames und $25\unit{FPS}$, also gute $1,5\unit{min}$ Video.
+
+Im Folgenden sind einige ausgewählte Frames zu sehen:
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.98\textwidth]{Bilder/geode-Frame-0144-normal}
+\caption{Frame 144 -- Das FJS-Logo im Intro.}
+\label{frame144-logo}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.98\textwidth]{Bilder/geode-Frame-0464}
+\caption{Frame 464 -- Schriftzug der Intro-Credits.}
+\label{frame464-credits}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.98\textwidth]{Bilder/geode-Frame-0772}
+\caption{Frame 772 -- Die Protagonisten Peter und Bob.}
+\label{frame772-peterbob}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.98\textwidth]{Bilder/geode-Frame-0822}
+\caption{Frame 822 -- Die Geode von außen -- ein Stein?}
+\label{frame822-rock}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.98\textwidth]{Bilder/geode-Frame-1632-normal}
+\caption{Frame 1632 -- Detailansicht der Mineralien ohne Tiefenunschärfe.}
+\label{frame1632-detail}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.98\textwidth]{Bilder/geode-Frame-1670}
+\caption{Frame 1670 -- Detailansicht der Mineralien mit Tiefenunschärfe, Fokus auf hinteres Mineral.}
+\label{frame1670-detail-DoF1}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.98\textwidth]{Bilder/geode-Frame-1722}
+\caption{Frame 1722 -- Detailansicht der Mineralien mit Tiefenunschärfe, Fokus auf vorderes Mineral.}
+\label{frame1722-detail-DoF2}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.98\textwidth]{Bilder/geode-Frame-1968}
+\caption{Frame 1968 -- Cinematische Ansicht der Geode.}
+\label{frame1968-mineral}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.98\textwidth]{Bilder/geode-Frame-2448}
+\caption{Frame 2448 -- Der letzte Frame (Übersicht der Szene).}
+\label{frame2448-last}
+\end{figure}
+
+\chapter*{Quellen}
+\addcontentsline{toc}{chapter}{Quellen}
 \renewcommand{\emph}[1]{\textit{#1}}
-\newpage
-\printbibliography
-
+\printbibliography[heading=none]
+\clearpage
+\listoffigures
 \end{document}
