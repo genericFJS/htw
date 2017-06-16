@@ -8,8 +8,6 @@ findPath(M, S, H, R) :-
   get_time(T2),
   DeltaT is round((T2- T1)*1000)/1000,
   write('Weg in '), write(DeltaT), write(' s gefunden.\n'), nl, !.
-  
-% --------------------------------------------------------------------------------
 
 :- [idDfs].
 

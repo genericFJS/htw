@@ -257,7 +257,86 @@ tweg(X,Y) :- weg(X,Y); weg(X,Z), tweg(Z,Y).
 
 \chapter{Praktikum 9: Pfadsuche}
 \section{Aufgabe 17}
-%%% TODO -> Papier :-)
+Umformung Heuristik: Entferne \emph{Wurzelknoten} und berechne $f$ von Nachbarknoten. Füge Nachbarknoten in Heap ein (kleinere oberhalb, größere unterhalb). Suche ist beendet, wenn der Wurzelknoten zum Ziel führt (genau genommen ist dieser Knoten am Schluss nicht mehr im Heap, weil er [zum Vergleichen] raus genommen wurde… wird hier nicht dargestellt)
+
+\begin{anumerate}
+\item Startknoten in Heap einfügen, $f$ berechnen:
+\begin{center}
+\begin{tikzpicture}
+\node (v1) at (0,0) {(A, $0+6 = 6$)};
+\end{tikzpicture}
+\end{center}
+Wurzelknoten löschen und Nachbarknoten (B und C) mit berechnetem $f$ einfügen:
+\begin{center}
+\begin{tikzpicture}
+\node (v1) at (0,0) {(A-B, $5+2 = 7$)};
+\node (v2) at (0,-1) {(A-C, $3+8 = 11$)};
+\draw (v1) -- (v2);
+\end{tikzpicture}
+\end{center}
+Wurzelknoten erneut löschen und Nachbarknoten (D) mit berechnetem $f$ einfügen:
+\begin{center}
+\begin{tikzpicture}
+\node (v1) at (0,0) {(A-B-d, $8+0 = 8$)};
+\node (v2) at (0,-1) {(A-C, $3+8 = 11$)};
+\draw (v1) -- (v2);
+\end{tikzpicture}
+\end{center}
+\item Startknoten:
+\begin{center}
+\begin{tikzpicture}
+\node (v1) at (0,0) {(A, $6$)};
+\end{tikzpicture}
+\end{center}
+\medskip
+\begin{center}
+\begin{tikzpicture}
+\node (v1) at (0,0) {(A-C, $4$)};
+\node (v2) at (0,-1) {(A-B, $7$)};
+\draw (v1) -- (v2);
+\end{tikzpicture}
+\end{center}
+\medskip
+\begin{center}
+\begin{tikzpicture}
+\node (v1) at (0,0) {(A-B, $7$)};
+\node (v2) at (0,-1) {(A-C-D, $13$)};
+\draw (v1) -- (v2);
+\end{tikzpicture}
+\end{center}
+\medskip
+\begin{center}
+\begin{tikzpicture}
+\node (v1) at (0,0) {(A-B-D, $8$)};
+\node (v2) at (0,-1) {(A-C-D, $13$)};
+\draw (v1) -- (v2);
+\end{tikzpicture}
+\end{center}
+$\Rightarrow$ zu kleine Heuristik verlängert die Suche!
+\item Startknoten:
+\begin{center}
+\begin{tikzpicture}
+\node (v1) at (0,0) {(A, $6$)};
+\end{tikzpicture}
+\end{center}
+\medskip
+\begin{center}
+\begin{tikzpicture}
+\node (v1) at (0,0) {(A-C, $11$)};
+\node (v2) at (0,-1) {(A-B, $15$)};
+\draw (v1) -- (v2);
+\end{tikzpicture}
+\end{center}
+\medskip
+\begin{center}
+\begin{tikzpicture}
+\node (v1) at (0,0) {(A-C-D, $13$)};
+\node (v2) at (0,-1) {(A-B, $15$)};
+\draw (v1) -- (v2);
+\end{tikzpicture}
+\end{center}
+$\Rightarrow$ ungültige (zu große) Heuristik ergibt nicht optimalen Pfad!
+\end{anumerate}
 
 \section{Aufgabe 18}
 $$t=\frac{s}{v}$$
@@ -272,7 +351,7 @@ Seien $K(x)$ die Kosten bis zum Ziel. Aus $h_1, h_2$ zulässig folgt $h_1(x)\leq
 
 
 \section{Aufgabe 20}
-%%% TODO
+\lstinputlisting[language=Prolog]{Prolog/aufg20.pl}
 
 \chapter{Praktikum 10: Problemlösung}
 \section{Aufgabe 20}
@@ -306,7 +385,12 @@ solution(P) :- X = [0,0,0,0], Y = [1,1,1,1], idDfs(X,Y,P).
 Eigene Lösung:
 \lstinputlisting[language=Prolog]{Prolog/aufg20_10.pl}
 
+\chapter{Praktikum 11: Suche}
+\section{Aufgabe 21}
+\lstinputlisting[language=Prolog]{Vorlesungsbeispiele/8puzzle.pl}
 
+\section{Aufgabe 22}
+%%% TODO
 
 
 
