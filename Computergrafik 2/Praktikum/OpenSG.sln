@@ -1,20 +1,36 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "prakt5", "prakt5/prakt5.vcxproj", "{78637E50-C3E0-401B-B01D-383615D4E2F7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "prakt5", "prakt5\prakt5.vcxproj", "{78637E50-C3E0-401B-B01D-383615D4E2F7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "prakt6", "prakt6\prakt6.vcxproj", "{12A53DF7-6204-4245-84E5-36390AE69ECF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
+		sUltrabook|Win32 = sUltrabook|Win32
+		Ultrabook|Win32 = Ultrabook|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{78637E50-C3E0-401B-B01D-383615D4E2F7}.Debug|Win32.ActiveCfg = Debug|Win32
 		{78637E50-C3E0-401B-B01D-383615D4E2F7}.Debug|Win32.Build.0 = Debug|Win32
 		{78637E50-C3E0-401B-B01D-383615D4E2F7}.Release|Win32.ActiveCfg = Release|Win32
 		{78637E50-C3E0-401B-B01D-383615D4E2F7}.Release|Win32.Build.0 = Release|Win32
+		{78637E50-C3E0-401B-B01D-383615D4E2F7}.sUltrabook|Win32.ActiveCfg = sUltrabook|Win32
+		{78637E50-C3E0-401B-B01D-383615D4E2F7}.sUltrabook|Win32.Build.0 = sUltrabook|Win32
+		{78637E50-C3E0-401B-B01D-383615D4E2F7}.Ultrabook|Win32.ActiveCfg = Ultrabook|Win32
+		{78637E50-C3E0-401B-B01D-383615D4E2F7}.Ultrabook|Win32.Build.0 = Ultrabook|Win32
+		{12A53DF7-6204-4245-84E5-36390AE69ECF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{12A53DF7-6204-4245-84E5-36390AE69ECF}.Debug|Win32.Build.0 = Debug|Win32
+		{12A53DF7-6204-4245-84E5-36390AE69ECF}.Release|Win32.ActiveCfg = Release|Win32
+		{12A53DF7-6204-4245-84E5-36390AE69ECF}.Release|Win32.Build.0 = Release|Win32
+		{12A53DF7-6204-4245-84E5-36390AE69ECF}.sUltrabook|Win32.ActiveCfg = sUltrabook|Win32
+		{12A53DF7-6204-4245-84E5-36390AE69ECF}.sUltrabook|Win32.Build.0 = sUltrabook|Win32
+		{12A53DF7-6204-4245-84E5-36390AE69ECF}.Ultrabook|Win32.ActiveCfg = Ultrabook|Win32
+		{12A53DF7-6204-4245-84E5-36390AE69ECF}.Ultrabook|Win32.Build.0 = Ultrabook|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
