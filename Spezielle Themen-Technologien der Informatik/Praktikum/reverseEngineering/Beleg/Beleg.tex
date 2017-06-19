@@ -1,0 +1,266 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrartcl}
+\gdef\pathtomaster{../../../../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\makeatletter
+\gdef\@islecture{\relax}
+\bilingual{\lectureauthorname}{Beleg von}{}
+%\bilingual{\professorname}{}{}
+\makeatother
+
+\faculty{Fakultät Informatik/Mathematik}
+\chair{Lehrstuhl für Betriebssysteme}
+\subject{Belegarbeit}
+\title{Passwort aus Binary}
+\author{Falk-Jonatan Strube (s74053)}
+\authormore{„Ach, wie gut, dass niemand weiß,
+dass ich \texttt{Rumpelstilzchen!} heiß!“}
+\professor{Prof. Dr.-Ing. Robert Baumgartl}
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Aufgabe}
+Die Aufgabe des Belegs zum Themenbereich „Reverse Engineering“ im Modul „Spezielle Themen-Technologien der Informatik“ lautet:
+\begin{quote}
+Ermitteln Sie das Passwort im Binary \texttt{bar}, so dass das Programm „Erfolg!“ meldet.\\
+Dokumentieren Sie Ihre Vorgehensweise.
+\end{quote}
+Im Folgenden ist ebendiese Vorgehensweise und das Ergebnis dokumentiert.
+
+\section{Erste Betrachtung}
+Das Programm wurde mit dem (gdb-ähnlichen) Tool „Nemiver“ untersucht.
+
+Nemiver erzeugt -- wie gdb -- zu der Binary Assembler Code. Mit dem GUI Tool können bequem Haltepunkte festgelegt, Schrittweise durch den Assembler Code durchgelaufen und dabei Register und Speicherinhalt betrachtet werden.\bigskip
+
+Zuerst wurde der grobe Aufbau des Assembler Codes untersucht. Es wurde folgenden Abarbeitungsschritte in der Funktion \lstinline`main` erkannt (\autoref{firstASM}).
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{r l}
+Zeilen & Vermutete Funktion\\\hline
+  0 - 238 & Initialisierung und Nutzereingabe\\
+240 - 287 & Schleife\\
+289 - 354 & Abgleichen der Nutzereingabe mit Passwort\\
+\end{tabular}
+\caption{Erste Analyse des Assembler Codes.}
+\label{firstASM}
+\end{table}
+
+Es wurde weiterhin beobachtet, dass nach der Initialisierung unter anderem die Zeichenkette „Schnorchelpamps?“, eine nicht menschenlesbare (im Folgenden „magische Zeichen“ genannt) und die eingegebenen Zeichenkette im Speicher zu finden waren.
+
+Beim manuellen Durchlauf des Assembler Codes wurde festgestellt, dass die Schleife die eingegebene Zeichenkette verändert. Darauf hin wurde, ohne weitere Beachtung des Assembler Codes, versucht ein Muster zu erkennen.
+
+\begin{table}[!ht]%
+\centering%
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l c c c c c c c c c c c c c c c c c}
+Eingabe$_{10}$ & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\\hline
+Eingabe$_{16}$ & 30 & 30 & 30 & 30 & 30 & 30 & 30 & 30 & 30 & 30 & 30 & 30 & 30 & 30 & 30 & 30\\
+Veränderte Eingabe$_{16}$ & 63 & 53 & 58 & 5E & 5F & 42 & 53 & 58 & 55 & 5C & 40 & 51 & 5D & 40 & 43 & 0F\\
+Schnorchelpamps?$_{16}$ & 53 & 63 & 68  & 6E  & 6F  & 72  & 63 & 68  & 65  & 6C  & 70  & 61 & 6D  & 70  & 73  & 3F\\\hline
+Veränderte Eingabe$_{10}$ & 99 & 83 & 88 & 94 & 95 & 66 & 83 & 88 & 85 & 92 & 64 & 81 & 93 & 64 & 67 & 15\\
+Schnorchelpamps?$_{10}$ & 83 & 99 & 104 & 110 & 111 & 114 & 99 & 104 & 101 & 108 & 112 & 97 & 109 & 112 & 115 & 63\\
+Schn…$_{10}$ -- Verändertes$_{10}$ & -16 & 16 & 16 & 16 & 16 & 48 & 16 & 16 & 16 & 16 & 48 & 16 & 16 & 48 & 48 & 48\\
+\end{tabular}%
+}%
+\caption{Nutzereingabe, „Schnorchelpamps?“ und mögliches Muster.}
+\label{userSchnor}
+\end{table}
+
+Das abziehen der veränderten Eingabe von „Schnorchelpamps?“ ließ ein scheinbares Muster mit wiederkehrenden, durch 16 teilbaren Zahlen erkennen(siehe \autoref{userSchnor}, letzte Zeile). Bei näherer Betrachtung konnte jedoch kein anwendbares Muster ermittelt werden.
+
+Auffällig war allerdings, dass Eingabe zu 00000000000000000000000000000000$_{16}$ verändert wurde, sobald „Schnorchelpamps?“ eingegeben wurde. Das führte dazu, dass noch ausprobiert wurde, „Schnorchelpamps?“ zu invertieren und dieses Inverse als Eingabe zu verwenden. Das Inverse bestand allerdings nicht mehr aus ASCII Zeichen und führt auch nicht zum Erfolg.
+
+Also wurde letztendlich doch der komplette Assembler Code betrachtet.
+
+\section{Analyse des Assembler Codes}
+
+Um herauszubekommen, wie das Programm funktioniert, wurde der Assemblercode durchgegangen und kommentiert, was er bewirkt.
+
+Die Adresse für \lstinline`%ebp` war stets \lstinline`0xffffd678`. Diese und durch Verschiebung entstehende Adressen werden in den Kommentaren erwähnt:
+\begin{itemize}
+\item \lstinline`0xffffd608`: Speicherort der Eingabe
+\item \lstinline`0xffffd5a4`: Speicherort für „Schnorchelpamps?“
+\item \lstinline`0xffffd540`: Speicherort für „Magische Zeichen“
+\end{itemize}
+\begin{lstlisting}[language={[x86masm]Assembler}]
+0x0804848b <+0>:	lea 0x4(%esp),%ecx
+0x0804848f <+4>:	and    $0xfffffff0,%esp
+0x08048492 <+7>:	pushl  -0x4(%ecx)
+0x08048495 <+10>:	push   %ebp
+0x08048496 <+11>:	mov    %esp,%ebp
+0x08048498 <+13>:	push   %edi
+0x08048499 <+14>:	push   %ecx
+0x0804849a <+15>:	sub    $0x130,%esp
+; "Schnorchelpamps?" in 0xffffd5a4:
+0x080484a0 <+21>:	movl   $0x6e686353,-0xd4(%ebp)
+0x080484aa <+31>:	movl   $0x6863726f,-0xd0(%ebp)
+0x080484b4 <+41>:	movl   $0x61706c65,-0xcc(%ebp)
+0x080484be <+51>:	movl   $0x3f73706d,-0xc8(%ebp)
+0x080484c8 <+61>:	movl   $0x0,-0xc4(%ebp)
+0x080484d2 <+71>:	lea    -0xc0(%ebp),%edx
+0x080484d8 <+77>:	mov    $0x0,%eax
+0x080484dd <+82>:	mov    $0x14,%ecx
+0x080484e2 <+87>:	mov    %edx,%edi
+; Speicherblöcke leeren/vorbereiten:
+0x080484e4 <+89>:	rep stos %eax,%es:(%edi)
+0x080484e6 <+91>:	lea    -0x138(%ebp),%edx
+0x080484ec <+97>:	mov    $0x0,%eax
+0x080484f1 <+102>:	mov    $0x19,%ecx
+0x080484f6 <+107>:	mov    %edx,%edi
+0x080484f8 <+109>:	rep stos %eax,%es:(%edi)
+; "Magische Zeichen" in 0xffffd540:
+0x080484fa <+111>:	movb   $0x1,-0x138(%ebp)
+0x08048501 <+118>:	movb   $0x16,-0x137(%ebp)
+0x08048508 <+125>:	movb   $0x5,-0x136(%ebp)
+0x0804850f <+132>:	movb   $0x1e,-0x135(%ebp)
+0x08048516 <+139>:	movb   $0xa,-0x134(%ebp)
+0x0804851d <+146>:	movb   $0x1e,-0x133(%ebp)
+0x08048524 <+153>:	movb   $0x10,-0x132(%ebp)
+0x0804852b <+160>:	movb   $0x1c,-0x131(%ebp)
+0x08048532 <+167>:	movb   $0xc,-0x130(%ebp)
+0x08048539 <+174>:	movb   $0xa,-0x12e(%ebp)
+0x08048540 <+181>:	movb   $0x2,-0x12d(%ebp)
+0x08048547 <+188>:	movb   $0x5,-0x12c(%ebp)
+0x0804854e <+195>:	movb   $0x15,-0x12b(%ebp)
+0x08048555 <+202>:	movb   $0x1d,-0x12a(%ebp)
+0x0804855c <+209>:	movb   $0x1e,-0x129(%ebp)
+0x08048563 <+216>:	sub    $0xc,%esp
+0x08048566 <+219>:	lea    -0x70(%ebp),%eax
+0x08048569 <+222>:	push   %eax
+; Nutzereingabe:
+0x0804856a <+223>:	call0x8048340 <gets@plt>
+0x0804856f <+228>:	add    $0x10,%esp
+0x08048572 <+231>:	movl   $0x10,-0xc(%ebp)
+0x08048579 <+238>:	jmp 0x80485a6 <main+283>
+; -------- Eingabe Transformieren --------
+; für alle Zeichen (hier als Beispiel "U" an Stelle "F"):
+; Lade Eingabe-Adresse in %edx (0xffffd608):
+0x0804857b <+240>:	lea    -0x70(%ebp),%edx
+; Lade aktuelle Adresse in %eax (0xf):
+0x0804857e <+243>:	mov    -0xc(%ebp),%eax
+; Addiere %edx zu %eax (0xffffd617):
+0x08048581 <+246>:	add    %edx,%eax
+; Lade aktuelles Zeichen der Eingabe zu %edx (0x55):
+0x08048583 <+248>:	movzbl (%eax),%edx
+; Lade "Schnorchelpamps?" in %ecx (0xffffd5a4):
+0x08048586 <+251>:	lea    -0xd4(%ebp),%ecx
+; Lade wieder aktuelle Adresse in %eax (0xf):
+0x0804858c <+257>:	mov    -0xc(%ebp),%eax
+; Addiere akt. Adresse auf "Schnorchelpamps?" in %eax (0xffffd5b3):
+0x0804858f <+260>:	add    %ecx,%eax
+; Lade aktuelles Zeichen von "Schnorchelpamps?" in %eax (0x3f):
+0x08048591 <+262>:	movzbl (%eax),%eax
+; Lade %edx in %ecx (0x55)
+0x08048594 <+265>:	mov    %edx,%ecx
+; Exklusives Oder auf %eax und %ecx (0x79):
+; (also: akt. Zeichen Eingabe XOR akt. Zeichen "Schnorchelpamps?")
+0x08048596 <+267>:	xor    %eax,%ecx
+; Lade wieder Eingabeadresse in %edx (0xffffd608)
+0x08048598 <+269>:	lea    -0x70(%ebp),%edx
+; Lade wieder aktuelle Adresse auf %eax (0xf)
+0x0804859b <+272>:	mov    -0xc(%ebp),%eax
+; Addiere wieder %edx auf %eax (0xffffd617)
+0x0804859e <+275>:	add    %edx,%eax
+; Schreibe Ergebnis (aus XOR) in Eingabe-Adresse:
+0x080485a0 <+277>:	mov    %cl,(%eax)
+; Schrittweise weiter durch %ebp laufen, bis alles "konvertiert":
+0x080485a2 <+279>:	subl   $0x1,-0xc(%ebp)
+0x080485a6 <+283>:	cmpl   $0x0,-0xc(%ebp)
+0x080485aa <+287>:	jns 0x804857b <main+240>
+; Wenn alle Zeichen "konvertiert" wurden geht's weiter:
+0x080485ac <+289>:	sub    $0x8,%esp
+0x080485af <+292>:	lea    -0x138(%ebp),%eax
+0x080485b5 <+298>:	push   %eax
+0x080485b6 <+299>:	lea    -0x70(%ebp),%eax
+0x080485b9 <+302>:	push   %eax
+; Vergleiche 0xffffd540 mit 0xffffd608:
+; (also: konvertierte Eingabe == "magische Zeichen")
+0x080485ba <+303>:	call0x8048330 <strcmp@plt>
+0x080485bf <+308>:	add    $0x10,%esp
+; Wenn %eax 0x0 ist, dann sind sie gleich:
+0x080485c2 <+311>:	test   %eax,%eax
+; Wenn sie nicht gleich sind, Springe zum Misserfolg (Schade!):
+0x080485c4 <+313>:	jne 0x80485d8 <main+333>
+; Ansonsten melde Erfolg (Erfolg!):
+0x080485c6 <+315>:	sub    $0xc,%esp
+0x080485c9 <+318>:	push   $0x8048690
+0x080485ce <+323>:	call0x8048350 <puts@plt>
+0x080485d3 <+328>:	add    $0x10,%esp
+; Und beende auch bei Erfolg:
+0x080485d6 <+331>:	jmp 0x80485e8 <main+349>
+0x080485d8 <+333>:	sub    $0xc,%esp
+0x080485db <+336>:	push   $0x8048698
+0x080485e0 <+341>:	call0x8048350 <puts@plt>
+0x080485e5 <+346>:	add    $0x10,%esp
+; Beende Programm:
+0x080485e8 <+349>:	sub    $0xc,%esp
+0x080485eb <+352>:	push   $0x0
+0x080485ed <+354>:	call0x8048370 <exit@plt>
+\end{lstlisting}
+
+\section{Ergebnisse der Analyse}
+
+Die Analyse des Assembler Codes hat den wichtigsten Teil der ersten Analyse der Abarbeitungsschritte (\autoref{firstASM}) genauer beschrieben: Die Schleife. Im Grunde tut sie nichts anderes, als Zeichenweise die Zeichenkette „Schnorchelpamps?“ und die vom Nutzer eingegebene Zeichenkette exklusiv zu verodern.
+
+Beim Abschnitt des Abgleichens der Nutzereingabe mit dem Passwort wurde festgestellt, dass die durch die Schleife veränderte Zeichenkette mit der „magischen Zeichenkette“ verglichen wurde. Damit war das Ziel klar: Die einzugebende Zeichenkette muss mit „Schnorchelpamps?“ exklusiv verodert die „magische Zeichenkette“ ergeben.
+
+\begin{table}[!ht]
+\resizebox{\textwidth}{!}{
+\begin{tabular}{l c c c c c c c c c c c c c c c c c}
+Schnorchelpamps?$_{char}$ & S & c & h & n & o & r & c & h & e & l & p & a & m & p & s & ?\\
+Schnorchelpamps?$_{16}$ & 53 & 63 & 68  & 6E  & 6F  & 72  & 63 & 68  & 65  & 6C  & 70  & 61 & 6D  & 70  & 73  & 3F\\
+Magische/gewünschte Zeichen$_{16}$ & 01 & 16 & 05 & 1E & 0A & 1E & 10 & 1C & 0C & 00 & 0A & 02 & 05 & 15 & 1D & 1E\\
+\end{tabular}
+}
+\caption{Vergleich „Schnorchelpamps?“ mit der magischen/gewünschten Zeichenkette.}
+\label{goal}
+\end{table}
+
+\noindent Mit der Gleichung
+$$\text{Schnorchelpamps?} \oplus \text{Passwort} = \text{magische Zeichenkette} $$
+lässt sich die Gleichung zum Ausrechnen des Passworts aufstellen:
+$$\text{Schnorchelpamps?} \oplus \text{magische Zeichenkette} = \text{Passwort}$$
+
+\noindent Mit
+\begin{itemize}
+\item $p=\text{Schnorchelpamps?}$
+\item $p\oplus q = \text{magische Zeichenkette}$
+\item $q=\text{Passwort}$
+\end{itemize}
+kann nun das Passwort aufgestellt werden (siehe \autoref{final}).\footnote{Zum Verodern der Hex-Werte wurde \url{http://xor.pw/} genutzt.}
+\begin{table}[!ht]
+\centering
+\begin{tabular}{c c | c}
+$p$ & $p \oplus q$ & $q$\\\hline
+53 & 01 & 52 \\
+63 & 16 & 75 \\
+68 & 05 & 6D \\
+6E & 1E & 70 \\
+6F & 0A & 65 \\
+72 & 1E & 6C \\
+63 & 10 & 73 \\
+68 & 1C & 74 \\
+65 & 0C & 69 \\
+6C & 00 & 6C \\
+70 & 0A & 7A \\
+61 & 02 & 63 \\
+6D & 05 & 68 \\
+70 & 15 & 65 \\
+73 & 1D & 6E \\
+3F & 1E & 21 \\
+\end{tabular}
+\caption{Berechnung des Passworts.}
+\label{final}
+\end{table}
+
+Das Umrechnen der Hex-Werte in Buchstaben\footnote{Für Umformung von Hex-, Binär- und Character-Werten wurde \url{http://string-functions.com/} genutzt.} ergibt das Passwort:
+\begin{center}
+\LARGE
+Rumpelstilzchen!
+\end{center}
+
+Wird das Passwort eingegeben erscheint, wie zu erwarten, die Meldung „Erfolg!“.
+
+\end{document}
