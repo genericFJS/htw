@@ -41,7 +41,7 @@ Fertigen Sie eine Systemdokumentation in Form eines pdf-Dokumentes von etwa 10 S
 \item Demonstration:\\
 Die Ergebnisse der Modellierung, des Renderns und der Dokumentation sind an einem Computer des Praktikumslabors zu demonstrieren.
 \item Abgabe:\\
-Abschließend sind alle Dokumente (3dsMax-, Bild-, Video- und pdf-Dateien) in einem Verzeichnis zu übergeben.
+Abschließend sind alle Dokumente (3dsMax-\footnote{Die 3dsMax-Datei wurde mit 3dsMax 2018 erstellt (\lstinline`geode.max`). Für die Version 3dsMax 2016 (die im Rechnerlabor läuft) wurde die Datei im 2016-Kompatibiltätsmodus gespeichert (\lstinline`geode_2016.max`). Bei dieser Version müssen beim Öffnen einige Warnhinweise weg geklickt werden.}, Bild-, Video- und pdf-Dateien) in einem Verzeichnis zu übergeben.
 \end{enumerate}
 
 Als zusätzliche Einschränkung gilt, dass die Szene Steine, Mineralien oder ähnlichen Objekte präsentieren soll.\bigskip
@@ -149,7 +149,7 @@ Die Hintergrund-Mineralien bestehen aus einigen gedrehten und verschobenen Hedra
 \label{mineral_settings}
 \end{figure}
 
-Beide Mineralientypen werden mit einer Farbe versehen und Textureigenschaften wie Glanz, Spiegelung und Transparenz zugewiesen. Da die Spiegelung beim berechnen sehr viel Zeit beanspruchen würde, wenn man sie in jedem Frame dynamisch berechnen würde, wird eine Cubemap, die als Spiegelung genutzt wird, erstellt.
+Beide Mineralientypen werden mit einer Farbe versehen\footnote{Die Farbe wurde aus ästhetischen Gründen gewählt und ähnelt der des Běhounekit.} und Textureigenschaften wie Glanz, Spiegelung und Transparenz zugewiesen. Da die Spiegelung beim berechnen sehr viel Zeit beanspruchen würde, wenn man sie in jedem Frame dynamisch berechnen würde, wird eine Cubemap, die als Spiegelung genutzt wird, erstellt.
 
 Mit diesen Vorlagen kann die Innenseite der ausgehöhlten Kugel bemalt werden. Dazu werden zuerst die Detail-Mineralien in großen Abständen gemalt. Schließlich werden die Hintergrund-Mineralien so gemalt, dass die innere Mantelfläche fast ausschließlich bedeckt ist (siehe \autoref{geode}).
 
