@@ -488,6 +488,422 @@ printB(Board) :- maplist(writeln, Board), write('\n').
 print(Boards) :- maplist(printB, Boards).
 \end{lstlisting}
 
+\subsection{Spiele mit Gegner}
+
+Es gibt zwei Spieler: Min, Max. Im Spielbaum stellen wir Min durch $\triangledown$, Max durch $\triangle$ dar. Im Spielbaum gibt es Endzustände und eine Nutzenfunktion, die den Nutzen eines Knotens für Max angibt.\\
+Der einfachste Fall einer Nutzenfunktion ist eine Funktion mit drei Werten:
+\begin{itemize}
+\item[1:] Max hat gewonnen
+\item[0:] unentschieden
+\item[-1:] Min hat gewonnen
+\end{itemize}
+Max versucht die Nutzenfunktion zu maximieren, Min versucht sie zu minimieren.\\
+Für Endzustände lässt nich die Nutzenfunktion leicht angeben.
+
+\paragraph{Beispiel} Suchbaum für Tic-Tac-Toe, Max setzt $\times$, Min setzt $\circ$
+
+\begin{center}
+\begin{tikzpicture}[scale=.4]
+
+\draw  (0,-4) rectangle (1,-3);
+\draw  (1,-4) rectangle (2,-3);
+\draw  (2,-4) rectangle (3,-3);
+\draw  (0,-5) rectangle (1,-4);
+\draw  (1,-5) rectangle (2,-4);
+\draw  (2,-5) rectangle (3,-4);
+\draw  (0,-6) rectangle (1,-5);
+\draw  (1,-6) rectangle (2,-5);
+\draw  (2,-6) rectangle (3,-5);
+
+\draw  (-5,-9) rectangle node{$\times$}(-4,-8);
+\draw  (-4,-9) rectangle (-3,-8);
+\draw  (-3,-9) rectangle (-2,-8);
+\draw  (-5,-10) rectangle (-4,-9);
+\draw  (-4,-10) rectangle (-3,-9);
+\draw  (-3,-10) rectangle (-2,-9);
+\draw  (-5,-11) rectangle (-4,-10);
+\draw  (-4,-11) rectangle (-3,-10);
+\draw  (-3,-11) rectangle (-2,-10);
+
+\draw  (5,-9) rectangle (6,-8);
+\draw  (6,-9) rectangle (7,-8);
+\draw  (7,-9) rectangle (8,-8);
+\draw  (5,-10) rectangle (6,-9);
+\draw  (6,-10) rectangle (7,-9);
+\draw  (7,-10) rectangle (8,-9);
+\draw  (5,-11) rectangle (6,-10);
+\draw  (6,-11) rectangle (7,-10);
+\draw  (7,-11) rectangle node{$\times$} (8,-10);
+
+\draw  (-9,-14) rectangle node{$\times$} (-8,-13);
+\draw  (-8,-14) rectangle node{$\circ$} (-7,-13);
+\draw  (-7,-14) rectangle (-6,-13);
+\draw  (-9,-15) rectangle (-8,-14);
+\draw  (-8,-15) rectangle (-7,-14);
+\draw  (-7,-15) rectangle (-6,-14);
+\draw  (-9,-16) rectangle (-8,-15);
+\draw  (-8,-16) rectangle (-7,-15);
+\draw  (-7,-16) rectangle (-6,-15);
+
+\draw  (-1,-14) rectangle node{$\times$} (0,-13);
+\draw  (0,-14) rectangle (1,-13);
+\draw  (1,-14) rectangle (2,-13);
+\draw  (-1,-15) rectangle (0,-14);
+\draw  (0,-15) rectangle (1,-14);
+\draw  (1,-15) rectangle (2,-14);
+\draw  (-1,-16) rectangle (0,-15);
+\draw  (0,-16) rectangle (1,-15);
+\draw  (1,-16) rectangle node{$\circ$} (2,-15);
+\node at (-4,-14) {…};
+\node at (1,-9) {…};
+\draw (0.5,-6) -- (-3.5,-8);
+\draw (1.5,-6) -- (0,-7.5);
+\draw (2.5,-6) -- (6.5,-8);
+\draw (-4.5,-11) -- (-7.5,-13);
+\draw (-3.5,-11) -- (-4,-13);
+
+\draw (-2.5,-11) -- (0.5,-13);
+\draw (-7.5,-16) -- (-9.5,-19) node[below]{…};
+\draw (0.5,-16) -- (2,-19) node[below]{…};
+\draw (6.5,-11) -- (7.5,-14) node[below]{…};
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[scale=.4]
+\draw  (-5,-4) rectangle node{$\times$} (-4,-3);
+\draw  (-4,-4) rectangle node{$\circ$} (-3,-3);
+\draw  (-3,-4) rectangle node{$\times$} (-2,-3);
+\draw  (-5,-5) rectangle (-4,-4);
+\draw  (-4,-5) rectangle node{$\circ$} (-3,-4);
+\draw  (-3,-5) rectangle node{$\times$} (-2,-4);
+\draw  (-5,-6) rectangle (-4,-5);
+\draw  (-4,-6) rectangle node{$\circ$} (-3,-5);
+\draw  (-3,-6) rectangle (-2,-5);
+
+\draw  (0,-4) rectangle node{$\times$} (1,-3);
+\draw  (1,-4) rectangle node{$\circ$} (2,-3);
+\draw  (2,-4) rectangle node{$\times$} (3,-3);
+\draw  (0,-5) rectangle node{$\circ$} (1,-4);
+\draw  (1,-5) rectangle node{$\circ$} (2,-4);
+\draw  (2,-5) rectangle node{$\times$} (3,-4);
+\draw  (0,-6) rectangle node{$\times$} (1,-5);
+\draw  (1,-6) rectangle node{$\times$} (2,-5);
+\draw  (2,-6) rectangle node{$\circ$} (3,-5);
+
+\draw  (5,-4) rectangle node{$\times$} (6,-3);
+\draw  (6,-4) rectangle node{$\circ$} (7,-3);
+\draw  (7,-4) rectangle node{$\times$} (8,-3);
+\draw  (5,-5) rectangle (6,-4);
+\draw  (6,-5) rectangle node{$\times$} (7,-4);
+\draw  (7,-5) rectangle (8,-4);
+\draw  (5,-6) rectangle node{$\times$} (6,-5);
+\draw  (6,-6) rectangle node{$\circ$} (7,-5);
+\draw  (7,-6) rectangle node{$\circ$} (8,-5);
+\node at (-3.5,-8) {-1};
+\node at (1.5,-8) {0};
+\node at (6.5,-8) {-1};
+\node at (-6,-4.5) [left] {Terminal:};
+\node at (-6,-8) [left] {Utility:};
+\end{tikzpicture}
+\end{center}
+
+\subsubsection{Minimax}
+Da wir nicht wissen, wie der Gegner zieht, betrachten wir alle möglichen Züge des Gegners und nehmen an, dass dieser optimal spielt. Damit berechnen wir einen Nutzenwert für jeden Knoten (minmax-Wert). Dieser ergibt sich als:
+\begin{itemize}
+\item Maximum der Bewertungen der Nachfolgeknoten, wenn Max am Zug ist,
+\item Minimum der Bewertungen der Nachfolgeknoten, wenn Min am Zug ist.
+\end{itemize}
+Damit erhalten wir:
+$$ \mathrm{minimax}(n) =\begin{cases}
+\mathrm{utility}(n) & \text{, wenn }n \text{ ein Endzustand ist}\\
+\max\{ \mathrm{minimax}(s)\;|\; s \text{ ist Nachfolger von }n\} & \text{, wenn }n \text{ ein Max-Knoten ist}\\
+\min\{ \mathrm{minimax}(s)\;|\; s \text{ ist Nachfolger von }n\} & \text{, wenn }n \text{ ein Min-Knoten ist}\\
+\end{cases} $$
+\begin{center}
+\begin{tikzpicture}[scale=.5]
+\node (v2) at (0,0) {$\triangle$ 1};
+\node (v1) at (-3,-3) {1};
+\node (v4) at (0,-3) {0};
+\node (v3) at (3,-3) {-1};
+\draw (v1) -- (v2) -- (v3);
+\draw (v2) -- (v4);
+\end{tikzpicture} \quad
+\begin{tikzpicture}[scale=.5]
+\node (v2) at (0,0) {$\triangledown$ -1};
+\node (v1) at (-3,-3) {1};
+\node (v4) at (0,-3) {0};
+\node (v3) at (3,-3) {-1};
+\draw (v1) -- (v2) -- (v3);
+\draw (v2) -- (v4);
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Beispiel}
+\begin{center}
+\begin{tikzpicture}[scale=.5]
+\node (v2) at (0,0) {3 $\triangle$};
+\node (v1) at (-7,-3) {3 $\triangledown$};
+\node (v4) at (0,-3) {2 $\triangledown$};
+\node (v3) at (7,-3) {2 $\triangledown$};
+\draw (v1) -- (v2) -- (v3);
+\draw (v2) -- (v4);
+\node (v5) at (-9,-6) {3 $\triangle$};
+\node (v7) at (-7,-6) {12 $\triangle$};
+\node (v6) at (-5,-6) {8 $\triangle$};
+\node (v8) at (-2,-6) {2 $\triangle$};
+\node (v10) at (0,-6) {4 $\triangle$};
+\node (v9) at (2,-6) {6 $\triangle$};
+\node (v11) at (5,-6) {14 $\triangle$};
+\node (v13) at (7,-6) {5 $\triangle$};
+\node (v12) at (9,-6) {2 $\triangle$};
+\draw (v5) -- (v1) -- (v6);
+\draw (v1) -- (v7);
+\draw (v8) -- (v4) -- (v9);
+\draw (v10) -- (v4);
+\draw (v11) -- (v3) -- (v12);
+\draw (v13) -- (v3);
+\end{tikzpicture}
+\end{center}\bigskip
+Laufzeit der Minimax-Berechnung: $O(b^d)$ für Spielbaum mit (konstanten) Verzweigungsfaktor $b$ und Tiefe $d$.\\
+Um die Laufzeit zu verkürzen rechnen wir Minimax-Werte nur für solche Knoten, die das Ergebnis verändern können.
+\paragraph{Beispiel}
+\begin{center}
+\begin{tikzpicture}[scale=.5]
+\node (v2) at (0,0) {3 $\triangle$};
+\node (v1) at (-7,-3) {3 $\triangledown$};
+\node (v4) at (0,-3) {2 $\triangledown$};
+\node (v3) at (7,-3) {2 $\triangledown$};
+\draw [red] (v1) -- (v2) -- (v3);
+\draw [red] (v2) -- (v4);
+\node (v5) at (-9,-6) {3 $\triangle$};
+\node (v7) at (-7,-6) {12 $\triangle$};
+\node (v6) at (-5,-6) {8 $\triangle$};
+\node (v8) at (-2,-6) {2 $\triangle$};
+\node (v10) at (0,-6) {4 $\triangle$};
+\node (v9) at (2,-6) {6 $\triangle$};
+\node (v11) at (5,-6) {5 $\triangle$};
+\node (v13) at (7,-6) {2 $\triangle$};
+\node (v12) at (9,-6) {14 $\triangle$};
+\draw [red] (v5) -- (v1) -- (v6);
+\draw [red] (v1) -- (v7);
+\draw [red] (v8) -- (v4);
+\draw (v4) -- (v9);
+\draw (v10) -- (v4);
+\draw [red] (v11) -- (v3);
+\draw (v3) -- (v12);
+\draw [red](v13) -- (v3);
+\draw [thick](-0.5,-7) -- (2.5,-4);
+\draw [thick](-0.5,-4) -- (2.5,-7);
+\draw [thick](7.5,-7) -- (10,-4);
+\draw [thick](7.5,-4) -- (10,-7);
+\end{tikzpicture}
+\end{center}
+Die Tiefensuche kann im zweiten Zweig abgebrochen werden, da bereits ein (potentielles) Minimum für den minmax-Wert gefunden wurde. Dies ist schon geringer, als das Minimum vom ersten Zweig. Damit braucht der nicht rot markierte Pfad zu Knoten 4 und 6 nicht mehr betrachtet werden. Gleiches gilt für den Pfad zum Koten 14 im dritten Zweig.
+
+\subsubsection{Alpha-Beta-Algorithmus}
+Der $\alpha$-$\beta$-Algorithmus schneidet Zweige des Suchbaums ab, wenn die Werte der darin enthaltenen Knoten den Minimax-Wert des aktuellen Knotens nicht verändern.\\
+Dann wird während der Suche für jeden Knoten ein Intervall $[\alpha, \beta]$ mitgeführt, das angibt, in welchem Bereich sich der Minimax-Wert befindet.
+
+Regeln für das Beschneiden des Suchbaums (Pruning):
+\begin{itemize}
+\item Ist der $\beta$-Wert eines Min-Knotens $\leq$ $\alpha$-Wert des Vater-Max-Kontens, so wird der Min-Knoten nicht weiter untersucht.
+\begin{center}
+\begin{tikzpicture}[scale=.5]
+\node (v3) at (0,0) {$\triangle\; [\alpha, \_]$};
+\node (v2) at (0,-3) {$\triangledown\; [\_, \beta \leq \alpha]$};
+\node (v1) at (-2,-6) {$\triangle$};
+\draw (v1) -- (v2) -- (v3);
+\draw [thick] (0,-4) -- (3,-7);
+\draw [thick] (0,-7) -- (3,-4);
+\end{tikzpicture}
+\end{center}
+\item Ist der $\alpha$-Wert eines Max-Knotens $\geq$ $\beta$-Wert des Vater-Min-Knotens, so wird der Max-Knoten nicht weiter untersucht.
+\begin{center}
+\begin{tikzpicture}[scale=.5]
+\node (v3) at (0,0) {$\triangledown\; [\_,\beta]$};
+\node (v2) at (0,-3) {$\triangle\; [\alpha \geq \beta, \_]$};
+\node (v1) at (-2,-6) {$\triangledown$};
+\draw (v1) -- (v2) -- (v3);
+\draw [thick] (0,-4) -- (3,-7);
+\draw [thick] (0,-7) -- (3,-4);
+\end{tikzpicture}
+\end{center}
+\end{itemize}
+
+\paragraph{Beispiel} Suchbaum von oben:\\
+1. Schritt:
+\begin{center}
+\begin{tikzpicture}[scale=.3]
+\node (v2) at (0,0) {$[-\infty, \infty]$ $\triangle$};
+\node (v1) at (-7,-3) {$[-\infty, \infty]$ $\triangledown$};c
+\draw (v2) -- (v1);
+\end{tikzpicture}
+\end{center}
+2. Schritt:
+\begin{center}
+\begin{tikzpicture}[scale=.3]
+\node (v2) at (0,0) {$[-\infty, \infty]$ $\triangle$};
+\node (v1) at (-7,-3) {$[-\infty, 3]$ $\triangledown$};c
+\draw (v2) -- (v1);
+\node (v3) at (-10,-6) {3 $\triangle$};
+\draw (v3) -- (v1);
+\end{tikzpicture}
+\end{center}
+3. Schritt:
+\begin{center}
+\begin{tikzpicture}[scale=.3]
+\node (v2) at (0,0) {$[-\infty, \infty]$ $\triangle$};
+\node (v1) at (-7,-3) {$[-\infty, 3]$ $\triangledown$};c
+\draw (v2) -- (v1);
+\node (v3) at (-10,-6) {3 $\triangle$};
+\draw (v3) -- (v1);
+\node (v4) at (-7,-6) {12 $\triangle$};
+\draw (v4) -- (v1);
+\end{tikzpicture}
+\end{center}
+4. Schritt:
+\begin{center}
+\begin{tikzpicture}[scale=.3]
+\node (v2) at (0,0) {$[-\infty, \infty]$ $\triangle$};
+\node (v1) at (-7,-3) {$[3, 3]$ $\triangledown$};c
+\draw (v2) -- (v1);
+\node (v3) at (-10,-6) {3 $\triangle$};
+\draw (v3) -- (v1);
+\node (v4) at (-7,-6) {12 $\triangle$};
+\draw (v4) -- (v1);
+\node (v5) at (-4,-6) {8 $\triangle$};
+\draw (v5) -- (v1);
+\end{tikzpicture}
+\end{center}
+5. Schritt:
+\begin{center}
+\begin{tikzpicture}[scale=.3]
+\node (v2) at (0,0) {$[3, \infty]$ $\triangle$};
+\node (v1) at (-7,-3) {$[3, 3]$ $\triangledown$};
+\draw (v2) -- (v1);
+\node (v3) at (-10,-6) {3 $\triangle$};
+\draw (v3) -- (v1);
+\node (v4) at (-7,-6) {12 $\triangle$};
+\draw (v4) -- (v1);
+\node (v5) at (-4,-6) {8 $\triangle$};
+\draw (v5) -- (v1);
+\end{tikzpicture}
+\end{center}
+6. Schritt:
+\begin{center}
+\begin{tikzpicture}[scale=.3]
+\node (v2) at (0,0) {$[3, \infty]$ $\triangle$};
+\node (v1) at (-7,-3) {$[3, 3]$ $\triangledown$};
+\draw (v2) -- (v1);
+\node (v3) at (-10,-6) {3 $\triangle$};
+\draw (v3) -- (v1);
+\node (v4) at (-7,-6) {12 $\triangle$};
+\draw (v4) -- (v1);
+\node (v5) at (-4,-6) {8 $\triangle$};
+\draw (v5) -- (v1);
+\node (v6) at (0,-3) {$[-\infty, \infty]$ $\triangledown$};
+\draw (v2) -- (v6);
+\end{tikzpicture}
+\end{center}
+7. Schritt:
+\begin{center}
+\begin{tikzpicture}[scale=.3]
+\node (v2) at (0,0) {$[3, \infty]$ $\triangle$};
+\node (v1) at (-7,-3) {$[3, 3]$ $\triangledown$};
+\draw (v2) -- (v1);
+\node (v3) at (-10,-6) {3 $\triangle$};
+\draw (v3) -- (v1);
+\node (v4) at (-7,-6) {12 $\triangle$};
+\draw (v4) -- (v1);
+\node (v5) at (-4,-6) {8 $\triangle$};
+\draw (v5) -- (v1);
+\node (v6) at (0,-3) {$[-\infty, 2]$ $\triangledown$};
+\draw (v2) -- (v6);
+\node (v7) at (-1,-6) {2 $\triangle$};
+\draw (v7) -- (v6);
+\end{tikzpicture}
+\end{center}
+8. Schritt:
+\begin{center}
+\begin{tikzpicture}[scale=.3]
+\node (v2) at (0,0) {$[3, \infty]$ $\triangle$};
+\node (v1) at (-7,-3) {$[3, 3]$ $\triangledown$};
+\draw (v2) -- (v1);
+\node (v3) at (-10,-6) {3 $\triangle$};
+\draw (v3) -- (v1);
+\node (v4) at (-7,-6) {12 $\triangle$};
+\draw (v4) -- (v1);
+\node (v5) at (-4,-6) {8 $\triangle$};
+\draw (v5) -- (v1);
+\node (v6) at (0,-3) {$[-\infty, 2]$ $\triangledown$};
+\draw (v2) -- (v6);
+\node (v7) at (-1,-6) {2 $\triangle$};
+\draw (v7) -- (v6);
+\draw [thick] (1,-4) -- (3,-6);
+\draw [thick] (1,-6) -- (3,-4);
+\end{tikzpicture}
+\end{center}
+Analog:
+\begin{center}
+\begin{tikzpicture}[scale=.3]
+\node (v2) at (0,0) {$[3, \infty]$ $\triangle$};
+\node (v1) at (-7,-3) {$[3, 3]$ $\triangledown$};
+\draw (v2) -- (v1);
+\node (v3) at (-10,-6) {3 $\triangle$};
+\draw (v3) -- (v1);
+\node (v4) at (-7,-6) {12 $\triangle$};
+\draw (v4) -- (v1);
+\node (v5) at (-4,-6) {8 $\triangle$};
+\draw (v5) -- (v1);
+\node (v6) at (0,-3) {$[-\infty, 2]$ $\triangledown$};
+\draw (v2) -- (v6);
+\node (v7) at (-1,-6) {2 $\triangle$};
+\draw (v7) -- (v6);
+\draw [thick] (1,-4) -- (3,-6);
+\draw [thick] (1,-6) -- (3,-4);
+\node (v6) at (7,-3) {$[-\infty, 2]$ $\triangledown$};
+\draw (v2) -- (v6);
+\node (v7) at (6,-6) {2 $\triangle$};
+\draw (v7) -- (v6);
+\draw [thick] (8,-4) -- (10,-6);
+\draw [thick] (8,-6) -- (10,-4);
+\end{tikzpicture}
+\end{center}
+Und damit letztendlich:
+\begin{center}
+\begin{tikzpicture}[scale=.3]
+\node (v2) at (0,0) {$[3, 3]$ $\triangle$};
+\node (v1) at (-7,-3) {$[3, 3]$ $\triangledown$};
+\draw (v2) -- (v1);
+\node (v3) at (-10,-6) {3 $\triangle$};
+\draw (v3) -- (v1);
+\node (v4) at (-7,-6) {12 $\triangle$};
+\draw (v4) -- (v1);
+\node (v5) at (-4,-6) {8 $\triangle$};
+\draw (v5) -- (v1);
+\node (v6) at (0,-3) {$[-\infty, 2]$ $\triangledown$};
+\draw (v2) -- (v6);
+\node (v7) at (-1,-6) {2 $\triangle$};
+\draw (v7) -- (v6);
+\draw [thick] (1,-4) -- (3,-6);
+\draw [thick] (1,-6) -- (3,-4);
+\node (v6) at (7,-3) {$[-\infty, 2]$ $\triangledown$};
+\draw (v2) -- (v6);
+\node (v7) at (6,-6) {2 $\triangle$};
+\draw (v7) -- (v6);
+\draw [thick] (8,-4) -- (10,-6);
+\draw [thick] (8,-6) -- (10,-4);
+\end{tikzpicture}
+\end{center}
+
+
+
+
+
+
+
+
 
 
 
