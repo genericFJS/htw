@@ -78,18 +78,67 @@ Zwei Komponenten, die Zugriffszeiten beeinflussen:
 \item Seek: Zeit, die der Lesekopf braucht, um auf die richtige Spur zu kommen.
 \item Rot: Zeit, die die Platte zur Rotation braucht. Rotationslatenz liegt zwischen $0$ (Sektor zufällig unter Lesekopf), und $\frac{1}{f}$ (Sektor gerade am Lesekopf vorbei).
 \end{itemize}
+Weiterhin muss noch die Zeit eingerechnet werden, die das Lesen des Sektors benötigt.
 
 \subsubsection*{Optimierung von Massenspeicherzugriffen}
 \slides{06-filesystems}{23}
 
 \subsection{FCFS, SSTF}
+\subsubsection{First Come First Serve}
+\slides{06-filesystems}{24}
+
+\subsubsection{Shortest Seek/Service Time First}
+\slides{06-filesystems}{25}
 
 \subsection{SCAN (Elevator) und Varianten}
+\slides{06-filesystems}{26}
+\slides{06-filesystems}{27}
+
+\subsubsection{Circular Scan (C-SCAN) und FSCAN}
+\slides{06-filesystems}{28}
+\slides{06-filesystems}{29}
 
 \subsection{Shortest Access Time First (SATF)}
+\slides{06-filesystems}{30}
+\subsubsection*{Überlappung von Rotation und Seek}
+\slides{06-filesystems}{31}
+\subsubsection*{Berechnung der Access Time}
+\slides{06-filesystems}{32}
+\subsubsection{Techniken zum Verhindern des Aushungerns}
+\subsubsection*{Batch-Algorithmen}
+\slides{06-filesystems}{33}
+\subsubsection*{Erzwungenes Ausführen des ältesten Auftrags}
+\slides{06-filesystems}{34}
 
 \subsection{Verfahren im Linux-Kernel}
 
+\subsubsection{Grundlagen}
+\slides{06-filesystems}{35}
+
+\subsubsection{„Writes-starving-reads“}
+\slides{06-filesystems}{36}
+\subsubsection*{Beispiel}
+\slides{06-filesystems}{37}
+
+\subsubsection{Linus Elevator (Kernel 2.4)}
+\slides{06-filesystems}{38}
+2.+3. Schritt wäre dann wieder FIFO, was wieder langsam wird!
+
+\subsubsection{Deadline I/O Scheduler}
+\slides{06-filesystems}{39}
+
+\subsubsection{Anticipatory Scheduler}
+\slides{06-filesystems}{40}
+Ist mittlerweile nicht mehr im Kernel.
+
+\subsubsection{CFQ und Noop}
+\slides{06-filesystems}{41}
+
+\subsubsection{Praxis}
+\slides{06-filesystems}{42}
+
+\section{Zusammenfassung}
+\slides{06-filesystems}{43}
 
 
 
