@@ -37,5 +37,33 @@ Selektor: \lstinline`person => person` (Delegate) entspricht hier \lstinline`SEL
 \end{itemize}
 
 
+\lecdate{16.06.2017}
 
+Antwort Kinder:\\
+8 Elemente:
+\begin{itemize}
+\item Hans hat 2 Kinder, 
+\item Ruth hat 2 Kinder,
+\item Klaus hat 1 Kind,
+\item Petra hat 1 Kind,
+\item Günther hat 1 Kind,
+\item Manuela hat 1 Kind
+\end{itemize}
+(die entstandenen Duplikate könnten mit \lstinline`DISTINCT` entfernt werden.\bigskip\\
+Antwort Enkel:\\
+8 Elemente
+\begin{itemize}
+\item Klaus, Petra, Günther und Manuela haben je zwei Enkelkinder 
+\end{itemize}
+
+%%% FOLIEN
+
+Funktioniert SELECT immer oder braucht jede Datenquelle ein eigenes SELECT?\\
+
+NEIN!\\
+Abfragesyntax ist nicht fest mit den entsprechenden Standardabfrageoperatoren verdrahtet.\\
+Es wird eine Zwischenschicht benötigt, die zwischen LINQ abfrage und Datenquelle liegt ($\to$ LINQ-Provider)
+
+%%% FOLIEN
+Gebildeten Gruppen:
 
