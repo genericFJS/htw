@@ -1,0 +1,127 @@
+\lecdate{26.06.2017}
+\section{Formeln und Begriffe}
+%\\
+$$\text{Notation: } \PP(A,B)=\PP(A \cap B)$$
+$$\PP(\bullet | A ) = \cA[0,1]$$
+$$\PP(B|A)=\frac{\PP(A \cap B)}{\PP(A)} \quad \text{bzw. } \PP(B|A)\cdot \PP(A) = \PP(A,B)$$
+Dies gilt nur, wenn $B$ nur von $A$ abhängig ist und nicht von weiteren. Sonst: Marginalisierung / disjunkte Zerlegung:
+$$\PP(A) = \PP(A\cap (B \cup \overline{B}))=\PP((A \cap B) \cup (A \cap \overline{B}))=\PP(A \cap B) + \PP(A\cap \overline{B})=\PP(A,B)+\PP(A, \overline{B})$$
+$$A, \;B \text{ unabhängig}\Leftrightarrow \PP(A \cap B)=\PP(A) \cdot \PP(B)$$
+$$P\left(\sum A_k\right) = \sum \PP(A_k)$$
+$$P\left(\bigcup A_k\right) \leq \sum \PP(A_k)$$
+Ereignisse $A$, $B$ heißen \emph{bedingt unabhängig} gegeben $C$, wenn gilt $\PP(A,B|C) = \PP(A|C) \cdot \PP(B|C)$. Dies ist gleichwertig damit, dass $A$, $B$ unabhängig bezüglich des W-Maßes $\PP(\bullet|C)$ sind.
+\section{Grundlagen}
+
+\paragraph{Beispiel} Bob hat in seinem Haus eine Alarmanlage installiert. Seine Nachbarn John und Marry rufen ihn im Büro an, wenn sie Alarm hören. Bob modelliert deren Zuverlässigkeit durch 
+$$\PP(J \; | \; Al) =0,9 \qquad \PP(M \; | \; Al) =0,7$$
+$$\PP(J \; | \; \overline{Al}) = 0,05 \qquad \PP(M \; | \; \overline{Al}) = 0,01$$
+Sowohl ein Einbruch als auch ein Erdbeben können einen Alarm auslösen:
+$$\PP(Al \; | \; Ein, \; Erd) = 0,95 \qquad \PP(Al \; |\; Ein,\; \overline{Erd}) = 0,94$$
+$$\PP(Al \; | \; \overline{Ein},\; Erd) = 0,29 \qquad \PP(Al \; | \; \overline{Ein}, \; \overline{Erd}) =0,001$$
+Ferner sei $\PP(Ein) = 0,001$, $\PP(Erd) = 0,002$.\\
+Die Ereignisse $Erd$, $Ein$ seien unabhängig.\\
+Graphisch Darstellung als Bayes'sches Netz:
+\begin{itemize}
+\item Knoten: Ereignisse
+\item Kanten: Bedingte W'keiten
+\end{itemize}
+\begin{center}
+\begin{tikzpicture}
+\draw  (-3,1) node{Alarm} ellipse(1.5 and 0.5);
+\draw  (-6.5,4) node{Einbruch} ellipse (1.5 and 0.5);
+\draw  (0,4) node{Erdbeben} ellipse (1.5 and 0.5);
+\draw  (-6.5,-2) node{John} ellipse (1.5 and 0.5);
+\draw  (0,-2) node{Mary} ellipse (1.5 and 0.5);
+\node [right] at (-5,4) {\begin{tabular}{c}
+$\PP(Ein)$\\\hline
+0,001\\
+\end{tabular}};
+\node [right] at (1.5,4) {\begin{tabular}{c}
+$\PP(Erd)$\\\hline
+0,002
+\end{tabular}};
+\node [right] at (-5,-2) {\begin{tabular}{c c}
+$Al$ & $\PP(J)$\\\hline
+w & 0,9\\
+f & 0,05\\
+\end{tabular}};
+\node [right] at (1.5,-2) {\begin{tabular}{c c}
+$Al$ & $\PP(M)$\\\hline
+w & 0,7\\
+f & 0,01
+\end{tabular}};
+\node [right]at (-1.5,1) {\begin{tabular}{c c | c}
+$Ein$ & $Erd$ & $\PP(Al)$\\\hline
+w & w & 0,95\\
+w & f & 0,94\\
+f & w & 0,29\\
+f & f & 0,001
+\end{tabular}};
+\draw [-latex] (-6.5,3.5) -- (-4,1.5);
+\draw [-latex](0,3.5) -- (-2,1.5);
+\draw [-latex](-4,0.5) -- (-6.5,-1.5);
+\draw [-latex](-2,0.5) -- (0,-1.5);
+\end{tikzpicture}
+\end{center}
+Wen John und Mary unabhängig auf einen Alarm reagieren, dann sind die Ereignisse $J$, $M$ unabhängig gegeben $Al$.
+
+\section{Semantik von Bayes-Netzen}
+Kanten beschreiben (bedingte) Unabhängigkeiten von Ereignissen:
+\begin{center}
+\begin{tikzpicture}[scale=.5]
+\draw  (-3,1) node{C} ellipse(1.5 and 0.5);
+\draw  (-6.5,4) node{A} ellipse (1.5 and 0.5);
+\draw  (0,4) node{B} ellipse (1.5 and 0.5);
+\draw [-latex] (-6.5,3.5) -- (-4,1.5);
+\draw [-latex](0,3.5) -- (-2,1.5);
+\end{tikzpicture}\\
+$\to$ $A$, $B$ sind unabhängig.
+\end{center}
+\begin{center}
+\begin{tikzpicture}[scale=.5]
+\draw  (-3,1) node{C} ellipse(1.5 and 0.5);
+\draw  (-6.5,-2) node{A} ellipse (1.5 and 0.5);
+\draw  (0,-2) node{B} ellipse (1.5 and 0.5);
+\draw [-latex](-4,0.5) -- (-6.5,-1.5);
+\draw [-latex](-2,0.5) -- (0,-1.5);
+\end{tikzpicture}\\
+$\to$ $A$, $B$ sind unabhängig gegeben $C$.
+\end{center}
+Ein Bayes-Netz muss ein DAG (directed asymmetric graph) sein (enthält also keinen Loop). Dann können die Knoten topologisch sortiert werden. Dann gilt:
+$$\PP(A_n|A_1, \dots, A_{n-1}=\PP(A_n|\; \mathrm{Eltern}(A_n)$$
+\begin{center}
+\begin{tikzpicture}[scale=.4]
+\draw  (-10,7) ellipse (1.5 and 0.5);
+\draw  (-3.5,7) ellipse (1.5 and 0.5);
+\draw [-latex] (-10,6.5) -- (-7.5,4.5);
+\draw [-latex](-3.5,6.5) -- (-5.5,4.5);
+\draw  (-3,1) node{$A_n$} ellipse(1.5 and 0.5);
+\draw  (-6.5,4) ellipse (1.5 and 0.5);
+\draw  (0,4) ellipse (1.5 and 0.5);
+\draw [-latex] (-6.5,3.5) -- (-4,1.5);
+\draw [-latex](0,3.5) -- (-2,1.5);
+\end{tikzpicture}
+\end{center}
+Daraus folgt:
+\begin{align*}
+\PP(A_1, \dots, A_n)&=\PP(A_n|A_1,\dots,A_{n-1})\cdot \PP(A_1, \dots, A_{n-1})\\
+&= \PP(A_n|\;\mathrm{Eltern}(A_n)) \cdot \PP(A_1, \dots, A_{n-1})\\
+&=\ldots \\
+&= \prod_{k=1}^n \PP(A_k |\; \mathrm{Eltern}(A_k))
+\end{align*}
+Dabei ist $\PP(A_k|\; \mathrm{Eltern}(A_k)):=\PP(A_k)$, wenn $A_k$ keine Eltern besitzt.
+\paragraph{Beispiel} 
+\begin{align*}
+\PP(J, Al, Ein, Erd) &= \PP(J|Al) \cdot \PP(Al|Ein, Erd) \cdot \PP(Ein) \cdot \PP(Erd)\\
+&= 0,00000171
+\end{align*}
+\begin{align*}
+\PP(J, Ein) &= \PP(J, Al, Ein, Erd) + \PP(J, \overline{Al}, Ein, Erd)\\
+& \qquad +\PP(J, Al, \overline{Erd}, Ein) + \PP(J, \overline{Al}, Ein, \overline{Erd})\\
+&= \ldots = 0,000849
+\end{align*}
+Entsprechend ergibt sich $\PP(J) = 0,052$.\\
+$\PP(Ein|J) = \frac{\PP(Ein, J)}{\PP(J)}=0,016$. Diese Zahl ist so gering, da die WK für den Einbruch sehr gering ist.
+
+
+
