@@ -67,7 +67,14 @@ $\to$ Subklassen bilden $\to$ Spezialisierung
 \end{itemize}
 
 \subsubsection*{Beispiel}
-% input aus Praktikum
+Von:
+\begin{center}
+\includegraphics[scale=.5]{Vorlesung/antipattern/Refactoring_davor.pdf}
+\end{center}
+Zu:
+\begin{center}
+\includegraphics[scale=.8]{Vorlesung/antipattern/Refactoring.pdf}
+\end{center}
 
 \section{Anti-Muster}
 
@@ -109,6 +116,73 @@ $\to$ Auftauchen und plötzliches Verschwinden
 \item Lösung: Poltergeister als Klasse beseitigen. Eventuell den Klassen zuordnen, von denen sie aufgerufen werden.
 \end{itemize}
 
+\lecdate{22.06.2017}
+
+\subsection{Goldener Hammer}
+$\to$ „Ich besitze einen Hammer („Wunderwaffe“) und alles andere sind Nägel.“
+
+\begin{itemize}
+\item Symptome:
+\begin{itemize}
+\item Die Architektur unseres Systems ist unsere Datenbank.
+\item In der Analyse \emph{lenken} die Entwickler die Diskussion zu den Anforderungen aus der Perspektive der technologischen Lösungsmöglichkeiten.
+\end{itemize}
+\item Ursachen:
+\begin{itemize}
+\item aktuelle Entwicklung ist nicht im Blick
+\item Überschätzung der bisherigen Lösungsvariante
+\item blindes Vertrauen
+\item hohe Investitionskosten müssen weiterhin die Technologiewahl bestimmen
+\end{itemize}
+\item Lösung:
+\begin{itemize}
+\item 2 Aspekte:
+\begin{itemize}
+\item Vorgehensweise (Kultur, philisophisch)\\
+$\to$ Änderung im Entwicklungsprozess: Freiraum schaffen, Diskussion, Evaluieren
+\item SW-System\\
+Austauschbarkeit durch klare Abgrenzung der Komponenten (Abstraktionsstufe)
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+
+\subsection{Spaghetti-Code}
+\begin{itemize}
+\item Symptome:
+\begin{itemize}
+\item wenig Struktur im System
+\item Objekt sind wie Prozess bezeichnet (mit Verb: bspw. \texttt{schreibt} anstatt \texttt{Schreiber})
+\item Ablaufsteuerung ist vom Objekt, nicht vom Client des Objektes vorgeschrieben
+\item Objektoperationen haben wenig bis keine Parameter (Instanziierung) $\to$ statt Parameter: 
+\begin{itemize}
+\item Klassenvariablen
+\item globale Variablen
+\end{itemize}
+\end{itemize}
+\item Ursachen:
+\begin{itemize}
+\item Sprachkonzepte sind nicht verstanden
+\item vor Implementierungsphase gibt es keine Entwurfs-Phase
+\item Entwickler arbeiten isoliert voneinander
+\item keine Code-Überwachung
+\end{itemize}
+\item Lösung:
+\begin{itemize}
+\item Refactoring
+\begin{itemize}
+\item eher Prävention
+\item ständige Code-Überwachung $\to$ wirkliches Refactoring: z.B. Objekte als Objekte verwenden
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+\section{Sotograph}
+$=$ Plattform zur schnellen und komfortablen Untersuchung der inneren Struktur von SW-Systemen (für \lstinline`C / C++, Java, C#, ABAP, PHP, ...`)
+
+\begin{center}
+% TODO: Graphik aus prakt
+\end{center}
 
 
 
