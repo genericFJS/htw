@@ -1,0 +1,80 @@
+\lecdate{28.06.2017}
+
+\section{Grundbegriff}
+\subsection{Ziele der Systemsicherheit}
+\slides{07-security}{3}
+\subsection{Bedrohungen}
+\slides{07-security}{4}
+
+\section{Bösartige Software}
+\subsection{Überblick}
+\slides{07-security}{5}
+\begin{itemize}
+\item lokaler Angriff (insider Angriff): Nutzer hat bereits Zugang zu System und versucht bspw. \lstinline`root` zu werden.
+\item entfernter Angriff: Zugriff von außen (kein Account auf angegriffenen System vorhanden).
+\item on-line-Angriff: Hacker ist verbunden ist mit angegriffenen System und „hackt“ (selten) [auch lokal möglich].
+\item off-line-Angriff: bspw. durchforsten von Passwort-Dateien (die erklaut wurden).
+\end{itemize}
+
+\subsection{Logische Bomben}
+\slides{07-security}{6}
+\subsubsection*{Ausschnitt McAfee Aktivierungskalender}
+\slides{07-security}{7}
+
+\subsection{Hintertüren (Backdoors)}
+\slides{07-security}{8}
+\subsubsection*{Beispiel 1}
+\slides{07-security}{9}
+\subsubsection*{Beispiel 2}
+\slides{07-security}{10}
+Bei \lstinline`current->uid = 0` wird nicht verglichen, sondern \lstinline`uid` gesetzt! Wenn also die angegeben Option-Flags gesetzte werden, wird der ausführende Nutzer \lstinline`root`.
+\slides{07-security}{11}
+
+\subsection{Trojanisches Pferd}
+\slides{07-security}{12}
+\subsubsection*{Beispiel Unix}
+\slides{07-security}{17}
+\lstinline`u+s`: Setzen des Sticky-Bits (Programm läuft unter rechten des Eigentümers der Datei, nicht unter den rechten des Ausführenden)
+
+\subsection{(Computer-)Viren}
+\slides{07-security}{18}
+\subsubsection*{Einfaches Beispiel}
+\slides{07-security}{23}
+\subsubsection*{Erweitertes Beispiel}
+\slides{07-security}{24}
+$\to$ keine Mehrfachinfektion mehr
+
+\subsection{Würmer}
+\slides{07-security}{25}
+\subsubsection*{Komponenten eines Wurms}
+\slides{07-security}{26}
+\slides{07-security}{27}
+Vokabeln:
+\begin{itemize}
+\item Vulnerability: Schwachstelle
+\item Exploit: Ausnutzen einer Schwachstelle
+\end{itemize}
+
+\subsection{Rootkits}
+\slides{07-security}{28}
+Hinweis: Rootkit ist nicht dafür da, root zu werden, sondern das Schadprogramm zu verbergen.
+\subsubsection*{Arten von Rootkits}
+\slides{07-security}{29}
+\subsubsection*{Gegenmaßnahmen}
+\slides{07-security}{30}
+
+\section{Authentifizierungsmechanismen}
+
+\section{Angriffstechniken}
+
+\subsection{Buffer Overflow}
+
+\subsection{Return-into-Libc}
+
+\subsection{Format String Exploit}
+
+\section{Angriffscode (Shell)}
+
+
+% Folie 44:
+\lstinline`strcopy` interessiert sich nicht für Buffergröße $\to$ gesamtes \lstinline`argv[1]` wird in Speicher geschrieben. Dadurch kann die Rücksprungadresse überschrieben werden. Damit kann Schadcode ausgeführt werden (das wird von modernen Betriebssystemen allerdings verhindert).
