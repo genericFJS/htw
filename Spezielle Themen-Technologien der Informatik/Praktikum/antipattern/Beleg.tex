@@ -23,13 +23,13 @@ Simon Retsch (s74077)}
 \tableofcontents
 
 \section{Aufgabe}
-Die Aufgabe dieses Belegs lautet einen (objektorientiert) geschriebenen Quellcode anschauen, wo Verbesserungspotential vorhanden ist. Der original Quellcode, die Symptome und deren Beseitigung sind zu beschreiben. Auszüge aus Klassendiagrammen sind erwünscht.
+Die Aufgabe dieses Belegs lautet einen (objektorientiert) geschriebenen Quellcode anschauen, wo Verbesserungspotential vorhanden ist. Der originaler Quellcode, die Symptome und deren Beseitigung sind zu beschreiben. Auszüge aus Klassendiagrammen sind erwünscht.
 
 \section{Quellcode}
 \label{quellcode}
 Der Quellcode ist aus einer Belegarbeit des Fachs \emph{Internettechnologien 1} entnommen. Dort war die Aufgabe einen primitiven Vokabeltrainer über eine Webseite zu programmieren. 
 Zur Veranschaulichung wurden daraus drei Dateien ausgewählt:
-\subsection{Original Quellcode}
+\subsection{Originaler Quellcode}
 \begin{itemize}
 \item \lstinline`lessonsJQ.php`
 \begin{lstlisting}[language=html]
@@ -567,7 +567,7 @@ Die entnommenen Dateien können wie folgt beschrieben werden:
 \item \lstinline`resultJQ.php` gibt das Ergebnis einer beantworteten Vokabelabfrage aus (ob die Antwort richtig/falsch war).
 \item \lstinline`setupJQ.php` ermöglicht dem Nutzer eine Datei mit einer Vokabellektion hochzuladen.
 \end{itemize}
-Diese Dateien haben grob folgende Struktur. Dabei ist zu beachten, dass der original Quellcode keine Funktionen hat -- alles wird prozedural erledigt. Die Funktionalität der Quellcodezeilen wird im folgenden durch deskriptive Funktionsnamen angedeutet. Weiterhin funktioniert jede Datei unabhängig von den anderen:
+Diese Dateien haben grob folgende Struktur. Dabei ist zu beachten, dass der originale Quellcode keine Funktionen hat -- alles wird prozedural erledigt. Die Funktionalität der Quellcodezeilen wird im Folgenden durch deskriptive Funktionsnamen angedeutet. Weiterhin funktioniert jede Datei unabhängig von den anderen:
 \begin{center}
 \begin{tabular}{|p{.35\textwidth}|>{\footnotesize} p{.55\textwidth}}
 \cline{1-1}
@@ -615,14 +615,14 @@ Diese Dateien haben grob folgende Struktur. Dabei ist zu beachten, dass der orig
 Die Hauptsymptome des Systems sind:
 \begin{itemize}
 \item Fire Drill:\\
-Die folgenden Symptome sind vor allem dieses Architektur-Antipatterns -- dem Umstand des Entwicklungsprozesses -- zu schulden: Das System wurde auf den letzten Drücker entwickelt. 
+Die folgenden Symptome sind vor allem dieses Architektur-Antipatterns -- dem Umstand des Entwicklungsprozesses -- zu Schulden: Das System wurde auf den letzten Drücker entwickelt. 
 \item Spaghetti-Code:\\
-Das System hat wenig Struktur. Die Funktionen sind in Dateien aufgeteilt sind, was positiv zu bewerten ist. In diesen Dateien ist jedoch HTML-, CSS-, PHP- und Javascript-Code durcheinander geschrieben.\\
+Das System hat wenig Struktur. Die Funktionen sind in Dateien aufgeteilt, was positiv zu bewerten ist. In diesen Dateien ist jedoch HTML-, CSS-, PHP- und Javascript-Code durcheinander geschrieben.\\
 Die Dateien sind zwar wie Objekte bezeichnet, allerdings nur prozedural programmiert.
 \item Blob (light):\\
 Das System ist überhaupt nicht objektorientiert geschrieben. Allerdings haben die einzelnen Dateien den Charakter eines Objektes, das alles alleine macht.
 \item Goldener Hammer:\\
-In der Datei \lstinline`lessonsJQ.php` wird der Hammer Javascript/Ajax grundsätzlich zum Füllen der Webseite mit der ausgewählten Lektion angewendet -- egal, ob die Dynamik benötigt wird oder nicht: Sie wird nicht benötigt, wenn die Datei initial aufgerufen wird (was der Regelfall ist). Sie wird eigentlich nur benötigt, wenn die Richtung der Vokabelabfrage gewechselt werden soll. Das führt zu teils doppelter Last für den Webserver, der den php Code der Seite und gesonderten php-Code über die Ajax-Abfrage ausführen muss.
+In der Datei \lstinline`lessonsJQ.php` wird der Hammer Javascript/Ajax grundsätzlich zum Füllen der Webseite mit der ausgewählten Lektion angewendet -- egal, ob die Dynamik benötigt wird oder nicht: Sie wird nicht benötigt, wenn die Datei initial aufgerufen wird (was der Regelfall ist). Sie wird eigentlich nur benötigt, wenn die Richtung der Vokabelabfrage gewechselt werden soll. Das führt zu teils doppelter Last für den Webserver, der den php-Code der Seite und gesonderten php-Code über die Ajax-Abfrage ausführen muss.
 \end{itemize}
 
 
@@ -630,7 +630,7 @@ In der Datei \lstinline`lessonsJQ.php` wird der Hammer Javascript/Ajax grundsät
 
 Zunächst wurde der Quellcode der 3 Dateien analysiert und bereits in grobe Funktionalitäten (als Funktionen benannt) eingeteilt, die den Ablauf des Programms beschreiben. Mit diesen Funktionen wurde nun ein Ist-Diagramm erstellt (siehe \autoref{analquell}).
 
-Wie schon im Ist-Diagramm (und der Vorarbeit dazu) gut zu erkennen, wiederholen sich in den drei PHP-Dateien einige Funktionalitäten immer wieder. Diese können leicht zu einer einzigen Funktion zusammen gelegt werden. 
+Wie schon im Ist-Diagramm (und der Vorarbeit dazu) gut zu erkennen, wiederholen sich in den drei PHP-Dateien einige Funktionalitäten immer wieder. Diese können leicht zu einer einzigen Funktion zusammengelegt werden. 
 
 Ebenfalls ist zu erkennen, dass einige Aufgaben in gemeinsame Kategorien, also Klassen, eingeteilt werden können. Funktionen wie \lstinline`printHeader()` und \lstinline`printFooter()` werden in einer Klasse \lstinline`page.class.php` als Funktionen zusammen gelegt. Damit sind die Funktionalitäten für die gleiche Kategorie an einem Ort zu finden sind. Weitere Funktionen, die zum Beispiel den Aufbau der Seite betreffen, können dann ebenfalls in dieser Klasse untergebracht werden. Im Falle von Änderungen einer Funktion(alität) muss diese nicht in jeder einzelnen Datei, sondern nur an einer Stelle -- der entsprechenden Klasse -- angepasst werden.
 
