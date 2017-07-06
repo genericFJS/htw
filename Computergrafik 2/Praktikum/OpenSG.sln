@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "prakt5", "prakt5\prakt5.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "prakt6", "prakt6\prakt6.vcxproj", "{12A53DF7-6204-4245-84E5-36390AE69ECF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "prakt7", "prakt7\prakt7.vcxproj", "{CF48AB31-2A4A-4CD9-BC05-44A9C805138A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +33,14 @@ Global
 		{12A53DF7-6204-4245-84E5-36390AE69ECF}.sUltrabook|Win32.Build.0 = sUltrabook|Win32
 		{12A53DF7-6204-4245-84E5-36390AE69ECF}.Ultrabook|Win32.ActiveCfg = Ultrabook|Win32
 		{12A53DF7-6204-4245-84E5-36390AE69ECF}.Ultrabook|Win32.Build.0 = Ultrabook|Win32
+		{CF48AB31-2A4A-4CD9-BC05-44A9C805138A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CF48AB31-2A4A-4CD9-BC05-44A9C805138A}.Debug|Win32.Build.0 = Debug|Win32
+		{CF48AB31-2A4A-4CD9-BC05-44A9C805138A}.Release|Win32.ActiveCfg = Release|Win32
+		{CF48AB31-2A4A-4CD9-BC05-44A9C805138A}.Release|Win32.Build.0 = Release|Win32
+		{CF48AB31-2A4A-4CD9-BC05-44A9C805138A}.sUltrabook|Win32.ActiveCfg = sUltrabook|Win32
+		{CF48AB31-2A4A-4CD9-BC05-44A9C805138A}.sUltrabook|Win32.Build.0 = sUltrabook|Win32
+		{CF48AB31-2A4A-4CD9-BC05-44A9C805138A}.Ultrabook|Win32.ActiveCfg = Ultrabook|Win32
+		{CF48AB31-2A4A-4CD9-BC05-44A9C805138A}.Ultrabook|Win32.Build.0 = Ultrabook|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
