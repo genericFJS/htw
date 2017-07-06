@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <?php
-// Erzeuge die Verwaltung fÃ¼r den Seiteninhalt:
+// Erzeuge die Verwaltung für den Seiteninhalt:
 include_once 'page.class.php';
 $page = new Page ();
 ?>

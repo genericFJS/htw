@@ -1,0 +1,765 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrartcl}
+\gdef\pathtomaster{../../../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\makeatletter
+\gdef\@islecture{\relax}
+\bilingual{\lectureauthorname}{Beleg von}{}
+%\bilingual{\professorname}{}{}
+\makeatother
+
+\faculty{Fakultät Informatik/Mathematik}
+\chair{Lehrstuhl für Softwaretechnologie}
+\thesis{Belegarbeit}
+\title{Antipattern}
+\author{Falk-Jonatan Strube (s74053)\texorpdfstring{\\}{, }
+Jürgen Tomaszewski (s76451)\texorpdfstring{\\}{, }
+Simon Retsch (s74077)}
+\professor{Prof. Dr. Anna Sabine Hauptmann}
+\begin{document}
+\maketitle
+\ofoot{}
+\tableofcontents
+
+\section{Aufgabe}
+Die Aufgabe dieses Belegs lautet einen (objektorientiert) geschriebenen Quellcode anschauen, wo Verbesserungspotential vorhanden ist. Der original Quellcode, die Symptome und deren Beseitigung sind zu beschreiben. Auszüge aus Klassendiagrammen sind erwünscht.
+
+\section{Quellcode}
+\label{quellcode}
+Der Quellcode ist aus einer Belegarbeit des Fachs \emph{Internettechnologien 1} entnommen. Dort war die Aufgabe einen primitiven Vokabeltrainer über eine Webseite zu programmieren. 
+Zur Veranschaulichung wurden daraus drei Dateien ausgewählt:
+\subsection{Original Quellcode}
+\begin{itemize}
+\item \lstinline`lessonsJQ.php`
+\begin{lstlisting}[language=html]
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "UTF-8"/>
+
+		<!-- jQuery stuff -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+		<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+		<style>
+			//[data-role=page]{height: 100% !important; position:relative !important;}
+			[data-role=footer]{bottom:0; position:absolute !important; top: auto !important; width:100%;}
+		</style>
+	</head>
+
+	<body>	
+
+		<div data-role="page">
+		<div data-role="header">
+			<h1>Lesson</h1>
+		</div>
+		<div data-role="main" class="ui-content">
+
+		<!-- main content -->
+
+		<!-- javascript -->
+		<script>
+		var mode = 1;
+
+		// function for the ajax call
+		function showHint(str, lesson) 
+		{
+			num = 0;
+
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function()
+			{
+				if (this.readyState == 4 && this.status == 200)
+				{
+					var myObj = JSON.parse(this.responseText);
+
+					var ok = myObj[10];
+
+					// was there an error getting the words?
+					if(ok == 0)
+					{
+						// error field
+						document.getElementById("err").innerHTML = "";		
+
+						// start the form
+						document.getElementById("q").innerHTML = myObj[0];
+
+						// radio
+						document.getElementById("lab1").innerHTML = myObj[1];
+						document.getElementById("poss1").value = myObj[1];
+	
+						document.getElementById("lab2").innerHTML = myObj[2];
+						document.getElementById("poss2").value = myObj[2];
+	
+						document.getElementById("lab3").innerHTML = myObj[3];
+						document.getElementById("poss3").value = myObj[3];
+	
+						document.getElementById("lab4").innerHTML = myObj[4];
+						document.getElementById("poss4").value = myObj[4];
+	
+						document.getElementById("lab5").innerHTML = myObj[5];
+						document.getElementById("poss5").value = myObj[5];
+	
+						// end
+						document.getElementById("e1").value = myObj[6];
+						document.getElementById("e2").value = myObj[7];
+						document.getElementById("e3").value = myObj[8];
+	
+						// mode for POST
+						document.getElementById("postMode").value = myObj[9];
+					}
+					else if(ok == 1)
+					{
+						document.getElementById("send").type = "hidden";
+
+						// error field
+						document.getElementById("err").innerHTML = "<br>In der Lektionsdatei befinden sich Zeichen die nicht zulässig sind!<br>";	
+
+						// radio
+						document.getElementById("lab1").innerHTML = "error";
+						document.getElementById("poss1").value = myObj[1];
+						document.getElementById("poss1").type = "hidden";
+	
+						document.getElementById("lab2").innerHTML = "error";
+						document.getElementById("poss2").value = myObj[2];
+						document.getElementById("poss2").type = "hidden";
+	
+						document.getElementById("lab3").innerHTML = "error";
+						document.getElementById("poss3").value = myObj[3];
+						document.getElementById("poss3").type = "hidden";
+	
+						document.getElementById("lab4").innerHTML = "error";
+						document.getElementById("poss4").value = myObj[4];
+						document.getElementById("poss4").type = "hidden";
+	
+						document.getElementById("lab5").innerHTML = "error";
+						document.getElementById("poss5").value = myObj[5];	
+						document.getElementById("poss5").type = "hidden";						
+
+					}
+					else
+					{
+						document.getElementById("send").type = "hidden";
+
+						// error field
+						document.getElementById("err").innerHTML = "<br>Die Datei kann nicht geöffnet werden!<br>";	
+
+						// radio
+						document.getElementById("lab1").innerHTML = "error";
+						document.getElementById("poss1").value = myObj[1];
+						document.getElementById("poss1").type = "hidden";
+	
+						document.getElementById("lab2").innerHTML = "error";
+						document.getElementById("poss2").value = myObj[2];
+						document.getElementById("poss2").type = "hidden";
+	
+						document.getElementById("lab3").innerHTML = "error";
+						document.getElementById("poss3").value = myObj[3];
+						document.getElementById("poss3").type = "hidden";
+	
+						document.getElementById("lab4").innerHTML = "error";
+						document.getElementById("poss4").value = myObj[4];
+						document.getElementById("poss4").type = "hidden";
+	
+						document.getElementById("lab5").innerHTML = "error";
+						document.getElementById("poss5").value = myObj[5];	
+						document.getElementById("poss5").type = "hidden";
+					}
+				}
+			};
+		
+			xmlhttp.open("GET", "switchLesson.php?m=" + str + "&lesson=" + lesson, true);
+			xmlhttp.send();
+		}
+		</script>
+
+
+	<?php
+		// get post variables
+
+		$lesson = $_POST["lesson"];
+		$mode = $_POST["mode"];
+
+		// if no mode was given so far, set mode to 1
+		if($mode == "")
+		{
+			$mode = 1;
+		}
+
+		// get .stat fileName
+		$lessons_name = str_replace(".txt", "", $lesson);
+		$lessons_name = str_replace("uploads/", "", $lessons_name);
+
+
+		// get the php vars 'lesson' and 'mode' into js vars cause js can't read in POST's
+		echo "<script>";
+		echo "var lesson = " . json_encode($lesson) . ";";
+		echo "mode = " . json_encode($mode) . ";";
+		echo "showHint(mode, lesson);";
+		echo "</script>";
+	?>	
+	
+
+	<!-- Error message -->
+	<p id="err" style="display:inline"></p>
+	
+
+	<!-- switch words buttons -->
+	<div data-role="controlgroup" data-type="horizontal">
+		<a href="#" class="ui-btn ui-btn-up-c" onclick="showHint(1, lesson)">
+			<?php echo "Deutsch -> ".$lessons_name; ?>
+		</a>
+		<a href="#" class="ui-btn" onclick="showHint(0, lesson)">
+			<?php echo $lessons_name." -> Deutsch"; ?>
+		</a>
+	</div>
+
+	<!-- start Radio with question -->
+	<form method="POST" action="resultJQ.php?lesson=<?php echo $lesson;?>"">
+		<fieldset data-role="controlgroup">
+			<legend>
+				Was ist die korrekte Übersetzung für <p id="q" style="display:inline"></p>?
+			</legend>
+
+	<!-- radio options -->
+	<label for="poss1" id="lab1"></label>
+	<input type="radio" name="answer" id="poss1" value="">
+
+	<label for="poss2" id="lab2"></label>
+	<input type="radio" name="answer" id="poss2" value="">
+
+	<label for="poss3" id="lab3"></label>
+	<input type="radio" name="answer" id="poss3" value="">
+
+	<label for="poss4" id="lab4"></label>
+	<input type="radio" name="answer" id="poss4" value="">
+
+	<label for="poss5" id="lab5"></label>
+	<input type="radio" name="answer" id="poss5" value="">
+
+	</fieldset>
+	<input type="hidden" name="solution" id="e1" value="">
+	<input type="hidden" name="translation" id="e2" value="">
+	<input type="hidden" name="lesson" id="e3" value="" />
+	<input type="hidden" name="mode" id="postMode" value=""/>
+
+	<input type="submit" data-inline="true" id="send" value="Senden">
+	</form>
+		</div>
+
+			<!-- footer -->
+			<div data-role="footer"><div data-role="navbar"><ul><li>
+
+				<!-- Option 1 -->
+				<start>
+					<form action="startJQ.php">
+						<input type="submit" value="Auswahl" />
+					</form>
+				</start>
+
+			</li><li>
+
+				<!-- Option 2 -->
+				<statistic>
+					<form action="statisticJQ.php">
+						<input type="submit" value="Statistik" />
+					</form>
+				</statistic>
+
+			</li><li>
+
+				<!-- Option 3 -->
+				<setup>
+					<form action="setupJQ.php">
+						<input type="submit" value="Setup" />
+					</form>
+				</setup>
+
+			</li></ul></div></div>
+
+
+		</div> 
+	</body>
+</html>
+\end{lstlisting}
+\item \lstinline`resultJQ.php`
+\begin{lstlisting}[language=html]
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "UTF-8"/>
+
+		<!-- jQuery stuff -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+		<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+		<style>
+			//[data-role=page]{height: 100% !important; position:relative !important;}
+			[data-role=footer]{bottom:0; position:absolute !important; top: auto !important; width:100%;}
+		</style>
+	</head>
+
+	<body>	
+
+		<div data-role="page">
+		<div data-role="header">
+			<h1>Ergebnis</h1>
+		</div>
+		<div data-role="main" class="ui-content">
+
+		<!-- main content -->
+		<?php
+			// read in the chosen lesson
+			$from = $_POST["from"];
+			$lesson = $_POST["lesson"];
+			$mode = $_POST["mode"];
+
+			$answer = $_POST["answer"];
+			$solution = $_POST["solution"];
+			$translation = $_POST["translation"];
+
+			$info = array(2);
+
+
+			// get .stat fileName
+			$lessons_name = str_replace(".txt", "", $lesson);
+			$lessons_name = str_replace("uploads/", "", $lessons_name);
+			$fileName = $lessons_name.".stat";
+
+			// open statistic file
+			$file = fopen($fileName, "c+") or die("<br>Die Datei kann nicht geöffnet werden!");
+
+			// get content
+			$string = fgets($file);
+			fclose($file);	
+
+			// was the file just created?
+			if($string != "")
+			{
+				$line = explode(';', $string);
+			}
+			else
+			{
+				$line[0] = 0;
+				$line[1] = 0;
+			}
+
+			// correct the numbers of the statistic and display
+
+
+			if(strcmp($answer, $solution) == 0)
+			{
+				echo "<a class=\"ui-btn\" style=\"background: green; color: white;\">";
+				echo $translation."<br>";
+				echo $solution."<br>";
+				echo "</a>";
+
+				// correct answer counter
+				$line[0] += 1;
+			}
+			else
+			{
+				echo "<a class=\"ui-btn\" style=\"background: red; color: white;\";>";
+				echo $translation."<br>";
+
+				if(strcmp($answer, "") == 0)
+					echo "(keine Antwort ausgewählt!)<br>";
+				else
+					echo "<strike>".$answer."</strike><br>";
+
+				echo $solution."<br>";
+				echo "</a>";
+			}
+
+
+			// question counter
+			$line[1] += 1;
+
+			$output = $line[0].";".$line[1];
+
+			// open statistic file	
+			$file = fopen($fileName, "w") or die("<br>Die Datei kann nicht zum schreiben geöffnet werden!");
+
+			// write content
+			fwrite($file, $output);
+	
+			fclose($file);
+		?>
+
+		<forward>
+			<form action="lessonsJQ.php?lesson=<?php echo $lesson;?>" method="POST">
+				<input type="hidden" name="lesson" value="<?php echo $lesson;?>" />
+				<input type="hidden" name="mode" value="<?php echo $mode;?>" />
+				<input type="submit" value="Weiter" />
+			</form>
+		</forward>
+
+		</div>
+
+			<!-- footer -->
+			<div data-role="footer"><div data-role="navbar"><ul><li>
+
+				<!-- Option 1 -->
+				<start>
+					<form action="startJQ.php">
+						<input type="submit" value="Auswahl" />
+					</form>
+				</start>
+
+			</li><li>
+
+				<!-- Option 2 -->
+				<statistic>
+					<form action="statisticJQ.php">
+						<input type="submit" value="Statistik" />
+					</form>
+				</statistic>
+
+			</li><li>
+
+				<!-- Option 3 -->
+				<setup>
+					<form action="setupJQ.php">
+						<input type="submit" value="Setup" />
+					</form>
+				</setup>
+
+			</li></ul></div></div>
+		</div> 
+	</body>
+</html>
+\end{lstlisting}
+\item \lstinline`setupJQ.php`
+\begin{lstlisting}[language=html]
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "UTF-8"/>
+
+		<!-- jQuery stuff -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+		<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+		<style>
+			//[data-role=page]{height: 100% !important; position:relative !important;}
+			[data-role=footer]{bottom:0; position:absolute !important; top: auto !important; width:100%;}
+		</style>
+	</head>
+
+	<body>	
+
+		<div data-role="page">
+		<div data-role="header">
+			<h1>Setup</h1>
+		</div>
+		<div data-role="main" class="ui-content">
+
+		<!-- main content -->
+		<?php
+			// read info where it is coming from
+			$from = $_POST["from"];
+		
+			// get uploaded file name
+			$target_dir = "";//uploads/";
+			$target_file = $target_dir . basename($_FILES["fileToUpload"]	["name"]);
+
+			$uploadOk = 1;
+
+			// if there are html tag close stuff in the name replace the name with err			
+			if (preg_match('/[...]/', $target_file))
+			{
+				// one or more of the 'special characters' found in $string
+				$target_file = "err";
+				echo "<br>Im Dateinamen befinden sich unzulässige Zeichen.";
+				$uploadOk = 0;
+			}
+			
+
+			
+			$fileType = pathinfo($target_file,PATHINFO_EXTENSION);
+
+			if(strcmp($from, "setup") == 0)
+			{
+			
+				// Check if the file already exists
+				if (file_exists($target_file)) {
+					echo "<br>Die Datei existiert bereits.";
+					$uploadOk = 0;
+				}
+		
+				//  check if the ending of the file is txt
+				if($fileType != "txt") {
+					echo "<br>Die Dateiendung muss txt sein.";
+					$uploadOk = 0;
+				}
+
+				// Check if $uploadOk is set to 0 by an error
+				if ($uploadOk == 0) {
+					echo "<br>Datei wurde nicht hochgeladen.";
+
+				// if everything is ok, try to upload file
+				} 
+				else 
+				{
+
+					// move the uploaded file to the servers filesystem
+					if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file))
+					{
+						echo "<br>Die Datei ". basename( $_FILES["fileToUpload"]["name"]). " wurde hochgeladen.";
+
+						// write the new path in the lessons.info
+						$file = fopen("lessons.data", "a") or die("<br>Die Lessons-Datei kann nicht geöffnet werden!");		
+						fwrite($file, $target_file."\n");
+						fclose($file);
+
+					} 
+					else 
+					{
+						echo "<br>Es gab einen Fehler beim speichern der hochgeladenen Datei.";
+					}
+				}
+			}
+		?>		
+
+		</div>
+
+		<form action="setupJQ.php" method="post" data-ajax="false" enctype="multipart/form-data">
+			Datei zum Hochladen wählen:
+			<input type="file" name="fileToUpload" id="fileToUpload">
+			<input type="hidden" name="from" value="setup">
+			<input type="submit" value="Datei hochladen" name="submit">
+		</form>
+
+			<!-- footer -->
+			<div data-role="footer"><div data-role="navbar"><ul><li>
+
+				<start>
+					<form action="startJQ.php" method="POST">
+						<input type="submit" value="Auswahl" />
+					</form>
+				</start>
+
+			</li><li>
+
+				<statistic>
+					<form action="statisticJQ.php">
+						<input type="submit" value="Statistik" />
+					</form>
+				</statistic>
+
+			</li></ul></div></div>
+
+
+		</div> 
+	</body>
+</html>
+\end{lstlisting}
+\end{itemize}
+\subsection{Analyse des Quellcodes}
+\label{analquell}
+Die entnommenen Dateien können wie folgt beschrieben werden:
+\begin{itemize}
+\item \lstinline`lessonsJQ.php` gibt eine Vokabellektion zur Abfrage aus.
+\item \lstinline`resultJQ.php` gibt das Ergebnis einer beantworteten Vokabelabfrage aus (ob die Antwort richtig/falsch war).
+\item \lstinline`setupJQ.php` ermöglicht dem Nutzer eine Datei mit einer Vokabellektion hochzuladen.
+\end{itemize}
+Diese Dateien haben grob folgende Struktur. Dabei ist zu beachten, dass der original Quellcode keine Funktionen hat -- alles wird prozedural erledigt. Die Funktionalität der Quellcodezeilen wird im folgenden durch deskriptive Funktionsnamen angedeutet. Weiterhin funktioniert jede Datei unabhängig von den anderen:
+\begin{center}
+\begin{tabular}{|p{.35\textwidth}|>{\footnotesize} p{.55\textwidth}}
+\cline{1-1}
+\lstinline`lessonsJQ.php` & Beschreibung:\\\cline{1-1}
+\lstinline`printHeader()` & in HTML und CSS geschrieben. Gibt den HTML-Header aus.\\
+\lstinline`insertContent()` & in Javascript/Ajax geschrieben. \\
+\lstinline`getPostVars()` & in php geschrieben. Holt die \lstinline`$_POST` Variablen zur Weiterverarbeitung.\\
+\lstinline`execJavaScript()` & in php als HTML/Javascript geschrieben. \\
+\lstinline`printContentPlaceholder()` & in HTML geschrieben. Stellt "Hüllen" bereit, die per Javascript befüllt werden.\\
+\lstinline`printFooter()` & in HTML. Gibt den HTML-Footer aus.\\
+\cline{1-1}
+\end{tabular}
+\end{center}
+\begin{center}
+\begin{tabular}{|p{.35\textwidth}|>{\footnotesize} p{.55\textwidth}}
+\cline{1-1}
+\lstinline`resultJQ.php` & \\\cline{1-1}
+\lstinline`printHeader()` & in HTML und CSS geschrieben. Gibt den HTML-Header aus.\\
+\lstinline`printMainA()` & in HTML geschrieben. Gibt ersten Teil des Seiteninhalts aus. \\
+\lstinline`getPostVars()` & in php geschrieben. Holt die \lstinline`$_POST` Variablen zur Weiterverarbeitung.\\
+\lstinline`openStatFile()` & in php geschrieben. Öffnet Statistik-Datei. \\
+\lstinline`writeStatFile()` & in php geschrieben. Schreibt Antwort in Statistik. \\
+\lstinline`printMainB()` & in php geschrieben. Gibt zweiten Teil des Seiteninhalts, nämlich die Statistik der Statistik-Datei, aus. \\
+\lstinline`printMainC()` & in HTML geschrieben. Gibt dritten Teil des Seiteninhalts aus. \\
+\lstinline`printFooter()` & in HTML. Gibt den HTML-Footer aus.\\
+\cline{1-1}
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{|p{.35\textwidth}|>{\footnotesize} p{.55\textwidth}}
+\cline{1-1}
+\lstinline`setupJQ.php` & \\\cline{1-1}
+\lstinline`printHeader()` & in HTML und CSS geschrieben. Gibt den HTML-Header aus.\\
+\lstinline`printMainA()` & in HTML geschrieben. Gibt ersten Teil des Seiteninhalts aus. \\
+\lstinline`getPostVars()` & in php geschrieben. Holt die \lstinline`$_POST` Variablen zur Weiterverarbeitung.\\
+\lstinline`tryUpload()` & in php geschrieben. Versucht (gepostete) Datei hochzuladen. \\
+\lstinline`printMainB()` & in HTML geschrieben. Gibt zweiten Teil des Seiteninhalts, nämlich die Form für das das Hochladen, aus. \\
+\lstinline`printFooter()` & in HTML. Gibt den HTML-Footer aus.\\
+\cline{1-1}
+\end{tabular}
+\end{center}
+
+\section{Symptome}
+Die Hauptsymptome des Systems sind:
+\begin{itemize}
+\item Fire Drill:\\
+Die folgenden Symptome sind vor allem dieses Architektur-Antipatterns -- dem Umstand des Entwicklungsprozesses -- zu schulden: Das System wurde auf den letzten Drücker entwickelt. 
+\item Spaghetti-Code:\\
+Das System hat wenig Struktur. Die Funktionen sind in Dateien aufgeteilt sind, was positiv zu bewerten ist. In diesen Dateien ist jedoch HTML-, CSS-, PHP- und Javascript-Code durcheinander geschrieben.\\
+Die Dateien sind zwar wie Objekte bezeichnet, allerdings nur prozedural programmiert.
+\item Blob (light):\\
+Das System ist überhaupt nicht objektorientiert geschrieben. Allerdings haben die einzelnen Dateien den Charakter eines Objektes, das alles alleine macht.
+\item Goldener Hammer:\\
+In der Datei \lstinline`lessonsJQ.php` wird der Hammer Javascript/Ajax grundsätzlich zum Füllen der Webseite mit der ausgewählten Lektion angewendet -- egal, ob die Dynamik benötigt wird oder nicht: Sie wird nicht benötigt, wenn die Datei initial aufgerufen wird (was der Regelfall ist). Sie wird eigentlich nur benötigt, wenn die Richtung der Vokabelabfrage gewechselt werden soll. Das führt zu teils doppelter Last für den Webserver, der den php Code der Seite und gesonderten php-Code über die Ajax-Abfrage ausführen muss.
+\end{itemize}
+
+
+\section{Beseitigung}
+
+Zunächst wurde der Quellcode der 3 Dateien analysiert und bereits in grobe Funktionalitäten (als Funktionen benannt) eingeteilt, die den Ablauf des Programms beschreiben. Mit diesen Funktionen wurde nun ein Ist-Diagramm erstellt (siehe \autoref{analquell}).
+
+Wie schon im Ist-Diagramm (und der Vorarbeit dazu) gut zu erkennen, wiederholen sich in den drei PHP-Dateien einige Funktionalitäten immer wieder. Diese können leicht zu einer einzigen Funktion zusammen gelegt werden. 
+
+Ebenfalls ist zu erkennen, dass einige Aufgaben in gemeinsame Kategorien, also Klassen, eingeteilt werden können. Funktionen wie \lstinline`printHeader()` und \lstinline`printFooter()` werden in einer Klasse \lstinline`page.class.php` als Funktionen zusammen gelegt. Damit sind die Funktionalitäten für die gleiche Kategorie an einem Ort zu finden sind. Weitere Funktionen, die zum Beispiel den Aufbau der Seite betreffen, können dann ebenfalls in dieser Klasse untergebracht werden. Im Falle von Änderungen einer Funktion(alität) muss diese nicht in jeder einzelnen Datei, sondern nur an einer Stelle -- der entsprechenden Klasse -- angepasst werden.
+
+Auch die Verwendung von großen Programmabschnitten in anderen Sprachen kann durch die Einteilung in PHP-Klassen deutlich übersichtlicher gestaltet werden. Damit soll vor allem auch erreicht werden, dass in einer späteren \lstinline`index.php` Datei hauptsächlich eine Sprache benutzt wird (HTML). Nur die Initialisierung der \lstinline`page`-Klasse und kurze Aufrufe tauchen so im HTML-Code auf. Auch der Javascript-Code wird in eine separate Datei verfrachtet und von der \lstinline`index`-Datei eingebunden.
+
+Die Modellierung der Funktionen in den einzelnen Klassen ist in folgendem Klassendiagramm angedeutet:
+\begin{center}
+\includegraphics[width=.8\textwidth]{Klassendiagramm.pdf}
+\end{center}
+In den angedeuteten Klassen sind einige Funktionen, die beim Implementieren noch entstehen würden, noch nicht enthalten. Das Diagramm soll nur zur Veranschaulichung der Beseitigung der Symptome gelten.\bigskip
+
+Im Folgenden sind nun die einzelnen Dateien/Klassen entworfen:
+\begin{itemize}
+\item Durch die \lstinline`index`-Datei wird die Webseite aufgerufen:
+\begin{lstlisting}[language=html]
+<!DOCTYPE html>
+<html lang="de">
+<?php
+// Erzeuge die Verwaltung für den Seiteninhalt:
+include_once 'page.class.php';
+$page = new Page ();
+?>
+<head>
+	<!-- Binde die Stylesheet- und Javascript-Datei ein: -->
+	<link rel="stylesheet" href="style.css" />
+	<script src="script.js"></script>
+</head>
+<body>
+	<?php
+	// Generiere Inhalt des Headers:
+	$page->printHeader();
+	?>
+		<main>
+			<?php
+			// Generiere Main-Seiteninhalt:
+			$page->printMainContent ();
+			?>
+		</main>
+<?php
+	// Generiere Inhalt des Footers:
+	$page->printFooter();
+	?>
+</body>
+
+</html>
+\end{lstlisting}
+\item In der darin eingebundenen Javascript-Datei wird das dynamische Wechseln der Sprache realisiert:
+\begin{lstlisting}[]
+function switchLanguage() {
+	/*
+	* Ändert die Abfragerichtung der Sprache, indem die entsprechenden Felder ausgetauscht werden und die Adresszeile korrigiert wird.
+	*/
+}
+\end{lstlisting}
+\item Die \lstinline`page`-Klasse realisiert die Logik der Webseite:
+\begin{lstlisting}[language=php]
+<?php
+class page {
+	// Potentielle Variablen.
+
+	public function __construct() {
+		// Potentielle Variablen mit Start Werten initialisieren.
+	}
+
+	public function printHeader() {
+		// Erstellen des Kontents im Header der Webseite.
+	}	
+
+	public function printFooter() {
+		// Erstellen des Kontents im Footer der Webseite.
+	}
+
+	public function readPostVars() {
+		// Einlesen der mit Post übergebenen Variablen.
+	}
+
+	public function printMainContent(var PostVar) {
+		// Erstellen des Kontents im Body der Webseite mit Hilfe der übergebenen Variablen.
+	}
+}
+\end{lstlisting}
+\item Die \lstinline`lesson`-Klasse kümmert sich um die Lektion (falls die entsprechende Seite aufgerufen wird):
+\begin{lstlisting}[language=php]
+<?php
+class Lesson {
+	// potentielle globale Variablen (wie die Lektion o.ä.)
+	
+	public function __construct() {
+		// Potentielle Variablen mit Start Werten initialisieren.
+	}
+	
+	public function getVocabulary() {
+		// Holt die entsprechenden Vokabeln aus der Datei.
+	}
+}
+\end{lstlisting}
+\item Die \lstinline`filehandler`-Klasse ist für den Umgang mit der Datei, in der die Vokabel abgespeichert sind, verantwortlich:
+\begin{lstlisting}[language=php]
+<?php
+/* Einbinden potentieller Bibliotheken. */
+
+class filehandler {
+	/* Potentielle Variablen. */
+	private $languageFile
+	private $statFile
+
+	public function __construct() {
+		/* Initialisieren von $languageFile und statFile. */
+	}
+
+	public function openStatFile() {
+		/* Öffnen der Statistik Datei. */
+	}	
+
+	public function uploadStatFile() {
+		/* Hochladen der Statistik Datei. */
+	}
+
+	public function checkExistingFile() {
+		/* Dateien auf Existenz prüfen. */
+	}
+
+	public function uploadLanguageFile() {
+		/* Hochladen der angegebenen Sprachdatei. */
+	}
+}
+\end{lstlisting}
+\end{itemize}
+Durch diese Überlegungen können alle Symptome beseitigt werden.
+
+
+\end{document}
