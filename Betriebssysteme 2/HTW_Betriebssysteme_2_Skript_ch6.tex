@@ -64,17 +64,152 @@ Hinweis: Rootkit ist nicht dafür da, root zu werden, sondern das Schadprogramm 
 \slides{07-security}{30}
 
 \section{Authentifizierungsmechanismen}
+\lecdate{05.07.2017}
+\slides{07-security}{31}
+Athentifizierung: Identifikation von einem Nutzer durch einen Host-Rechner.
+
+\subsection{Angriffe auf den Authorisierungsvorgang}
+\slides{07-security}{32}
+\subsubsection{Erraten des Passworts}
+\slides{07-security}{33}
+\subsubsection*{Beispiel /var/log/auth.log}
+\slides{07-security}{34}
+\subsubsection{Wörterbuchangriff}
+\slides{07-security}{35}
+\subsubsection{Erschweren des Wörterbuchangriffs mittels Salz}
+\slides{07-security}{36}
+\subsubsection*{Beispiel: Bibliotheksfunktion crypt()}
+\slides{07-security}{37}
+\subsubsection*{Weitere Gegenmaßnahmen}
+\slides{07-security}{38}
+
+\subsection{Challenge-Response zur Authentifizierung}
+\slides{07-security}{39}
+
+\subsection{Beispiel: Authentifizierung in Windows}
+\slides{07-security}{40}
+
+\subsection{Sicherheit von NTLM}
+\slides{07-security}{41}
+
+\subsection{Authentifizierung mit physischen Objekten}
+\slides{07-security}{42}
 
 \section{Angriffstechniken}
+\begin{itemize}
+\item Heap Overflow (nicht regulär auszunutzen)
+\item Integer Overflow (nicht regulär auszunutzen)
+\item Stack Overflow: spezielle Form eines Buffer Overflows
+\item Return-into-Libc-Exploit: Libc (return-)Aufruf umleiten
+\item Return-Oriented-Programming (ROP)
+\item Format-String-Attacke: Versuche \lstinline`printf` oder vergleichbares auszunutzen
+\end{itemize}
 
 \subsection{Buffer Overflow}
+\slides{07-security}{44}
+Sehr einfaches verwundbares Programm:\\
+\lstinline`strcopy` interessiert sich nicht für Buffergröße $\to$ gesamtes \lstinline`argv[1]` wird in Speicher geschrieben. Dadurch kann die Rücksprungadresse überschrieben werden. Damit kann Schadcode ausgeführt werden (das wird von modernen Betriebssystemen allerdings verhindert):
+
+\subsubsection{Prinzip}
+\slides{07-security}{45}
+
+\subsubsection{Ausschnitt des Stacks}
+\slides{07-security}{46}
+SFP: Saved Frame Pointer\\
+<Ret>: Rückkehradresse
+%\slides{07-security}{47}
+%\slides{07-security}{48}
+\slides{07-security}{49}
+\slides{07-security}{50}
+Return kehrt zu eigenem Code im Puffer zurück.
+
+\subsubsection{Einfache Gegenmaßnahmen}
+\slides{07-security}{51}
+
+\subsubsection{Stackguard}
+\slides{07-security}{52}
+\subsubsection*{Wahl des Canary Words}
+\slides{07-security}{53}
+Canary word verhindert, dass es vom Angreifer eingegeben und kopiert werden kann -- wenn doch, dann würde beim Terminator Canary die Eingabe abbrechen.
+\subsubsection*{Grenzen des Konzepts}
+\slides{07-security}{54}
+
+\subsubsection{StackShield}
+\slides{07-security}{55}
+
+\subsubsection[Ausführungsverbote beschreibbarer Seiten]{Ausführungsverbote beschreibbarer Seiten ($W \oplus X$)}
+\slides{07-security}{56}
+\slides{07-security}{58}
+\slides{07-security}{59}
+\begin{itemize}
+\item Text: +X+R -W
+\item Data: +R+W -X
+\item Stack: +R+W -X
+\end{itemize}
+\subsubsection*{Adressumsetzung PAE (NX)}
+\slides{07-security}{57}
+
+\subsubsection{Address Space Layout Randomization (ASLR)}
+\slides{07-security}{60}
+Weiterhin negativ: tiefer Eingriff ins System; einige Programme müssen ohne ASLR laufen, weil sie sonst nicht mehr funktionieren (bleiben angreifbar)
 
 \subsection{Return-into-Libc}
+\slides{07-security}{61}
+\subsubsection*{Stacklayout}
+\slides{07-security}{62}
+\subsubsection*{Verkettung zweier Libc-Aufrufe}
+\slides{07-security}{66}
+\slides{07-security}{67}
+\subsubsection*{Anmerkungen}
+\slides{07-security}{63}
+\subsubsection{Bestimmung der Einsprungsadresse (statisch)}
+\slides{07-security}{64}
+\subsubsection{Dynamische Bestimmung der Einsprungadresse}
+\slides{07-security}{65}
+\subsubsection{Weitere Techniken}
+\slides{07-security}{68}
+
 
 \subsection{Format String Exploit}
+\subsubsection{Funktionalität von printf()}
+\slides{07-security}{70}
+\subsubsection*{Beispiel}
+\slides{07-security}{71}
+\subsubsection{Explizite Adressierung von Argumenten}
+\slides{07-security}{72}
+\subsubsection*{Stacklayout}
+\slides{07-security}{73}
+\subsubsection{Beispiel für verwundbare Funktion}
+\slides{07-security}{74}
+\slides{07-security}{75}
+%%% TODO: Folien
+
+\subsection{Heap-Overflow}
+\slides{07-security}{91}
+Beispiel: 
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char* argv[]){
+	char *buf;
+	char* num;
+	
+	buf = malloc(20);
+	num = malloc(sizeof(int));
+	
+	*num = 42;
+	printf("num = %d\n", *num);
+	
+	gets(buf);
+	printf("num = %d\n", *num);
+}
+\end{lstlisting}
+Wenn Eingabe zu Lang ist: Num wird überschrieben.
+\subsection{Integer-Overflow}
+\slides{07-security}{92}
+\subsubsection*{Beispiel}
+\slides{07-security}{93}
 
 \section{Angriffscode (Shell)}
-
-
-% Folie 44:
-\lstinline`strcopy` interessiert sich nicht für Buffergröße $\to$ gesamtes \lstinline`argv[1]` wird in Speicher geschrieben. Dadurch kann die Rücksprungadresse überschrieben werden. Damit kann Schadcode ausgeführt werden (das wird von modernen Betriebssystemen allerdings verhindert).
+%%% TODO: Folien
