@@ -13,9 +13,9 @@
 \chair{Lehrstuhl für Softwaretechnologie}
 \thesis{Belegarbeit}
 \title{Antipattern}
-\author{Falk-Jonatan Strube (s74053)\texorpdfstring{\\}{, }
-Jürgen Tomaszewski (s76451)\texorpdfstring{\\}{, }
-Simon Retsch (s74077)}
+\author{Simon Retsch (s74077)\texorpdfstring{\\}{, }
+Falk-Jonatan Strube (s74053)\texorpdfstring{\\}{, }
+Jürgen Tomaszewski (s76451)}
 \professor{Prof. Dr. Anna Sabine Hauptmann}
 \begin{document}
 \maketitle
@@ -23,13 +23,26 @@ Simon Retsch (s74077)}
 \tableofcontents
 
 \section{Aufgabe}
-Die Aufgabe dieses Belegs lautet einen (objektorientiert) geschriebenen Quellcode anschauen, wo Verbesserungspotential vorhanden ist. Der originaler Quellcode, die Symptome und deren Beseitigung sind zu beschreiben. Auszüge aus Klassendiagrammen sind erwünscht.
+Die Aufgabe dieses Belegs ist, einen (objektorientiert) geschriebenen Quellcode zu betrachten, bei dem Verbesserungspotential vorhanden ist. Der originale Quellcode, die Symptome und deren Beseitigung sind zu beschreiben. Auszüge aus Klassendiagrammen sind erwünscht.
 
 \section{Quellcode}
 \label{quellcode}
 Der Quellcode ist aus einer Belegarbeit des Fachs \emph{Internettechnologien 1} entnommen. Dort war die Aufgabe einen primitiven Vokabeltrainer über eine Webseite zu programmieren. 
-Zur Veranschaulichung wurden daraus drei Dateien ausgewählt:
+Zur Veranschaulichung wurden daraus drei Dateien ausgewählt, die gleichzeitig auch drei Anzeigen der Software darstellen:
+\begin{itemize}
+\item \lstinline`lessonsJQ.php`
+\item \lstinline`resultJQ.php`
+\item \lstinline`setupJQ.php`
+\end{itemize}
+\begin{center}
+\includegraphics[width=.31\textwidth]{pic/lesson.PNG}
+\includegraphics[width=.31\textwidth]{pic/result.PNG}
+\includegraphics[width=.31\textwidth]{pic/setup.PNG}
+\end{center}
+Der vollständige originale Quellcode ist auf Folgenden Seiten in \autoref{origquell}, die Analyse dieses Quellcodes ab \autopageref{analquell} im \autoref{analquell} zu finden.
+\clearpage
 \subsection{Originaler Quellcode}
+\label{origquell}
 \begin{itemize}
 \item \lstinline`lessonsJQ.php`
 \begin{lstlisting}[language=html]
@@ -559,6 +572,7 @@ Zur Veranschaulichung wurden daraus drei Dateien ausgewählt:
 </html>
 \end{lstlisting}
 \end{itemize}
+\clearpage
 \subsection{Analyse des Quellcodes}
 \label{analquell}
 Die entnommenen Dateien können wie folgt beschrieben werden:
@@ -630,11 +644,13 @@ In der Datei \lstinline`lessonsJQ.php` wird der Hammer Javascript/Ajax grundsät
 
 Zunächst wurde der Quellcode der 3 Dateien analysiert und bereits in grobe Funktionalitäten (als Funktionen benannt) eingeteilt, die den Ablauf des Programms beschreiben. Mit diesen Funktionen wurde nun ein Ist-Diagramm erstellt (siehe \autoref{analquell}).
 
-Wie schon im Ist-Diagramm (und der Vorarbeit dazu) gut zu erkennen, wiederholen sich in den drei PHP-Dateien einige Funktionalitäten immer wieder. Diese können leicht zu einer einzigen Funktion zusammengelegt werden. 
+Wie dort gut zu erkennen, wiederholen sich in den drei PHP-Dateien einige Funktionalitäten immer wieder. 
 
-Ebenfalls ist zu erkennen, dass einige Aufgaben in gemeinsame Kategorien, also Klassen, eingeteilt werden können. Funktionen wie \lstinline`printHeader()` und \lstinline`printFooter()` werden in einer Klasse \lstinline`page.class.php` als Funktionen zusammen gelegt. Damit sind die Funktionalitäten für die gleiche Kategorie an einem Ort zu finden sind. Weitere Funktionen, die zum Beispiel den Aufbau der Seite betreffen, können dann ebenfalls in dieser Klasse untergebracht werden. Im Falle von Änderungen einer Funktion(alität) muss diese nicht in jeder einzelnen Datei, sondern nur an einer Stelle -- der entsprechenden Klasse -- angepasst werden.
+Ebenfalls ist zu erkennen, dass einige Aufgaben in gemeinsame Kategorien, also Klassen, eingeteilt werden können. 
 
-Auch die Verwendung von großen Programmabschnitten in anderen Sprachen kann durch die Einteilung in PHP-Klassen deutlich übersichtlicher gestaltet werden. Damit soll vor allem auch erreicht werden, dass in einer späteren \lstinline`index.php` Datei hauptsächlich eine Sprache benutzt wird (HTML). Nur die Initialisierung der \lstinline`page`-Klasse und kurze Aufrufe tauchen so im HTML-Code auf. Auch der Javascript-Code wird in eine separate Datei verfrachtet und von der \lstinline`index`-Datei eingebunden.
+Mit diesen Erkenntnissen können Funktionen wie \lstinline`printHeader()` und \lstinline`printFooter()` in einer Klasse \lstinline`page.class.php` als zusammen gelegt. Damit sind die Funktionalitäten gleichen Typs an einem Ort zu finden. Weitere Funktionen, die zum Beispiel den Aufbau der Seite betreffen, können dann ebenfalls in dieser Klasse untergebracht werden. Im Falle von Änderungen einer Funktion(alität) muss diese nicht in jeder einzelnen Datei, sondern nur an einer Stelle -- der entsprechenden Klasse -- angepasst werden.
+
+Auch die Verwendung von großen Programmabschnitten in anderen Sprachen kann durch die Einteilung in PHP-Klassen deutlich übersichtlicher gestaltet werden. Damit soll vor allem auch erreicht werden, dass in einer späteren \lstinline`index.php` Datei hauptsächlich eine Sprache benutzt wird (HTML). Nur die Initialisierung der \lstinline`page`-Klasse und kurze Aufrufe tauchen so im HTML-Code auf. Der Javascript-Code wird ebenfalls in eine separate Datei verschoben und von der \lstinline`index`-Datei eingebunden.
 
 Die Modellierung der Funktionen in den einzelnen Klassen ist in folgendem Klassendiagramm angedeutet:
 \begin{center}
