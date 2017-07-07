@@ -13,6 +13,12 @@
 
 %[language={[Sharp]C}]
 \slideScale{.6}
+% Zu viel Inhalt -- mehr Platz im Inhaltsverzeichnis:
+\makeatletter
+\renewcommand{\@pnumwidth}{1.75em} 
+\makeatother
+\RedeclareSectionCommand[tocnumwidth=4.5em]{subsubsection}
+\RedeclareSectionCommand[tocnumwidth=3.5em]{subsection}
 \begin{document}
 \maketitle
 \tableofcontents

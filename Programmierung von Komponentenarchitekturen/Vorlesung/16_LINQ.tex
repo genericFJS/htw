@@ -1,4 +1,4 @@
-\slideScale{.48}
+\slideScale{.47}
 \section{Nutzen von Link}
 \slides{Vorlesung/16_LINQ_Studentenversion}{2}
 \slides{Vorlesung/16_LINQ_Studentenversion}{3}
@@ -29,16 +29,22 @@
 \slides{Vorlesung/16_LINQ_Studentenversion}{16}
 Selektor: \lstinline`person => person` (Delegate) entspricht hier \lstinline`SELECT *`
 
-\subsection{Fragen}
+\subsubsection*{Beispiel}
 \slides{Vorlesung/16_LINQ_Studentenversion}{17}
 \begin{itemize}
 \item Wenn im Vornherein die Datenquelle bekannt ist, kann IntelliSense entsprechend der Quelle Vorschläge machen.
 \item Ergebnis ist vom Typ \lstinline`IEnumerable<Person>`
 \end{itemize}
 
-
+\subsection{Selektor}
 \lecdate{16.06.2017}
+\slides{Vorlesung/16_LINQ_Studentenversion}{18}
 
+\subsection{Unterabfragen}
+\slides{Vorlesung/16_LINQ_Studentenversion}{19}
+
+\subsubsection*{Beispiel}
+\slides{Vorlesung/16_LINQ_Studentenversion}{20}
 Antwort Kinder:\\
 8 Elemente:
 \begin{itemize}
@@ -56,14 +62,41 @@ Antwort Enkel:\\
 \item Klaus, Petra, Günther und Manuela haben je zwei Enkelkinder 
 \end{itemize}
 
-%%% FOLIEN
+\subsection{Select vs SelectMany}
+\slides{Vorlesung/16_LINQ_Studentenversion}{21}
+\slides{Vorlesung/16_LINQ_Studentenversion}{22}
+\slides{Vorlesung/16_LINQ_Studentenversion}{23}
 
-Funktioniert SELECT immer oder braucht jede Datenquelle ein eigenes SELECT?\\
+\subsection{Where}
+\slides{Vorlesung/16_LINQ_Studentenversion}{24}
+\slides{Vorlesung/16_LINQ_Studentenversion}{25}
 
+\subsection{Ausführen der Abfrage}
+\slides{Vorlesung/16_LINQ_Studentenversion}{26}
+\slides{Vorlesung/16_LINQ_Studentenversion}{27}
+\subsubsection*{Beispiel 1}
+\slides{Vorlesung/16_LINQ_Studentenversion}{28}
+\subsubsection*{Beispiel 2}
+\slides{Vorlesung/16_LINQ_Studentenversion}{29}
+$\to $ Funktioniert SELECT immer oder braucht jede Datenquelle ein eigenes SELECT?\\
 NEIN!\\
 Abfragesyntax ist nicht fest mit den entsprechenden Standardabfrageoperatoren verdrahtet.\\
 Es wird eine Zwischenschicht benötigt, die zwischen LINQ abfrage und Datenquelle liegt ($\to$ LINQ-Provider)
 
-%%% FOLIEN
-Gebildeten Gruppen:
+\subsection{GroupBy}
+\slides{Vorlesung/16_LINQ_Studentenversion}{32}
+\slides{Vorlesung/16_LINQ_Studentenversion}{33}
+\subsubsection*{Beispiel}
+\slides{Vorlesung/16_LINQ_Studentenversion}{34}
+\subsubsection{Composite-Keys}
+\slides{Vorlesung/16_LINQ_Studentenversion}{35}
 
+\section{LINQ-Provider/Implementierungen/Flavors}
+\slides{Vorlesung/16_LINQ_Studentenversion}{30}
+\slides{Vorlesung/16_LINQ_Studentenversion}{31}
+
+\section{Weiteres}
+\subsection{Abfrageoperatoren}
+\slides{Vorlesung/16_LINQ_Studentenversion}{38}
+\subsection{Anwendungsbeispiel}
+\slides{Vorlesung/16_LINQ_Studentenversion}{39}
