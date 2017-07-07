@@ -33,72 +33,175 @@ Gliederung
 \item Agile / emergente Entwicklung 
 \end{itemize}
 
-\section{Prüfung}
+\section*{Prüfung}
 \begin{itemize}
 \item Prüfung am PC (PC-Pool) $\to$ hauptsächlich Programmierung, ggf. ein wenig Verständnisfragen
 \item Skripte/Notizen/Bücher erlaubt (jedes nicht-elektronische Hilfsmittel)
 \end{itemize}
 
-%\chapter{Einführung}
-%\input{Vorlesung/1_Introduction}
-%
-%\chapter{Grundlagen C\#}
-%\input{Vorlesung/2_Grundlagen_C_}
-%
-%\chapter{Methoden und Parameter Modifizierer}
-%\input{Vorlesung/3_Methoden_und_Parameter_Modifizierer}
-%
-%\chapter{Array / Struct / Enum}
-%\input{Vorlesung/4_ArrayStructEnum}
-% 
-%\chapter{Objekt-orientierung in C\#}
-%\input{Vorlesung/5_Objekt-Orientierung}
-%
-%\chapter{Interfaces (Schnittstellen)}
-%\input{Vorlesung/6_Interfaces}
-%
-%\chapter{Generik}
-%\input{Vorlesung/7_Generik}
-%
-%\chapter{Exceptions}
-%\input{Vorlesung/8_Exceptions}
-%
-%\chapter{Delegates und Events}
-%\input{Vorlesung/9_DelegatesEvents}
-%
-%\chapter{Windows Forms}
-%\input{Vorlesung/10_WinForms}
-%\input{Vorlesung/10_WinForms_Events}
-%
-%\chapter{Sockets}
-%\input{Vorlesung/11_Sockets}
-%
-%\chapter{DLLs/COM}
-%\input{Vorlesung/12_COM}
-%
-%\chapter{Parallele Programmierung}
-%\section{Einleitung}
-%\input{Vorlesung/13.0_Parallel_Einleitung}
-%\section{Multithreading}
-%\input{Vorlesung/13.1_Parallel_Multithreading}
-%\section{Synchronisation von Threads}
-%\input{Vorlesung/13.2_Parallel_Synchronisation}
-%\section{Deadlock, Starvation}
-%\input{Vorlesung/13.3_Parallel_Deadlocks}
-%\section{Asynchrone Methoden}
-%\input{Vorlesung/13.4_Parallel_Asynchron}
-%\section{Task Parallel Library}
-%\input{Vorlesung/13.5_Parallel_Tasks}
-%\section{Asynch/Await}
-%\input{Vorlesung/13.6_Parallel_AsyncAwait}
-%
-%\chapter{Iteratoren: IEnumerable, IEnumerator, yield return}
-%\input{Vorlesung/14_Iteratoren_IEnumerable_IEnumerator_yieldreturn}
-%
-%\chapter{C\# Features: Attribute, Reflections, Extension methods}
-%\input{Vorlesung/15_C_Features_Attributes_Reflections_Extensions}
+\subsection*{Themen der Prüfung}
+\begin{itemize}
+\item Klassen und Konstruktoren anlegen
+\item Properties
+\item Polymorphie / Methoden überschreiben
+\item Interfaces
+\item Exceptions
+\item generische Collections (List)
+\item Windows Forms
+\item Parallelisierung
+\begin{itemize}
+\item Parallel.For
+\item Threads / Tasks
+\item Locking / Thread-Safety
+\item Async / Await
+\end{itemize}
+\item Iteratoren (IEnumerable, IEnumerator)
+\item Lambda Expressions
+\end{itemize}
+\subsection*{NICHT Themen der Prüfung}
+\begin{itemize}
+\item Test-Driven Development
+\item Sockets, DLL \& COM
+\item Attribute, Reflections
+\item LINQ
+\end{itemize}
+
+\subsection*{Umfang der Prüfung}
+\begin{itemize}
+\item 2 große Aufgaben (jeweils ca. 1 Stunde Programmierzeit)
+\end{itemize}
+
+\chapter{Einführung}
+\input{Vorlesung/1_Introduction}
+
+\chapter{Grundlagen C\#}
+\input{Vorlesung/2_Grundlagen_C_}
+
+\chapter{Methoden und Parameter Modifizierer}
+\input{Vorlesung/3_Methoden_und_Parameter_Modifizierer}
+
+\chapter{Array / Struct / Enum}
+\input{Vorlesung/4_ArrayStructEnum}
+ 
+\chapter{Objekt-orientierung in C\#}
+\input{Vorlesung/5_Objekt-Orientierung}
+
+\chapter{Interfaces (Schnittstellen)}
+\input{Vorlesung/6_Interfaces}
+
+\chapter{Generik}
+\input{Vorlesung/7_Generik}
+
+\chapter{Exceptions}
+\input{Vorlesung/8_Exceptions}
+
+\chapter{Delegates und Events}
+\input{Vorlesung/9_DelegatesEvents}
+
+\chapter{Windows Forms}
+\input{Vorlesung/10_WinForms}
+\input{Vorlesung/10_WinForms_Events}
+
+\unimptnt{
+\chapter{Sockets}
+\input{Vorlesung/11_Sockets}
+
+\chapter{DLLs/COM}
+\input{Vorlesung/12_COM}
+}
+
+\chapter{Parallele Programmierung}
+\section{Einleitung}
+\input{Vorlesung/13.0_Parallel_Einleitung}
+\section{Multithreading}
+\input{Vorlesung/13.1_Parallel_Multithreading}
+\section{Synchronisation von Threads}
+\input{Vorlesung/13.2_Parallel_Synchronisation}
+\section{Deadlock, Starvation}
+\input{Vorlesung/13.3_Parallel_Deadlocks}
+\section{Asynchrone Methoden}
+\input{Vorlesung/13.4_Parallel_Asynchron}
+\section{Task Parallel Library}
+\input{Vorlesung/13.5_Parallel_Tasks}
+\section{Asynch/Await}
+\input{Vorlesung/13.6_Parallel_AsyncAwait}
+
+\chapter{Iteratoren: IEnumerable, IEnumerator, yield return}
+\input{Vorlesung/14_Iteratoren_IEnumerable_IEnumerator_yieldreturn}
+
+\unimptnt{
+\chapter{C\# Features: Attribute, Reflections, Extension methods}
+\input{Vorlesung/15_C_Features_Attributes_Reflections_Extensions}
 
 \chapter{LINQ}
 \input{Vorlesung/16_LINQ}
+}
+
+\chapter{Wiederholung}
+\lecdate{07.07.2017}
+\section{Lambda Expressions}
+Zur Veranschaulichung:
+\begin{lstlisting}[language={[Sharp]C}]
+delegate double myDel(double x, int i);
+//...
+myDel myMethodWithLambda = (x,i) => x + i;
+double result = myMethodWithLambda(1.2, 2);
+\end{lstlisting}
+Oder:
+\begin{lstlisting}[language={[Sharp]C}]
+double[] x = { 1, 2, 5, 3, 7, 4 };
+x = x.OrderBy((xi) => xi).ToArray();
+// Orderby sortiert, aber weiß nicht wie. Mit der Lambda-Expr. teilen wir es ihr mit, dass nur die Zahl als solche übergibt.
+// Alternativ zum Beispiel rückwärts sortiert:
+x = x.OrderBy((xi) => -xi).ToArray();
+// auch noch komplizierter (erst gerade, dann ungerade Zahlen):
+x = x.OrderBy((xi) => {
+	if (xi%2 == 0)
+		return 0
+	else
+		return 1
+}).ToArray();
+// ohne Lambda, mit vorher definierter Methode:
+x = x.OrderBy(MySortMethod).ToArray();
+\end{lstlisting}
+Zusammenfassung:
+\begin{lstlisting}[language={[Sharp]C}]
+// Lambda-Expression ohne Übergabewert:
+() => 0;
+// einfache Lambda-Expression:
+(x,y,z) => 0;
+// komplexere Lambda-Expression:
+(x,y,z) => { /* ... */ }
+\end{lstlisting}
+Lambda Expressions sind sinnvoll, wenn Methode nur einmalig / an einer Stelle benötigt wird -- braucht/hat keinen Methodennamen.
+\subsection*{Zugriff auf lokale Variable}
+\begin{lstlisting}[language={[Sharp]C}]
+static double MySortMethod(double xi){
+	return xi;	// xi*i nicht möglich!
+}
+
+i = 5;
+x = x.OrderBy((xi) => {
+	if (xi%i == 0)
+		return 0
+	else
+		return 1
+}).ToArray();	// Zugriff auf lokales i möglich
+x = x.OrderBy(MySortMethod).ToArray();	// Kein Zugriff auf lokales i möglich
+
+// Der Zustand der Variable bleibt aktuell:
+for (int i=0; i<2; i++){
+	Task t = new Task(() => { Console.WriteLine(i); }); // diese Line wird wahrscheinlich erst gestartet, wenn Schleife schon längst beendet ist (da Task ggf. initialisiert werden muss o.ä.) Ausgabe ist also nicht, wie erwartet "0 1", sondern "2 2"
+	t.Start();
+}
+// Soll gezählt werden, müsste folgendes gemacht werden:
+for (int i=0; i<2; i++){
+	k = i;	// i wird explizit gefangen.
+	Task t = new Task(() => { Console.WriteLine(k); }); 
+	t.Start();
+}	// Ausgabe nun "0 1"
+\end{lstlisting}
+
+
 
 \end{document}
