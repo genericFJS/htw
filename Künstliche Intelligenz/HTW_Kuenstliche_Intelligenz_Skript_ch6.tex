@@ -2,13 +2,15 @@
 \section{Formeln und Begriffe}
 %\\
 $$\text{Notation: } \PP(A,B)=\PP(A \cap B)$$
-$$\PP(\bullet | A ) = \cA[0,1]$$
+%$$\PP(\bullet | A ) = \cA[0,1]$$
 $$\PP(B|A)=\frac{\PP(A \cap B)}{\PP(A)} \quad \text{bzw. } \PP(B|A)\cdot \PP(A) = \PP(A,B)$$
 Dies gilt nur, wenn $B$ nur von $A$ abhängig ist und nicht von weiteren. Sonst: Marginalisierung / disjunkte Zerlegung:
 $$\PP(A) = \PP(A\cap (B \cup \overline{B}))=\PP((A \cap B) \cup (A \cap \overline{B}))=\PP(A \cap B) + \PP(A\cap \overline{B})=\PP(A,B)+\PP(A, \overline{B})$$
-$$A, \;B \text{ unabhängig}\Leftrightarrow \PP(A \cap B)=\PP(A) \cdot \PP(B)$$
-$$P\left(\sum A_k\right) = \sum \PP(A_k)$$
-$$P\left(\bigcup A_k\right) \leq \sum \PP(A_k)$$
+$$A, \;B \text{ unabhängig}\Leftrightarrow \PP(A \cap B)=\PP(A) \cdot \PP(B) \text{ und auch: }\PP(A \cap B | X)=\PP(A|X) \cdot \PP(B|X)$$
+$$\PP(A) = \PP(A|B) \cdot \PP(B) + \PP(A|\overline{B}) \cdot \PP(\overline{B})$$
+$$\PP(A|B)=1-\PP(\overline{A}|B)$$
+$$\PP\left(\sum A_k\right) = \sum \PP(A_k)$$
+$$\PP\left(\bigcup A_k\right) \leq \sum \PP(A_k)$$
 Ereignisse $A$, $B$ heißen \emph{bedingt unabhängig} gegeben $C$, wenn gilt $\PP(A,B|C) = \PP(A|C) \cdot \PP(B|C)$. Dies ist gleichwertig damit, dass $A$, $B$ unabhängig bezüglich des W-Maßes $\PP(\bullet|C)$ sind.\\
 Hinweis zur Berechnung von Wahrscheinlichkeiten:
 \begin{center}

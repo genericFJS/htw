@@ -230,11 +230,38 @@ tweg(X,Y) :- weg(X,Y); weg(X,Z), tweg(Z,Y).
 
 \section{Aufgabe 12}
 %%% TODO
+--
 
 \chapter{Praktikum 5: Vereinfachung Prolog}
 
 \section{Aufgabe 12}
-%%% TODO
+\begin{lstlisting}[language=Prolog]
+d(X,X,1).
+d(C,X,0) :- atomic(C), C \== X.
+d(-F,X,-DF) :- d(F,X,DF).
+d(C*F,X,C*DF) :- d(C,X,0), d(F,X,DF).
+d(F+G,X,DF+DG) :- d(F,X,DF), d(G,X,DG).
+d(F-G,X,DF-DG) :- d(F,X,DF), d(G,X,DG).
+d(F^N,X,N*F^M*DF) :- number(N), M is N-1, d(F,X,DF).
+
+
+s(A*B,C) :- s(A,SA) , s(B,SB), s0(SA*SB,C).
+s(A+B,C) :- s(A,SA) , s(B,SB), s0(SA+SB,C).
+s(A,A).
+
+s0(A*X+B*X,C*X):- s0(A+B,C).
+s0(A*X*B,C*X):- s0(A*B,C).
+s0(A*B,C) :-  number(A), number(B),C is A*B.
+s0(A+B,C) :-  number(A), number(B),C is A+B.
+s0(X*X,X^2).
+s0(0+A,A).
+s0(A+0,A).
+s0(1*A,A).
+s0(A*1,A).
+s0(A,A).
+
+diff(A,C) :- d(A,x,B), s(B,C).
+\end{lstlisting}
 
 \section{Aufgabe 13}
 \lstinputlisting[language=Prolog]{Prolog/aufg13.pl}
@@ -242,7 +269,7 @@ tweg(X,Y) :- weg(X,Y); weg(X,Z), tweg(Z,Y).
 
 \chapter{Praktikum 6: Umformungen Prolog}
 \section{Aufgabe 14}
-%%% TODO
+--
 
 \chapter{Praktikum 7: Suche}
 \section{Aufgabe 15}
@@ -253,7 +280,18 @@ tweg(X,Y) :- weg(X,Y); weg(X,Z), tweg(Z,Y).
 
 \chapter{Praktikum 8: Pfadsuche}
 \section{Aufgabe 16}
-%%% TODO
+\begin{lstlisting}[language=Prolog]
+adj0(X,Y) :- (Y is X+1; Y is X-1), between(1,8,Y).
+adj((X1,Y1),(X2,Y2)) :-
+	adj0(X1,X2), Y2 = Y1;
+	adj0(Y1,Y2), X2 = X1.
+goal((8,8)).
+dfs4(Node, Path, ReturnPath) :-
+	goal(Node), reverse(Path, ReturnPath);
+	adj(Node, NewNeighbor), not(member(NewNeighbor,Path)),
+	dfs4(NewNeighbor, [NewNeighbor|Path],ReturnPath).
+\end{lstlisting}
+
 
 \chapter{Praktikum 9: Pfadsuche}
 \section{Aufgabe 17}
@@ -390,11 +428,529 @@ Eigene Lösung:
 \lstinputlisting[language=Prolog]{Vorlesungsbeispiele/8puzzle.pl}
 
 \section{Aufgabe 22}
-%%% TODO
+Lösung von Raphael Pour:
+\begin{anumerate}
+\item $ $
+\paragraph{Beweisversuch - Zulässigkeit von $h$}
+$h(s)$ ist zulässig wenn $h_m(s) + h_c(s)$ nicht überschätzt. Insbesondere dürfen $h_m(s)$ und $h_c(s)$ nicht überschätzen.
+\subparagraph{Zulässigkeit von $h_m$}
+$h_m(s)$ überschätzt nicht, da diese Heuristik die Manhattan-Distanz einer 16-Puzzle-Brettstellung errechnet mit der Prämisse, dass zwischen Startfeld und Zielfeld keine weiteren Plättchen liegen und theoretisch der direkte Weg (über horizontale bzw. vertikale Bewegungen) möglich ist (siehe~\autoref{fig:man1}). Wenn Start und Zielfeld direkt nebeneinander liegen, ist das Ergebnis von $h_m$, die exakte Anzahl von Zügen (siehe~\autoref{fig:man2}).
+\subparagraph{Zulässigkeit von $h_c$}
+$h_c$  ist zulässig, da in beiden Fällen dieser Funktion nicht überschätzt wird:
+\begin{enumerate}[label=Fall \arabic*:]
+    \item $h_c(s) = 0$\\
+    Ist zulässig, da 0 eine zulässige Heuristik ist (vgl. Vorlesung).
+    \item $h_c(s) = 2$\\
+    Sei in einer Zeile mit dem Index $z_i$ eines beliebigen Spielbretts $s$ die  Plättchen $p,q$. Sei Spielbrett $g$ das Brett mit der Zielstellung bzw. dem Referenzbrett (~\ref{fig:man0}). Damit die Bedingung im diesem Fall gilt muss $q<p$ sein und $p,q$ in Zeile $z_i$ des Brettes $g$ liegen.\\
+    Dieser Fall überschätzt nicht, da für $p,q$ die vertikalen Züge ermittelt werden, welche mindestens beim Tauschen zweier Plättchen nötig wäre. Da bei einem 15-Puzzle nicht direkt vertauscht werden darf, muss ein Plättchen „um das andere herum“ geschoben werden.
+\end{enumerate}
+\subparagraph{Zulässigkeit von $h$}
+Betrachtung von $h(s) = h_m(s) + h_c(s)$
+\begin{enumerate}[label=Fall \arabic*:]
+    \item $h_c(s) = 0$\\
+    In diesem Fall ist $h(s) = h_m(s) + 0 \Rightarrow h(s) = h_m(s) $. Da $h_m$ zulässig ist, ist $h(s)$ in diesem Fall auch zulässig.
+    \item $h_c(s) = 2$\\
+    $h_c$ ergänzt in diesem Fall die Heuristik für das Tauschen von $p,q$, welche durch Heuristik $h_c$ ermittelt wird. Dort werden 4 Züge für den Tausch benötigt. $h_c$ ermittelt 2 für diesen Fall. $h_m$ ermittelt ebenso 2, da für das Verschieben von $p$ auf die Position von $q$ ein Zug benötigt wird und für das Verschieben von $q$ auf die Position für $p$ einen weiteren. Folglich ergibt $h_c(s)= 2$ und $h_m(s) = 2$. Somit ergibt sich $h(s) = 2+2 = 4$. Damit unterschätzt die Funktion $h$ den Minimalfall nicht und $h$ ist zulässig.
+\end{enumerate}
+\begin{figure}[!h]
+\centering
+\begin{tikzpicture}[scale=0.6]
+\foreach \x in {1,...,4}
+\foreach \y in {1,...,4}
+	\draw [] (\x,\y)rectangle node[]{}(1+\x,1+\y);
+\node [] (v6) at (1.5,4.5) {1};
+\node at (2.5,4.5) []{2};
+\node at (3.5,4.5) []{3};
+\node at (4.5,4.5) []{4};
+\node [] (v5) at (1.5,3.5) {5};
+\node at (2.5,3.5) []{6};
+\node at (3.5,3.5) []{7};
+\node at (4.5,3.5) []{8};
+\node [] (v4) at (1.5,2.5) {9};
+\node at (2.5,2.5) []{10};
+\node at (3.5,2.5) []{11};
+\node at (4.5,2.5) []{12};
+\node [] (v3) at (1.5,1.5) {13};
+\node (v7)at (2.5,1.5) []{14};
+\node [] (v2) at (3.5,1.5) {15};
+\node [] (v1) at (4.5,1.5) {16};
+\end{tikzpicture}
+\caption{Zielpositionen}
+\label{fig:man0}
+\end{figure}
+\begin{figure}[!h]
+\centering
+\begin{tikzpicture}[scale=0.6]
+\foreach \x in {1,...,4}
+\foreach \y in {1,...,4} 
+	\draw [] (\x,\y)rectangle node[]{}(1+\x,1+\y);
+\node [] (v6) at (1.5,4.5) {};
+\node at (2.5,4.5) [gray]{};
+\node at (3.5,4.5) [gray]{};
+\node at (4.5,4.5) [gray]{};
+\node [] (v5) at (1.5,3.5) {};
+\node at (2.5,3.5) [gray]{};
+\node at (3.5,3.5) [gray]{};
+\node at (4.5,3.5) [gray]{};
+\node [] (v4) at (1.5,2.5) {};
+\node at (2.5,2.5) [gray]{};
+\node at (3.5,2.5) [gray]{};
+\node at (4.5,2.5) [gray]{};
+\node [] (v3) at (1.5,1.5) {};
+\node (v7)at (2.5,1.5) []{};
+\node [] (v2) at (3.5,1.5) {};
+\node [] (v1) at (4.5,1.5) {1};
+\path
+	(v1) edge [-latex] node  {} (v2)
+	(v2) edge [-latex] node  {} (v7)
+	(v7) edge [-latex] node  {} (v3)
+	(v3) edge [-latex] node  {} (v4)
+	(v4) edge [-latex] node  {} (v5)
+	(v5) edge [-latex] node  []{} (v6);
+\end{tikzpicture}
+\caption{Beispielpfad für Manhattan-Distanz}
+\label{fig:man1}
+\end{figure}
+\begin{figure}[!h]
+\centering
+\begin{tikzpicture}[scale=0.6]
+\foreach \x in {1,...,4}
+\foreach \y in {1,...,4}
+	\draw [] (\x,\y)rectangle node[]{}(1+\x,1+\y);
+\node [] (v1) at (4.5,1.5) {15};
+\path
+	(v1) edge [-latex] node  {} (3.5,1.5);
+\end{tikzpicture}
+\caption{Sonderfall für Manhattan-Distanz}
+\label{fig:man2}
+\end{figure}
+\item 
+\begin{lstlisting}[language=Prolog]
+:- [idas].
+% 16 = Leeres Feld
+% shift stellt mit Hilfe von shift0 alle möglichen
+% horizontalen verschiebungen dar.
+shift0([A,B,C,16],[A,B,16,C]).
+shift0([A,B,16,C],[A,16,B,C]).
+shift0([A,16,B,C],[16,A,B,C]).
+shift(X,Y) :-
+    shift0(X,Y);
+    shift0(Y,X).
+
+% Transponiert die aktuellen Brettposition
+% Mit Hilfe einer Transponierung sind horizontale
+% und vertikale Züge identisch
+transpose([[A1,B1,C1,D1],
+           [A2,B2,C2,D2],
+           [A3,B3,C3,D3],
+           [A4,B4,C4,D4]],
+          [[A1,A2,A3,A4],
+           [B1,B2,B3,B4],
+           [C1,C2,C3,C4],
+           [D1,D2,D3,D4]]
+           ).
+
+adj0([  In,Row2,Row3, Row4],[ Out,Row2,Row3,Row4]) :- shift(In, Out).
+adj0([Row1,  In,Row3, Row4],[Row1, Out,Row3,Row4]) :- shift(In, Out).
+adj0([Row1,Row2,  In, Row4],[Row1,Row2, Out,Row4]) :- shift(In, Out).
+adj0([Row1,Row2,Row3,   In],[Row1,Row2,Row3, Out]) :- shift(In, Out).
 
 
+adj(X,Y) :- adj0(X,Y); (transpose(X,S),adj0(S,R), transpose(R,Y)).
+
+% Die Ziel-Brettpositionen, wobei 16 das leere Feld bedeutet
+goal([[ 1, 2, 3, 4],
+      [ 5, 6, 7, 8],
+      [ 9,10,11,12],
+      [13,14,15,16]]).
+      
+% trivial
+start1([[ 1, 2, 3, 4],
+       [ 5, 6, 7, 8],
+       [ 9,10,11,12],
+       [13,14,16,15]]).
+
+% difficult
+start([[ 1, 2, 3, 4],
+       [ 5, 7, 8, 11],
+       [ 9,6,16,12],
+       [13,15,14,10]]).
+
+getX([Row,_,_,_],Field,0) :- member(Field,Row),!.
+getX([_,Row,_,_],Field,1) :- member(Field,Row),!.
+getX([_,_,Row,_],Field,2) :- member(Field,Row),!.
+getX([_,_,_,Row],Field,3) :- member(Field,Row),!.
+    
+getY(Board,Field,Pos) :-
+    transpose(Board,BoardT),
+    getX(BoardT,Field,Pos).
+    
+getPos(Board,Field,(X,Y)) :-
+    getX(Board,Field,X),
+    getY(Board,Field,Y),!.
+
+% Calculate Manhattan-Distance of a field with the field where it should be
+% We use the goal as reference to calculate two absolute points and
+% compute them with the manhattan-distance formula
+manhattan(16,_,0) :- !.
+manhattan(F,F,0) :- !.
+manhattan(Field1,Field2,D) :-
+   goal(Board),
+   getPos(Board,Field1,(X1,Y1)),
+   getPos(Board,Field2,(X2,Y2)),
+   D is abs(X1 - X2) + abs(Y1 - Y2).
 
 
+hc0([Q,P,_,_],G) :- hc1(Q,P,G).
+hc0([Q,_,P,_],G) :- hc1(Q,P,G).
+hc0([Q,_,_,P],G) :- hc1(Q,P,G).
+hc0([_,Q,P,_],G) :- hc1(Q,P,G).
+hc0([_,Q,_,P],G) :- hc1(Q,P,G).
+hc0([_,_,Q,P],G) :- hc1(Q,P,G).
 
+hc1(Q,P,G) :-
+    Q \== 16,
+    P \== 16,
+    Q > P,
+    member(Q,G),
+    member(P,G).
+
+
+hc([R,_,_,_],2) :- goal([G,_,_,_]),hc0(R,G).
+hc([_,R,_,_],2) :- goal([_,G,_,_]),hc0(R,G).
+hc([_,_,R,_],2) :- goal([_,_,G,_]),hc0(R,G).
+hc([_,_,_,R],2) :- goal([_,_,_,G]),hc0(R,G).
+hc(_,0).
+
+h(In,Out) :-
+   flatten(In, InF),
+   goal(Goal),
+   flatten(Goal,GoalF),
+   maplist(manhattan,InF,GoalF,HOut),
+   sumlist(HOut,Out1),
+   hc(In,Out2),
+   Out is Out1 + Out2.
+
+% Pretty-Printer
+printB(Board) :- maplist(writeln, Board), write('\n').
+print(Boards) :- maplist(printB, Boards).
+
+solution(P) :- start(S), goal(G), idas(S,G,P), print(P),!.
+\end{lstlisting}
+
+\end{anumerate}
+
+\chapter{Praktikum 12: Min-Max, Kombinatorik}
+\section{Aufgabe 22}
+Beginnend mit $\triangle[-\infty,\infty]$, da das Max für den nächsten Zug benötigt wird.
+\begin{center}
+\resizebox{.99\textwidth}{!}{
+\begin{tikzpicture}[scale=.4]
+\begin{scope}
+\draw (-0.5,1.5) -- (-0.5,-1.5);
+\draw (0.5,1.5) -- (0.5,-1.5);
+\draw (-1.5,0.5) -- (1.5,0.5);
+\draw (-1.5,-0.5) -- (1.5,-0.5);
+\node at (-1,1) {O};
+\node at (0,1) {O};
+\node at (1,1) {X};
+\node at (-1,0) {};
+\node at (0,0) {X};
+\node at (1,0) {};
+\node at (-1,-1) {O};
+\node at (0,-1) {X};
+\node at (1,-1) {};
+\node at (1.5,0) [right] {$\triangle[0,0]$};
+\end{scope}
+
+\begin{scope}[shift={(-16,-6)}]
+\draw (-0.5,1.5) -- (-0.5,-1.5);
+\draw (0.5,1.5) -- (0.5,-1.5);
+\draw (-1.5,0.5) -- (1.5,0.5);
+\draw (-1.5,-0.5) -- (1.5,-0.5);
+\node at (-1,1) {O};
+\node at (0,1) {O};
+\node at (1,1) {X};
+\node at (-1,0) {X};
+\node at (0,0) {X};
+\node at (1,0) {};
+\node at (-1,-1) {O};
+\node at (0,-1) {X};
+\node at (1,-1) {};
+\node [right] at (1.5,0) {$\triangledown[0,0]$};
+\end{scope}
+\begin{scope}[shift={(-20,-12)}]
+\draw (-0.5,1.5) -- (-0.5,-1.5);
+\draw (0.5,1.5) -- (0.5,-1.5);
+\draw (-1.5,0.5) -- (1.5,0.5);
+\draw (-1.5,-0.5) -- (1.5,-0.5);
+\node at (-1,1) {O};
+\node at (0,1) {O};
+\node at (1,1) {X};
+\node at (-1,0) {X};
+\node at (0,0) {X};
+\node at (1,0) {O};
+\node at (-1,-1) {O};
+\node at (0,-1) {X};
+\node at (1,-1) {};
+\node [right] at (1.5,0) {$\triangle[0,0]$};
+\end{scope}
+\begin{scope}[shift={(-20,-18)}]
+\draw (-0.5,1.5) -- (-0.5,-1.5);
+\draw (0.5,1.5) -- (0.5,-1.5);
+\draw (-1.5,0.5) -- (1.5,0.5);
+\draw (-1.5,-0.5) -- (1.5,-0.5);
+\node at (-1,1) {O};
+\node at (0,1) {O};
+\node at (1,1) {X};
+\node at (-1,0) {X};
+\node at (0,0) {X};
+\node at (1,0) {O};
+\node at (-1,-1) {O};
+\node at (0,-1) {X};
+\node at (1,-1) {X};
+\node [right] at (1.5,0) {$\triangledown[0]$};
+\end{scope}
+\begin{scope}[shift={(-12,-12)}]
+\draw (-0.5,1.5) -- (-0.5,-1.5);
+\draw (0.5,1.5) -- (0.5,-1.5);
+\draw (-1.5,0.5) -- (1.5,0.5);
+\draw (-1.5,-0.5) -- (1.5,-0.5);
+\node at (-1,1) {O};
+\node at (0,1) {O};
+\node at (1,1) {X};
+\node at (-1,0) {X};
+\node at (0,0) {X};
+\node at (1,0) {};
+\node at (-1,-1) {O};
+\node at (0,-1) {X};
+\node at (1,-1) {O};
+\node [right] at (1.5,0) {$\triangle[1,1]$};
+\end{scope}
+\begin{scope}[shift={(-12,-18)}]
+\draw (-0.5,1.5) -- (-0.5,-1.5);
+\draw (0.5,1.5) -- (0.5,-1.5);
+\draw (-1.5,0.5) -- (1.5,0.5);
+\draw (-1.5,-0.5) -- (1.5,-0.5);
+\node at (-1,1) {O};
+\node at (0,1) {O};
+\node at (1,1) {X};
+\node at (-1,0) {X};
+\node at (0,0) {X};
+\node at (1,0) {X};
+\node at (-1,-1) {O};
+\node at (0,-1) {X};
+\node at (1,-1) {O};
+\node [right] at (1.5,0) {$\triangledown[1]$};
+\end{scope}
+
+\begin{scope}[shift={(0,-6)}]
+\draw (-0.5,1.5) -- (-0.5,-1.5);
+\draw (0.5,1.5) -- (0.5,-1.5);
+\draw (-1.5,0.5) -- (1.5,0.5);
+\draw (-1.5,-0.5) -- (1.5,-0.5);
+\node at (-1,1) {O};
+\node at (0,1) {O};
+\node at (1,1) {X};
+\node at (-1,0) {};
+\node at (0,0) {X};
+\node at (1,0) {X};
+\node at (-1,-1) {O};
+\node at (0,-1) {X};
+\node at (1,-1) {};
+\node [right] at (1.5,0) {$\triangledown[-\infty,-1]$};
+\end{scope}
+\begin{scope}[shift={(-4,-12)}]
+\draw (-0.5,1.5) -- (-0.5,-1.5);
+\draw (0.5,1.5) -- (0.5,-1.5);
+\draw (-1.5,0.5) -- (1.5,0.5);
+\draw (-1.5,-0.5) -- (1.5,-0.5);
+\node at (-1,1) {O};
+\node at (0,1) {O};
+\node at (1,1) {X};
+\node at (-1,0) {O};
+\node at (0,0) {X};
+\node at (1,0) {X};
+\node at (-1,-1) {O};
+\node at (0,-1) {X};
+\node at (1,-1) {};
+\node [right] at (1.5,0) {$\triangle[-1]$};
+\end{scope}
+\draw [thick](1,-10) -- (4,-14);
+\draw [thick](1,-14) -- (4,-10);
+
+\begin{scope}[shift={(12,-6)}]
+\draw (-0.5,1.5) -- (-0.5,-1.5);
+\draw (0.5,1.5) -- (0.5,-1.5);
+\draw (-1.5,0.5) -- (1.5,0.5);
+\draw (-1.5,-0.5) -- (1.5,-0.5);
+\node at (-1,1) {O};
+\node at (0,1) {O};
+\node at (1,1) {X};
+\node at (-1,0) {};
+\node at (0,0) {X};
+\node at (1,0) {};
+\node at (-1,-1) {O};
+\node at (0,-1) {X};
+\node at (1,-1) {X};
+\node [right] at (1.5,0) {$\triangledown[-\infty,-1]$};
+\end{scope}
+\begin{scope}[shift={(8,-12)}]
+\draw (-0.5,1.5) -- (-0.5,-1.5);
+\draw (0.5,1.5) -- (0.5,-1.5);
+\draw (-1.5,0.5) -- (1.5,0.5);
+\draw (-1.5,-0.5) -- (1.5,-0.5);
+\node at (-1,1) {O};
+\node at (0,1) {O};
+\node at (1,1) {X};
+\node at (-1,0) {O};
+\node at (0,0) {X};
+\node at (1,0) {};
+\node at (-1,-1) {O};
+\node at (0,-1) {X};
+\node at (1,-1) {X};
+\node [right] at (1.5,0) {$\triangle[-1]$};
+\end{scope}
+\draw [thick](13,-10) -- (16,-14);
+\draw [thick](13,-14) -- (16,-10);
+\draw (-2,-1) -- (-15,-4);
+\draw (0,-2) -- (0,-4);
+\draw (2,-1) -- (11,-4);
+\draw (-17,-8) -- (-20,-10);
+\draw (-15,-8) -- (-12,-10);
+\draw (-20,-14) -- (-20,-16);
+\draw (-12,-14) -- (-12,-16);
+\draw (-1,-8) -- (-4,-10);
+\draw (1,-8) -- (2.5,-10);
+\draw (11,-8) -- (8,-10);
+\draw (13,-8) -- (14.5,-10);
+\end{tikzpicture}
+}
+\end{center}
+
+\section{Aufgabe 23}
+Einfachste Lösung: \\
+$3^9=19\,683$ (komplette Belegungsmöglichkeiten von $3\times 3$ Feldern)\bigskip\\
+Erweiterte/Genauere Lösung:\\
+$\binom{9}{5}\cdot 2^5+
+\binom{9}{6}\cdot 2^6+
+\binom{9}{7}\cdot 2^7+
+\binom{9}{8}\cdot 2^8+
+\binom{9}{9}\cdot 2^9 = 16\,832$\\
+Dabei bezeichnet das $\binom{n}{k}$, dass $k$ Feldern von $n$ ausgewählt wurden. Die zwei Status (X und O) müssen dann auf diese $k$ Felder verteilt werden: $2^k$.
+
+\section{Aufgabe 24}
+$1+24\cdot (1+23\cdot (1+22\cdot(1+21\cdot (1+20))))=5\,368\,225$\\
+Dabei sind $1$ (Wurzelknoten/Ausgangssituation des aktuellen Spielzugs) plus die verbleibenden Auswahlmöglichkeiten mal die jeweils weiteren Ebenen die möglichen Kombinationen.
+
+\chapter{Praktikum 13: Bayessches Netz}
+\section{Aufgabe 26}
+$A$ … Student $A$ erscheint zur Vorlesung\\
+$B$ … Student $B$ erscheint zur Vorlesung\\
+$W$ … Es ist Badewetter\\
+$P(A|W)=0,3$\\
+$P(A|\overline{W})=0,9$\\
+$P(B|W)=0,5$\\
+$P(B|\overline{W})=0,8$\\
+$P(W)=0,05$
+\begin{anumerate}
+\item Bayes'sches Netz:
+\begin{center}
+\begin{tikzpicture}
+\draw  (-3,1) node{W} ellipse(0.5 and 0.5);
+\draw  (-6.5,-2) node{A} ellipse (0.5 and 0.5);
+\draw  (0,-2) node{B} ellipse (0.5 and 0.5);
+\node [right] at (-2.5,1) {\begin{tabular}{c}
+$\PP(W)$\\\hline
+0,05\\
+\end{tabular}};
+\node [right] at (-6,-2) {\begin{tabular}{c c}
+$W$ & $\PP(A)$\\\hline
+w & 0,3\\
+f & 0,9\\
+\end{tabular}};
+\node [right] at (0.5,-2) {\begin{tabular}{c c}
+$W$ & $\PP(B)$\\\hline
+w & 0,5\\
+f & 0,8
+\end{tabular}};
+\draw [-latex](-3.5,0.5) -- (-6.5,-1.5);
+\draw [-latex](-2.5,0.5) -- (0,-1.5);
+\end{tikzpicture}
+\end{center}
+\item Gesucht: $\PP(\overline{A}|\overline{B})=\frac{\PP(\overline{A}\cap \overline{B})}{\PP(\overline{B})}$\\
+Berechnen von $\PP(\overline{A}\cap \overline{B})$:
+\begin{align*}
+\PP(\overline{A}\cap \overline{B}) =& \PP(\overline{A}\cap \overline{B}\cap W) + \PP(\overline{A}\cap \overline{B}\cap \overline{W})\\
+&\uparrow\text{(Marginalisierung / disjunkte Zerlegung)}\\
+=& \PP(\overline{A} \cap \overline{B}|W)\cdot \PP(W) + \PP(\overline{A} \cap \overline{B}|\overline{W})\cdot \PP(\overline{W})\\
+&\text{Da }A\text{ und }B\text{ unabhängig:}\\ 
+=&\PP(\overline{A}|W) \cdot \PP(\overline{B}|W) \cdot \PP(W)+\PP(\overline{A}|\overline{W}) \cdot \PP(\overline{B}|\overline{W}) \cdot \PP(\overline{W})\\
+=& 0,7 \cdot 0,5 \cdot 0,005 + 0,1 \cdot 0,2 \cdot 0,95\\
+=&0,0365
+\end{align*}
+Berechnen von $\PP(\overline{B})$:
+\begin{align*}
+\PP(\overline{B})=&\PP(\overline{B}|W) \cdot \PP(W) + \PP(\overline{B}|\overline{W}) \cdot \PP(\overline{W})\\
+=&0,5 \cdot 0,05 + 0,2 \cdot 0,95\\
+=&0,215
+\end{align*}
+Und damit $\PP(\overline{A}|\overline{B})=\frac{0,0365}{0,215}=0,1698$
+\item $\PP(\overline{A})=\PP(\overline{A}|W) \cdot \PP(W) + \PP(\overline{A}|\overline{W}) \cdot \PP(\overline{W})=0,7\cdot 0,05 + 0,1 \cdot 0,95=0,13$\\
+Da $\PP(\overline{A}|\overline{B})\not = \PP(\overline{A}) \Rightarrow 0,1698 \not = 0,13$, sind $A$ und $B$ abhängig.
+\end{anumerate}
+
+\chapter{Praktikum 14: Bayessches Netz, Sampling}
+\section{Aufgabe 27}
+\begin{center}
+\begin{tikzpicture}[scale=.7]
+\draw  (-4,3) node{A} ellipse (0.5 and 0.5);
+\draw  (0,3) node{B} ellipse (0.5 and 0.5);
+\draw  (4,3) node{C} ellipse (0.5 and 0.5);
+\draw  (0,0) node{F} ellipse(0.5 and 0.5);
+\node [right] at (-3.5,3) {\begin{tabular}{c}
+$\PP(A)$\\\hline
+0,5\\
+\end{tabular}};
+\node [right] at (0.5,3) {\begin{tabular}{c}
+$\PP(B)$\\\hline
+0,5
+\end{tabular}};
+\node [right] at (4.5,3) {\begin{tabular}{c}
+$\PP(C)$\\\hline
+0,5
+\end{tabular}};
+\node [below right = -.5 and 0] at (0.5,0) {\begin{tabular}{c c c | c}
+A & B & C & $\PP(F)$\\\hline
+f & f & f & 0\\
+f & f & w & 1\\
+f & w & f & 0\\
+f & w & w & 0\\
+w & f & f & 0\\
+w & f & w & 1\\
+w & w & f & 0\\
+w & w & w & 1\\
+\end{tabular}};
+\draw [-latex] (-4,2.5) -- (-0.5,0.5);
+\draw [-latex] (0,2.5) -- (0,0.5);
+\draw [-latex] (4,2.5) -- (0.5,0.5);
+\end{tikzpicture}
+\end{center}
+\begin{align*}
+\PP(F) =& \PP(F,A,B,C)+ \ldots + \PP(F, \overline{A}, \overline{B}, \overline{C})\\
+&\text{Disjunkte Zerlegung / Marginalisierung der Summanden:}\\
+=&\PP(F|A \cap B \cap C) \cdot \PP(A) \cdot \PP(B) \cdot \PP(C) + \ldots \\
+&\qquad+\PP(F|\overline{A} \cap \overline{B} \cap \overline{C}) \cdot \PP(\overline{A}) \cdot \PP(\overline{B}) \cdot \PP(\overline{C})\\
+&\text{Da }\PP(A)=\PP(\overline{A})\text{, sind alle Permutationen von }\PP(A)\text{, }\PP(B)\text{ und }\PP(C)\text{ gleich}\\
+&\text{und können ausgeklammert werden:}\\
+=&\underbrace{\frac{1}{8}}_{\left(\tfrac{1}{2}\right)^3}\cdot (\PP(F|A\cap B \cap C) + \ldots + \PP(F|\overline{A}\cap \overline{B} \cap \overline{C}))\\
+=& \frac{1}{8} \cdot 3\\
+=& \frac{3}{8}
+\end{align*}
+
+\section{Aufgabe 28}
+\begin{lstlisting}
+... Code in beliebiger Programmiersprache, die Stichproben auswählt und diese als Sample nutzt.
+\end{lstlisting}
 
 \end{document}
