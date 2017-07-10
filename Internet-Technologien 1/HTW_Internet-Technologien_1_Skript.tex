@@ -13,7 +13,11 @@
 
 \slidePath{Vorlesung/}
 \slideScale{1}
-
+\makeatletter
+\renewcommand{\@pnumwidth}{1.75em} 
+\makeatother
+\RedeclareSectionCommand[tocnumwidth=4.5em]{subsubsection}
+\RedeclareSectionCommand[tocnumwidth=3.5em]{subsection}
 \begin{document}
 \maketitle
 \tableofcontents
@@ -30,7 +34,7 @@
 \chapter{Netzsicherheit}
 \input{HTW_Internet-Technologien_1_Skript_ch3}
 
-%\chapter{Übertragungsprotokolle}
+\chapter{Übertragungsprotokolle}
 \input{HTW_Internet-Technologien_1_Skript_ch4}
 
 \chapter{E-Mail}
@@ -41,6 +45,28 @@
 
 \chapter{HTML und XHTML}
 \input{HTW_Internet-Technologien_1_Skript_ch7}
+
+\chapter{Cascading Style Sheets (CSS)}
+\input{HTW_Internet-Technologien_1_Skript_ch8}
+
+\chapter{Javascript}
+\input{HTW_Internet-Technologien_1_Skript_ch9}
+
+\chapter{Kryptographie Grundlagen}
+
+\chapter{Symmetrische Kryptographie}
+
+\chapter{Algebraische Grundlagen Kryptographie}
+
+\chapter{Advanced Encryption Standard (AES)}
+
+\chapter{Kryptographie: Einwegfunktionen}
+
+\chapter{Public-Key-Kryptographie}
+
+\chapter{Zertifikate}
+
+\chapter{Sage}
 
 %\newpage
 %\printbibliography
