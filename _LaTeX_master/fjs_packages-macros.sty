@@ -214,7 +214,8 @@ style=authoryear, citestyle=authoryear-ibid,
 \ifvalidimage{#2}{
 \forceincludegraphics[#1]{#2}
 }{
-\message{Achtung: Grafik wurde nicht gefunden: '#2'}
+%\message{Achtung: Grafik wurde nicht gefunden: '#2'}
+\ClassWarning{graphics}{Missing included graphic: '#2'}
 \minibox[frame]{
 \textbf{\StrSubstitute{#2}{_}{\_}}%  \ifthenelse{\isempty{#1}}{}{\\\textit{#1}}
 }}}
