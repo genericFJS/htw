@@ -1,0 +1,60 @@
+\section{Mathematische Notation}
+\slides{WS2016_Kap1_Kap2}{4}
+\subsection{Neuronale Bezeichner}
+\slides{WS2016_Kap1_Kap2}{5}
+$w_{ij}$: Sender $i$, Empfänger $j$
+\slides{WS2016_Kap1_Kap2}{6}
+$d$: Abstandsmaß (bspw. Euklidisch oder Hamming-Distanz)
+\section{Neuronenmodell}
+\slides{WS2016_Kap1_Kap2}{7}
+\slides{WS2016_Kap1_Kap2}{8}
+\unimptnt{
+\section{Netzwerk- \& Lernparadigmen}
+\slides{WS2016_Kap1_Kap2}{9}
+}
+\section{Lernparadigmen}
+\subsection{Hebb'sche  Lernregeln}
+Korrelationslernen, unüberwacht
+\slides{WS2016_Kap1_Kap2}{10}
+\begin{center}
+\begin{tikzpicture}
+\draw (0,0) node{$i$} circle (0.5) node[above = .5]{Sendeneuron};
+\draw (4,0) node{$j$} circle (0.5) node[above = .5]{Empfangsneuron};
+\draw [-hooks] (0.5,0) -- (2,0);
+\draw [hooks-](2,0) -- (3.5,0);
+\draw [decorate, decoration={brace, amplitude=5pt}](2.5,-0.5) -- (1.5,-0.5);
+\node at (2,-1) {$w_{ij}$};
+\end{tikzpicture}
+\end{center}
+\paragraph{Frage:} Wann soll sich der Gewichtswert der Verbindungssynapse $w_{ij}$ ändern?
+\paragraph{Idee:} Gewicht proportional zur Aktivität prä- und postsynaptische Seite erhöhen.\bigskip\\
+Als binäre Wertetabelle:\\
+\begin{tabular}{c | c c}
+$y_i / y_j$ & 0 & 1\\
+\hline
+0 & 0 & 0\\
+1 & 0 & 1
+\end{tabular}\\
+$\Delta w_{ij} = \mu \cdot y_i \cdot y_j$ \qquad ($\mu$: Lernrate mit $0 < \mu \leq 1$)\\
+$\to$ Gewicht der Synapse wird verstärkt, wenn \emph{beide} Neuronen aktiv sind.\\
+$\Rightarrow$ Korrelations-LR\\
+\emph{Nachteil:} keine Änderung $\Delta w_{ij}$ in negative Richtung möglich!
+
+\unimptnt{
+\subsection{SOFM}
+Kohnen-Algorithmus, unüberwacht
+\slides{WS2016_Kap1_Kap2}{11}
+}
+
+\subsection{Error-Driven}
+überwacht
+\slides{WS2016_Kap1_Kap2}{12}
+
+
+
+
+
+
+
+
+
