@@ -427,6 +427,9 @@ Spezielle Themen-Technologien der Informatik/Praktikum/reverseEngineering/2016/b
 Spezielle Themen-Technologien der Informatik/Praktikum/reverseEngineering/2016/foo
 Spezielle Themen-Technologien der Informatik/Praktikum/reverseEngineering/bar
 Spezielle Themen-Technologien der Informatik/Praktikum/reverseEngineering/foo
+Compiler-Interpreter/Praktikum/src/
+Compiler-Interpreter/Vorlesung/doc/
+Compiler-Interpreter/Vorlesung/cd
 # ignoriere Dateien
 *.pdf
 *.psd
