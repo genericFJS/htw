@@ -1,0 +1,36 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrreprt}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\faculty{Fakultät Informatik/Mathematik}
+\chair{Lehrstuhl für Rechnernetze/Kommunikationssysteme}
+\subject{lecture}
+\title{Internet-Technologien 2}
+\author{Falk-Jonatan Strube}
+\professor{Prof. Dr.-Ing. Jörg Vogt}
+
+\slidePath{Vorlesung/}
+\slideScale{.85}
+\makeatletter
+\renewcommand{\@pnumwidth}{1.75em} 
+\makeatother
+\RedeclareSectionCommand[tocnumwidth=4.5em]{subsubsection}
+\RedeclareSectionCommand[tocnumwidth=3.5em]{subsection}
+\RedeclareSectionCommand[tocnumwidth=2.7em]{section}
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter*{Vorbemerkung}
+% Nutzer: it2		PW: VLIT2
+
+\chapter{Grundlagen Echtzeitdienste}
+\input{HTW_Internet-Technologien_2_Skript_ch1}
+
+
+%\newpage
+%\printbibliography
+
+\end{document}
