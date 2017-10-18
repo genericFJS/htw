@@ -23,6 +23,7 @@
 %\usepackage{titleref}
 \usepackage[breakwords, fit]{truncate}	% Abschneiden von Sätzen
 \renewcommand{\TruncateMarker}{\,…}
+\RequirePackage{scrlayer-scrpage}	% Kopf- und Fußzeilen
 
 % Mathe usw.
 \usepackage{amssymb}
@@ -335,6 +336,16 @@ urlcolor=htworange,%
 % Hanging parameters
 \newcommand{\hangpara}[1]{\par\noindent\hangindent+2em\hangafter=1 #1\par\noindent}
 
+% Nicht-nummerierte Überschriften im Inhaltsverzeichnis
+\newcommand{\chapterN}[1]{\chapter*{#1}%
+\addcontentsline{toc}{chapter}{\protect\numberline{}#1}}
+\newcommand{\sectionN}[1]{\section*{#1}%
+\addcontentsline{toc}{section}{\protect\numberline{}#1}}
+\newcommand{\subsectionN}[1]{\subsection*{#1}%
+\addcontentsline{toc}{subsection}{\protect\numberline{}#1}}
+\newcommand{\subsubsectionN}[1]{\subsubsection*{#1}%
+\addcontentsline{toc}{subsubsection}{\protect\numberline{}#1}}
+
 %% EINFACHE BEFEHLE
 
 % Abkürzungen Mathe
@@ -422,7 +433,7 @@ urlcolor=htworange,%
 \newcommand{\parnl}{\unskip\parfillskip 0pt \par} % justified new line (brace line!)
 
 % mathematische Abkürzungen
-\newcommand{\corr}{\;\widehat{=}\;}
+\newcommand{\corr}{\,\widehat{=}\,}
 \newcommand{\mdeg}{^{\circ}}
 \newcommand{\nok}[2]{\binom{#1}{#2}}	% n über k BESSER: \binom{n}{k}
 \newcommand{\mtr}[1]{\begin{pmatrix}#1\end{pmatrix}}	% Matrix
@@ -436,7 +447,9 @@ urlcolor=htworange,%
 \newcommand{\unit}[1]{\,\mathrm{#1}}
 %\LetLtxMacro{\ntilde}{\tilde}
 %\renewcommand{\tilde}{\widetilde}
+\newcommand{\To}{\Rightarrow}
 
 % weiter Abkürzungen
 \newcommand{\gdw}{genau dann wenn}
 \newcommand{\lecdate}[1]{\marginpar{\small\textcolor{gray}{Vorlesung\newline #1}}}
+\newcommand{\lesdate}[1]{\marginpar{\small\textcolor{gray}{Übung\newline #1}}}
