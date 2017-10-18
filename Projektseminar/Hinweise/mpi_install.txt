@@ -1,0 +1,50 @@
+MPI Standard
+
+MPI Implementationen
+
+
+MPICH 
+aktuelle Version: 3.2
+
+Installation 
+
+Download von https://www.mpich.org/downloads/
+
+Datei: mpich-3.2.tar.gz (11 MB, source code)
+
+tar -xzf mpich-3.2.tar.gz
+erzeugt das Verzeichnis mpich-3.2
+
+mkdir /home/s99999/mpich-install
+(Verzeichnis muss per nfs auf allen genutzten Rechnern eingebunden sein)
+
+mpich-3.2/configure -prefix=/home/s99999/mpich-install --disable-f77 |& tee c.txt
+
+mpich-3.2/make |& tee m.txt
+
+mpich-3.2/make install |& tee mi.txt
+
+Pfad auf bin-Unterverzeichis der MPI-Installation setzen,
+z.B. export PATH=/u/s99999/mpich_install/bin:$PATH
+in .bashrc
+
+ssh konfigurieren, so dass keine Passworteingabe mehr nötig.
+Es sollte z.B. "ssh isys121 ls" ohne Passworteingabe funktionieren
+Anleitung unter: http://www.schlittermann.de/doc/ssh.html
+
+eine Datei machinefile anlegen 
+und dort z.B. zwei Rechner eintragen:
+isys122
+isys123
+
+Ausführen des Programms 'hostname' per MPI  
+mpiexec -f machinefile -n <number> hostname
+
+Ausführen eines MPI-Programms
+mpiexec -n 5 -f machinefile ./examples/cpi
+
+Übersetzen und Ausführen selbst erstellter MPI-Programme
+
+mpicc -o meincode meincode.c
+mpiexec -n 44 ./meincode
+
