@@ -1,0 +1,113 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrreprt}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\faculty{Fakultät Informatik/Mathematik}
+\chair{Lehrstuhl für Informationssicherheit/Informatikrecht}
+\subject{lesson}
+\title{Informatikrecht}
+\author{Falk-Jonatan Strube}
+\professor{Prof. Dr. Andreas Westfeld}
+
+\usepackage{bookmark}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\part{Übung}
+\sectionN{Grundlagen / Einführung}
+\lesdate{18.10.2017}
+Recht $\corr$ Verhaltensregeln\\
+Sinn von Recht: Unterschiedliche \emph{Interessengruppen} sollen \emph{konfliktfrei} voneinander leben können.\\
+Anteil: Priorität von öffentlichen oder privaten Interesse abwägen (bspw. Datenschutz)
+
+\subsectionN{Rechtsformen}
+\begin{enumerate}
+\item Gesetz:\\
+parlamentarische Beschlussfassung auf
+\begin{itemize}
+\item Bundesebene (Bundestag [Vertretung des Bundes] \& Bundesrat [Vertretung der Bundesländer]) und 
+\item Länderebene (Landtag) 
+\end{itemize}
+$\To$ von Volksvertretungen erlassen\\
+bspw. GG (GrundGesetz), BGB(BürgerGesetzBuch), StGB (StrafGesetzBuch), SächsHSFG (Sächsisches HochschulFreiheitsGesetz), BDSG (BundesDatenSchutzGesetz), …
+\item Verordnung:\\
+auf Verwaltungswege (Minister, …) erlassen, bedarf Ermächtigungsgrundlage im Gesetz (bspw. Straßenverkehrsgesetz ermächtigt Straßenverkehrsordnung). Auf Bundes- oder Länderebene.\\
+bspw. StVO (StraßenVerkehrsOrdnung), StPO (StrafProzessOrdnung), …
+\item Satzung:\\
+beschlossen auf Kommunalparlament (Kreis, Gemeinde), bedarf Ermächtigungsgrundlage im Gesetz. (nicht zu verwechseln mit bspw. Vereinssatzung o.ä.)\\
+bspw. Abfallsatzung, Abfallgebührensatzung, Kurtaxe, …
+\end{enumerate}
+
+\subsectionN{Hinweis Urheberrecht}
+Urheber (jemand, der ein [intellektuelles] Werk geschaffen hat) vs Nutzer
+\subsectionN{Allgemeine Vorgehensweise}
+\begin{enumerate}[label=\arabic*.]
+\item \label{geschWerk} Was ist/soll ein geschütztes Werk sein? $\to$ Gibt es überhaupt was zu schützen?
+\item \label{Urheber} Wer ist Urheber?
+\item \label{Inhaber} Wer ist Rechtsinhaber\footnote{$\to$ Inhaber der Verwertungsrechte, bspw. „vermögensrechtliche Befugnisse“}?
+\item \label{Handlung} Was ist urheberrechtsrelevante Handlung?
+\item \label{Verletzung} Liegt eine Rechtsverletzung vor?
+\item \label{Folgen} Was sind Rechtsfolgen dieser Rechtsverletzung?
+\end{enumerate}
+
+
+
+\sectionN{Aufgabe 1}
+\begin{enumerate}
+\item[\ref{geschWerk}] DBMS ist Computerprogramm nach §69a UrhG.
+\item[\ref{Urheber}] A ist Urheber des DBMS nach §7 UrhG.
+\item[\ref{Inhaber}] Der Hersteller (Argbeitgeber von A) ist Rechtsinhaber nach §69b UrhG.
+\item[\ref{Handlung}] Einsatz durch A zu Hause ist Vervielfältigung\footnote{Auch private Speicherung, nicht nur Nutzung, ist schon Vervielfältigung.} nach §69c Nr. 1 und damit zustimmungspflichtig durch den Hersteller.
+\item[\ref{Verletzung}] Vergleich: Rechtsinhaber -- Ausführender\\
+A vervielfältigt ohne erforderliche Zustimmung durch Hersteller $\to$ Rechtsverletzung
+\end{enumerate}
+
+\part{Gesetze}
+\chapterN{Teil 1 Urheberrecht}
+
+\sectionN{Abschnitt 3 Der Urheber}
+\subsubsectionN{§ 7 Urheber}
+Urheber ist der Schöpfer des Werkes.
+
+\sectionN{Abschnitt 8 Besondere Bestimmungen für Computerprogramme}
+
+\unimptnt{
+\subsubsectionN{§ 69a Gegenstand des Schutzes}
+\begin{enumerate}[label=(\arabic*)]
+\item Computerprogramme im Sinne dieses Gesetzes sind Programme in jeder Gestalt, einschließlich des Entwurfsmaterials.
+\item Der gewährte Schutz gilt für alle Ausdrucksformen eines Computerprogramms. Ideen und Grundsätze, die einem Element eines Computerprogramms zugrunde liegen, einschließlich der den Schnittstellen zugrundeliegenden Ideen und Grundsätze, sind nicht geschützt.
+\item Computerprogramme werden geschützt, wenn sie individuelle Werke in dem Sinne darstellen, daß sie das Ergebnis der eigenen geistigen Schöpfung ihres Urhebers sind. Zur Bestimmung ihrer Schutzfähigkeit sind keine anderen Kriterien, insbesondere nicht qualitative oder ästhetische, anzuwenden.
+\item Auf Computerprogramme finden die für Sprachwerke geltenden Bestimmungen Anwendung, soweit in diesem Abschnitt nichts anderes bestimmt ist.
+\item Die Vorschriften der §§ 32d, 32e, 36 bis 36c, 40a und 95a bis 95d finden auf Computerprogramme keine Anwendung.
+\end{enumerate}
+}
+
+\subsubsectionN{§ 69b Urheber in Arbeits- und Dienstverhältnissen}
+\begin{enumerate}[label=(\arabic*)]
+\item Wird ein Computerprogramm von einem Arbeitnehmer in Wahrnehmung seiner Aufgaben oder nach den Anweisungen seines Arbeitgebers geschaffen, so ist ausschließlich der Arbeitgeber zur Ausübung aller vermögensrechtlichen Befugnisse an dem Computerprogramm berechtigt, sofern nichts anderes vereinbart ist.
+\item Absatz 1 ist auf Dienstverhältnisse entsprechend anzuwenden.
+\end{enumerate}
+
+\subsubsectionN{§ 69c Zustimmungsbedürftige Handlungen}
+Der Rechtsinhaber hat das ausschließliche Recht, folgende Handlungen vorzunehmen oder zu gestatten: 
+\begin{enumerate}[label=\arabic*.]
+\item die dauerhafte oder vorübergehende Vervielfältigung, ganz oder teilweise, eines Computerprogramms mit jedem Mittel und in jeder Form. Soweit das Laden, Anzeigen, Ablaufen, Übertragen oder Speichern des Computerprogramms eine Vervielfältigung erfordert, bedürfen diese Handlungen der Zustimmung des Rechtsinhabers; 
+\item die Übersetzung, die Bearbeitung, das Arrangement und andere Umarbeitungen eines Computerprogramms sowie die Vervielfältigung der erzielten Ergebnisse. Die Rechte derjenigen, die das Programm bearbeiten, bleiben unberührt; 
+\item jede Form der Verbreitung des Originals eines Computerprogramms oder von Vervielfältigungsstücken, einschließlich der Vermietung. Wird ein Vervielfältigungsstück eines Computerprogramms mit Zustimmung des Rechtsinhabers im Gebiet der Europäischen Union oder eines anderen Vertragsstaates des Abkommens über den Europäischen Wirtschaftsraum im Wege der Veräußerung in Verkehr gebracht, so erschöpft sich das Verbreitungsrecht in bezug auf dieses Vervielfältigungsstück mit Ausnahme des Vermietrechts; 
+\item die drahtgebundene oder drahtlose öffentliche Wiedergabe eines Computerprogramms einschließlich der öffentlichen Zugänglichmachung in der Weise, dass es Mitgliedern der Öffentlichkeit von Orten und zu Zeiten ihrer Wahl zugänglich ist.
+\end{enumerate}
+
+\chapterN{Teil 4 Gemeinsame Bestimmungen für Urheberrecht und verwandte Schutzrechte}
+
+\sectionN{Abschnitt 2 Rechtsverletzungen}
+\subsectionN{Unterabschnitt 1 Bürgerlich-rechtliche Vorschriften; Rechtsweg}
+\subsubsectionN{§ 97 Anspruch auf Unterlassung und Schadensersatz}
+\begin{enumerate}[label=(\arabic*)]
+\item Wer das Urheberrecht oder ein anderes nach diesem Gesetz geschütztes Recht widerrechtlich verletzt, kann von dem Verletzten auf Beseitigung der Beeinträchtigung, bei Wiederholungsgefahr auf Unterlassung in Anspruch genommen werden. Der Anspruch auf Unterlassung besteht auch dann, wenn eine Zuwiderhandlung erstmalig droht.
+\item Wer die Handlung vorsätzlich oder fahrlässig vornimmt, ist dem Verletzten zum Ersatz des daraus entstehenden Schadens verpflichtet. Bei der Bemessung des Schadensersatzes kann auch der Gewinn, den der Verletzer durch die Verletzung des Rechts erzielt hat, berücksichtigt werden. Der Schadensersatzanspruch kann auch auf der Grundlage des Betrages berechnet werden, den der Verletzer als angemessene Vergütung hätte entrichten müssen, wenn er die Erlaubnis zur Nutzung des verletzten Rechts eingeholt hätte. Urheber, Verfasser wissenschaftlicher Ausgaben (§ 70), Lichtbildner (§ 72) und ausübende Künstler (§ 73) können auch wegen des Schadens, der nicht Vermögensschaden ist, eine Entschädigung in Geld verlangen, wenn und soweit dies der Billigkeit entspricht.
+\end{enumerate}
+
+\end{document}
