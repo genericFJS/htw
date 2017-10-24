@@ -430,11 +430,13 @@ Spezielle Themen-Technologien der Informatik/Praktikum/reverseEngineering/foo
 Compiler-Interpreter/Praktikum/src/
 Compiler-Interpreter/Vorlesung/doc/
 Compiler-Interpreter/Vorlesung/cd
+Nutzerschnittstellengestaltung und Usability/Praktikum/01_Stadt-Wehlen/
 # ignoriere Dateien
 *.pdf
 *.psd
 *.png
 *.jpg
+*.gif
 *.svg
 *.eps
 *.ico
