@@ -1,0 +1,117 @@
+\lecdate{10.10.2017}
+\slides{NI_intro_bio}{1}
+\section{Einordnung der Neuroinformatik}
+Künstliche Intelligenz:
+\begin{itemize}
+\item Logik und Deduktion
+\item Mustererkennung
+\item Maschinelles Lernen
+\item Spracherkennung
+\item …
+\item \emph{Neuroinformationsverarbeitung}
+\begin{itemize}
+\item Biologie
+\item Psychologie
+\item Computational Neuroscience
+\item …
+\item \emph{Neuronalen Netze}
+\end{itemize}
+\end{itemize}
+
+\section{Geschichte der Neuroinformatik}
+\slides{NI_intro_bio}{2}
+\subsection{Lernen}
+\begin{center}
+\fbox{Biologisches System} $\longleftrightarrow$ \fbox{Umwelt}
+\end{center}
+\emph{Lernen}: Optimierung der „Fitness“\\
+(Biologisches System soll besser in seiner Umwelt zurecht kommen).\\
+Benötigt dafür: Funktion, die diese Fitness beschreibt.
+\subsection{Klassifikation}
+Einfache Klassifikation: Die, die links und die, die rechts von $\Theta$ liegen.
+\begin{center}
+\begin{tikzpicture}[scale=.5]
+% Koordinatenachsen:
+\draw [-latex] (-5.5,0) -- (7,0) node[below right]{$y$};
+\draw [-latex] (0,-0.5) node[right]{$0$} -- (0,3.5) node[above left]{$z$};
+% Funktion:
+\draw [thick] (-3.5,0) -- (2.5,0) node[below]{$\Theta$} -- (2.5,2) -- (6,2);
+\draw (0,2) -- (-0.2,2) node[left]{$1$};
+\end{tikzpicture}
+\end{center}
+Eine Gerade als einfachste Form einer Diskriminanzfunktion (einer Punktwolke). Orthogonal zu dieser Geraden kann wieder die klassifizierende Funktion mit dem $\Theta$ an der Diskriminanzfunktion anlegen.
+\begin{center}
+\begin{tikzpicture}[scale=.5]
+% Koordinatenachsen:
+\draw [-latex] (-5.5,0) -- (7,0) node[below right]{$x_1$};
+\draw [-latex] (0,-0.5) -- (0,3.5) node[above left]{$x_2$};
+% Funktion:
+\draw (-2,-1.5) -- (5.5,3.5);
+% Punkte oben:
+\draw [orange] (2,3) circle (0.2);
+\draw [orange] (2.75,2.5) circle (0.2);
+\draw [orange] (1,1.5) circle (0.2);
+\draw [orange] (1.5,2) circle (0.2);
+\draw [orange] (1,2.5) circle (0.2);
+% Punkte unten
+\draw [blue] (4.25,2) circle (0.2);
+\draw [blue] (4.5,1) circle (0.2);
+\draw [blue] (2.5,0.5) circle (0.2);
+\draw [blue] (3.75,1) circle (0.2);
+\draw [blue] (3.25,1.5) circle (0.2);
+\end{tikzpicture}
+\end{center}
+Kontrast: XOR -- Welche lineare Funktion kann diese Klassen separieren? Keine!
+\begin{center}
+\begin{tikzpicture}[scale=1]
+% Koordinatenachsen:
+\draw [-latex] (-0.5,0) -- (2,0) node[below right]{$x_1$};
+\draw [-latex] (0,-0.5) -- (0,2) node[above left]{$x_2$};
+% Funktion:
+% Punkte oben:
+\draw [orange] (1,0) circle (0.1);
+\draw [orange] (0,1) circle (0.1);
+% Punkte unten
+\draw [blue] (1,1) circle (0.1);
+\draw [blue] (0,0) circle (0.1);
+\end{tikzpicture}
+\end{center}
+Lösungsmöglichkeiten: Einteilung in Mengen -- die Diagonale und der Rest. 
+
+\section{Das Gehirn}
+\subsection{Anatomie}
+\slides{NI_intro_bio}{3}
+\subsection{Vorstellung der Funktionalität Anfang des 20. Jahrhunderts}
+\slides{NI_intro_bio}{4}
+
+\subsection{Neuronen}
+\subsubsection{Experimenteller Nachweis von Einzelneuronen}
+\slides{NI_intro_bio}{6}
+\subsubsection{Strukturelle Vielfalt der Neuronentypen}
+\slides{NI_intro_bio}{7}
+\subsubsection{Strukturelle und funktionelle Details}
+\slides[.7]{NI_intro_bio}{10}
+Wichtige Bestandteile:
+\begin{itemize}
+\item Dendrit mit Kontaktstellen (Axon von anderer Zelle)\\
+Kopplung durch Synapsen beschreibt man mit einem Gewichtsvektor $\vec{w}$, dessen Komponenten adaptierbar sind $\to$ lernen!
+\item Axon\\
+Jeder Eingang bildet \emph{eine} Komponente eines Eingabevektors $\vec{x}$.
+\item Zellkörper\\
+„verrechnet“ $\vec{x}$ und $\vec{w}$
+\end{itemize}
+Die Nervenzelle hat eine besondere Art der Zellmembran: Semipermeable Membran mit Ionen-Kanälen (Teilbild rechts oben).
+
+\subsection{Medizinische Verfahren für funktionelle Untersuchungen}
+\slides{NI_intro_bio}{8}
+
+\subsection{Hirnaktivität bei Intellektuellen Aufgaben}
+\slides{NI_intro_bio}{9}
+
+\section{Neuronale Netze in der Robotik}
+\subsection{Lokale Fahrzeugnavigation durch Experten-Cloning}
+\slides{NI_intro_bio}{12}
+\subsection[360 Grad Geräusch-Lokalisationssystems für Roboter]{Biologisch motiviertes Modell eines 360 Grad Geräusch-Lokalisationssystems für Roboter}
+\slides{NI_intro_bio}{13}
+\subsubsection*{Experimentelle Ergebnisse}
+\slides{NI_intro_bio}{14}
