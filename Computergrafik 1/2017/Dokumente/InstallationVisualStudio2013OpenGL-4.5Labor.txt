@@ -1,0 +1,55 @@
+
+
+Internet:
+=========
+
+www.opengl.org
+
+Programmstruktur:
+=================
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <glm.hpp>
+#include <gtx/transform.hpp>
+#include <glew.h>
+#include <freeglut.h>
+#include <FreeImage.h>
+
+(Reihenfolge beachten)
+
+Projektkonfiguration:
+=====================
+
+PROJEKT -> <Projektname>-Eigenschaften... -> Konfigurationseigenschaften
+
+PATH Variable:
+--------------
+
+Windows Betriebssystemeinstellungen
+
+P:\OpenGL\bin
+P:\OpenGL\OpenGL\glew-1.13.0\bin\Release\Win32;P:\OpenGL\OpenGL\FreeImage3170Win32Win64\FreeImage\Dist\x32;P:\OpenGL\OpenGL\freeglut-3.0.0\bin\Release
+(gegebenenfalls freeglut.dll in Projektverzeichnis kopieren)
+
+Include Path:
+-------------
+
+-> C/C++ -> Allgemein -> Zusätzliche Includeverzeichnisse
+
+P:\OpenGL\OpenGL\glew-1.13.0\include\GL;P:\OpenGL\OpenGL\freeglut-3.0.0\include\GL;P:\OpenGL\OpenGL\glm-0.9.7.1\glm\glm;P:\OpenGL\OpenGL\FreeImage3170Win32Win64\FreeImage\Dist\x32
+
+Library Path:
+-------------
+
+-> Linker -> Allgemein -> Zusätzliche Bibliotheksverzeichnisse
+
+P:\OpenGL\OpenGL\glew-1.13.0\lib\Release\Win32;P:\OpenGL\OpenGL\freeglut-3.0.0\lib\Release;P:\OpenGL\OpenGL\FreeImage3170Win32Win64\FreeImage\Dist\x32
+
+Additional Libraries:
+---------------------
+
+-> Linker -> Eingabe -> Zusätzliche Abhängigkeiten
+
+opengl32.lib;freeglut.lib;glew32.lib;FreeImage.lib
