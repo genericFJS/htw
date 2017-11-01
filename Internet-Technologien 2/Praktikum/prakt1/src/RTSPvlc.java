@@ -5,7 +5,7 @@ class RTSPvlc {
 
 	public static void main(String argv[]) throws Exception {
 		String[] sentences = new String[7];
-		String modifiedSentence;
+		String response;
 
 		// BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
 		// sentence = inFromUser.readLine();
@@ -27,8 +27,8 @@ class RTSPvlc {
 			outToServer.writeBytes(sentence + '\n');
 
 			System.out.println("RECIEVING: \n----------");
-			while ((modifiedSentence = inFromServer.readLine()) != null && (modifiedSentence.length() > 0)) {
-				System.out.println(modifiedSentence);
+			while (((response = inFromServer.readLine()) != null) && (response.length() > 0)) {
+				System.out.println(response);
 			}
 			System.out.println("===========================================================");
 		}
