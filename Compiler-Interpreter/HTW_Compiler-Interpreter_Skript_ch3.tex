@@ -1,0 +1,150 @@
+\section{Lexikalische Analyse}
+\slides{V3_Lexer}{1}
+
+\subsection{Einordnung in den Compiler}
+\slides{V3_Lexer}{2}
+
+\subsection{Funktionsweise}
+\slides{V3_Lexer}{3}
+
+\section{Grammatik der PL/0 Token}
+\slides{V3_Lexer}{4}
+Buzi: Buchstabe/Ziffer; Bu: Buchstabe
+\subsection{Regeln der Grammatik der Morpheme}
+\slides{V3_Lexer}{5}
+\subsubsection*{Syntaxgraph}
+\label{pl0syntaxgraph}
+\slides[.4]{V3_Lexer}{6}
+
+\section{Endlicher deterministischer Automat}
+\slides{V3_Lexer}{7}
+\slides{V3_Lexer}{8}
+\slides{V3_Lexer}{9}
+
+\subsection{Automatentabelle}
+\slides{V3_Lexer}{10}
+\subsubsection{Zeichenklassenvektor}
+\slides{V3_Lexer}{11}
+\slides[.4]{V3_Lexer}{12}
+$\to$Jedem ASCII-Zeichen wird eine Spalte („Handlung“) in der Automatentabelle zugewiesen (mit Hilfe des Syntaxgraphs in \autoref{pl0syntaxgraph}):
+\slides[.4]{V3_Lexer}{15}
+s: Schreibe des betrachteten Symbols in die Ausgabe\\
+g/sg: Schreibe Großbuchstabe des betrachteten Buchstaben\\
+l: Lese nächstes Symbol\\
+b: Beende das Erkennen dieses Tokens
+
+\subsubsection{Aktionen}
+\slides{V3_Lexer}{16}
+
+\subsubsection{Fazit}
+\slides{V3_Lexer}{17}
+
+\subsubsection*{Variablen Beispiellexer}
+\slides{V3_Lexer}{18}
+
+\section{Funktionen des Lexers}
+\slides{V3_Lexer}{19}
+\subsection{Beispielimplementierung}
+\slides{V3_Lexer}{20}
+\slides[.4]{V3_Lexer}{21}
+%\slides{V3_Lexer}{22}
+%\slides{V3_Lexer}{23}
+\begin{lstlisting}[language=C]
+/* Schalt und Ausgabefunktionen des Automaten */
+static void fl (void);
+static void fb (void);
+static void fgl (void);
+static void fsl (void);
+static void fslb(void);
+typedef void (*FX)(void);
+static FX vfx[]={fl,fb,fgl,fsl,fslb};
+
+/* Funktionsindex *0x10, bzw. *16 */
+typedef enum T_Fx{
+	ifl=0x0,
+	ifb=0x10,
+	ifgl=0x20,
+	ifsl=0x30,
+	ifslb=0x40
+}tFx;
+
+/* Morphemcodes */
+typedef enum T_MC{
+	mcEmpty, mcSymb, mcNum, mcIdent
+}tMC;
+typedef enum T_ZS{
+	zNIL,
+	zERG=128,zLE,zGE,
+	zBGN,zCLL,zCST,zDO,zEND,zIF,zODD,zPRC,zTHN,zVAR,zWHL
+}tZS;
+
+typedef struct{
+	tMC MC; /* Morphemcode */
+	int PosLine; /* Zeile */
+	int PosCol; /* Spalte */
+	union VAL	{
+		long Num;
+		char*pStr;
+		int Symb;
+	}Val;
+	int MLen; /* Morphemlnge*/
+}tMorph;
+
+int initLex(char* fname);
+tMorph* Lex(void);
+\end{lstlisting}
+\slides[.4]{V3_Lexer}{24}
+\slides[.4]{V3_Lexer}{25}
+\begin{lstlisting}[language=C]
+static FILE *pIF;
+static tMorph MorphInit;
+extern tMorph Morph;
+static int X;
+static int Z;
+static char vBuf[1024+1];
+static char* pBuf;
+static int line,col;
+static int Ende; // Entfällt, wenn Zustand 9 -> Ende
+/* Initialisierung der lexiaklischen Analyse */
+int initLex(char* fname){
+	char vName[128+1];
+	strcpy(vName,fname);
+	if (strstr(vName,".pl0")==NULL)
+		strcat(vName,".pl0");
+	pIF=fopen(vName,"r+t");
+	if (pIF!=NULL){
+		X=fgetc(pIF); /* Lesen des ersten Zeichens */
+		return OK;
+	}
+	return FAIL;
+}
+\end{lstlisting}
+
+\subsection{Algorithmus des Lexers}
+\begin{lstlisting}[language=C]
+tMorph* Lex(void){
+	Z=0; // Anfangszustand, wenn nicht aus Tabelle
+	int zx;
+	Morph=MorphInit;
+	Morph.PosLine=line;
+	Morph.PosCol =col;
+	pBuf=vBuf;
+	End=0;
+	do{
+		zx= vSMatrix[Z][vZKl[X&0x7f]]&0xF;
+		vfx[(vSMatrix[Z][vZKl[X&0x7f]])>>4]();
+		Z=zx;
+	}while (End==0); // (Z!=zEnd) // zEnd:9
+	return &Morph;
+}
+\end{lstlisting}
+
+Hinweis Praktikum: Klassifizierung soll über Zeichenklassenvektor passieren!
+
+
+
+
+
+
+
+
