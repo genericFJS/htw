@@ -16,14 +16,15 @@
 \begin{document}
 \maketitle
 \tableofcontents
-\part{Übung}
-\sectionN{Grundlagen / Einführung}
+
+\setcounter{chapter}{-1}
+\chapter{Grundlagen / Einführung}
 \lesdate{18.10.2017}
 Recht $\corr$ Verhaltensregeln\\
 Sinn von Recht: Unterschiedliche \emph{Interessengruppen} sollen \emph{konfliktfrei} voneinander leben können.\\
 Anteil: Priorität von öffentlichen oder privaten Interesse abwägen (bspw. Datenschutz)
 
-\subsectionN{Rechtsformen}
+\section{Rechtsformen}
 \begin{enumerate}
 \item Gesetz:\\
 parlamentarische Beschlussfassung auf
@@ -41,13 +42,13 @@ beschlossen auf Kommunalparlament (Kreis, Gemeinde), bedarf Ermächtigungsgrundl
 bspw. Abfallsatzung, Abfallgebührensatzung, Kurtaxe, …
 \end{enumerate}
 
-\subsectionN{Hinweis Urheberrecht}
+\section{Hinweis Urheberrecht}
 Urheber (jemand, der ein [intellektuelles] Werk geschaffen hat) vs Nutzer
-\subsectionN{Allgemeine Vorgehensweise}
+\section{Allgemeine Vorgehensweise}
 \begin{enumerate}[label=\arabic*.]
 \item \label{geschWerk} Was ist/soll ein geschütztes Werk sein? $\to$ Gibt es überhaupt was zu schützen?
 \item \label{Urheber} Wer ist Urheber?
-\item \label{Inhaber} Wer ist Rechtsinhaber\footnote{$\to$ Inhaber der Verwertungsrechte, bspw. „vermögensrechtliche Befugnisse“}?
+\item \label{RInhaber} Wer ist Rechtsinhaber\footnote{$\to$ Inhaber der Verwertungsrechte, bspw. „vermögensrechtliche Befugnisse“}?
 \item \label{Handlung} Was ist urheberrechtsrelevante Handlung?
 \item \label{Verletzung} Liegt eine Rechtsverletzung vor?
 \item \label{Folgen} Was sind Rechtsfolgen dieser Rechtsverletzung?
@@ -55,59 +56,41 @@ Urheber (jemand, der ein [intellektuelles] Werk geschaffen hat) vs Nutzer
 
 
 
-\sectionN{Aufgabe 1}
+\chapter{Aufgabe 1}
 \begin{enumerate}
-\item[\ref{geschWerk}] DBMS ist Computerprogramm nach §69a UrhG.
-\item[\ref{Urheber}] A ist Urheber des DBMS nach §7 UrhG.
-\item[\ref{Inhaber}] Der Hersteller (Argbeitgeber von A) ist Rechtsinhaber nach §69b UrhG.
-\item[\ref{Handlung}] Einsatz durch A zu Hause ist Vervielfältigung\footnote{Auch private Speicherung, nicht nur Nutzung, ist schon Vervielfältigung.} nach §69c Nr. 1 und damit zustimmungspflichtig durch den Hersteller.
-\item[\ref{Verletzung}] Vergleich: Rechtsinhaber -- Ausführender\\
-A vervielfältigt ohne erforderliche Zustimmung durch Hersteller $\to$ Rechtsverletzung
+\item[\ref{geschWerk}] DBMS ist Computerprogramm. \hfill §69a UrhG
+\item[\ref{Urheber}] A ist Urheber des DBMS. \hfill §7 UrhG
+\item[\ref{RInhaber}] Der Hersteller (Argbeitgeber von A) ist Rechtsinhaber. \hfill §69b UrhG
+\item[\ref{Handlung}] Einsatz durch A zu Hause ist Vervielfältigung\footnote{Auch private Speicherung, nicht nur Nutzung, ist schon Vervielfältigung.} nach §69c Nr. 1 und damit zustimmungspflichtig durch den Hersteller. \hfill §69c Nr. 1
+\item[\ref{Verletzung}] Vergleich Rechtsinhaber -- Ausführender: A vervielfältigt ohne erforderliche Zustimmung durch Hersteller $\to$ Rechtsverletzung. \hfill §69c Nr. 1
+\item[\ref{Folgen}] Reinstallation des Zustands ohne Urheberrechtsverletzung (Vernichtung aller unrechtmäßig hergestellter Vervielfältigungsstücke).\\
+Ggf. Übergabe der Vervielfältigungsstücke an den Rechtsinhaber gegen eine angemessene Vergütung (Wenn Schädigender A nicht nur private Kopien gemacht hat, sondern auch aufwendig bspw. DVDs gebrannt und weitergegeben hat, so soll dieser Aufwand nicht umsonst sein, indem A die Stücke vernichtet, sondern Arbeitgeber diesen Aufwand entschädigt). \hfill §69f Abs. 1 UrhG
 \end{enumerate}
 
-\part{Gesetze}
-\chapterN{Teil 1 Urheberrecht}
-
-\sectionN{Abschnitt 3 Der Urheber}
-\subsubsectionN{§ 7 Urheber}
-Urheber ist der Schöpfer des Werkes.
-
-\sectionN{Abschnitt 8 Besondere Bestimmungen für Computerprogramme}
-
-\unimptnt{
-\subsubsectionN{§ 69a Gegenstand des Schutzes}
-\begin{enumerate}[label=(\arabic*)]
-\item Computerprogramme im Sinne dieses Gesetzes sind Programme in jeder Gestalt, einschließlich des Entwurfsmaterials.
-\item Der gewährte Schutz gilt für alle Ausdrucksformen eines Computerprogramms. Ideen und Grundsätze, die einem Element eines Computerprogramms zugrunde liegen, einschließlich der den Schnittstellen zugrundeliegenden Ideen und Grundsätze, sind nicht geschützt.
-\item Computerprogramme werden geschützt, wenn sie individuelle Werke in dem Sinne darstellen, daß sie das Ergebnis der eigenen geistigen Schöpfung ihres Urhebers sind. Zur Bestimmung ihrer Schutzfähigkeit sind keine anderen Kriterien, insbesondere nicht qualitative oder ästhetische, anzuwenden.
-\item Auf Computerprogramme finden die für Sprachwerke geltenden Bestimmungen Anwendung, soweit in diesem Abschnitt nichts anderes bestimmt ist.
-\item Die Vorschriften der §§ 32d, 32e, 36 bis 36c, 40a und 95a bis 95d finden auf Computerprogramme keine Anwendung.
+\chapter{Aufgabe 2}
+\lesdate{01.11.2017}
+\begin{enumerate}
+\item[\ref{geschWerk}] SPX ist Computerprogramm nach §69a UrhG, da individuelles Werk als geistige Schöpfung angenommen werden kann. \hfill §69a Abs. 3 UrhG
+\item[\ref{Urheber}] E ist Urheber von SPX. \hfill §7 UrhG
+\item[\ref{RInhaber}] E ist Rechtsinhaber, da §69b UrhG nicht greift\footnote{Ohne Arbeitnehmer ist Urheber in der Regel automatisch Rechtsinhaber}.
+\item[\ref{Handlung}] 
+\begin{enumerate}
+\item Bereitstellung im Internet von A ohne Zugangsbeschränkung: ist öffentliche Zugänglichmachung und damit zustimmungsbedürftig durch E. \hfill §69c Nr. 4 UrhG
+\item Verkauf von SPX durch A an C ist Verbreitung und damit zustimmungsbedürftig durch E. \hfill §69c Nr. 3 UrhG
+\item Herunterladen ist Verfielfältigung, dafür ist Zustimmung erforderlich. Diese liegt nicht vor. Damit verletzt C durch Herunterladen von SPX die Verwertungsrechte von E \hfill § 69a Nr. 1 UrhG
 \end{enumerate}
-}
-
-\subsubsectionN{§ 69b Urheber in Arbeits- und Dienstverhältnissen}
-\begin{enumerate}[label=(\arabic*)]
-\item Wird ein Computerprogramm von einem Arbeitnehmer in Wahrnehmung seiner Aufgaben oder nach den Anweisungen seines Arbeitgebers geschaffen, so ist ausschließlich der Arbeitgeber zur Ausübung aller vermögensrechtlichen Befugnisse an dem Computerprogramm berechtigt, sofern nichts anderes vereinbart ist.
-\item Absatz 1 ist auf Dienstverhältnisse entsprechend anzuwenden.
+\item[\ref{Verletzung}] 
+\begin{enumerate}
+\item Zustimmung durch E liegt nicht vor $\to$ Rechtsverletzung.  \hfill §69c Nr. 4 UrhG
+\item Verbreitungsrecht von E an Vervielfältigungsstück von A ist durch Verkauf an A erschöpft (ausgehend davon, dass es in der EU verkauft wurde), Zustimmung durch E nicht erforderlich. \hfill §69c Nr. 3 Satz 2 UrhG
+\item s.o.
 \end{enumerate}
-
-\subsubsectionN{§ 69c Zustimmungsbedürftige Handlungen}
-Der Rechtsinhaber hat das ausschließliche Recht, folgende Handlungen vorzunehmen oder zu gestatten: 
-\begin{enumerate}[label=\arabic*.]
-\item die dauerhafte oder vorübergehende Vervielfältigung, ganz oder teilweise, eines Computerprogramms mit jedem Mittel und in jeder Form. Soweit das Laden, Anzeigen, Ablaufen, Übertragen oder Speichern des Computerprogramms eine Vervielfältigung erfordert, bedürfen diese Handlungen der Zustimmung des Rechtsinhabers; 
-\item die Übersetzung, die Bearbeitung, das Arrangement und andere Umarbeitungen eines Computerprogramms sowie die Vervielfältigung der erzielten Ergebnisse. Die Rechte derjenigen, die das Programm bearbeiten, bleiben unberührt; 
-\item jede Form der Verbreitung des Originals eines Computerprogramms oder von Vervielfältigungsstücken, einschließlich der Vermietung. Wird ein Vervielfältigungsstück eines Computerprogramms mit Zustimmung des Rechtsinhabers im Gebiet der Europäischen Union oder eines anderen Vertragsstaates des Abkommens über den Europäischen Wirtschaftsraum im Wege der Veräußerung in Verkehr gebracht, so erschöpft sich das Verbreitungsrecht in bezug auf dieses Vervielfältigungsstück mit Ausnahme des Vermietrechts; 
-\item die drahtgebundene oder drahtlose öffentliche Wiedergabe eines Computerprogramms einschließlich der öffentlichen Zugänglichmachung in der Weise, dass es Mitgliedern der Öffentlichkeit von Orten und zu Zeiten ihrer Wahl zugänglich ist.
+\item[\ref{Folgen}] \begin{enumerate}
+\item E steht Schadensersatz in Höhe des entgangenen Gewinns von A zu. \hfill §97 Abs. 2 Satz 1 UrhG
+\item --
+\item Verfielfältigungsstück muss vernichtet werden \hfill §69f
 \end{enumerate}
-
-\chapterN{Teil 4 Gemeinsame Bestimmungen für Urheberrecht und verwandte Schutzrechte}
-
-\sectionN{Abschnitt 2 Rechtsverletzungen}
-\subsectionN{Unterabschnitt 1 Bürgerlich-rechtliche Vorschriften; Rechtsweg}
-\subsubsectionN{§ 97 Anspruch auf Unterlassung und Schadensersatz}
-\begin{enumerate}[label=(\arabic*)]
-\item Wer das Urheberrecht oder ein anderes nach diesem Gesetz geschütztes Recht widerrechtlich verletzt, kann von dem Verletzten auf Beseitigung der Beeinträchtigung, bei Wiederholungsgefahr auf Unterlassung in Anspruch genommen werden. Der Anspruch auf Unterlassung besteht auch dann, wenn eine Zuwiderhandlung erstmalig droht.
-\item Wer die Handlung vorsätzlich oder fahrlässig vornimmt, ist dem Verletzten zum Ersatz des daraus entstehenden Schadens verpflichtet. Bei der Bemessung des Schadensersatzes kann auch der Gewinn, den der Verletzer durch die Verletzung des Rechts erzielt hat, berücksichtigt werden. Der Schadensersatzanspruch kann auch auf der Grundlage des Betrages berechnet werden, den der Verletzer als angemessene Vergütung hätte entrichten müssen, wenn er die Erlaubnis zur Nutzung des verletzten Rechts eingeholt hätte. Urheber, Verfasser wissenschaftlicher Ausgaben (§ 70), Lichtbildner (§ 72) und ausübende Künstler (§ 73) können auch wegen des Schadens, der nicht Vermögensschaden ist, eine Entschädigung in Geld verlangen, wenn und soweit dies der Billigkeit entspricht.
 \end{enumerate}
+Hinweis: Problem ist nicht der Weiterverkauf, sondern die öffentliche Zugänglichmachung.
 
 \end{document}
