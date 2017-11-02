@@ -6,29 +6,36 @@ using System.Threading.Tasks;
 
 namespace aufgabeEins {
     class Program {
-        //        typedef struct morph {
-        //            int mc;     // morphem-code (siehe unten)
-        //            double dval;    // Zahl (wenn Zahl)
-        //            char cval;  // Zeichen (wenn Operand)
-        //        }
-        //        MORPHEM;
-        public struct Morphem {
-            public MorphemCode mCode;
-            public double doubleValue;
-            public char charValue;
+
+        struct Unlexed {
+            public MorphemCode currentMorphem;
+            private double currentDouble;
+            private char currentChar;
+            public double CurrentDouble {
+                get; private set;
+            }
+            public char CurrentChar {
+                get; private set;
+            }
+            public List<char> remainingChars;
+
+            public void RemoveLeadingWhitespace() {
+                while (remainingChars.Any() && (remainingChars.ElementAt(0) == ' ' || remainingChars.ElementAt(0) == '\t'))
+                    remainingChars.RemoveAt(0);
+            }
+            public void ParseDouble() {
+
+            }
         }
-        //enum mcodes {
-        //            mempty, // leer
-        //            mop,    // Operant
-        //            mdbl    // Zahl (ggf. "." für Gleitkomma)
-        //        };
-        public enum MorphemCode {
+
+        enum MorphemCode {
             mEmpty,
             mOperand,
             mDouble
         }
-        //        static MORPHEM m;
-        static Morphem morphem;
+
+        static Unlexed unlexed;
+
         //        void lex(char* pX) {
         //            static char* px;
         //            /* Initialisierung (wird nur beim ersten Aufruf (mit Eingabezeile) aufgerufen): */
@@ -45,7 +52,7 @@ namespace aufgabeEins {
         //                for (; *px == ' ' || *px == '\t'; px++) ;
         //                // Wenn nächstes Zeichen Zahl (oder Float-Seperator) ist: 
         //                if (isdigit(*px) || *px == '.') {
-        //                    m.dval = strtod(px, &px);   // Setze dval auf zu Zahl konvertierten Char (setzt auch Pointer weiter)
+        //                    m.dval = strtod(px, &px);   // Setze dval auf zu Zahl konvertierten Char (verschiebt Pointer nach Zahl)
         //                    m.mc = mdbl;
         //                } else
         //                    switch (*px) {
@@ -64,19 +71,42 @@ namespace aufgabeEins {
         //                    }
         //            }
         //        }
-        public static void InitLex() {
-            morphem.mCode = MorphemCode.mEmpty;
+
+        static void initLexer(List<char> charList) {
+            unlexed.currentMorphem = MorphemCode.mEmpty;
+            unlexed.remainingChars = charList;
         }
 
-        public static List<char> Lex(List<char> charList) {
-            if (!charList.Any()) {  // leer?
-                morphem.mCode = MorphemCode.mEmpty;
+        public static List<char> Lex() {
+            if (!unlexed.remainingChars.Any()) {
+                unlexed.currentMorphem = MorphemCode.mEmpty;
             } else {
-                while (charList.ElementAt(0) == ' ' || charList.ElementAt(0) == '\t')
-                    charList.RemoveAt(0);
+                // führende Leerzeichen/Tabs entfernen:
+                unlexed.RemoveLeadingWhitespace();
+                if (System.Char.IsDigit(unlexed.remainingChars[0])) {
+                    unlexed.ParseDouble();
+                } else {
+                    switch (unlexed.remainingChars[0]) {
+                        case '+':
+                        case '-':
+                        case '*':
+                        case '/':
+                        case '(':
+                        case ')':
+                            morphem.charValue = charList[0];
+                            charList.RemoveAt(0);
+                            morphem.mCode = MorphemCode.mOperand;
+                            break;
+                        default:
+                            Console.WriteLine("Falsche Eingabe '{0}'!\n Abbruch.\n", charList[0]);
+                            Environment.Exit(1);
+                            break;
+                    }
+                }
             }
             return charList;
         }
+
         //        double fac() {
         //            double tmp;
         //            if (m.mc == mop) {  // wenn Operand, dann Klammer berücksichtigen:
@@ -96,6 +126,14 @@ namespace aufgabeEins {
         //                exit(1);
         //            return tmp;
         //        }
+        public static double fac() {
+            if (morphem.mCode == MorphemCode.mOperand) {
+                if (morphem.charValue == '(') {
+
+                }
+            }
+            return 0;
+        }
 
         //        double term(void) {
         //            double tmp = fac(); // Faktor berechnen
@@ -106,6 +144,10 @@ namespace aufgabeEins {
         //            return tmp;
         //        }
 
+        public static double Expression(Unlexed unlexed) {
+
+            return 0;
+        }
         //        double expr(void) {
         //            double tmp = term();    // Term berechnen
         //            if (m.mc == mop && m.cval == '+') { // wenn aktuelle Stelle Operand + ist:
@@ -114,6 +156,7 @@ namespace aufgabeEins {
         //            }
         //            return tmp;
         //        }
+
 
         //        int main(int argc, char* argv[]) {
         //            char* pBuf = argv[1];
@@ -127,7 +170,7 @@ namespace aufgabeEins {
             String inputString = Console.ReadLine();
             List<char> inputCharList = new List<char>();
             inputCharList.AddRange(inputString);
-            InitLex();
+            InitLex(inputCharList);
             double result = 0;
             //lex( inputExpression );
             Console.WriteLine("Eingabe:  " + inputString);
@@ -135,8 +178,7 @@ namespace aufgabeEins {
             // Tests:
             Console.WriteLine("========================");
             inputCharList = Lex(inputCharList);
-            inputCharList.ForEach(delegate (char theChar)
-            {
+            inputCharList.ForEach(delegate (char theChar) {
                 Console.Write(theChar);
             });
             Console.Write("\n");

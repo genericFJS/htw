@@ -37,7 +37,7 @@ void lex(char * pX) {
 		for (; *px == ' ' || *px == '\t'; px++);
 		// Wenn nächstes Zeichen Zahl (oder Float-Seperator) ist: 
 		if (isdigit(*px) || *px == '.') {
-			m.dval = strtod(px, &px);	// Setze dval auf zu Zahl konvertierten Char (setzt auch Pointer weiter)
+			m.dval = strtod(px, &px);	// Setze dval auf zu Zahl konvertierten Char (verschiebt Pointer nach Zahl)
 			m.mc = mdbl;
 		} else
 			switch (*px) {
