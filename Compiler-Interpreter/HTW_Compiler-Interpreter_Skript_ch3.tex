@@ -42,9 +42,9 @@ b: Beende das Erkennen dieses Tokens
 \subsubsection*{Variablen Beispiellexer}
 \slides{V3_Lexer}{18}
 
-\section{Funktionen des Lexers}
+\section{Implementierung des Lexers}
 \slides{V3_Lexer}{19}
-\subsection{Beispielimplementierung}
+\subsection{Datentypen}
 \slides{V3_Lexer}{20}
 \slides[.4]{V3_Lexer}{21}
 %\slides{V3_Lexer}{22}
@@ -95,6 +95,7 @@ tMorph* Lex(void);
 \end{lstlisting}
 \slides[.4]{V3_Lexer}{24}
 \slides[.4]{V3_Lexer}{25}
+\subsection{Initialisierung}
 \begin{lstlisting}[language=C]
 static FILE *pIF;
 static tMorph MorphInit;
@@ -120,7 +121,7 @@ int initLex(char* fname){
 }
 \end{lstlisting}
 
-\subsection{Algorithmus des Lexers}
+\subsection{Algorithmus}
 \begin{lstlisting}[language=C]
 tMorph* Lex(void){
 	Z=0; // Anfangszustand, wenn nicht aus Tabelle
@@ -141,10 +142,196 @@ tMorph* Lex(void){
 
 Hinweis Praktikum: Klassifizierung soll über Zeichenklassenvektor passieren!
 
+\subsection{Funktionen}
+\lecdate{01.11.2017}
+\begin{lstlisting}[language=C]
+/* lesen */
+static void fl (void){
+	X=fgetc(pIF);
+	if (X=='\n') 
+		line++,
+		col=0;
+	else 
+		col++;
+}
+/* schreiben als Großbuchstabe, lesen */
+static void fgl (void){
+	*pBuf=(char)toupper(X);	// oder *Buf=(char)X&0xdf;
+	*(++pBuf)=0;
+	fl();
+}
+/* schreiben, lesen */
+static void fsl (void){
+	*pBuf=(char)X;
+	*(++pBuf)=0;
+	fl();
+}
+/*schreiben, lesen, beenden */
+static void fslb(void){
+	fsl();
+	fb();
+}
+\end{lstlisting}
 
+\subsubsection{Beenden}
+\begin{lstlisting}[language=C]
+static void fb (){
+	int i,j;
+	switch (Z){
+		/* Symbol */
+		case 3: // :
+		case 4: // <
+		case 5: // >
+		case 0:
+			Morph.Val.Symb=vBuf[0];
+			Morph.MC =mcSymb;
+			break;
+		/* Zahl */
+		case 1:
+			Morph.Val.Num=atol(vBuf);
+			Morph.MC =mcNum;
+			break;
+		/* Ergibtzeichen */
+		case 6:
+			Morph.Val.Symb=(long)zErg;
+			Morph.MC =mcSymb;
+			break;
+		/* KleinerGleich */
+		case 7:
+			Morph.Val.Symb=(long)zle;
+			Morph.MC =mcSymb;
+			break;
+		/* GroesserGleich */
+		case 8:
+			Morph.Val.Symb=(long)zge;
+			Morph.MC =mcSymb;
+			break;
+	}
+	Ende=1; // entfällt bei Variante mit Zustand zEnd
+}
+\end{lstlisting}
+\slides[.5]{V3_Lexer}{30}
 
+\section{Schlüsselworterkennung}
+\slides{V3_Lexer}{31}
+\slides{V3_Lexer}{32}
 
+\subsection*{Implementationsvarianten}
+\slides{V3_Lexer}{33}
+\subsection{Binäre Suche}
+\begin{lstlisting}[language=C]
+int main(int argc, char*argv[]){
+	/* sortierter Vektor der Keywords: */
+	const char* Keyw[]= {"BEGIN","CALL","CONST","DO","END","IF","ODD","PROCEDURE","THEN","VAR","WHILE"};
+	int n=sizeof Keyw/sizeof(char*);
+	int i;
+	printf("Anz:%d\n",n);
+	i=binary_search(Keyw,n,argv[1]);
+	if (i>=0)
+		printf("Ergebnis: %d %s\n",i, Keyw[i]);
+	else 
+		printf("Ergebnis: not found\n");
+	return 0;
+}
+\end{lstlisting}
+\subsubsection*{Nicht-Rekursiv}
+\begin{lstlisting}[language=C]
+int binary_search(
+	const char** M,	// stock
+	int n,					// number
+	const char* X){	// needle
+	unsigned mitte;
+	unsigned links = 0; /* man beginne beim kleinsten Index */
+	unsigned rechts = n 1;
+	/* Arrays sind 0basiert
+	*/
+	int ret=1;
+	int bool;
+	do{
+		if (n<=0)
+			break;
+		mitte = links + ((rechts links)/ 2); // Bereich halbieren
+		if (rechts < links)
+			break; // alles wurde durchsucht, X nicht gefunden
+		bool=strcmp(M[mitte],X);
+		if (bool==0) // Element X gefunden?
+			ret=mitte; 
+		else if (bool >0) // im linken Abschnitt weitersuchen
+			rechts = mitte; 
+		else  // im rechten Abschnitt weitersuchen
+			links = mitte + 1;
+		n=(n)/2;
+	} while (bool!=0);
+	return ret;
+}
+\end{lstlisting}
+\subsubsection*{Rekursiv}
+\begin{lstlisting}[language=C]
+int count=0;
+int binary_search(
+	const char** M,	// stock
+	int n,					// number
+	const char* X,	// needle
+	int offset){		// offset fuer return
+	count ++;
+	unsigned mitte, index, ret=1;
+	unsigned links = 0; // man beginne beim kleinsten Index
+	unsigned rechts = n 1;
+	// Arrays sind 0basiert
+	if (M == NULL || n <= 0) // Bereichsüberprüfung
+		printf("out of Range n:%d M[0]:%s m[%d]:%s\n",n, M[0], n1, n>0? M[n1]:"OutOfRange");
+	else{
+		int bool;
+		mitte = links + ((rechts links) / 2); // Bereich halbieren
+		if (rechts >= links){
+			bool=strcmp(M[mitte],X);
+			if (bool==0) // gefunden
+				ret= mitte+offset; 
+			else if (bool >0) // links weiter
+				ret= binary_search(M, n/2, X,offset); 
+			else // rechts weiter
+				ret= binary_search(M+mitte+1, n/2, X, offset+=mitte+1);
+		}
+	}
+	return ret;
+}
+\end{lstlisting}
 
+\subsubsection{Tabelle}
+\slides[.5]{V3_Lexer}{37}
+\subsubsection{Zeichenklassen für Buchstaben der Schlüsselwörter}
+\slides[.5]{V3_Lexer}{38}
+\subsubsection{Extra Zeichenklasse für 1. Buchstaben von Schlüsselwörtern}
+\slides[.5]{V3_Lexer}{39}
+\subsection{Automatentabelle}
+mit Schlüsselwörtern \lstinline`BEGIN`, \lstinline`CALL`, \lstinline`CONST`
+\slides[.5]{V3_Lexer}{40}
 
+\subsection{Schlüsselworttabelle mit einfacher Hashtechnik}
+\slides[.5]{V3_Lexer}{41}
+
+\begin{lstlisting}[language=C]
+/* Bezeichner/Wortsymbol */
+case 2:
+	i=vBuf[0]'A';
+	j=strlen(vBuf)2;
+	if (j>=0)
+		if (mSclW[i][j].pKeyWord)
+			if (strcmp(vBuf+1,mSclW[i][j].pKeyWord)==0){
+				Morph.MC =mcSymb;
+				Morph.Val.Symb=mSclW[i][j].KWCode;
+				break;
+			}
+	Morph.Val.pStr=vBuf;
+	Morph.MC =mcIdent;
+	break;
+\end{lstlisting}
+\begin{lstlisting}[language=C]	
+typedef enum T_ZS{
+	zNIL,
+	zErg=128,zle,zge,
+	zBGN,zCLL,zCST,zDO,zEND,zIF,zODD,zPRC,zTHN,zVAR,zWHL
+}tZS;
+\end{lstlisting}
 
 
