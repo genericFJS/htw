@@ -1,0 +1,110 @@
+\lecdate{07.11.2017}
+Aufbau:
+\begin{center}
+\begin{tikzpicture}[scale=.5]
+\draw  (0,4) circle (0.5);
+\draw  (0,1) circle (0.5);
+\draw  (0,-0.5) circle (0.5);
+\draw  (4,4) circle (0.5);
+\draw  (4,1) circle (0.5);
+\draw  (4,-0.5) circle (0.5);
+\draw  (8,4) circle (0.5);
+\draw  (8,1) circle (0.5);
+\draw  (8,-0.5) circle (0.5);
+\node at (0,4.5) [above, align=center] {Eingabe-\\schicht};
+\node [above, align=center] at (4,4.5) {Hidden-\\schicht(en)};
+\node [above, align=center] at (8,4.5) {Ausgabe-\\schicht};
+\draw (0.5,4) -- (3.5,4);
+\draw (4.5,4) -- (7.5,4);
+\draw (0.5,-0.5) -- (3.5,-0.5);
+\draw [thick, orange](4.5,-0.5) -- (7.5,-0.5);
+\draw [thick, blue](0.5,3.5) -- (3.5,0);
+\draw (0.5,0) -- (3.5,3.5);
+\draw (4.5,3.5) -- (7.5,0);
+\draw (4.5,0) -- (7.5,3.5);
+\node at (4,2.5) {…};
+\node at (0,2.5) {…};
+\node at (8,2.5) {…};
+\node at (0,-1) [below] {$k$};
+\node at (4,-1) [below] {$j$};
+\node at (8,-1) [below] {$i$};
+\node at (-1.5,2) [left] {$\vec{x}^p \Rightarrow$};
+\node at (11,4) [right] {$\vec{t}^p$};
+\node at (10,2) {$\Rightarrow\vec{y}$};
+\draw [-latex] (11,4) -- (10,3) -- (9,3);
+\draw (11,3) -- (12.5,2) node[right, align=left]{Fehler kann für alle \\Ausgabeneuronen \\berechnet werden};
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+\item Feed-forward-network
+\item vollvernetzt zwischen benachbarten Ebenen
+\end{itemize}
+Fehlerfunktion lautet:
+$$\boxed{E^p = \frac{1}{2} \sum_{i=1}^{I}(t_i^p-y_i^p)^2}$$
+(Quadratischer Ausgabefehler)\bigskip\\
+Für alle Neuronen, ausgenommen die Eingabeneuronen, gilt:\\
+$z_s = \sum w_{rs} \cdot y_s \To$ Skalarprodukt\\
+$y_s = \frac{1}{1+e^{-z_s}}$\begin{center}
+\begin{tikzpicture}
+\begin{axis}[hide axis, axis equal, clip=false, scale=.7]
+\addplot[domain=-2:2] {1/(1+e^(-4*x))}; 
+\draw [-latex](-2.5,0) -- (2.5,0) node[below left]{$z_s$};
+\draw [-latex](0,-0.1) -- (0,1.5) node[above right]{$y_s$}; 
+\draw (0.1,1) -- (-0.1,1) node[left]{$1$};
+\end{axis}
+\end{tikzpicture}
+\end{center}\bigskip
+Für ausgezeichnetes Gewicht \torange{$w_{ji}$} würde mit Hilfe der Delta-Lernregel gelten:
+$$\Delta w_{ji}=\eta \cdot y_j \cdot (t_i-y_i)$$
+Wie adaptiert man das Gewicht \tblue{$w_{kj}$}?!
+
+Idee: Die Delta-Lernregel mit Hilfe eines Gradientenverfahrens verallgemeinern, so dass sich ausgehend vom Fehler am NW-Ausgang \emph{alle} Parameter adaptieren lassen.\\
+$\To$ wir notieren die Fehlerfunktion als Funktion, die vom zu adaptierenden Parameter abhängt (als Argument der Funktion). Zum Beispiel:
+$$E^p(\vec{x}^p, \vec{W})=\torange{f(w_{ji})}$$
+$$E^p(\vec{x}^p, \vec{W})=\tblue{f(w_{kj})}$$
+$$E=\frac{1}{2}\sum(t_i-y_i)^2 =  \ldots =f(w_{ji})$$
+
+Für alle Trainingsmuster/-beispiele soll der Fehler (am Ausgang) minimal sein. Dafür muss eben der Wert für die einzelnen Parameter der Übergänge gesucht werden, für die die Ausgabe einen minimalen Fehler hat.
+
+Zum Bestimmen von $f(w_{ji})$ muss folgendes beachtet werden:
+
+$\Delta w \approx -\frac{\partial E}{\partial w}$ (zum Suchen $w_{opt}$ in Richtung des Minimums bewegen)\\
+$\to$ $\Delta w_{ji}\approx -\frac{\partial E}{\partial w-{ji}}$ \qquad $\Delta w_{kj}\approx - \frac{\partial E}{\partial w_{kj}}$\\
+Wie hängt die Fehlerfunktion $E$ von Parameter $w_{ji}$ ab?\\
+$\to$ $E_i=f(y_i)$ \quad $y_i=f(z_i)$ \quad $z_i=f(w_{ji})$\\
+$\To E_i(y_i(z_i(w_{ji})))$\\
+$\frac{\partial E_i}{\partial w_{ji}} = \frac{\partial E_i}{\partial y_i} \cdot \frac{\partial y_i}{\partial z_i} \cdot \frac{\partial z_i}{\partial w_{ji}}$ (Kettenregel)
+\begin{itemize}
+\item $\frac{\partial E_i}{\partial y_i}=\left[\frac{1}{2}(t_i-y_i)^2\right]_{y_i}=-(t_i -y_i)$
+\item $\frac{\partial y_i}{\partial z_i}=\left[ \frac{1}{1+e^{-z_i}}\right]_{z_i}=\left[ (1+e^{-z_i})^{-1}\right]_{z_i}=-e^{-z_i}\cdot -(1+e^{-z_i})^{-2}\\
+=\frac{e^{-z_i}}{(1+e^{-z_i})^2}=\frac{1}{1+e^{-z_i}}\cdot\frac{e^{-z_i}\torange{+1-1}}{1+e^{z_i}}=\frac{1}{1+e^{-z_i}}\cdot\left(\frac{1+e^{-z_i}}{1+e^{z_i}}-\frac{1}{1+e^{-z_i}}\right)=y_i(1-y_i)$
+\item $\frac{\partial z_i}{\partial w_{ji}}=\left[ y_1^H \cdot w_{1i} + y_2^H \cdot w_{2i} + \ldots + y_j^H \cdot w_{ji} + \ldots \right]_{w_{ji}}=y_j^H$
+\end{itemize}
+Damit gilt:\\
+$\frac{\partial E_i}{\partial w_{ji}}=-(t_i-y_i)\cdot y_i (1-y_i) \cdot y_i$\\
+$\boxed{\Delta w_{ji}=\eta \left( - \frac{\partial E_i}{\partial w_{ji}} \right)}$\\
+$\boxed{\Delta w_{ji} = \eta \cdot (t_i-y_i) \cdot y_i (1-y_i) \cdot y_j}$\\
+Für $\Delta w_{kj}$ ergibt sich jetzt $E(y_i(z_i(y_j(z_j(w_{kj})))))$:\\
+$\frac{\partial E}{\partial w_{jk}} = \frac{\partial E}{\partial y_i} \cdot \frac{\partial y_i}{\partial z_i} \cdot \frac{\partial z_i}{\partial y_j}\cdot \frac{\partial y_j}{\partial z_j}\cdot \frac{\partial z_j}{\partial w_{kj}}$\\
+$\frac{\partial E}{\partial w_{jk}}= (-1) \sum_i (t_i-y_i) \cdot y_i(1-y_i) \cdot w_{ji} \cdot y_j(1-y_j) \cdot y_k$\\
+Dabei sei $(t_i-y_) \cdot y_i(1-y_i) = \delta_i$ der Fehler am Knoten $i$.\\
+Somit ist $\frac{\partial E}{\partial w_{jk}}=(-1) \sum_i \delta_i \cdot w_{ji} \cdot y_j(1-y_j) \cdot y_k$\\
+Dabei sei $\sum_i \delta_i \cdot w_{ji} \cdot y_j(1-y_j) = \delta_j$ der Fehler am Knoten $j$.\\
+Somit ist $\Delta w_{kj}=\eta \cdot y_j(1-y_j) \cdot y_k \sum_i \delta _i \cdot w_{ji} = \eta \cdot \delta_j \cdot y_k$\\
+$\boxed{\Delta w_{ji}=\eta \cdot \delta_i \cdot y_j}$
+$\boxed{\Delta w_{kj}=\eta \cdot \delta_j \cdot y_k}$ usw.
+
+
+
+
+
+
+\section{Beispiel}
+%%% Handout
+Wichtig: An Neuron wird der $z$-Wert zusammengerechnet. Für die folgenden Neuronen ist dann der $y$-Wert relevant, der sich aus dem $z$-Wert ergibt.
+\begin{align*}
+z_5 &= 0,6\cdot 0 &&+ 0,3 \cdot 1 &&+ 0,1 \cdot 0 &&+ (-0,3) \cdot 1 &&+ 0 &&= 0\\
+z_6 &= 0,1\cdot 0 &&+ 0,1 \cdot 1 &&+ 0,1 \cdot 0 &&+ 0,1 \cdot 1 &&-0,2 &&= 0\\
+z_7 &= 0,4\cdot 0 &&+ (-0,1) \cdot 1 &&+ 0,1 \cdot 0 &&+ (-0,2) \cdot 1 &&+ 0,3 &&= 0
+\end{align*}

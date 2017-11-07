@@ -32,9 +32,9 @@ Norm: $L_m=\sqrt[n]{(x_1-w_{1i})^m+\ldots+(x_n-w_{ni})^m}$\\
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[hide axis, axis equal, clip=false, scale=.5]
-\addplot[domain=-3:3] {1/(1+e^(-x))}; 
-\draw [-latex](-3.5,0) -- (3.5,0) node[below left]{$z_i$};
-\draw [-latex](0,-0.1) -- (0,2) node[above right]{$y_i$}; 
+\addplot[domain=-2:2] {1/(1+e^(-4*x))}; 
+\draw [-latex](-2.5,0) -- (2.5,0) node[below left]{$z_s$};
+\draw [-latex](0,-0.1) -- (0,1.5) node[above right]{$y_s$}; 
 \draw (0.1,1) -- (-0.1,1) node[left]{$1$};
 \end{axis}
 \end{tikzpicture}
@@ -205,11 +205,11 @@ Bei Belegungen mit Anordnungen wie beim XOR:
 \draw [-latex](0.5,0) -- (2.5,-0.5);
 \draw [-latex](0.5,-2) -- (2.5,-1.5);
 \draw [-latex](3.5,-1) -- (4.5,-1) node[right]{$y_5$};
-\draw [-latex](-1.5,-2) -- (-0.5,-0.5);
+\draw [-latex](-1.5,-1.5) -- (-0.5,-0.5);
 \draw [-latex](-1.5,-0.5) -- (-0.5,-1.5);
 \end{tikzpicture}
 \end{center}
-Neuronen 1, …, 5 sind Skalarprodukt-neuronen mit $y_i = \frac{1}{1+e{-z_i}}$ $\to$ stetig differenzierbare Funktion. Für unsere Darstellung der $y_4$-$y_5$-Ebene verwenden wir $y=f(z) = \begin{cases}
+Neuronen 1, …, 5 sind Skalarprodukt-neuronen mit $y_i = \frac{1}{1+e^{-z_i}}$ $\to$ stetig differenzierbare Funktion. Für unsere Darstellung der $y_4$-$y_5$-Ebene verwenden wir $y=f(z) = \begin{cases}
 1 & \text{für } z> 0\\
 0 & \text{für }z \leq 0
 \end{cases}$
@@ -257,7 +257,13 @@ $(8,8)^T$: $z_3=3 \to y_3=1$, $z_4=-3 \to y_4 = 0$
 \end{tikzpicture}
 \end{center}
 
-
+\sectionN{Delta Lernregel}
+\lecdate{07.11.2017}
+$$\Delta w_{ij} = \eta \cdot y_i \cdot (t_j - y_j)$$
+$\To$ gültig für \emph{Perceptoren}.\\
+Ziel: Lernregel finden, mit der Parameter eines mehrschichtigen Netzwerks adaptiert werden können.
+\subsection{Mehrschichtiges Netzwerk}
+$\to$ \emph{Multilayer-Perceptron} (MLP)
 
 
 
