@@ -10,6 +10,7 @@
 Hinweis: In PL0 darf das \lstinline`statement` auch leer sein (da eckige Klammern).
 \subsection{First/Follow}
 \slides{V4_Parser}{6}
+\subsection{Als Graph}
 \subsubsection{programm}
 \slides{V4_Parser}{7}
 \subsubsection{block}
@@ -17,9 +18,212 @@ Hinweis: In PL0 darf das \lstinline`statement` auch leer sein (da eckige Klammer
 \subsubsection{statement}
 \slides{V4_Parser}{9}
 \subsubsection{expr}
+\lecdate{08.11.2017}
 \slides{V4_Parser}{10}
+1. Variante reicht für Parser, 3. Variante ist sinnvoller, wenn das Ergebnis im Compiler weiter genutzt werden soll.
+\subsubsection{term}
+\slides{V4_Parser}{11}
+\subsubsection{factor}
+\slides{V4_Parser}{12}
+\subsubsection{condition}
+\slides{V4_Parser}{13}
+\subsubsection{Bewertung}
+\slides{V4_Parser}{14}
+\slides{V4_Parser}{15}
+\subsubsection*{Alternative}
+\slides{V4_Parser}{16}
+\slides{V4_Parser}{17}
 
+\section{Implementation von Graphen}
+\slides{V4_Parser}{18}
+\subsection{Struktur eines Bogens}
+\slides{V4_Parser}{19}
+\subsubsection*{Beispiel Factor}
+\begin{lstlisting}[language=C]
+typedef unsigned long ul;
+tBog gFact[] = {
+/* 0*/ {BgMo,{(ul)mcIdent	}, NULL, 5, 1},	/*(0)---ident--->(E)*/
+/* 1*/ {BgMo,{(ul)mcNumb 	}, NULL, 5, 2},	/* +----number-->(E)*/
+/* 2*/ {BgSy,{(ul)'(' 		}, NULL, 3, 0},	/*(+)----'('---->(3)*/
+/* 3*/ {BgGr,{(ul)gExpr 	}, NULL, 4, 0},	/*(1)--express-->(4)*/
+/* 4*/ {BgSy,{(ul)')' 		}, NULL, 5, 0},	/*(0)----')'---->(E)*/
+/* 5*/ {BgEn,{(ul)0 			}, NULL, 0, 0} 	/*(E)---------(ENDE)*/
+};
+\end{lstlisting}
+\slides[.5]{V4_Parser}{20}
+Hinweis: $0$ in \lstinline`iAlt` bedeutet keine Alternative (vorher festgelegt, könnte auch $-1$ sein).
+\subsection{Erstellen eines Graphen}
+\slides[.5]{V4_Parser}{21}
+\begin{lstlisting}[language=C]
+tBog gFact[]={
+/* 0*/ {BgMo,{(ul)mcIdent	}, NULL, 5, 1},
+/* 1*/ {BgMo,{(ul)mcNumb	}, NULL, 5, 2},
+/* 2*/ {BgSy,{(ul)'(' 		}, NULL, 3, 0},
+/* 3*/ {BgGr,{(ul)gExpr 	}, NULL, 4, 0},
+/* 4*/ {BgSy,{(ul)')' 		}, NULL, 5, 0},
+/* 5*/ {BgEn,{(ul)0 			}, NULL, 0, 0}
+};
+\end{lstlisting}
+\subsubsection*{Hinweise zur Umsetzung}
+\slides{V4_Parser}{22}
+\subsection{Implementation von Bögen in Graphen}
+\slides{V4_Parser}{23}
+\begin{lstlisting}[language=C]
+int pars(tBog* pGraph){
+	tBog* pBog=pGraph;
+	int succ=0;
+	if (Morph.MC==mcEmpty)Lex();
+	while(1){
+		switch(pBog->BgD){
+			case BgNl:
+				succ=1;
+				break;
+			case BgSy:
+				succ=(Morph.Val.Symb==pBog->BgX.S);
+				break;
+			case BgMo:
+				succ=(Morph.MC==(tMC)pBog->BgX.M);
+				break;
+			case BgGr:
+				succ=pars(pBog->BgX.G);
+				break;
+			case BgEn:
+				return 1; /* Ende erreichet Erfolg */
+		}
+		if (succ && pBog->fx!=NULL)
+			succ=pBog->fx();
+		if (!succ)/* Alternativbogen probieren */
+			if (pBog->iAlt != 0)
+				pBog=pGraph+pBog->iAlt;
+			else
+				return FAIL;
+		else{/* Morphem formal akzeptiert (eaten) */
+			if (pBog->BgD & BgSy || pBog->BgD & BgMo)
+				Lex();
+			pBog=pGraph+pBog->iNext;
+		}
+	}/* while */
+}
+\end{lstlisting}
+\subsection{Parsebaum (optional)}
+\slides{V4_Parser}{25}
+\begin{lstlisting}[language=C]
+typedef struct{
+	int 		line;
+	char 		Type[10];
+	tList* 	pList;
+	char * 	Descr;
+}TreeItem;
 
+TreeItem* crItem(	tList* pList, // neue Liste od. NULL
+									char* Descr, // Description
+									char* Type, // Bogentyp
+									int line){ // Quellzeile
+	TreeItem *ptmp=malloc(sizeof(TreeItem));
+	strncpy(ptmp->Type,Type,9);
+	ptmp->pList=pList;
+	ptmp->Descr=Descr;
+	ptmp->line=line;
+	return ptmp;
+}
+\end{lstlisting}
+Aufruf:
+\begin{lstlisting}[language=C]
+InsertHead(pTree,crItem((pl=CreateList()),"Prog","MetaSymb",0));
+if (pars(gProg,pl)==1)
+/* ... */
+
+int pars(tBog* pGraph,tList* pList){
+	int verarbMorph=0;
+	tBog* pBog=pGraph;
+	int succ;
+	tList* pl=NULL;
+	TreeItem *pItem=NULL;
+	if (Morph.MC==mcEmpty)Lex();
+	while(1){
+		switch(pBog->BgD & (BgNl+BgSy+BgMo+BgGr+BgEn)){
+			case BgNl:
+				succ=1;
+				break;
+			case BgSy:
+				succ=(Morph.Val.Symb==pBog->BgX.S);
+				if (succ)
+					InsertTail(pList,crItem(NULL,(crStr(Morph.vBuf)),"Symbol",Morph.PosLine));
+				break;
+			case BgMo:
+				succ=(Morph.MC==(tMC)pBog->BgX.M);
+				if (succ)
+					InsertTail(pList,crItem(NULL,(crStr(Morph.vBuf)),"Morph",Morph.PosLine));
+				break;
+			case BgGr:
+				pl=CreateList();
+				pItem=crItem((pl),crStr(StrGr[pBog->BgX.G]),"MetaSymb",Morph.PosLine);
+				InsertTail(pList,pItem);
+				succ=pars(vGr[pBog->BgX.G],pl);
+				if (succ!=OK){
+					DeleteList(pl); 
+					free(pItem->Descr);
+					free(pItem); 
+					GetLast(pList); 
+					RemoveItem(pList);
+				}
+				break;
+			case BgEn:
+				return 1; /* Ende erreichet - Erfolg */
+		}
+		
+		if (succ && pBog->fx!=NULL)
+			succ=pBog->fx();
+		if (!succ){/* Alternativbogen probieren */
+			if (pBog->iAlt != 0)
+				pBog=pGraph+pBog->iAlt;
+			/* Graph nicht erfolgreich verlassen */
+			else if (verarbMorph)
+				return ERROR; /* Syntaxfehler */
+			else{
+				//printf("go back\n");
+				while(pItem=GetFirst(pList)){
+					free(pItem->Descr);
+					free(pItem);
+					RemoveItem(pList);
+				}
+				return FAIL; /* vielleicht gibt es noch Alternative */
+			}
+		} else { /* Morphem formal akzeptiert */
+			if (pBog->BgD & BgSy || pBog->BgD & BgMo){
+				verarbMorph=1;
+				Lex();
+			}
+			pBog=pGraph+pBog->iNext;
+		}
+	}
+}
+\end{lstlisting}
+\slides{V4_Parser}{27}
+
+\subsection{Erweiterte Graphen mit Backtracking}
+\slides[.5]{V4_Parser}{30}
+\slides[.5]{V4_Parser}{31}
+\slides[.5]{V4_Parser}{32}
+\slides[.5]{V4_Parser}{33}
+\begin{lstlisting}[language=C]
+tBog gStmnt[]= { 
+/* 0*/ {BgGr,{(unsigned long)iAssign	}, NULL, 7, 1},
+/* 1*/ {BgGr,{(unsigned long)iCall 		}, NULL, 7, 2},
+/* 2*/ {BgGr,{(unsigned long)iBegin 	}, NULL, 7, 3},
+/* 3*/ {BgGr,{(unsigned long)iIf 			}, NULL, 7, 4},
+/* 4*/ {BgGr,{(unsigned long)iWhile 	}, St4 , 7, 5},
+/* 5*/ {BgGr,{(unsigned long)iInput 	}, NULL, 7, 6},
+/* 6*/ {BgGr,{(unsigned long)iOutput	}, NULL, 7, 0},
+/* 7*/ {BgEn,{(unsigned long)0 				}, NULL, 0, 0}
+};
+tBog gAssign[]={
+/* 0*/ {BgMo,{(unsigned long)mcIdent	}, St0 , 1, 0},
+/* 1*/ {BgSy,{(unsigned long)zErg 		}, NULL, 2, 0},
+/* 2*/ {BgGr,{(unsigned long)iExpr 		}, St8 , 3, 0},
+/* 3*/ {BgEn,{(unsigned long)0 				}, NULL, 0, 0}
+};
+\end{lstlisting}
 
 
 
