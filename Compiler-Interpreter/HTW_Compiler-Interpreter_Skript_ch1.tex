@@ -1,4 +1,238 @@
-%%% Nachtragen, auch ch2
+\section{Motivation}
+\slides{V1_Grundlagen}{5}
+\subsection{Der Compiler}
+\slides{V1_Grundlagen}{6}
+\subsubsection{Aufbau eines Compilers}
+\slides{V1_Grundlagen}{7}
+\subsubsection{Beispiel}
+\slides{V1_Grundlagen}{8}
+\subsubsection*{Abstrakter Syntaxbaum}
+\slides{V1_Grundlagen}{9}
+\slides{V1_Grundlagen}{10}
+\subsection{Dreiadressmaschine vs Stackmaschine}
+\slides{V1_Grundlagen}{11}
+\slides{V1_Grundlagen}{12}
+\subsection{Syntaxgesteuerter Einpasscompiler}
+\slides{V1_Grundlagen}{13}
+
+\section{Grundlagen}
+\slides{V2_Ableitung}{1}
+\subsection{Sprache}
+\slides{V1_Grundlagen}{14}
+\subsection{Alphabet}
+\slides{V1_Grundlagen}{15}
+\subsubsection*{Beispiel}
+\slides{V1_Grundlagen}{16}
+\subsection{Zeichenkette}
+\slides{V1_Grundlagen}{17}
+\subsection{Freie Halbgruppe (A*)}
+\slides{V1_Grundlagen}{18}
+\subsection{Syntaxregeln}
+\slides{V1_Grundlagen}{18}
+\subsection{Grammatik und Parser}
+\slides{V2_Ableitung}{6}
+\subsection{BNF}
+\slides{V2_Ableitung}{7}
+\slides{V2_Ableitung}{8}
+\subsubsection*{Beispiel}
+\slides{V2_Ableitung}{9}
+\subsection{EBNF}
+\slides{V2_Ableitung}{10}
+\slides{V2_Ableitung}{11}
+\subsection{Syntaxgraph}
+\slides{V2_Ableitung}{12}
+\slides{V2_Ableitung}{13}
+\slides{V2_Ableitung}{14}
+\slides{V2_Ableitung}{15}
+\subsection{Grammatik von PL/0}
+\slides{V2_Ableitung}{16}
+\slides{V2_Ableitung}{17}
+\subsubsection*{Beispiele}
+\slides{V2_Ableitung}{18}
+
+\section{Grammatik nach Chomsky}
+\slides{V1_Grundlagen}{20}
+\subsubsection*{Beispiel}
+\slides{V1_Grundlagen}{21}
+\subsection{Ableitung}
+\slides{V1_Grundlagen}{22}
+\subsubsection*{Direkte Ableitung}
+\slides{V1_Grundlagen}{23}
+\slides{V1_Grundlagen}{24}
+\subsection{Chomsky Typ 0}
+\slides{V1_Grundlagen}{25}
+\subsection{Chomsky Typ 1}
+\slides{V1_Grundlagen}{26}
+\subsection{Chomsky Typ 2}
+\slides{V1_Grundlagen}{27}
+\subsection{Chomsky Typ 3}
+\slides{V1_Grundlagen}{28}
+\subsection{Chomsky Typ 4}
+\slides{V1_Grundlagen}{29}
+\subsection{Beispiel}
+\slides{V1_Grundlagen}{30}
+\subsubsection*{Analysen}
+\slides{V1_Grundlagen}{31}
+\slides{V1_Grundlagen}{32}
+\subsection{Analysestrategien}
+\slides{V1_Grundlagen}{33}
+
+\section{Morpheme, Token, Atome}
+\slides{V1_Grundlagen}{34}
+\subsection{Morpheme einfacher Ausdrücke}
+\slides{V1_Grundlagen}{35}
+\slides{V1_Grundlagen}{36}
+\subsubsection*{Beispiel 3+5*12}
+\slides{V1_Grundlagen}{37}
+\subsection{Ein einfacher Lexer}
+\begin{lstlisting}[language=C]
+typedef struct morph{
+	int mc;
+	double dval;
+	char cval;
+}MORPHEM;
+
+enum mcodes{
+	mempty,
+	mop,
+	mdbl
+};
+
+static MORPHEM m;
+
+void lex(char * pX){
+	static char * px;
+	/* Initialisierung*/
+	if (pX!=NULL){
+		m.mc=mempty;
+		px=pX;
+	}
+	/* lexiaklische Analyse */
+	if (*px=='\0'){
+		m.mc=mempty;
+	} else {
+		for (;*px==' '||*px=='\t';px++);
+		if (isdigit(*px) || *px=='.'){
+			m.dval=strtod(px,&px);
+			m.mc =mdbl;
+		} else
+			switch (*px){
+				case '+':
+				case '':
+				case '*':
+				case '/':
+				case '(':
+				case ')':
+					m.cval=*px++;
+					m.mc=mop;
+					break;
+				default :
+					printf("wrong ...: %c\n-- canceling --\n",*px);
+					exit (1);
+			}
+	}
+}
+\end{lstlisting}
+
+\section{Grammatik 1: Einfache Ausdrücke}
+\slides{V1_Grundlagen}{39}
+\subsection{Rekursiver Abstieg}
+\slides{V1_Grundlagen}{40}
+\subsubsection*{Alternative Regeln}
+\begin{lstlisting}[language=C]
+if (lookahead == First(A1)){
+	A1();
+} else if (lookahead == First(A2)) {
+	A2();
+}
+/* ... */
+else if (lookahead == First(An)){
+	An();
+} else {
+	error();
+}
+\end{lstlisting}
+First ist das jeweils erste terminale Symbol einer alternativen
+Regel
+\subsection{Anforderungen}
+\slides{V1_Grundlagen}{42}
+
+\section{LL(1) Grammatiken}
+\slides{V1_Grundlagen}{43}
+\slides{V1_Grundlagen}{44}
+
+\section{Grammatik 2: Einfache Ausdrücke ohne Linksrekursion}
+\slides{V1_Grundlagen}{45}
+\subsection{Linksfaktorisierung}
+\slides{V1_Grundlagen}{46}
+\subsubsection*{An Grammatik}
+\slides{V1_Grundlagen}{47}
+\subsection{First/Follow}
+\slides{V1_Grundlagen}{48}
+\subsection{Expression}
+\begin{lstlisting}[language=C]
+double expr(void){
+	double tmp=term();
+	if (m.mc==mop && m.cval=='+'){
+		lex(NULL); 
+		tmp+=expr();
+	}
+	return tmp;
+}
+\end{lstlisting}
+\subsection{Term}
+\begin{lstlisting}[language=C]
+double term(void){
+	double tmp=fac();
+	if (m.mc==mop && m.cval=='*'){
+		lex(NULL);
+		tmp*=term();
+	}
+	return tmp;
+}
+\end{lstlisting}
+\subsection{Faktor}
+\begin{lstlisting}[language=C]
+double fac(){
+	double tmp;
+	if (m.mc==mop)	{
+		if (m.cval=='(')	{
+			lex(NULL);
+			tmp=expr();
+			if (m.mc != mop || m.cval != ')')
+				exit (1);
+			lex(NULL);
+		} else 
+			exit (1);
+	}	else
+		if (m.mc==mdbl){
+			tmp=m.dval;
+			lex(NULL);
+		}	else 
+			exit (1);
+	return tmp;
+}
+\end{lstlisting}
+\subsection{Main}
+\begin{lstlisting}[language=C]
+int main(int argc, char*argv[]){
+	char *pBuf=argv[1];
+	printf("%s\n",pBuf);
+	lex(pBuf);
+	printf("%10.4f\n",expr());
+	free(pBuf);
+	return 0;
+}
+\end{lstlisting}
+\subsection{Ausführen}
+\begin{lstlisting}
+beck@linux:~/COMPILER> ./tPM 5+2*3
+5+2*3
+11.0000
+aber:
+beck@linux:~/COMPILER>./tPM 12/2*3
+\end{lstlisting}
+$\to$ Grammatik rechnet nicht korrekt!
 
 \section{Umformung der Grammatik}
 \lecdate{25.10.2017}
