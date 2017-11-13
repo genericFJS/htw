@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,131 +10,248 @@ namespace aufgabeEins {
 
 	struct Morphem {
 		public MorphemCode code { get; private set; }
-		char operand;
-		public char Operand { get { return operand; } set { operand = value; code = MorphemCode.operand; } }
-		double number;
-		public double Number { get { return number; } set { number = value; code = MorphemCode.number; } }
-		string identifier;
-		public string Identifier { get { return identifier; } set { identifier = value; code = MorphemCode.identifier; } }
-		public void SetEmpty() {
+		public int[] position;
+		string stringValue;
+		public string Symbol {
+			get { return stringValue; }
+			set { stringValue = value; code = MorphemCode.symbol; }
+		}
+		double numberValue;
+		public double Number {
+			get { return numberValue; }
+			set { numberValue = value; code = MorphemCode.number; }
+		}
+		public string Identifier {
+			get { return stringValue; }
+			set { stringValue = value; code = MorphemCode.identifier; }
+		}
+		public void Init() {
+			Reset();
+			position = new int[] { 0, 0 };
+		}
+		public void Reset() {
 			code = MorphemCode.empty;
 		}
 	}
 
 	enum MorphemCode {
 		empty,
-		operand,
+		symbol,
 		number,
-		identifier
+		identifier,
+	}
+
+	enum ExitCode : int {
+		Success = 0,
+		NoFile = 1
 	}
 
 	class Lexer {
-		public string InputString { get; set; }
-		public int Position { get; private set; }
-		public char CurrentChar { get { return InputString[Position]; } }
-		public Morphem CurrentMorphem;
-		private enum ActionCode : byte {
-			q=0,  // quit:				beenden
-			r=1,  // read:				lesen
-			cr=2, // char, read:			Großbuchstaben schreiben, lesen
-			wr=3, // write, read:			schreiben, lesen
-			wrq=4 // write, read, quit:	schreiben, lesen, beenden
+		private StreamReader reader;
+		private int currentState;
+		private int currentCharCode;
+		private string tempMorphemString;
+		private Morphem lexedMorphem;
+
+		// Aktionen für Kategorien:
+		private enum Actions {
+			FinishMorphem,      // finish:				beenden
+			ReadNext,           // read:				lesen
+			WriteCharReadNext,  // char, read:			Großbuchstaben schreiben, lesen
+			WriteReadNext,      // write, read:			schreiben, lesen
+			WriteReadNextFinish // write, read, quit:	schreiben, lesen, beenden
 		}
-		private static byte[] charClassTable = {
-		/*		0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F	*/
-		/* 0*/	7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,	//   0+
-		/*10*/	7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,	//  16+
-		/*		   !  "  #  $  %  &  '  (  )  *  +  ,  -  .  /	*/
-		/*20*/	7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	//  32+
-		/*		Zahlen                        :  ;  <  =  >  ?	*/
-		/*30*/	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 0, 5, 4, 6, 0,	//  48+
-		/*		@  Großbuchstaben								*/
-		/*40*/	0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,	//  64+
-		/*		                                 [  \  ]  ^  _	*/
-		/*50*/	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0,	//  80+
-		/*		`  Kleinbuchstaben								*/
-		/*60*/	0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,	//  96+
-		/*		                                 {  |  }  ~		*/
-		/*70*/	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0	// 112+
+		// Aktionen als kurze Variablen zur besseren Übersicht in der Tabelle:
+		private const int F = (int)Actions.FinishMorphem;
+		private const int R = (int)Actions.ReadNext;
+		private const int CR = (int)Actions.WriteCharReadNext;
+		private const int WR = (int)Actions.WriteReadNext;
+		private const int WRQ = (int)Actions.WriteReadNextFinish;
+
+		/// <summary>
+		/// Gibt an, welches Zeichen welcher Kategorie entspricht. 
+		/// Die Kategorie entscheidet über die Abarbeitung des nächsten Zeichens.
+		/// Kategorien:
+		/// 0: Sonderzeichen
+		/// 1: Buchstaben
+		/// 2: Ziffern
+		/// 3: Doppelpunkt
+		/// 4: Kleiner
+		/// 5: Größer
+		/// 6: Gleich
+		/// 7: Steuersymbol
+		/// </summary>
+		private readonly byte[] charCategoryTable = {
+			7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,	//   0+
+			7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,	//  16+
+		/*	   !  "  #  $  %  &  '  (  )  *  +  ,  -  .  /	*/
+			7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	//  32+
+		/*	Zahlen                        :  ;  <  =  >  ?	*/
+			2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 0, 4, 6, 5, 0,	//  48+
+		/*	@  Großbuchstaben								*/
+			0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,	//  64+
+		/*	                                 [  \  ]  ^  _	*/
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,	//  80+
+		/*	`  Kleinbuchstaben								*/
+			0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,	//  96+
+		/*		                                 {  |  }  ~	*/
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0	// 112+
 		// 
 		};
-		/**Jedes Array enthält eine Klasse.
-		 * Jedes Klassenarray 
-		 * 
-		 */
-		private static byte[,,] classNextActionTable = {
-		/* Zust		So		Zi		Bu		:		=		<		>		Sonst	*/
-		/* 0 */{    {0, (byte)ActionCode.wrq} },
-		/* 1 */{ },
-		/* 2 */{ },
-		/* 3 */{ },
-		/* 4 */{ },
-		/* 5 */{ },
-		/* 6 */{ },
-		/* 7 */{ },
-		/* 8 */{ }
+		/// <summary>
+		/// Abhängig von dem aktuellen Zustand und der Kategorie des gelesenen Zeichens 
+		/// sollen unterschiedliche Aktionen ausgeführt werden.
+		/// Die äußersten Arrays entsprichen den möglichen Zuständen. 
+		/// Die darin geschachtelten Arrays enthalten die möglichen Kategorien des gelesenen Zeichens.
+		/// Dieses innere Array enthält den Folgezustand und die auszuführende Aktion.
+		/// Zustände:
+		/// Z0: Grundzustand
+		/// Z1: Buchstabe
+		/// Z2: Ziffer
+		/// Z3: Doppelpunkt
+		/// Z4: Kleiner
+		/// Z5: Größer
+		/// Z6: Doppelpunkt-Gleich
+		/// Z7: Kleiner-Gleich
+		/// Z8: Größer-Gleich
+		/// </summary>
+		private readonly int[,,] categoryNextActionTable = {
+		/* Zust		So			Bu			Zi			:			<			>			=			Sonst	*/
+		/* Z0 */{   {9, WRQ},   {1, CR},    {2, WR},    {3, WR},    {4, WR},    {5, WR},    {9, WRQ},   {9, R}  },
+		/* Z1 */{   {9, F},     {1, CR},    {1, WR},    {9, F},     {9, F},     {9, F},     {9, F},     {9, F}  },
+		/* Z2 */{   {9, F},     {9, F},     {1, WR},    {9, F},     {9, F},     {9, F},     {9, F},     {9, F}  },
+		/* Z3 */{   {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {6, WR},    {9, F}  },
+		/* Z4 */{   {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {7, WR},    {9, F}  },
+		/* Z5 */{   {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {8, WR},    {9, F}  },
+		/* Z6 */{   {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F}  },
+		/* Z7 */{   {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F}  },
+		/* Z8 */{   {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F}  }
 		};
 
+		/// <summary>
+		/// Tabelle der möglichen Schlüsselwörtern abhängig von:
+		/// - Anfangsbuchstabe (äußeres Array)
+		/// - Länge (inneres Array)
+		/// Wenn Eintrag null ist, liegt kein Schlüsselwort vor.
+		/// Ansonsten muss die zu prüfende Zeichenkette mit Eintrag verglichen werden:
+		/// Bei Gleichheit liegt entsprechendes Schlüsselwort vor.
+		/// </summary>
+		private readonly string[,] keywordTable = {
+		/* Len:	2      3      4       5        6     7     8       9   	*/
+		/* A */ {null, null,  null,   null,    null, null, null,   null       },
+		/* B */ {null, null,  null,   "BEGIN", null, null, null,   null       },
+		/* C */ {null, null,  "CALL", "CONST", null, null, null,   null       },
+		/* D */ {"DO", null,  null,   null,    null, null, null,   null       },
+		/* E */ {null, "END", null,   null,    null, null, null,   null       },
+		/* F */ {null, null,  null,   null,    null, null, null,   null       }, // ELSE?
+		/* G */ {null, null,  null,   null,    null, null, null,   null       }, // GET?
+		/* H */ {null, null,  null,   null,    null, null, null,   null       },
+		/* I */ {"IF", null,  null,   null,    null, null, null,   null       },
+		/* J */ {null, null,  null,   null,    null, null, null,   null       },
+		/* K */ {null, null,  null,   null,    null, null, null,   null       },
+		/* L */ {null, null,  null,   null,    null, null, null,   null       },
+		/* M */ {null, null,  null,   null,    null, null, null,   null       },
+		/* N */ {null, null,  null,   null,    null, null, null,   null       },
+		/* O */ {null, "ODD", null,   null,    null, null, null,   null       },
+		/* P */ {null, null,  null,   null,    null, null, null,   "PROCEDURE"}, // PUT?
+		/* Q */ {null, null,  null,   null,    null, null, null,   null       },
+		/* R */ {null, null,  null,   null,    null, null, null,   null       },
+		/* S */ {null, null,  null,   null,    null, null, null,   null       },
+		/* T */ {null, null,  "THEN", null,    null, null, null,   null       },
+		/* U */ {null, null,  null,   null,    null, null, null,   null       },
+		/* V */ {null, "VAR", null,   null,    null, null, null,   null       },
+		/* W */ {null, null,  null,   "WHILE", null, null, null,   null       },
+		/* X */ {null, null,  null,   null,    null, null, null,   null       },
+		/* Y */ {null, null,  null,   null,    null, null, null,   null       },
+		/* Z */ {null, null,  null,   null,    null, null, null,   null       }
+		};
 
-		public Lexer(string inputString) {
-			InputString = inputString;
-			Position = 0;
-		}
-
-
-		double StringToDouble() {
-			string numberString = "";
-
-			while (NextMorphemExists() && Char.IsDigit(CurrentChar)) {
-				numberString += CurrentChar.ToString();
-				Position += 1;
-			}
-			if (NextMorphemExists() && CurrentChar == '.') {
-				do {
-					numberString += CurrentChar.ToString();
-					Position += 1;
-				} while (NextMorphemExists() && Char.IsDigit(CurrentChar));
-			}
-			//Console.WriteLine("Parse {0} next: '{1}'", numberString, CurrentChar);
-			return double.Parse(numberString);
-		}
-
-		void SkipWhitespaces() {
-			while (NextMorphemExists() && (CurrentChar == '\t' || CurrentChar == ' '))
-				Position += 1;
-		}
-
-		bool NextMorphemExists() {
-			if (InputString.Length > Position)
-				return true;
-			else
-				return false;
-		}
-
-		public void NextMorphem() {
-			if (!NextMorphemExists()) {
-				CurrentMorphem.SetEmpty();
+		public Lexer(string filePath) {
+			if (!filePath.EndsWith(".pl0"))
+				filePath += ".pl0";
+			if (!File.Exists(filePath)) {
+				Console.WriteLine("File not found: '{0}'", filePath);
+				Environment.Exit((int)ExitCode.NoFile);
 			} else {
-				SkipWhitespaces();
-				if (Char.IsDigit(CurrentChar)) {
-					CurrentMorphem.Number = StringToDouble();
-				} else {
-					switch (CurrentChar) {
-						case '+':
-						case '-':
-						case '*':
-						case '/':
-						case '(':
-						case ')':
-							CurrentMorphem.Operand = CurrentChar;
-							Position += 1;
-							break;
-						default:
-							Console.WriteLine("Falsche Eingabe: '{0}'!\n Abbruch.\n", CurrentChar);
-							Environment.Exit(1);
-							break;
-					}
-				}
+				reader = new StreamReader(@filePath);
+			}
+			lexedMorphem = new Morphem();
+			lexedMorphem.Init();
+			ReadNext();
+		}
+
+		private void HelloWorld() {
+			Console.WriteLine("Hello World!");
+		}
+
+		public Morphem NextMorphem() {
+			currentState = 0;
+			lexedMorphem.Reset();
+			tempMorphemString = "";
+			int currentCategory;
+			// Während aktueller Zustand noch ein gültiger abzuarbeitender Zustand ist:
+			while (currentState < categoryNextActionTable.GetLength(0)) {
+				currentCategory = charCategoryTable[currentCharCode];
+				//Console.WriteLine("CharCode: {0}[{1}]; State: {2}; Category: {3}",currentCharCode, (char)currentCharCode, currentState, currentCategory);
+				// Funktionsname aus Tabelle (abhängig vom aktuellen Zustand und Zeichen) ablesen:
+				string actionFunctionName = ((Actions)categoryNextActionTable[currentState, currentCategory, 1]).ToString();
+				//Console.WriteLine("Entering function: {0}", actionFunctionName);
+				// Funktion mit entsprechenden Namen aufrufen:
+				this.GetType().GetMethod(actionFunctionName, BindingFlags.NonPublic | BindingFlags.Instance).Invoke(this, null);
+				// Nächsten Zustand setzen (abhängig vom aktuellen Zustand und Zeichen):
+				currentState = categoryNextActionTable[currentState, currentCategory, 0];
+				Console.WriteLine("Read so far: {0}; next state: {1}", tempMorphemString, currentState);
+			}
+			return lexedMorphem;
+		}
+
+		private void ReadNext() {
+			currentCharCode = reader.Read();
+			if (currentCharCode == (int)Char.GetNumericValue('\n')) {
+				// nächste Zeile (Zeile erhöhen, Spalte zurücksetzen)
+				lexedMorphem.position[0] = 0;
+				lexedMorphem.position[1] += 1;
+			} else {
+				lexedMorphem.position[0] += 1;
+			}
+		}
+
+		private void WriteCharReadNext() {
+			//Console.WriteLine("Writing char: {0}", (char)currentCharCode);
+			tempMorphemString += ((char)currentCharCode).ToString().ToUpper();
+			ReadNext();
+		}
+
+		private void WriteReadNext() {
+			tempMorphemString += currentCharCode.ToString();
+			ReadNext();
+		}
+
+		private void WriteReadNextFinish() {
+			WriteReadNext();
+			FinishMorphem();
+		}
+
+		private void FinishMorphem() {
+			switch (currentState) {
+				case 3: // :
+				case 4: // <
+				case 5: // >
+				case 6: // :=
+				case 7: // <=
+				case 8: // >=
+				case 0: // Sonderzeichen
+					lexedMorphem.Symbol = tempMorphemString;
+					break;
+				case 2: // Zahl
+					lexedMorphem.Number = double.Parse(tempMorphemString);
+					break;
+				case 1: // Buchstabe
+					lexedMorphem.Identifier = tempMorphemString;
+					break;
+				default:
+					Console.WriteLine("Unknown morphem: {0}", tempMorphemString);
+					break;
 			}
 		}
 	}
@@ -141,78 +260,21 @@ namespace aufgabeEins {
 
 		Lexer lexer;
 
-		public Evaluator(string inputString) {
-			lexer = new Lexer(inputString);
+		public Evaluator(string filePath) {
+			lexer = new Lexer(filePath);
 		}
 
 		public double Evaluate() {
-			lexer.NextMorphem();    // erstes Morphem
-			return Expression();
-		}
-
-		double Expression() {
-			double result = Term();
-			while (lexer.CurrentMorphem.code == MorphemCode.operand && (lexer.CurrentMorphem.Operand == '+' || lexer.CurrentMorphem.Operand == '-')) {
-				if (lexer.CurrentMorphem.Operand == '+') {
-					lexer.NextMorphem();    // konsumiere gelesenen Operanden
-					result += Term();
-				} else if (lexer.CurrentMorphem.Operand == '-') {
-					lexer.NextMorphem();    // konsumiere gelesenen Operanden
-					result -= Term();
-				}
-			}
-			return result;
-		}
-
-		double Term() {
-			double result = Factor();
-			while (lexer.CurrentMorphem.code == MorphemCode.operand && (lexer.CurrentMorphem.Operand == '*' || lexer.CurrentMorphem.Operand == '/')) {
-				if (lexer.CurrentMorphem.Operand == '*') {
-					lexer.NextMorphem();    // konsumiere gelesenen Operanden
-					result *= Factor();
-				} else if (lexer.CurrentMorphem.Operand == '/') {
-					lexer.NextMorphem();    // konsumiere gelesenen Operanden
-					result /= Factor();
-				}
-			}
-			return result;
-		}
-
-		double Factor() {
-			double result;
-			if (lexer.CurrentMorphem.code == MorphemCode.operand) {
-				if (lexer.CurrentMorphem.Operand == '(') {
-					lexer.NextMorphem();    // konsumiere gelesene Klammer auf
-					result = Expression();
-					if (lexer.CurrentMorphem.code != MorphemCode.operand || lexer.CurrentMorphem.Operand != ')') {
-						Console.WriteLine("Habe ) erwartet, aber {0} gefunden.\n", lexer.CurrentChar);
-						Environment.Exit(1);
-					}
-					lexer.NextMorphem();    // konsumiere gelesene Klammer zu
-				} else {
-					Console.WriteLine("Habe ( erwartet, aber {0} gefunden.\n", lexer.CurrentChar);
-					result = 1;
-					Environment.Exit(1);
-				}
-
-			} else {
-				if (lexer.CurrentMorphem.code == MorphemCode.number) {
-					result = lexer.CurrentMorphem.Number;
-					lexer.NextMorphem();    // konsumiere gelesene Zahl
-				} else {
-					Console.WriteLine("Habe eine Zahl erwartet, aber {0} gefunden.\n", lexer.CurrentChar);
-					result = 1;
-					Environment.Exit(1);
-				}
-			}
-			return result;
+			Morphem first = lexer.NextMorphem();
+			Console.WriteLine("erstes: {0}/{1}/{2} ({3})", first.Number, first.Symbol, first.Identifier, first.code);
+			return 1;
 		}
 	}
 
 	class MainClass {
 		static void Main(string[] args) {
 			while (true) {
-				Console.Write("Rechnung: ");
+				Console.Write("Dateiname: ");
 				string input = Console.ReadLine();
 				Evaluator evaluator = new Evaluator(input);
 				double result = evaluator.Evaluate();
