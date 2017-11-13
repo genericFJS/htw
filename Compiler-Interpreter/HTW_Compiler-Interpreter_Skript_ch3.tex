@@ -313,8 +313,8 @@ mit Schlüsselwörtern \lstinline`BEGIN`, \lstinline`CALL`, \lstinline`CONST`
 \begin{lstlisting}[language=C]
 /* Bezeichner/Wortsymbol */
 case 2:
-	i=vBuf[0]'A';
-	j=strlen(vBuf)2;
+	i=vBuf[0]-'A';
+	j=strlen(vBuf)-2;
 	if (j>=0)
 		if (mSclW[i][j].pKeyWord)
 			if (strcmp(vBuf+1,mSclW[i][j].pKeyWord)==0){
