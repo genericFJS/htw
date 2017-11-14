@@ -25,9 +25,22 @@ namespace aufgabeEins {
 			get { return stringValue; }
 			set { stringValue = value; code = MorphemCode.identifier; }
 		}
+		public dynamic getValue() {
+			switch (code) {
+				case MorphemCode.empty:
+					return null;
+				case MorphemCode.identifier:
+				case MorphemCode.symbol:
+					return stringValue;
+				case MorphemCode.number:
+					return numberValue;
+				default:
+					return "none";
+			}
+		}
 		public void Init() {
 			Reset();
-			position = new int[] { 0, 0 };
+			position = new int[] { 1, 1 };
 		}
 		public void Reset() {
 			code = MorphemCode.empty;
@@ -117,9 +130,9 @@ namespace aufgabeEins {
 		/// </summary>
 		private readonly int[,,] categoryNextActionTable = {
 		/* Zust		So			Bu			Zi			:			<			>			=			Sonst	*/
-		/* Z0 */{   {9, WRQ},   {1, CR},    {2, WR},    {3, WR},    {4, WR},    {5, WR},    {9, WRQ},   {9, R}  },
+		/* Z0 */{   {9, WRQ},   {1, CR},    {2, WR},    {3, WR},    {4, WR},    {5, WR},    {9, WRQ},   {0, R}  },
 		/* Z1 */{   {9, F},     {1, CR},    {1, WR},    {9, F},     {9, F},     {9, F},     {9, F},     {9, F}  },
-		/* Z2 */{   {9, F},     {9, F},     {1, WR},    {9, F},     {9, F},     {9, F},     {9, F},     {9, F}  },
+		/* Z2 */{   {9, F},     {9, F},     {2, WR},    {9, F},     {9, F},     {9, F},     {9, F},     {9, F}  },
 		/* Z3 */{   {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {6, WR},    {9, F}  },
 		/* Z4 */{   {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {7, WR},    {9, F}  },
 		/* Z5 */{   {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {8, WR},    {9, F}  },
@@ -180,10 +193,6 @@ namespace aufgabeEins {
 			ReadNext();
 		}
 
-		private void HelloWorld() {
-			Console.WriteLine("Hello World!");
-		}
-
 		public Morphem NextMorphem() {
 			currentState = 0;
 			lexedMorphem.Reset();
@@ -191,8 +200,12 @@ namespace aufgabeEins {
 			int currentCategory;
 			// Während aktueller Zustand noch ein gültiger abzuarbeitender Zustand ist:
 			while (currentState < categoryNextActionTable.GetLength(0)) {
+				// Aufhören, wenn ungültiges (nicht-ASCII) Zeichen oder EOF
+				if (charCategoryTable.Length < currentCharCode || currentCharCode < 0) {
+					break;
+				}
 				currentCategory = charCategoryTable[currentCharCode];
-				//Console.WriteLine("CharCode: {0}[{1}]; State: {2}; Category: {3}",currentCharCode, (char)currentCharCode, currentState, currentCategory);
+				//Console.WriteLine("CharCode: {1}[{0}]; Current State: {2}; Current Category: {3}", currentCharCode, (char)currentCharCode, currentState, currentCategory);
 				// Funktionsname aus Tabelle (abhängig vom aktuellen Zustand und Zeichen) ablesen:
 				string actionFunctionName = ((Actions)categoryNextActionTable[currentState, currentCategory, 1]).ToString();
 				//Console.WriteLine("Entering function: {0}", actionFunctionName);
@@ -200,20 +213,22 @@ namespace aufgabeEins {
 				this.GetType().GetMethod(actionFunctionName, BindingFlags.NonPublic | BindingFlags.Instance).Invoke(this, null);
 				// Nächsten Zustand setzen (abhängig vom aktuellen Zustand und Zeichen):
 				currentState = categoryNextActionTable[currentState, currentCategory, 0];
-				Console.WriteLine("Read so far: {0}; next state: {1}", tempMorphemString, currentState);
+				//Console.WriteLine("Read so far: {0} - next state: {1}", tempMorphemString, currentState);
 			}
 			return lexedMorphem;
 		}
 
 		private void ReadNext() {
-			currentCharCode = reader.Read();
-			if (currentCharCode == (int)Char.GetNumericValue('\n')) {
+			//Console.Write("{0}|", currentCharCode);
+			// 10: newline
+			if (currentCharCode == 10) {
 				// nächste Zeile (Zeile erhöhen, Spalte zurücksetzen)
-				lexedMorphem.position[0] = 0;
+				lexedMorphem.position[0] = 1;
 				lexedMorphem.position[1] += 1;
 			} else {
 				lexedMorphem.position[0] += 1;
 			}
+			currentCharCode = reader.Read();
 		}
 
 		private void WriteCharReadNext() {
@@ -223,7 +238,7 @@ namespace aufgabeEins {
 		}
 
 		private void WriteReadNext() {
-			tempMorphemString += currentCharCode.ToString();
+			tempMorphemString += ((char)currentCharCode).ToString();
 			ReadNext();
 		}
 
@@ -247,27 +262,75 @@ namespace aufgabeEins {
 					lexedMorphem.Number = double.Parse(tempMorphemString);
 					break;
 				case 1: // Buchstabe
-					lexedMorphem.Identifier = tempMorphemString;
+					if (IsKeyword(tempMorphemString)) {
+						lexedMorphem.Symbol = tempMorphemString;
+					} else {
+						lexedMorphem.Identifier = tempMorphemString;
+					}
 					break;
 				default:
 					Console.WriteLine("Unknown morphem: {0}", tempMorphemString);
 					break;
 			}
 		}
+
+		private bool IsKeyword(string morphemString) {
+			int morphemLength = morphemString.Length;
+			// Länger als längstes Keyword?
+			if (morphemLength < 2 || morphemLength > keywordTable.GetLength(1) + 1)
+				return false;
+			// Eintrag aus Keyword-Tabelle
+			string potentialKeyword = keywordTable[(int)morphemString[0] - 65, morphemLength - 2];
+			if (potentialKeyword != null && potentialKeyword.Equals(morphemString))
+				return true;
+			return false;
+		}
 	}
 
 	class Evaluator {
 
 		Lexer lexer;
+		int currentLine;
 
 		public Evaluator(string filePath) {
 			lexer = new Lexer(filePath);
+			currentLine = 0;
 		}
 
-		public double Evaluate() {
-			Morphem first = lexer.NextMorphem();
-			Console.WriteLine("erstes: {0}/{1}/{2} ({3})", first.Number, first.Symbol, first.Identifier, first.code);
-			return 1;
+
+
+		public void Evaluate() {
+			Morphem morphem;
+			do {
+				morphem = lexer.NextMorphem();
+				//Console.WriteLine("erstes: {0} ({1})", morphem.getValue(), morphem.code);
+				if (currentLine < morphem.position[1]) {
+					currentLine = morphem.position[1];
+					Console.Write("\n{0,2}: ", currentLine);
+				}
+				switch (morphem.code) {
+					case MorphemCode.number:
+						Console.ForegroundColor = ConsoleColor.Blue;
+						Console.Write("{0} ", morphem.getValue());
+						Console.ResetColor();
+						break;
+					case MorphemCode.identifier:
+						Console.ForegroundColor = ConsoleColor.Cyan;
+						Console.Write("{0} ", morphem.getValue());
+						Console.ResetColor();
+						break;
+					case MorphemCode.symbol:
+						Console.ForegroundColor = ConsoleColor.Green;
+						Console.Write("{0} ", morphem.getValue());
+						Console.ResetColor();
+						break;
+					default:
+						Console.ForegroundColor = ConsoleColor.Red;
+						Console.Write("\nFinished");
+						Console.ResetColor();
+						break;
+				}
+			} while (morphem.code != MorphemCode.empty);
 		}
 	}
 
@@ -277,9 +340,8 @@ namespace aufgabeEins {
 				Console.Write("Dateiname: ");
 				string input = Console.ReadLine();
 				Evaluator evaluator = new Evaluator(input);
-				double result = evaluator.Evaluate();
-				Console.WriteLine("Ergebnis: " + result);
-				Console.WriteLine("========================");
+				evaluator.Evaluate();
+				Console.Write("\n========================\n");
 			}
 		}
 	}

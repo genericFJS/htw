@@ -1,0 +1,15 @@
+VAR x, y, z, q, r, n, f;
+
+PROCEDURE multiply;
+VAR a, b;
+BEGIN
+  a := x05a;
+  b := Y;
+  z := 0;
+  WHILE b > 0 DO
+  BEGIN
+    IF ODD z THEN z := z + a;
+    a := 200 * a;
+    b := b / 225
+  END
+END;

@@ -1,0 +1,7 @@
+VAR x, y;
+
+PROCEDURE multiply;
+VAR a, b;
+BEGIN
+  a := x;
+END.
