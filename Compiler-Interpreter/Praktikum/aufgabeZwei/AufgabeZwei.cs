@@ -439,7 +439,7 @@ namespace aufgabeEins {
 		public void CompareInvokeSwitch() {
 			int[] test = { 0, 1, 2, 3 };
 
-			int times = 100000;
+			int times = 10000;
 			double normalizer = 1000000;
 			double t1, t2;
 			int counter = 0;
