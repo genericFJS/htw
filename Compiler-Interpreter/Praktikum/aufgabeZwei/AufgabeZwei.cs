@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -206,11 +207,23 @@ namespace aufgabeEins {
 				}
 				currentCategory = charCategoryTable[currentCharCode];
 				//Console.WriteLine("CharCode: {1}[{0}]; Current State: {2}; Current Category: {3}", currentCharCode, (char)currentCharCode, currentState, currentCategory);
-				// Funktionsname aus Tabelle (abhängig vom aktuellen Zustand und Zeichen) ablesen:
-				string actionFunctionName = ((Actions)categoryNextActionTable[currentState, currentCategory, 1]).ToString();
-				//Console.WriteLine("Entering function: {0}", actionFunctionName);
-				// Funktion mit entsprechenden Namen aufrufen:
-				this.GetType().GetMethod(actionFunctionName, BindingFlags.NonPublic | BindingFlags.Instance).Invoke(this, null);
+				switch ((Actions)categoryNextActionTable[currentState, currentCategory, 1]) {
+					case Actions.ReadNext:
+						ReadNext();
+						break;
+					case Actions.WriteReadNext:
+						WriteReadNext();
+						break;
+					case Actions.WriteCharReadNext:
+						WriteCharReadNext();
+						break;
+					case Actions.WriteReadNextFinish:
+						WriteReadNextFinish();
+						break;
+					case Actions.FinishMorphem:
+						FinishMorphem();
+						break;
+				}
 				// Nächsten Zustand setzen (abhängig vom aktuellen Zustand und Zeichen):
 				currentState = categoryNextActionTable[currentState, currentCategory, 0];
 				//Console.WriteLine("Read so far: {0} - next state: {1}", tempMorphemString, currentState);
@@ -224,9 +237,9 @@ namespace aufgabeEins {
 			if (currentCharCode == 10) {
 				// nächste Zeile (Zeile erhöhen, Spalte zurücksetzen)
 				lexedMorphem.position[0] = 1;
-				lexedMorphem.position[1] += 1;
+				lexedMorphem.position[1]++;
 			} else {
-				lexedMorphem.position[0] += 1;
+				lexedMorphem.position[0]++;
 			}
 			currentCharCode = reader.Read();
 		}
@@ -285,6 +298,196 @@ namespace aufgabeEins {
 				return true;
 			return false;
 		}
+
+		// ====================================================================
+		//							Performance Tests
+		// ====================================================================
+
+		private readonly List<string> keywordList = new List<string> {
+			"DO", "IF", "END", "ODD", "VAR", "CALL", "THEN", "BEGIN", "CONST", "WHILE", "PROCEDURE"
+		};
+
+		private bool IsKeywordAlt(string morphemString) {
+			if (keywordList.Contains(morphemString))
+				return true;
+			else
+				return false;
+		}
+
+		// Vergleich zeigt, dass das Array in jedem Fall schneller ist. Vor allem aber, wenn Elemente in der Liste sind, die nicht passen.
+		public void CompareKeywordSearch() {
+			int times = 1000000;
+			double normalizer = 1000000;
+			double t1, t2;
+			List<string> testElements = keywordList;
+			int counter = 0;
+			Stopwatch sw = new Stopwatch();
+
+			sw.Start();
+			while (counter < times) {
+				foreach (string element in testElements) {
+					IsKeyword(element);
+					counter++;
+				}
+			}
+			sw.Stop();
+			t1 = sw.Elapsed.TotalMilliseconds * normalizer / counter;
+			sw.Reset();
+			counter = 0;
+			sw.Start();
+			while (counter < times) {
+				foreach (string element in testElements) {
+					IsKeywordAlt(element);
+					counter++;
+				}
+			}
+			sw.Stop();
+			t2 = sw.Elapsed.TotalMilliseconds * normalizer / counter;
+			Console.WriteLine("(Average time in ns for 1000000 searches)");
+			Console.WriteLine("Option                              Time KeywordTable  Time KeywordList  Table Speedup");
+			Console.WriteLine("Search only matching:               {0,-12:0.00}       {1,-12:0.00}      {2,3:0.}%", t1, t2, t2 / t1 * 100);
+
+			testElements.Add("HALLO");
+			testElements.Add("HALLO");
+			testElements.Add("HALLO");
+			testElements.Add("HALLO");
+			testElements.Add("HALLO");
+			sw.Reset();
+			counter = 0;
+			sw.Start();
+			while (counter < times) {
+				foreach (string element in testElements) {
+					IsKeyword(element);
+					counter++;
+				}
+			}
+			sw.Stop();
+			t1 = sw.Elapsed.TotalMilliseconds * normalizer / counter;
+			sw.Reset();
+			counter = 0;
+			sw.Start();
+			while (counter < times) {
+				foreach (string element in testElements) {
+					IsKeywordAlt(element);
+					counter++;
+				}
+			}
+			sw.Stop();
+			t2 = sw.Elapsed.TotalMilliseconds * normalizer / counter;
+			Console.WriteLine("Search other, too (shorter):        {0,-12:0.00}       {1,-12:0.00}      {2,3:0.}%", t1, t2, t2 / t1 * 100);
+
+			testElements.Add("PROZEDURAL");
+			testElements.Add("PROZEDURAL");
+			testElements.Add("PROZEDURAL");
+			testElements.Add("PROZEDURAL");
+			testElements.Add("PROZEDURAL");
+			testElements.Add("PROZEDURAL");
+			sw.Reset();
+			counter = 0;
+			sw.Start();
+			while (counter < times) {
+				foreach (string element in testElements) {
+					IsKeyword(element);
+					counter++;
+				}
+			}
+			sw.Stop();
+			t1 = sw.Elapsed.TotalMilliseconds * normalizer / counter;
+			sw.Reset();
+			counter = 0;
+			sw.Start();
+			while (counter < times) {
+				foreach (string element in testElements) {
+					IsKeywordAlt(element);
+					counter++;
+				}
+			}
+			sw.Stop();
+			t2 = sw.Elapsed.TotalMilliseconds * normalizer / counter;
+			Console.WriteLine("Search other, too (shorter+longer): {0,-12:0.00}       {1,-12:0.00}      {2,3:0.}%", t1, t2, t2 / t1 * 100);
+		}
+
+		private void TestCode() {
+			for (int i = 1; i < 1000; i++)
+				;
+		}
+
+		private void TestFuncA() {
+			TestCode();
+		}
+
+		private void TestFuncB() {
+			TestCode();
+		}
+
+		private void TestFuncC() {
+			TestCode();
+		}
+
+		private void TestFuncD() {
+			TestCode();
+		}
+
+		private enum TestActions {
+			TestFuncA = 0,
+			TestFuncB,
+			TestFuncC,
+			TestFuncD
+		}
+
+		// Vergleicht das Aufrufen einer Funktion abhängig von einem enum-Bezeichner: Entweder über Reflection oder über Switch. Switch ist schneller.
+		public void CompareInvokeSwitch() {
+			int[] test = { 0, 1, 2, 3 };
+
+			int times = 100000;
+			double normalizer = 1000000;
+			double t1, t2;
+			int counter = 0;
+			Stopwatch sw = new Stopwatch();
+
+			sw.Start();
+			while (counter < times) {
+				foreach (int element in test) {
+					string actionFunctionName = ((TestActions)test[1]).ToString();
+					this.GetType().GetMethod(actionFunctionName, BindingFlags.NonPublic | BindingFlags.Instance).Invoke(this, null);
+					counter++;
+				}
+			}
+			sw.Stop();
+			t1 = sw.Elapsed.TotalMilliseconds * normalizer / counter;
+			sw.Reset();
+			counter = 0;
+			sw.Start();
+			while (counter < times) {
+				foreach (int element in test) {
+					switch (element) {
+						case 0:
+							TestFuncA();
+							break;
+						case 1:
+							TestFuncB();
+							break;
+						case 2:
+							TestFuncC();
+							break;
+						case 3:
+							TestFuncD();
+							break;
+					}
+					counter++;
+				}
+			}
+			sw.Stop();
+			t2 = sw.Elapsed.TotalMilliseconds * normalizer / counter;
+			Console.WriteLine("(Average time in ns for 1000000 calls)");
+			Console.WriteLine("Option                Time Reflection  Time Switch Case  Reflection Speedup");
+			double speedUp;
+			if (t2 > t1)
+				speedUp = t2 / t1 * 100;
+			else
+				speedUp = -t1 / t2 * 100;
+			Console.WriteLine("Search only matching: {0,-12:0.00}     {1,-12:0.00}      {2,4:0.}%", t1, t2, speedUp);
+		}
 	}
 
 	class Evaluator {
@@ -326,11 +529,17 @@ namespace aufgabeEins {
 						break;
 					default:
 						Console.ForegroundColor = ConsoleColor.Red;
-						Console.Write("\nFinished");
+						Console.Write("\nFinished\n");
 						Console.ResetColor();
 						break;
 				}
 			} while (morphem.code != MorphemCode.empty);
+		}
+
+		public void CompareLexerPerformance() {
+			lexer.CompareKeywordSearch();
+			Console.Write("========================\n");
+			lexer.CompareInvokeSwitch();
 		}
 	}
 
@@ -341,7 +550,9 @@ namespace aufgabeEins {
 				string input = Console.ReadLine();
 				Evaluator evaluator = new Evaluator(input);
 				evaluator.Evaluate();
-				Console.Write("\n========================\n");
+				Console.WriteLine("========================");
+				evaluator.CompareLexerPerformance();
+				Console.WriteLine("========================");
 			}
 		}
 	}
