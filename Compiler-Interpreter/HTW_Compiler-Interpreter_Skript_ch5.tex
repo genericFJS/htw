@@ -1,0 +1,78 @@
+\section{Grundlagen}
+\slides{V5_NamenList}{1}
+\subsection*{Implementationsvarianten}
+\slides{V5_NamenList}{2}
+\section{Namenslisteneintrag}
+\begin{lstlisting}[language=C]
+typedef struct{
+	tKz Kz;					// Kennzeichen (enum)
+	short IdxProc;	// Prozedurnummer
+	void* pObj;			// Poiner auf benanntes Objekt
+	int Len;				
+	char* pName;		// Pointer auf Name
+}tBez;
+
+typedef enum tKZ{
+	KzBez, 
+	KzPrc, 
+	KzConst, 
+	KzVar, 
+	KzLabl, 
+	Kz0ptr,
+	// ...
+}
+\end{lstlisting}
+\section{Variablenbeschreibung}
+\slides{V5_NamenList}{4}
+\begin{lstlisting}[language=C]
+typedef struct tVAR{
+	tKz Kz;
+	int Dspl;	// Displacement
+}tVar;
+\end{lstlisting}
+\section{Konstantenbeschreibung}
+\slides{V5_NamenList}{6}
+\begin{lstlisting}[language=C]
+typedef struct tCONST{
+	tKz Kz;
+	long Val;	// Wert der Konstanten
+	int Idx;	// Index der Konstanten im ConstBlock
+}tConst;
+\end{lstlisting}
+%\subsubsection*{Konstanten am Ende des Codes}
+%\slides{V5_NamenList}{7}
+\section{Prozedurbeschreibung}
+\slides{V5_NamenList}{9}
+\begin{lstlisting}[language=C]
+typedef struct tPROC{
+	tKz Kz;								
+	short IdxProc;				// Prozedurnummer
+	struct tPROC*pParent;	// Pointer auf die Prozedurbeschreibung der Parentprozedur
+	tList *pLBez;					// Lokale Namensliste der Prozedur
+	int SpzzVar;					// Speicherplatzzuordnungszähler für Variable
+}tProc;
+\end{lstlisting}
+
+\section{Beispiel Namensliste}
+\slides[.5]{V5_NamenList}{11}
+\begin{center}
+$\downarrow$
+\end{center}
+\slides[.5]{V5_NamenList}{12}
+\subsection*{Realisierung als Stack}
+\slides[.5]{V5_NamenList}{13}
+
+\section{Funktionen zur Namensliste}
+\slides{V5_NamenList}{14}
+\section{Einordnung in Parser}
+bl* wird ausgeführt, wenn Bogen formal akzeptiert wurde.
+\slides[.5]{V5_NamenList}{15}
+\slides{V5_NamenList}{16}
+\slides{V5_NamenList}{17}
+\slides[.5]{V5_NamenList}{18}
+
+
+
+
+
+
