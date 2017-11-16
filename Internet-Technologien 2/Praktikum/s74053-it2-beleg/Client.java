@@ -16,14 +16,15 @@ public class Client {
 
 	// GUI
 	// ----
-	JFrame		f						= new JFrame("Client");
-	JButton		setupButton	= new JButton("Setup");
-	JButton		playButton	= new JButton("Play");
-	JButton		pauseButton	= new JButton("Pause");
-	JButton		tearButton	= new JButton("Teardown");
-	JPanel		mainPanel		= new JPanel();
-	JPanel		buttonPanel	= new JPanel();
-	JLabel		iconLabel		= new JLabel();
+	JFrame		f							= new JFrame("Client");
+	JButton		setupButton		= new JButton("Setup");
+	JButton		playButton		= new JButton("Play");
+	JButton		pauseButton		= new JButton("Pause");
+	JButton		optionsButton	= new JButton("Options");
+	JButton		tearButton		= new JButton("Teardown");
+	JPanel		mainPanel			= new JPanel();
+	JPanel		buttonPanel		= new JPanel();
+	JLabel		iconLabel			= new JLabel();
 	ImageIcon	icon;
 
 	// RTP variables:
@@ -41,6 +42,7 @@ public class Client {
 	final static int	INIT		= 0;
 	final static int	READY		= 1;
 	final static int	PLAYING	= 2;
+	final static int	OPTIONS	= 3;
 	static int				state;			// RTSP state == INIT or READY or PLAYING
 	Socket						RTSPsocket;	// socket used to send/receive RTSP messages
 	// input and output stream filters
@@ -76,10 +78,12 @@ public class Client {
 		buttonPanel.add(setupButton);
 		buttonPanel.add(playButton);
 		buttonPanel.add(pauseButton);
+		buttonPanel.add(optionsButton);
 		buttonPanel.add(tearButton);
 		setupButton.addActionListener(new setupButtonListener());
 		playButton.addActionListener(new playButtonListener());
 		pauseButton.addActionListener(new pauseButtonListener());
+		optionsButton.addActionListener(new optionsButtonListener());
 		tearButton.addActionListener(new tearButtonListener());
 
 		// Image display label
@@ -89,11 +93,11 @@ public class Client {
 		mainPanel.setLayout(null);
 		mainPanel.add(iconLabel);
 		mainPanel.add(buttonPanel);
-		iconLabel.setBounds(0, 0, 380, 280);
-		buttonPanel.setBounds(0, 280, 380, 50);
+		iconLabel.setBounds(100, 0, 380, 280);
+		buttonPanel.setBounds(0, 280, 580, 50);
 
 		f.getContentPane().add(mainPanel, BorderLayout.CENTER);
-		f.setSize(new Dimension(390, 370));
+		f.setSize(new Dimension(590, 370));
 		f.setVisible(true);
 
 		// init timer
@@ -238,6 +242,24 @@ public class Client {
 		}
 	}
 
+	// Handler for Pause button
+	// -----------------------
+	class optionsButtonListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+
+			// increase RTSP sequence number
+			RTSPSeqNb++;
+
+			// Send PAUSE message to the server
+			send_RTSP_request("OPTIONS");
+			state = OPTIONS;
+
+			// Wait for the response
+			if (parse_server_response() != 200)
+				System.out.println("Invalid Server Response");
+		}
+	}
+
 	// Handler for Teardown button
 	// -----------------------
 	class tearButtonListener implements ActionListener {
@@ -336,12 +358,16 @@ public class Client {
 				System.out.println(SessionLine);
 
 				// if state == INIT gets the Session Id from the SessionLine
-				tokens = new StringTokenizer(SessionLine);
-				tokens.nextToken(); // skip over the Session:
-				RTSPid = Integer.parseInt(tokens.nextToken());
+				if (state != OPTIONS) {
+					tokens = new StringTokenizer(SessionLine);
+					tokens.nextToken(); // skip over the Session:
+					RTSPid = Integer.parseInt(tokens.nextToken());
+				} else {
+					state = INIT;
+				}
 			}
 		} catch (Exception ex) {
-			System.out.println("Exception caught: " + ex);
+			System.out.println("Exception caught in parse_server_response: " + ex);
 			System.exit(0);
 		}
 
@@ -369,6 +395,8 @@ public class Client {
 			// check if request_type is equal to "SETUP" and in this case write the Transport: line advertising to the server the port used to receive the RTP packets RTP_RCV_PORT
 			if (request_type.equals("SETUP")) {
 				RTSPBufferedWriter.write("Transport: RTP/UDP; client_port= " + RTP_RCV_PORT + "\n");
+			} else if (request_type.equals("OPTIONS")) {
+				// nothing to do here...
 			} else { // otherwise, write the Session line from the RTSPid field
 				RTSPBufferedWriter.write("Session: " + RTSPid + "\n");
 			}
