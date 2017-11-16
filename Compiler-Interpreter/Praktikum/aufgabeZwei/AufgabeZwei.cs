@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace aufgabeEins {
+namespace aufgabeZwei {
 
 	struct Morphem {
 		public MorphemCode code { get; private set; }
@@ -66,21 +66,7 @@ namespace aufgabeEins {
 		private int currentCharCode;
 		private string tempMorphemString;
 		private Morphem lexedMorphem;
-
-		// Aktionen für Kategorien:
-		private enum Actions {
-			FinishMorphem,      // finish:				beenden
-			ReadNext,           // read:				lesen
-			WriteCharReadNext,  // char, read:			Großbuchstaben schreiben, lesen
-			WriteReadNext,      // write, read:			schreiben, lesen
-			WriteReadNextFinish // write, read, quit:	schreiben, lesen, beenden
-		}
-		// Aktionen als kurze Variablen zur besseren Übersicht in der Tabelle:
-		private const int F = (int)Actions.FinishMorphem;
-		private const int R = (int)Actions.ReadNext;
-		private const int CR = (int)Actions.WriteCharReadNext;
-		private const int WR = (int)Actions.WriteReadNext;
-		private const int WRQ = (int)Actions.WriteReadNextFinish;
+		private delegate void ActionHandler();
 
 		/// <summary>
 		/// Gibt an, welches Zeichen welcher Kategorie entspricht. 
@@ -128,19 +114,9 @@ namespace aufgabeEins {
 		/// Z6: Doppelpunkt-Gleich
 		/// Z7: Kleiner-Gleich
 		/// Z8: Größer-Gleich
+		/// (Belegung im Konstruktor)
 		/// </summary>
-		private readonly int[,,] categoryNextActionTable = {
-		/* Zust		So			Bu			Zi			:			<			>			=			Sonst	*/
-		/* Z0 */{   {9, WRQ},   {1, CR},    {2, WR},    {3, WR},    {4, WR},    {5, WR},    {9, WRQ},   {0, R}  },
-		/* Z1 */{   {9, F},     {1, CR},    {1, WR},    {9, F},     {9, F},     {9, F},     {9, F},     {9, F}  },
-		/* Z2 */{   {9, F},     {9, F},     {2, WR},    {9, F},     {9, F},     {9, F},     {9, F},     {9, F}  },
-		/* Z3 */{   {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {6, WR},    {9, F}  },
-		/* Z4 */{   {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {7, WR},    {9, F}  },
-		/* Z5 */{   {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {8, WR},    {9, F}  },
-		/* Z6 */{   {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F}  },
-		/* Z7 */{   {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F}  },
-		/* Z8 */{   {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F},     {9, F}  }
-		};
+		private readonly object[,,] categoryNextActionTable;
 
 		/// <summary>
 		/// Tabelle der möglichen Schlüsselwörtern abhängig von:
@@ -189,6 +165,26 @@ namespace aufgabeEins {
 			} else {
 				reader = new StreamReader(@filePath);
 			}
+			// Aktionen als kurze Variablen zur besseren Übersicht in der Tabelle:
+			ActionHandler F = new ActionHandler(FinishMorphem);
+			ActionHandler R = new ActionHandler(ReadNext);
+			ActionHandler CR = new ActionHandler(WriteCharReadNext);
+			ActionHandler WR = new ActionHandler(WriteReadNext);
+			ActionHandler WRQ = new ActionHandler(WriteReadNextFinish);
+			// Belegung der Tabelle:
+			categoryNextActionTable = new object[,,]{
+				/* Zust		So			Bu			Zi			:			<			>			=			Sonst	*/
+				/* Z0 */{ { 9, WRQ},   { 1, CR},    { 2, WR},    { 3, WR},    { 4, WR},    { 5, WR},    { 9, WRQ},   { 0, R} },
+				/* Z1 */{ { 9, F},     { 1, CR},    { 1, WR},    { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F} },
+				/* Z2 */{ { 9, F},     { 9, F},     { 2, WR},    { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F} },
+				/* Z3 */{ { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 6, WR},    { 9, F} },
+				/* Z4 */{ { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 7, WR},    { 9, F} },
+				/* Z5 */{ { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 8, WR},    { 9, F} },
+				/* Z6 */{ { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F} },
+				/* Z7 */{ { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F} },
+				/* Z8 */{ { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F} }
+			};
+
 			lexedMorphem = new Morphem();
 			lexedMorphem.Init();
 			ReadNext();
@@ -207,25 +203,9 @@ namespace aufgabeEins {
 				}
 				currentCategory = charCategoryTable[currentCharCode];
 				//Console.WriteLine("CharCode: {1}[{0}]; Current State: {2}; Current Category: {3}", currentCharCode, (char)currentCharCode, currentState, currentCategory);
-				switch ((Actions)categoryNextActionTable[currentState, currentCategory, 1]) {
-					case Actions.ReadNext:
-						ReadNext();
-						break;
-					case Actions.WriteReadNext:
-						WriteReadNext();
-						break;
-					case Actions.WriteCharReadNext:
-						WriteCharReadNext();
-						break;
-					case Actions.WriteReadNextFinish:
-						WriteReadNextFinish();
-						break;
-					case Actions.FinishMorphem:
-						FinishMorphem();
-						break;
-				}
+				((ActionHandler)categoryNextActionTable[currentState, currentCategory, 1])();
 				// Nächsten Zustand setzen (abhängig vom aktuellen Zustand und Zeichen):
-				currentState = categoryNextActionTable[currentState, currentCategory, 0];
+				currentState = (int)categoryNextActionTable[currentState, currentCategory, 0];
 				//Console.WriteLine("Read so far: {0} - next state: {1}", tempMorphemString, currentState);
 			}
 			return lexedMorphem;
@@ -344,7 +324,7 @@ namespace aufgabeEins {
 			sw.Stop();
 			t2 = sw.Elapsed.TotalMilliseconds * normalizer / counter;
 			Console.WriteLine("(Average time in ns for 1000000 searches)");
-			Console.WriteLine("Option                              Time KeywordTable  Time KeywordList  Table Speedup");
+			Console.WriteLine("Option                              Time KeywordTable  Time KeywordList  TableVList");
 			Console.WriteLine("Search only matching:               {0,-12:0.00}       {1,-12:0.00}      {2,3:0.}%", t1, t2, t2 / t1 * 100);
 
 			testElements.Add("HALLO");
@@ -404,7 +384,7 @@ namespace aufgabeEins {
 			}
 			sw.Stop();
 			t2 = sw.Elapsed.TotalMilliseconds * normalizer / counter;
-			Console.WriteLine("Search other, too (shorter+longer): {0,-12:0.00}       {1,-12:0.00}      {2,3:0.}%", t1, t2, t2 / t1 * 100);
+			Console.WriteLine("Search other, too (shorter+longer): {0,-12:0.00}       {1,-12:0.00}      {2,6:p}%", t1, t2, t2 / t1);
 		}
 
 		private void TestCode() {
@@ -438,13 +418,15 @@ namespace aufgabeEins {
 		// Vergleicht das Aufrufen einer Funktion abhängig von einem enum-Bezeichner: Entweder über Reflection oder über Switch. Switch ist schneller.
 		public void CompareInvokeSwitch() {
 			int[] test = { 0, 1, 2, 3 };
+			object[] testActions = { new ActionHandler(TestFuncA), new ActionHandler(TestFuncB), new ActionHandler(TestFuncC), new ActionHandler(TestFuncD) };
 
 			int times = 10000;
 			double normalizer = 1000000;
-			double t1, t2;
+			double t1, t2, t3;
 			int counter = 0;
 			Stopwatch sw = new Stopwatch();
 
+			// Reflection:
 			sw.Start();
 			while (counter < times) {
 				foreach (int element in test) {
@@ -455,6 +437,19 @@ namespace aufgabeEins {
 			}
 			sw.Stop();
 			t1 = sw.Elapsed.TotalMilliseconds * normalizer / counter;
+			// Delegeates:
+			sw.Reset();
+			counter = 0;
+			sw.Start();
+			while (counter < times) {
+				foreach (int element in test) {
+					((ActionHandler)testActions[element])();
+					counter++;
+				}
+			}
+			sw.Stop();
+			t2 = sw.Elapsed.TotalMilliseconds * normalizer / counter;
+			// Cases:
 			sw.Reset();
 			counter = 0;
 			sw.Start();
@@ -478,15 +473,20 @@ namespace aufgabeEins {
 				}
 			}
 			sw.Stop();
-			t2 = sw.Elapsed.TotalMilliseconds * normalizer / counter;
+			t3 = sw.Elapsed.TotalMilliseconds * normalizer / counter;
+
 			Console.WriteLine("(Average time in ns for 1000000 calls)");
-			Console.WriteLine("Option                Time Reflection  Time Switch Case  Reflection Speedup");
-			double speedUp;
-			if (t2 > t1)
-				speedUp = t2 / t1 * 100;
+			Console.WriteLine("Option                Time Reflection  Time Delegate  Time Switch Case  ReflectionVSwitch  DelegateVSwitch");
+			double speedUp1, speedUp2;
+			if (t3 > t1)
+				speedUp1 = t3 / t1 - 1;
 			else
-				speedUp = -t1 / t2 * 100;
-			Console.WriteLine("Search only matching: {0,-12:0.00}     {1,-12:0.00}      {2,4:0.}%", t1, t2, speedUp);
+				speedUp1 = 1 - t1 / t3;
+			if (t3 > t2)
+				speedUp2 = t3 / t2 - 1;
+			else
+				speedUp2 = 1 - t2 / t3;
+			Console.WriteLine("Search only matching: {0,-12:0.00}     {1,-12:0.00}   {2,-12:0.00}      {3,-8:p}           {4,-8:p}", t1, t2, t3, speedUp1, speedUp2);
 		}
 	}
 
