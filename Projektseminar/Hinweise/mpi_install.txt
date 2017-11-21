@@ -15,17 +15,19 @@ Datei: mpich-3.2.tar.gz (11 MB, source code)
 tar -xzf mpich-3.2.tar.gz
 erzeugt das Verzeichnis mpich-3.2
 
-mkdir /home/s99999/mpich-install
+mkdir /user/profile/active/ia99/s99999/mpich-install
 (Verzeichnis muss per nfs auf allen genutzten Rechnern eingebunden sein)
 
-mpich-3.2/configure -prefix=/home/s99999/mpich-install --disable-f77 |& tee c.txt
+cd mpich-3.2
 
-mpich-3.2/make |& tee m.txt
+configure -prefix=/user/profile/active/ia99/s99999/mpich-install |& tee c.txt (ggf. --disable-f77 oder --disable-fortran)
 
-mpich-3.2/make install |& tee mi.txt
+make |& tee m.txt
+
+make install |& tee mi.txt
 
 Pfad auf bin-Unterverzeichis der MPI-Installation setzen,
-z.B. export PATH=/u/s99999/mpich_install/bin:$PATH
+z.B. export PATH=/u/s99999/mpich-install/bin:$PATH
 in .bashrc
 
 ssh konfigurieren, so dass keine Passworteingabe mehr nötig.
