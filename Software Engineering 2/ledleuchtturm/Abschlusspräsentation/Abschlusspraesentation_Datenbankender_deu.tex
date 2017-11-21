@@ -1,0 +1,260 @@
+\documentclass[ignorenonframetext, 11pt, table]{beamer}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\input{\pathtomaster/htwcd_beamer.sty}
+
+\author{Ragnar Luga}
+\title{\texttt{ledleuchtturm} -- Datenbank / Hardware}
+\date{18.07.2017}
+
+\begin{document}
+\author{Ragnar Luga}
+\title{\texttt{ledleuchtturm} -- Datenbank / Hardware}
+
+\begin{frame}[plain]
+\begin{center}
+\includegraphics[width=.7\textwidth]{\pathtomaster/HTW.eps}
+\end{center}
+\maketitle
+\end{frame}
+
+\section{Inhalt}
+\begin{frame}
+\begin{enumerate}
+\setlength\itemsep{0.2em}
+\item Aufgaben/Hardware \pause 
+\item Aufgaben/Datenbank \pause
+\item Gesammelte Erfahrungen \pause
+\item Rückblick
+\end{enumerate}
+\end{frame}
+
+\section{Hardware}
+\subsection{Aufgabe}
+\begin{frame}
+Verantwortlich für die Hardware unseres Projektes.\pause
+\newline\newline
+Hauptaufgaben:
+\begin{itemize}
+\item Raspberry Pi einrichten.\pause
+\item LED-System einrichten.
+\end{itemize}
+\end{frame}
+
+\subsection{Voraussetzung an Wissen}
+\begin{frame}
+\begin{itemize}
+\item Persönliches Interesse. \pause
+\item Programmierung von Mikrocontrollern mit Prof A. Beck. \pause
+\item Internet
+\end{itemize}
+\end{frame}
+
+\subsection{Einrichtung des Raspberry Pi}
+\begin{frame}
+Aufgabe: Der Raspberry Pi muss mit einem Betriebssystem versehen werden. \pause
+\begin{itemize}
+\item Keine eigene Erfahrung bisher \pause
+\item Raspbian
+\end{itemize}
+\end{frame}
+
+\subsection{Einrichtung des LED-Systems}
+\begin{frame}
+Aufgabe: Ein kleines LED-System erstellen.\newline \pause
+
+Benötigte Einzelteile:  \pause
+\begin{itemize}
+\item 3 LEDs - rot, gelb, grün \pause
+\item 3 Widerstände
+\end{itemize}
+\end{frame}
+\begin{frame}
+\begin{center}
+\includegraphics[scale=.12,angle=-90, trim = 1000px 0 1000px 0, clip]{breadboard.jpeg}
+\end{center}
+\end{frame}
+
+\section{Datenbank}
+\subsection{Aufgaben}
+\begin{frame}
+Verantwortlich für die Datenbank des Projektes. \newline\newline\pause
+Hauptaufgaben:\pause
+\begin{itemize}
+\item Eigene lokale Datenbank erstellen \pause
+\item Analyse der Datenbank\pause
+\item Raspberry Pi mit der Datenbank verbinden\pause
+\item Datenbank mit dem Raspberry Pi verbinden\pause
+\item Trigger/Instruktionen für Datenbank erzeugen
+\end{itemize}
+\end{frame}
+
+\subsection{Voraussetzung an Wissen}
+\begin{frame}
+\begin{itemize}
+\item Pflichtenheft \pause
+\item \textbackslash TR3 - Trigger \pause
+\item \textbackslash TR4 - PostgreSQL \pause
+\item Kein Polling
+\item Datenbanksysteme I mit Prof A. Toll
+\end{itemize}
+\end{frame}
+
+\subsection{Lokale Datenbank}
+\begin{frame}
+Aufgabe: Einrichten einer lokalen Datenbank\pause
+\newline\newline
+Anfangs an Raphael abgegeben.\newline\newline\pause
+Ergebnisse:\pause
+\begin{itemize}
+\item Funktionierende Datenbank.\pause
+\item Grundlegende Analyse.\pause
+\end{itemize}
+~\\
+Aufgetretene Probleme:\pause
+\begin{itemize}
+\item Dem Datenbank-Dump fehlten einige Rollen. \pause
+\item Die Datenbank ist extern.
+\end{itemize}
+\end{frame}
+
+\subsection{Analyse der Datenbank}
+\begin{frame}
+Aufgabe: Nötige Tabellen und Spalten finden.\newline\pause
+
+Ausversehen rückwärts erledigt!
+\end{frame}
+
+\begin{frame}
+\includegraphics[scale=0.45]{database_layout.PNG}
+\end{frame}
+\begin{frame}
+\includegraphics[scale=0.45]{database_layout1.png}
+\end{frame}
+\subsection{Verbindung RasPi-Datenbank}
+\begin{frame}
+Aufgabe: Eine Verbindung vom Raspberry Pi zur Datenbank herstellen.\newline\pause
+
+\begin{itemize}
+\item Python\pause
+\item Psycopg
+\end{itemize}
+\end{frame}
+
+\subsection{Verbindung Datenbank-RasPi}
+\begin{frame}
+Aufgabe: Eine Verbindung von der Datenbank zum Raspberry Pi herstellen.\newline\pause
+
+Hintergrund:\pause
+\begin{itemize}
+\item Pflichtenheft $\Rightarrow$ \textbackslash TR3 $\Rightarrow$ Trigger\pause
+\item Kein Polling\pause
+\item Muss skalierbar sein!\pause
+\end{itemize}
+~\\
+Lösung:\pause
+\begin{itemize}
+\item PostgreSQL unterstützt prozedurale Sprachen!\pause
+\item Python + Sockets\pause
+\item Lokale Datenbank notwendig!
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{lstlisting}[label=trigger-func, basicstyle=\tiny]
+-- replace '192.168.0.100' with the machine actual IP
+-- replace 8050 with the port of the machine 
+-- replace machine_send with our machine/tool name, example: MET9001_send
+-- replace MET9001 with the name of your machine, example: MEX9788
+-- important! make sure the language name is exactly the same when you installed it
+
+CREATE OR REPLACE FUNCTION machine_send()  
+    RETURNS TRIGGER AS
+$BODY$
+
+    import socket
+    if TD["new"]["tool"] == "MET9001": 
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect(('192.168.0.101', 8050)) 
+            updated = TD["new"]["tool"] +" "+ TD["new"]["state"]
+            s.sendall(updated)
+        except:
+            pass
+    else:
+        pass
+$BODY$
+    LANGUAGE plpythonu;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{lstlisting}[label=trigger2, basicstyle =\tiny]
+-- replace testTrigger with machine_trigger where machine is the name of your machine for example: MET9001_trigger
+-- replace machine_send() with the name of the function you created with the previous script
+
+CREATE TRIGGER testTrigger
+AFTER UPDATE
+ON tool
+FOR EACH ROW
+EXECUTE PROCEDURE machine_send();
+\end{lstlisting}
+\end{frame}
+
+\subsection{Trigger-/Datenbankdoku}
+\begin{frame}
+Aufgabe: Entsprechende Dokumentation erstellen\newline\pause
+
+Themen:\pause
+\begin{itemize}
+\item Datenbankerstellung/-einrichtung \pause
+\item Erzeugen des Triggers\pause
+\item Benutzerdokumentation\pause
+\item Gruppenmeetings
+\end{itemize}
+\end{frame}
+
+\section{Gesammelte Erfahrungen}
+\begin{frame}
+Hardware:\pause
+\begin{itemize}
+\item Raspberry Pi\pause
+\item LED-System\pause
+\end{itemize}
+~\\
+Datenbank:
+\begin{itemize}
+\item Allgemein\pause
+\item Dokumentation!!!\pause
+\item Trigger
+\end{itemize}
+\end{frame}
+
+\section{Rückblick: Positives}
+\begin{frame}
+\begin{itemize}
+\item Erstes Softwareprojekt\pause
+\item Kommunikation mit Teammitgliedern\pause 
+\item Strukturierter Arbeitsplan\pause
+\item Notwendige sprachliche Hilfestellung
+\end{itemize}
+\end{frame}
+
+\section{Rückblick: Negatives}
+\begin{frame}
+\begin{itemize}
+\item Eigeninitiative\pause
+\item Kommunikationwerkzeug
+\end{itemize}
+\end{frame}
+
+
+\section{Rückblick: Vorschläge}
+\begin{frame}
+\begin{itemize}
+\item MQTT?\pause
+\item Trigger im Programm selbst
+\end{itemize}
+\end{frame}
+
+\end{document}

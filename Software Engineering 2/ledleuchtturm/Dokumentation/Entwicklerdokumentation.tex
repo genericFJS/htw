@@ -1,0 +1,95 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Entwicklerdokumentation}
+\date{}
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+\tableofcontents
+\renewcommand{\maketitle}{}
+\renewcommand{\tableofcontents}{}
+% Anmerkung: Entwicklerdokumentation = Programmiererdokumentation (Pflichtenheft /DA2/)
+
+\section*{Einleitung}
+
+In der Entwicklerdokumentation wird die Entwicklung des Softwaresystems \texttt{ledleuchtturm} dargestellt. In den Abschnitten \nameref{grobentw} und \nameref{feinentw} sind die Vorüberlegungen zu der Software zu finden. Diese Abschnitte erläutern, auf welche Themen geachtet wurde und wie ein Plan für das finale Produkt entstand.
+
+Im Abschnitt \nameref{strukt} ist dargestellt, wie das Softwaresystem, bzw. dessen Code, im Vergleich zum Entwurf organisiert ist. Der Abschnitt \nameref{epydoc} stellt schließlich die vollständige Dokumentation des Codes dar.
+
+%Diese Dokumentation soll dabei helfen einen Einblick in das Softwaresystem zu bekommen.
+
+\section{Grobentwurf}
+\label{grobentw}
+\input{Entwicklerdokumentation_Grobentwurf.tex}
+% Grobentwurf aus Pflichtenheft entnehmen und noch mal als Dokumentation aufarbeiten.
+
+\clearpage
+\section{Feinentwurf}
+\label{feinentw}
+\input{Entwicklerdokumentation_Feinentwurf.tex}
+% Feinentwurf aus Entwurf/Entwurf.tex noch mal aufarbeiten und Dokumentieren.
+
+\clearpage
+\section{Struktur des Codes}
+\label{strukt}
+\input{Entwicklerdokumentation_StrukturDesCodes.tex}
+% Struktur des Codes (wie er abgegeben wurde) festhalten. 
+% Wie sind die Dateien/Packet(e) organisiert?
+% Alle Dateien beschreiben: Überblick verschaffen.
+% Am besten (statt Klassendiagramm) ein "Datei-Diagramm" erstellen.
+% Muss so eindeutig sein, dass Fremde mithilfe dises Abschnitts einen Überblick erhalten können und zusammen mit dem PyDoc das Programm ohne viel Nachforschung weiterentwickeln könnten => Anleitung, wie etwas verändert werden könnte!
+
+\clearpage
+\section{EpyDoc}
+\label{epydoc}
+\begingroup
+\setlength{\headheight}{16pt}
+\setlength{\headsep}{24pt}
+\setlength{\topmargin}{-\headsep}
+\setlength{\parindent}{0ex}
+\setlength{\parskip}{2ex}
+\setlength{\fboxrule}{2\fboxrule}
+\newlength{\BCL} % base class length, for base trees.
+\newlength{\funcindent}
+\newlength{\funcwidth}
+\setlength{\funcindent}{1cm}
+\setlength{\funcwidth}{\textwidth}
+\addtolength{\funcwidth}{-2\funcindent}
+\newlength{\varindent}
+\newlength{\varnamewidth}
+\newlength{\vardescrwidth}
+\setlength{\varindent}{1cm}
+\setlength{\varnamewidth}{.3\textwidth}
+%\setlength{\varwidth}{\textwidth}
+%\addtolength{\varwidth}{-4\tabcolsep}
+%\addtolength{\varwidth}{-3\arrayrulewidth}
+%\addtolength{\varwidth}{-2\varindent}
+\setlength{\vardescrwidth}{8.3cm}
+%\addtolength{\vardescrwidth}{-\varnamewidth}
+\newenvironment{Ventry}[1]%
+ {\begin{list}{}{%
+   \renewcommand{\makelabel}[1]{\texttt{##1:}\hfil}%
+   \settowidth{\labelwidth}{\texttt{#1:}}%
+   \setlength{\leftmargin}{\labelsep}%
+   \addtolength{\leftmargin}{\labelwidth}}}%
+ {\end{list}}
+\arrayrulecolor{black}
+\LetLtxMacro{\oldsec}{\section}
+\LetLtxMacro{\oldsubsec}{\subsection}
+\renewcommand{\section}[1]{\oldsubsec{#1}}
+\renewcommand{\subsection}[1]{\subsubsection{#1}}
+\input{epydoc/ledleuchtturm-module}
+\include{epydoc/ledleuchtturm.dbFunc-module}
+\include{epydoc/ledleuchtturm.fileFunc-module}
+\include{epydoc/ledleuchtturm.ledFunc-module}
+\include{epydoc/ledleuchtturm.ledleuchtturm-module}
+\include{epydoc/ledleuchtturm.stdFunc-module}
+\endgroup
+% wird zum Schluss generiert und eingebunden
+
+\end{document}

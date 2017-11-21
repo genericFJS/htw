@@ -1,0 +1,60 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Projektdokumentation}
+\date{}
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+\tableofcontents
+\renewcommand{\maketitle}{}
+\renewcommand{\tableofcontents}{}
+
+\section{Einleitung}
+\input{Projektdokumentation_Projektplan.tex}
+% Projektplan vorstellen und ggf. auf Änderungen, die sich ergeben haben eingehen. Auch auf Vorgehensmodell (Agil, ...?) eingehen. Vergleich Ist/Soll: was sollte erreicht werden/was wurde erreicht?
+
+\clearpage
+%\section{Projektleitung}
+\input{Projektdokumentation_Projektleitung.tex}
+% Was wurde gemacht? Was waren Herausforderungen? Was war einfach? Was hat man gelernt? => Kann bzw. Soll sich mit Inhalten aus Abschlusspräsentation doppeln (gute Vorbereitung :-) ).
+
+\clearpage
+%\section{Analyse}
+\input{Projektdokumentation_Analyse.tex}
+% Was wurde gemacht? Was waren Herausforderungen? Was war einfach? Was hat man gelernt? => Kann bzw. Soll sich mit Inhalten aus Abschlusspräsentation doppeln (gute Vorbereitung :-) ).
+
+\clearpage
+\section{Entwurf}
+\input{Projektdokumentation_Entwurf.tex}
+% Was wurde gemacht? Was waren Herausforderungen? Was war einfach? Was hat man gelernt? => Kann bzw. Soll sich mit Inhalten aus Abschlusspräsentation doppeln (gute Vorbereitung :-) ).
+
+\clearpage
+\section{Datenbank und Hardware}
+\input{Projektdokumentation_DBHW.tex}
+% Was wurde gemacht? Was waren Herausforderungen? Was war einfach? Was hat man gelernt? => Kann bzw. Soll sich mit Inhalten aus Abschlusspräsentation doppeln (gute Vorbereitung :-) ).
+
+\clearpage
+\section{Implementierung}
+\input{Projektdokumentation_Implementierung}
+
+\clearpage
+%\section{Tests}
+\input{Projektdokumentation_Test}
+% Was wurde gemacht? Was waren Herausforderungen? Was war einfach? Was hat man gelernt? => Kann bzw. Soll sich mit Inhalten aus Abschlusspräsentation doppeln (gute Vorbereitung :-) ).
+
+\clearpage
+\section{Dokumentation}
+\input{Projektdokumentation_Doku}
+% Was wurde gemacht? Was waren Herausforderungen? Was war einfach? Was hat man gelernt? => Kann bzw. Soll sich mit Inhalten aus Abschlusspräsentation doppeln (gute Vorbereitung :-) ).
+
+\clearpage
+\section{Qualitätssicherung}
+\input{Projektdokumentation_Qualitätssicherung.tex}
+% Was wurde gemacht? Was waren Herausforderungen? Was war einfach? Was hat man gelernt? => Kann bzw. Soll sich mit Inhalten aus Abschlusspräsentation doppeln (gute Vorbereitung :-) ). Danke Jonathan für deine aufmunternden Worte!
+
+\end{document}

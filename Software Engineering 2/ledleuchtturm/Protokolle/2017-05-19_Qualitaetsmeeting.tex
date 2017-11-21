@@ -1,0 +1,56 @@
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Protokoll Qualitätsmeeting}
+\def\datename{}
+\date{19.05.2017}	%%% ??? = DATUM!
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+\section{Qualitätsmeeting 19.05.2017}	%%% ??? = DATUM!
+\begin{tabular}[t]{p{.25\linewidth} p{.25\linewidth}}
+\emph{Beginn:}				& 8:00\\
+\emph{Ende:}					& 9:00\\
+\emph{Ort:}						& Hansastraße 32 4. OG Links\\
+\emph{Anwesend:}	& 
+Raphael\newline
+Simon
+\\
+\emph{Abwesend:}		 & 
+--
+\\
+\emph{Protokollant:}& Raphael
+\end{tabular}
+\paragraph{Tagesordnungspunkte}
+\begin{itemize}
+\item Coding Guideline
+\item Pythonspezifische Fragen
+\end{itemize}
+
+\subsection{Coding Guideline}
+\begin{itemize}
+    \item PEP 8 als Coding Guideline $\rightarrow$ Unser Python Code wird PEP8 Kompatibel sein
+    \item PEP8 Online Validator \url{https://www.python.org/dev/peps/pep-0008/}. Es wird zwar Code an eine Website übertragen aber da unser Code OpenSource sein wird, stellt das kein Problem dar.
+    \item Optional Modul \texttt{pep8} in Python Code einbinden
+    \item Optional PyCharm als Python-Entwicklungsumgebung verwenden, da PEP8 automatisch angezeigt wird
+\end{itemize}
+\subsection{Pythonspezifische Fragen}
+\begin{itemize}
+    \item Fehler beim aufrufen des Test Skripts $\Rightarrow$ Dateiname des Testskripts war identisch mit dem benutzten Python-Modul. Python hat daher statt dem Modul das Testskript selber inkludiert und einen Fehler ausgegeben. Umbenennung des Testskripts hat den Fehler behoben
+    \item Falls keine Konfiguration existiert legt das Python-Skript eine neue, leere, Konfiguration an. Der Dateiname dieser Konfiguration soll \texttt{template.json} lauten.
+    \item Die Endung der Konfigurationsdateien soll \texttt{json} sein, damit 
+    \begin{itemize}
+        \item eindeutig ist das es eine JSON-Konfigurationsdatei ist
+        \item das Betriebssystem automatisch JSON (und damit z.B. Notepad und co) damit assoziiert
+    \end{itemize}
+\end{itemize}
+\subsection{Nächste Schritte}
+\begin{tabular}{L{.249} L{.2} L{.25} L{.25}}
+Betreff & Frist & Verantwortliche(r) & Involviert\\\hline
+Qualitätsmeeting & 24.05.2017&Raphael &Simon \\
+\end{tabular}
+
+\end{document}

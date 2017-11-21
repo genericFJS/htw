@@ -1,0 +1,39 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Anpassungen Pflichtenheft}
+\date{}
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+%\tableofcontents
+\renewcommand{\maketitle}{}
+\renewcommand{\tableofcontents}{}
+
+\section{Einleitung}
+Vor allem der Abschnitt „Technische/technologische Rahmenbedingungen“ des Pflichenhefts wurde bewusst allgemein gehalten, da noch nicht entschieden war, wie die Anforderungen umgesetzt werden sollten. 
+
+Die Konkretisierungen basieren auf mündlichen Absprachen, die in Protokollen nachlesbar sind. Im Folgenden werden sie außerdem explizit dargestellt.
+
+\section{Voraussetzungen an die Datenbank}
+% Sektionstitel entsprächend Anpassung ändern. Anpassung beschreiben (ggf. aus Protokollen entnehmen).
+% Weitere Anpassungen in seperaten Sektionen ebenso beschreiben.
+Nach Abschluss der Analysephase für die Datenbank wurde die Arbeit an einem Trigger begonnen um die Statusänderungen aus der Datenbank an das Programm weiterzuleiten (siehe Abschnitt Datenbank). Nach der Recherche von Möglichkeiten wurde erkennbar, dass die PostgreSQL-Datenbanksprache nicht in der Lage ist, selbstständig eine Socket-Verbindung oder eine MQTT-Implementierung zu bedienen. Deshalb wurde das PL/Python Paket installiert, welches die Möglichkeit bietet native Python-Skripte in der Datenbank (spezifisch auch im Trigger) auszuführen. Die Kommunikation mit dem Raspberry Pi konnte nun auf einfache Weise hergestellt werden, allerdings war das Produkt nun nicht mehr explizit innerhalb der Grenzen des Pflichtenheftes.
+
+Trotz sorgfältiger Analyse war diese Entwicklung nicht absehbar. Daher wurde ein Meeting mit unserem Kunden angesetzt und der bisherige Technikstand vorgeführt. Nach kurzer Rücksprache wurde die mündliche Vereinbarung getroffen, dass PL/Python als zusätzliche Voraussetzung für die Software geführt und die bisherige Implementierung beibehalten werden kann.
+
+\section{Voraussetzungen an den Raspberry Pi}
+Im Laufe der Entwicklung des Softwaresystems hat sich herausgestellt, dass, wie bei den Voraussetzungen an die Datenbank, zusätzliche (Python-)Pakete auf dem Raspberry Pi installiert sein müssen. Um mit Python einen Socket zu erstellen braucht es die Pakete \texttt{psycopg2} und \texttt{netifaces}.
+
+\section{Ergänzungen}
+\begin{enumerate}
+\item[/TR6/] Die \emph{Datenbank} ist in der Lage Python Code in einem Trigger auszuführen: Auf ihr ist das Paket PL/Python installiert.
+\item[/TR7/] Auf dem Raspberry Pi sind die Python-Pakete \texttt{psycopg2} und \texttt{netifaces} installiert.
+\end{enumerate}
+
+
+\end{document}

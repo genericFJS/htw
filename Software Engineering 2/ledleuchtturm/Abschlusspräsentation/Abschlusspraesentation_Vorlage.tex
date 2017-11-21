@@ -1,0 +1,116 @@
+\documentclass[ignorenonframetext, 11pt, table]{beamer}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\input{\pathtomaster/htwcd_beamer.sty}
+
+\author{Autor}
+\title{\texttt{ledleuchtturm} -- Thema}
+\date{18.07.2017}
+
+%%% folgendes in eigener Präsi im Kopf einfügen, um Notizen anzuzeigen
+%%% Beispiel Notizen: Erste Animationsfolie
+\usepackage{pgfpages}
+\setbeameroption{show notes on second screen=right}
+
+% Powerpoint Vorlage: https://www.htw-dresden.de/intern/marketing/corporate-design.html
+% (Anmelden und dann Link noch mal aufrufen)
+\begin{document}
+
+\begin{frame}[plain]
+\begin{center}
+\includegraphics[width=.7\textwidth]{\pathtomaster/HTW.eps}
+\end{center}
+\maketitle
+\end{frame}
+
+% GRUNDLAGEN des Beamers (Animation). Siehe auch: https://www.sharelatex.com/learn/Beamer
+\section*{Animation}
+\subsection*{Unterdings}
+\begin{frame}
+Auf dieser Folie \pause
+ 
+folgt ein Absatz \pause und Satzteil \pause \note{An dieser Stelle muss noch etwas gesagt werden\\}
+\begin{itemize}
+\item und Aufzählung
+\end{itemize} \pause
+und Bild 
+\begin{center}
+\includegraphics{foo}
+\end{center} \note{Hier ist noch was wichtiges\\}
+\pause
+dem Nächsten.
+\note{Achtung: alle Notizen werden für eine Folie zusammengefügt! (Nicht für einzelne Animationsschritte)
+
+\begin{itemize}
+\item In Notizen können beliebige Elemente benutzt werden.
+\end{itemize}}
+\end{frame}
+
+\begin{frame}
+Aufzählungen können sehr gut nacheinander eingeblendet und sogar wieder ausgeblendet werden. 
+\begin{itemize}
+\item<1-> Sichtbar ab Folie 1
+\item<2-> Sichtbar ab Folie 2
+\item<3> Sichtbar nur auf Folie 3 (nimmt auch Platz ein auf Folien 3+)
+\item<4-> Sichtbar ab Folie 4
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+Referenztext\\
+$ $\only<1>{Nur auf Folie 1}\\
+$ $\uncover<2->{Auf Folien 2+}\\
+$ $\only<3>{Nur auf Folie 3}\\
+$ $\uncover<4->{Auf Folien 4+}
+\end{frame}
+
+% RICHTLINIEN Inhalt
+
+\section*{Inhalt}
+\begin{frame}
+\begin{itemize}
+\setlength\itemsep{0.2em}
+\item Worin bestand Ihre spezielle  Aufgabe (vielleicht auch mehere)  in der Belegarbeit?
+\item Welches theoretische Wissen aus Vorlesung, Praktikum, anderen Quellen  war Voraussetzung für die Lösung Ihrer Aufgabe?
+\item Wie haben Sie dieses Wissen konkret für die Lösung Ihrer Aufgabe eingesetzt?
+\item Welche Erfahrungen haben Sie dabei gesammelt? (in fachlicher Hinsicht und auch im Hinblick auf die gemeinsame Arbeit in einer Gruppe)
+\item Was würden Sie wieder so machen, d.h. was hat sich bewährt?   
+\item Was würden Sie anders machen, d.h. was hat sich nicht bewährt?
+\end{itemize}
+\end{frame}
+
+\section*{Aufgabe}
+\begin{frame}
+Erläuterung der Aufgabe
+\end{frame}
+\begin{frame}
+... weiter Erläuterung
+\end{frame}
+
+\section*{Voraussetzung an Wissen}
+\begin{frame}
+Eine neue Folie! Wahnsinn
+\end{frame}
+
+\section*{Anwendung des Wissens}
+\begin{frame}
+Ganz schön lang, die Präsentation!
+\end{frame}
+
+\section*{Gesammelte Erfahrungen}
+\begin{frame}
+Keine! Bin so schlau wie eh und je...
+\end{frame}
+
+\section*{Rückblick: Positives}
+\begin{frame}
+Gab es positive Seiten?
+\end{frame}
+
+\section*{Rückblick: Negatives}
+\begin{frame}
+Negative Seiten gab's auf keinen Fall!
+\end{frame}
+
+
+\end{document}

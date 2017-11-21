@@ -1,0 +1,62 @@
+bis 18.05.17
+[x] GPIOs mit Raspberry über Python ansteuern [X]
+
+bis 25.05.17
+[ ] Json file mit Python einlesen
+    [x] bei falschen Daten oder keinem mitgegebenem config File sollte configMe erstellt werden
+    [x] exception handling, Argumente einlesen, Datei öffnen, Untersuchen auf Json Struktur
+    [x] alle Daten printen
+
+bis 01.06.17
+[x] Maschinenzustände programmieren (festlegen)
+[x] Thread Schalten für LED ansteuerung (Blinken)
+[x] if main ding benutzen
+
+bis 29.06.17
+[x] singal Handler tests machen
+
+bis 07.07.17
+[x] file mit endung ungleich .json gibt keine Fehlernachricht
+    -> bei xml als config datei kein fehler aber abbruch
+
+ohne Deadline
+[x] falls kein configfile vorhanden soll ein default.json angelegt werden
+[x] prints außerhalb von Funktionen!
+[x] db connection schließen
+[x] stop function für thread schreiben
+[x] kann Programm auf zwei Updates mit einer Zeitdifferenz von 1 Millisekunde reagieren?
+[x] funktionen auslagen (Abhängigkeiten wie argv an Funktion übergeben)
+[x] testDBconection: Timeout für Datenbankverbingung Öffnen einbauen
+[x] waitForDBupdate: Check if updateArray has enough Fields, Usecase: DB sends: ' ', 'asdjflkjals', 'MET9001', 'PROC'
+[x] quit() durch sys.exit() benutzen (0 für erfolg, -1 für Fehler)
+[x] Socketfehler bei Unterbrechung von waitForDBupdate() durch CTRL-C abfangen
+[x] Funktionsdoku korrigieren: @type var:   ; Neue Zeile 4 spaces ; Alle Funktionen dokumentieren
+[x] changeState korrekt in Main verwenden
+[x] print in changeStat korrigieren
+[x] socket immer wieder schließen
+[x] signal_handler: clean up in handler mit globalen variablen realisieren
+[x] Funktionsdoku korrigieren: ledFunc.py -> int ohne Punkt
+[x] Funktionsdoku korrigieren: überall Einrückung korrigieren (so wie Joatan)
+[ ] ledFunc.py: Print bei exceptions (DEBUG = 1)
+[x] Funktionsdokumentation: BESCHREIBUNG HIER durch korrekte Beschreibungen ersetzen und Authoren in den Kommentar schreiben
+[x] Files PEP8 konform?
+
+// Raspi stand sichern! -> config1 und config2 (table tool angeben!)
+[ ] Funktionieren Trigger skripte?
+[x] Konfigangabe: Pfade außerhalb des Ordners möglich, relative/absolute Pfade
+[x] Meldung bei Update mit aktueller Zeit?
+[x] Funktioniert Angabe von table (tool) in Konfig
+
+Notizen
++ IDE PyCharm
++ beim testen von json struktur jsonObjektFile verwerfen
++ entwerfer aktivitätsdiagramm kann sich von implementierer aktivitätsdiagramm unterscheiden?
+    z.B. Infos auf config file holen
+    Entwurf: mehrmals
+    Implementation: einmalig
+
++ Raspberry Pi IP = 192.168.1.200
+
++ Beenden des Programmes:
+    main Programm und z. B. Socket Programm in zwei verschiedenen Threads laufen lassen
+    -> bevorzugt signal handler auf crtl-c : https://docs.python.org/2/library/signal.html

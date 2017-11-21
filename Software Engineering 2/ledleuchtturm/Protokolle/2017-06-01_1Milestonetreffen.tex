@@ -1,0 +1,115 @@
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Protokoll Gruppentreffen}
+\def\datename{}
+\date{01.06.2017}	%%% ??? = DATUM!
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+\section{Gruppentreffen 01.06.2017}	%%% ??? = DATUM!
+\begin{tabular}[t]{p{.25\linewidth} p{.25\linewidth}}
+\emph{Beginn:}				& 15:00 \\
+\emph{Ende:}					& 15:40 \\
+\emph{Ort:}						& Z903A \\
+\emph{Anwesend:}	& 
+Ragnar\newline
+Raphael\newline
+Eric\newline
+Ben\newline
+Jonatan (bis 15:10)\newline
+Jürgen\newline
+Herr Ringel 
+\\
+\emph{Abwesend:}		 & 
+Simon
+\\
+\emph{Protokollant:} & Eric Schmidtgen
+\end{tabular}
+\paragraph{Tagesordnungspunkte}
+\begin{itemize}
+\item Wie sieht der Entwurf aus?
+\item Was sagt die Gruppe dazu?
+\item Was macht die Gruppe (sozial, fachlich,...)
+\end{itemize}
+
+
+\subsection{Entwurfsvorstellung}
+Es war nicht so einfach, das richtige und vorteilhafteste Diagramm zu erstellen/finden. 
+
+\subsubsection{Aktivitätsdiagramm}
+\begin{itemize}
+	\item Programmablauf wird widergespiegelt
+	\item "Wofür ist das Aktivitätsdiagramm dar?" $\rightarrow$ Im Prinzip für den kompletten Programmablauf des Raspberry Pi
+	\item fehlende Überschrift im Aktivitätsdiagramm wurde bemängelt
+	\item Aktivitätsdiagramm wurde abgenommen
+\end{itemize}
+
+\subsubsection{Config-File}
+\begin{itemize}
+	\item JSON ist in Ordnung
+	\item Config-File wurde abgenommen
+\end{itemize}
+
+\subsubsection{Zustandsdiagramm}
+\begin{itemize}
+	\item Zustandsdiagramm wurde abgenommen
+\end{itemize}
+
+\subsubsection{Schaltplan}
+\begin{itemize}
+	\item Schaltplan wurde abgenommen
+\end{itemize}
+
+$\rightarrow$ Entwurf wurde komplett abgenommen
+
+\subsection{Fragen}
+\begin{center}
+\begin{tabular}[t]{p{.45\linewidth} p{.45\linewidth}}
+Ringel: „Wie kommt die Nachricht der Änderung von der Datenbank zum Programm?“ & Über den Socket soll die Nachricht verschickt werden \\
+\hline
+Ragnar: „Jede Maschine hat eigene Trigger?“ & Das können wir handhaben, wie wir möchten.\\
+\hline
+Ragnar: „Wo ändert sich der Wert genau?“ & Tabelle Tool Spalte State. Wenn sich da der Wert ändert, dann muss der Trigger anspringen, und eine Änderung stattfinden.\\
+\hline
+Ringel: „Wie reagiert das Programm auf die Änderung?“ & Es werden Sockets geöffnet, und dann ein 'Listen' auf dem Socket. \\
+\hline
+Ringel: „Wo liegen derzeit die technischen Probleme?“ & Technische Probleme, wie die Verbindung zwischen der Datenbank und dem Programm \\
+\hline
+Ringel: „Was passiert nach dem Trigger, oder was passiert im Trigger genau?“ & Alles passiert in PostgreSQL und es wird ein Stück Python Skript ausgeführt \\
+\hline
+Ringel: „Ist das jetzt schon der endgültige Code?“ & Nein, alles ist noch in der Implementationsphase. Das Ziel war es, dass die LED's leuchten und ihre Zustände repräsentieren. \\
+\end{tabular}
+\end{center}
+
+\subsection{Was macht die Gruppe?}
+\begin{itemize}
+	\item Entwurfsphase abgeschlossen
+	\item Implementation
+	\item Tests sind am laufen
+	\item wöchentlich findet zwischen dem Qualitätsbeauftragenden und dem Implementierer ein kurzes Meeting statt
+	\item Quellcode an sich testen und den Quellcode auf Funktionalität testen
+	\item Probleme beim Test 
+	\item Tester soll sich regelmäßig mit der Implementation und dem Qualitätsbeauftragenden zusammensetzen 
+	\item Was kann alles schief gehen? Dies wird durch den Projektleiter geprüft
+\end{itemize}
+
+\subsection{Herr Ringel}
+\begin{itemize}
+	\item Jeder hat eine Aufgabe? $\rightarrow$ Ja, jeder bekommt eine Aufgabe vom Projektleiter zugeteilt
+	\item Vorschlag für die Sockets: MQQT Sockets IBM oder Bluemix
+	\item Wichtig war, dass der Datenbankbeauftragende schon einmal einen Trigger gebaut hat und der auch funktioniert
+	\item Am Ende muss das SW-Produkt mit den jeweiligen Rechten versehen werden
+	\item alles sollte bei der Datenbank ordentlich dokumentiert werden
+\end{itemize}
+
+\subsection{Vorstellung des Raspberry Pi mit leuchtenden LED}
+Die LED's leuchten nach 30 Sekunden automatisch und ändern ihre Zustände.\\
+Jeder Status ist eine Sekunde lang. \\
+$\rightarrow$ wurde abgenommen
+
+
+\end{document}

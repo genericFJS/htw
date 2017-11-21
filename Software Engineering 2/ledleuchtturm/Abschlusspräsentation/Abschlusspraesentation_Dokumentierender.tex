@@ -1,0 +1,376 @@
+\documentclass[ignorenonframetext, 11pt, table]{beamer}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\input{\pathtomaster/htwcd_beamer.sty}
+
+\author{Falk-Jonatan Strube}
+\title{\texttt{ledleuchtturm} -- Dokumentation}
+\date{18.07.2017}
+
+\usepackage{pgfpages}
+\setbeameroption{show notes on second screen=right}
+\begin{document}
+\author{Falk-Jonatan Strube}
+\title{\texttt{ledleuchtturm} -- Dokumentation}
+
+\begin{frame}[plain]
+\begin{center}
+\includegraphics[width=.7\textwidth]{\pathtomaster/HTW.eps}
+\end{center}
+\maketitle
+\end{frame}
+
+\section{Gliederung}
+\begin{frame}
+\setstretch{1.5}
+\note{\setstretch{1.5}}
+\begin{itemize}
+\item<2-> Aufgaben
+\begin{itemize}
+\item<3-> Umfang
+\item<4-> Durchführung
+\end{itemize}
+\item<5-> Bewertung
+\begin{itemize}
+\item<6-> Aufgaben
+\note<6>[item]{Wie ist die Aufgabe zu bewerten?}
+\item<7> Projekt
+\note<7>[item]{NEXT}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Aufgaben}
+\subsection{Umfang}
+\begin{frame}
+\setstretch{1.5}
+\note{\setstretch{1.5}}
+\note{Aufgaben lassen sich in unterschiedliche Kategorien packen:}
+\begin{itemize}
+\item<2-> Als \emph{Dokument}\,ierender
+\item<3-> Delegierte Aufgaben
+\item<4-> Weitere
+\note<4>[item]{NEXT}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\setstretch{1.5}
+\note{\setstretch{1.5}}
+Als \emph{Dokument}\,ierender:
+\begin{itemize}
+\item<2-> \LaTeX{}-Vorlagen
+\note<2>[item]{Vorlagen im Corporate Design der HTW (Stil)}
+\note<2>[item]{Hilfestellung}
+\item<3-> Dokumentenvorlagen zum „Ausfüllen“
+\note<3>[item]{Struktur}
+\note<3>[item]{inhaltliche Vorüberlegungen.}
+\item<4-> Code-Dokumentation (Epydoc)
+\note<4>[item]{Beispiel erstellt}
+\note<4>[item]{Hilfestellung und Rückfragen}
+\note<4>[item]{Anpassung an \LaTeX{} (Stil, Übersetzung).}
+\item<5-> Koordination Dokumentationsarbeit
+\note<5>[item]{Wer muss was schreiben?}
+\item<6-> Überarbeitung der Dokumente
+\note<6>[item]{Korrekturen}
+\note<6>[item]{teils große Änderungen}
+\note<6>[item]{Übersetzung ins Deutsche}
+\note<6>[item]{NEXT}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\setstretch{1.5}
+\note{\setstretch{1.5}}
+Delegierte Aufgaben:
+\begin{itemize}
+\item<2-> Pflichtenheft (Überarbeitung)
+\note<2>[item]{Finale Überarbeitung}
+\note<2>[item]{Ergänzte Inhalte (Abrundung)}
+\item<3-> Vorlage Unit-Tests
+\note<3>[item]{Erarbeiten, wie Unit Tests in Python funktionieren.}
+\item<4-> Vorlage Python Paketstruktur
+\note<4>[item]{Von Python Skriptsammlung $\Rightarrow$ gebündelte Paketstruktur}
+\item<5-> \lstinline`changeState()`-Funktionen
+\note<5>[item]{Module LED-Funktionen}
+\end{itemize}
+\uncover<6->{Weitere:}
+\begin{itemize}
+\item<7-> \lstinline`git`
+\note<7>[item]{Schon in SE1 angedeutet}
+\note<7>[item]{Rückfragen}
+\note<7>[item]{Grundprinzip}
+\note<7>[item]{Einrichtung}
+\item<8-> Prototyp MQTT (verworfen)
+\note<8>[item]{Prototyp entwickelt}
+\note<8>[item]{Vor- und Nachteile erarbeitet.}
+\note<8>[item]{NEXT: Nun an einigen Beispielen Durchführung erläutern.}
+\end{itemize}
+\end{frame}
+
+\subsection{Durchführung}
+\begin{frame}{\LaTeX{}-Vorlage (Layout)}
+\setstretch{1.5}
+\note{\setstretch{1.5}}
+Styleguide der HTW Dresden:
+\note<1>[item]{Danach gerichtet, um Vorlage zu erstellen}
+\begin{itemize}
+\item<2-> Schrift
+\note<2>[item]{beinhaltet:}
+\begin{itemize}
+\item<3-> Schriftart
+\note<3>[item]{Arial/Helvetica}
+\item<4-> Schriftgröße
+\end{itemize}
+\item<5-> Logo
+\note<5>[item]{Dazu gab es:}
+\begin{itemize}
+\item<6-> Positionierung
+\item<7-> Größe
+\end{itemize}
+\item<8-> Vorgaben für wissenschaftliche Dokumente?!
+\note<8>[item]{Keine weiteren Vorgaben vorhanden. vgl. TU Dresden}
+\note<8>[item]{NEXT: Beispiel}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{\LaTeX{}-Vorlage (Layout)}
+\setstretch{1.5}
+\note{\setstretch{1.5}}
+%trim: {left lower right upper}
+\begin{center}
+\includegraphics[scale=.27, page=1, trim={2cm 2cm 2cm 2cm},clip]{Beispiel_Layout.pdf}
+\includegraphics[scale=.27, page=2, trim={2cm 2cm 2cm 2cm},clip]{Beispiel_Layout.pdf}
+\end{center}
+\note{
+\begin{itemize}
+\item Orientiert an CD der TUD:
+\begin{itemize}
+\item Aufmachung der Titelseite(n)
+\item Layout der Überschriften
+\end{itemize}
+\item Einhaltung des CD der HTW
+\begin{itemize}
+\item Logo
+\item Schriftart
+\end{itemize}
+\end{itemize}
+}
+\end{frame}
+
+\begin{frame}{\LaTeX{}-Vorlage (Struktur)}
+\setstretch{1.5}
+\note{\setstretch{1.5}}
+\note<1>[item]{Struktur!!!}
+\begin{itemize}
+\item<2-> Benötigte Dokumenteninhalte
+\note<2>[item]{Was gehört in \\
+Protokolle\\
+Entwicklerdoku\\
+Projektdoku\\
+Gesamtdoku\\
+Präsentation?}
+\item<3-> Optimale Struktur
+\note<3>[item]{Sinnvolle Reihenfolge?}
+\note<3>[item]{NEXT: Beispiel}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{\LaTeX{}-Vorlage (Struktur)}
+%\setstretch{1.5}
+\note{\setstretch{1.5}}
+\begin{lstlisting}[language={[LaTeX]TeX}, basicstyle=\ttfamily\footnotesize, frame=none, numbers=none]
+\maketitle
+\section{Gruppentreffen ???}
+% Tabellarische Auflistung von Beginn, Ende, Ort, Anwenden und Protokollant
+
+\paragraph{Tagesordnungspunkte}
+% Auflistung der TOPs
+
+\subsection{TOP ???}
+% TOPs als Unterabschnitte
+
+\subsection{Nächste Schritte}
+% Tabellarische Auflistung der nächsten Schritte
+\end{lstlisting}
+\note{
+Protokoll:
+\begin{itemize}
+\item Benötigte Dokumenteninhalte, nicht nur für Protokoll!\\
+Was gehört in Protokolle, Entwickler-, Projekt-, Gesamtdoku und Präsentation?
+\item Optimale Struktur\\
+Sinnvolle Reihenfolge?
+\end{itemize}
+}
+\end{frame}
+
+%\begin{frame}[fragile]{\LaTeX{}-Vorlage (Struktur)}
+%%\setstretch{1.5}
+%\note{\setstretch{1.5}}
+%\begin{lstlisting}[language={[LaTeX]TeX}, basicstyle=\ttfamily\footnotesize, frame=none, numbers=none]
+%% Entwicklerdokumentation = Programmiererdokumentation (Pflichtenheft /DA2/)
+%\section{Grobentwurf}
+%% Grobentwurf aus Pflichtenheft entnehmen und noch mal als Dokumentation aufarbeiten.
+%\section{Feinentwurf}
+%% Feinentwurf aus Entwurf/Entwurf.tex noch mal aufarbeiten und Dokumentieren.
+%\section{Struktur des Codes}
+%% Struktur des Codes (wie er abgegeben wurde) festhalten. 
+%% Wie sind die Dateien/Packet(e) organisiert?
+%% Alle Dateien beschreiben: Überblick verschaffen.
+%% Am besten (statt Klassendiagramm) ein "Datei-Diagramm" erstellen.
+%% [...]
+%\end{lstlisting}
+%\note{Entwicklerdokumentation:
+%\begin{itemize}
+%\item Benötigte Dokumenteninhalte\\
+%Was gehört in Protokolle, Entwickler-, Projekt-, Gesamtdoku und Präsentation?
+%\item Optimale Struktur\\
+%Sinnvolle Reihenfolge?
+%\end{itemize}
+%}
+%\end{frame}
+
+\begin{frame}{Pflichtenheft}
+\setstretch{1.5}
+\note{\setstretch{1.5}}
+\begin{itemize}
+\item<2-> Inhaltliche Verbesserungen
+\item<3-> Ergänzungen
+\item<4-> Verschönerung
+\item<5-> Strukturierung
+\note<5>[item]{NEXT: Beispiel}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Pflichtenheft (Entwurf $\Rightarrow$ Abgabedokument)}
+\setstretch{1.5}
+\note{\setstretch{1.5}}
+%trim: {left lower right upper}
+\begin{center}
+\includegraphics[scale=.27, page=1, trim={2cm 2cm 2cm 2cm},clip]{Beispiel_Pflichtenheft_first.pdf}
+\includegraphics[scale=.27, page=1, trim={2cm 2cm 2cm 2cm},clip]{Beispiel_Pflichtenheft_final.pdf}
+\end{center}
+\note{
+\begin{itemize}
+\item Inhaltliche Verbesserungen\\
+Mehrdeutigkeiten, Redundanz (Qualitätsanf.)
+\item Ergänzungen\\
+Eingangstext, Beschreibung
+\item Verschönerung\\
+Verdeutlichung der Zustände, Unterschriftzeile
+\item Strukturierung\\
+Nummerierung der Anforderungen zum referenzieren
+\end{itemize}
+}
+\end{frame}
+
+%\begin{frame}{EpyDoc}
+%\setstretch{1.5}
+%\note{\setstretch{1.5}}
+%\note[item]{Ähnlich wie JavaDoc}
+%\begin{itemize}
+%\item Kommentierung des Codes
+%\item Generierung einer Dokumentation
+%\begin{itemize}
+%\item \LaTeX{}-Ausgabe
+%\item Anpassungen
+%\item Übersetzung
+%\end{itemize}
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}[fragile]{EpyDoc}
+%%\setstretch{1.5}
+%\note{\setstretch{1.5}}
+%\begin{lstlisting}[language={Python}, basicstyle=\ttfamily\footnotesize, frame=none, numbers=none]
+%def testFunc(test):
+%    '''
+%    Beschreibung
+%    
+%    @type test: Typ Parameter
+%    @param test: Beschreibung Parameter
+%    @rtype: Typ Rückgabewert
+%    @return: Beschreibung Rückgabewert
+%    @author: Autor
+%    '''
+%\end{lstlisting}
+%\end{frame}
+%
+%\begin{frame}[fragile]{EpyDoc}
+%%\setstretch{1.5}
+%\note{\setstretch{1.5}}
+%%trim: {left lower right upper}
+%\begin{center}
+%\includegraphics[scale=.5, page=1, trim={3cm 15.5cm 3cm 7.5cm},clip]{Beispiel_EpyDoc.pdf}
+%\end{center}
+%\end{frame}
+
+\begin{frame}{LED-Funktionen}
+\setstretch{1.5}
+\note{\setstretch{1.5}}
+Funktion \lstinline`changeState()`
+\note<1>[item]{Je nach Status: LED an-/ausschalten oder blinken. Dafür benötigte Funktionen:}
+\begin{itemize}
+\item<2-> \lstinline`toggleLED()`, \lstinline`enableLED()`
+\note<2>[item]{Einfache Zustandsänderung}
+\item<3-> \lstinline`switchAllOff()`
+\note<3>[item]{Zurücksetzen}
+\item<4-> Blinken:
+\begin{itemize}
+\item<5-> \lstinline`blink()`
+\item<6-> \lstinline`blinkThreadFunction()`
+\note<6>[item]{Thread als Funktion}
+\item<7-> \lstinline`killBlinkThread()`
+\note<7>[item]{Thread wird nur gestartet, wenn nötig und sofort wieder beendet, wenn nicht mehr benötigt)}
+\note<7>[item]{NEXT}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Bewertung}
+\subsection{Aufgaben}
+\begin{frame}
+\setstretch{1.5}
+\note{\setstretch{1.5}}
+\begin{itemize}
+\item<2-> Python
+\note<2>[item]{Wissen erweitert}
+\note<2>[item]{Anwendung von Threads: BS2, PKA}
+\item<3-> \LaTeX{}
+\note<3>[item]{Wissen erweitert}
+\item<4-> \texttt{git}
+\note<4>[item]{Wissen erweitert}
+\note<4>[item]{Jetzt auch in Gruppe und nicht nur alleine genutzt}
+\item<5-> Dokumentieren
+\note<5>[item]{Erfahrung gesammelt}
+\note<5>[item]{Strukturierung von Doku}
+\note<5>[item]{NEXT}
+\end{itemize}
+\end{frame}
+
+\subsection{Projekt}
+\begin{frame}
+\setstretch{1.5}
+\note{\setstretch{1.5}}
+\begin{itemize}
+\item<2-> Gruppengröße 
+\note<2-3>[item]{Gruppe zu groß}
+\item<3-> Umfang der Aufgabe 
+\note<3>[item]{Aufgabe zu klein: geht nicht größer, weil Belege}
+\item<4-> Unterschiedliche Motivation / Anspruch\\
+$\Rightarrow$ Entmutigt Delegation
+\note<4>[item]{Unterschiedliche Motivation/Anspruch \\
+$\to$ mehr Arbeit für Gruppenmitglieder mit höherem Anspruch}
+\item<5-> Doch Objektorientierung?
+\note<5>[item]{aktuelle Lösung gut}
+\note<5>[item]{Objektorientierung:\\
+würde einiges einfacher machen \\
+haben schon Objekte (Thread, …)}
+\item<6-> Lieber MQTT?
+\note<6>[item]{MQTT: Sockets zwar nicht ohne Grund gewählt (Broker)}
+\note<6>[item]{MQTT allerdings dynamischer}
+\note<6>[item]{DONE}
+\end{itemize}
+\end{frame}
+
+\end{document}

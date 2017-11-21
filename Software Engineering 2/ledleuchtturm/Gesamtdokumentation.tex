@@ -1,0 +1,108 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrreprt}
+\gdef\pathtomaster{_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Belegarbeit}
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+\tableofcontents
+\renewcommand{\maketitle}{}
+\renewcommand{\tableofcontents}{}
+
+% ==================================
+% ----------------------------------
+% ==================================
+\chapter{Entwicklerdokumentation}
+\import{Dokumentation/}{Entwicklerdokumentation}
+
+% ==================================
+% ----------------------------------
+% ==================================
+\chapter{Testdokumentation}
+\import{Dokumentation/}{Testdokumentation}
+
+% ==================================
+% ----------------------------------
+% ==================================
+\chapter{Benutzerdokumentation}
+\import{Dokumentation/}{Benutzerdokumentation}
+
+% ==================================
+% ----------------------------------
+% ==================================
+\chapter{Projektdokumentation}
+\import{Dokumentation/}{Projektdokumentation}
+
+% ==================================
+% ----------------------------------
+% ==================================
+\chapter{Protokolle Gruppentreffen/Kundengespräche}
+\import{Protokolle/}{Erlauterte_Vorlage.tex}\clearpage
+\import{Protokolle/}{2017-04-18_Gruppentreffen}\clearpage
+\import{Protokolle/}{2017-04-20_Kundengespraech}\clearpage
+\import{Protokolle/}{2017-04-25_Gruppentreffen}\clearpage
+\import{Protokolle/}{2017-05-04_Kickoff}\clearpage
+\import{Protokolle/}{2017-05-11_Gruppentreffen}\clearpage
+\import{Protokolle/}{2017-05-18_Gruppentreffen}\clearpage
+\import{Protokolle/}{2017-05-19_Qualitaetsmeeting}\clearpage
+\import{Protokolle/}{2017-05-24_Entwurfsmeeting}\clearpage
+\import{Protokolle/}{2017-05-24_Implementationsmeeting}\clearpage
+\import{Protokolle/}{2017-05-30_Datenbankenmeeting}\clearpage
+\import{Protokolle/}{2017-06-01_1Milestonetreffen}\clearpage
+\import{Protokolle/}{2017-06-08_MQTT_Treffen}\clearpage
+\import{Protokolle/}{2017-06-15_TriggerTreff}\clearpage
+\import{Protokolle/}{2017-06-26_Qualitaetsmeeting}\clearpage
+\import{Protokolle/}{2017-06-26_Testmeeting}\clearpage
+\import{Protokolle/}{2017-06-29_Gruppentreffen}\clearpage
+\import{Protokolle/}{2017-06-30_Qualitaetsmeeting}
+
+% ==================================
+% ----------------------------------
+% ==================================
+\chapter{Pflichtenheft}
+\import{Pflichtenheft/}{Pflichtenheft}
+
+% ==================================
+% ----------------------------------
+% ==================================
+\chapter{Anpassungen Pflichtenheft}
+\import{Dokumentation/}{Pflichtenheft_Anpassungen}
+
+\chapter{Glossar}
+\import{Dokumentation/}{Glossar}
+
+\chapter{Anhang}
+\section{Projektplan}
+\clearpage
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=.37 , trim={35px 0 145px 47px},clip, angle=90]{Projektplan/SE2-Projektplan-Gantt.png}
+\caption{gantt-Diagramm}
+\end{figure}
+
+\clearpage
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=.37 , trim={35px 0 53px 47px},clip, angle=90]{Projektplan/SE2-Projektplan-Gantt_komplett.png}
+\caption{Vollständiges gantt-Diagramm}
+\end{figure}
+
+\clearpage
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=.39 , trim={35px 0 58px 47px},clip, angle=90]{Projektplan/SE2-Projektplan-Ressourcendiagramm.png}
+\caption{Ressourcen-Diagramm}
+\end{figure}
+
+\clearpage
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=.27 , trim={35px 0 58px 47px},clip]{Projektplan/SE2-Projektplan-Ressourcendiagramm_komplett.png}
+\caption{Vollständiges Ressourcen-Diagramm}
+\end{figure}
+
+\end{document}

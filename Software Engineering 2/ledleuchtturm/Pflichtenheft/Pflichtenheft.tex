@@ -1,0 +1,190 @@
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Pflichtenheft}
+\date{04.05.2017}
+
+\input{\pathtomaster/globalDocumentSettings}
+\def\pflichtenheft{}
+\begin{document}
+\maketitle
+\tableofcontents 
+\section{Ausgangssituation und Zielsetzung}
+% ein bisschen mehr blabla:
+Das Projekt Cinderella soll als Lehr- und Übungsplattform in der Informatikausbildung dienen, indem es ein praxisnahes Experiementierfeld auf dem Gebiet der automatisierten Produktion bietet. Darüber hinaus kann es für Entwicklungsprojekte im Bereich von Industrie 4.0 genutzt werden. Cinderella erlaubt die interdisziplinäre Kooperation zwischen den Fachbereichen Maschinenbau/Produktionstechnik, Elektrotechnik, Gestaltung/Design, Wirtschaftswissenschaften und Informatik.
+
+Das Grundsystem besteht aus einem Server für die automatische Produktionssteuerung, der die Fertigung in einer Modellfabrik mit ca. 30 Anlagen steuert. Dazu gehören mehrere Lego-BrickPi-Maschinen. In der ersten Ausbaustufe ist der Anschluss eines 3D-Druckers geplant, die Entwicklung eines Energie-Monitorings, die Integration einer realen Maschine und die Anbindung eines ERP-Systems sollen als weitere Schritte folgen.\footnote{\href{https://www.htw-dresden.de/de/fakultaet-informatikmathematik/forschung/arbeitsgruppen/smart-production-systems/forschungsprojekte/cinderella-plattform.html}{https://www.htw-dresden.de/de/fakultaet-informatikmathematik/forschung/arbeitsgruppen/smart-production-systems/forschungsprojekte/cinderella-plattform.html}, abgerufen am 04.05.2017} \bigskip
+
+%sonst alles normal:
+Die Anlagen der Modellfabrik sind mit einer PostgreSQL-Datenbank verbunden in dem die entsprechenden Maschinenzustände festgehalten werden.
+
+Das Ziel ist es den aktuellen aus der Datenbank entnommenen Maschinenzustand einer Maschine in Form einer LED-Leuchtturmanzeige zu visualisieren. 
+
+\section{Systemeinsatz und Umgebung}
+% nur ein bisschen aufgehübscht:
+Das \emph{Softwaresystem} wird auf einem Raspberry Pi Computer ausgeführt. Dieser ist mit dem LED-Leuchtturm per Kabel verbunden und befindet sich im gleichen Netzwerk wie die \emph{Datenbank}.
+
+\section{Benutzerschnittstellen}
+% ein bisschen mehr Erklärung 
+Das \emph{Softwaresystem} ist ein Dienst, der während der Laufzeit keine direkte Interaktion durch den Nutzer ermöglicht. Die \emph{Software} konfiguriert sich bei jedem Start mit Hilfe einer \emph{Konfigurationsdatei}. Diese \emph{Datei} wird vom Nutzer unabhängig vom \emph{Softwaresystem} manuell erstellt/angepasst.
+
+
+\section{Funktionale Anforderungen}
+\begin{enumerate}[label=/FA\arabic*/]
+% mehr Details / verschobene Details von "Benutzerschnittstellen"
+\item Das \emph{Softwaresystem} liest eine \emph{Konfigurationsdatei} ein. In der Konfigurationsdatei stehen:
+\begin{itemize}
+\item Die Ports der roten/gelben/grünen LED.
+\item Der Name der darzustellenden Anlage (wie er in der \emph{Datenbank} hinterlegt ist).
+\item Der Datenbankzugang mit allen Informationen die nötig sind, um:
+\begin{itemize}
+\item sich mit der Datenbank erfolgreich zu verbinden.
+\item einen Trigger anzulegen.
+\item Daten auszulesen.
+\end{itemize}
+\end{itemize}
+% NEU! richtig so?
+\item Das \emph{Softwaresystem} überprüft beim Starten, ob die in der \emph{Konfigurationsdatei} eingetragene \emph{Datenbank} erreichbar und die in der \emph{Konfigurationsdatei} angegebene Anlage in der \emph{Datenbank} vorhanden ist. Wenn ja, holt es den aktuellen Zustand der Anlage aus der \emph{Datenbank}.
+% mehr Aufhübschung :D
+\item Das \emph{Softwaresystem} muss fähig sein auf einen Statuswechsel in der \emph{Datenbank} zu reagieren und ihn mithilfe der LEDs darzustellen. Die Zustände und entsprechende LED-Belegungen sind wie folgt:\\
+\begin{tabular}{l l l}
+\begin{tikzpicture}[thick, scale =.5]
+\fill [green] (0.5,0.5) circle (0.5);
+\draw [gray] (0,3) rectangle (1,2);
+\draw [gray] (0,2) rectangle (1,1);
+\draw [gray] (0,1) rectangle (1,0);
+\draw  (0.5,2.5) circle (0.5);
+\draw  (0.5,1.5) circle (0.5);
+\draw  (0.5,0.5) circle (0.5);
+\end{tikzpicture} & grün leuchtend & Prozess wird abgearbeitet (Processing)\\
+\begin{tikzpicture}[thick, scale =.5]
+\fill [orange] (0.5,1.5) circle (0.5);
+\draw [gray] (0,3) rectangle (1,2);
+\draw [gray] (0,2) rectangle (1,1);
+\draw [gray] (0,1) rectangle (1,0);
+\draw  (0.5,2.5) circle (0.5);
+\draw  (0.5,1.5) circle (0.5);
+\draw  (0.5,0.5) circle (0.5);
+\end{tikzpicture} &gelb leuchtend & Warten auf einen abzuarbeitenden Prozess (Idle) \\
+\begin{tikzpicture}[thick, scale =.5]
+\fill [red] (0.5,2.5) circle (0.5);
+\draw [gray] (0,3) rectangle (1,2);
+\draw [gray] (0,2) rectangle (1,1);
+\draw [gray] (0,1) rectangle (1,0);
+\draw  (0.5,2.5) circle (0.5);
+\draw  (0.5,1.5) circle (0.5);
+\draw  (0.5,0.5) circle (0.5);
+\end{tikzpicture}& rot leuchtend & Wartung steht an (Maintenance)\\
+\begin{tikzpicture}[thick, scale =.5]
+\fill [red] (0.5,2.5) circle (0.5);
+\fill [white] (1,3) -- (0,2) -- (1,2) -- cycle;
+\draw [gray] (0,3) rectangle (1,2);
+\draw [gray] (0,2) rectangle (1,1);
+\draw [gray] (0,1) rectangle (1,0);
+\draw  (0.5,2.5) circle (0.5);
+\draw  (0.5,1.5) circle (0.5);
+\draw  (0.5,0.5) circle (0.5);
+\end{tikzpicture} & rot blinkend & Komponente der Anlage defekt (Down)\\
+\begin{tikzpicture}[thick, scale =.5]
+\draw [gray] (0,3) rectangle (1,2);
+\draw [gray] (0,2) rectangle (1,1);
+\draw [gray] (0,1) rectangle (1,0);
+\draw  (0.5,2.5) circle (0.5);
+\draw  (0.5,1.5) circle (0.5);
+\draw  (0.5,0.5) circle (0.5);
+\end{tikzpicture} & unbeleuchtet & Anlage nicht in Datenbank vorhanden / Anlage deaktiviert\\
+\end{tabular}
+\end{enumerate}
+\section{Qualitätsanforderungen}
+Das \emph{Softwaresystem}:
+\begin{enumerate}[label=/QA\arabic*/]
+% Dopplungen von Funkt. Anforderungen raus genommen
+\item Reagiert innerhalb einer Sekunde auf einen Statuswechsel in der \emph{Datenbank}.
+% NEU
+\item Läuft nach dem Starten selbstständig.
+\end{enumerate}
+
+\section{Kundenwünsche}
+Diese Funktionen und Qualitäten sind nicht obligatorisch zu implementieren.
+\begin{enumerate}[label=/KW\arabic*/]
+\item Leuchtsystem mit 12V Technik.
+\item Ständer für LED Leuchte.
+\item Software System als Service im Linux Raspberry Pi OS (Daemon).
+\item Monitoring ob der Dienst/Raspberry Pi noch läuft.
+\end{enumerate}
+
+\section{Rahmenbedingungen}
+\subsection{Technische/technologische Rahmenbedingungen}
+\begin{enumerate}[label=/TR\arabic*/]
+\item Das \emph{Softwaresystem} ist auf einem Raspberry Pi 3 ausführbar, auf dem eine frische Version des Betriebsystems Raspbian Jessie installiert ist.
+\item Der Nutzer hat vor dem Start der \emph{Software} eine gültige Konfigurationsdatei erstellt/bearbeitet (siehe \ref{doku}: \nameref{doku}).
+\item Der Nutzer hat vor dem Starten der \emph{Software} einen Trigger in die Datenbank eingetragen, der die Zustände der Anlage(n) an das \emph{Softwaresystem} zurück gibt sobald sie sich ändern (siehe \ref{doku}: \nameref{doku}).
+\item Die \emph{Datenbank} von der die Maschinenzustände gelesen werden ist eine PostgreSQL Datenbank. Die Struktur der \emph{Datenbank} ergibt sich aus dem Dump, der vom Kunden bereitgestellt wird: Der Status ist eindeutig in der \emph{Datenbank} durch einen String repräsentiert und abfragbar.
+% alt: \item Das \emph{Softwaresystem} hat zum Einrichten der Trigger Schreibrechte auf der \emph{Datenbank}.
+\item Die \emph{Datenbank}-\emph{Software}-Kommunikation erfolgt über ein lokales Netzwerk. Paketverluste sind auszuschließen.
+\end{enumerate}
+\subsection{Organisatorische Rahmenbedingungen}
+\begin{enumerate}[label=/OR\arabic*/]
+\item Das \emph{Softwaresystem} wird zum Ende des Sommersemesters 2017 abgegeben und danach nicht weiter unterstützt.
+\item Das \emph{Softwaresystem} läuft ausschließlich an der HTW Dresden.
+\item Die zum Testen benötigte Hardware wird vom Auftraggeber gestellt:
+\begin{itemize}
+\item Raspberry Pi
+\item Arduino
+\item Steckboard
+\item Netzteil
+\item LEDs
+\item Widerstände
+\end{itemize}
+\end{enumerate}
+\subsection{Rechtliche Rahmenbedingungen}
+\begin{enumerate}[label=/RR\arabic*/]
+\item Das \emph{Softwaresystem} ist uneingeschränkt open source.
+\item Die Auftragnehmer übernehmen keine Verantwortung für eventuelle Schäden jedweder Art an der Cinderella Produktionsfabrik.
+\end{enumerate}
+%\section{Fehlertoleranzmaßnahmen}
+%Alle aufgezählten Anforderungen werden in entsprechenden Tests auf Fehler überprüft.
+\section{Anforderung an die Dokumentation}
+\label{doku}
+Die Dokumentation muss folgende Teile umschließen:
+\begin{enumerate}[label=/DA\arabic*/]
+\item Benutzerdokumentation in Form eines \emph{Cheat Sheets} mit dem Umfang einer doppelseitigen A4-Seite. Darin muss unter anderem zu finden sein, wie der Nutzer:
+\begin{itemize}
+\item die Konfigurationsdatei erstellt.
+\item den Trigger für die Datenbank einrichtet.
+\end{itemize}
+\item Programmiererdokumentation.
+\item Technische (Methoden-)Dokumentation der zu installierenden Datenbank-Trigger.
+\end{enumerate}
+\section{Abnahmekriterien}
+\begin{enumerate}[label=/AK\arabic*/]
+\item Alle Anforderungen können erfolgreich vorgestellt werden.
+\item Die Abgabefrist zum Ende des Sommersemesters 2017 wurde eingehalten.
+\end{enumerate}
+
+\section{Glossar}
+
+\begin{tabular}{>{\raggedright}p{.25\linewidth} >{\raggedright}p{.65\linewidth} l}
+Datenbank & Wenn im Rahmen dieses Pflichtenhefts von „der Datenbank“ die Rede ist, ist die PostgreSQL-Datenbank gemeint, mit der die Anlagen der Modellfabrik verbunden sind.&\\
+Softwaresystem / Software & Mit „dem Softwaresystem“ / „der Software“ ist die zu erstellende Software gemeint.&\\
+Konfigurationsdatei / Datei & Mit der „(Konfigurations-)Datei“ ist eine Textdatei gemeint, die die nötigen Einstellungen für die Software enthalten.&\\
+LED-Ports & Die Ports, an der die 3 LEDs angeschlossen sind.&\\
+Anlage & Die Anlage/Maschine, deren Zustand mit dem LED-Leuchtturm dargestellt wird&\\
+Nutzer & Die Person, der die Software startet&\\
+Cheat Sheet & Eine Beschreibung, wie das Softwaresystem in Betrieb genommen und benutzt werden kann &\\
+Dump & Abbild der Daten einer Datenbank an einem definierten Zeitpunkt. Durch diesen können flüchtige bzw. zeitlich Veränderliche Daten persistent gespeichert werden.
+\end{tabular}
+%Glossar (Begriffslexikon)
+%Index
+%Anhang
+\vspace*{7em}
+\par\noindent\makebox[2.5in]{\hrulefill}\hfill\makebox[2.0in]{\hrulefill}
+\par\noindent\makebox[2.5in][l]{Unterschrift Projektleiter}\hfill\makebox[2.0in][l]{Datum}
+
+\vspace*{5em}
+\par\noindent\makebox[2.5in]{\hrulefill}\hfill\makebox[2.0in]{\hrulefill}
+\par\noindent\makebox[2.5in][l]{Unterschrift Kunde}\hfill\makebox[2.0in][l]{Datum}
+
+\end{document}

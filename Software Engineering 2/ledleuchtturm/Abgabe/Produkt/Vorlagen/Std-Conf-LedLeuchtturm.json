@@ -1,0 +1,28 @@
+
+        {
+            "ledleuchtturm":{
+
+                "machine":{
+                    "name":"MACHINE_NAME"
+                },
+
+                "database":{
+                    "server":"SERVER_IP",
+                    "port":SERVER_PORT,
+                    "socketport":LISTENING_PORT,
+                    "interface":"eth0",
+                    "dbname":"DB_NAME",
+                    "username":"USER_NAME",
+                    "password":"DB_PASSWORD",
+                    "table":"tool",
+                    "column":"default"
+                },
+
+                "hardware":{
+                    "green":21,
+                    "yellow":20,
+                    "red":16
+                }
+            }
+        }
+        

@@ -1,0 +1,91 @@
+\documentclass[11pt]{beamer}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\input{\pathtomaster/htwcd_beamer.sty}
+
+\author{Gruppe 2}
+\title{\texttt{ledleuchtturm}}
+\date{18.07.2017}
+
+\newcommand{\pauseFrame}{
+\begin{frame}[plain]
+\begin{center}
+\dots
+\note{\Large NÄCHSTER}
+\end{center}
+\end{frame}
+}
+\usepackage{pgfpages}
+%\setbeameroption{show notes on second screen=right}
+
+\begin{document}
+
+\begin{frame}[plain]
+\begin{center}
+\includegraphics[width=.7\textwidth]{\pathtomaster/HTW.eps}
+\end{center}
+\maketitle
+\end{frame}
+
+\section{Die Gruppe}
+\begin{frame}
+\setlength{\parskip}{.5em}
+Projektmanagement: \tabto{.45\linewidth}Jürgen Tomaszewski
+
+Analyse: \tabto{.45\linewidth}Eric Schmidtgen
+
+Entwurf: \tabto{.45\linewidth}Ben Schönherr
+
+Datenbank / Hardware:  \tabto{.45\linewidth}Ragnar Luga
+
+Implementation: \tabto{.45\linewidth}Simon Retsch
+
+Tests: \tabto{.45\linewidth}Torsten Polczyk
+
+Dokumentation: \tabto{.45\linewidth}Falk-Jonatan Strube
+
+Qualitätsmanagement: \tabto{.45\linewidth}Raphael Pour
+\end{frame}
+
+\section{==TEIL== Projektmanager}
+\import{./}{Abschlusspraesentation_Projektmanager.tex}
+\pauseFrame
+\section{==TEIL== Analyse}
+\import{./}{Abschlusspraesentation_Analysierender.tex}
+\pauseFrame
+\section{==TEIL== Entwurf}
+\import{./}{Abschlusspraesentation_Entwerfender.tex}
+\pauseFrame
+\section{==TEIL== Datenbank/Hardware}
+\import{./}{Abschlusspraesentation_Datenbankender_deu.tex}
+\pauseFrame
+\section{==TEIL== Implementation}
+\import{./}{Abschlusspraesentation_Implementierender.tex}
+\pauseFrame
+\section{==TEIL== Tests}
+\import{./}{Abschlusspraesentation_Testender.tex}
+\pauseFrame
+\section{==TEIL== Dokumentation}
+\import{./}{Abschlusspraesentation_Dokumentierender.tex}
+\pauseFrame
+\section{==TEIL== Qualität}
+\import{./}{Abschlusspraesentation_Qualitätsmanager.tex}
+\pauseFrame
+
+%{
+%\setbeamercolor{background canvas}{bg=}
+%\makeatletter
+%\@latex@warning{ACHTUNG: Vor dem Kompilieren dieser Praesentation muessen alle anderen pdfs kompiliert werden!!!}
+%\@latex@warning{Diese .tex Datei fuegt die pdfs nur aneinander!}
+%\makeatother
+%\includepdf[pages={-}]{Abschlusspraesentation_Projektmanager.pdf}
+%\includepdf[pages={-}]{Abschlusspraesentation_Analysierender.pdf}
+%\includepdf[pages={-}]{Abschlusspraesentation_Entwerfender.pdf}
+%\includepdf[pages={-}]{Abschlusspraesentation_Datenbankender.pdf}
+%\includepdf[pages={-}]{Abschlusspraesentation_Implementierender.pdf}
+%\includepdf[pages={-}]{Abschlusspraesentation_Testender.pdf}
+%\includepdf[pages={-}]{Abschlusspraesentation_Dokumentierender.pdf}
+%\includepdf[pages={-}]{Abschlusspraesentation_Qualitätsmanager.pdf}
+%}
+
+\end{document}

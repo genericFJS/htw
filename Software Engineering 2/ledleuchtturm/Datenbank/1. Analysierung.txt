@@ -1,0 +1,26 @@
+/*
+	Writing in english, since it is faster and I make less mistakes: Ragnar
+*/
+
+The database has 19 tabels from which only one is important for us: state_report .
+It is designed so that every row is an update meaning that it could be any device.
+Therefore, in order to get the last update of OUR machine, we need to include LIMIT operator
+to get the latest result. Machines are called as tools in the table.
+
+/*
+	A SQL query to get all the columns about the tool (machine) from the latest update.
+*/
+
+SELECT * FROM public.state_report						// state_report is our table
+WHERE tool = 'ALN1001' ORDER BY date DESC				// tool is our machine, date is ordered desc to get
+														// the latest row
+LIMIT 1													// get only the first row/result
+
+
+
+/*
+	A SQL query to get ONLY the STATE of the MACHINE (this is probably something we will be using to get the state)
+*/
+SELECT state FROM public.state_report
+WHERE tool = 'ALN1001' ORDER BY date DESC				// replace ALN1001 with our preferred machine name
+LIMIT 1

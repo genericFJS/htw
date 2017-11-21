@@ -1,0 +1,31 @@
+Dokumentation:
++ Wie beschreibt man zwei verschieden Return typen?
+
+Qualität:
++ Globale Variablen benutzen?
+	-> Joa, kann man machen, aber Maschinenzustände können dadurch vielleicht nicht mehr nachvollziehbar sein
+
++ Funktionen outsourcen?
+	-> Ja, man kann auch mehrere funktionsfiles machen, z.B. configFile.py und db.py mit den darauf bezogenen funktionen
+    => Übergabe von zum Beispiel argv muss geregelt werden
+
++ Ist es ok nur operationalError zu catchen?
+    -> Ist ok
+
++ Bei exception handling auch Error meldung ausgeben?
+    -> Mögliche Fehler angeben, Passwort, IP, dbName falsch usw.
+
++ Layout Funktionskommentare (Header)
+    - param vor type?
+        -> egal
+    - Zahl anstatt int oder Zeichenkette anstatt string?
+        -> nein, Typenbezeichnung verwenden (int/string). Am besten bei mehreren (Ausgabe-)Typen keine "deutschen Vokbabeln" benutzen: "@rtype: int oder ggf. string" wird zu "@rtype: int / string"!
+    - Punkt hinter '@type: int'?
+        -> nein. Aber: Punkt hinter Beschreibung der Funktion und Beschreibung der Variablen/Parameter!
+    - kein @rtype benutzen?
+        -> nein
+    - Einrückung korrekt?
+        -> nein, so wie Jontan machen: Der gesamte Epydoc-Text ist noch mal um 4 Leerzeichen/1 Tab eingerückt.
+    - Globale Variablen Kommentieren!
+        -> "#: Beschreibung." (siehe beispielsweise globale Variable blinkThread in playground/statusChanger.py)
+           ACHTUNG: deswegen dürfen mehrere (globale) Variablen nicht in einer Zeile stehen: "GREEN_PORT, YELLOW_PORT, RED_PORT = -1, -1, -1 #: Ports, an denen die LEDs anliegen." ist falsch (Jeder Port auf eigene Zeile mit eigener Beschreibung)

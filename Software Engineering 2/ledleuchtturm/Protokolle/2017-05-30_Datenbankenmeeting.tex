@@ -1,0 +1,64 @@
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Protokoll Gruppentreffen}
+\def\datename{}
+\date{30.05.2017}	%%% ??? = DATUM!
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+\section{Datenbankenmeeting 30.05.2017}	%%% ??? = DATUM!
+\begin{tabular}[t]{p{.25\linewidth} p{.25\linewidth}}
+\emph{Beginn:}				& 13:00 Uhr\\
+\emph{Ende:}					& 14:00 Uhr\\
+\emph{Ort:}						& Z136c\\
+\emph{Anwesend:}	& 
+Ragnar\newline
+Simon
+\\
+\emph{Abwesend:}		 & 
+--
+\\
+\emph{Protokollant:}& Simon
+\end{tabular}
+\paragraph{Tagesordnungspunkte}
+\begin{itemize}
+\item Kommunikation zwischen Trigger und Pythonprogramm
+\end{itemize}
+
+\subsection{Kommunikation zwischen Trigger und Pythonprogramm}
+TCP Socket Connection
+
+\subsection{Fragen}
+\begin{itemize}
+	\item Sind Rapsberry Pi und Datenbank wirklich im gleichen Netzwerk?
+	\item Ist es möglich mehrer Trigger zum Beispiel einen für jede Maschine einzurichten?
+	\item Sollten wir alle Updates an den Raspberry Pi schicken oder die Daten bereits im Trigger aussortieren?
+\end{itemize}
+Es können nicht mehrere Socketverbindungen (der verschiedenen Instanzenan gleiche IP) mit dem gleichen Port aufgemacht werden!
+
+\subsection{Anwendungsfall}
+\begin{enumerate}
+	\item 
+	\begin{enumerate}
+		\item Trigger Funktion anpassen: Erste Instanz:\\
+		Eine Zeile mit IP und einem Port für die erste Instanz einfügen
+		\item Trigger Funktion anpassen: Weitere Instanzen:\\
+	Eine Zeile mit neuer, oder bereits bekannte IP und einen neuen Port für die neue Instanz einfügen
+	\end{enumerate}
+	
+	\item Trigger Funktion in Datenbanken updaten
+	\item Starte Programm
+\end{enumerate}
+
+
+\subsection{Nächste Schritte}
+\begin{tabular}{L{.249} L{.2} L{.25} L{.25}}
+Betreff & Frist & Verantwortliche(r) & Involviert\\\hline
+Fragen Stellen und Anwendungsfall abklären  & 01.06.17 & Ragnar & Simon
+\end{tabular}
+
+\end{document}

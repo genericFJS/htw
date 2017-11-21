@@ -1,0 +1,28 @@
+/*Run the bash command to download the plython package to postgresql*/
+
+sudo apt-get install postgresql-contrib postgresql-plpython
+
+/*
+1. Login to your database as the owner.
+2. Run these two SQL-commands in the postgresql database to install and configure the Python language
+*/
+
+CREATE PROCEDURAL LANGUAGE 'plpythonu' HANDLER plpython_call_handler
+
+UPDATE pg_language SET lanpltrusted = true WHERE lanname LIKE 'plpythonu';
+
+##IMPORTANT##
+
+The name of the language between '' brackets is ours to choose and is important when we
+write our python scripts in the Postgresql database. So for now, let the name be 'plpython.'
+
+/* how to check if you got it right*/
+
+1. change the ip in the machine_send().sql to 127.0.0.1
+2. create a python socket server on localhost with port 8050.
+3. run the server
+4. Login to your local database
+5. Run machine_send().sql again with 
+   \i machine_send().sql
+6. run a dummy update on the database with the command
+   UPDATE tool SET state = 'IDLE' WHERE tool = 'MET9001';

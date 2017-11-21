@@ -1,0 +1,58 @@
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Protokoll Gruppentreffen}
+\def\datename{}
+\date{26.06.2017}	%%% ??? = DATUM!
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+\section{Qualitätsmeeting 26.06.2017}	%%% ??? = DATUM!
+\begin{tabular}[t]{p{.25\linewidth} p{.25\linewidth}}
+\emph{Beginn:}				& 13:30\\
+\emph{Ende:}					& 14:00\\
+\emph{Ort:}						& Z355\\
+\emph{Anwesend:}	& 
+Raphael\newline
+Torsten
+\\
+\emph{Abwesend:}		 & 
+--
+\\
+\emph{Protokollant:}& Raphael Pour
+\end{tabular}
+\paragraph{Tagesordnungspunkte}
+\begin{itemize}
+\item Ergebnisse der Tests
+\item Testen der ``einen Sekunde''
+\end{itemize}
+
+\subsection{Ergebnisse der Tests}
+Die Datenbanktests schlugen fehl aufgrund ``Fehlender Rechte'' wie es in der Konsole angezeigt wird. Es stellte sich heraus, dass auf der Testdatenbank die Rechte noch nicht richtig gesetzt worden sind. Mit dem Ausführen der Abfrage \texttt{GRANT SELECT ON tool TO se2;} sollte das Rechteproblem gelöst sein.
+
+\subsection{Testen der ``einen Sekunde''}
+$\backslash$QA1 sieht vor einen Statuswechsel unter einer Sekunde zu propagieren. 
+Wir überlegten uns ein Schema nach welchem ein Test für die eine Sekunde aufgebaut sein sollte:
+\begin{enumerate}
+    \item Datenbankverbindung herstellen
+    \item Maschinenzustand auf PROC setzen
+    \item Zeitstempel $t_1$ nehmen
+    \item Maschinenzustand auf IDLE setzen
+    \item Maschinenzustand über unser ledLeuchtturm-Skript abfragen
+    \item Vergleichen ob der aktuelle Zustand = IDLE ist
+    \item Falls nein, wieder zu Punkt 4 übergehen
+    \item Zeitstempel $t_2$ nehmen
+    \item Dauer über $t_2-t_1$ ausrechnen und prüfen ob dieser unter einer Sekunde liegt
+\end{enumerate}
+\subsection{Nächste Schritte}
+\begin{tabular}{L{.249} L{.2} L{.25} L{.25}}
+Betreff & Frist & Verantwortliche(r) & Involviert\\\hline
+Alle bisherigen Tests sind OK& 30.06.2017&Torsten & \\
+Neuer Test für Qualitätsanforderung $\backslash$QA1 evaluieren und entwickeln& 30.06.2017& Torsten & Raphael\\
+Nächstes Testmeeting&30.06.2017&Torsten&Raphael\\
+\end{tabular}
+
+\end{document}

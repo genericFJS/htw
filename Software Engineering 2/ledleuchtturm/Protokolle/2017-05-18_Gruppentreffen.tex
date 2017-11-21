@@ -1,0 +1,110 @@
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\usepackage{booktabs}
+
+\thesis{Protokoll Gruppentreffen}
+\def\datename{}
+\date{18.05.2017}	%%% ??? = DATUM!
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+\section{Gruppentreffen 18.05.2017}	%%% ??? = DATUM!
+\begin{tabular}[t]{p{.25\linewidth} p{.25\linewidth}}
+\emph{Beginn:}				& 11:15\\
+\emph{Ende:}					& 12:25\\
+\emph{Ort:}						& Z136b\\
+\emph{Anwesend:}	& 
+Ragnar\newline
+Raphael\newline
+Torsten\newline
+Simon\newline
+Eric\newline
+Ben
+\\
+\emph{Abwesend:}		 & 
+Jonatan \newline
+Torsten 
+\\
+\emph{Protokollant:}& Eric Schmidtgen
+\end{tabular}
+\paragraph{Tagesordnungspunkte}
+\begin{itemize}
+\item Sprachevaluation festlegen
+\item Entwurfsphase abschließen
+\item Struktur der Config-Datei
+\item Aktivitätsdiagramm checken und abschließen 
+\end{itemize}
+
+\subsection{Meeting}
+\begin{itemize}
+	\item wir haben eine leuchtende LED
+	\item Aktivitätsdiagramm ist abgeschlossen und wird vom Projektleiter abgenommen
+	\item Struktur der Config-Datei wird vorgestellt
+	\item Sprachevaluation: Python Version 2.7 $\rightarrow$ bei Problemen gibt es eine Absprache mit dem Projektleiter
+	\item Beschäftigung mit der Datenbank steht vor Problemen; Rücksprache mit Kunden (Herrn Ringel)
+	\item Diskussion über notwendige Diagramme; welche brauchen wir; welche sind überflüssig
+	\item Zustandsdiagramm wäre das einzige Diagramm, was wir als notwendig sehen
+	\item Schaltplan wäre zum Vorteil für den Implementierer und den Hardwarebeauftragenden
+	\item Trigger muss gegen unsere API sprechen
+\end{itemize}
+
+\subsection{Struktur der Config-Datei}
+Teilnehmer der Diskussion:
+\begin{itemize}
+	\item Ben (Verantwortlicher)
+	\item Simon
+	\item Jürgen
+	\item Ragnar
+	\item Raphael
+\end{itemize}
+
+\subsubsection*{Diskussion}
+\begin{itemize}
+	\item Ben stellt seinen Entwurf der Config-Datei vor
+	\item je nachdem, was Ragnar später noch feststellt, muss die Config angepasst werden
+	\item Raphael stellt XML in Frage
+	\item JSON wäre eine Alternative
+	\item die Schwierigkeit, eine XML Datei zu parsen kann zu hoch sein, JSON ist einfacher
+	\item die Config-Datei wird in JSON erstellt, um dem Implementierer später Arbeit abzunehmen
+	\item die einfachere Lösung wird bevorzugt
+\end{itemize}
+
+
+\subsection{Aktivitätsdiagramm}
+Teilnehmer der Diskussion:
+\begin{itemize}
+	\item Ben (Verantwortlicher)
+	\item Jürgen
+\end{itemize}
+
+\subsubsection*{Diskussion}
+\begin{itemize}
+	\item wenn keine Config-Datei vorhanden ist; soll eine leere JSON-Datei erstellt werden, die dem Format entspricht
+	\item Config-Datei soll auch ausgegeben werden, falls sie gelöscht wird, oder sie so zerstört ist, dass sie nicht mehr gelesen werden kann
+	\item Verbindung zur Datenbank fehlgeschlagen, soll der Fehlercode mit ausgegeben werden
+	\item einen Trigger, der jeden Status an unserer Software schickt
+	\item Änderungen werden eingebunden
+\end{itemize}
+
+
+
+\subsection{Nächste Schritte}
+\begin{tabular}{L{.249} L{.2} L{.25} L{.25}}
+Betreff & Frist & Verantwortliche(r) & Involviert\\ \hline
+
+Config-Datei in JSON bauen & 21.05.2017 & Ben & - \\ \hline
+Datenbanktrigger erstellen & 25.05.2017 & Ragnar & Jonathan, Raphael (beratende/dokumentierende Rolle) \\ \hline
+Zustandsdiagramm & 25.05.2017 & Ben  & Eric \\ \hline
+Anwendungsfalldiagramm & 25.05.2017 & Ben  & Eric \\ \hline
+Schaltplan & 25.05.2017 & Ben  & Eric \\ \hline
+Config-Datei einlesen & 25.05.2017 & Simon & - \\ \hline
+Zustände programmieren & 01.06.2017 & Simon & - \\ \hline
+
+
+
+\end{tabular}
+
+\end{document}

@@ -1,0 +1,5 @@
+Verbindung zur Datenbank
+    + psycopg2
+    + netifaces
+
+

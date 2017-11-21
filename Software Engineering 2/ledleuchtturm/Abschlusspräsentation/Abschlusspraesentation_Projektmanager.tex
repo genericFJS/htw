@@ -1,0 +1,192 @@
+\documentclass[ignorenonframetext, 11pt, table]{beamer}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\input{\pathtomaster/htwcd_beamer.sty}
+
+\author{Jürgen Tomaszewski}
+\title{\texttt{ledleuchtturm} -- Projektmanagement}
+\date{18.07.2017}
+
+\begin{document}
+\author{Jürgen Tomaszewski}
+\title{\texttt{ledleuchtturm} -- Projektmanagement}
+
+\begin{frame}[plain]
+\begin{center}
+\includegraphics[width=.7\textwidth]{\pathtomaster/HTW.eps}
+\end{center}
+\maketitle
+\end{frame}
+
+\section{Inhalt}
+\begin{frame}
+\begin{enumerate}
+	\setlength\itemsep{0.2em}
+	\item<1-> Aufgaben des Projektleiters
+		\note[item]<1-> {Aufgabe des Projektleiters}
+	\item<2-> Wissensbasis
+		\note[item]<2-> {Wissensbasis}
+	\item<3-> Meetings
+		\note[item]<3-> {Meetings}
+	\item<4-> Projektplan
+		\note[item]<4-> {Projektplan}
+	\begin{enumerate}
+		\item<5-> gantt-Diagramm
+		\item<5-> Ressourcen-Diagramm
+	\end{enumerate}
+	\item<6-> Gesammelte Erfahrung
+		\note[item]<5-> {gantt und Ressourcen-Diagramm \newline 6. gesammelte Erfahrung}
+		%Dat Dirty-Hack...
+	\item<7-> Rückblick
+		\note[item]<7-> {7. Rückblick $\blacksquare$}
+\end{enumerate}
+\end{frame}
+
+\section{Aufgaben des Projektleiters}
+\begin{frame}
+	\uncover<1->{Strukturierung der Gesamtaufgabe}\newline%
+		\note[item]<1->{Strukturierung - 4 Schritte der Projektplanung}%
+	\uncover<2->{Verteilung der Teilaufgaben}\newline%
+		\note[item]<2->{Verteilung - Ressourcen-Diagramm, Gruppen-/Einzelaufgaben}%
+	\uncover<3->{Überwachung der Fortschritte}\newline%
+		\note[item]<3->{Überwachung - regelmäßige Kommunikation, Verfolgung des Projektplans}%
+	\uncover<4->{Pflichtenheft}\newline%
+		\note[item]<4->{Pflichtenheft - Zusammenarbeit mit Analyst, Vorbereitung Kick-Off-Meeting}%
+	\uncover<5->{Kommunikation mit dem Kunden}\newline%
+		\note[item]<5->{regelmäßige Kommunikation, Vereinbarung von Meetings, Ergänzungen Pflichtenheft $\blacksquare$}
+\end{frame}
+
+\section{Voraussetzung an Wissen}
+\begin{frame}
+	\uncover<1->{Wissensbasis}
+	\begin{itemize}
+		\item<2-> zeitlicher Ablauf - Projektplanung
+			\note[item]<2-> {Anforderungsanalyse, Entwurf, Implementation, Überprüfung}
+		\item<3-> Projektphasenmodell
+			\note[item]<3-> {paralleles Phasenmodell - keine strikte zeitliche Trennung}
+		\item<4-> Pflichtenheft
+			\note[item]<4-> {Gestaltung und Inhalt, fachliche Richtigkeit, rechtliche Absicherung}
+		\item<5-> Kommunikations-Richtlinien
+			\note[item]<5-> {konkrete Anweisungen, fordernd und fördernd}
+	\end{itemize}
+	\uncover<6->{Bezug der Wissensbasis}
+	\begin{itemize}
+		\item<7-> Vorlesung Softwareengineerung I+II
+			\note[item]<7-> {SE: Anforderungsanalyse, Pflichtenheft}
+			\note[item]<7-> {SE: Rational Unified Process, Iterativ Inkrementelles Vorgehen, Agile Softwareentwicklung}
+		\item<8-> Vorlesung Projektmanagement
+			\note[item]<8-> {PM: Prozessmanagement, Magisches Fünfeck, Goldenes Dreieck, Kosten immer zeitlich!}
+		\item<9-> eigene Erfahrung aus Ehrenamt \& Arbeit
+			\note[item]<9-> {Bigband-Vorstand und Arbeit in Softwareentwicklung}
+		\item<10-> Die Projektmethode: "`Der Weg zum bildenden Tun"' - Karl Frey
+			\note[item]<10-> {Auszüge/überflogen - nicht komplett gelesen $\blacksquare$}
+	\end{itemize}
+\end{frame}
+
+\section{Meetings}
+\begin{frame}
+	\begin{itemize}
+		\item<1-> Gruppen-, Team- und Kundenmeetings
+			\note[item]<1-> {Kunden = Milestone-Meetings, wichtige Grundlage für Pflichtenheft sowie Projektplan}
+		\item<2-> Konstituierendes Meeting
+			\note[item]<2-> {Rollenverteilung, noch kein Teamleiter}
+		\item<3-> Kickoff-Meeting
+			\note[item]<3-> {Bestätigung unserer Anforderungsanalyse, festgelegte Ziele, Unterschrift Pflichtenheft}
+		\item<4-> Gruppenmeetings
+			\note[item]<4-> {Allgemeine Probleme, generelle Absprachen}
+		\item<5-> Teammeetings
+			\note[item]<5-> {Lösung konkreter Probleme (Coding Guidelines), evtl. Eskalation auf gesamte Gruppe (MQTT)}
+		\item<6-> Milestone-Meetings
+			\note[item]<6-> {2 Stück, Abschluss Entwurfsphase \& Demonstration Prototyp $\blacksquare$}
+	\end{itemize}
+\end{frame}
+
+\section{Projektplan}
+\subsection{gantt Diagramm}
+\begin{frame}
+	%trim: {left lower right upper}
+	% Einzelbild: 
+	%\includegraphics[width=\textwidth , trim={35px 0 145px 47px},clip]{../Projektplan/SE2-Projektplan-Gantt.png}
+	% Aufgeteilt auf 2 Bilder:
+	\begin{flushleft}
+	\includegraphics[scale=.32 , trim={35px 0 1060px 47px},clip]{../Projektplan/SE2-Projektplan-Gantt.png}
+	\end{flushleft}
+	\begin{flushright}
+	\includegraphics[scale=.32 , trim={920px 0 145px 47px},clip]{../Projektplan/SE2-Projektplan-Gantt.png}
+	\end{flushright}
+	\note[item] {Unterteilung in: Anforderungsanalyse, }
+	\note[item] {Entwurf, }
+	\note[item] {Implementation, }
+	\note[item] {Überprüfung, }
+	\note[item] {Abgabe und }
+	\note[item] {Zusatzarbeiten / Kundenwünsche}
+	\note[item] {paralleles Phasenmodell, weiche (Phasenübergang) und harte Abhängigkeiten (phasenintern) $\blacksquare$}
+\end{frame}
+
+\subsection{Vorgehensweise für Projektplan}
+\begin{frame}
+	\begin{enumerate}
+		\item<1-> Anfang und Ende festlegen
+			\note[item]<1-> {Anfang klar, direkt nach Aufgabenstellung - Ende Absprache mit Gruppe (01.07.)}
+		\item<2-> Anlegen der Rollen/Ressourcen
+			\note[item]<2-> {alle Mitglieder komplett einpflegen}
+		\item<3-> Grobunterteilung zeitlich
+			\note[item]<3-> {4 Phasen vorerst, nur Anfangszeiten keine Deadlines, schnell Arbeit verteilen}
+		\item<4-> Detaillierte Vorgänge
+			\note[item]<4-> {erste 2 Phasen mit Detailaufgaben versehen}
+		\item<5-> Rücksprache mit Team
+			\note[item]<5-> {Deadlines festlegen, dadurch auch Länge der ersten 2 Phasen}
+		\item<6-> Milestone-Meeting festlegen
+			\note[item]<6-> {konkretes Arbeitsziel}
+		\item<7-> Wdh. 4-6.
+			\note[item]<7-> {restliche 2 Phasen mit Arbeit füllen, geschah ca. 2-3 Wochen nach Projektstart $\blacksquare$}
+	\end{enumerate}
+\end{frame}
+
+\subsection{Ressourcen-Diagramm}
+\begin{frame}
+	%trim: {left lower right upper}
+	% Einzelbild: 
+	%\includegraphics[width=\textwidth , trim={35px 0 58px 47px},clip]{../Projektplan/SE2-Projektplan-Ressourcendiagramm.png}
+	% Aufgeteilt auf 2 Bilder:
+	\begin{flushleft}
+	\includegraphics[scale=.32 , trim={35px 0 940px 47px},clip]{../Projektplan/SE2-Projektplan-Ressourcendiagramm.png}
+	\end{flushleft}
+	\begin{flushright}
+	\includegraphics[scale=.32 , trim={840px 0 58px 47px},clip]{../Projektplan/SE2-Projektplan-Ressourcendiagramm.png}
+	\end{flushright}
+	\note[item] {Rollenverteilung stark getrennt ABER}
+	\note[item] {nicht entsprechend der realen Arbeit - Veranschaulicht der Verantwortungen }
+	\note[item] {Arbeitslast willkürlich gewählt}
+	\note[item] {Studium, fehlende Kenntnis der Mitarbeiter $\blacksquare$}
+\end{frame}
+
+\section{Gesammelte Erfahrungen}
+\begin{frame}
+	\begin{itemize}
+		\item<1-> Strikte Nachverfolgung des Zeitplans
+			\note[item]<1-> {kurze Nichtanwesenheit - kein Problem, größerer Zeitraum schon -> Tester \newline Verzögerung (1 Woche) musste rausgearbeitet werden}
+		\item<2-> Rechtzeitiges Einschreiten bei Problemen
+			\note[item]<2-> {Rechtzeitiges Einschreiten bei Problemen}
+		\item<3-> Langfristigere Planung von Meetings
+			\note[item]<3-> {Doodle Umfragen meist 24-48h nur}
+		\item<4-> Abwägung Kontrolle / Überwachung
+			\note[item]<4-> {ständg alles im Blick aber nicht jedem immer auf die Finger schauen $\blacksquare$}
+	\end{itemize}
+\end{frame}
+
+\section{Rückblick - Positives \& Negatives}
+\begin{frame}
+	\begin{itemize}
+		\item<1-> Mehr Gefühl für sinnvolles Einschreiten
+			\note[item]<1-> {Meldung der Gruppe bei Vernachlässigung, Lob bei guter Führung}
+		\item<2-> Gute Kommunikation
+			\note[item]<2-> {schnelle, Absprache, auch kurzfristige Doodle Termine gingen}
+		\item<3-> fordernder als Ehrenamt
+			\note[item]<3-> {aber genauso erfüllend.}
+		\item<4-> Höhere Verantwortung
+			\note[item]<4-> {"nicht gegen den Baum fahren" $\blacksquare$}
+	\end{itemize}
+\end{frame}
+
+\end{document}

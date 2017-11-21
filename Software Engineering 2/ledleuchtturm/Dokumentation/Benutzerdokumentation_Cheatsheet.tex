@@ -1,0 +1,101 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Benutzerdokumentation}
+\date{}
+
+\input{\pathtomaster/globalDocumentSettings}
+\chead{Cheatsheet \texttt{ledleuchtturm}}
+\begin{document}
+
+\section{Einrichten der Software}
+\subsection{Vorraussetzungen Raspberry Pi}
+Damit die Software ordnungsgemäß auf dem Raspberry Pi funktionieren kann, müssen folgende Pakete installiert sein: \qquad\lstinline$python-pip$\qquad \lstinline$python-dev$\qquad \lstinline$libq-dev$\\
+Des Weiteren müssen Pakete für Python mit dem Program \texttt{pip} installiert werden. Der Befehl um Python-Pakete zu installieren lautet: \lstinline$pip install neues_paket$. Eventuell ist der Befehl mit root Rechten auszuführen.\\
+Diese Python-Pakete müssen mit \texttt{pip} installiert werden: \qquad \lstinline$psycopg2$ \qquad \lstinline`netifaces`
+
+\subsection{Installation}
+Zum Installieren der Software ist der Ordner \texttt{ledleuchtturm} aus dem Archiv \lstinline`ledleuchtturm.zip` an einen beliebigen Ort zu legen. \\
+Zum Ausführen muss per Konsole in diesen Ordner (\texttt{ledleuchtturm}) gewechselt werden. Dann kann die Software mit dem Befehl \texttt{python ledleuchtturm.py} gestartet werden.\\
+Vor dem ersten Ausführen sollte die Konfigurationsdatei erstellt werden. Diese kann beim Aufruf der Software (optional) übergeben werden:\\ \texttt{python ledleuchtturm.py Konfigurationsdatei.json}\\
+Wird keine Konfigurationsdatei beim Start übergeben, so wird die (gegebenenfalls automatisch erstellte) Datei \lstinline$Std-Conf-LedLeuchtturm.json$ verwendet.\\
+Sind Konfigurationsdatei und Trigger korrekt eingerichtet, kann die Software ausgeführt werden. Sie läuft dann ohne weitere Benutzereingaben automatisch, bis sie mit einem System-Interrupt beendet wird.
+% selbsterklärend die Einrichtung... ggf. auch voraussetzungen an Paketen bei DB und Pi
+
+\section{Konfigurationsdatei}
+% wie ist die Konfigurationsdatei aufgebaut, was muss/kann der Nutzer anpassen?
+Vor dem Starten der Software muss eine neue Konfigurationsdatei eingerichtet oder eine vorhandene angepasst werden. Im Folgenden ist die Struktur der Konfigurationsdatei aufgeführt. Anzupassende Zeichenketten sind orange markiert. 
+\begin{lstlisting}[frame=none,numbers=none,escapeinside={&}{&}, basicstyle=\ttfamily\footnotesize]
+{
+	"ledleuchtturm":{
+		"machine":{
+			"name":"&\textcolor{htworange}{MET9001}&"						&{\sffamily (Maschinenname in der Datenbank)}&
+		},
+		"database":{
+			"server":"&\textcolor{htworange}{localhost}&",		 	&{\sffamily(IP der Datenbank)&
+			"port":&\textcolor{htworange}{12345}&,						 &{\sffamily(Port der Datenbank)&
+			"socketport":&\textcolor{htworange}{8050}&,				&{\sffamily(Port, an dem Software lauscht)}&
+			"interface":"&\textcolor{htworange}{eth0}&",				&{\sffamily(Adapter, der mit dem Netzwerk verbunden ist)}&
+			"dbname":"&\textcolor{htworange}{DB}&",						&{\sffamily(Name der Datenbank)}&
+			"username":"&\textcolor{htworange}{USER}&",				&{\sffamily(Nutzer der Datenbank mit Leserechten)}&
+			"password":"&\textcolor{htworange}{DBPW}&"					&{\sffamily(Passwort dieses Nutzers)}&
+			"table":"&\textcolor{htworange}{tool}&",						&{\sffamily(Tabelle, in dem Stati verändert werden)}&
+		 },
+		"hardware":{
+			"green":&\textcolor{htworange}{21}&,								&{\sffamily(GPIO-Pin der grünen LED)}&
+			"yellow":&\textcolor{htworange}{20}&,							&{\sffamily(GPIO-Pin der gelben LED)}&
+			"red":&\textcolor{htworange}{16}&									&{\sffamily(GPIO-Pin der roten LED)}&
+		}
+	}
+}
+\end{lstlisting}
+
+\section{Einrichten des Triggers}
+\subsection{Voraussetzungen Datenbank}
+% wie muss der Nutzer den Trigger einrichten
+Damit die Trigger funktionieren, müssen in der PostgreSQL Datenbank das Paket PL/Python installiert und eingerichtet sein. In Unix kann es mit folgendem Bash-Befehl installiert werden: \lstinline$sudo apt-get install postgresql-contrib postgresql-plpython-9.5$
+
+Als Inhaber in der PostgreSQL Datenbank angemeldet, muss die Sprache dort eingerichtet werden. Dazu sind folgende Zeilen auszuführen:
+\begin{lstlisting}[frame=none, numbers=none, basicstyle=\ttfamily\footnotesize]
+CREATE PROCEDURAL LANGUAGE 'plpythonu' HANDLER plpython_call_handler;
+UPDATE pg_language SET lanpltrusted = true WHERE lanname LIKE 'plpythonu';}
+\end{lstlisting}
+
+Der Trigger und die dazugehörige Funktion müssen für jede Maschine, beziehungsweise jede Instanz des Softwaresystems, einzeln eingerichtet werden. Zu jeder neuen Maschine gehört eine neue Trigger-Funktion Kombination.
+
+\subsection{Funktion}
+
+In der Funktion müssen die orange markierten Zeichenketten angepasst werden. Die Zeichen \lstinline`machine` (Zeile 1 und 5) müssen mit der Bezeichnung der gewünschten Machine ersetzt werden (bspw. \lstinline$MET9001$). Für die IP und den Port (Zeile 8) müssen die Verbindungsdaten des Raspberry Pi auf dem das Softwaresystem läuft eingetragen werden. Zu beachten ist, dass ein Port nicht doppelt vergeben werden kann. Falls das Paket PL/Python mit einem anderen Namen eingerichtet wurde, muss gegebenenfalls auch die Sprache (Zeile 16) entsprechend ersetzt werden.
+\begin{lstlisting}[escapeinside={&}{&}, basicstyle=\ttfamily\footnotesize]
+CREATE OR REPLACE FUNCTION &\textcolor{htworange}{machine}&_send()  
+    RETURNS TRIGGER AS
+$BODY$
+    import socket
+    if TD["new"]["tool"] == "&\textcolor{htworange}{machine}&": 
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect(('&\textcolor{htworange}{127.0.0.1}&', &\textcolor{htworange}{8050}&)) 
+            updated = TD["new"]["tool"] +" "+ TD["new"]["state"]
+            s.sendall(updated)
+        except:
+            pass
+    else:
+        pass
+$BODY$
+    LANGUAGE &\textcolor{htworange}{plpythonu}&;
+\end{lstlisting}
+\subsection{Trigger}
+Im Trigger muss der Maschinenname angepasst werden. Es gilt zu beachten, dass der Name der Prozedur mit dem der bereits eingerichteten Funktion übereinstimmen muss.
+\begin{lstlisting}[escapeinside={&}{&}, basicstyle=\ttfamily\footnotesize]
+CREATE TRIGGER &\textcolor{htworange}{machine}&_trigger
+AFTER UPDATE
+ON tool
+FOR EACH ROW
+EXECUTE PROCEDURE &\textcolor{htworange}{machine}&_send();
+\end{lstlisting}
+
+Werden Funktion und Trigger in eine \lstinline`.sql`-Datei geschrieben, können sie in der Datenbank mit dem Befehl \lstinline`\i <filename>.sql;` ausgeführt werden.
+\end{document}

@@ -1,0 +1,28 @@
+
+        {
+            "ledleuchtturm":{
+
+                "machine":{
+                    "name":"MET9001"
+                },
+
+                "database":{
+                    "server":"localhost",
+                    "port":5432,
+                    "socketport":8050,
+                    "interface":"eth0",
+                    "dbname":"se2",
+                    "username":"se2",
+                    "password":"CandyM4n();",
+                    "table":"tool",
+                    "column":"default"
+                },
+
+                "hardware":{
+                    "green":21,
+                    "yellow":20,
+                    "red":16
+                }
+            }
+        }
+        

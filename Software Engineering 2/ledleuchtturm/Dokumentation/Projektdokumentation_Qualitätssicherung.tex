@@ -1,0 +1,189 @@
+\subsection{Aufgabenfeld}
+Für den Qualitätsmanager ergaben sich in diesem Projekt folgende Aufgaben und Verantwortlichkeiten:
+\begin{itemize}
+    \item Überprüfen der Erfüllung der Qualitätsanforderungen
+    \item Anlaufstelle für den Implementierenden
+    \item Anlaufstelle für den Testenden
+    \item Stellen von Qualitätsanforderungen an den Implementierenden
+    \item Überprüfen der Aussagefähigkeit der Tests des Testenden
+    \item Überprüfung der Qualität des Quellcodes
+    \item Unterstützung des Projektleitenden
+\end{itemize}
+Folgende zusätzliche Aufgaben wurden von diversen Rollen an den Qualitätsmanager delegiert, um die Last dieser zu verringern:
+\begin{itemize}
+    \item Einrichtung und Administration einer PostGre Datenbank
+    \item Implementierung von ausgewählten Funktionen
+\end{itemize}
+Dabei kristallisierten sich zwei verschiedene Arten von Qualitäten heraus:
+\begin{itemize}
+    \item Team-Qualität:\\
+    Der Umgang miteinander, mit den Zeitplänen und den verfügbaren Ressourcen. Die Stimmung und Effektivität des Teams messen und bei Bedarf reagieren.
+    \item Software-Qualität:\\
+    Qualitätsansprüche (neben dem Erfüllen der Qualitätsanforderungen) festlegen, durchsetzen und überprüfen. Sicherstellen, dass die Software die vorausgesetzte Qualität erfüllen kann.
+\end{itemize}
+Im Folgenden wird aus der Sicht des Qualitätsmanagers auf diese beiden Aspekte separat eingegangen und im Nachhinein ein Fazit getroffen.
+\subsection{Team-Qualität}
+Die Prämisse für eine qualitativ hochwertige Software ist ein Team mit guter Kommunikation und Organisation. Dabei sollten die Verantwortlichkeiten (=Rollen) klar aufgeteilt und definiert sein. Abläufe wie Dateiorganisation oder Kommunikation von Neuigkeiten sollten klar geregelt sein und eingehalten werden.
+
+Dieser Abschnitt befasst sich mit diversen Facetten der Team-Qualität, welche Probleme mit ihr einhergehen und wie das Team damit umgegangen ist und was in dem Zusammenhang die Aufgabe des Qualitätsmanagers war.
+
+\subsubsection{Nachrichtenaustausch}
+Um im Team ohne persönliche Anwesenheit kommunizieren zu können, wird ein gemeinsames Medium benötigt. In der Gruppengründungsphase wurde daher eine Einigung auf einen Nachrichtendienst forciert. So konnte die Gruppe von Anfang an mit einander vernetzt.
+
+Dabei wurde sich auf einen Instant-Messenger anstelle von z.B. Email festgelegt. Diese Wahl hatte einige Vorteile, jedoch auch, wie sich im Nachhinein herausstellte, ein paar Nachteile.
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.5]{include/im.png}
+\label{fig:im}
+\caption{Beispielnachrichtenverlauf unseres Instant-Messengers}
+\end{figure}
+\paragraph{Vor-/Nachteile}
+\begin{itemize}[label=(+)]
+     \item Direkte Kommunikation:\\
+     Keine große Verzögerung wie es z.B. bei Email der Fall wäre
+     \item Höhere Erreichbarkeit:\\
+     Nachrichten  kommen meist unmittelbar auf dem mobilen Endgerät jedes Gruppenmitglied an
+\end{itemize}
+\begin{itemize}[label=(-)]
+     \item Nachrichten nicht immer für alle relevant
+     \item Trash-Talk
+     \item Chaotische Nachrichtenhierarchien
+\end{itemize}
+Folgend wird besonders auf die Nachteile eingegangen, da diese teilweise erst im Nachhinein festgestellt wurden und überraschend waren.
+\paragraph{Irrelevante Nachrichten}
+Oft gab es Nachrichten, welche nur für einzelne Mitglieder einen Informationswert boten. Es gab Situationen, bei denen sich zahlreiche ungelesene Nachrichten bei dem Blick auf das mobile Endgerät gesammelt hatten. Handelte es sich hierbei um eine Diskussion über ein, für die eigene Rolle irrelevantes Thema, neigte man oft dazu gar nicht erst mit dem Aufarbeiten der ungelesenen Nachrichten anzufangen.
+\paragraph{Trash-Talk}
+Trash-Talk (Unsinnige Nachrichten) bestand aus Aussagen bzw. Nachrichten, welche keinen Neuigkeitswert lieferten und somit zu dem Nachteil \emph{Irrelevante Nachrichten} noch hinzukamen.
+\paragraph{Chaotische Nachrichtenhierarchie}
+Wurden mehrere Themen in dem Chat besprochen, war schnell ein Punkt erreicht, an dem die Nachrichtenkette nicht mehr eindeutig nachvollziehbar war. Hierbei haben wir aber schnell eine \emph{Antworten}-Funktion gefunden, bei der Bezug auf die Originalnachricht genommen werden konnten.
+
+Ähnlich wie bei dem Nachteil \emph{Irrelevante Nachrichten} kam es zu dem Problem, eine Fülle an Nachrichten mit verschiedenen Themen aufarbeiten zu müssen um herauszufinden, ob Fragen oder Anweisungen über die eigene Rolle gefallen sind.
+
+\subsubsection{Dateiverwaltung}
+Schnell sind in einem Team Daten generiert, welche bei jedem Mitglied aktuell und eindeutig sein sollten. Egal ob Projektplan, To-Do-Listen oder Implementierungsdateien. Selbst wenn alleine an einem Projekt gearbeitet wird, ist es oft nötig Sicherungen in Form von Versionen anzustellen, damit Experimente gegebenenfalls rückgängig gemacht werden können. 
+%Schnell heißt eine Präsentation \texttt{Meine Präsentation 10 FINAL DONE RELEASE 2.tex} und eine Implementierung \texttt{DatabaseConnection2\_test.py}. 
+Sind nun mehrere Personen an der Arbeit an einer Datei beteiligt, werden die Vorteile einer Versionsverwaltung erkennbar.
+
+Umso erfreulicher war daher, dass die meisten Teammitglieder erste Erfahrungen mit der Versionskontrolle \texttt{git} einbringen konnten.
+\subsubsection*{git}
+Durch \texttt{git} wurde nicht nur die Dateiverwaltung im Team gelöst, sondern gleichzeitig auch die Möglichkeit der Reflektion des Projektverlaufs durch die Historie der Commits geboten. 
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=.9\textwidth]{include/git.png}
+\label{fig:git}
+\caption{Commit-Verlauf unseres git-Repositories}
+\end{figure}
+\subsubsection*{Persönliches Fazit zu git}
+\texttt{Git} würde ich jederzeit wieder von Anfang an einsetzen. Eben diese Tools erleichtern die Wertschöpfung im Team. Jedoch würde ich in einer nächsten Projektarbeit Regeln für das Schreiben von Commit-Messages festlegen. In unserem Fall war es so, dass zwar jede Nachricht verständlich, diese in in sich jedoch nicht kohärent waren. Dies könnte sich beispielsweise durch die Nutzung einer vereinbarten Sprache für die Commit Messages verbessern lassen.
+\subsection{Softwarequalität}
+Um Software-Qualität zu gewährleisten, muss sich in erster Line auf die Vorstellungen von Qualität verständigt werden. Danach ist es wichtig diese konsequent anzuwenden und im Nachhinein zu testen.
+\subsubsection{Coding Guideline}
+Eine Aufgabe war das Festlegen einer Coding-Guideline. Diese stellt sicher, dass der Quellcode lesbarer (vgl. \autoref{lst:code1} mit \autoref{lst:code2}) und nachvollziehbar ist, sowie den Ansprüchen des Dokumentierenden genügt.
+
+\begin{lstlisting}[language=python,caption={Schwer lesbaren Code},label={lst:code1}]
+def getconf(CONFPATH):
+    try:
+        json.load(open(CONFPATH, 'r'))
+        return 1
+    except:
+        return -1
+\end{lstlisting}
+\begin{lstlisting}[language=python,caption={Besser lesbaren Code},label={lst:code2}]
+def configFileValidJsonFile(configFile):
+    '''
+        Überprüft ob es sich bei configFile wirklich um eine json Datei handelt.
+
+        @type configFile: string
+        @param configFile: Pfad der Konfigurationsdatei.
+        @rtype: int
+        @return: 1 falls configFile eine Json Datei ist, -1 falls configFile
+        keine Json Datei ist.
+    '''
+
+    try:
+        json.load(open(configFile, 'r'))
+        return 1
+    except ValueError as e:
+        return -1
+\end{lstlisting}
+
+Aufgrund von Programmiererfahrung mit Python wurde der Fokus zuerst auf PEP-8\footnote{\url{https://www.python.org/dev/peps/pep-0008/}} gelegt. Diese Python-Coding-Guideline ist weit verbreitet und genießt daher in vielen Entwicklungsumgebungen einen Validator. Dabei wird Quellcode in einer Entwicklungsumgebung mit Validator direkt markiert, sollte er nicht PEP-8 entsprechen (vgl. \autoref{fig:pep81} und \autoref{fig:pep82}). So können die Richtlinien größtenteils automatisch überprüft werden und der Implementierende ist unabhängiger von dem Qualitätsmanager.
+
+Zusammen mit dem Implementierenden wurde eine Einigung auf PEP-8 erzielt.
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=.5]{include/pep8_2.png}
+\caption{Python Quellcode ohne PEP-8}
+\label{fig:pep82}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=.5]{include/pep8_1.png}
+\caption{Python Quellcode mit PEP-8}
+\label{fig:pep81}
+\end{figure}
+\subsubsection{Qualitätsmeetings}
+Um die Software-Qualität manuell zu überprüfen, wurde sich mit dem Implementierer auf unregelmäßige Qualitätsmeetings geeinigt. In diesen stand in erster Linie der Qualitätsmanager für Fragen zur Implementierung bereit. Gemeinsam sollte in einer Diskussion über Alternativen nachgedacht und eine Entscheidung getroffen werden. Weiterhin sollte der Qualitätsmanager die Möglichkeit haben, die Qualitätsansprüche zu überprüfen und zu diskutieren.
+
+Die Qualitätsmeetings konnten auch dem Projektleiter als Feedback über das Voranschreiten der Implementierung dienen.
+
+Es gab es folgende erwähnenswerten Meetings bzw. Diskussionen:
+\paragraph{Exception vs. Return Codes}
+Der Implementierende hatte die Frage, ob Exceptions oder Return Codes verwendet sollten.
+Konkret ging es darum, ob im Allgemeinen ein Fehler in der betreffenden Funktion abgehandelt (siehe \autoref{lst:code3}) oder weitergereicht werden soll (siehe \autoref{lst:code4}).
+\begin{lstlisting}[language=python,caption={Returncodes verwenden},label={lst:code3}]
+def aMethod():
+    try:
+        # Do stuff
+        return 1
+    except:
+        return -1
+\end{lstlisting}
+\begin{lstlisting}[language=python,caption={Durch Exception nach oben eskalieren},label={lst:code4}]
+def getconf(CONFPATH):
+    # get conf from somewhere
+    # which can fail in some cases
+    return conf
+    
+try:
+    conf = getConf()       
+    # do soemthing with the conf
+except:
+    print "getConf() failed"        
+\end{lstlisting}
+Es entstand eine Einigung auf die erste Variante (\autoref{lst:code3}), da diese dem Implementierer intuitiver erschien. Aus Sicht des Qualitätsmanagers war es vor allem wichtig, dass der Implementierer Vertrauen in seinen Quellcode gewinnt.% anstelle Praktiken zu nutzen für die er seine Skepsis überwinden muss. 
+Für die zweite Variante (\autoref{lst:code4}) muss im Catch-Block Eindeutigkeit über das Aufzuräumende herrschen.
+\paragraph{Threads vs. Signal Handling}
+Wenn das Programm fehlerfrei gestartet wurde, lief es in einer Endlos-Schleife. Um diese zu Beenden, ist ein Verlassen auf \texttt{Strg+C} nicht ausreichend. Um das Programm sauber zu beenden, müssen einige Ressourcen abgebaut werden. Beispielsweise muss die Verbindung zur Datenbank sauber geschlossen und die LEDs abgeschaltet werden.
+
+%Der Implementierende trat mit der Frage an mich heran, wie dieses Problem konzeptionell gelöst werden könnte.\\
+Es stellte sich die Frage, wie dieses Problem konzeptionell gelöst werden könnte. 
+
+Dem Implementierenden schlug ich zwei Varianten vor:
+\begin{enumerate}
+    \item Threads:\\
+    Die Endlosschleife in einen zweiten Thread auslagern und im Hauptthread in einer Endlosschleife fragen, ob der Anwender z.B. das Schlüsselwort \texttt{quit} eingegeben hat. Liegt das Schlüsselwort vor, soll die zweite Endlosschleife verlassen werden und dem zweiten Thread mitgeteilt werden, dass dieser sich beenden soll.
+    \item Signal-Handling:\\
+    Den Standard-Handler für \texttt{Strg+C} überschreiben und im Funktionsrumpf des Handlers alles zurückbauen.
+\end{enumerate}
+Es wurde sich auf Variante 2 geeinigt, da ein Signal-Handler schneller implementiert ist als ein Thread. Des Weiteren kümmert sich das Betriebssystem um das gesamte Signale-Handling, während beim Threading noch die Synchronisation berücksichtigt werden müsste.
+
+Die Lösung durch Signal-Handler führt jedoch dazu, dass globale Variablen eingeführt werden mussten, um innerhalb des Signal-Handlers auf die abzubauende Ressourcen zugreifen zu können.
+\paragraph{Globale Variablen}
+Da aufgrund der fehlenden Komplexität keine objektorientierte Programmierung angewandt wurde, kam das Thema der globalen Variablen auf. Diese sollten helfen Zustände zu speichern.
+
+Der Grundgedanke war globale Variablen zu vermeiden. Letztendlich konnte das Thema „Threads vs. Signal-Handling“ allerdings nicht ohne globale Variablen gelöst werden. 
+\paragraph{Der „eine Sekunde“ Test}
+Aus dem Pflichenheft ergab sich die wichtige Qualitätsanforderung innerhalb einer Sekunde eine Statusänderung an den LEDs anzuzeigen.
+
+Dabei konnte der Testende die Deadline für den entsprechenden Test nicht erfüllen, da nicht berücksichtigt wurde, dass dieser keinen Raspberry Pi hat. Folglich konnte der Test für diese Qualitätsanforderung nicht fertiggestellt werden, da auf einem Rechner ohne GPIOs der Status der LEDs immer gleich bleibt.
+
+Das Problem wurde gelöst, indem eine Arbeitsgruppe aus Testender, Implementierender und Qualitätsmanager gebildet wurde, die den Test bearbeitete. Dieser Test erwies sich als besonders wichtig, da er das Erfüllen der Qualitätsanforderung /QA1/ bestätigt.
+\subsection{Persönliches Fazit}
+Die Rolle des Qualitätsmanagers bot mir eine spannende Perspektive auf das Software-Projekt.
+
+Ich stellte im Besonderen fest, dass es mir schwer fiel meine Rolle nicht zu überschreiten: Es war schwer den Implementierenden nicht darauf hinzuweisen, dass er nicht so programmiert, wie es meinen Vorstellungen entsprechen würde. Zu Beginn war es schwer von der Implementierung Abstand zu nehmen und sich rein auf die Rolle des Qualitätsmanagers zu konzentrieren.
+
+Die Qualitätsmeetings boten mir jedoch einen guten Ausgleich. Der Implementierende hatte dort die Möglichkeit mir konzeptionelle Fragen zu stellen und ich bot ihm Alternativen an. Anschließend gab ich ihm eine Empfehlung, was ich anstreben würde.
+
+Beim nächsten Mal würde ich den Fokus mehr auf die Kommunikation des Teams legen: Den Status bei jeder Rolle regelmäßig erfragen und Hilfe anbieten wenn es irgendwo klemmen sollte.

@@ -1,0 +1,183 @@
+\documentclass[ignorenonframetext, 11pt, table]{beamer}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\input{\pathtomaster/htwcd_beamer.sty}
+
+\author{Eric Schmidtgen}
+\title{\texttt{ledleuchtturm} -- Analyse}
+\date{18.07.2017}
+%\setbeameroption{show notes on second screen=right}
+
+\begin{document}
+	\author{Eric Schmidtgen}
+	\title{\texttt{ledleuchtturm} -- Analyse}
+	
+	\begin{frame}[plain]
+		\begin{center}
+			\includegraphics[width=.7\textwidth]{\pathtomaster/HTW.eps}
+		\end{center}
+		\maketitle
+	\end{frame}
+	
+	
+	\section{Inhalt}
+	\begin{frame}
+	\begin{enumerate}
+		\item Aufgabenbereich
+		\item Voraussetzung an Wissen
+		\item Vorgehensweise
+		\item Ausschnitt aus dem Pflichtenheft
+		\item Anwendung des Wissens
+		\item Was hat sich bewährt?
+		\item Rückblick
+		\item Fazit
+	\end{enumerate}
+
+	\end{frame}
+	
+	\section{Aufgabenbereich}
+	\begin{frame}
+		\begin{itemize}
+			\setlength\itemsep{0.2em}
+			\item<1-> Visionen des Kunden aufnehmen
+			\item<2-> Alle Anforderungen des SW-System aufstellen
+			\item<3-> Qualitätsanforderungen an die SW stellen
+			\item<4->[] $\rightarrow$ \textbf{Erstellung des Pflichtenheftes}
+			\note[item]<4>{LETZTER SP}
+		\end{itemize}
+	\end{frame}
+	
+	\section{Voraussetzung an Wissen}
+	\begin{frame}
+		Ein Pflichtenheft muss (SE1):
+		\begin{itemize}
+		\setlength\itemsep{0.2em}	
+			\item<2-> hinreichend präzise
+				\note[item]<2>{verständlich sein für den Auftraggeber und den Auftraggeber}
+			\item<3-> widerspruchsfrei
+				\note[item]<3>{korrekt\\ vollständig\\ eindeutig\\ minimal}
+			\item<4-> realisierbar
+				\note[item]<4>{nachvollziehbar und hinsichtlich der Erfüllung überprüfbar sein\\ Machbarkeitsstudie}
+			\item<5-> Adressierung
+					\note[item]<5>{Auftraggeber und Auftragnehmer(WIR)}
+			\item<6-> Aufbau eines Pflichtenheftes
+				\note[item]<6>{Ausgangssituation, Systemeinsatz, Benutzerschnittstellen, usw. \\ LETZTER SP}
+		\end{itemize}
+	\end{frame}
+	
+	
+	\section{Vorgehensweise}
+	\begin{frame}
+		\begin{itemize}
+			\setlength\itemsep{0.2em}
+			\item<1-> Anwesenheit beim ersten Kundengespräch
+			\item<2-> Funktionale Anforderungen aufnehmen
+			\item<3-> Rücksprache gegenüber dem Kunden halten auf Machbarkeit
+			\item<4-> Pflichtenheft aufstellen
+			\item<5-> Rücksprache mit dem Team
+			\item<6-> Korrektur lesen
+			\item<7-> Abgabe/Übergabe des Pflichtenheftes durch den Projektleiter
+				\note[item]<7>{LETZTER SP}
+		\end{itemize}
+	\end{frame}
+	
+	
+	\section{Ausschnitt aus dem Plichtenheft}
+	\begin{frame} \pause
+		"`Das \emph{Softwaresystem} liest eine \emph{Konfigurationsdatei} ein. In der Konfigurationsdatei stehen: \pause
+		\begin{itemize}
+			\setlength\itemsep{0.2em}
+			\item Die Ports der roten/gelben/grünen LED.
+			\item Der Name der darzustellenden Anlage (wie er in der \emph{Datenbank} hinterlegt ist).
+			\item Der Datenbankzugang mit allen Informationen die nötig sind, um:\pause
+			\begin{itemize}
+				\setlength\itemsep{0.2em}
+				\item sich mit der Datenbank erfolgreich zu verbinden.
+				\item einen Trigger anzulegen.
+				\item Daten auszulesen."'\\
+			\end{itemize}
+		\end{itemize}
+		
+		{\footnotesize Abschnitt 4 - Funktionale Anforderungen (Seite 3)}
+	\end{frame}
+	
+	\begin{frame}
+		"`Das \emph{Softwaresystem} überprüft beim Starten, ob die in der \emph{Konfigurationsdatei} eingetragene \emph{Datenbank} erreichbar und die in der \emph{Konfigurationsdatei} angegebene Anlage in der \emph{Datenbank} vorhanden ist. Wenn ja, holt es den aktuellen Zustand der Anlage aus der \emph{Datenbank}.\\ \pause
+		Das \emph{Softwaresystem} muss fähig sein auf einen Statuswechsel in der \emph{Datenbank} zu reagieren und ihn mithilfe der LEDs darzustellen."'\\
+		{\footnotesize Abschnitt 4 - Funktionale Anforderungen (Seite 3 \& 4)}
+	\end{frame}
+	
+	\section{Anwendung des Wissens}
+	\begin{frame}
+		\begin{itemize}
+			\item<1-> \textbf{Vollständig}
+				\note[item]<1>{Vollständigkeit eines Pflichtenheftes}
+			\item<2-> Aufbau eines Pflichtenheftes
+				\note[item]<2>{Gliederungspunkte aus den Vorlesungen(Wissen angewendet) \\ Inhaltsverzeichnis baut darauf auf}
+			\item<3-> Präzise Formulierung der Sätze
+				\note[item]<3>{Verbindung zu Punkt Widerspruchsfreiheit \\ Klare Sätze \\ Verständlichkeit muss gegeben sein \\ Inhalt der Sätze im Vordergrund \\ Nicht um-schweifen}
+			\item<4-> Widerspruchsfreiheit
+			\item<5-> Erweiterbarkeit
+				\note[item]<5>{Kundenwünsche}
+			\item<6-> Rahmenbedingungen
+				\note[item]<6>{Pflichtenheft Seite 4 \& 5 verankert \\ Organisatorisch sowie Rechtlich(Abgabe und Open Source) \\ Ersten Meeting mit Kunden geklärt \\ LETZTER SP}
+		\end{itemize}
+	\end{frame}
+	
+	\section{Gesammelte Erfahrungen}
+	\begin{frame}
+		\begin{itemize}
+			\item<1-> Erstellung eines Pflichtenheftes
+			\item<2-> Meetings mit einem Kunden
+			\item<3-> Protokollierung eines Meetings
+				\note[item]<3>{Wichtigkeit Hoch \\ Für Projektleiter und nötige Informationen für das Team}
+			\item<4-> Kommunikation in einer größeren Gruppe
+				\note[item]<4>{evt. zu große Gruppe für das Projekt \\ LETZTER SP}
+		\end{itemize}
+	\end{frame}
+	
+	\section{Was hat sich bewährt?}
+	\begin{frame}
+		\begin{itemize}
+			\item<1-> \emph{Erstellung} des Pflichtenheftes 
+			\item<2-> \emph{Formatierung} des Pflichtenheftes
+			\item<3-> \emph{Aufbau} des Pflichtenheftes
+			\item<4-> \emph{Kommunikation} bei der Erstellung des Pflichtenheftes
+				\note[item]<4>{LETZTER SP}
+		\end{itemize}
+	\end{frame}
+	
+	
+	\section{Rückblick: Positives}
+	\begin{frame}
+		\begin{itemize}
+			\item<1-> Einigkeit bei der Erstellung des Pflichtenheftes
+			\item<2-> Arbeitsklima innerhalb der Gruppe
+			\item<3-> Kommunikation in einer größeren Gruppe
+			\item<4-> Einhaltung der "`Deadlines"'
+				\note[item]<4>{LETZTER SP}
+		\end{itemize}
+	\end{frame}
+	
+	\section{Rückblick: Negatives}
+	\begin{frame}
+		\begin{itemize}
+			\item<1-> Zu große Gruppe
+			\note[item]<1>{Gruppenauslastung war zu gering}
+			\item<2-> Zeit für die Erstellung des Pflichtentenheftes
+			\note[item]<2>{Knapp eine Woche nach dem Meeting \\ LETZTER SP} 
+		\end{itemize}
+	\end{frame}
+
+
+	\section{Fazit}
+	\begin{frame}
+		\begin{itemize}
+			\item<1-> Pflichtenheft erstellt (im Zeitrahmen)
+			\item<2-> Teamfähigkeit ausgebaut
+			\item<3-> Kommunikation innerhalb einer Gruppe kennengelernt/verbessert
+				\note[item]<3>{LETZTER SP}
+		\end{itemize}
+	\end{frame}
+	
+\end{document}

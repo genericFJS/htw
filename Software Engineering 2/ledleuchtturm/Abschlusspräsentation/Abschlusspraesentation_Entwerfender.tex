@@ -1,0 +1,235 @@
+\documentclass[ignorenonframetext, 11pt, table]{beamer}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\input{\pathtomaster/htwcd_beamer.sty}
+
+\author{Ben Schönherr}
+\title{\texttt{ledleuchtturm} -- Entwurf}
+\date{18.07.2017}
+
+\begin{document}
+\author{Ben Schönherr}
+\title{\texttt{ledleuchtturm} -- Entwurf}
+
+\begin{frame}[plain]
+\begin{center}
+\includegraphics[width=.7\textwidth]{\pathtomaster/HTW.eps}
+\end{center}
+\maketitle
+\end{frame}
+\section{Inhalt}
+\begin{frame}
+	\begin{enumerate}
+		\setlength\itemsep{0.2em}
+		\item Was war meine Aufgabe?
+		\item Vorausgesetztes Wissen	
+		\item Entwurf
+		\begin{itemize}
+			\setlength\itemsep{0.2em}
+			\item Frage nach der Programmiersprache
+			\item notwendige Diagramme
+			\item Konfigurationsdatei
+			\item Schaltskizze
+		\end{itemize}	
+		\item Gesammelte Erfahrung
+		\item Rückblick: Positives
+		\item Rückblick: Negatives / Kritik
+	\end{enumerate}
+\end{frame}
+
+\section{Meine Aufgabe}
+\begin{frame}
+	Verantwortlich für:
+	\begin{itemize}
+		\setlength\itemsep{0.2em}
+		\item Entwurfsprozess \newline \newline \pause
+		
+	\end{itemize}		
+	% den Entwurfsprozess. Entwurf erstellen, der ein erfolgreiches Entwickeln des Produktes garantiert. 
+	Dazu war nötig:
+	\begin{itemize}
+		\setlength\itemsep{0.2em}
+		%\item gegebene Informationen abstrahieren, um die Komplexität des Softwaresystem zu senken 	\pause
+		\item Informationen abstrahieren, senken der Komplexität \pause
+		\item Softwaresystem in lose und gekoppelte Teile zerlegen 	\pause
+		\item iteratives und inkrementelles Vorgehen 	\pause
+		\item in den Programmierer hineinversetzen 
+	\end{itemize}\pause
+	Resultat:
+	\begin{itemize}
+		\setlength\itemsep{0.2em}
+		\item Bauplan zum Entwickeln der Software
+		\item Diagramme 
+		\item Hilfsmittel
+	\end{itemize}
+\end{frame}
+
+
+\section{Vorrausetzung}
+\begin{frame}
+	Wissen über
+	\begin{itemize}
+		\setlength\itemsep{0.2em}
+		\item Diagramme
+		\item Programmiersprachen
+		\item Ablauf / Vorgehensweise Entwurfsprozess
+	\end{itemize}	\pause
+	Woher?
+	\begin{itemize}
+		\setlength\itemsep{0.2em}
+		\item Vorlesung Softwareengineering I, speziell Praktika und Beleg 
+		\item Eigene Erfahrung
+	\end{itemize}
+\end{frame}
+
+\section*{Entwurf}
+\begin{frame}
+	\begin{itemize}
+		\setlength\itemsep{0.2em}
+		\item Frage nach der Programmiersprache
+		\item notwendige Diagramme
+		\item Konfigurationsdatei
+		\item Schaltskizze
+	\end{itemize}
+\end{frame}
+
+\section{Frage nach der Programmiersprache}
+\begin{frame}[fragile]
+	Programmiersprache? \newline\newline\newline \pause
+	%\textbf{Frage:} Welche Programmiersprache kann die Anforderungen, ohne großen Aufwand, umsetzen?\newline\newline \pause
+	engere Auswahl: C, C++, Java, Python	\newline\newline \pause
+	Warum Python Version 2.7.0?
+	\begin{itemize}
+		\setlength\itemsep{0.2em}
+		\item[+] verständlich
+		\item[+] LEDs leicht über GPIO ansteuerbar
+		\item[+] einfache Datenbankanbindung
+		\item[+] Version 2.7.0 ist auf den meisten Linux-Plattformen installiert
+	\end{itemize} 	
+	
+\end{frame}
+
+\section{Notwendige Diagramme}
+\begin{frame}
+	Diagramme? \newline\newline\newline \pause
+	%\textbf{Fragen:} Welche Diagramme werden benötigt? Welche sind möglicherweise nicht gewinnbringend? \newline\newline \pause
+	Auswahlfaktoren:
+	\begin{itemize}
+		\setlength\itemsep{0.2em}
+		\item Umfang 
+		\item Komplexität
+		\item Anwendungsfälle 
+		\item Kosten-Nutzen 
+	\end{itemize}\mbox{}\\ \pause
+	$\blacktriangleright$ Anwendungsfalldiagramm, Klassendiagramm, Entity-Relationship-Modell entfallen
+\end{frame}
+
+\section{Aktivitätsdiagramm}
+\begin{frame}
+	\includegraphics[width=0.48\textwidth , trim={0.0cm 0.0cm .0cm 0.0cm},clip]{../Entwurf/Aktivitaetsdiagramm_old_include} \pause
+	\includegraphics[width=0.48\textwidth , trim={.0cm 0.0cm .0cm 0.0cm},clip]{../Entwurf/Aktivitaetsdiagramm_include}	
+\end{frame}
+
+\begin{frame}
+%\includegraphics<1>[width=0.99\textwidth , trim={.0cm 13.0cm .0cm 1.0cm},clip]{../Entwurf/Aktivitaetsdiagramm_include}
+	\includegraphics<1>[width=0.99\textwidth , trim={.0cm 13.0cm .0cm 1.0cm},clip]{../Entwurf/Aktivitaetsdiagramm_include_1}	
+	\includegraphics<2>[width=0.99\textwidth , trim={.0cm 13.0cm .0cm 1.0cm},clip]{../Entwurf/Aktivitaetsdiagramm_include_2}	
+	\includegraphics<3>[width=0.99\textwidth , trim={.0cm 13.0cm .0cm 1.0cm},clip]{../Entwurf/Aktivitaetsdiagramm_include_3}	
+	\includegraphics<4>[width=0.99\textwidth , trim={.0cm 13.0cm .0cm 1.0cm},clip]{../Entwurf/Aktivitaetsdiagramm_include_4}	
+	\includegraphics<5>[width=0.99\textwidth , trim={.0cm 13.0cm .0cm 1.0cm},clip]{../Entwurf/Aktivitaetsdiagramm_include_5}	
+	\includegraphics<6>[width=0.99\textwidth , trim={.0cm 13.0cm .0cm 1.0cm},clip]{../Entwurf/Aktivitaetsdiagramm_include_6}	
+\end{frame}
+
+\begin{frame}
+%\includegraphics<1>[width=0.99\textwidth , trim={.0cm 1.0cm .0cm 15.5cm},clip]{../Entwurf/Aktivitaetsdiagramm_include}	
+	\includegraphics<1>[width=0.99\textwidth , trim={.0cm 1.0cm .0cm 15.5cm},clip]{../Entwurf/Aktivitaetsdiagramm_include_6}	
+	\includegraphics<2>[width=0.99\textwidth , trim={.0cm 1.0cm .0cm 15.5cm},clip]{../Entwurf/Aktivitaetsdiagramm_include_7}	
+	\includegraphics<3>[width=0.99\textwidth , trim={.0cm 1.0cm .0cm 15.5cm},clip]{../Entwurf/Aktivitaetsdiagramm_include_8}	
+	\includegraphics<4>[width=0.99\textwidth , trim={.0cm 1.0cm .0cm 15.5cm},clip]{../Entwurf/Aktivitaetsdiagramm_include_9}	
+	\includegraphics<5>[width=0.99\textwidth , trim={.0cm 1.0cm .0cm 15.5cm},clip]{../Entwurf/Aktivitaetsdiagramm_include_10}	
+	\includegraphics<6>[width=0.99\textwidth , trim={.0cm 1.0cm .0cm 15.5cm},clip]{../Entwurf/Aktivitaetsdiagramm_include_11}	
+	\includegraphics<7>[width=0.99\textwidth , trim={.0cm 1.0cm .0cm 15.5cm},clip]{../Entwurf/Aktivitaetsdiagramm_include_12}	
+	\includegraphics<8>[width=0.99\textwidth , trim={.0cm 1.0cm .0cm 15.5cm},clip]{../Entwurf/Aktivitaetsdiagramm_include_13}	
+	\includegraphics<9>[width=0.99\textwidth , trim={.0cm 1.0cm .0cm 15.5cm},clip]{../Entwurf/Aktivitaetsdiagramm_include_14}	
+\end{frame}
+
+\section{Zustandsdiagramm}
+\begin{frame}
+	\includegraphics[width=1.\textwidth , trim={1.4cm 1.2cm 1.4cm 3.0cm},clip]{../Entwurf/Zustandsdiagramm_include}	
+\end{frame}
+
+\section{Konfigurationsdatei}
+\subsection{Eigenschaften}
+\begin{frame}
+	\begin{itemize}
+	\setlength\itemsep{0.2em}
+	\item enthält alle wichtigen, zur Laufzeit relevanten Daten \pause
+	\item wird vom Programm oder Nutzer angelegt
+	\end{itemize} \mbox{}\newline \newline \pause
+	\textbf{Standard-Konfigurationsdatei}
+	{\small 
+	\begin{tabular}{lll}
+		Name: & {\color<4->{gray} LedLeuchtturm.conf}  \uncover<4->{ & Std-Conf-LedLeuchtturm.json} \\  
+		Verzeichnis: &  Programmverzeichnis\\
+		Einträge: & {\color<4->{gray} 7}  \uncover<4->{ & 12}\\	
+		Dateityp: & {\color<4->{gray} XML} \uncover<4->{ & JSON}\\
+	\end{tabular}}
+\end{frame}
+
+\subsection{Inhalt}
+\begin{frame}
+	\lstset{ %
+		basicstyle=\ttfamily\tiny
+	}	
+	Konfigurationsdatei Std-Conf-LedLeuchtturm.json	
+	\lstinputlisting[%frame=none
+	, numbers=none]{../Entwurf/Std-Conf-LedLeuchtturm.json}
+\end{frame}
+
+\section{Schaltskizze}
+\begin{frame}
+	\begin{center}
+		\includegraphics[scale=0.6]{../Entwurf/Schaltskizze}
+	\end{center}
+\end{frame}
+
+
+\section{Gesammelte Erfahrungen}
+\begin{frame}
+	\begin{itemize}
+		\setlength\itemsep{0.2em}
+		\item Analyse ist wichtig
+		\item Rolle / Aufgabenbereich als Entwerfer
+		\item Entwicklung eines Produktes in einem Team
+		\item Kommunikation zum Kunden und untereinander
+	\end{itemize} 
+\end{frame}
+
+\section{Rückblick: Positives}
+\begin{frame}
+	\begin{itemize}
+		\setlength\itemsep{0.2em}
+		\item Meetings
+		\item Kommunikation, Reaktionszeiten bei Fragen und Meinungen
+		\item Umgang im Team
+	\end{itemize}  
+\end{frame}
+
+
+\section{Rückblick: Negatives / Kritik}
+\begin{frame}
+	Persönlich:
+	\begin{itemize}
+		\setlength\itemsep{0.2em}
+		\item Eigeninitiative / Interesse
+		\item Ablauf / Vorgehensweise Entwurfsprozess
+	\end{itemize}\pause
+	Allgemein:
+	\begin{itemize}
+		\setlength\itemsep{0.2em}
+		\item Frage des Aufgabenbereichs  
+	\end{itemize}
+\end{frame}
+
+
+\end{document}

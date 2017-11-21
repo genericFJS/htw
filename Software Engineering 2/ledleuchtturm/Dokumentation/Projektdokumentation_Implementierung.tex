@@ -1,0 +1,87 @@
+% Was wurde gemacht? Was waren Herausforderungen? Was war einfach? Was hat man gelernt? => Kann bzw. Soll sich mit Inhalten aus Abschlusspräsentation doppeln (gute Vorbereitung :-) ).
+
+\subsection{Aufgaben}
+Die Aufgabe des Implementierenden war es die Ergebnisse der Analyse- und Entwurfsphase zu implementieren. So sollte aus dem konkreten Entwurf und den dort getroffenen Entscheidungen ein lauffähiges Programm erstellt werden, das sich an den entsprechenden Diagrammen wie z.B. dem Aktivitätsdiagramm orientiert. Die Freiheit von den Entscheidungen im Entwurf abzuweichen, sofern diese einen merklichen Vorteil für die Sicherheit oder Effizienz des Projektes bringen würden, war jedoch gegeben. Während der Arbeit sollte stets der Kontakt mit dem Entwerfenden, dem Qualitätsmanager und im späteren Verlauf auch mit dem Testenden gehalten werden. Sobald die Testphase beginnt sollten Tester und Implementierender stärker zusammen arbeiten um mögliche Fehler der Software schnell zu beseitigen.
+
+\subsection{Ablauf}
+\subsubsection{Programmiersprache}
+Die erste Aufgabe bezog sich auf die Festlegung der Programmiersprache. In Zusammenarbeit mit dem Entwerfenden musste hierfür eine Entscheidung getroffen werden. Zur Auswahl standen die Programmiersprachen Python, C, C++ und Java. Das Hauptkriterium war, dass die Ansteuerung der GPIO Pins des Raspberry Pi damit realisiert werden kann. Hierfür eigneten sich alle vier Auswahlmöglichkeiten. Des Weiteren sollte es einfach sein eine XML oder Json Datei einzulesen und die enthaltenen Informationen in Variablen zu speichern. Ebenso wichtig war die Kommunikation mit der Datenbank.
+
+Hierfür wurde das erste Versuchsprogramm zum Ansteuern der GPIO Pins in Python geschrieben. Schnell erwies sich Python auch für die anderen Anforderungen als geeigneter Kandidat. Einziger Nachteil war, dass nur der Qualitätsmanager, Datenbankbeauftragte und Dokumentierender gute Kenntnisse in dieser Sprache hatten. Doch da Python auch in den Punkten Funktionsdokumentation und Tests überzeugen konnte, wurde sie als Programmiersprache ausgewählt.
+
+\subsubsection{Einarbeiten in Python}
+% weis noch nicht wie ich diese Programme nennen soll
+Nachdem die Programmiersprache auf Python festgelegt wurde, konnten die ersten Versuchsprogramme geschrieben werden. Darunter sollten folgende Funktionalitäten erprobt werden:
+\begin{itemize}
+	\item Einlesen einer Json Datei.
+	\item Speichern eines Python Objektes in eine Json Datei.
+	\item Ausgabe der Attribute eines Python Objektes.
+	\item Einlesen einer Json Datei unter Verwendung von exceptions.
+\end{itemize}
+Die Versuchsprogramme waren lauffähige Python Programme und lösten nur eine bestimmte Aufgabe unabhängig vom Gesamtprojekt. Sie dienten hauptsächlich dazu die grundsätzliche Arbeitsweise für eine spätere Funktion zu testen und zu definieren.
+
+\subsubsection{Prototyp}
+% Entwurf stand jetzt -> funktionen aus Entwurf + groben Ablauf von Aktivitätsdiagram in main
+Als die Entwurfsphase abgeschlossen wurde, konnte ein erster Prototyp des Hauptprogramms angelegt werden, in welchem alle im Entwurf beschriebenen Funktionen definiert waren. Für die Struktur wurde das Aktivitätsdiagramm als Kommentar in den Hauptabschnitt des Prototypen geschrieben.
+
+Hier konnten nun erste Funktionen in Zusammenarbeit mit anderen getestet werden. Der Prototyp enthielt jedoch noch einige Codeabschnitte die fehlerhaft waren. Zu diesem Zeitpunkt bezogen sich die Hauptaufgaben und Deadlines auf die Funktionen „Einlesen einer Konfigurationsdatei“ und „Ansteuern der LEDs“.
+
+\subsubsection{Zuweisung von Entwicklungsaufgaben und Dokumentation mit EpyDoc}
+Aufgrund der schnell fortschreitenden Zeit und einiger Deadlines wurde dem Qualitätsmanager die Aufgabe zugewiesen alle Funktionen, welche sich der Dateiarbeit dienten, zu implementieren.
+Ebenfalls gab es eine kleine Unterweisung des Dokumentierenden zum Thema EpyDoc. In diesem Zusammenhang wurde zu allen Funktionen ein Kommentar über die Funktion, deren Übergabeparameter und Rückgabewerte erstellt.
+
+\subsubsection{Anlegen des finalen Programms}
+Da der Prototyp immer noch mit Funktionen gefüllt war, welche Fehler enthielten oder nicht komplettiert waren, wurde die finale Programmdatei erstellt. Darin sollten sich nur Funktionen befinden, die bereits vollständig implementiert waren und für den Testenden freigegeben wurden. Des Weiteren sollte das Hauptprogramm sich stets von Beginn an bis zum jeweiligen Stand der Implementierung verhalten wie das Aktivitätsdiagramm. Zu diesem Zeitpunkt konnte das Hauptprogramm einschließlich des Punktes „Datenbankinformationen aus der Konfigurationsdatei“ realisiert werden.
+
+\subsubsection{Datenbank Versuchsprogramme}
+% Datenbank Konzept stand jetzt
+Nachdem der Datenbankbeauftragte das Aufsetzen einer Testdatenbank und die Entwicklung eines Trigger abgeschlossen hatte, konnten folgende Funktionen implementiert werden:
+\begin{itemize}
+	\item \texttt{testDBconnection}
+	\item \texttt{getCurrentDBstate}
+	\item \texttt{waitForUpdate}
+\end{itemize}
+Diese wurden teilweise in enger Zusammenarbeit mit dem Datenbankbeauftragten erstellt.
+
+\subsubsection{Auslagern aller Funktionen}
+Nach einer Anmerkung des Qualitätsmanagers bezüglich der Übersicht des Hauptprogramms, gab es die Anweisung alle Funktionen in Funktionsdateien oder Module auszulagern. Es wurden vier Module erstellt, von welchen jedes Funktionen enthält, die einer speziellen Kategorie zugeordnet werden können. Darunter waren:
+\begin{itemize}
+	\item fileFunc: Alle Funktionen welche sich mit der Erstellung oder Bearbeitung von Dateien beschäftigen.
+	\item dbFunc: Alle Funktionen welche sich mit der Datenbank beschäftigen.
+	\item ledFunc: Alle Funktionen welche sich mit dem Ansteuern der LEDs beschäftigen.
+	\item stdFunc: Alle Funktionen welche zur Entwicklung oder Fehlersuche des Programms nötig sind.
+\end{itemize}
+
+\subsubsection{Weitere Zuweisung von Entwicklungsaufgaben}
+Im Prozess des Projektes wurde auch dem Dokumentierenden eine Implementierungs-Aufgabe zugewiesen. Diese bestand darin, alle Funktionen die dem Ansteuern der LEDs dienten und vor allem die Funktion \texttt{changeState()} auf einen fehlerfreien und lauffähigen Stand zu bringen.
+
+\subsubsection{Signal-Handler Versuchsprogramm}
+Als letzte wichtige Komponente fehlte eine Funktion, die das Hauptprogramm ordnungsgemäß beendet. Bevor sie in das finale Programm eingepflegt werden konnte, musste erneut ein Versuchsprogramm geschrieben werden. Aufgrund der Eigenschaft, das der Signal Handler auf einige globale Variablen der verschiedenen Module zugreifen muss, ist er die einzige Funktion welche im Hauptprogramm definiert ist.
+
+\subsubsection{Letzte Änderungen}
+Aus den Ergebnissen der Testphase konnte man einige Schwächen und Fehler des Programms feststellen, welche es zu korrigieren galt:
+\begin{itemize}
+	\item Falls das Argument für das Hauptprogramm keine Json Datei war, gab es keine entsprechende Meldung.
+	\item Rapsberry Pi ist auf eine Verbindung über Ethernet begrenzt.
+	\item Fehlverhalten in dem Fall, dass eine Maschine oft zwischen zwei Zuständen wechselt.
+\end{itemize}
+Darüber hinaus wurde die Konfigurationsdatei um die Einträge \texttt{socketport} und \texttt{interface} erweitert und erneut einige Änderungen im Syntaxbild vorgenommen, damit dieses wieder den PEP8 Vorgaben entsprach.
+
+\subsection{Herausforderungen}
+Die Herausforderungen des Implementierenden bestehen sicherlich darin, sich auf den ausgearbeiteten Entwurf zu konzentrieren, diesen als Vorgabe zu betrachten und nicht zu sehr davon abzuweichen. In dieser Rolle entwickelt man schnell eine eigene Meinung über eine mögliche Realisierung des Software-Projektes und verfolgt diese. Dabei läuft man Gefahr, sich weit von dem vorgegebenen Entwurf zu entfernen und etwa eine Software zu schreiben, welche die Wünsche des Kunden nicht erfüllt oder diese übersteigt. Dementsprechend muss auf die Entscheidungen und das Konzept des Analysierenden und Entwerfenden vertraut werden.
+
+Ebenso können sich Meinungsverschiedenheiten zwischen Implementierenden und Qualitätsmanager ergeben. Dieses Risiko ist besonders dann gegeben, wenn ein Mitarbeiter mit anderen Vorstellungen über das Schreiben eines qualitativ guten Codes neu in ein Projekt oder eine Firma einsteigt. In diesem Fall muss der Programmierer sich ebenfalls der Meinung des Qualitätsmanagers annehmen, da dieser für die Qualität der Software verantwortlich ist. Insgesamt muss der Implementierende weniger Entscheidungen und Eigeninitiative einbringen, was ebenso eine Herausforderung ist.
+
+\subsection{Fazit}
+Abschließend ist zu sagen, dass es sehr angenehm sein kann, sich nicht selbst die Struktur, die Anforderungen und den groben Ablauf einer Software erarbeiten zu müssen, sondern klare Anweisungen in Form eines Entwurfes zu bekommen. Es zeigte sich, dass ein sehr strukturiertes Arbeiten möglich war, wenn man sich an den gegebenen Entwurf hielt.
+
+Doch der Fülle an Vorgaben war es trotzdem möglich, die eigenen Gedanken und Lösungswege einzubringen. Auch die Option Implementationsaufgaben einem weiteren Gruppenmitglied zuzuteilen, damit eine Deadline eingehalten werden konnte, machte die Arbeit angenehm und überschaubar. Hinzu kommt, dass das ausführliche Testen der Software nicht selbst erledigt werden muss, was sehr viel Zeit spart und garantiert, dass weitere Personen sich mit der Fehlersuche beschäftigen.
+
+% Kontent für ein Glossar:
+% XML
+% Json
+% Prototyp
+% Pydoc
+% Deadline
+% socketport
+% interface

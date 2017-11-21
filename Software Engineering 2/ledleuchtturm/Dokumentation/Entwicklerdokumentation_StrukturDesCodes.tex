@@ -1,0 +1,33 @@
+% Struktur des Codes (wie er abgegeben wurde) festhalten.
+Das Softwaresystem \texttt{ledleuchtturm} wurde in Python realisiert und ist rein prozedural programmiert. Der Programmcode ist auf fünf Dateien verteilt. Bei vier dieser Dateien handelt es sich um Module mit Funktionen, die zu einem speziellen Aufgabenbereich gehören. Die fünfte Datei ist die Haupt-Datei, die auch beim Ausführen der Software aufgerufen werden muss.
+% Wie sind die Dateien/Modul(e) organisiert?
+
+\subsection{Überblick}
+% Am besten (statt Klassendiagramm) ein "Datei-Diagramm" erstellen.
+Für einen Überblick über die Struktur der Dateien des Softwaresystems mit ihren Funktionalitäten und Variablen sei folgendes Diagramm gegeben:
+\begin{center}
+	\includegraphics[width=1.0\linewidth]{include/Entwicklerdokumentation_aufbau}
+\end{center}
+
+\subsection{Beschreibung}
+Aus dem Diagramm lassen sich bereits sehr gut die Funktionalitäten der Software ablesen. Für einen groben Überblick sei der Zweck der Dateien im Folgenden grob umschrieben. Eine detaillierte Beschreibung der Funktionen und Variablen ist im \nameref{epydoc} (\autoref{epydoc}) zu finden.
+
+% Alle Dateien beschreiben: Überblick verschaffen.
+\subsubsection*{ledleuchtturm.py}
+Die Datei ledleuchtturm.py ist die Haupt-Datei des Projektes. In ihr werden alle Module importiert und die notwendigen Funktionen ausgeführt. Der Code beschränkt sich im Wesentlichen auf das Ausführen von Funktionen, die Auswertung der Rückgabewerte und Ausgaben auf der Kommandozeile.\\
+Die Struktur der ledleuchtturm.py orientiert sich bis zum Aufruf der Funktion $F_9$ stark an dem Aktivitätsdiagramm. Ab dem ersten Ansteuern der LEDs verfolgt die Datei eine leicht veränderte Struktur.\\
+Die Datei besitzt selbst nur die Funktion \texttt{signal\_handler}. Diese  wurde nicht ausgelagert, da sie auf globale Variablen aus mehreren Modulen zugreift. Deshalb ist eine zentrale Definition der Funktion von Vorteil.
+
+\subsubsection*{fileFunc.py}
+Das Modul fileFunc.py besitzt alle Funktionen die sich mit dem Erstellen, beschreiben oder lesen von Dateien beschäftigen.
+
+\subsubsection*{dbFunc.py}
+Das Modul dbFunc.py besitzt alle Funktionen die sich mit der Datenbank beschäftigen.
+
+\subsubsection*{ledFunc.py}
+Das Modul ledFunc.py besitzt alle Funktionen die sich mit der Ansteuerung oder Initialisierung der LEDs beschäftigen.
+
+\subsubsection*{stdFunc.py}
+Das Modul stdFunc.py besitzt Hilfsfunktionen die für den grundsätzlichen Programmablauf nicht wichtig sind. Die Funktionen darin werden im Entwicklungsprozess oder für die Fehlersuche verwendet.
+
+% Muss so eindeutig sein, dass Fremde mithilfe dieses Abschnitts einen Überblick erhalten können und zusammen mit dem PyDoc das Programm ohne viel Nachforschung weiterentwickeln könnten => Anleitung, wie etwas verändert werden könnte!

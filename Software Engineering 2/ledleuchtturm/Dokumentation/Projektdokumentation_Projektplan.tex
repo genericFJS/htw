@@ -1,0 +1,59 @@
+Im Rahmen der Projektdokumentation wird die Projektarbeit aus der Sicht von jedem Gruppenmitglied festgehalten. Die Projektarbeit besteht dabei einerseits aus den Leistungen der einzelnen Gruppenmitglieder und andererseits aus dem Zusammenspiel der Gruppe.
+
+Diese Dokumentation bietet somit einen Überblick über die Projektarbeit und den dazugehörigen Erläuterungen der Aufgabe, sowie einer Beschreibung des Ablaufs für jeden Einzelnen. Diese Darlegung wird ergänzt durch den Bericht von Herausforderungen und persönlichen Schlussfolgerungen, sodass vielseitige subjektive Blickwinkel auf den Ablauf des dargestellt werden.
+
+\subsection*{Projektablauf}
+
+Der Projektablaufplan bietet eine Übersicht über die Folge geplanter Arbeitsschritte. Er wurde in Gantt-Project erstellt und unterteilt sich in das gantt-Diagramm (\autoref{fig:gantt-diag}: Darstellung der Aufgaben und ihrer zeitlichen Einordnung) und das Ressourcen-Diagramm (\autoref{fig:ress-diag}: Darstellung der Gruppenmitglieder und ihrer jeweiligen Verantwortungen). 
+
+Die Gruppe teilte sich in folgende Verantwortungsbereiche auf:
+\begin{itemize}
+\item Jürgen Tomaszewski		\tabto{.35\linewidth} Projektleitung
+\item Eric Schmidtgen				\tabto{.35\linewidth} Analyse
+\item Ben Schönherr					\tabto{.35\linewidth} Entwurf
+\item Ragnar Luga						\tabto{.35\linewidth} Datenbank und Hardware
+\item Simon Retsch					\tabto{.35\linewidth} Implementierung
+\item Torsten Polczyk				\tabto{.35\linewidth} Tests
+\item Falk-Jonatan Strube		\tabto{.35\linewidth} Dokumentation
+\item Raphael Pour					\tabto{.35\linewidth} Qualitätssicherung
+\end{itemize}
+
+Die Phasenunterteilung wurde direkt zu Beginn grob vorgenommen. Nach dem Kick-Off-Meeting mit dem Kunden konnte die detaillierte Ausarbeitung beginnen. Zunächst wurden die einzelnen Schritte (z.B. Datenbank-Einrichtung und Betriebssystem-Installation) hinzugefügt. Dann folgte die Zuordnung der Vorgängen zu die entsprechenden Teammitglieder und die individuelle Arbeitslast (gestaffelt in 25\% Schritten). An letzter Stelle stand die Abhängigkeit der Schritte untereinander als Voraussetzung für eine detaillierte zeitliche Strukturierung.
+
+Der Großteil der Prozesse stellte Ende-Anfang Beziehungen, da die nachfolgenden Schritte immer auf den vorherigen aufbauen (LED kann nicht angesteuert werden, solange kein Betriebssystem auf dem Raspberry Pi läuft, etc.). Einige Abhängigkeiten sind anders gestaltet worden, sodass zum Beispiel die Coding Guidelines schon parallel zur Sprachevaluation laufen konnten, da diese auch einen Einfluss auf die Auswahl der Sprache hatten.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\textwidth , trim={35px 0 145px 47px},clip]{../Projektplan/SE2-Projektplan-Gantt.png}
+\caption{gantt-Diagramm}
+\label{fig:gantt-diag}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\textwidth , trim={35px 0 58px 47px},clip]{../Projektplan/SE2-Projektplan-Ressourcendiagramm.png}
+\caption{Ressourcen-Diagramm}
+\label{fig:ress-diag}
+\end{figure}
+
+Da die Gruppe das Projekt mit \texttt{git} versioniert hat, bieten die dadurch entstehenden Graphen mit der Darstellung der Commits (\autoref{fig:proj_contributers}) und der entsprechenden Änderungen (\autoref{fig:proj_codefreq}) einen Anhaltspunkt, wie das Projekt tatsächlich verlaufen ist. Der Umgang mit \texttt{git} variierte je nach Gruppenmitglied, sodass die die Graphen einzige als Anhaltspunkt dienen und nicht den absoluten Projektablauf darstellen: Beispielsweise haben manche Gruppenmitglieder regelmäßig Zwischenergebnisse commited, andere nur Endergebnisse. Auch durch umbenannte oder verschobene Dateien oder Dateiinhalte wird vor allem der Graph der Veränderungen stark verfälscht.
+
+%trim: {left lower right upper}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\textwidth , trim={140px 1765px 120px 530px},clip]{include/Contributors.png}
+\caption{Commits pro Woche}
+\label{fig:proj_contributers}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\textwidth , trim={132px 255px 90px 415px},clip]{include/Code_frequency.png}
+\caption{Veränderungen im Code (Hinzugefügtes und Gelöschtes)}
+\label{fig:proj_codefreq}
+\end{figure}
+
+%Die Phasenunterteilung wurde direkt zu Beginn mit einer groben terminlichen Einordnung hinzugefügt. Nach dem Kick-Off-Meeting mit dem Kunden konnte dann die detaillierte Ausarbeitung beginnen. Zunächst wurden alle einzelnen Schritte (z.B. Datenbank-Einrichtung und Betriebssystem-Installation) hinzugefügt. Danach wurden den Vorgängen die entsprechenden Teammitglieder und die individuelle Arbeitslast (gestaffelt in 25\% Schritten) hinzugefügt. Der letzte Schritt war die Abhängigkeit der Schritte untereinander einzufügen, wodurch die zeitliche Gliederung überhaupt erst möglich wurde.
+
+%Die meisten Beziehungen von Vorgängen untereinander waren Ende-Anfang Beziehungen, da die nachfolgenden Schritte immer auf den vorherigen aufbauen (LED kann nicht angesteuert werden, solange kein Betriebssystem auf dem Raspberry Pi läuft etc.). Einige Abhängigkeiten sind anders gestaltet worden, sodass zum Beispiel die Coding Guidelines schon parallel zur Sprachevaluation laufen konnten, da diese auch einen Einfluss auf die Auswahl der Sprache hatten.
+

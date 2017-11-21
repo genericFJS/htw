@@ -1,0 +1,56 @@
+--------------------
+Entwicklerdokumentation:
+- Grobentwurf: Eric
+- Feinentwurf: Ben
+- Struktur des Codes: Simon (und weitere Implemntierende)
+- PyDoc: Simon (und weitere Implementierende) / Jonatan (generieren)
+
+--------------------
+Testdokumentation:
+- Testplan (Torsten)
+- Testfälle (Torsten)
+- Testdaten (Torsten)
+- Testprotokolle (Torsten)
+
+--------------------
+Benutzerdokumentation:
+- Cheatsheet
+-- Einrichen der Software: Jonatan (mit Zuarbeit von Raphael, Simon, Ragnar)
+-- Konfigurationsdatei: Jonatan (mit Zuarbeit von Raphael, Simon, Ben)
+-- Einrichten des Triggers: Jonatan (mit Zuarbeit von Ragnar)
+- Methodendokumentation Trigger: Ragnar (ggf. mit Hilfe von Jonatan)
+
+--------------------
+Projektdokumentation:
+- Projektplan: Jürgen
+- Projektleitung: Jürgen
+- Analyse: Eric
+- Entwurf: Ben
+- Datenbank und Hardware: Ragnar
+- Implentatierung: Simon
+- Test: Torsten
+- Qualitätssicherung: Raphael
+- Dokumentation: Jonatan
+
+--------------------
+Protokolle: Jonatan
+
+--------------------
+Pflichtenheft: schon gegessen :-)
+
+--------------------
+Anpassungen Pflichtenheft: Jürgen
+
+--------------------
+Glossar: Alle nach Bedarf
+
+====================
+NACH PERSONEN:
+- Jürgen: Projektdokumentation, Anpassung Pflichtenheft, ggf. Glossar
+- Eric: Projektdokumentation, Entwicklerdokumentation, ggf. Glossar
+- Ben: Projektdokumentation, Entwicklerdokumentation, ggf. Glossar
+- Ragnar: Projektdokumentation, Benutzerdokumentation, ggf. Glossar
+- Simon: Projektdokumentation, Entwicklerdokumentation(, Benutzerdokumentation), ggf. Glossar
+- Torsten: Projektdokumentation, Testdokumentation, ggf. Glossar
+- Raphael: Projektdokumentation, Benutzerdokumentation, ggf. Glossar
+- Jonatan: Projektdokumentation, ggf. Aushilfe beim Rest

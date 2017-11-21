@@ -1,0 +1,131 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Benutzerdokumentation}
+\date{}
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+\tableofcontents
+\renewcommand{\maketitle}{}
+\renewcommand{\tableofcontents}{}
+
+\section{Cheatsheet} % Pflichtenheft /DA1/
+\begingroup
+\LetLtxMacro{\oldsec}{\section}
+\LetLtxMacro{\oldsubsec}{\subsection}
+\renewcommand{\section}[1]{\oldsubsec{#1}}
+\renewcommand{\subsection}[1]{\subsubsection{#1}}
+\input{Benutzerdokumentation_Cheatsheet}
+\endgroup
+
+\section{Weitere Hinweise}
+
+\subsection{Installation}
+Die Installation des Softwaresystems, der Trigger und aller benötigten Voraussetzungen kann entsprechend der Beschreibungen im Cheatsheet vorgenommen werden.
+
+Für eine vereinfachte Installation befinden sich im Ordner \lstinline`Produkt/Trigger und Skripte` einige Bash-Skripte und \lstinline`.sql`-Dateien, die angepasst werden können und die beschriebenen Aktionen ausführen. Auf diese Dateien besteht keine Gewähr.
+
+%\subsection{Fehlerbehebung beim Einrichten des Triggers}
+%
+%This subsection is dedicated to help the user troubleshoot the trigger if no connection is achieved between the tool and the database trigger.  
+%Firstly, the user should go over the functions and the trigger scripts used to create the trigger functions and the trigger. The database must use the IP of the machine, where the Program is running. The port in the trigger function must be the same that is used in the Program to open up the socket for the database. Make sure of all requirements mentioned in the previous section about creating the trigger.
+%
+%If the user has checked the things above and wants to make sure that the problem is not behind local network connectivity, then the user can create a small python server that the user can run on the same machine where the database is running. Rerun the trigger function script, but this time change the IP to 127.0.0.1 . This will make the database connect to a local server socket. Now, copy the code below to a empty file and save it as server.py .
+%Run the server from the bash: python server.py
+%
+%\begin{lstlisting}
+%DROP TRIGGER <triggername> ON tool
+%import socket
+%
+%serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+%serversocket.bind(('127.0.0.1', 8050))
+%serversocket.listen(1) # become a server socket, maximum 5 connections
+%print ("opened on port 8050")
+%while True:
+%    connection, address = serversocket.accept()
+%    buf = connection.recv(64)
+%    if len(buf) > 0:
+%        print buf
+%        
+%        #remove break to make the server run "forever"
+%        break
+%
+%DROP FUNCTION <functionname>
+%\end{lstlisting}
+%
+%Now the user should run a "fake" update on the tool the trigger is configured to work with. The name of the tool and then updated state should appear in the terminal where the python server is running. 
+%If this works, then that means that the trigger is correctly set up. Rerun the trigger function script with the IP of the machine where the Program is running on and try again. Make sure to recheck the IP in the target machine.
+%If nothing is displayed in the python server, then this means that the trigger is not set up correctly. The user should check both the trigger function and trigger creation scripts. Should the fault be in the trigger function script, just fix it there and rerun the script again, then check if the local python server can receive the update. If the error is in the trigger creation script (z.B. wrong trigger function name),then the user firstly needs to delete the trigger and then rerun the trigger creation script with changes.
+%
+%If the database still fails to send the update to the Program, but is successful in sending it to the local python server and if the user is sure, that all connection configuration is correct, then another connection type should be used since the connection may be faulty.
+
+\subsection{Löschen des Triggers}
+Falls ein Tool nicht mehr beobachtet werden soll, können der Trigger und die dazugehörige Funktion mit folgenden Befehlen aus der PostgreSQL Datenbank gelöscht werden. Dabei müssen \lstinline`<triggername>` und \lstinline`<functionname>` mit den entsprechenden Namen des Triggers beziehungsweise der Funktion ersetzt werden.
+%If the user decides that the tool is no longer needed in the system, the trigger should also be deleted from the database since it has no target tool to send the updates. The user must first delete the trigger and then the function associated with the tool.
+
+\begin{lstlisting}[numbers=none, frame=none]
+DROP TRIGGER <triggername> ON tool
+DROP FUNCTION <functionname>
+\end{lstlisting}
+
+%The user must replace <triggername> with the name of the trigger and <functionname> with the functionname that corresponds with the trigger.
+
+\section{Methodendokumentation Datenbanktrigger}
+% GENAUE Beschreibung, was der Trigger, der in der Datenbank eingerichtet werden soll macht. 
+%In this section the two scripts used to create the trigger will be described as specifically as possible to make sure that there is no hidden malicious code in the scripts for security reasons. Firstly, the trigger creation script will be examined. Here it is displayed again.
+An dieser Stelle sind der Code des zu installierenden Triggers und der dazugehörigen Funktion beschrieben. Auf Basis dieser Beschreibung kann der Kunde auch mit minimalem Verständnis des Quelltextes nachvollziehen, was ausgeführt wird und sicher gehen, dass kein bösartiger Code enthalten ist.
+
+\subsection{Trigger}
+\begin{lstlisting}[label=trigger2,caption=Trigger]
+CREATE TRIGGER machine_trigger
+AFTER UPDATE
+ON tool
+FOR EACH ROW
+EXECUTE PROCEDURE machine_send();
+\end{lstlisting}
+Zeilenweise Beschreibung des Triggers:
+\begin{itemize}
+\item Zeile 1: Der Trigger mit dem Namen \lstinline`machine_trigger` wird erstellt.
+\item Zeilen 2-3: Der Trigger wird bei jedem \lstinline`UPDATE` der Tabelle \lstinline`tool` ausgeführt.
+\item Zeilen 4-5: Der Trigger führt die Funktion \lstinline`machine_send()` auf jeder Reihe der Tabelle aus.
+\end{itemize}
+
+\subsection{Funktion}
+\begin{lstlisting}[label=trigger-func2,caption=Trigger Function]
+CREATE OR REPLACE FUNCTION machine_send()  
+    RETURNS TRIGGER AS
+$BODY$
+    import socket
+    if TD["new"]["tool"] == "MET9001": 
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect(('192.168.0.101', 8050)) 
+            updated = TD["new"]["tool"] +" "+ TD["new"]["state"]
+            s.sendall(updated)
+        except:
+            pass
+    else:
+        pass
+$BODY$
+    LANGUAGE plpythonu;
+\end{lstlisting}
+
+\begin{itemize}
+\item Zeile 1: Die Funktion \lstinline`machine_send()` wird erstellt oder ersetzt, wenn sie bereits vorhanden ist.
+\item Zeile 2: Der Rückgabewert der Funktion ist als \lstinline`TRIGGER` deklariert.
+\item Zeile 3 und 15: Der Teil des Triggers, der Pythoncode ist wird mit \lstinline`$BODY$` eingerahmt.
+\item Zeile 4: Die Bibliothek \lstinline`socket.py` der Python Standardbibliothek wird  eingebunden.
+\item Zeile 5: Überprüfung, ob die aktualisierte Zeile der Maschinenbezeichnung entspricht. Wenn ja, werden die folgenden Zeilen 6-12 ausgeführt. Wenn nicht wird die Zeile 13/14 bearbeitet, die die Funktion beendet.
+%TD["new"] is a dictionary, that contains the data for the updated row. TD["new"]["tool"] contains the updated row's new state value. If the updated row is the one that this functions corresponds to, the function will execute the next line.
+\item Zeile 6: Es wird versucht den Code von Zeilen 7-10 auszuführen. Wenn ein Fehler auftritt, wird die Zeile 11/12 bearbeitet, die die Funktion beendet.
+\item Zeile 7: Ein TCP Socket wird erzeugt.
+\item Zeile 8: Das TCP Socket baut eine Verbindung zu der gegebenen IP an dem gegebenen Port auf.
+\item Zeilen 9-10: Die Nachricht welche Reihe zu welchem Wert geändert wurde, wird über den Socket gesendet.
+\item Zeile 16: Die Sprache des Codes der von den \lstinline`$BODY$`-Block eingeschlossen ist, wird deklariert.
+\end{itemize}
+\end{document}

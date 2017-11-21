@@ -1,0 +1,48 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Entwicklerdokumentation -- Grobentwurf}
+\date{}
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+\tableofcontents
+
+Die im Grobentwurf erarbeiteten Themen geben die Eckpunkte für das Softwaresystem vor. Das Pflichtenheft wurde auf dessen Basis formuliert.
+
+\subsection{Zielsetzung}
+Die Zielsetzung für das Softwaresystem \texttt{ledleuchtturm} ergab sich aus der Aufgabenstellung. Diese war Grundlage der Entwicklung und wurde vom Kunden (Herrn Dipl.-Inf. Robert Ringel) bestätigt und erläutert:
+\begin{quote}
+„Entwicklung eines LED‐Leuchtturms zur Anzeige des aktuellen Maschinenzustands:\\
+Mit Hilfe eines Raspberry-Pi-Computers ist der aktuelle Maschinenzustand einer Maschine der Cinderella-Modellfabrik in Form einer LED-Leuchtturmanzeige zu visualisieren. Der Maschinenzustand ist aus der
+PostgreSQL-Datenbank des Produktionssteuerungssystems zu entnehmen.“
+\begin{flushright}
+\textit{Belegarbeit „Software-Engineering II“: Sommersemester 2017}
+\end{flushright}
+\end{quote}
+
+\subsection{Systemeinsatz und Umgebung}
+Im Kundengespräch wurde die Festlegung, dass das Softwaresystem auf einem Raspberry Pi der zweiten Generation laufen soll, vereinbart. Dieser Computer soll von einer Datenbank, die sich im selben Netzwerk befindet, Informationen über den aktuellen Status einer Maschine erhalten. Das Übertragen der Daten ist in der Datenbank von einem Trigger auszulösen. Die LEDs für die Anzeige des Status sind direkt an den GPIO-Port anzuschließen.
+
+\subsection{Benutzerschnittstellen}
+Im Hinblick darauf, dass das Softwaresystem stets im Hintergrund läuft, beschränkt sich die Benutzerschnittstelle auf das Starten und Beenden der Software. Beim Starten ist die die Konfiguration der Software relevant, die jedoch in eine Datei ausgelagert und nicht durch ein Nutzerinterface eingegeben werden soll.
+
+\subsection{Funktionale Anforderungen}
+Funktionale Anforderungen sind teilweise direkt durch die Aufgabenstellung bedingt: Die Software soll einen Status(-wechsel) der Datenbank durch LEDs anzeigen. Die Analyse der Benutzerschnittstelle hat ergeben, dass das Softwaresystem weiterhin eine Konfigurationsdatei besitzen und diese auswerten muss. In der Konfigurationsdatei müssen alle notwendigen Informationen stehen, um sich mit der Datenbank zu verbinden, den Status der gewünschten Maschine auszulesen und auf dem im Trigger eingerichteten Port auf einen Statuswechsel der Datenbank zu warten.
+
+\subsection{Qualitätsanforderungen}
+Die Qualitätsanforderungen des Softwaresystems beschränken sich auf zwei Punkte:
+\begin{enumerate}
+	\item Das Softwaresystem hat innerhalb einer Sekunde auf einen Statuswechsel in der Datenbank zu reagieren.
+	\item Das Softwaresystem soll nach dem Starten selbstständig laufen.
+\end{enumerate}
+Dabei wird mit der ersten Anforderung betont, dass das System annäherungsweise in Echtzeit laufen soll. Da die Hardware allerdings keine Laufzeit in Echtzeit hergeben kann, wurde die eine Sekunde als Schwellwert definiert.
+
+\subsection{Rahmenbedingungen}
+Das Softwaresystem kann nur lauffähig sein, wenn der entsprechende Trigger und die Konfigurationsdatei vom Nutzer selbständig korrekt eingerichtet wurden. Die Benutzerdokumentation hat das Einrichten der Software ausreichend zu beschreiben.
+
+\end{document}

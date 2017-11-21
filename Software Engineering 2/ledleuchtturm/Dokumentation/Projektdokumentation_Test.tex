@@ -1,0 +1,36 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Projektdokumentation}
+\date{}
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+\tableofcontents
+\renewcommand{\maketitle}{}
+\renewcommand{\tableofcontents}{}
+\section{Tests}
+% Was wurde gemacht? Was waren Herausforderungen? Was war einfach? Was hat man gelernt? => Kann bzw. Soll sich mit Inhalten aus Abschlusspräsentation doppeln (gute Vorbereitung :-) ).
+\subsection{Aufgabe}
+Bevor mit dem Testen eines Programms anfangen werden kann, muss klar sein, was getestet werden soll. Es muss genau überlegt werden, welche Tests zwingend notwendig.
+
+Aus dem Entwurf ergaben sich die Aufgaben und Zielführung der Tests. In der Gruppe wurden die Prioritäten der Tests erarbeitet. Als Testender musste nun ermittelt werden, wie die Tests umgesetzt werden können: Ist ein Szenario in einem Test realisierbar oder müssen mehrere separate Tests durchgeführt werden? Wie sind diese zu dokumentieren? Im Erarbeiten und Durchführen der Antworten lag die Hauptaufgabe des Testenden.
+
+\subsection{Ablauf und Herausforderungen}
+Die erste Herausforderung war das Einarbeiten in die Programmiersprache Python. Zunächst wurden einige kleine Programme zu Testzwecken programmiert. Nach ein paar Versuchen hat wurde jedoch ein ausreichender Einblick in die Programmiersprache geschaffen. 
+
+Im nächsten Schritt musste eine brauchbare Testumgebung geschaffen werden. Nach Recherche und Hilfestellungen von Gruppenmitgliedern konnte dies umgesetzt werden.
+
+Eine weitere Herausforderung bestand darin, die Testdokumentation anzufertigen. Dies stellte sich im Verlauf der Projektarbeit komplexer heraus, als zuvor angenommen.
+%\subsection{Was war einfach?}
+
+%Wirklich einfach war so gesehen nichts, man hatte überall mal ein Problem oder kam einfach nicht weiter, aber nachdem man etwas Zeit reingesteckt hatte ging alles etwas leichter. Mal hat man sich einfach einer anderen Aufgabe gewidmet, mal hat man einfach eine Pause gemacht oder man hat sich mit Kollegen besprochen, damit man weiter kam oder um eine einfachere Methode zu finden, aber einfach war es nicht.\\
+%Aber es war nicht so schwer das man daran verzweifelt ist, nachdem man sich mit allem auseinandergesetzt war es eine herausfordernde Aufgabe.
+\subsection{Persönliches Fazit}
+Die Dokumentation von Tests und darüber hinaus die Entscheidungen über das Ausmaß der Tests, ist eine komplexe, wenn auch empfehlenswerte Aufgabe. Ich konnte eine neue Perspektive auf das Erstellen von Tests gewinnen, die entgegen meiner vorherigen Annahme nicht nur der Verortung von Fehlern dient. Darüber hinaus ist es wichtig, die Kommunikation mit den anderen Projektmitgliedern, vor allem dem Implementierer, aufrecht zu erhalten, da dieser wissen muss, ob sein Programm problemlos funktioniert.
+%Als Testverantwortlicher hat man eine Aufgabe die im jeden Projekt wichtig ist, aus diesem Grund würde ich jedem es empfehlen und würde diese Aufgabe wieder übernehmen, da man doch noch so einiges lernen kann.
+\end{document}

@@ -1,0 +1,45 @@
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Protokoll Gruppentreffen}
+\def\datename{}
+\date{26.06.2017}	%%% ??? = DATUM!
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+\section{Qualitätsmeeting 26.06.2017}	%%% ??? = DATUM!
+\begin{tabular}[t]{p{.25\linewidth} p{.25\linewidth}}
+\emph{Beginn:}				& 14:30\\
+\emph{Ende:}					& 15:00\\
+\emph{Ort:}						& Z355\\
+\emph{Anwesend:}	& 
+Raphael\newline
+Simon
+\\
+\emph{Abwesend:}		 & 
+--
+\\
+\emph{Protokollant:}& Raphael Pour
+\end{tabular}
+\paragraph{Tagesordnungspunkte}
+\begin{itemize}
+\item Implementierungsfortschritt
+\item Abbruch des Threads - Signal Handling
+\end{itemize}
+
+\subsection{Implementierungsfortschritt}
+Bis auf das Signal-Handling/Abbruch des Programms ist alles implementiert, aber noch nicht vollständig getestet.
+
+\subsection{Abbruch des Threads - Signal Handling}
+Im Signal Handler sollen alle Verbindungen und Ressourcen zurückgebaut und das Programm beendet werden.
+
+\subsection{Nächste Schritte}
+\begin{tabular}{L{.249} L{.2} L{.25} L{.25}}
+Betreff & Frist & Verantwortliche(r) & Involviert\\\hline
+Nächstes Qualitätsmeeting&30.06.2017&Raphael&Simon\\
+\end{tabular}
+
+\end{document}

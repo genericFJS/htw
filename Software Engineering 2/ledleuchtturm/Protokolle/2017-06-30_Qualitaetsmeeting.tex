@@ -1,0 +1,46 @@
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Protokoll Gruppentreffen}
+\def\datename{}
+\date{30.05.2017}	%%% ??? = DATUM!
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+\section{Qualitätsmeeting 30.05.2017}	%%% ??? = DATUM!
+\begin{tabular}[t]{p{.25\linewidth} p{.25\linewidth}}
+\emph{Beginn:}				& 9:30\\
+\emph{Ende:}					& 10:00\\
+\emph{Ort:}						& Z355\\
+\emph{Anwesend:}	& 
+Raphael\newline
+Torsten\newline
+Simon
+\\
+\emph{Abwesend:}	& 
+--
+\\
+\emph{Protokollant:}& Raphael Pour
+\end{tabular}
+\paragraph{Tagesordnungspunkte}
+\begin{itemize}
+    \item Testergebnisse von Torsten
+    \item Der „eine Sekunde“ Test
+\end{itemize}
+
+\subsection{Testergebnisse von Torsten}
+Alle Tests sind OK außer bei einem bzgl. des Einlesens von Konfigurationsdateien. Wenn bspw. eine XML-Datei übergeben wird reagiert das Programm wie in dem Fall von einer nicht gefundenen Konfigurationsdatei. Es wird eine Standardkonfiguration angelegt und verwendet ohne darauf einzugehen dass die übergebene Konfigurationsdatei falsch ist. 
+
+\subsection{Der „eine Sekunde“ Test}
+Da der Tester keinen RaspberryPi hat, erwies sich das Testen der einen Sekunde aus seiner Sicht als nicht machbar. Wir (QM, Implementierer, Tester) einigten uns in den Kommenden zwei Tagen ein treffen auszumachen bei welchem wir zusammen mit dem RaspberryPi diesen Test finalisieren.
+
+\subsection{Nächste Schritte}
+\begin{tabular}{L{.249} L{.2} L{.25} L{.25}}
+Betreff & Frist & Verantwortliche(r) & Involviert\\\hline
+Bugfixing&07.07.2017&Simon\\\hline
+Den „eine Sekunde“ Test finalisieren&02.07.2017&Torsten&Simon,Raphael\\
+\end{tabular}
+\end{document}

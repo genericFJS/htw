@@ -1,0 +1,6 @@
+Linux:
+Um led_test.py auszuführen, einfach in den Ordner kopieren in dem sich die restlichen Dateien des Programmes befinden.
+
+Windows:
+Unterordner 'test' erstellen und die Datei dort hin kopieren.
+Evtl. installiern von psycopg2

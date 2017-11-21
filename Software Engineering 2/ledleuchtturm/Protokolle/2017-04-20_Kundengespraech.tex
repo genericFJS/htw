@@ -1,0 +1,148 @@
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Protokoll Kundengespräch}
+\def\datename{}
+\date{20.04.2017}
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+\section{Kundengespräch 20.04.2017}
+\begin{tabular}[t]{p{.25\linewidth} p{.25\linewidth}}
+\emph{Beginn:}				& 15:00\\
+\emph{Ende:}					& 16:00\\
+\emph{Ort:}						& Z 541\\
+\emph{Anwesend:}	& 
+Ragnar\newline
+Raphael\newline
+Simon\newline
+Erik\newline
+Ben\newline
+Jonatan\newline
+Jürgen\newline
+Herr Ringel
+\\
+\emph{Abwesend:}		 & 
+Torsten
+\\
+\emph{Protokollant:}& Raphael, Erik, Jonatan
+\end{tabular}
+\paragraph{Tagesordnungspunkte}
+\begin{itemize}
+\item Themeneinordnung
+\item Kommunikation
+\item Fragerunde
+\end{itemize}
+\subsection{Themeneinordnung}
+\begin{itemize}
+\item Cinderella (Das Automatische Fabrikmodell): Projekt für Studenten: Industrie 4.0 mit Lego/Raspberry Pi
+\begin{itemize}
+\item Industriemaschine fragt über Netzwerk bei Raspberry Pi/ Produktionssteuerungssystem Aufträge an
+\item Datenbank mit 100 Schritte im Fertigsungsfluss + alle Maschine + 100 Werkstücke
+\item 14 Tage Produktionszeit, 2 Tage effektiv ohne Stau
+\item Großes Labor im 9. Stock mit echten Maschinen
+\end{itemize}
+\item Aufgabe: LED-Leuchtturmanzeige
+\begin{itemize}
+\item Anhand von der Leuchtfarbe der Lampen erkennen wie der Zustand der Maschine ist
+\item feste Didaktikmodule (= echte Produktionsmaschine) mit Access Datenbank
+\item eine Anzeige für die SBS und jeweils eine für beide Arbeitsmodule
+\end{itemize}
+\end{itemize}
+
+\subsection{Kommunikation}
+\begin{itemize}
+\item Treffen aller 14 Tage, Projektleiter + 1-2 weitere (relevante) Teammitglieder
+\item Ringel 3 Rollen:
+    \begin{itemize}
+    \item Kunde: Auftrag erteilen, Wunsch, wir liefern
+    \item Fachlicher Berater, Coach: Ansprechpartner für Software, technische oder Datenbank Probleme 
+    \item Beobachter unserer Arbeit: Unsere Lernstrategien durch Umfragen erfassen
+    \end{itemize}
+\item Aller 14 Tage Miniumfrage von jedem persönlich / Gruppe ausfüllen
+\item Umfrageergebnisse (und Frequenz der Teilnahme) fließt nicht in die Bewertung/Note ein
+\end{itemize}
+\subsection{Fragerunde}
+
+\begin{itemize}
+\item Die Maschine kommuniziert mit einem RPI und teilt Herrn Ringel mit wie der Zustand ist?
+
+Nein, die Maschine ist mit einer Schnittstelle an ein MES angeschlossen und teilt diesem über die PostGRE Datenbank den Zustand mit. Bzw. Arduino. Mittels Postgre Abfrage die LEDs beschalten. Die Datenbank ist aktuell
+\item Programm ist mit der Datenbank verbunden?
+
+Ja und über den Raspi oder Arduino mit LEDs
+\item Programmiersprache?
+
+Egal, Arduino C. RPI Python, Java, C, BSH
+\item Wie kann auf den Datenbankserver zum Testen zugegriffen werden?
+
+Eigenen Datenbankserver aufsetzen, Herr Ringel stellt Dump bereit.
+\item LED-Leuchtturm enthält nur grüne/rote/gelbe LED?
+
+Ja, es reichen 3 LED
+\item Echtzeit? 
+
+„Echtzeitnah“: (im Durchschnitt) spätestens 1 Sekunde nach dem der Eintrag in der Datenbank ist soll die Lampe aktualisiert sein. Nicht pollen, sondern trigger für DB erstellen.
+\item Werte der Datenbank?
+
+Cinderella auf der HTW-Seite enthält Datenbank-Schema, Processing=grün, Idle=gelb, Wartung=rot
+\item Dokumentation?
+    \begin{itemize}
+    \item Cheat Sheet (Wie kann unser Produkt in Betrieb genommen werden? $\to$ bspw. Rechte, die Programm braucht) -- eine doppelseitige A4-Seite 
+    \item Programmdokumentation (Java = javadoc,....)
+    \item Technische Dokumentation bzgl. der Datenbankskripte
+    \end{itemize}
+\item Darf die Software Quelloffen sein?
+
+Ja
+\end{itemize}
+\subsubsection{Anforderungen}
+\paragraph{Muss}
+\begin{itemize}
+\item Maschinenzustand aus PostgreSQL-Datenbank lesen
+\item Innerhalb von einer Sekunde Datenbankzustand darstellen
+\item Darstellen der 5 vorhandenen Zustände mit LED-Lämpchen:
+\begin{itemize}
+\item grün: processing
+\item gelb: idle
+\item rot leuchtend: Wartung
+\item rot blinkend: Maschine kaputt
+\item nicht leuchtend: Maschine nicht in DB vorhanden / Maschine nicht aktiv
+\end{itemize}
+\item Konfigurierbarkeit:
+\begin{itemize}
+\item Welche Maschine (in DB) dargestellt werden soll
+\item An welchen PINs sind die LEDs angeschlossen ist
+\item Datenbankdaten
+\end{itemize}
+\item Dokumentation / Bedienungsanleitung (s.o.)
+\end{itemize}
+\paragraph{Kann}
+\begin{itemize}
+\item Lampe wird gebaut (und mit Zusatzfeatures bestückt, wie bspw. 12V LEDs)
+\item Software als Service/Deamon im Raspberry
+\item Monitoring, ob Dienst/Software noch läuft (ob sozusagen von außen das Programm "angepingt" werden kann)
+\end{itemize}
+\paragraph{Rahmenbedingungen}
+\begin{itemize}
+\item Datenbank und Programm laufen innerhalb eines LAN-Netzwerkes
+\item Software darf quelloffen sein
+\item Zubehör, das gestellt wird:
+\begin{itemize}
+\item Raspberry Pi
+\item Arduino
+\item Steckboard
+\item Netzteil
+\item 10-15 Euro für LEDs + Widerstände
+\end{itemize}
+\end{itemize}
+
+\subsection{Nächste Schritte}
+\begin{tabular}{L{.249} L{.2} L{.25} L{.25}}
+Betreff & Frist & Verantwortliche(r) & Involviert\\\hline
+Entwurf an Herrn Ringel & 28.04.2017 & Entwerfer / Analyst & Entwerfer / Analyst\\
+\end{tabular}
+\end{document}

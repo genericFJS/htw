@@ -1,0 +1,236 @@
+\documentclass[ignorenonframetext, 11pt, table]{beamer}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\input{\pathtomaster/htwcd_beamer.sty}
+
+\author{Simon Retsch}
+\title{\texttt{ledleuchtturm} -- Implementation}
+\date{18.07.2017}
+
+\usepackage{pgfpages}
+\setbeameroption{show notes on second screen=right}
+\begin{document}
+\author{Simon Retsch}
+\title{\texttt{ledleuchtturm} -- Implementation}
+
+\begin{frame}[plain]
+\begin{center}
+\includegraphics[width=.7\textwidth]{\pathtomaster/HTW.eps}
+\end{center}
+\maketitle
+\end{frame}
+
+\section{Inhalt}
+\begin{frame}
+\begin{enumerate}
+\setlength\itemsep{0.2em}
+%\item Worin bestand Ihre spezielle  Aufgabe (vielleicht auch mehere)  in der Belegarbeit?
+%\item Welches theoretische Wissen aus Vorlesung, Praktikum, anderen Quellen  war Voraussetzung für die Lösung Ihrer Aufgabe?
+%\item Wie haben Sie dieses Wissen konkret für die Lösung Ihrer Aufgabe eingesetzt?
+%\item Welche Erfahrungen haben Sie dabei gesammelt? (in fachlicher Hinsicht und auch im Hinblick auf die gemeinsame Arbeit in einer Gruppe)
+%\item Was würden Sie wieder so machen, d.h. was hat sich bewährt?   
+%\item Was würden Sie anders machen, d.h. was hat sich nicht bewährt?
+\note[item]<1>{Zunächst zum Ablauf der Präsentation}
+\item <2->Aufgaben des Implementierenden
+\item <3->Ablauf des Projektes
+\begin{itemize}
+	\item <4->Fragen zum Entwurf
+	\item <5->Erste Versuche
+	\item <6->Prototyp und erste Funktionen
+	\item <7->Zuteilungen von Aufgaben
+	\item <8->Auslagerung der Funktionen
+	\item <9->Finales Programm
+\end{itemize}
+\item <10->Fazit
+\end{enumerate}
+\end{frame}
+
+\section{Aufgabe des Implementierenden}
+\begin{frame}
+	\begin{itemize}
+		\item <1->Lauffähiges Programm erstellen
+		\item <2->Umsetzung des Entwurfs
+		\item <3->Freiheit für kleine Abweichungen
+		\item <4->Kommunikation mit:
+		\begin{itemize}
+			\item <5->Entwerfer
+			\item <6->Qualitätsmanager
+			\item <7->Tester
+			\item <8->Dokumentierer
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+
+
+\section{Ablauf}
+	\subsection{Fragen zum Entwurf}
+\begin{frame}
+	    \note[item]<1>{Fragen des Entwerfenden die im Vorraus geklärt werden mussten}
+	\begin{itemize}
+		\item <2->Programmiersprache
+		    \note[item]<2>{Programmiersprachen zur Auswahl: C/C++, Java, Python}
+		    \note[item]<2>{Kriterium: GPIO ansteuerung}
+		    \note[item]<2>{Einlesen einer XML oder Python Datei}
+		\begin{itemize}
+			\item <3->Python
+			    \note[item]<3>{Trotz das nur 3 Leute richtig gut Python konnten}
+		\end{itemize}
+		\item <4->Dateiformat Konfigurationsdatei
+		    \note[item]<4>{Einlesen einer Konfigurationsdatei}
+		    \note[item]<4>{Am besten gleich in Variablen oder Objekt}
+		    \note[item]<4>{Kleiner Test zeigte, geht in Python gut mit Json}
+		\begin{itemize}
+			\item <5->Json
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+	\subsection{Erste Versuche}
+\begin{frame}
+	    \note[item]<1>{Erste Versuch unabhängig vom späteren Gesamtprodukt}
+	    \note[item]<1>{Entscheidungshilfe für Programmiersprache und Dateiformat}
+	\begin{itemize}
+		\item <2->GPIO Pins ansteuern
+		\item <3->Objekt in Json File speichern
+		\item <4->Json File einlesen
+	\end{itemize}
+\end{frame}
+
+	\subsection{Prototyp und erste Funktionen}
+\begin{frame}
+	    \note[item]<1>{Programm nimmt erste Formen an}
+	\begin{itemize}
+		\item <2->Funktionsköpfe des Entwurfs übernehmen
+		    \note[item]<2>{Alle Funktionen die im Aktivitätsdiagramm umschriebene wurden}
+		    \note[item]<2>{Nur Köpfe und ret definiert}
+		\item <3->Erste Interaktion der Funktionen
+		    \note[item]<3>{Datei als Argument übergeben und Infos auslesen}
+		    \note[item]<3>{Status ändern und LEDs ansteuern}
+		\item <4->Prototyp Funktionen: nicht fehlerfrei
+		    \note[item]<4>{Funktionen waren noch nicht bereit für Tests}
+		    \note[item]<4>{Probephase oder noch nicht erstellt}
+	\end{itemize}
+\end{frame}
+
+	\subsection{Zuteilungen von Aufgaben}
+\begin{frame}
+	    \note[item]<1>{zunehmender Zeitdruck (auch andere Projekte)}
+	\begin{itemize}
+		\item <2->Qualitätsmanager: Datei-Funktionen
+		    \note[item]<2>{einige Funktionen die sich mit der Dateiarbeit beschäftigen}
+		    \note[item]<2>{Prüfen der Validität von Json Dateien}
+		\item <3->Dokumentierer: Led-Funktionen
+		    \note[item]<3>{einige Funktionen die sich mit den LEDs beschäftigen}
+		    \note[item]<3>{Blink-Thread}
+		\item <4->Datenbankbeauftragter: Datenbank-Funktionen
+		    \note[item]<4>{Empfangen von Updates durch Sockets}
+		\item <5->Kontrolle und Test
+		    \note[item]<5>{Sichtprüfung und Funktionskontrolle der abgelieferten Funktionen}
+		    \note[item]<5>{Einpflegen in den Prototyp}
+	\end{itemize}
+\end{frame}
+
+	\subsection{Auslagerung der Funktionen}
+\begin{frame}
+	\begin{itemize}
+		\item <2->Instruktion des Qualitätsmanagers
+		    \note[item]<2>{Auf Anmerkungen des QM hin}
+		
+		\item <3->Dateien:
+		\begin{itemize}
+			\item <4->fileFunc.py
+			        \note[item]<4>{Alle Funktionen welche sich mit der Erstellung oder Bearbeitung von Dateien beschäftigen.}
+			\item <5->dbFunc.py
+			        \note[item]<5>{Alle Funktionen welche sich mit der Datenbank beschäftigen.}
+			\item <6->ledFunc.py
+			        \note[item]<6>{Alle Funktionen welche sich mit dem Ansteuern der LEDs beschäftigen.}
+			\item <7->stdFunc.py
+			        \note[item]<7>{Alle Funktionen welche zur Entwicklung oder Fehlersuche des Programms nötig sind.}
+			\item <8->ledleuchtturm.py
+			        \note[item]<8>{Hauptdatei der Software, import ...Func.py Dateien und Aufruf der Funktionen}
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+	\subsection{Finales Programm}
+\begin{frame}
+	    \note[item]<1>{Erstellung des wirklichen Programmes}
+	\begin{itemize}
+		\item <2->Struktur des Aktivitätsdiagramms
+		    \note[item]<2>{Mehr oder weniger Streng an Diagramm halten}
+		\item <3->Lauffähiges Programm
+		    \note[item]<3>{Von Beginn ab bis zum aktuellen Entwicklungsstand lauffähig}
+		\item <4->Hinzufügen von fehlerfreien Funktionen
+		    \note[item]<4>{'Endstand' der Funktionen aus Entwicklersicht}
+		\item <5->Zum Test freigegeben
+		    \note[item]<5>{Damit zum Test freigegeben}
+	\end{itemize}
+\end{frame}
+
+
+
+\section{Fazit}
+\begin{frame}
+\begin{itemize}
+	\item <2->Aufgabenbereich nicht verlassen
+	\note<2>{Aufgabenbereich nicht verlassen}
+	    \note[item]<2>{Schwer im eigenen Bereich zu bleiben: gerade Entwurf}
+	    \note[item]<2>{Andere Vorstellungen vom Aufbau der Konfigurationsdatei}
+	    \note[item]<2>{Man muss es akzeptieren und gehen lassen, dann wird es einfacher}
+	    \note[item]<2>{Teamgedanke wird stärker}
+	\item <3->Zuteilungen von Aufgaben
+	\note<3>{Zuteilungen von Aufgaben:}
+	    \note[item]<3>{Manchmal Stress}
+	    \note[item]<3>{Andere Projekte}
+	    \note[item]<3>{Angenehm Aufgaben zu verteilen}
+	\item <4->Persönliche Erfolge
+	\begin{itemize}
+		\item <5->Python
+		\note<5>{Python:}
+			\note[item]<5>{Module verwenden}
+			\note[item]<5>{Threads benutzen}
+			\note[item]<5>{Json Dateien einlesen}
+			\note[item]<5>{Exceptions}
+		\item <6->Organisation
+		\note<6>{Organisation:}
+			\note[item]<6>{Aufgaben abgeben}
+			\note[item]<6>{Mit Deadlines arbeiten}
+	\end{itemize}
+	\item <7->Projektarbeit insgesamt
+	\note<7>{Projektarbeit insgesamt:}
+	    \note[item]<7>{Sehr positive Erfahrungen gemacht}
+	    \note[item]<7>{Angenehm im eigenen Bereich zu bleiben bei:}
+	    \note[item]<7>{Analyse}
+	    \note[item]<7>{Entwurf}
+	    \note[item]<7>{Tests}
+	    \note[item]<7>{Und damit zum Testenden (Kollege Torsten)}
+\end{itemize}
+\end{frame}
+
+%\section*{Voraussetzung an Wissen}
+%\begin{frame}
+%Eine neue Folie! Wahnsinn
+%\end{frame}
+%
+%\section*{Anwendung des Wissens}
+%\begin{frame}
+%Ganz schön lang, die Präsentation!
+%\end{frame}
+%
+%\section*{Gesammelte Erfahrungen}
+%\begin{frame}
+%%\end{frame}
+%
+%\section*{Rückblick: Positives}
+%\begin{frame}
+%Gab es positive Seiten?
+%\end{frame}
+
+%\section*{Rückblick: Negatives}
+%\begin{frame}
+%Negative Seiten gab's auf keinen Fall!
+%\end{frame}
+
+
+\end{document}

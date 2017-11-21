@@ -1,0 +1,162 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Testdokumentation}
+\date{}
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+\tableofcontents
+\renewcommand{\maketitle}{}
+\renewcommand{\tableofcontents}{}
+
+\section{Testplan}
+% Einführende Worte: Was soll grob getestet werden, was muss beachtet werden?
+Das Programm wird mit einer Vielzahl Tests auf Fehler geprüft. Es müssen grundsätzlich drei große Bereiche getestet werden, die mit mehreren kleinen Test abgedeckt werden:\bigskip
+
+Der erste Bereich ist die Überprüfung der Konfigurationsdatei beim Start des Programms. 
+Es soll überprüft werden ob eine Konfigurationsdatei existiert: Ist dies nicht der Fall, ist eine Konfigurationsdatei zu erstellen. Des Weiteren muss dem Benutzer ein Hinweis gegeben werden, damit dieser die vom Programm generierte Vorlage der Konfigurationsdatei bearbeiten kann. 
+Falls eine Konfigurationsdatei vorhanden ist, muss überprüft werden ob diese auch beim Start des Programms übergeben wurde. Wenn nicht, so soll das Programm die am Standard-Ablageort vorhandene Konfigurationsdatei benutzen und dem Benutzer mitteilen, dass diese verwendet wird. Beim Start des Programms soll weiterhin überprüft werden, ob die Konfigurationsdatei das richtige Format hat. Falls dies nicht der Fall ist, wird dem Benutzer ein Hinweis angezeigt.
+
+Der zweite Bereich besteht aus der Überprüfung, ob die Verbindung zur Datenbank hergestellt wird. 
+Dazu wird in der Konfigurationsdatei die nötigen Informationen gespeichert um Zugriff auf die Datenbank zu gewähren. Beim Start des Programms wird die Verbindung zur Datenbank hergestellt. Dazu müssen folgende Informationen vorhanden sein: Server, Port, Socketport, Interface, Datenbankname, Passwort, Tabelle und Spalte. Falls keine Verbindung hergestellt werden kann, so wird dem Benutzer eine konkrete Fehlermeldung gezeigt. 
+Wenn die Verbindung zur Datenbank besteht können die Statuswechsel durchgeführt werden.
+
+Der dritte Bereich ist das Testen der Geschwindigkeit der Veränderung der Anzeige beim Statuswechsel der Datenbank. 
+Dazu wird die Zeit vor einem Statuswechsel festgehalten und gemessen die Dauer bis die entsprechende Lampe leuchtet. 
+Weiterhin wird geprüft, in welchem Zeitraum mehrere Statuswechsel durchgeführt werden können. Dies ist wichtig, falls innerhalb kurzer Zeit mehrere Stati in der Datenbank verändert werden.\bigskip
+
+Insgesamt sind also folgende Bereiche durch Tests abzudecken:
+\begin{itemize}
+	\item Konfigurationsdatei
+	\begin{itemize}
+		\item Existiert eine Konfigurationsdatei?
+		\item Hat die Konfigurationsdatei das richtige Format?
+		\item Wurde die Konfigurationsdatei übergeben?
+	\end{itemize}
+	\item Datenbank
+	\begin{itemize}
+		\item Besteht die Verbindung zur Datenbank?
+		\item Werden die Statusänderungen übernommen?
+	\end{itemize}
+	\item Qualitätsanforderungen
+	\begin{itemize}
+		\item Wird ein Statuswechsel der Datenbank innerhalb einer Sekunde angezeigt?
+		\item In welchen Zeitraum können zwei Statuswechsel stattfinden?
+	\end{itemize}
+\end{itemize}
+
+\section{Testfälle}
+% Liste der konkreten Testfälle (am besten Tabellarisch für später).
+\begin{tabular}{L{.3} | L{.65}}
+	Test-Case & Beschreibung \\\hline\hline
+%	Ausführen des Prototyps & Testen ob das Programm ohne Probleme ausgeführt werden kann und ob eine Konfigurationsdatei gefunden wurde. \\\hline
+%	Verbindung mit der Datenbank herstellen & Besteht die Verbindung zur Datenbank und können Statuswechsel durchgeführt werden. \\\hline
+%	Ausführen der neusten Version des Programms & Kann das Programm ohne Probleme ausgeführt werden nach einigen Änderungen \\\hline
+	Ausführen des Programms ohne Konfigurationsdatei & Das Programm wird ohne eine Konfigurationsdatei ausgeführt. \\\hline
+	Ausführen des Programms mit ungültiger Datei & Das Programm wird mit einer ungültigen Datei ausgeführt. \\\hline
+	Ausführen des Programms ohne die Konfigurationsdatei & Das Programm wird ausgeführt, ohne dass eine Konfigurationsdatei beim Start übergeben wurde. \\\hline
+	Ausführen des Programms mit einer Konfigurationsdatei & Das Programm wird mit Übergabe einer vorhandenen Konfigurationsdatei ausgeführt. \\\hline
+	Verbindung zur Datenbank & Prüfen der Verbindung zur Datenbank und der durchgeführten Statuswechsel. \\\hline
+	„Eine Sekunde“ & Prüfen, ob die Statuswechsel in der Datenbank innerhalb einer Sekunde durchgeführt werden. \\\hline
+	Zwei aufeinanderfolgend Updates & Prüfen, in welchem Zeitraum mehrere Statuswechsel durchgeführt werden können.
+\end{tabular}
+
+%\section{Testdaten}
+%% ??? (Jonatan: bin mir nicht sicher, was hier rein soll... irgendwelche Ideen?)
+%Bei der Übergabe der Konfigurationsdatei beim Ausführen des Programms müssen folgende Daten enthalten sein:
+%\begin{itemize}
+%	\item \lstinline~server~: 
+%	Unter welcher IP-Adresse die Datenbank erreichbar ist.
+%	\item \lstinline~port~: 
+%	Welcher Port muss geöffnet werden, eine Verbindung aufzubauen.
+%	\item \lstinline~socketport~: 
+%	Welcher Port muss geöffnet werden, eine Verbindung aufzubauen.
+%	\item \lstinline~interace~: 
+%	Wie wird die Netzwerkverbindung hergestellt.
+%	\item \lstinline~dbname~: 
+%	Wie heißt die Datenbank in der die Statuswechsel durchgeführt werden soll.
+%	\item \lstinline~username~: 
+%	Welcher Benutzer hat Zugriff auf die Datenbank.
+%	\item \lstinline~password~: 
+%	Wie lautet das Passwort womit sich eingeloggt wird.
+%	\item \lstinline~table~: 
+%	In welcher Tabelle soll der Statuswechsel durchgeführt werden.
+%	\item \lstinline~column~: 
+%	In welcher Spalte soll der Statuswechsel durchgeführt werden.
+%\end{itemize}
+
+\section{Testprotokolle}
+% Liste der konkreten Testfälle mit den erreichten Testergebnissen erweitern.
+\subsection{Tests der Prototypen}
+\subsubsection*{Prototyp (Version 16.06.2017)}
+\newcommand{\beginTestTabular}{\begin{tabular}{>{\footnotesize\tt}L{.21}|L{.23}|C{.129}|C{.128}|L{.3}}
+{\normalsize\sffamily Funktion} & Test-Case & Erwartete Reaktion & Reaktion & Bemerkungen \\\hline\hline}
+\beginTestTabular
+	blinkThread & Run & OK & OK & - \\\hline
+	newblinkThread & Run & OK & OK &  - \\\hline
+	CheckArgument\newline\hspace*{1em}ForConfigFile & Run & OK & Fehler & configFile not defined\\\hline
+	ConfigFileExists & Run & OK & Fehler & missing argument: configFile\\\hline
+	ConfigFile\newline\hspace*{1em}validJsonFile & Run & OK & Fehler & missing argument: configFile\\\hline
+	getDBinfo & Run & Fehler & Fehler & missing argument: configFile\\\hline
+	testDBconnection & Run & Fehler & Fehler & missing argument: dbinfo\\\hline
+	checkForDBmessage & Run & Fehler & Fehler & missing argument: trigger\\\hline
+	loadCurrent\newline\hspace*{1em}MaschineState & Run & OK & Fehler & state not defined\\\hline
+	compareMa\newline\hspace*{1em}schineNames & Run & Fehler & Fehler & missing argument: maschineName\\\hline
+	setState & Run & Fehler & Fehler & missing argument: state \& Pins\\\hline
+	checkfor\newline\hspace*{1em}ExitCommand & Run & Fehler & Fehler & missing argument: missing argument: exitcommand\\\hline
+	createStdconf & Run & OK & OK & - \\\hline
+	getJsonFileObject & Run & OK & Fehler & missing argument: filename\\\hline
+	printConfig\newline\hspace*{1em}Settings & Run & OK & Fehler & missing argument: jsonFileObject
+\end{tabular}
+\subsubsection*{Datenbank (Version 22.06.2017)}
+\beginTestTabular
+	getDBinfo & Verbindung DB & OK & Fehler & missing argument: ConmfigFile\\\hline
+	testDBconnection & Verbindung DB & OK & Fehler & missing argument: dbinfo\\\hline
+	checkForDBmessage & Verbindung DB & OK & Fehler & missing argument: trigger\\
+\end{tabular}
+\subsubsection*{LedLeuchtturm (Version 25.06.2017)}
+\beginTestTabular
+	CheckArgument\newline\hspace*{1em} ForConfigFile & Run & OK & Fehler & Keine Konfigurationsdatei als Argument übergeben \\\hline
+	configFileExists & Run & OK & OK & Konfigurationsdatei gefunden \\\hline
+	testDBconnection & Run & OK & OK & Verbindung zur Datenbank erfolgreich \\\hline
+	getCurrentDBstate & Run & OK & Fehler & Es konnte kein valider erster Status für die aktuelle Maschine abgefragt werden 
+\end{tabular}
+\subsection{Tests der finalen Version}
+\subsubsection*{Start ohne ConfigFile}% - 28.06.17}
+\beginTestTabular
+	CheckArgument\newline\hspace*{1em} ForConfigFile & Starten ohne dass ConfigFile existiert & Fehler & Fehler & Keine Konfigurationsdatei als Argument übergeben. \\\hline
+	configFileExists & Starten ohne Existenz einer ConfigFile & Fehler & Fehler & Konfigurationsdatei wurde nicht gefunden. \newline Muster-Konfigurationsdatei wurde erstellt. \newline Programm wird beendet.
+\end{tabular}
+\subsubsection*{Start und ungültige Datei übergeben}% - 28.06.17}
+\beginTestTabular
+	CheckArgument\newline\hspace*{1em} ForConfigFile & Ungültige Datei & Fehler & Fehler & Keine Konfigurationsdatei als Argument übergeben. \newline Standard Konfigurationsdatei wird benutzt. \\\hline
+	configFileExists & Ungültige Datei & Fehler & Fehler & Konfigurationsdatei gefunden.
+\end{tabular}
+\subsubsection*{Start mit Configfile (nicht übergeben)}% - 28.06.17}
+\beginTestTabular
+	CheckArgument\newline\hspace*{1em} ForConfigFile & ConfigFile nicht übergeben & OK & OK & Keine Konfigurationsdatei als Argument übergeben. \newline Standard Konfigurationsdatei wird benutzt. \\\hline
+	configFileExists & ConfigFile nicht übergeben & OK & OK & Konfigurationsdatei gefunden.
+\end{tabular}
+\subsubsection*{Start und Configfile (übergeben)}% - 28.06.17}
+\beginTestTabular
+	CheckArgument\newline\hspace*{1em} ForConfigFile & ConfigFile wurde übergeben & OK & OK & Konfigurationsdatei als Argument übergeben. \newline Standard Konfigurationsdatei wird benutzt. \\\hline
+	configFileExists & ConfigFile wurde übergeben & OK & OK & Konfigurationsdatei gefunden.
+\end{tabular}
+\subsubsection*{Verbinden mit der Datenbank}% - 28.06.17}
+\beginTestTabular
+	testDBconnection & Verbindung DB & OK & OK & Verbindung zur Datenbank erfolgreich 
+\end{tabular}
+\subsubsection*{„Eine Sekunde“}% - 01.07.17}
+\beginTestTabular
+	OneSecondTest & Statuswechsel unter 1 sec & OK & OK & Änderung des Statuswechsel innerhalb von 0.4 sec
+\end{tabular}
+\subsubsection*{Zwei Updates hintereinander}% - 01.07.17}
+\beginTestTabular
+	update2updateTest & In welchen Zeitraum werden zwei Statuswechsel durchgeführt? & unter 1 sec & unter 0.5 sec & Nach mehreren Versuchen ergab sich ein Zeitraum von maximal 0.5 sec
+\end{tabular}
+\end{document}

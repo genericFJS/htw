@@ -1,0 +1,108 @@
+\subsection{Aufgaben}
+Der Dokumentierende ist für sämtliche Dokumente im Zusammenhang mit der Projektarbeit verantwortlich. Das beinhaltet nicht nur die Inhalte der Dokumente, sondern auch das Layout und das Erarbeiten der Struktur ebendieser. So müssen Vorlagen für Dokumente wie die Protokolle erstellt werden, die von der Gruppe ausgefüllt werden können.
+
+Zur Verantwortung bezüglich der Dokumentation kommen auch noch delegierte Aufgaben der Gruppenmitglieder hinzu. Dies war insbesondere die Implementation der Funktionen rund um die Ansteuerung der LEDs.
+\subsection{Ablauf}
+
+Der Anfang des Projekts bestand aus einigen Gruppentreffen, die der Organisation dienten. In dem Zusammenhang wurde bereits die erste Aufgabe des Dokumentierenden klar: Es musste eine Vorlage für die Protokolle der Gruppentreffen entworfen werden. Dabei wurde Wert darauf gelegt, dass die Protokolle und alle weiteren Dokumente, ein professionelles Erscheinungsbild haben sollen. Mit dieser Voraussetzung wurde Textverarbeitungssoftware wie \emph{Microsoft Word} ausgeschlossen und ein passendes Textsatzsystem ausgewählt: LaTeX. Da das Corporate Design der HTW Dresden keine Vorlagen für wissenschaftliche Dokumente liefert, wurde auf Basis des Corporate Design Leitfadens ein neue LaTeX-Vorlage erstellt: Zuerst für die allgemeinen Dokumente, später auch für die LaTeX-Präsentation.
+
+Mit dem entwickelten Layout konnte die Struktur der Protokolle festgesetzt werden, die als Vorlage diente (siehe \autoref{lst:dok:protokoll}).
+\begin{lstlisting}[language={[LaTeX]TeX}, label=lst:dok:protokoll, caption=Auszug der Vorlage für Protokolle]
+\maketitle
+\section{Gruppentreffen ???}	%%% ??? = DATUM!
+\begin{tabular}[t]{p{.25\linewidth} p{.25\linewidth}}
+\emph{Beginn:}				& ???		\\
+\emph{Ende:}					& ???		\\
+\emph{Ort:}						& ???		\\
+\emph{Anwesend:}			& ???	\\
+\emph{Abwesend:}			& --		\\
+\emph{Protokollant:}	& ???
+\end{tabular}
+\paragraph{Tagesordnungspunkte}
+\begin{itemize}
+\item 
+\end{itemize}
+
+\subsection{TOP ???}
+
+\subsection{Nächste Schritte}
+\begin{tabular}{L{.249} L{.2} L{.25} L{.25}}
+Betreff & Frist & Verantwortliche(r) & Involviert\\\hline
+???
+\end{tabular}
+\end{lstlisting}\bigskip
+
+Als erster Milestone der Projektarbeit musste für den Kunden ein Pflichtenheft auf Basis eines Grobentwurfs entwickelt werden. Dies geschah vor allem in Gruppenarbeit. Ein besonderes Augenmerk wurde darauf gelegt, so wenig wie möglich als Anforderung zu erfassen und so viel wie möglich in die Kundenwünsche zu schieben. Auf diese Weise konnte sicher gestellt werden, dass das Projekt mit hoher Wahrscheinlichkeit nicht an zu viel versprochenen Features scheitert. \bigskip
+
+Mit dem Pflichtenheft konnte der Feinentwurf voran getrieben und zur Implementation übergegangen werden. Da die Programmiersprache Python einigen Gruppenmitgliedern noch relativ unbekannt war, wurde mit einem Minimalbeispiel die Struktur von Python Paketen und Modulen entworfen. Daran konnten sich alle Gruppenmitglieder im Zweifelsfall orientieren. Ähnlich wurden auch einige Beispieltests zu trivialem Beispielcode geschrieben, um dem Testenden die Funktionsweise und Struktur der unit-Tests zu verdeutlichen.
+
+Zur Implementation gehört auch die Dokumentation des Codes. Dazu wurde das JavaDoc-ähnliche System EpyDoc verwendet. Der Vorteil von EpyDoc war unter anderem, dass die damit verfassten Kommentare auch als LaTeX-Dokument exportiert werden konnten. Somit war eine nahtlose Bindung mit der restlichen Entwicklerdokumentation problemlos möglich. Die einzige Schwierigkeit bei EpyDoc bestand darin, dass die ausgegebene Dokumentation in Englischer Sprache war. Dem entsprechend mussten Schlüsselwörter wie „function“ oder „author“ noch ins Deutsche übersetzt werden.
+
+Zum Thema EpyDoc wurden ebenfalls Minimalbeispiele entwickelt, um dem Implementierenden zu verdeutlichen, wie der Code zu dokumentieren ist. \bigskip
+
+Im Verlauf der Implementationsphase kam die Frage auf, wie die Statuswechsel von der Datenbank in Erfahrung gebracht werden können. Dass ein Trigger entwickelt werden musste war selbstverständlich. Es stellte sich jedoch die Frage, wie dieser Trigger die Information weiterleitet. 
+
+Eine Variante war die Lösung mit Sockets, eine andere mit MQTT. Nachdem der Grundaufbau der Trigger (unabhängig von der gewählten Lösung) erarbeitet war, wurde ein kleiner Prototyp für die MQTT-Lösung parallel zu dem Haupt-Sockets-Prototyp entwickelt. Die Gruppe bewertete letztendlich die Vor- und Nachteile der beiden Lösungen und entschied sich letztendlich für Sockets.
+
+Während der Implementation wurden einige Programmieraufgaben vom Implementierenden an den Dokumentierenden delegiert, wie beispielsweise das Programmieren einer Funktion \lstinline`changeStatus()` mit allen damit verbundenen Funktionen: Das Modul der LED-Funktionen. Ein großer Teil davon bestand aus dem Entwickeln einer Thread-basierten Lösung für das Blinken der LEDs.\bigskip
+
+Zum Ende der Implementationsphase gewann die Dokumentation des Projektes wieder an Bedeutung. Mit dem Erfüllen eines Hauptzieles der Projektarbeit, der Fertigstellung des Produktes, mussten alle Notizen und Gedanken dokumentarisch zusammengetragen werden.
+
+Dabei war erneut wichtig eine Struktur und präzise Vorgaben zu bieten, sodass sich jedes Gruppenmitglied seiner Aufgaben bewusst war (siehe \autoref{lst:dok:prefab_entwicklerdoku} und \autoref{lst:dok:prefab_projektdoku}).
+
+\begin{lstlisting}[language={[LaTeX]TeX}, label=lst:dok:prefab_entwicklerdoku, caption=Auszug der Vorlage der Entwicklerdokumentation]
+% Anmerkung: Entwicklerdokumentation = Programmiererdokumentation (Pflichtenheft /DA2/)
+\section{Grobentwurf}
+% Grobentwurf aus Pflichtenheft entnehmen und noch mal als Dokumentation aufarbeiten.
+\section{Feinentwurf}
+% Feinentwurf aus Entwurf/Entwurf.tex noch mal aufarbeiten und Dokumentieren.
+\section{Struktur des Codes}
+% Struktur des Codes (wie er abgegeben wurde) festhalten. 
+% Wie sind die Dateien/Packet(e) organisiert?
+% Alle Dateien beschreiben: Überblick verschaffen.
+% Am besten (statt Klassendiagramm) ein "Datei-Diagramm" erstellen.
+% Muss so eindeutig sein, dass Fremde mithilfe dises Abschnitts einen Überblick erhalten können und zusammen mit dem PyDoc das Programm ohne viel Nachforschung weiterentwickeln könnten => Anleitung, wie etwas verändert werden könnte!
+\end{lstlisting}
+
+\begin{lstlisting}[language={[LaTeX]TeX}, label=lst:dok:prefab_projektdoku, caption=Auszug der Vorlage der Projektdokumentation]
+\section{Projektplan}
+% Projektplan vorstellen und ggf. auf Änderungen, die sich ergeben haben eingehen. Auch auf Vorgehensmodell (Agil, ...?) eingehen. Vergleich Ist/Soll: was sollte erreicht werden/was wurde erreicht?
+\section{Projektleitung}
+% Was wurde gemacht? Was waren Herausforderungen? Was war einfach? Was hat man gelernt? => Kann bzw. Soll sich mit Inhalten aus Abschlusspräsentation doppeln (gute Vorbereitung :-) ).
+\end{lstlisting}
+
+Ein bedeutender Aufwand bestand schließlich darin, die von der Gruppe verfassten Dokumente aufzuarbeiten, um eine angemessene Qualität zu erreichen. So mussten bei einigen Passagen große inhaltliche und grammatikalische Korrekturen vorgenommen und andere Passagen erst noch geschrieben werden. Da ein Gruppenmitglied der englischen Sprache mächtiger war als der deutschen, mussten die von ihm verfassten Inhalte weiterhin ins Deutsche übersetzt werden.\bigskip
+
+Zum Schluss galt es die Vorlage für die Präsentation zu erstellen. Dazu musste ein LaTeX Dokument enstprechend der \emph{PowerPoint}-Vorlage der HTW Dresden angepasst werden. Eine erarbeitete Struktur gab der Gruppe wieder wichtige Anhaltspunkte, welche Inhalte in die Präsentation gehören. Aufgrund der Eigenheiten einer LaTeX-Präsentation mussten für die unerfahreneren Gruppenmitglieder einige Bespiele zur Animation und dem Grundaufbau eines LaTeX-Beamer-Dokuments erstellt werden.
+
+\subsection{Herausforderungen}
+Eine große Herausforderung des Dokumentierenden ist es, alle Schritte der Projektarbeit im Blick zu behalten, da jeder Schritt ein Teil der Dokumentation ist. Dementsprechend gab es während des gesamten Projektverlaufs unabhängig von Delegiertem immer wieder Aufgaben zu erledigen. Der Überblick war auch nötig, um die Struktur der Dokumente zu entwickeln.
+
+Des Weiteren war das Delegieren selbst nicht ganz einfach. Im Verlauf des Projekts hat sich herauskristallisiert, dass es zwischen Gruppenmitgliedern sehr divergente Ansprüche und Motivationen gab. Folglich war es nicht immer einfach abzuwägen, ob durch das Delegieren Arbeit eingespart wird, oder Mehrarbeit durch nachträgliche Korrekturen erzeugt wird.
+
+\subsection{Persönliches Fazit}
+Insgesamt bin ich von der Projektarbeit sehr enttäuscht. Während ich das Ergebnis -- das Produkt -- sehr gut finde, habe ich mir unter dem Projekt mehr vorgestellt. Das Projekt scheint mir zu klein für so viele Gruppenmitglieder. 
+%Um das zu verdeutlichen sind im Folgenden vergleichbare Prüfungs(vor)leistungen grob nach der Aufwand sortiert aufgelistet (höchster Aufwand zuerst):
+%\begin{itemize}
+%\item Computergraphik 1 (PVL, unbenotet)
+%\item Programmierung 1 (APL, Teil der Modulnote)
+%\item Programmierung 2 (APL, Teil der Modulnote)
+%\item Software Engineering 2 (APL, Gesamte Modulnote)
+%\item Rechnernetze (APL, Teil der Modulnote)
+%\item Internettechnologien 1 (APL, Teil der Modulnote)
+%\item Computergraphik 2 (PVL, unbenotet)
+%\end{itemize}
+%Bei allen Belegen hatte ich eine Entwurfsphase, habe eine Art Pflichtenheft für mich anfertigt und eine  Dokumentation geschrieben. Das Paradoxe ist, dass das Modul mit dem (subjektiv eingeschätzt) höchsten Aufwand unbenotet ist, während die Projektarbeit in Software Engineering 2 ein komplette Modulnote ausmacht. 
+
+Die Größe des Projektes ist verständlicher Weise klein, da vor allem in dem vierten Fachsemester viele Belege in anderen Fächer anstehen. Auch das Anliegen des Moduls, ein großes Team im Projekt zu simulieren, ist nachvollziehbar. Bloß ist es nicht möglich diese beiden Punkte miteinander in Einklang zu bringen.
+
+Wenn ich dieses Projekt selbstbestimmt wiederholen sollte, würde ich die Gruppe maximal halb so groß wählen. Mit dieser Gruppengröße von 3-4 Personen könnte das gesamte Projekt -- inklusive Entwurf, Implementation und Dokumentation -- mit einem Arbeitspensum von einem verlängerten Wochenende abgeschlossen werden.
+
+So hat das Projekt ein ganzes Semester gedauert und bestand größtenteils daraus, über Entscheidungen zu reden, anstatt sie zu treffen. In meiner Wahrnehmung war das der Qualität des Arbeitsprozesses in der Regel nicht zuträglich und hat viele Ergebnisse verzögert.\bigskip
+
+Unabhängig davon gab es zwei Bereiche, bei denen ich mich mittlerweile anders entschieden hätte: Zum einen würde ich das Projekt nicht noch einmal prozedural implementieren. Obwohl es bei der geringen Größe angemessen ist, nicht objektorientiert zu entwickeln, habe ich an einigen Stellen gemerkt, dass es vielleicht auch von Vorteil gewesen wäre. Des Weiteren gefiel mir die MQTT-Lösung besser als die Lösung mit Sockets. Auch wenn dafür mehr Infrastruktur durch den Broker vorhanden sein muss, scheint mir eine MQTT-Lösung vielseitiger, flexibler und damit zukunftssicherer.
+
+Insgesamt habe ich gemerkt, dass ich viele bereits gesammelte Erfahrungen in das Projekt einfließen lassen konnte: Beim Pflichtenheft habe ich darauf geachtet, dass möglichst wenig als Anforderung erfasst wurde (Es gibt schließlich nichts geschenkt!). Allgemein konnte ich meine Gruppenmitglieder im Thema LaTeX, git und Python (inklusive EpyDoc) unterstützen und war diesbezüglich eine der ersten Anlaufstellen bei Fragen.
+
+Diese Erfahrungen habe ich allerdings nicht in Lehrveranstaltungen der HTW Dresden gesammelt, sondern über die Jahre größtenteils selber angeeignet -- so, wie ich sie auch durch dieses Projekt selbstständig erweitert habe. Einzig bei der Entwicklung des Blinkens der LEDs kamen mir die Lehrveranstaltungen, die sich mit Threads beschäftigt haben zu Gute: Betriebssysteme 2 und Programmierung von Komponentenarchitekturen.
+

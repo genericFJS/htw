@@ -1,0 +1,103 @@
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Protokoll Gruppentreffen}
+\def\datename{}
+\date{08.06.2017}	%%% ??? = DATUM!
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+\section{Gruppentreffen 08.06.2017}	%%% ??? = DATUM!
+\begin{tabular}[t]{p{.25\linewidth} p{.25\linewidth}}
+\emph{Beginn:}				& 11:10\\
+\emph{Ende:}					& 12:00\\
+\emph{Ort:}						& Z136b\\
+\emph{Anwesend:}	& 
+Ragnar\newline
+Torsten\newline
+Simon\newline
+Eric\newline
+Ben\newline
+Jonatan\newline
+Jürgen
+\\
+\emph{Abwesend:}		 & 
+Raphael 
+\\
+\emph{Protokollant:}& Eric Schmidtgen
+\end{tabular}
+\paragraph{Tagesordnungspunkte}
+\begin{itemize}
+\item Evaluation eines IBM MQTT
+\item Evaluation von Sockets 
+\end{itemize}
+
+\subsection{Bewertung MQTT}
+\begin{itemize}
+\item[$-$] MQTT ist für unsere Aufgabe evt. zu umfangreich $\to$ großer Aufwand
+\item Programm wartet auf den Broker (anstatt an Socket zu lauschen)
+\item[$+$] es muss nur an den Pi gehen, der den Broker installiert hat
+\item[$+$] flexibler, da hier kein Aufwand besteht, einen neuen Socket anzulegen
+\end{itemize}
+
+\subsection{Bewertung Sockets}
+\begin{center}
+Vorteile/Nachteile Sockets/MQTT\\
+\begin{longtable}{L{.45} L{.45}}
+Sockets & MQTT\\\hline
+$+$ entspricht Pflichtenheft & \\
+$-$ braucht für jedes Tool extra Trigger, die explizit eingerichtet werden müssen & $+$ benötigt nur einen Trigger, der Änderungen abhängig von Tool in Subtopic schreibt\\
+$-$ Instanzen des Programms müssen deswegen mühevoll eingerichtet werden & $+$ Beliebig viele Instanzen (auch mehrere für ein Tool) können ohne Aufwand gestartet werden\\
+$-$ braucht IP von DB-Server (erstes Abfragen des Zustands) und IP vom Pi, auf dem ledleuchtturm läuft (für Einrichtung Trigger) & $+$ braucht nur IP von MQTT-Broker (kann sogar problemlos Internetadresse sein)\\
+$\circ$ muss Initialzustand aus DB holen und dann an Socket lauschen & $\circ$ bekommt alle Zustände (auch Initialzustand) über Subscription (Trigger muss allerdings einmal [irgendwann unabhängig vom Programm] aktiviert worden sein)\\
+ & $-$ braucht extra Software, die laufen muss (Broker)\\
+$-$ braucht extra Paket für Verbindung zu DB (für Initialstatus Abfrage) & $-$ braucht extra Paket für MQTT\\
+$-$ Nur so viele Instanzen möglich, wie offene Ports am Pi-/DB-Rechner vorhanden (eher weniger relevant) & $+$ beliebig viele Instanzen möglich\\
+\end{longtable}
+\end{center}
+\begin{itemize}
+\item Vorrangiges Argument: Sockets sind im Pflichtenheft verankert, MQTT nicht. MQTT bräuchte zusätzliche Software (Broker). Deswegen trotz der Vorteile von MQTT lieber Sockets.
+\item Kann es sein, dass wir in 2 Wochen Probleme mit unseren Sockets bekommen?\\
+$\to$ Wahrscheinlich nicht: Ragnar hat eine Sockets-Lösung bereits erstellt und getestet und es hat alles funktioniert:
+\begin{itemize}
+\item jede Maschine hat eigenen Trigger (nicht: ein Trigger mit mehreren Unterscheidungen)
+%\item die Trigger könnten sie konfiguriert werden, dass sie nur das schicken, was geändert wurde
+\item das Programm lauscht auf dem jeweiligen Socket
+\end{itemize}
+%\item[$-$] mit Socket müssen wir jedes mal einen neuen Port anlegen
+\item jeder Pi hat ggf. eine eigene IP
+%\item der Konfigurationsaufwand wäre doch genau so groß
+%\item die Gefahr ist zu groß, dass ein Paket verloren geht, wenn wir mit Sockets arbeiten
+%\item woher weiß der Nutzer, auf welchen Port der Empfang ansteht
+%\item zudem hält der Projektleiter Rücksprache mit Herrn Ringel
+\item Eine Schablone soll angelegt werden, damit der Kunde den Trigger in der Datenbank anlegen kann
+%\item Kann noch etwas schief gehen?
+%\begin{itemize}
+%\item Software Probleme
+%\item wollen wir alle Statusänderungen an alle Sockets schicken?
+%\end{itemize}
+\end{itemize}
+
+\subsection{Sonstiges}
+\begin{itemize}
+\item Es sollte auf Programmierung Coding Guidlines geachtet werden:\\
+Variablennamen, Konstanten, …
+\item finales Package anlegen mit einer \lstinline`__init__`\\
+$\to$ wichtig für die Tests
+\item auch das Python Skript von Ragnar muss geprüft werden
+\item Quellcode soll gut dokumentiert sein
+\end{itemize}
+
+
+\subsection{Nächste Schritte}
+\begin{tabular}{L{.249} L{.2} L{.25} L{.25}}
+Betreff & Frist & Verantwortliche(r) & Involviert\\\hline
+
+Sockets weiter ausbauen & & Ragnar & \\
+Empfang vorbereiten bzw. Sockets anlegen & & Simon & \\
+\end{tabular}
+
+\end{document}

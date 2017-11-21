@@ -1,0 +1,124 @@
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Entwurf}
+\def\datename{}
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+\section{Einleitung}
+	In den kommenden Seiten wird der konzeptionelle Feinentwurf beschrieben. Er beinhaltet alle Diagramme, Richtlinien, Hinweise und Dateien, die notwendig für die Implementierung sind. Aufgabe des Entwurfes ist es, die Implementation und Entwicklung der geforderten Software mit ihren Rahmenbedingungen und Anforderungen in ihrer hinreichenden Komplexität handhabbar zu gestalten. Somit wird auf alle wichtigen Punkte, Sachverhalte und Probleme eingegangen, die in Verbindung zum Erstellen des Produktes stehen.\\ Als Grundlage für den Entwurf wird das Pflichtenheft genommen, welches von Eric Schmidtgen (Analyst) erstellt wurde und von Jürgen Tomaszewski (Projektleiter) sowie unserem Auftraggeber unterschrieben wurde. 
+\section{Programmierstandards}	
+\subsection{Programmiersprache}	
+	Da nicht nur der Implementierer, sondern mindestens auch der Qualitätssichernde, der Datenbankbeauftragte und der Projektleiter den Quellcode verstehen muss, ist es wichtig, dass sich gemeinsam auf eine Programmiersprache geeinigt wird. Zur Auswahl standen die Programmiersprachen C, Java und Python. Das Programm LED-LEUCHTTURM wird mit der Programmiersprache Python geschrieben, da mit dieser Programmiersprache Dateiarbeit und die Anbindung zur Datenbank relativ leicht umsetzbar ist. Die Version 2.7.0. ist auf den meisten Linuxsystemen standardisiert. 
+\subsection{Quellcode}
+	Der Programmcode ist Sauber und Verständlich zu halten. Da die Qualität des Quellcodes von Raphael Pour (Qualitätsmanager) überprüft wird, sind hier nur erste Richtlinien für den Quellcode.\\
+	Variablennamen und Kommentare sind im Quellcode in Englisch zu verfassen. Jede Funktion im Quellcode \textbf{muss} einen Rückgabewert besitzen, damit geprüft werden kann, ob die Funktionen korrekt abgearbeitet wurden. Erst nachdem man den Rückgabewert geprüft hat, werden die Ausgaben (siehe \autoref{entw:ausg}) gemacht.
+	
+	Der Implementierer darf im Quellcode Funktionen ändern oder hinzufügen, soweit es die funktionalen Anforderungen (siehe \autoref{entw:funktAnf}) nicht beeinträchtigt.
+\newpage
+\section{Diagramme}
+ERM, Klassendiagramm und Anwendungsfalldiagramm entfallen, da sie in diesem Kontext nicht gewinnbringend sind: 
+\begin{itemize}
+\item Das Programm ist aufgrund des relativ geringen Umfangs nicht objektorientiert. Es wird also kein Klassendiagramm benötigt. Dem entsprechend entfällt auch das ERM.
+\item Das Programm beschränkt sich auf einen Anwendungsfall (Programm wird gestartet).
+\end{itemize}
+Somit besteht der Entwurf ausschließlich aus folgenden Elementen:
+\begin{itemize}
+	\item Aktivitätsdiagramm des vollständigen Programms, wie es im Pflichtenheft festgehalten wurde (\autoref{entw:aktdia}) mit funktionalen Anforderungen (\autoref{entw:funktAnf}) und Ausgaben (\autoref{entw:ausg})
+	\item Schaltskizze (\autoref{entw:schltsk})
+	\item Zustandsdiagramm (\autoref{entw:zstdia})
+	\item Konfigurationsdatei mit einem Beispiel (\autoref{entw:konf})
+\end{itemize}	
+\subsection{Aktivitätsdiagramm}
+	Das Aktivitätsdiagramm beschreibt den regulären Ablauf des Programms vom Start bis zum Beenden. Grundsätzlich gab es hier die Herausforderung, alle notwendigen funktionalen Anforderungen in das Aktivitätsdiagramm einzubringen und gleichzeitig nur den Programmablauf zu beachten. Es werden keine mögliche Implementationslösungen betrachtet.\newpage
+\label{entw:aktdia}
+\begin{center}
+\includegraphics[width=.99\textwidth , trim={0.5cm 2.1cm 0.4cm 1cm},clip]{Aktivitaetsdiagramm_include}
+\end{center}
+
+\newpage
+\subsection{Funktionale Anforderungen}
+\label{entw:funktAnf}
+	Die unten genannten Funktionalen Anforderungen \textbf{müssen} in unserer Software umgesetzt werden.
+\begin{center}
+\resizebox{.99\textwidth}{!}{
+\begin{tabular}{ | C{.13} | L{.35} | L{.2} | L{.2}  | L{.17} | }
+	\hline
+	Kennung	& Funktion	& Eingangsdaten	& Ausgangsdaten & Ausgabe \\ \hline\hline
+	$F_{1}$ & Prüfe, ob eine Konfigurations- datei mit Pfad angehängt ist	& angehängte Konfigurationsdatei	& Konfigurationsdatei	&	 $A_{1},A_{2}$\\ \hline
+	
+	$F_{2}$ & Prüfe, ob die Konfigurations- datei gefunden wird 	& Konfigurationsdatei	& & $A_{3},A_{4.1},A_{4.2}$\\ \hline
+	$F_{3}$ & Prüfe, ob es sich um die Konfigurationsdatei handelt	& Konfigurationsdatei	& 	& $A_{5}$,$A_{6}$\\ \hline
+	$F_{4}$ & Lade Datenbankinformationen aus der Konfigurationsdatei 	& Konfigurationsdatei& Datenbankinformationen & \\ \hline
+	$F_{5}$ & Teste die Verbindung zur Datenbank & Datenbankinformationen	&	& $A_{7},A_{8}$\\ \hline
+	$F_{6}$ & Prüfe, ob Nachricht von Datenbank-Trigger eingetroffen & Datenbank-Trigger	&		&\\ \hline
+	$F_{7}$ & Lade den aktuellen Status der	Maschine aus der Datenbank & & Status	&\\ \hline
+	$F_{8}$ & Vergleiche Maschinenname des Triggers mit dem Maschinenname der Konfigurationsdatei & Maschinenname &		&\\ \hline
+	$F_{9}$ &Ansteuern der LEDs Entsprechend der Vorgabe & Status	& Status	& $A_{9}$\\ \hline
+	$F_{10}$ &Prüfe, ob Abbruchbefehl eingegeben wurde& Abbruchbefehl	&	&$A_{10}$\\ \hline
+	$F_{11}$ &Erstelle Konfigurationsdatei mit Struktur, falls kein Pfad angehängt wurde& 	&	&\\\hline
+\end{tabular}
+}
+\end{center}
+
+\newpage
+\subsection{Ausgaben}
+\label{entw:ausg}
+	Hier werden die Nachrichten, die das Programm auf der Konsole ausgibt, aufgelistet. Diese Tabelle soll die unterschiedlichen Meldearten darstellen, die der Implementierer dann so umzusetzen hat. Alle Nachrichten an den Nutzer werden in Deutsch verfasst. 
+\begin{center}
+	\begin{tabular}{ | C{.2} | L{.5} | L{.25} | }
+	\hline
+	Kennung & Nachricht	& Art \\ \hline\hline
+	$A_{1}$	& verwende den Standardpfad für Konfigurationsdatei	& Information	\\ \hline
+	$A_{2}$	& verwende angehängten Pfad mit Konfigurationsdatei	& Information	\\ \hline
+	$A_{3}$	& Konfigurationsdatei gefunden	& Info	\\ \hline
+	$A_{4.1}$	& Konfigurationsdatei nicht gefunden	& Fehler	\\ \hline
+	$A_{4.2}$	& Konfigurationsdatei nicht gefunden,erstelle Muster-Konfigurationsdatei	& Fehler	\\ \hline
+	$A_{5}$	& Handelt sich nicht um Konfigurationsdatei	& Fehler	\\ \hline
+	$A_{6}$	& Verarbeite Konfigurationsdatei	& Info	\\ \hline
+	$A_{7}$	& Verbindung zur Datenbank fehlgeschlagen	& Fehler 	\\ \hline
+	$A_{8}$	& Verbindung zur Datenbank	Erfolgreich  Start Abbruchbefehl	& Info	\\ \hline
+	$A_{9}$	& Statusänderung,Farbe,Zeit	& Status	\\ \hline
+	$A_{9}$	& Programm wird beendet	& Status	\\ \hline	
+\end{tabular}
+\end{center}
+
+\newpage
+\subsection{Schaltskizze}
+Im folgendem wird eine Skizze betrachtet. Das  heißt der Aufbau muss im Realen nicht dieser Skizze entsprechen. Die LEDs müssen jedoch einen entsprechenden Vorwiderstand haben. Die Pinbelegung am RaspberryPi ist variabel und kann später über die Konfigurationsdatei (\autoref{entw:konf}) angepasst werden.
+\label{entw:schltsk}
+\begin{center}
+\includegraphics[scale=1]{Schaltskizze}
+\end{center}
+
+\newpage
+\subsection{Zustandsdiagramm}
+\label{entw:zstdia}
+Das Zustandsdiagramm beschreibt alle Zustände, die ausgehend von der Datenbank eintreten können. Die Software hat 5 wechselbare Zustände, die über die drei LEDs sichtbar gemacht werden können. Der Implementierer muss die Zustände genauso im Programm umsetzen.
+\begin{center}
+\includegraphics[width=.99\textwidth , trim={1.9cm 1.7cm 1.9cm 3.5cm},clip]{Zustandsdiagramm_include}
+\end{center}
+
+\newpage
+\subsection{Konfigurationsdatei}
+	In der Konfigurationsdatei werden alle variablen und zur Laufzeit des Programms notwendigen Informationen gespeichert. Standards sind hier besonders wichtig, da das Programm die Datei an einem bestimmten Ort öffnet und den Inhalt entsprechend filtern wird.
+\subsubsection*{Richtlinien}
+\label{entw:konf}
+\begin{itemize}
+	\item Standart-Konfigurationsdatei heißt Std-Conf-LedLeuchtturm.json
+	\item Standart-Konfigurationsdatei liegt im selben Verzeichnis wie das Programm
+\end{itemize}
+
+\subsubsection*{Beispiel}
+\label{entw:konfbsp}
+Die Konfigurationsdatei Std-Conf-LedLeuchtturm.json kann von der Software selbst erstellt werden. Siehe F11 (\autoref{entw:funktAnf}). 
+\lstinputlisting[%frame=none
+, numbers=none]{Std-Conf-LedLeuchtturm.json}
+
+
+
+\end{document}

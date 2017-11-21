@@ -1,0 +1,26 @@
+
+        {
+            "ledleuchtturm":{
+
+                "maschine":{
+                    "name":"default"
+                },
+
+                "database":{
+                    "server":"default",
+                    "port":"default",
+                    "dbname":"default",
+                    "username":"default",
+                    "password":"default",
+                    "table":"default",
+                    "column":"default"
+                },
+
+                "hardware":{
+                    "green":16,
+                    "yellow":20,
+                    "red":21
+                }
+            }
+        }
+        

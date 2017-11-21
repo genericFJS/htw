@@ -1,0 +1,83 @@
+/*
+
+    @author:		Ragnar Luga
+    @date:		20.06.2017
+    @descriptiom:	Instructions to install a local Postgressql database,
+    			create a user, restore the project database from the dump,
+    			and create the neccessary triggers.
+    			
+    @resources:		Raphael's .sql file, thanks!
+    			Guide on the internet
+    			LINK: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04
+*/
+
+/* THE FOLLOWING COMMANDS ARE EXECUTED BY DIFFERENT TERMINALS */
+/* COMMENTS WILL BE GIVEN, WHERE COMMANDS SHOULD BE EXECUTED IN [] BRACKETS */
+
+    // First refresh/update the package indexes  [linux/bash]
+    sudo apt-get update
+    
+    // Install postgresql [linux/bash]
+    sudo apt-get install postgresql postgresql-contrib
+
+    //Log in to the postgres as the user postgres [linux/bash]
+    sudo -i -u postgres
+    
+    
+    // Create a user with the same name as your linux user!! IMPORTANT [linux/postgres]
+    // Make it a superuser.
+    createuser --interactive
+    
+    // Create a new database with your name [linux/postgres]
+    // This is actually not needed, but strongly recommended.
+    // When we se the psql command from linux bash, it logs us automatically into 
+    // a database named with your linux user. Altough we practically don't
+    // need another database, it is strongly recommended to follow the instructions
+    // unless you know what you are doing.
+    createdb <yourname>
+    exit
+    
+    // Log into your new database with your own user [linux/bash]
+    sudo -i -u <yourname>
+    // Log into the Postgres session [linux/postgres]
+    psql
+    
+    // Run Raphaels script to create a foundation for our new database 'se2'. [linux/postgres/session]
+    // Download the files from our Dropbox and extract them to the SAME DIRECTORY
+    // where you logged into the Postgres session (last 2 steps).
+    // Or log out from the session with \q and change the directory to the downloaded files
+    // and relog into the session.
+    // NB! Extract the dump from the .gz file
+    //
+    // \i psql_dump_bootstrap.sql
+    // Log out
+    // \q
+    // Now we restore the database
+    
+    // Restore the database. [linux/bash]
+    // #READ CAREFULLY!#
+    // Restore the database to our database (yourname) or to the newly created 'se2' (from Raphael's script) 
+    // The difference is that if you restore it to 'se2' you will specially have to log in to that
+    // database from the linux bash with this command
+    //
+    // psql -d se2
+    //
+    // I accidentally restored the dump to my own database (agular) on the first time, but the script file
+    // is actually only necessary (maybe) when we create it on a server and want 
+    // others to have access to it. So for easier access we are going to restore the dump
+    // to OUR DATABASE (yourname), since it only requires a simple bash command to log into it.
+    //
+    // psql <yourname> < vwdump
+    //
+    // Log into the database and list the tables to confirm dump recovery. [linux/bash]
+    // psql
+    // or
+    // psql -d se2 if you restored the dump into the se2 database
+    //
+    // List the tables [linux/postgres/session]
+    // \d
+
+    
+    //
+    // The database is restored, now follow the instructions from Ragnar's trigger file to
+    // install plpython into the database and create the triggers.

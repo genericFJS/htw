@@ -1,0 +1,230 @@
+\documentclass[ignorenonframetext, 11pt, table]{beamer}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\input{\pathtomaster/htwcd_beamer.sty}
+
+\usepackage{listings}
+\usepackage{enumitem}
+\date{18.07.2017}
+\author{Raphael Pour}
+\title{\texttt{ledleuchtturm} -- Qualitätsmanagement}
+\usepackage{pgfpages}
+\setbeameroption{show notes on second screen=right}
+
+% Powerpoint Vorlage: https://www.htw-dresden.de/intern/marketing/corporate-design.html
+% (Anmelden und dann Link noch mal aufrufen)
+\begin{document}
+\author{Raphael Pour}
+\title{\texttt{ledleuchtturm} -- Qualitätsmanagement}
+\begin{frame}[plain]
+\note{KEIN ÄHM SAGEN!\\
+\begin{itemize}
+    \item Wer bin ich?
+    \item Was waren meine Aufgaben als QM?
+    \item Wie habe ich die Qualität des Produkts beeinflusst?
+\end{itemize}
+}
+\begin{center}
+\includegraphics[width=.7\textwidth]{\pathtomaster/HTW.eps}
+\end{center}
+\maketitle
+\end{frame}
+%
+% Bilder
+%
+% Checkliste
+% https://pixabay.com/de/checkliste-liste-%C3%BCberpr%C3%BCfen-marke-1919328/
+% https://pixabay.com/de/checkliste-%C3%BCberpr%C3%BCfen-liste-marker-2077021/
+\section{Inhalt}
+\begin{frame}
+\begin{itemize}
+    \item
+Software-Qualität \note{Qualitätsanforderungen erfüllen\\}
+\begin{itemize}
+\setlength\itemsep{0.2em}
+    \item<2-> Coding-Guideline
+    \item<3-> Qualitätsmeetings
+    \item<4-> Der "`eine Sekunde"' Test
+\end{itemize}
+\item 
+Team-Qualität\note{Qualität des Produkts indirekt durch gute Kommunikation und Organisation beeinflussen\\Team-Qualität = Prozess-Qualität}
+\begin{itemize}
+\setlength\itemsep{0.2em}
+    \item<5-> Teamwerkzeuge
+\end{itemize}
+    \item<6-> Rückblick\note<6->{$\blacksquare$}
+\end{itemize}
+\end{frame}
+
+\section{Software-Qualität}
+\note{Qualitätsmeetings zur Überprüfung der Qualität\\}
+\begin{frame}
+\begin{itemize}
+    \item<1-> Verifizieren\note<1->{Verifizieren: Wurde das Richtige Konzept verwendet (Implementierer)\\}
+    \item<2-> Validieren\note<2->{Validieren: Wurde das Konzept richtig angewendet (Tester)}
+\end{itemize}
+
+\begin{figure}
+    \includegraphics[scale=1]{tools-2145775_640.jpg}\pause
+    \includegraphics[scale=0.2]{confused-880735_640.jpg}
+\end{figure}
+
+\end{frame}
+
+\subsection{Coding Guideline}
+\begin{frame}
+\begin{center}
+\Huge Code-Qualität?\note{Codequalität voraussetzen}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\setlength\itemsep{0.2em}
+    \item<1->Lesbarkeit
+    \item<2->Einheitlich programmiert
+    \item<3->Validierung des Codes \note<3->{$\blacksquare$}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{lstlisting}[language=python,basicstyle=\tiny,caption={\url{http://wiki.c2.com/?ObfuscatedPython}}]
+  print ''.join('%(pre)s%(num)s %(bot)s on the wall, %(nul)s %(bot)s,\n%(tak)s\n' % (lambda c,b:
+  {'pre':['','%s %s on the wall.\n\n' % (c,b)][abs(cmp(c,'Ninety-nine'))],
+ 'num':c, 'nul':c.lower(), 'bot':b,
+ 'tak':['Go to the store and buy some more... Ninety-nine %s.' % b,'Take one down, pass it around,'][abs(cmp(x,0))]
+  })((lambda x,o: [(['Twenty','Thirty','Forty','Fifty',
+  'Sixty','Seventy','Eighty','Ninety'][x/10-2]+'-'+o.lower()).replace('-no more',''), o][int(x<20)])(x, ['No more','One','Two',
+  'Three','Four','Five','Six','Seven','Eight',
+  'Nine','Ten','Eleven','Twelve','Thirteen','Fourteen',
+  'Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'][[x,x%10][int(x>=20)]]),'bottle%s of beer' % ['','s'][abs(cmp(x,1))])
+  for x in xrange(99,-1,-1))
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\note{
+\begin{itemize}
+    \item Python Enhancement Proposals $\Rightarrow$ Python Verbesserungsvorschlag
+    \item 2001 entwickelt
+    \item von Python-Erfinder Guido van Rossum
+    \item IDE Unterstützung/ Python-Modul
+\end{itemize}
+}
+\begin{center}
+\Huge PEP-8
+\end{center}
+\end{frame}
+
+\begin{frame}
+\note{Python Code mit PEP-8 Fehler}
+\begin{center}
+\includegraphics[scale=0.5]{pep8_2.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\note{Python Code ohne PEP-8 Fehler}
+\begin{center}
+\includegraphics[scale=0.5]{pep8_1.png}
+\end{center}
+\end{frame}
+
+\subsection{Qualitätsmeetings}
+\begin{frame}
+    \begin{itemize}
+        \item<1-> Implementierer (Verifizieren)\note<1->{Konzepte ausarbeiten und diskutieren}
+        \item<2-> Tester (Validieren)\note<2->{Prüfen ob Konzepte richtig angewendet worden sind $\blacksquare$}
+    \end{itemize}
+\end{frame}
+\begin{frame}
+    \begin{itemize}
+        \item<1-> Exception Handling vs. Return Code\note<1->{
+Exceptions sind modern, aber müssen richtig abgefangen werden\\
+        }
+        \item<2-> Outsourcen von Funktionen\note<2->{ Funktionen gruppieren\\}
+        \item<3-> Threads vs. Signal Handling\note<3->{Benutzer soll das Programm jederzeit beenden. Aber alles läuft in Endlosschleife.$\blacksquare$}
+    \end{itemize}
+\end{frame}
+
+\subsection{Der "`eine Sekunde"' Test}
+\begin{frame}
+\begin{itemize}
+    \item<1-> Beweis für $\backslash$QA1
+    \item<2-> Wichtig für QM
+    \item<3-> Deadlineverletzung beim Testen
+    \item<4-> Raspberry Pi notwendig
+    \item<5-> $\Rightarrow$ Spontane Arbeitsgruppe\note<5->{$\blacksquare$}
+\end{itemize}
+\end{frame}
+
+\section{Team-Qualität -- Teamwerkzeuge}
+\begin{frame}
+    \begin{itemize}
+        \item Kommunikation  
+        \item Organisation  
+    \end{itemize}
+\end{frame}
+\begin{frame}
+    \begin{itemize}
+        \item Kommunikation  $\Rightarrow$ Nachrichtendienst
+        \item Organisation  $\Rightarrow$ Dateiverwaltung
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\note{
+\begin{itemize}
+    \item Schnelle Kommunikation
+    \item Immer Dabei
+    \item Viele ungelesene Nachrichten
+    \item Viele unwichtige Nachrichten
+\end{itemize}}
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{im.png}
+\caption{Nachrichtendienst}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\note{
+\begin{itemize}
+    \item keine Dateikonflikte mehr
+    \item Durch Commit-Historie ein Projektverlauf einsehbar
+\end{itemize}}
+\begin{figure}
+   \centering
+   \includegraphics[scale=0.65]{git.png}
+   \caption{Git}
+\end{figure}
+\end{frame}
+\section{Rückblick}
+\begin{frame}
+\begin{figure}
+\centering
+\includegraphics[scale=1]{rear-mirror-167580_640.jpg}
+\end{figure}
+\end{frame}
+\subsection{Vor-/Nachteile}
+\begin{frame}
+\begin{itemize}[label=-]
+    \item<1-> Gruppengröße $>>$ Aufgabengröße \note<1->{Jeder bleibt in seiner Rolle und fühlt sich für andere Sachen nicht verantwortlich\\}
+    \item<2-> schnelle Über-/Unterschätzung der Rolle\note<2->{Bevormundung/fehlende Initiative\\ Fehlende Kommunikation mit dem Tester}
+    \item<3-> fehlendes messbares Produkt \note<3->{Tester hat Tests, Implementierer hat Code, usw.\\}
+\end{itemize}
+\begin{itemize}[label=+]
+    \item<4-> Komplexere Organisation erforderlich \note<4->{Keiner kann das Wissen von allen anderen haben, Einteilung, man konnte sich nicht durch geschickte Aufteilung um Kollisionen drücken\\}
+    \item<5-> Freie Wahl der Werkzeuge,Sprache, Vorgehensweise
+    \item<6-> Implementierer beraten\note<6->{Konzepte diskutieren$\blacksquare$}
+\end{itemize}
+\end{frame}
+\subsection{Fazit}
+\begin{frame}
+\begin{itemize}
+    \item<1-> Neue Perspektive\note<1>{1/3}
+    \item<2-> Erfahrungen in großem Team\note<2>{2/3}
+    \item<3-> $\Rightarrow$ Lieber Implementierer\note<3->{3/3$\blacksquare$}
+\end{itemize}
+\end{frame}
+\end{document}

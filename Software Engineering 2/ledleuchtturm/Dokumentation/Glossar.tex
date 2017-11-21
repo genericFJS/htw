@@ -1,0 +1,60 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrartcl}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\thesis{Glossar}
+\date{}
+
+\input{\pathtomaster/globalDocumentSettings}
+\begin{document}
+\maketitle
+%\tableofcontents
+\renewcommand{\maketitle}{}
+\renewcommand{\tableofcontents}{}
+
+% In den Glossar gehört jedes Wort, das die Kassiererin an der Kasse nicht verstehen würde. Ggf. sogar (scheinbar triviale) Worte wie "Projektplan"...
+{
+\renewcommand*{\arraystretch}{1.5}
+%\begin{table}[!ht]
+%\label{abkr}
+\begin{center}
+\begin{longtable}{>{\bfseries}l L{.35} L{.4}}
+Begriff & Bedeutung & Beschreibung\\\hline
+Broker & Software zum Verteilen von Nachrichten bei MQTT\\
+Commit& git-Befehl zum Hinzufügen eigener Änderungen zum lokalen git-Repository&\\
+Deadline & Frist & Frist, zu der etwas fertig gestellt werden muss.\\
+EpyDoc & Dokumentation für Python & Bietet Möglichkeiten Code zu kommentieren und daraus eine Dokumentation zu erzeugen.\\
+ERM & Entity Relationship Modell & \\
+Exception & Ausnahmebehandlung einer Programmiersprache& Exception-Handling ist Praktik, um Fehler systematisch abzufangen und zu verarbeiten ohne einen Programmabsturz hervorzurufen.\\
+GanttProject/gantt & Software zum Planen von Projekten &\\
+Gantt-Plan & Ein Projektplan, der mit gantt erstellt wurde\\
+git & Versionsverwaltungssystem&\\
+GPIO& \emph{General Purpose Input Output} (Hardwareschnittstelle des RaspberryPi)& Über diese Schnittstelle können eigene Schaltkreise via Python angesteuert werden.\\
+Instant-Messenger& Elektronisches Internet-Kommunikationsmittel& Kommunikationsmittel zum schnellen Nachrichtenaustausch.\\
+Interface & Schnittstelle & Schnittstelle zwischen Programmen/-teilen.\\
+Json & \emph{JavaScript Object Notation}& Elektronisches Datenaustauschverfahren.\\
+LED & \emph{Light Emmiting Diode} (Leuchtdiode) & Bauteil aus der Elektrotechnik, welches Häufig in Geräten zur Statusanzeige verbaut ist.\\
+Milestone & Meilenstein & Signifikanter Punkt in der Softwareentwicklung.\\
+MQTT & \emph{Message Queue Telemetry Transport} & Verfahren zur Verteilung von Nachrichten.\\
+PEP-8& Python Quellcode-Richtlinien.& Bietet Hilfe bei der Benennung von Variablen oder Kommentierung von Methoden. Methoden zur erhöhten Lesbarkeit.\\
+Polling & Wiederholte Abfrage einer Datenbank\\
+Prototyp & Erstes lauffähiges Stück Software & Deutet finale Funktionalitäten an.\\
+Raspberry Pi & Mini-Recheneinheit & Einplatinencomputer mit vollwertigem Linux und GPIOs als Hardwareschnittstelle.\\
+Repository& Mit git verwaltetes Verzeichnis&\\
+Return-Code& Rückgabewert einer Methode & Methoden einer Programmiersprache weisen immer einen Rückgabewert auf, welcher auf seinen Datentyp vor der Laufzeit definiert sein muss.\\
+Signal-Handling& Bearbeitung von Signalen& Signale können beispielsweise Tastatureingaben und System-Interrupts sein.\\
+Socket & Kommunikationssendepunkt & Sockets werden verwendet, um Daten (in einem Netzwerk) zwischen Computer auszutauschen.\\
+Socketport & Port für eine Socketverbindung &\\
+System-Interrupt & Abbruchbefehl auf Systemebene & Beendet ein Programm.\\
+Thread& Parallele Ausführung & Ermöglicht asynchrones Ausführen von Subroutinen Unterbrechung des Hauptprogramms.\\
+Trigger& Auslöser bei Änderung in einer Datenbank&\\
+Validator & Prüft Quellcode auf syntaktische Korrektheit & Programm oder Mechanismus um mit einer vorher definierten Syntax den Quellcode zu überprüfen.\\
+XML & \emph{Extensible Markup Language}& Sprache zur Darstellung hierarchischer Strukturen.\\
+\end{longtable}
+%\end{table}
+\end{center}
+}
+
+\end{document}
