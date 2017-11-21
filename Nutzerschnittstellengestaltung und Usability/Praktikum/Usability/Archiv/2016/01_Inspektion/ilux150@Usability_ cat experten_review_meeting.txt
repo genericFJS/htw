@@ -1,0 +1,37 @@
+ilux150@Usability> cat experten_review_meeting.txt 
+
+Nr Beschreibung Grundsatz Anzahl-Zutreffend \\ \hline
+1 	& Seite ist stark verschachtelt 	& Klarheit Erkennbarkeit Kompaktheit 		&4 \\
+2	& Suchergebnisse sind suboptimal 	& Klarheit Unterscheidbarkeit Konsistenz	&4 \\
+3	& Funkionalität verstreut			& \neg Lesbarkeit							&4 \\
+4 	& Workflows werden nicht unterstützt& Erkennbarkeit Klarheit					&4 \\
+5	& Englisch ist FUBAR				& Lesbarkeit Konsistenz						&4 \\
+6 	& Besuchte Links nicht markiert		& Lesbarkeit Erkennbarkeit Konsistenz		&2 \\
+7	& Terme nicht immer ein Wort		& Lesbarkeit Verständlichkeit				&3 \\
+8	& Layout wechselt links und rechts	& Konsistenz								&1 \\
+9 	& Alt-Text Bilder fehlt				& Lesbarkeit								&4 \\
+10 	& Seite überladen mit Bildern		& Lesbarkeit								&1 \\
+
+
+enum: 1 Katastrophe
+	\vdots
+		4 Kleiners Problem
+
+Nr 	& Häufigkeit & Hartnäckigkeit 	& Folgen 				& Priorisierung \\ \hline
+1  	& Immer		& Ja				& Unübersichtlichkeit	&	1\\ 
+2	& Sehr oft	& Ja				& Man findet nichts		& 	1\\ %Seitensuche unbenutzbar
+3	& Oft		& Ja				& Zeitverlust			& 	2\\
+4	& Oft		& Ja				& Zeitverlust			&	2\\
+5	& Immer		& Ja				& Informationsverlust	&	1\\
+6 	& Immer		& Nein				& Unübersichtlichkeit	&	4\\
+7	& Manchmal	& Nein				& UnLesbarkeit und Looks&	4\\
+8	& Manchmal	& Nein				& UnLesbarkeit			& 	3\\
+9	& Oft		& Nein				& UnLesbarkeit			&	3\\
+10	& Manchmal	& Nein				& Unübersichtlichkeit	& 	4\\
+
+
+Lösung zu 
+	- 1 Gruppen-spezifische Unterseiten 
+	- 2 Bessere Suchergebnisse, besser strukturierte Ergebnisse, eingrenzbare Suche
+	- 5 Ganze Seite übersetzen, und gleich zur deutschen Version, ggf HTTP-language Erkennung
+
