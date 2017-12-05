@@ -1,0 +1,174 @@
+\section{Grundlagen}
+\lecdate{29.11.2017}
+\slides{V7_VirtuelleMasch}{2}
+
+\subsection{Dreiadressmaschine}
+\slides{V7_VirtuelleMasch}{3}
+\subsection{Zweiadressmaschine}
+\slides{V7_VirtuelleMasch}{4}
+\subsection{Einadressmaschine}
+\slides{V7_VirtuelleMasch}{5}
+\subsection{Nulladressmaschine - Stackmaschine}
+\slides{V7_VirtuelleMasch}{6}
+
+\section{Befehlssatz}
+\slides{V7_VirtuelleMasch}{7}
+\begin{footnotesize}
+\begin{lstlisting}[language=C]
+typedef enum TCODE{
+/*--- Kellerbefehle ---*/
+puValVrLocl,/*00 (short Displ)	[Kellern Wert lokale Variable]								*/
+puValVrMain,/*01 (short Displ)	[Kellern Wert Main Variable]									*/
+puValVrGlob,/*02 (short Displ,short Proc) [Kellern Wert globale Variable]			*/
+puAdrVrLocl,/*03 (short Displ)	[Kellern Adresse lokale Variable]							*/
+puAdrVrMain,/*04 (short Displ)	[Kellern Adresse Main Variable] 							*/
+puAdrVrGlob,/*05 (short Displ,short Proc) [Kellern Adresse globale Variable]	*/
+puConst,		/*06 (short Index)	[Kellern einer Konstanten]										*/
+storeVal,		/*07 ()							[Speichern Wert ->Adresse, beides aus Keller]	*/
+putVal,			/*08 ()							[Ausgabe eines Wertes aus Keller nach stdout]	*/
+getVal,			/*09 () 		[Eingabe eines Wertes von stdin -> Addr. im Keller ]	*/
+/*--- arithmetische Befehle ---*/
+vzMinus,		/*0A ()						 	[Vorzeichen ]																	*/
+odd,				/*0B ()						 	[ungerade -> 0/1]																*/
+/*--- binäre Operatoren kellern 2 Operanden aus und das Ergebnis ein ---*/
+OpAdd,			/*0C ()						 	[Addition] 																		*/
+OpSub,			/*0D ()						 	[Subtraktion ] 																*/
+OpMult,			/*0E ()						 	[Multiplikation ] 														*/
+OpDiv,			/*0F ()						 	[Division ] 																	*/
+cmpEQ,			/*10 ()						 	[Vergleich =  -> 0/1] 												*/
+cmpNE,			/*11 ()						 	[Vergleich #  -> 0/1] 												*/
+cmpLT,			/*12 ()						 	[Vergleich <  -> 0/1] 												*/
+cmpGT,			/*13 ()						 	[Vergleich >  -> 0/1] 												*/
+cmpLE,			/*14 ()						 	[Vergleich <= -> 0/1]													*/
+cmpGE,			/*15 ()						 	[Vergleich >= -> 0/1] 												*/
+/*--- Sprungbefehle ---*/
+call,				/*16 (short ProzNr) [Prozeduraufruf]															*/
+retProc,		/*17 ()							[Rücksprung]																	*/
+jmp,				/*18 (short RelAdr) [SPZZ innerhalb der Funktion]									*/
+jnot,				/*19 (short RelAdr) [SPZZ innerhalb der Funkt.,Beding.aus Keller]	*/
+entryProc,	/*1A (short lenCode,short ProcIdx,short lenVar)										*/
+/*--- Zusätzliche, (für uns) nicht benötigte Befehle ---*/
+putStrg,		/*1B (char[]) 																										*/
+pop,				/*1C																															*/
+swap,				/*1D								Austausch Adresse gegen Wert									*/
+EndOfCode 	/*1E 																															*/
+} tCode;
+\end{lstlisting}
+\end{footnotesize}
+\subsection{Arbeitsweise der Stackmaschine}
+\slides{V7_VirtuelleMasch}{8}
+
+\section{Datenstrukturen der VM}
+\slides{V7_VirtuelleMasch}{9}
+
+\section{Register der VM}
+\slides{V7_VirtuelleMasch}{10}
+
+\section{Prozedurtabelle}
+\slides{V7_VirtuelleMasch}{11}
+
+\section{Initialisierung}
+\slides{V7_VirtuelleMasch}{12}
+\slides{V7_VirtuelleMasch}{13}
+
+\section{Steuerschleife}
+\begin{lstlisting}[language=C]
+typedef int (*fx)(void);
+fx vx[]={
+	FcpuValVrLocl, FcpuValVrMain,
+	FcpuValVrGlob, FcpuAdrVrLocl,
+	FcpuAdrVrMain, FcpuAdrVrGlob,
+	FcpuConst, FcstoreVal,
+	FcputVal, FcgetVal,
+	FcvzMinus, Fcodd,
+	FcOpAdd, FcOpSub,
+	FcOpMult, FcOpDiv,
+	FccmpEQ, FccmpNE,
+	FccmpLT, FccmpGT,
+	FccmpLE, FccmpGE,
+	Fccall, FcRetProc,
+	Fcjmp, Fcjnot,
+	FcEntryProc, FcputStrg,
+	Fpop, Fswap,
+	FcEndOfCode, Fcput,
+	Fcget
+};
+
+while (!Ende){
+	vx[*pC++]();
+}
+
+while (!Ende){
+	switch (*pC++){
+		case puValVrLocl:FcpuValVrLocl(); break;
+		case puValVrMain:FcpuValVrMain(); break;
+		case puValVrGlob:FcpuValVrGlob(); break;
+		case puAdrVrLocl:FcpuAdrVrLocl(); break;
+		case puAdrVrMain:FcpuAdrVrMain(); break;
+		case puAdrVrGlob:FcpuAdrVrGlob(); break;
+		case puConst :FcpuConst(); break;
+		case storeVal :FcstoreVal(); break;
+		case putVal :FcputVal(); break;
+		case getVal :FcgetVal(); break;
+		case vzMinus :FcvzMinus(); break;
+		case odd :Fcodd(); break;
+		case OpAdd :FcOpAdd(); break;
+		case OpSub :FcOpSub(); break;
+		case OpMult :FcOpMult(); break;
+		case OpDiv :FcOpDiv(); break;
+		/* ... */
+		case pop :Fpop(); break;
+		case swap :Fswap(); break;
+		case EndOfCode :FcEndOfCode(); break;
+		case put :Fcput(); break;
+		case get :Fcget(); break;
+	}
+}
+\end{lstlisting}
+
+\section{Prozeduraufruf}
+\slides{V7_VirtuelleMasch}{16}
+\begin{lstlisting}[language=C]
+int Fccall(void){
+	short ProcNr;
+	ProcNr=gtSrtPar(pC);pC+=2;
+	push4((int4_t)(pInfProc[iCProc].pVar));
+	push4((int4_t)pC);
+	pC=pInfProc[ProcNr].pCode;//Sprung zu entryProc
+	push4(iCProc);
+	return OK;
+}
+int FcRetProc(void){
+	pS=pInfProc[iCProc].pVar;
+	iCProc =pop4();
+	pC =(char*)pop4();
+	pInfProc[iCProc].pVar=(char*)pop4();
+	return OK;
+}
+\end{lstlisting}
+\slides{V7_VirtuelleMasch}{18}
+\begin{lstlisting}[language=C]
+/* Entry Procedure */
+int FcEntryProc(void){
+	short lVar;
+	/* Codelaenge ueberlesen */
+	PC+=2;
+	/* Prozedurnummer lesen und einstellen */
+	iCProc=gtSrtPar(pC);pC+=2;
+	/* Variablenlaenge lesen */
+	lVar =gtSrtPar(pC);pC+=2;
+	/* Zeiger auf Variablenbereich */
+	pInfProc[iCProc].pVar=pS;
+	/* Neuer Stackpointer */
+	pS+=lVar;
+	return OK;
+}
+\end{lstlisting}
+
+\section{Rekursion}
+\slides{V7_VirtuelleMasch}{20}
+
+\section{Prozedur mit Parametern}
+Parameter wird vor Aufruf auf den Stack geschrieben. Dieser hat die relative Adresse -16 (die erste lokale Variable hat die relative Adresse 0, Die Adresse der Funktion sind 3 Byte, daher haben dann Parameter die Adresse ab -16).
+\slides{V7_VirtuelleMasch}{21}
+
