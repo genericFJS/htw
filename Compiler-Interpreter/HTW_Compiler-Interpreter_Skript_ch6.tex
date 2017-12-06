@@ -1,13 +1,138 @@
-%\section{Grundlagen}
-%\slides{V6_Codegen}{1}
+\lecdate{06.12.2017}
+\section{Grundlagen}
+\slides{V6_Codegen}{1}
+\section{Funktionen zur Codegenerierung}
+\slides{V6_Codegen}{3}
+\begin{lstlisting}[language=C]
+// Schreibt am aktuellen Programmcounter
+void wr2ToCode(short x){
+	*pCode++=(unsigned char)(x & 0xff);
+	*pCode++=(unsigned char)(x >> 8);
+}
+// Schreibt an der übergebenen Stelle
+void wr2ToCodeAtP(short x,char*pD){
+	* pD =(unsigned char)(x & 0xff);
+	*(pD+1)=(unsigned char)(x >> 8);
+}
+// Schreibt Befehl mit 0, 1, 2 oder 3 Parametern in den Codeausgabepuffer
+int code(tCode Code,...){
+	va_list ap;
+	short sarg;
+	if (pCode-vCode+MAX_LEN_OF_CODE>=LenCode){
+		char* xCode=realloc(vCode,(LenCode+=1024));
+		if (xCode==NULL) Error(ENoMem);
+		pCode=xCode+(pCodevCode);
+		vCode=xCode;
+	}
+	*pCode++=(char)Code;
+	va_start(ap,Code);
+	switch (Code){
+		/* Befehle mit 3 Parametern */
+		case entryProc:
+			sarg=va_arg(ap,int);
+			wr2ToCode(sarg);
+		/* Befehle mit 2 Parametern */
+		case puValVrGlob:
+		case puAdrVrGlob:
+			sarg=va_arg(ap,int);
+			wr2ToCode(sarg);
+		/* Befehle mit 1 Parameter */
+		case puValVrMain:
+		case puAdrVrMain:
+		case puValVrLocl:
+		case puAdrVrLocl:
+		case puConst:
+		case jmp :
+		case jnot:
+		case call:
+			sarg=va_arg(ap,int); // Prozedurnummer
+			wr2ToCode(sarg);
+			break;
+		/* keine Parameter */
+		default :
+			break;
+		}
+	va_end (ap);
+	return OK;
+}
+\end{lstlisting}
 
+\section{Variablen zur Codegenerierung}
+\slides{V6_Codegen}{7}
+\subsection{EntryProc}
+Vor der eigentlichen Codegenerierung ist der Befehl \lstinline`entryProc(Codelen, ProcIdx, VarLen)` zu generieren, dies erfolgt in dem Nil-Bogen vor statement (siehe \autoref{6-block}: bl6). CodeLen bleibt zunächst 0, ProcEdx ist die aktuelle Prozedur und VarLen ist dem SpzzVar zu entnehmen.
+\subsection{programm}
+Nur eine Aktion, wenn die Kompilierung bis hier gekommen ist $\to$ Abschlussarbeiten.
+\slides[.5]{V6_Codegen}{8}
+\subsection{block}
+\label{6-block}
+\slides[.5]{V6_Codegen}{9}
+\slides{V6_Codegen}{10}
+\slides{V6_Codegen}{11}
+\slides{V6_Codegen}{12}
+\subsection{statement}
+\slides[.5]{V6_Codegen}{13}
+\subsection{expression}
+\slides[.5]{V6_Codegen}{16}
+\subsection{term}
+\slides[.5]{V6_Codegen}{17}
+\subsection{factor}
+\slides[.5]{V6_Codegen}{18}
+\subsection{condition}
+\slides[.5]{V6_Codegen}{19}
 
+\subsection{Auszuführende Funktionen in statement}
+\subsubsection{Zuweisungen}
+stx wird jeweils ausgeführt, nachdem die beschriebenen Handlungen schon vollzogen wurden (ident, expression, …)
+\slides{V6_Codegen}{14}
+\subsubsection{conditional statement}
+\slides[.5]{V6_Codegen}{22}
+Beispielcode:
+\begin{lstlisting}[language=C]
+// Procedure
+0000:	1A	EntryProc							0028,0000,0004
+// ?a
+0007:	04	PushAdrVarMain				0000
+000A:	09	GetVal
+// if a>10 then
+000B:	01	PushValVarMain				0000
+000E:	06	PushConst							0000
+0011:	13	CmpGreaterThen
+0012:	19	JmpNot								0004
+// !00
+0015:	06	PushConst							0001
+0018:	08	PutVal
+// if a<=10 then
+0019:	01	PushValVarMain				0000
+001C:	06	PushConst							0000
+001F:	14	CmpLessEqual
+0020:	19	JmpNot								0004
+// !1
+0023:	06	PushConst							0002
+0026:	08	PutVal
 
-
-
-
-
-
-
-
-
+0027:	17	ReturnProc
+Const	0000:0010
+Const	0001:0100
+Const	0002:0001
+\end{lstlisting}
+\subsubsection{loop statement}
+\slides[.5]{V6_Codegen}{23}
+\subsubsection{procedure call}
+\slides[.5]{V6_Codegen}{24}
+%s8 Prozeduraufruf:
+%\begin{itemize}
+%\item Bezeichner global suchen
+%\begin{itemize}
+%\item Nicht gefunden $\to$ Fehlerbehandlung
+%\item Gefunden $\to$ ok.
+%\end{itemize}
+%\item Bezeichnet der Bezeichner eine Prozedur?
+%\begin{itemize}
+%\item Nein, eine Konstante oder Variable $\to$ Fehlebehandlung
+%\item Ja $\to$ ok
+%\end{itemize}
+%\item Codegenerierung call procedurenumber
+%\end{itemize}
+\subsubsection{Eingabe/Ausgabe}
+\slides{V6_Codegen}{15}
