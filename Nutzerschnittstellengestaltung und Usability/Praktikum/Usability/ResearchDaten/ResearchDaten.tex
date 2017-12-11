@@ -1,0 +1,220 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrartcl}
+%\gdef\pathtomaster{../../../../_LaTeX_master}
+%\input{\pathtomaster/htwcd_content.sty}
+%\input{\pathtomaster/fjs_packages-macros.sty}
+%
+%\faculty{Fakultät Informatik/Mathematik}
+%\chair{Lehrstuhl für Multimediale Werkzeuge}
+%\subject{lecture}
+%\title{Nutzerschnittstellen\-gestaltung und Usability}
+%\author{Gruppe Strube und co}
+%\professor{Prof. Dr. Teresa Merino}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{enumitem}
+
+\begin{document}
+%\maketitle
+%\tableofcontents
+
+\section{Gruppe}
+\begin{itemize}
+\item Ben
+\item Eric
+\item Jan
+\item Jonatan
+\item Simon
+\end{itemize}
+
+\section{App-Idee}
+App, die alle möglichen Abos mit Infos (Dauer, Kündigungsfrist, …) anzeigt. Bspw. für Netflix, Zeitungsabos, Vereine, …\
+
+Name: YourSub™
+
+\section{Nutzergruppen}
+\begin{enumerate}
+\item (Junge) Leute, die nur grobe Informationen und einen schnellen Überblick wünschen.
+\item Technikbegeisterte (ältere) Menschen, die alle Informationen zu allen Abos einsehen möchten.
+\end{enumerate}
+
+\section{Personas}
+\resizebox{.99\textwidth}{!}{
+\begin{tabular}{p{2cm}|p{5cm}|p{4cm}|p{5cm}|p{5cm}|p{4cm}}
+Bild & demographische Daten & Zitat & Nutzung mobiler Geräte & Allgemeine App-Nutzung & Wünsche App-Nutzung\\
+\hline 
+\begin{center}
+\includegraphics[width=2cm]{persona_heinrich}
+\end{center} & 
+%\vspace*{-2.5cm}
+\begin{itemize}[leftmargin=*]
+\item Heinrich Böhme
+\item Alter: 61
+\item Beruf: Professor für besondere Künste
+\item Mobiles Gerät: Android Smartphone
+\end{itemize} & 
+\vspace*{2em}
+„Ich will all meine Abos einsehen können und individuelle Details für die Übersicht einstellen können.“ &
+\begin{itemize}[leftmargin=*]
+\item Chattet mit seinen Enkeln
+\item Gelegentliches Versenden von Mails
+\item Nutzung von barrierefreier Apps
+\end{itemize} &
+\begin{itemize}[leftmargin=*]
+\item Nutzt den Überblick der Abos, guckt sich aber auch einzelne Einträge genauer an, um Tarif u.ä. zu vergleichen.
+\item Verändert, welche Details angezeigt werden sollen.
+\end{itemize} &
+\begin{itemize}[leftmargin=*]
+\item Für Sortierung und Anzeige möglichst viele Details anzeigbar.
+\end{itemize}\\
+\hline
+\begin{center}
+\includegraphics[width=2cm]{persona_donnerstag}
+\end{center} &
+\begin{itemize}[leftmargin=*]
+\item Georg Donnerstag
+\item Alter: 37
+\item Beruf: Webentwickler bei Lovoo
+\item Mobiles Gerät: das neuste iPhone
+\end{itemize} &
+\vspace*{2em}
+„Ich habe nicht viel Zeit und brauche einen schnellen Überblick über all meine Abos.“ &
+\begin{itemize}[leftmargin=*]
+\item Viel mit Geräten aktiv.
+\item Mails, Chatten, Musik, Termine, weitere mobile Applikationen
+\end{itemize} &
+\begin{itemize}[leftmargin=*]
+\item Überblick von aktuellen Abos
+\item Neue Abos hinzufügen
+\end{itemize} &
+\begin{itemize}[leftmargin=*]
+\item Bald auslaufende und aktuelle Abos an erster Stelle
+\end{itemize}
+\end{tabular}
+}
+%1. Persona:
+%\begin{itemize}
+%\item Bild:
+%\includegraphics[width=2cm]{persona_heinrich}
+%\item Name, demografische Daten:
+%\begin{itemize}
+%\item Name: Heinrich Böhme
+%\item Alter: 61
+%\item Beruf: Professor für phallische Künste
+%\item Mobiles Gerät: Android Smartphone
+%\end{itemize}
+%\item Zitat:
+%\begin{quote}
+%„Ich will all meine Abos einsehen können und individuelle Details für die Übersicht einstellen können.“
+%\end{quote}
+%\item Nutzung mobiler Geräte:
+%\begin{itemize}
+%\item Chattet mit seinen Enkeln
+%\item Gelegentliches Versenden von Mails
+%\item Nutzung von barrierefreier Apps
+%\end{itemize}
+%\item Allgemeine App-Nutzung:
+%\begin{itemize}
+%\item Nutzt den Überblick der Abos, guckt sich aber auch einzelne Einträge genauer an, um Tarif u.ä. zu vergleichen.
+%\item Verändert, welche Details angezeigt werden sollen.
+%\end{itemize}
+%\item Wünsche für App-Nutzung:
+%\begin{itemize}
+%\item Für Sortierung und Anzeige möglichst viele Details anzeigbar.
+%\end{itemize}
+%\end{itemize}
+%
+%2. Persona:
+%\begin{itemize}
+%\item Bild:
+%\includegraphics[width=2cm]{persona_donnerstag}
+%\item Name, demografische Daten:
+%\begin{itemize}
+%\item Name: Georg Donnerstag
+%\item Alter: 37
+%\item Beruf: Webentwickler bei Lovoo
+%\item Mobiles Gerät: das neuste iPhone
+%\end{itemize}
+%\item Zitat:
+%\begin{quote}
+%„Ich habe nicht viel Zeit und brauche einen schnellen Überblick über all meine Abos.“
+%\end{quote}
+%\item Nutzung mobiler Geräte:
+%\begin{itemize}
+%\item Viel mit Geräten aktiv.
+%\item Mails, Chatten, Musik, Termine, weitere mobile Applikationen
+%\end{itemize}
+%\item Allgemeine App-Nutzung:
+%\begin{itemize}
+%\item Überblick von aktuellen Abos
+%\item Neue Abos hinzufügen
+%\end{itemize}
+%\item Wünsche für App-Nutzung:
+%\begin{itemize}
+%\item Bald auslaufende und aktuelle Abos an erster Stelle
+%\end{itemize}
+%\end{itemize}
+
+\clearpage
+\section{Interviewleitfaden}
+
+\begin{itemize}
+\item Begrüßung
+\item Datenschutz un Anonymität
+\item Erklärung des Ablaufs
+\item Fragen
+\end{itemize}
+
+\section{Interviewfragen}
+\subsection{Demographische Fragen}
+\begin{itemize}
+\item Wie ist Ihr Name?
+\item Wie alt sind Sie?
+\item Welchen Beruf üben Sie zur Zeit aus?
+\item Was machen Sie in Ihrer Freizeit?
+\item Sind Sie Links- oder Rechtshänder?
+\end{itemize}
+\subsection{Alltagsroutine und Handlungen im Kontext von Abos und Apps}
+\begin{itemize}
+\item Welche Erfahrungen haben Sie bereits mit Smartphone-Apps gemacht?
+\item Wie viel Stunden benutzen Sie ihr Smartphone am Tag?
+\item Wie viele Abos haben Sie zur Zeit abgeschlossen (bspw. Ferseh- und Zeitungs-Abos)?
+\item Benutzen Sie bei der Bedienung von Smartphone(-App)s Gesten?
+\end{itemize}
+\subsection{Probleme und Bedürfnisse im Kontext von Abos und Apps}
+\begin{itemize}
+\item Was erwarten Sie von einer guten App, die Daten organisiert darstellt?
+\item Haben Sie schon einmal eine App bewusst deinstalliert? Wenn ja: Warum?
+\item Haben Sie häufig Probleme mit der Leserlichkeit von Smartphone-Apps? Größe der Schrift? Farbige Darstellung?
+\end{itemize}
+\subsection{Wünsche und Ziele im Kontext von Abos und Apps}
+\begin{itemize}
+\item Ist Ihnen eine kurze Einführung der Bedienmöglichkeiten von Apps beim ersten Start wichtig? Ist Ihnen eine Selbsterklärende App wichtiger? Möchten Sie beides?
+\item Legen Sie großen Wert auf Einstellmöglichkeiten zur Leserlichkeit von Apps (bspw. Schriftgröße)? 
+\item Legen Sie großen Wert auf Einstellmöglichkeiten zur Anpassung der Detailansicht?
+\item Wie viele und welche Details halten Sie bei der Auflistung der Abos für ein einzelnen Eintrag für sinnvoll?
+\item Wie viele und welche Details halten Sie bei der Einzelansicht eines Abos für sinnvoll?
+\end{itemize}
+\subsection{Nutzung von vergleichbaren Apps}
+\begin{itemize}
+\item Nutzen Sie andere Produkte, um am Smartphones Daten zu verwalten (Passwortmanager, …)?
+\item Wenn ja: Welche? Wie zufrieden sind sie mit der Struktur und Bedienbarkeit dieser Apps?
+\end{itemize}
+\subsection{Allgemeines Feedback}
+\begin{itemize}
+\item Haben Sie noch Anmerkungen zum Thema Abos, Apps und konkret unserer App-Idee?
+\end{itemize}
+
+\section{Entwicklergedanken}
+\begin{itemize}
+\item App sollte von Haus aus schon Anbieter zur Auswahl bieten. Nicht alle Daten sollen manuell eingegeben werden.
+\end{itemize}
+
+
+
+
+
+
+\end{document}
