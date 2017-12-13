@@ -1,0 +1,62 @@
+\documentclass[11pt, handout]{beamer}
+\gdef\pathtomaster{_LaTeX_master}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\input{\pathtomaster/htwcd_beamer.sty}
+
+\author[S. Retsch \& J. Strube]{Simon Retsch\texorpdfstring{\\}{ und }Jonatan Strube}
+\title{Versionsverwaltung mit git}
+\date{13.12.2017}
+
+\usepackage{pgfpages}
+%\setbeameroption{show notes on second screen=right}
+\setbeamercolor{section in toc}{fg=black,bg=white}
+\setbeamertemplate{section in toc}[sections numbered]
+\setcounter{tocdepth}{1}
+
+\usepackage{forest}
+\BeforeBeginEnvironment{frame}{\setstretch{1.5}}
+\newcommand\commit[2][htwgrey]{\node[commit,fill=#1,#1] (#2) {}; \node at (#2) {\small\strut};}
+\newcommand\commentm[2]{\node [clabel, outer sep=3em] at (#1) {#2}}
+\newcommand\commentb[2]{\node [clabel, outer sep=2.07em] at (#1) {#2}}
+\newcommand\commento[2]{\node [clabel, outer sep=1.17em] at (#1) {#2}}
+\newcommand\ghost[1]{\coordinate (#1);}
+\newcommand\connect[3][htwgrey]{\path (#2) [draw=#1, line width=.18em] to[out=-90,in=90] (#3);}
+\begin{document}
+
+\begin{frame}[plain]
+\begin{center}
+\includegraphics[width=.7\textwidth]{\pathtomaster/HTW.eps}
+\end{center}
+\maketitle
+\end{frame}
+
+\section*{Inhalt}
+\begin{frame}
+\tableofcontents
+\end{frame}
+
+\input{praesentation_1_prinzip}
+\input{praesentation_2_grundlagen}
+\input{praesentation_2_grundlagen_2}
+\input{praesentation_3_anbieter}
+\input{praesentation_4_apps}
+\input{praesentation_5_vorfuehrung}
+\input{praesentation_6_quellen}
+
+%{
+%\setbeamercolor{background canvas}{bg=}
+%\makeatletter
+%\@latex@warning{ACHTUNG: Vor dem Kompilieren dieser Praesentation muessen alle anderen pdfs kompiliert werden!!!}
+%\@latex@warning{Diese .tex Datei fuegt die pdfs nur aneinander!}
+%\makeatother
+%\includepdf[pages={-}]{Abschlusspraesentation_Projektmanager.pdf}
+%\includepdf[pages={-}]{Abschlusspraesentation_Analysierender.pdf}
+%\includepdf[pages={-}]{Abschlusspraesentation_Entwerfender.pdf}
+%\includepdf[pages={-}]{Abschlusspraesentation_Datenbankender.pdf}
+%\includepdf[pages={-}]{Abschlusspraesentation_Implementierender.pdf}
+%\includepdf[pages={-}]{Abschlusspraesentation_Testender.pdf}
+%\includepdf[pages={-}]{Abschlusspraesentation_Dokumentierender.pdf}
+%\includepdf[pages={-}]{Abschlusspraesentation_Qualitätsmanager.pdf}
+%}
+
+\end{document}

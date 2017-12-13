@@ -1,0 +1,168 @@
+\subsection{gitignore}
+\begin{frame}
+\uncover<2->{Versionierung sinnvoll bei:}
+\begin{itemize}
+\item<3-> Textdateien
+\end{itemize}
+\uncover<4->{Nicht sinnvoll bei:}
+\begin{itemize}
+\item<5-> Binärdateien
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\item<1-> Schwarze Liste von Dateien/Ordnern
+\begin{itemize}
+\item<2-> Binäres \hfill \lstinline`*.exe`
+\item<3-> Von Programmen \hfill \lstinline`.vscode/`
+\item<4-> Geheimes \hfill \lstinline`my_password.txt`
+\end{itemize}
+\item<5-> Weiße Liste
+\begin{itemize}
+\item<6-> Ausnahmen zur schwarzen Liste mit \lstinline`!` \hfill \lstinline`!final/*`
+\end{itemize}
+\end{itemize}
+\note<2>[item]{regex Charakter}
+\note<6>[item]{Ausnahme zur schwarzen Liste hinter schwarzer Liste!}
+\end{frame}
+
+\begin{frame}[fragile]
+\setstretch{1}
+Datei \lstinline`.gitignore`:
+\begin{lstlisting}[numbers=none, language=python]
+# alle Binärdateien:
+*.exe
+*.out
+# Ordner von VSC:
+.vscode/
+# Geheimes:
+mein_passwort.txt
+bildchen/*
+# Behalte Einzeldatei:
+!bildchen/goodprof.png
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\setstretch{1}
+\note[item]{.git beinhaltet alle Informationen zum Repository und wird selbst verständlich ignoriert}
+\begin{center}
+\begin{minipage}{.3\textwidth}
+\tiny
+\begin{lstlisting}[numbers=none, language=python]
+# alle Binärdateien:
+*.exe
+*.out
+# Ordner von VSC:
+.vscode/
+# Geheimes:
+mein_passwort.txt
+bildchen/*
+# Behalte Einzeldatei:
+!bildchen/goodprof.png
+\end{lstlisting}
+\end{minipage}
+\qquad
+\begin{minipage}{.3\textwidth}
+%\scalebox{.65}{
+\tiny
+\begin{forest}
+  for tree={
+    font=\ttfamily,
+    grow'=0,
+    child anchor=west,
+    parent anchor=south,
+    anchor=west,
+    calign=first,
+    edge path={
+      \noexpand\path [draw, \forestoption{edge}]
+      (!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+    },
+    before typesetting nodes={
+      if n=1
+        {insert before={[,phantom]}}
+        {}
+    },
+    fit=band,
+    before computing xy={l=15pt},
+  }
+[repository/
+	[{\color{htwgrey}.git/}]
+  [{\only<5>{\color{htworange}}%
+  \only<6>{\color{htwblue}}bildchen/}
+    [{\only<5->{\color{htwgrey}}badprof.png}]
+    [{\only<5-6>{\color{htwgrey}}\only<6>{\color{htwblue}}goodprof.png}]
+  ]
+  [programm/
+  	[{\only<4->{\color{htwgrey}}\only<3>{\color{htworange}}.vscode/}
+			[{\only<3->{\color{htwgrey}}…}]  	
+  	]
+    [readme.md]
+    [virus.c]
+    [{\only<2->{\color{htwgrey}}virus\_unix%
+    {\only<2>{\color{htworange}}.out}}]
+    [{\only<2->{\color{htwgrey}}virus\_win%
+    {\only<2>{\color{htworange}}.exe}}]
+  ]
+  [.gitignore]
+  [deren\_passwoerter.txt]
+  [{\only<5->{\color{htwgrey}}\only<4>{\color{htworange}}mein\_passwort.txt}]
+  [{\only<2->{\color{htwgrey}}no\_virus%
+  {\only<2>{\color{htworange}}.exe}}]
+  [virus.png]
+]
+\only<7>{}
+\end{forest}
+%}
+\end{minipage}
+\end{center}
+\end{frame}
+
+\subsection{Commitnachricht Richtlinien}
+\begin{frame}
+\uncover<2->{Commit Nachricht besteht aus:}
+\begin{itemize}
+\item<3-> Thema / Titel (\emph{subject})\\
+\uncover<5->{Kurze Beschreibung.}
+\item<4-> Rumpf / Beschreibung (\emph{body})\\
+\uncover<6->{\emph{Was} wurde \emph{warum} geändert (nicht \emph{wie})}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Richtlinien Titel}
+\begin{itemize}
+\item<2-> Kurz (50, max. 72 Zeichen)
+\note<2>[item]{viele GUIs schneiden längere Titel ab}
+\item<3-> Mit Großbuchstabe beginnen
+\item<4-> Kein Punkt am Ende
+\item<5-> Imperativ
+\note<5>{Im Englischen: If applied, this commit will ...\\
+Positiv: If applied, this commit will remove deprecated methods
+Negativ: If applied, this commit will more fixes for broken stuff
+}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Negativbeispiel}
+\footnotesize
+
+\texttt{\noindent
+Erweiterung Keylogger, der alles Aufgezeichnete in eine Datei im selben Ordner speichert.\bigskip\\
+Es wurde ein Keylogger durch memory injection implementiert. In Zeilen 50-100 der Codedatei kann man gut sehen, wie die durch einen buffer overflow jedes Betriebssystem komprimiert werden kann.\\
+Mehr Passwörter! Yay.
+}
+\end{frame}
+
+\begin{frame}{Beispielnachricht}
+\footnotesize
+
+\texttt{\noindent
+Erweitere Virus um Keylogger\bigskip\\
+Es wurde ein Keylogger implementiert, der alle 
+Nutzereingaben aufzeichnet und speichert.\\
+Dadurch können mehr Passwörter ausgelesen werden.
+}
+\end{frame}
+
+
