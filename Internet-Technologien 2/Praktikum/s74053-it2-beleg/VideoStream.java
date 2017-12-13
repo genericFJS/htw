@@ -2,11 +2,13 @@
 //VideoStream
 
 import java.io.*;
+import java.util.Scanner;
 
 public class VideoStream {
 
 	FileInputStream	fis;			// video file
 	int							frame_nb;	// current frame nb
+	Scanner					scanner;
 
 	// -----------------------------------
 	// constructor
@@ -16,6 +18,7 @@ public class VideoStream {
 		// init variables
 		fis = new FileInputStream(filename);
 		frame_nb = 0;
+		scanner = new Scanner(fis);
 	}
 
 	// -----------------------------------
@@ -26,6 +29,13 @@ public class VideoStream {
 		int length = 0;
 		String length_string;
 		byte[] frame_length = new byte[5];
+
+		scanner.useDelimiter("ÿØÿ");	// SOI
+		scanner.useDelimiter("ÿÙ");	// EOI
+
+		while (scanner.hasNext()) {
+			System.out.println("SQL statement: " + scanner.next());
+		}
 
 		// read current frame length
 		fis.read(frame_length, 0, 5);

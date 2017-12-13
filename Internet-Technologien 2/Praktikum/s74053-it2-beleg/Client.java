@@ -25,7 +25,7 @@ public class Client {
 	JButton		tearButton			= new JButton("Teardown");
 	JPanel		mainPanel				= new JPanel();
 	JPanel		buttonPanel			= new JPanel();
-	JLabel		iconLabel				= new JLabel();
+	JLabel		videoLabel				= new JLabel();
 	ImageIcon	icon;
 
 	// RTP variables:
@@ -92,13 +92,13 @@ public class Client {
 		tearButton.addActionListener(new tearButtonListener());
 
 		// Image display label
-		iconLabel.setIcon(null);
+		videoLabel.setIcon(null);
 
 		// frame layout
 		mainPanel.setLayout(null);
-		mainPanel.add(iconLabel);
+		mainPanel.add(videoLabel);
 		mainPanel.add(buttonPanel);
-		iconLabel.setBounds(100, 0, 380, 280);
+		videoLabel.setBounds(100, 0, 380, 280);
 		buttonPanel.setBounds(0, 280, 580, 50);
 
 		f.getContentPane().add(mainPanel, BorderLayout.CENTER);
@@ -345,7 +345,7 @@ public class Client {
 
 				// display the image as an ImageIcon object
 				icon = new ImageIcon(image);
-				iconLabel.setIcon(icon);
+				videoLabel.setIcon(icon);
 			} catch (InterruptedIOException iioe) {
 				// System.out.println("Nothing to read");
 			} catch (IOException ioe) {

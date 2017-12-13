@@ -1,0 +1,10 @@
+Format für diesen Server:
+|Länge(5 Byte)|JPEG|Länge|JPEG|...
+
+Standard mjpeg-Format:
+|(start-marker SOI)JPEG(end-marker EOI)|(start-marker)JPEG(end-marker)|...
+
+SOI: FFD8
+EOI: FFD9
+
+Verarbeitung potentiell ändern in VideoStream.getnextframe

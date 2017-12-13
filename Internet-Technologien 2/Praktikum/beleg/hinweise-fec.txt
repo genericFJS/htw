@@ -1,0 +1,6 @@
+Pakete haben unterschiedliche Größe -> beim XOR dann einfach den Rest des längeren ohne XOR nehmen (entspricht XOR mit 0).
+
+Beim Auflösen (auf Client-Seite) ist dann nicht bekannt, ob/wie viele 0en abgeschnitten werden dürfen, wenn das kleinere Paket verschwindet.
+Da wir aber JPEG haben, ist das kein Problem: der JPEG-decodierer sucht nach start- und end-of-image. Damit ist egal, wie viele 0en nach EOI kommt.
+
+Header der Pakete sind verschieden! FEC hat anderen Payload-Type. Sequenz-Nummer entspricht der, des zuletzt gesendeten Pakets.
