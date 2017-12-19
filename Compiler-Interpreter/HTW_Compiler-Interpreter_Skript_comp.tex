@@ -1,0 +1,25 @@
+\lecdate{13.12.2017}
+
+\section{Anzulegende Speicherbereiche}
+\begin{itemize}
+\item Morphem
+\item ProcMain (Prozedurbeschreibung der Main Funktion)
+\item Speicherbereich für Konstanten
+\item Speicherbereich für Zwischencode
+\item Ausgabedatei
+\end{itemize}
+
+\section{Abarbeitung}
+\begin{itemize}
+\item Lexer erkennt Morphem
+\item Parser startet mit Startbogen
+\item Parser ruft Blockbogen auf (rekursiver Aufruf von parse)
+\item Vor dem erstellen einer Konstanten/Variablen: Prüfen, ob es schon einen mit gleichen Namen gibt.
+\item Einfügen einer Konstante: erst prüfen, ob Wert bereits vorhanden. Konstanten mit gleichem Wert zeigen auf gleichen Speicherbereich
+\item Zuweisung einer Variablen: pusht Konstante. D.h. Konstantenspeicherbereich wird ggf. erweitert, wenn Wert noch nicht drin (als nicht benannter Eintrag)
+\end{itemize}
+
+
+
+
+
