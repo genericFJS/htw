@@ -1,0 +1,36 @@
+\section{Abgrenzung überwachte Lernverfahren}
+\begin{itemize}
+\item MLP/RBF $\to$ supervised learning\\
+$\vec{y}$ und $\vec{t}$ (Teacher) steuern das Neuronale Netzwerk.
+\item LVQ $\to$ semi-supervised learning\\
+Nutzen zwar Klassenzugehörigkeit der Beispieldaten aber geben keinen Teacher vor.
+\item Unüberwachte Lernverfahren: unsupervised learning
+\begin{itemize}
+\item Ausschließlich auf Basis der Eingabedaten (absolut kein Teacher mehr).
+\item \emph{Kompetitives Lernverfahren}: Neuronen konkurrieren um die Teilnahme am Adaptionsprozess.
+\item Vektorquantisierung.
+\end{itemize}
+\end{itemize}
+
+\section{Neural-Gas-Netzwerk (NG)}
+Gas $\to$ Bezüge aus Thermodynamik und Molekülbewegungen.\\
+Ziel: Anhand von $P$ Eingabedaten eine Menge von $M$ Referenzvektoren so verteilen, dass ein optimaler Vektorquantisierer entsteht (typischer Weise $P \gg M$).
+
+\subsection{Optimale Vektorquantisierer}
+Zum Bestimmen eines optimalen Vektorquantisierers wird ein Fehlermaß benötigt (Funktion). Der optimale Vektorquantisierer hat dann ein minimales Fehlermaß.\\
+Quantisierungsfehler $E = \sum_{p=1}^P \| \vec{x}^p-\vec{w}_b(\vec{x}^p)\|$ (Abstand der Punkte vom Best-Matching-Neuron)\\
+Man kann nachweisen, dass der NG-Algorithmus Optimalität sicherstellt.
+
+\subsection{Algorithmus}
+\begin{enumerate}
+\item Wähle ein $\vec{x}$ aus der Menge der Eingangsdaten.
+\item Sortiere alle Referenzvektoren ihres euklidischen Abstandes zu $\vec{x}$.\\
+$\To$ Ranking aller Referenzvektoren 
+\end{enumerate}
+
+
+
+
+
+
+
