@@ -1,0 +1,151 @@
+\section{Grundlagen}
+\lecdate{10.01.2018}
+\slides{V10_lex}{1}
+\subsection{Verwendung}
+\slides{V10_lex}{2}
+\subsection{Reguläre Ausdrücke}
+\slides{V10_lex}{3}
+\slides{V10_lex}{4}
+\subsection{Besondere Zeichen}
+\slides{V10_lex}{5}
+\subsection{Wiederholungen}
+\slides{V10_lex}{6}
+\subsection{Reihenfolge der Pattern}
+\slides{V10_lex}{7}
+
+\section{Aufbau einer flex-Quelldatei}
+\slides{V10_lex}{8}
+\subsection{Rules division}
+\slides{V10_lex}{9}
+\subsection{Vordefinierte Symbole}
+\slides{V10_lex}{10}
+
+\section{Beispiele}
+\subsection{Beispiel Leerzeichen}
+\slides{V10_lex}{11}
+\subsection{Zeichen/Zeilen zählen}
+\slides{V10_lex}{13}
+\subsection{Wörter zählen}
+\slides{V10_lex}{14}
+\subsection{Beispiel Regeln}
+\slides{V10_lex}{20}
+
+\section{Lexer für PL/0 Compiler}
+\begin{lstlisting}[language=C]
+%{
+/* Deklarationsteil */
+/*
+lexikalische Analyse mit lex für
+graphengesteuerten PL/0 Einpasscompiler
+*/
+#include "lex.h"
+#include "list.h"
+#include "debug.h"
+extern tMorph Morph; /* globale Morpemvariable */
+FILE * pIF; /* Eingabedatei */
+void MorSo(int Code); /* Function zum Bau eines SymbolTokens */
+%}
+%%
+
+/* Leer- und Trennzeichen */
+[ \t]+
+/* Zeilenwechsel */
+[\n] {Morph.PosLine++;}
+/* Schluesselwoerter (Wortsymbole) */
+/* werden wie Sonderzeichen behandlt */
+"begin" {MorSo(zBGN);return;}
+call {MorSo(zCLL);return;}
+const {MorSo(zCST);return;}
+do {MorSo(zDO); return;}
+else {MorSo(zELS);return;}
+end {MorSo(zEND);return;}
+if {MorSo(zIF); return;}
+odd {MorSo(zODD);return;}
+procedure {MorSo(zPRC);return;}
+then {MorSo(zTHN);return;}
+var {MorSo(zVAR);return;}
+while {MorSo(zWHL);return;}
+
+/**********/
+/* Zahlen */
+/**********/
+[0-9]+ {
+Morph.MC=mcNumb;
+Morph.Val.Numb=atol(yytext);
+Morph.MLen=strlen(yytext);
+return;
+}
+/***************/
+/* Bezeichner, */
+/***************/
+/* muessen hinter Schluesselwoertern aufgefuehrt werden */
+[A-Za-z]([A-Za-z0-9])* {
+Morph.MC=mcIdent;
+Morph.Val.pStr=yytext;
+Morph.MLen=strlen(yytext);
+return;
+}
+
+/* Sonderzeichen */
+("?") {MorSo('?' );return;}
+("!") {MorSo('!' );return;}
+("+") {MorSo('+' );return;}
+("-") {MorSo('-' );return;}
+("*") {MorSo('*' );return;}
+("/") {MorSo('/' );return;}
+("=") {MorSo('=' );return;}
+(">") {MorSo('>' );return;}
+("<") {MorSo('<' );return;}
+(":=") {MorSo(zErg);return;}
+("<=") {MorSo(zle );return;}
+(">=") {MorSo(zge );return;}
+(";") {MorSo(';' );return;}
+(".") {MorSo('.' );return;}
+(",") {MorSo(',' );return;}
+("(") {MorSo('(' );return;}
+(")") {MorSo(')' );return;}
+/* String */
+(\".*\") {Morph.MC=mcStrng;
+Morph.Val.pStr=yytext;
+Morph.MLen=strlen(yytext);
+return;}
+
+%%
+tMorph* Lex()
+{
+yylex();
+return &Morph;
+}
+void MorSo(int Code)
+{
+Morph.MC=mcSymb;
+Morph.Val.Symb=Code;
+Morph.MLen=strlen(yytext);
+return;
+}
+int initLex(char* fname)
+{
+char vName[128+1];
+strcpy(vName,fname);
+if (strstr(vName,".pl0")==NULL) strcat(vName,".pl0");
+pIF=fopen(vName,"rt");
+if (pIF!=NULL) {yyin=pIF; return OK;}
+return FAIL;
+}
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
