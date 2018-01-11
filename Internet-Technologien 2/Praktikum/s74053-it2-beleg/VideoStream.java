@@ -30,12 +30,12 @@ public class VideoStream {
 		String length_string;
 		byte[] frame_length = new byte[5];
 
-		scanner.useDelimiter("ÿØÿ");	// SOI
-		scanner.useDelimiter("ÿÙ");	// EOI
-
-		while (scanner.hasNext()) {
-			System.out.println("SQL statement: " + scanner.next());
-		}
+//		scanner.useDelimiter("ÿØÿ");	// SOI
+//		scanner.useDelimiter("ÿÙ");	// EOI
+//
+//		while (scanner.hasNext()) {
+//			System.out.println("SQL statement: " + scanner.next());
+//		}
 
 		// read current frame length
 		fis.read(frame_length, 0, 5);

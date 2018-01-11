@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.Timer;
+import javax.swing.border.EmptyBorder;
 
 public class Client {
 
@@ -25,7 +26,14 @@ public class Client {
 	JButton		tearButton			= new JButton("Teardown");
 	JPanel		mainPanel				= new JPanel();
 	JPanel		buttonPanel			= new JPanel();
-	JLabel		videoLabel				= new JLabel();
+	JPanel		statsPanel			= new JPanel();
+	JLabel		videoLabel			= new JLabel();
+	JLabel		packRecStat			= new JLabel();
+	JLabel		packLostStat		= new JLabel();
+	JLabel		packCorrStat		= new JLabel();
+	JLabel		packUncorrStat	= new JLabel();
+	JLabel		packNoFECStat		= new JLabel();
+	JLabel		currFrameStat		= new JLabel();
 	ImageIcon	icon;
 
 	// RTP variables:
@@ -34,8 +42,12 @@ public class Client {
 	DatagramSocket	RTPsocket;							// socket to be used to send and receive UDP packets
 	static int			RTP_RCV_PORT	= 25000;	// port where the client will receive the RTP packets
 
-	Timer		timer;	// timer used to receive data from the UDP socket
-	byte[]	buf;		// buffer used to store data received from the server
+	Timer				timer;											// timer used to receive data from the UDP socket
+	static int	BUFFER_TIME	= -2000;
+	static int	TIMER_STEP	= 20;
+	int					timerTime		= BUFFER_TIME;
+	byte[]			buf;												// buffer used to store data received from the server
+	Random			rand				= new Random();
 
 	// RTSP variables
 	// ----------------
@@ -56,6 +68,19 @@ public class Client {
 	int										RTSPid		= 0;			// ID of the RTSP session (given by the RTSP Server)
 
 	final static String CRLF = "\r\n";
+
+	// Statistics
+	// --------------------------
+	int	packets_received			= 0;
+	int	packets_lost					= 0;
+	int	packets_corrected			= 0;
+	int	packets_uncorrectable	= 0;
+
+	// FEC
+	// --------------------------
+	FECmanager	fec						= new FECmanager();
+	static int	FEC_TYPE			= 127;
+	int					currentPacket	= 0;
 
 	// Video constants:
 	// ------------------
@@ -94,21 +119,39 @@ public class Client {
 		// Image display label
 		videoLabel.setIcon(null);
 
+		// Stats
+		packRecStat.setText("Received: " + packets_received);
+		packLostStat.setText("Lost: " + packets_received);
+		packCorrStat.setText("Corrected: " + packets_received);
+		packUncorrStat.setText("Uncorrectable: " + packets_received);
+		packNoFECStat.setText("No matching FEC: " + packets_received);
+		currFrameStat.setText("Current Frame: " + packets_received);
+		statsPanel.setLayout(new GridLayout(0, 1));
+		statsPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		statsPanel.add(packRecStat);
+		statsPanel.add(packLostStat);
+		statsPanel.add(packCorrStat);
+		statsPanel.add(packUncorrStat);
+		//statsPanel.add(packNoFECStat);
+		statsPanel.add(currFrameStat);
+
 		// frame layout
 		mainPanel.setLayout(null);
 		mainPanel.add(videoLabel);
 		mainPanel.add(buttonPanel);
-		videoLabel.setBounds(100, 0, 380, 280);
+		mainPanel.add(statsPanel);
+		videoLabel.setBounds(0, 0, 380, 280);
 		buttonPanel.setBounds(0, 280, 580, 50);
+		statsPanel.setBounds(380, 0, 200, 280);
 
 		f.getContentPane().add(mainPanel, BorderLayout.CENTER);
 		f.setSize(new Dimension(590, 370));
 		f.setVisible(true);
-		f.setAlwaysOnTop( true );
+		f.setAlwaysOnTop(true);
 
 		// init timer
 		// --------------------------
-		timer = new Timer(20, new timerListener());
+		timer = new Timer(TIMER_STEP, new timerListener());
 		timer.setInitialDelay(0);
 		timer.setCoalesce(true);
 
@@ -147,10 +190,6 @@ public class Client {
 	// ------------------------------------
 	// Handler for buttons
 	// ------------------------------------
-
-	// .............
-	// TO COMPLETE
-	// .............
 
 	// Handler for Setup button
 	// -----------------------
@@ -317,6 +356,9 @@ public class Client {
 
 	class timerListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			// Timertaktung
+			timerTime += TIMER_STEP;
+			// System.out.println("timer: " + timerTime);
 
 			// Construct a DatagramPacket to receive data from the UDP socket
 			rcvdp = new DatagramPacket(buf, buf.length);
@@ -328,30 +370,126 @@ public class Client {
 				// create an RTPpacket object from the DP
 				RTPpacket rtp_packet = new RTPpacket(rcvdp.getData(), rcvdp.getLength());
 
-				// print important header fields of the RTP packet received:
-				System.out.println("Got RTP packet with SeqNum # " + rtp_packet.getsequencenumber() + " TimeStamp " + rtp_packet.gettimestamp() + " ms, of type " + rtp_packet.getpayloadtype());
-
-				// print header bitstream:
-				rtp_packet.printheader();
-
+				int pType = rtp_packet.getpayloadtype();
+				int packetNo = rtp_packet.getsequencenumber();
 				// get the payload bitstream from the RTPpacket object
 				int payload_length = rtp_packet.getpayload_length();
 				byte[] payload = new byte[payload_length];
 				rtp_packet.getpayload(payload);
+				// media package:
+				if (pType != FEC_TYPE) {
+					currentPacket = packetNo;
+					int timeStamp = rtp_packet.gettimestamp();
+					// print important header fields of the RTP packet received:;
+					// System.out.println("RTP packet: SeqNum # " + packetNo + " TimeStamp " + timeStamp + " ms");// , of type " + rtp_packet.getpayloadtype());
 
-				// get an Image object from the payload bitstream
-				Toolkit toolkit = Toolkit.getDefaultToolkit();
-				Image image = toolkit.createImage(payload, 0, payload_length);
+					// print header bitstream:
+					// rtp_packet.printheader();
 
-				// display the image as an ImageIcon object
-				icon = new ImageIcon(image);
-				videoLabel.setIcon(icon);
+					bufferImage(payload, timeStamp, packetNo);
+
+					packets_received += 1;
+					packets_lost = currentPacket - packets_received;
+				} else {
+					// fecpackage
+					int packetsCorrected = fec.correctPacket(payload, packetNo, rtp_packet.gettimestamp());
+					switch (packetsCorrected) {
+					case 0:
+						// System.out.println("\t\t\tFEC-Paket " + packetNo + " has nothing to correct.");
+						break;
+					case 1:
+						packets_corrected += 1;
+						break;
+					default:
+						//System.out.println("\t\t\tFEC-Paket " + packetNo + " could not correct frame.");
+						packets_uncorrectable += packetsCorrected;
+						break;
+					}
+				}
 			} catch (InterruptedIOException iioe) {
 				// System.out.println("Nothing to read");
 			} catch (IOException ioe) {
 				System.out.println("Exception caught: " + ioe);
 			}
+
+			if (timerTime > 0) {
+				// Ausgabe des Bildes:
+				if ((timerTime % 40) == 0) {
+					// System.out.println("\tShow frame " + timerTime / 40);
+					currFrameStat.setText("Current Frame: " + timerTime / 40);
+					displayImage(timerTime / 40);
+				}
+			} else {
+				// Zeige Puffer-Fortschritt:
+				if ((timerTime % (rand.nextInt(100) + 1)) == 0)
+					// if ((timerTime % 10) == 0)
+					videoLabel.setText("Buffering: " + (timerTime / 20 + 100) + "%");
+				else if (timerTime == BUFFER_TIME + TIMER_STEP)
+					videoLabel.setText("Buffering: " + (timerTime / 20 + 100) + "%");
+				else if (timerTime == 0 - TIMER_STEP)
+					videoLabel.setText("Buffering: 100%");
+			}
+
+			if ((timerTime % 1000) == 0) {
+				updateStats();
+			}
+
+			// hard stop:
+			if (timerTime / 40 >= 500) {
+				System.out.println("Finished.");
+				// increase RTSP sequence number
+				RTSPSeqNb++;
+
+				// Send PAUSE message to the server
+				send_RTSP_request("PAUSE");
+
+				// Wait for the response
+				if (parse_server_response() != 200)
+					System.out.println("Invalid Server Response");
+				else {
+					// change RTSP state and print out new state
+					state = READY;
+					System.out.println("New RTSP state: READY");
+
+					// stop the timer
+					timer.stop();
+				}
+			}
 		}
+	}
+
+	private void bufferImage(byte[] payload, int timeStamp, int packetNo) {
+		fec.setBufferEntry(payload, timeStamp, packetNo);
+	}
+
+	private void displayImage(int packetNo) {
+		Mediapacket mediaPacket = fec.getBufferEntry(packetNo);
+		if (mediaPacket == null) {
+			// System.out.println("\t Frame " + packetNo + " existiert nicht.");
+			return;
+		}
+		if (mediaPacket.timeStamp < (timerTime - 200)) {
+			// reset missing packages
+			fec.resetPacket(packetNo);
+			System.out.println("\t Frame " + packetNo + " nicht korrekt.");
+			return;
+		}
+		// get an Image object from the payload bitstream
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image image = toolkit.createImage(mediaPacket.data, 0, mediaPacket.data.length);
+		//System.out.println("Frame " + packetNo);
+		// display the image as an ImageIcon object
+		icon = new ImageIcon(image);
+		videoLabel.setIcon(icon);
+		fec.resetPacket(packetNo);
+	}
+
+	private void updateStats() {
+		packRecStat.setText("Received: " + packets_received);
+		packLostStat.setText("Lost: " + packets_lost);
+		packCorrStat.setText("Corrected: " + packets_corrected);
+		packUncorrStat.setText("Uncorrectable: " + packets_uncorrectable);
+		packNoFECStat.setText("No matching FEC: " + (packets_lost - (packets_corrected + packets_uncorrectable)));
 	}
 
 	// ------------------------------------
@@ -359,7 +497,7 @@ public class Client {
 	// ------------------------------------
 	private int parse_server_response() {
 		int reply_code = 0;
-		System.out.println("	Parsing response.");
+		// System.out.println(" Parsing response.");
 		try {
 			// parse status line and extract the reply_code:
 			String StatusLine = RTSPBufferedReader.readLine();
@@ -400,7 +538,7 @@ public class Client {
 			System.out.println("Exception caught in parse_server_response: " + ex);
 			System.exit(0);
 		}
-		System.out.println("	Response parsed.");
+		// System.out.println(" Response parsed.");
 		return (reply_code);
 	}
 

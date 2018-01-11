@@ -1,0 +1,134 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrartcl}
+\gdef\pathtomaster{../../../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\faculty{Fakultät Informatik/Mathematik}
+\chair{Lehrstuhl für Rechnernetze/Kommunikationssysteme}
+\subject{Prüfungsvorleistung}
+\title{RTSP-Streaming mit FEC Schutz}
+\subtitle{Internet-Technologien 2}
+\author{Falk-Jonatan Strube}
+\professor{Prof. Dr.-Ing. Jörg Vogt}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\clearpage
+\section{Überblick}
+
+Beim FEC-Fehlerschutz beim RTSP-Stream wird zusätzlich zu den Datenpaketen in gewissen Abständen (abhängig von der Gruppengröße) ein FEC-Pakete versendet. Dieses Paket enthält die Daten aus den potentiell zu korrigierenden Paket mit XOR verknüpft. Ein verlorenes Paket aus der Gruppe kann somit wiederhergestellt werden: Die vorhandenen Pakete der Gruppe müssen mit dem FEC-Paket erneut mit XOR-Verknüpft werden.
+
+\section{Implementierung FECmanager}
+In dieser Implementation wurde das so realisiert, dass sowohl der \lstinline`Client` als auch der \lstinline`server` einen \lstinline`FECmanager` haben. Dieser hat folgende Aufgabenbereiche:
+\begin{itemize}
+\item Buffern der Datenpakete
+\item Erstellen von FEC-Paketen (für den Server)
+\item Korrigieren von Datenpaketen (für den Client)
+\end{itemize}
+\subsection{Buffer}
+Der Buffer hat eine fest Größe. In ihn werden die Daten entsprechend der Sequenznummer (per Modulo-Rechnung) zugewiesen. Wichtig ist, dass der Client nicht länger warten und Buffern darf, als der Buffer groß ist, weil sonst Einträge überschrieben werden, bevor sie eine Chance haben ausgegeben zu werden.
+\subsection{Erstellen von FEC-Paketen}
+\label{subsec:erstellenFEC}
+Die FEC-Pakete werden erstellt, indem jeweils die letzten $k$ Datenpakete mit XOR-Verknüpft werden. Das FEC-Paket mit der Sequenznummer $i$ deckt somit die Gruppe der Datenpakete von $i-k$ bis $i$ ab. Das FEC-Paket wird nicht gebuffert.
+
+\subsection{Korrigieren von Datenpaketen}
+Das FEC-Paket kann ein fehlendes Datenpaket der Gruppe korrigieren (Gruppengröße und -reichweite siehe \autoref{subsec:erstellenFEC}). Der Funktion des \lstinline`FECmanager`s muss das FEC-Paket übergeben werden, da es nicht gebuffert wird. Sodann wird falls möglich ein entsprechend fehlender Buffereintrag korrigiert.
+
+\section{Implementierung Server}
+
+Beim Server wurde die Taktung des Timers verdoppelt. Jeden zweiten Takt wird ein Datenpaket versendet. Jeder anderer wird, ein FEC-Paket erstellt und versendet, falls es Zeit dafür ist (abhängig von der Gruppengröße alle $2k$ Takte). 
+
+\section{Implementierung Client}
+
+Der Client lässt die einkommenden Datenpakete erst für einige Sekunden buffern. Damit besteht genug Zeit, dass auch bei großer Gruppengröße die entsprechenden Pakete korrigiert werden können. Sobald die Bufferzeit verstrichen ist wird gleichzeitig weiter gebuffert und abgespielt (siehe \autoref{fig:Buffer}). Abgespielte Buffereinträge werden gelöscht. Die Taktung des Timers ist, ähnlich wie beim Server, verdoppelt, sodass die Daten- und FEC-Pakete empfangen werden können. Die FEC-Pakete werden sofort angewandt (falls möglich und nötig). 
+
+\begin{figure}[!ht]
+\centering
+\begin{subfigure}[b]{0.5\textwidth}
+\hspace*{2.5cm}
+\begin{tikzpicture}[scale=.6]
+\draw  (1,7.5) rectangle (3,6.5);
+\draw  (1,6.5) rectangle (3,3.5) node[pos=.5]{Daten};
+\draw  (1,3.5) rectangle (3,0);
+\draw [-latex] (3.5,7.5) node[right]{Daten lesen} -- (3.5,6.5);
+\draw [-latex] (3.5,4.5) node[right, align=left]{Daten schreiben\\ggf. korrigieren} -- (3.5,3.5);
+\end{tikzpicture}
+\caption{Buffer zum Zeitpunkt $t_1$}
+\end{subfigure}
+\qquad
+\begin{subfigure}[b]{0.4\textwidth}
+\hspace*{2.5cm}
+\begin{tikzpicture}[scale=.6]
+\draw  (1,7.5) rectangle (3,5.5);
+\draw  (1,5.5) rectangle (3,2.5) node[pos=.5]{Daten};
+\draw  (1,2.5) rectangle (3,0);
+\draw [-latex] (3.5,6.5)-- (3.5,5.5);
+\draw [-latex] (3.5,3.5) -- (3.5,2.5);
+\end{tikzpicture}
+\caption{Buffer zum Zeitpunkt $t_2$}
+\end{subfigure}
+\caption{Buffer im Client (Daten „wandern“)}\label{fig:Buffer}
+\end{figure}
+
+\section{Optimal Gruppengröße}
+
+Es soll die optimale Gruppengröße für $10\%$ Paketverlust gewählt werden.
+
+Das Problem ist, dass bei größerer Gruppengröße die Wahrscheinlichkeit größer ist, dass mehr als ein Paket in einer Gruppe verloren geht. Das kann (mit $p=1$) nicht mehr korrigiert werden. Also ist zu überlegen, wie groß die Gruppengröße gewählt werden kann, damit sie überhaupt noch Korrekturen vornehmen kann. Weiterhin ist zu beachten, dass die FEC-Pakete auch verloren gehen können.
+
+Es wurden einmalige Messungen für verschieden Gruppengrößen vorgenommen (bei $500$ Einzelbildern und $20$ Sekunden):
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{c c c r c c }
+Gruppengröße & Verloren & \multicolumn{2}{c}{Korrigiert} & FPS\\
+& & abs. & \% &\\\hline
+20 & 56 & 3  & 5\%  & 22.4 \\
+18 & 49 & 9  & 18\% & 23 \\
+16 & 47 & 7  & 15\% & 23 \\
+14 & 47 & 14 & 30\% & 23.4 \\
+12 & 48 & 12 & 25\% & 23.2 \\
+10 & 51 & 15 & 29\% & 23.2 \\
+8  & 48 & 23 & 48\% & 23.75 \\
+6  & 41 & 24 & 59\% & 24.15 \\
+4  & 42 & 27 & 64\% & 24.25 \\
+2  & 53 & 44 & 83\% & 24.55 \\
+\end{tabular}
+\caption{Messungen der FPS nach FEC-Gruppengröße}
+\end{table}
+
+Da die Ursprüngliche Framerate mit 25 FPS sehr gering ist, führt jede Verringerung der FPS-Anzahl zu einer deutlich verminderten „subjektiv zufriedenstellenden Bildqualität“. Dem entsprechend wäre ein Wert zwischen $6$ und $8$ empfehlenswert, damit die Framerate möglichst nicht noch unter 24 FPS sinkt.
+
+\section{Implementationsfehler}
+
+Durch einen noch nicht gefundenen Fehler in der Implementation kann es dazu kommen, dass korrigierte ein Bildfehler (am unteren Rand) haben. 
+
+Bei verschiedenen einfachen Tests werden keine Fehler beim Erstellen eines FEC-Pakets oder dem Korrigieren eines Datenpakets gefunden (siehe \autoref{lst:fectest}: Die Daten in Zeile 13 und 17 entsprechen den Originaldaten (zuzüglich folgender Nullen). Das FEC-Paket ist korrekt.).
+
+\begin{lstlisting}[basicstyle=\footnotesize\ttfamily, caption={Ausgabe des FEC Tests}, captionpos=b,label={lst:fectest}]
+Input:
+1 - Hex:                    [1, 2] / Bin: 0001 0010           
+2 - Hex:                [5, 7, 10] / Bin: 0101 0111 1010      
+3 - Hex:                       [6] / Bin: 0110                
+4 - Hex:   [10, 10, 10, 10, 15, 0] / Bin: 1010 1010 1010 1010 1111 0000
+5 - Hex:                      [14] / Bin: 1110                
+
+FEC:
+    Hex:     [6, 15, 0, 10, 15, 0] / Bin: 0110 1111 0000 1010 1111 0000
+
+Remove 3.
+			FEC-Paket 5 corrected frame 3.
+Corrected 3: [6, 0, 0, 0, 0, 0]
+
+Remove 2.
+			FEC-Paket 5 corrected frame 2.
+Corrected 2: [5, 7, 10, 0, 0, 0]
+
+\end{lstlisting}
+
+Bei näherer Inspektion des Buffers zeigt sich, dass bei einem korrigiertem Bild anscheinend einige Bits am Ende fehlen. Dadurch kommt der Bildfehler zustande. Wie er verursacht wird, müsste durch weiter Analysen erörtert werden.
+
+
+\end{document}

@@ -26,8 +26,13 @@ public class Server extends JFrame implements ActionListener {
 	int					RTP_dest_port	= 0;	// destination port for RTP packets (given by the RTSP Client)
 
 	// packet loss
-	int packetLoss = 0;
-	Random rand = new Random();
+	int			packetLoss	= 10;
+	Random	rand				= new Random();
+
+	// FEC
+	// --------------------------
+	int					fecGroupsize	= 5;
+	FECmanager	fec;
 
 	// GUI:
 	// ----------------
@@ -36,17 +41,21 @@ public class Server extends JFrame implements ActionListener {
 	JLabel	label							= new JLabel("Send frame #        ", JLabel.CENTER);
 	JLabel	packetLossLabel		= new JLabel("Packet loss: " + packetLoss + "%", JLabel.CENTER);
 	JSlider	packetLossSlider	= new JSlider(JSlider.HORIZONTAL, 0, 100, packetLoss);
+	JLabel	fecLabel					= new JLabel("FEC group size: " + fecGroupsize, JLabel.CENTER);
+	JSlider	fecSlider					= new JSlider(JSlider.HORIZONTAL, 2, 20, fecGroupsize);
 
 	// Video variables:
 	// ----------------
 	int					imagenb				= 0;		// image nb of the image currently transmitted
 	VideoStream	video;								// VideoStream object used to access video frames
 	static int	MJPEG_TYPE		= 26;		// RTP payload type for MJPEG video
+	static int	FEC_TYPE			= 127;
 	static int	FRAME_PERIOD	= 40;		// Frame period of the video to stream, in ms
 	static int	VIDEO_LENGTH	= 500;	// length of the video in frames
 
-	Timer		timer;	// timer used to send the images at the video frame rate
-	byte[]	buf;		// buffer used to store the images to send to the client
+	Timer		timer;		// timer used to send the images at the video frame rate
+	int			timerTime;
+	byte[]	buf;			// buffer used to store the images to send to the client
 
 	// RTSP variables
 	// ----------------
@@ -90,11 +99,16 @@ public class Server extends JFrame implements ActionListener {
 		packetLossSlider.addChangeListener(new sliderListener());
 		packetLossSlider.setMajorTickSpacing(10);
 		packetLossSlider.setPaintTicks(true);
+		fecSlider.addChangeListener(new sliderListener());
+		fecSlider.setMajorTickSpacing(3);
+		fecSlider.setPaintTicks(true);
 		// frame layout
 		mainPanel.setLayout(new GridLayout(0, 1));
 		mainPanel.add(label);
 		mainPanel.add(packetLossLabel);
 		mainPanel.add(packetLossSlider);
+		mainPanel.add(fecLabel);
+		mainPanel.add(fecSlider);
 
 		f.getContentPane().add(mainPanel, BorderLayout.CENTER);
 		f.setSize(new Dimension(590, 200));
@@ -103,7 +117,7 @@ public class Server extends JFrame implements ActionListener {
 		f.setLocation(0, 370);
 
 		// init Timer
-		timer = new Timer(FRAME_PERIOD, this);
+		timer = new Timer(FRAME_PERIOD / 2, this);
 		timer.setInitialDelay(0);
 		timer.setCoalesce(true);
 
@@ -118,6 +132,8 @@ public class Server extends JFrame implements ActionListener {
 			// update GUI
 			packetLoss = packetLossSlider.getValue();
 			packetLossLabel.setText("Packet loss: " + packetLoss + "%");
+			fecGroupsize = fecSlider.getValue();
+			fecLabel.setText("FEC group size: " + fecGroupsize);
 		}
 	}
 
@@ -152,7 +168,7 @@ public class Server extends JFrame implements ActionListener {
 		while (!done) {
 			System.out.println("Checking request");
 			request_type = theServer.parse_RTSP_request(); // blocking
-			System.out.println("Request received");
+			// System.out.println("Request received");
 
 			if (request_type == SETUP) {
 				done = true;
@@ -171,6 +187,14 @@ public class Server extends JFrame implements ActionListener {
 				theServer.RTPsocket = new DatagramSocket();
 			} else if (request_type == OPTIONS) {
 				theServer.send_RTSP_response(OPTIONS);
+			}
+			if (request_type == TEARDOWN) {
+				// stop timer
+				theServer.timer.stop();
+				// close sockets
+				theServer.RTSPsocket.close();
+
+				System.exit(0);
 			}
 		}
 
@@ -214,18 +238,59 @@ public class Server extends JFrame implements ActionListener {
 	// Handler for timer
 	// ------------------------
 	public void actionPerformed(ActionEvent e) {
+		timerTime += FRAME_PERIOD / 2;
+		if ((timerTime % FRAME_PERIOD) == 0) {
+			// image packet:
+			// ====================================
+			// if the current image nb is less than the length of the video
+			if (imagenb < VIDEO_LENGTH) {
+				// update current imagenb
+				imagenb++;
 
-		// if the current image nb is less than the length of the video
-		if (imagenb < VIDEO_LENGTH) {
-			// update current imagenb
-			imagenb++;
+				try {
+					// get next frame to send from the video, as well as its size
+					int image_length = video.getnextframe(buf);
 
+					// Builds an RTPpacket object containing the frame
+					RTPpacket rtp_packet = new RTPpacket(MJPEG_TYPE, imagenb, imagenb * FRAME_PERIOD, buf, image_length);
+
+					// Add frame to FEC buffer
+					fec.setBufferEntry(buf, imagenb * FRAME_PERIOD, imagenb);
+
+					// get to total length of the full rtp packet to send
+					int packet_length = rtp_packet.getlength();
+
+					// retrieve the packet bitstream and store it in an array of bytes
+					byte[] packet_bits = new byte[packet_length];
+					rtp_packet.getpacket(packet_bits);
+
+					// send the packet as a DatagramPacket over the UDP socket
+					senddp = new DatagramPacket(packet_bits, packet_length, ClientIPAddr, RTP_dest_port);
+					if (packetSent()) {
+						// System.out.println("Send frame #"+imagenb);
+						System.out.println("RTP packet: SeqNum # " + rtp_packet.getsequencenumber() + " TimeStamp " + rtp_packet.gettimestamp() + " ms");// , of type " + rtp_packet.getpayloadtype());
+						// print the header bitstream
+						// rtp_packet.printheader();
+					} else {
+						System.out.println("Losing Packet.");
+					}
+
+					// update GUI
+					label.setText("Send frame #" + imagenb);
+				} catch (Exception ex) {
+					System.out.println("Exception caught: " + ex);
+					System.exit(0);
+				}
+			} else {
+				// if we have reached the end of the video file, stop the timer
+				timer.stop();
+			}
+		} else if (imagenb > 0 && (imagenb % fecGroupsize) == 0) {
+			// possible FEC packet:
+			// ====================================
 			try {
-				// get next frame to send from the video, as well as its size
-				int image_length = video.getnextframe(buf);
-
-				// Builds an RTPpacket object containing the frame
-				RTPpacket rtp_packet = new RTPpacket(MJPEG_TYPE, imagenb, imagenb * FRAME_PERIOD, buf, image_length);
+				byte[] fecData = fec.getFECdata(imagenb);
+				RTPpacket rtp_packet = new RTPpacket(FEC_TYPE, imagenb, fecGroupsize, fecData, fecData.length); // timestamp gets violated as fecGroupsize ;-)
 
 				// get to total length of the full rtp packet to send
 				int packet_length = rtp_packet.getlength();
@@ -236,25 +301,27 @@ public class Server extends JFrame implements ActionListener {
 
 				// send the packet as a DatagramPacket over the UDP socket
 				senddp = new DatagramPacket(packet_bits, packet_length, ClientIPAddr, RTP_dest_port);
-				if (rand.nextInt(101) > packetLoss) {
-					RTPsocket.send(senddp);
-
+				if (packetSent()) {
 					// System.out.println("Send frame #"+imagenb);
+					System.out.println("\tFEC: SeqNum # " + rtp_packet.getsequencenumber());
 					// print the header bitstream
-					rtp_packet.printheader();
+					// rtp_packet.printheader();
 				} else {
-					System.out.println("Losing Packet.");
+					System.out.println("Losing FEC-Packet.");
 				}
-
-					// update GUI
-					label.setText("Send frame #" + imagenb);
 			} catch (Exception ex) {
 				System.out.println("Exception caught: " + ex);
 				System.exit(0);
 			}
+		}
+	}
+
+	private boolean packetSent() throws IOException {
+		if (rand.nextInt(100) + 1 > packetLoss) {
+			RTPsocket.send(senddp);
+			return true;
 		} else {
-			// if we have reached the end of the video file, stop the timer
-			timer.stop();
+			return false;
 		}
 	}
 
@@ -264,7 +331,7 @@ public class Server extends JFrame implements ActionListener {
 	private int parse_RTSP_request() {
 		int request_type = -1;
 
-		System.out.println("	Parsing request");
+		// System.out.println(" Parsing request");
 		try {
 			// parse request line and extract the request_type:
 			String RequestLine = RTSPBufferedReader.readLine();
@@ -314,6 +381,7 @@ public class Server extends JFrame implements ActionListener {
 					for (int i = 0; i < 3; i++)
 						tokens.nextToken(); // skip unused stuff
 					RTP_dest_port = Integer.parseInt(tokens.nextToken());
+					fec = new FECmanager(fecGroupsize);
 				}
 				// else LastLine will be the SessionId line ... do not check for now.
 			}
@@ -321,7 +389,7 @@ public class Server extends JFrame implements ActionListener {
 			System.out.println("Exception caught: " + ex);
 			System.exit(0);
 		}
-		System.out.println("	Requste parsed.");
+		// System.out.println(" Request parsed.");
 		return (request_type);
 	}
 
