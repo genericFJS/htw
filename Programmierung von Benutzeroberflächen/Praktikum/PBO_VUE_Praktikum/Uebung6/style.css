@@ -1,0 +1,9 @@
+.shape {
+    width: 150px;
+    height: 150px;
+    background-color: blue
+}
+
+.highlighted {
+    background-color: #DECA98
+}

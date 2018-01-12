@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 
+        EXCERCISE 1: Bind the "shapeStyles" data property to the "style" attribute. When clicking the below shape, change the shape from round to square or vice versa.
+        HINT: Use Vue.set to manipulate the data property. Use the "border-radius" CSS property for round corners.
+    -->
+        <div class="shape"></div>
+
+        <!--
+        EXERCISE 2: Apply the "highlighted" class to every second row in the below table. 
+        HINT: Use the modulus operator together with the v-for loop index.
+    -->
+        <h1>Employees</h1>
+
+        <table border="1">
+            <tr>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Company</th>
+            </tr>
+            <tr v-for="employee in employees">
+                <td>{{ employee.name}}</td>
+                <td>{{ employee.title}}</td>
+                <td>{{ companyName}} </td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>

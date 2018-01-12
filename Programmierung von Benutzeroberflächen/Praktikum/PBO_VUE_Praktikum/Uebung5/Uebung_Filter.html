@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/vue"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 
+    EXCERCISE 1: Implement a "uwfirst" filter which transforms the first character of each word to uppercase.
+    Use this filter to transform the paragraph's title with the v-bind directive.
+    HINT: Use JacaScript's "split" function to split the message into words.
+-->
+        <p v-bind:title="message">{{message}}</p>
+
+        <!--
+    EXCERCISE 2: Apply the filter from the first exercise to the below paragraph. Then implement a filter which removes any spaces and chain these two filters together.
+-->
+        <p>{{ message }}</p>
+    </div>
+</body>
+
+</html>

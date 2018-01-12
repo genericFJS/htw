@@ -1,0 +1,107 @@
+#header{
+    margin: auto;
+    width: 100%;
+    text-align: center;
+    background-color: crimson;
+    color: white;
+    font-family: 'Indie Flower', cursive;
+    font-size: 2.5em;
+}
+
+section {
+    width: 800px;
+    margin: auto;
+}
+
+button {
+    background-color: #efefef;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    border:1px solid crimson; 
+}
+
+button:active {
+    background-color: rgba(60,0,0,.4)
+}
+
+button:hover > img {
+    position: relative;
+    top: 2px;
+    left: 2px;
+}
+
+textarea {
+    resize:none;
+    width: 100%;
+    min-height: 7em;
+    height: 100%;
+    pointer-events: none;
+    box-sizing: border-box;
+    /*background-color: antiquewhite*/
+    border: none;
+}
+
+textarea:focus {
+    border: 1px solid black;
+    resize: vertical;
+    pointer-events: all;
+}
+
+
+
+#main_list {
+    margin: 0px;
+    padding: 0px;
+}
+
+#main_list>li {
+    padding-bottom: 15px;
+}
+
+.header{
+    background-color: #efefef;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.fieldname {
+    padding-right: 10px;
+}
+
+.fieldentry {
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: #efefef;
+    border: none;
+}
+
+.title {
+    font-size: 1.2em;
+}
+
+ul {
+  list-style-type: none;
+}
+
+#add {
+    background-color: crimson;
+    color: white;
+    font-size: 3em;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    vertical-align: center;
+    line-height: 50px;
+    position: fixed;
+    z-index: 1000;
+    box-shadow: 5px 5px 2px #888888;
+    bottom: 10px;
+    right: 10px;
+}
