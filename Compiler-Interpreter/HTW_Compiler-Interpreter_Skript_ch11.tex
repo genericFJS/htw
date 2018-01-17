@@ -1,0 +1,140 @@
+\section{Grundlagen}
+\lecdate{17.01.2018}
+\slides{V11_Yacc}{1}
+\subsection{Aufbau einer yacc-Datei}
+\slides{V11_Yacc}{2}
+\subsection{Zusammenspiel lex -- yacc}
+\slides{V11_Yacc}{3}
+
+\section{yacc-Teile}
+\subsection{Definitionsteil}
+\slides{V11_Yacc}{4}
+\subsection{Regelteil}
+\slides{V11_Yacc}{5}
+
+\subsection{Beispiel 1}
+\begin{lstlisting}
+%{
+	#include <stdio.h>
+	int yylex(void);
+	void yyerror(char *);
+%}
+%token INTEGER
+%%
+program:	program expr '\n'		{ printf("%d\n", $2); }
+					|
+					;
+expr:			INTEGER
+					| expr '+' expr			{ $$ = $1 + $3; }
+					| expr '-' expr			{ $$ = $1 - $3; }
+					;
+%%
+void yyerror(char *s) {
+	fprintf(stderr, "%s\n", s);
+}
+int main(void) {
+	yyparse();
+	return 0;
+}
+\end{lstlisting}
+Mit \lstinline`yacc -d xyz.y` generiert sich \lstinline`y.tab.h` (gekürzt):
+\slides{V11_Yacc}{7}
+Mit der dazugehörigen \lstinline`lex`-Datei:
+\slides{V11_Yacc}{8}
+
+\subsection{Beispiel 2: expr, term, factor}
+\begin{lstlisting}
+%{
+	#include <stdio.h> /* Printf */
+	#include <stdlib.h>/* exit */
+	#define YYSTYPE int
+	int yyparse(void);
+	int yylex(void);
+	void yyerror(char *mes);
+%}
+%token number
+%token QUIT 254
+%%
+ // Kommentar eins eingerückt
+program :	program expr '\n'		{printf("= %d\n", $2);}
+					|
+					;
+expr : 		expr '+' term				{puts("expr 1");$$ = $1 + $3;}
+					| expr '-' term			{puts("expr 2");$$ = $1 - $3;}
+					| term							{puts("expr 3");$$ = $1;}
+					| QUIT							{exit(0);}
+					;
+term : 		term '*' fact				{puts("term 1");$$ = $1 * $3;}
+					| term '/' fact			{puts("term 2");$$ = $1 / $3;}
+					| fact							{puts("term 3");$$ = $1;}
+					;
+fact : 		number							{puts("fact 1");$$ = $1;}
+					| '-'	number				{puts("fact 1");$$ = -$2;}
+					| '(' expr ')'			{puts("fact 2");$$ = $2;}
+					;
+%%
+int main() {
+	printf("Enter expression with + - * / ( ) \n");
+	yyparse(); return 0;
+}
+void yyerror(char *mes) {fprintf(stderr,"%s\n", mes);}
+\end{lstlisting}
+Mit dem Lexer:
+\begin{lstlisting}
+%{
+	#include "t2.h" /* eigentlich y.tab.h !! */
+	#include <stdlib.h> /* yacc -d -o t2.c erzeugt*/
+	void yyerror(char *); /* auch t2.h */
+%}
+
+%%
+[09]+				{ yylval = atoi(yytext);
+							return number;
+						}
+q(uit)? 		return QUIT;
+[-+()=/*\n]	{ return *yytext; }
+[ \t] 			; /* skip whitespace */
+.						yyerror("Unknown character");
+%%
+int yywrap(void) {
+	return 1;
+}
+\end{lstlisting}
+
+\section{Präzendenzregeln}
+\slides{V11_Yacc}{12}
+\subsection{Ausnahme}
+\slides{V11_Yacc}{13}
+\subsection{Beispiel}
+\slides{V11_Yacc}{14}
+\slides{V11_Yacc}{15}
+\slides{V11_Yacc}{16}
+Damit ergibt $12+3*4=24$, aber $12+3*-4=0$, da $12+(3*-4)=0$.
+
+\section{pl/0 mit yacc und lex}
+\slides{V11_Yacc}{17}
+\subsection{pl0.y}
+\subsubsection{Vereinbarungsteil}
+\slides{V11_Yacc}{18}
+\subsubsection{Funktionenteil}
+\slides{V11_Yacc}{19}
+\subsubsection{Regelteil}
+\slides{V11_Yacc}{20}
+\slides{V11_Yacc}{21}
+\slides{V11_Yacc}{22}
+\slides{V11_Yacc}{23}
+\subsection{Lexer}
+\slides{V11_Yacc}{26}
+\subsubsection{Funktionenteil}
+\slides{V11_Yacc}{27}
+\subsection{Regelteil}
+\slides{V11_Yacc}{28}
+\slides{V11_Yacc}{29}
+\slides{V11_Yacc}{30}
+\slides{V11_Yacc}{31}
+\subsection{Die Funktionen}
+\slides{V11_Yacc}{32}
+\slides{V11_Yacc}{33}
+
+
+
