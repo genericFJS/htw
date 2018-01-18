@@ -20,7 +20,7 @@ namespace aufgabeDrei {
 		// Das erarbeitete Morhpem (zur Rückgabe):
 		private Morphem lexedMorphem;
 		// Delegate für die Nächste Aktion im der categoryNextActionTable:
-		private delegate void ActionHandler();
+		private delegate void ActionDelegate();
 
 		/// <summary>
 		/// Gibt an, welches Zeichen welcher Kategorie entspricht. 
@@ -124,14 +124,14 @@ namespace aufgabeDrei {
 				reader = new StreamReader(@filePath);
 			}
 			// Aktionen als kurze Variablen zur besseren Übersicht in der Tabelle:
-			ActionHandler F = new ActionHandler(FinishMorphem);
-			ActionHandler R = new ActionHandler(ReadNext);
-			ActionHandler CR = new ActionHandler(WriteCharReadNext);
-			ActionHandler WR = new ActionHandler(WriteReadNext);
-			ActionHandler WRQ = new ActionHandler(WriteReadNextFinish);
+			ActionDelegate F = new ActionDelegate(FinishMorphem);
+			ActionDelegate R = new ActionDelegate(ReadNext);
+			ActionDelegate CR = new ActionDelegate(WriteCharReadNext);
+			ActionDelegate WR = new ActionDelegate(WriteReadNext);
+			ActionDelegate WRQ = new ActionDelegate(WriteReadNextFinish);
 			// Belegung der Tabelle:
 			categoryNextActionTable = new object[,,]{
-				/* Zust		So			Bu			Zi			:			<			>			=			Sonst	*/
+				/* Zust		So			Bu			 Zi			  :			   <			>		     =			  Sonst	*/
 				/* Z0 */{ { 9, WRQ},   { 1, CR},    { 2, WR},    { 3, WR},    { 4, WR},    { 5, WR},    { 9, WRQ},   { 0, R} },
 				/* Z1 */{ { 9, F},     { 1, CR},    { 1, WR},    { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F} },
 				/* Z2 */{ { 9, F},     { 9, F},     { 2, WR},    { 9, F},     { 9, F},     { 9, F},     { 9, F},     { 9, F} },
@@ -166,7 +166,7 @@ namespace aufgabeDrei {
 				}
 				currentCategory = charCategoryTable[currentCharCode];
 				// Aktion abhängig vom dem entsprechenden Tabelleneintrag:
-				((ActionHandler)categoryNextActionTable[currentState, currentCategory, 1])();
+				((ActionDelegate)categoryNextActionTable[currentState, currentCategory, 1])();
 				// Nächsten Zustand setzen (abhängig vom aktuellen Zustand und Zeichen):
 				currentState = (int)categoryNextActionTable[currentState, currentCategory, 0];
 			}
@@ -259,4 +259,14 @@ namespace aufgabeDrei {
 			return false;
 		}
 	}
+
+	//enum SymbolCode : int {
+	//	blank,          // kein Symbol
+	//	// ASCII-Symbole haben entsprechenden enum-Wert, weitere Symbole:
+	//	assign = 128,   // :=
+	//	lessEqual,      // <=
+	//	greaterEqual,   // >=
+	//	// Schlüsselworte:
+	//	BEGIN, CALL, CONST, DO, END, IF, ODD, PROCEDURE, THEN, VAR, WHILE
+	//}
 }

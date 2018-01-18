@@ -57,5 +57,6 @@ namespace aufgabeDrei {
 		symbol,
 		number,
 		identifier,
+		invalid
 	}
 }
