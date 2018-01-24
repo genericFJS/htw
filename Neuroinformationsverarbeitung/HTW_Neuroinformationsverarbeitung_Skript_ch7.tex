@@ -22,14 +22,55 @@ Quantisierungsfehler $E = \sum_{p=1}^P \| \vec{x}^p-\vec{w}_b(\vec{x}^p)\|$ (Abs
 Man kann nachweisen, dass der NG-Algorithmus Optimalität sicherstellt.
 
 \subsection{Algorithmus}
+\lecdate{23.01.2018}
 \begin{enumerate}
-\item Wähle ein $\vec{x}$ aus der Menge der Eingangsdaten.
+\item Wähle ein $\vec{x}$ aus der Menge der (gleichverteilten) Eingangsdaten.
 \item Sortiere alle Referenzvektoren ihres euklidischen Abstandes zu $\vec{x}$.\\
-$\To$ Ranking aller Referenzvektoren 
+$\To$ Ranking aller Referenzvektoren
 \end{enumerate}
+Ranking-Faktor: $k_i$, Lernreichweite: $h_\lambda(k_i)$.\\
+Reichweite wird mit zunehmender Trainingsdauer kleiner. Das Best-Matching-Neuron hat die größte Adaption, weitere Neuronen eine geringere. Die Reichweite beschreibt dann, welche Neuronen beim Training noch (wie stark) einbezogen werden.
+$$\Delta \vec{w}_i = \eta (t) \cdot h_\lambda(k_i) (\vec{x}-\vec{w}_i)$$\\
+$$\lambda(t)=\lambda_{A}\cdot \left(\frac{\lambda_{E}}{\lambda_{A}}\right)^{\frac{t}{t_{max}}}$$
+$$h_\lambda(k_i)=e^{\frac{-k_i}{\lambda(t)}}$$
+$$\eta(t)=\eta_{A}\cdot \left(\frac{\eta_{E}}{\eta_{A}}\right)^{\frac{t}{t_{max}}}$$
+Mit $\bullet_A$: Initialwert (Anfang), $\bullet_E$: Endwert, $t$: Trainingsepoche\\
+Anmerkung: auf den Folien $\eta = \epsilon$.
 
+\section{Kohonen-Netzwerke}
+\begin{itemize}
+\item Vektorquantisierer
+\item benannt noch „Erfinder“
+\item nutzt ncahbarschaft innerhalb der Netzwerk-Topologie
+\item trainiert wird jeweils das Best-Matching-Neuron $\vec{r}'$ (Koordinate im Netzwerk) mit
+$$\vec{r}'=\underset{\vec{r}}{\mathrm{argmin}}(\vec{x}-\vec{w}_{\vec{r}})$$
+und dessen Nachbarn in der \emph{Topologie} $\To$ „Dimension“ des Netzwerks
+\end{itemize}
+Beispiel „Dimension“/Topologie: 
+\begin{itemize}
+\item 1D $\to$ Kette (von Neuronen)
+\item 1,5D $\to$ Ring
+\item 2D $\to$ Karte/Grid/Gitter
+\end{itemize}
+Definition Nachbarschaftsfunktionen:
+$$h_{\vec{r}\vec{r}'}(t) = \exp (-\Vert\vec{r}'-\vec{r}\Vert)$$
+Reichweite nimmt mit zunehmender Trainingsdauer ab.\\
+$r(t)=r(t-1)\cdot \alpha$ mit $0<\alpha<1$, z.B. $\alpha=0,99$\\
+$r(t=0)=10$ (als Richtwert)\\
+$\eta(t)$: Analog zu Neural-Gas-Network oder einfacher $\eta(t)=\eta(0-1)\cdot \alpha$\\
+$\eta(t=0)=0,8$ als Richtwert
+$$\Delta \vec{w}_{\vec{r}} = \eta(t) \cdot h_{\vec{r}\vec{r}'}(t)\cdot (\vec{x}-\vec{w}_r)$$
+Definition der Nachbarschaft (Dimension der Topologie) führt zur Eigenschaft der topologieerhaltenden Abbildung (bzw.: Nachbarschaften im Eingaberaum werden auf Nachbarschaften in der neuronalen Repräsentation abgebildet -- benachbarte Punkte bleiben benachbart).\\
+Dies setzt voraus, dass die (Unter-)Mannigfaltigkeit (Dimensionen) der Eingabedaten mit der Dimension der Netzwerk-Topologie übereinstimmt. Sonst topologische Defekte zu erwarten (topologischer Defekt: Nachbarschaft in der neuronalen Repräsentation repräsentiert keine Nachbarschaft im Eingaberaum, bzw. umgekehrt). Beispiel Defekt: Kette (1D) in einer 2-D Ebene. Dort ist aber Beginn und Ende der Kette ggf. Nebeneinander, was nicht dem tatsächlichen Abstand entspricht.
 
+Das Kohonen-Modell hat den stärksten biologischen Background.
 
+\section{Growing-Neural-Gas}
+$\To$ Netzwerk bestimmt selbst:
+\begin{itemize}
+\item Lage der Referenzvektoren
+\item Anzahl der Referenzvektoren
+\end{itemize}
 
 
 
