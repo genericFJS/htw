@@ -1,0 +1,43 @@
+\section{Grundlagen}
+\lecdate{17.01.2018}
+\slides{V9_TabellenVerfahren}{1}
+\section{Schrittweise Aufbau eines top-down Parsers für Ausdrücke}
+\slides{V9_TabellenVerfahren}{2}
+\subsection{Umgeformte Regeln}
+\slides{V9_TabellenVerfahren}{3}
+\subsection{Bestimmung der terminalen Anfänge}
+\slides{V9_TabellenVerfahren}{4}
+\subsection{Aufbau der Tabelle}
+\slides{V9_TabellenVerfahren}{5}
+\subsection{Der Algorithmus}
+\slides{V9_TabellenVerfahren}{6}
+
+\subsection{Beispiel}
+Man schreibt die rechte Seite der Regeln hin (siehe Umgeformte Regeln), in denen eine Regel einen terminalen Anfang besitzt.
+\slides{V9_TabellenVerfahren}{7}
+\subsubsection*{Lösung Automatentabelle}
+\slides{V9_TabellenVerfahren}{8}
+Hinweis: nix entspricht keiner Eingabe beim Start, sonst ist leer.
+\subsubsection*{Algorithmusabarbeitung}
+\slides{V9_TabellenVerfahren}{10}
+$\to$ so lange entsprechend der Automatentabelle ersetzen, bis empty und alle akzeptiert.
+
+\section{bottom-up Analyse}
+\slides{V9_TabellenVerfahren}{11}
+\subsection{shift/reduce}
+\slides{V9_TabellenVerfahren}{12}
+\subsection{Automatentabelle}
+\slides{V9_TabellenVerfahren}{13}
+\subsection{Beispiel}
+\slides{V9_TabellenVerfahren}{14}
+1. Schritt: Mit aktuellem Eingabesymbol 2 (Num) zum nächsten Zustand Q5 (shift)\\
+2. Schritt: Mit aktuellem Eingabesymbol + zum nächsten Zustand/Reduce Anweisung: num mit F ersetzen und nächsten Sprung mit Sprungtabelle einfügen.\\
+3. Schritt: F mit T ersetzen, Q2 als Sprung.\\
+4. Schritt: T mit E ersetzen, Q1 als Sprung.\\
+usw… Es wird immer geshiftet oder reduced. Steht ein Qx drin, so wird geshifted, wobei das nächste Zeichen der Eingabe das aktuelle Token ist (mit dem man bei den Zuständen in die entsprechende Spalte guckt).\\
+Beim Reduzieren in späteren Schritten: so viele Zustände raus nehmen, wie in der Regel auf der rechten Seite stehen. Wie immer kommt ein neuer Zustand hinzu.
+\slides{V9_TabellenVerfahren}{15}
+
+
+
+
