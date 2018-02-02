@@ -1,0 +1,158 @@
+\begin{frame}
+\begin{itemize}
+\item<1-> Auswertung
+\item<2-> Fehleridentifizierung
+\item<3-> Fehlerbewertung
+\end{itemize}
+\note{
+Die Analyse besteht aus diesen Schritten.
+}
+\end{frame}
+
+\subsection{Allgemeines Feedback}
+
+\begin{frame}{Positives}
+\begin{center}
+\uncover<1->{Orientierung:\\
+\interviewScalaResult{6.2}{schwer}{leicht}\\\bigskip}
+\uncover<2->{Bedienbarkeit (Desktop und Mobil):\\
+\interviewScalaResult{6.5}{schlecht}{gut}}
+\end{center}
+\note{
+Im Interview wurden die Probanden um eine Einschätzung verschiedener Qualitäten der Webseite gebeten. Auf einer Skala von 1 bis 7 sollten diese bewertet werden.\bigskip
+
+Trotz einiger Probleme, die später identifiziert wurden, wurden bspw. die Orientierung und Bedienbarkeit positiv wahrgenommen.\\
+}
+\end{frame}
+
+\begin{frame}{Negatives}
+\begin{center}
+\uncover<1->{Gesamteindruck:\\
+\interviewScalaResult{3.5}{schlecht}{gut}\\\bigskip}
+\uncover<2->{Farbwahl:\\
+\interviewScalaResult{2.8}{schlecht}{gut}}
+\end{center}
+\note{
+Der Gesamteindruck und die Farbwahl wurden größtenteils negativ wahrgenommen. 
+
+Im Kontrast dazu wurde die Präsentation im Bezug auf den Inhalt als angemessen bewertet:
+\begin{center}
+Präsentation:\\
+\interviewScalaResult{6.2}{unangemessen}{angemessen}
+\end{center}
+Das bedeutet, dass trotz einer angemessenen Präsentation eine andere Farbkomposition zu wählen ist.\\
+}
+\end{frame}
+
+\subsection{Fehleridentifizierung}
+\begin{frame}
+Auswertung:
+\begin{itemize}
+\item<2-> Interviews
+\item<3-> Testprotokolle
+\end{itemize}
+\note{
+Zur Identifizierung der Fehler mussten die Interviews und Testprotokolle ausgewertet werden.
+
+Die identifizierten Fehler konnten dann bewertet werden.\\
+}
+\end{frame}
+
+\subsection{Fehlerbewertung}
+\begin{frame}{Aspekte zur Priorisierung}
+\begin{itemize}
+\item[$H$]<2-> Häufigkeit
+\item[$A$]<3-> Hartnäckigkeit (Auffälligkeit)
+\item[$F$]<4-> Folgen
+\end{itemize}
+\note{
+Um die identifizierten Fehler bzw. Probleme priorisieren zu können, wurden sie anhand folgender Kenngrößen bewertet:
+\begin{itemize}
+\item[$H$] Häufigkeit:\\
+Wie vielen Probanden sind diesem Problem begegnet (Anzahl)?
+\item[$A$] Hartnäckigkeit (Auffälligkeit):\\
+Wie oft ist diesen Probanden diesem Problem begegnet (Abschätzung/Wertung anhand von Protokollen)?
+\item[$F$] Folgen:\\
+Wie schwer sind die Folgen, wenn das Problem aufgetreten ist (Wertung anhand der Protokolle und persönlicher Einschätzung)?
+\end{itemize}
+}
+\end{frame}
+
+\begin{frame}{Priorisierung nach Nielsen}
+\begin{center}
+$P=\lceil H\cdot 30\%+A\cdot 20\%+F \cdot 50\%\rceil$
+\end{center}
+\begin{center}
+\uncover<2->{
+\begin{minipage}{.5\textwidth}
+\begin{enumerate}
+\item[\nielA] Geringes Problem
+\item[\nielB] Relatives Problem
+\item[\nielC] Ernsthaftes Problem
+\item[\nielD] Usability Katastrophe
+\end{enumerate}
+}
+\end{minipage}
+\end{center}
+\note{
+Für die Priorisierung sind vor allem die Folgen ausschlaggebend. Häufigkeit und Hartnäckigkeit spielen eine untergeordnete Rolle.\\
+}
+\end{frame}
+
+\begin{frame}{Allgemein}
+\footnotesize
+\begin{center}
+\begin{tabular}{ L{.56} | C{.11} C{.11} C{.11} | C{.11}}
+Beschreibung& $H$ & $A$ & $F$ & $P$\\\hline
+\uncover<2->{Farben trist (geringe Sättigung)} & \uncover<2->{\bewE} & \uncover<2->{\bewDe} & \uncover<2->{\bewBc} & \uncover<2->{\nielC}\\
+\uncover<3->{Farben eintönig (verschwimmen)} & \uncover<3->{\bewC} & \uncover<3->{\bewD} & \uncover<3->{\bewCd} & \uncover<3->{\nielC}\\
+\uncover<4->{Menüleiste zu groß} & \uncover<4->{\bewA} & \uncover<4->{\bewDe} & \uncover<4->{\bewDe} & \uncover<4->{\nielC}\\
+\end{tabular}
+\note{
+Aufgeführt sind ernsthafte Probleme, auf die im Redesign eingegangen wurde.
+
+Auffällig ist, dass die Farben fast jedem Probanden auf die eine oder andere Weise negativ aufgefallen ist.
+
+Obwohl das kantige und schlichte Design nicht schlecht angekommen ist, wurde vor allem die Menüleiste kritisiert, die besonders in der mobilen Ansicht zu viel Platz auf dem Bildschirm einnimmt.\\
+}
+\end{center}
+\end{frame}
+
+\begin{frame}{Automatisierte Wichtel System}
+\footnotesize
+\begin{center}
+\begin{tabular}{ L{.56} | C{.11} C{.11} C{.11} | C{.11}}
+Beschreibung& $H$ & $A$ & $F$ & $P$\\\hline
+\uncover<2->{Zuweisung: Tabelle nicht intuitiv benutzbar} & \uncover<2->{\bewD} & \uncover<2->{\bewDe} & \uncover<2->{\bewEf} & \uncover<2->{\nielD}\\
+\uncover<3->{Wichtel-Eingabe: Anordnung der Eingabeflächen nicht eindeutig (mobil)} & \uncover<3->{\bewB} & \uncover<3->{\bewCd} & \uncover<3->{\bewE} & \uncover<3->{\nielC}\\
+\uncover<4->{Mail-Anpassung: Textfelder zu klein (mobil)} & \uncover<4->{\bewC} & \uncover<4->{\bewD} & \uncover<4->{\bewBc} & \uncover<4->{\nielC}\\
+\end{tabular}
+\end{center}
+\note{
+Das AWS hatte am meisten spezifische Probleme, die teils sogar als Usability Katastrophe gewertet wurden.
+
+Wenige oder unpräzise Erklärungen konnten dazu führen, dass der Nutzer das Programm gegebenenfalls falsch bedient hat.
+
+Weiterhin kann man den AWS-Seiten ansehen, dass sie nicht für mobile Geräte konzipiert wurde.\\
+}
+\end{frame}
+
+\subsection{Fazit}
+\begin{frame}
+\begin{center}
+\uncover<2->{Nicht nur Kleinigkeiten zu korrigieren\\}
+\uncover<3->{$\Rightarrow$ Umfangreiches Redesign nötig\\\bigskip}
+\uncover<4->{Fehlerauswahl zum Redesign:\\nur Design-Fehler}
+\end{center}
+\note{
+Da die wichtigsten identifizierten Fehler und Probleme nicht nur Kleinigkeiten sind, ist ein umfangreiches Redesign nötig. 
+
+Das bedeutet, dass für die ausgewählten Fehler Vorschläge für die Veränderung erstellt wurden, die aufgrund des zeitlich eingeschränkten Rahmens teils nicht zur Perfektion ausgearbeitet werden konnten.
+
+Dies steht im Kontrast zu einer Evaluierung, die eine bereits erprobte und von Fachkräften designte Webseite (wie beispielsweise Opal oder die HTW-Seite) bewertet: Dabei müssen potentiell nur minimale Änderungen vorgenommen werden -- wenn bspw. die Anordnung leicht ungünstig muss nur ein Element verschoben werden. 
+
+Bei diesem Redesign sind deutlich komplexere strukturelle Änderungen vorzunehmen.
+
+Fehler technischer Natur wurden nicht ausgewählt.\\
+}
+\end{frame}

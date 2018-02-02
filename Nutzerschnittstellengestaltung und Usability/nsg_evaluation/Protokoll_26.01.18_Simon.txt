@@ -1,0 +1,50 @@
+---
+Präsentation
+Grundlegendes:
++ Hinweise auf Opal, bei Beispiele und Hinweise
++ Dauer: min 20, max 25 min, da sie mit fragen 30 min dauern soll
++ ist wie mündliche prüfung
+
+Inhalt:
++ Personas
++ Interview ruhig mitnehmen
++ Tabelle zeigen: nur ein paar wichtige punkte oder alles?
+	- Alles aber in Bereiche/Kategorien einteilen
+	- Speziell auf die Redesign punkte eingehen
+	- erklären wie man auf gewichtung und auswahl für redesign kommt
+
+---
+Abgabe 
+2 Versionen (ideal eine):
++ eine mit notizen
++ eine für präsi (folien dürfen auch etwas voller sein, weil doku)
+
+---
+Noch zu ändern
+3 screens beide mit desktop und mobile view
++ Hauptseite - Home
+	- Wichtel system mit als Menü punkt?
+	- Bei nur 3 menüpunkte braucht man kein menü -> platz sparen und damit direkt alle drei abbilden
+	Mobil Vorschlag:
+	- DE | EN mit in das obere Banner
+	- Home wird eliminiert, da es nur aufzeigt was es sonst für Seiten gibt auf dieser Webseite
+	- Anordnung: Kreativ, Code, Wichteln
+	- Und bei 4 Punkten (mit Home): mit 4 ist doof
+	- ist so praktischer
+	-  was mit der suche?:
+		* sollte oben rechts sein
+		* Deutsch Englisch sollte unten rein anstatt copy right -> Telefon weis welche Sprache er spricht
+	
+	Desktop:
+	- de en wieder oben
+	- copy right wieder mit rein
+
+	wenn wir wollen können wir unser eigenes Redesign(mit Menu) oder ihre Redesign machen, um dann durch nutzer entscheiden zu lassen, aber war nicht so begeistert
+
+(Bei diesen beiden sollte nur ein gegen Bild erstellt werden (Bei mobil -> Desktop und umgekehrt))
++ AWS - Wichtel einträge
++ AWS - Wichtel zuteilung
+
+(+ Mail mobile skroll problem (wenn wir bessere note wollen))
+War nicht zufrieden das Mail nicht redesigned wurde
+

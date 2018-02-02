@@ -1,0 +1,522 @@
+%-- Nummerierung bis Subsubsection für Report
+\setcounter{secnumdepth}{3}	% zählt auch subsubsection
+\setcounter{tocdepth}{3}	% Inhaltsverzeichnis bis in subsubsection
+
+% LuaLaTeX Unterscheidung
+\usepackage{ifluatex}
+
+% Input inkl. Umlaute, Silbentrennung
+\ifluatex
+	\usepackage{fontspec}
+\else
+	\usepackage[utf8]{inputenc}
+	\usepackage[T1]{fontenc}
+\fi
+\usepackage[english,ngerman]{babel}
+\usepackage{csquotes}	% Anführungszeichen
+\usepackage{marvosym}
+\usepackage{eurosym}
+
+% Style-Aufhübschung
+\usepackage{soul, color}	% Kapitälchen, Unterstrichen, Durchgestrichen usw. im Text
+%\usepackage{titleref}
+\usepackage[breakwords, fit]{truncate}	% Abschneiden von Sätzen
+\renewcommand{\TruncateMarker}{\,…}
+\usepackage{setspace}
+
+% Mathe usw.
+\usepackage{amssymb}
+\usepackage{amsthm}
+\makeatletter%
+\@ifclassloaded{beamer}%
+  {}%
+  {\usepackage[fleqn,intlimits]{amsmath}}%
+\makeatother%
+%\usepackage{mathtools} % u.a. schönere underbraces
+\usepackage{xcolor}
+\usepackage{esint}	% Schönere Integrale, \oiint vorhanden
+\everymath=\expandafter{\the\everymath\displaystyle}	% Mathe Inhalte werden weniger verkleinert
+\usepackage{wasysym}	% mehr Symbole, bspw \lightning
+%\renewcommand{\int}{\int\limits}
+%\usepackage{xfrac}	% mehr fracs: sfrac{}{}
+\let\oldemptyset\emptyset	% schöneres emptyset
+\let\emptyset\varnothing
+%\RequirePackage{mathabx}	% mehr Symbole
+\mathchardef\mhyphen="2D	% Hyphen in Math
+\usepackage{mathtools}		% zum Beispiel {pmatrix}[r] für Formatierung der Matrix
+
+% tikz usw.
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.11}	% Umgeht Fehlermeldung
+\usetikzlibrary{graphs}
+%\usetikzlibrary{through}	% ???
+\usetikzlibrary{arrows}
+\usetikzlibrary{arrows.meta}	% Pfeile verändern / vergrößern: \draw[-{>[scale=1.5]}] (-3,5) -> (-3,3);
+\usetikzlibrary{automata,positioning} % Zeilenumbruch im Node node[align=center] {Text\\nächste Zeile} automata für Graphen
+\usetikzlibrary{matrix}
+\usetikzlibrary{patterns}	% Schraffierte Füllung
+\usetikzlibrary{shapes.geometric}	% Polygon usw.
+\tikzstyle{reverseclip}=[insert path={	% Inverser Clip \clip
+	(current page.north east) --
+	(current page.south east) --
+	(current page.south west) --
+	(current page.north west) --
+	(current page.north east)}
+% Nutzen: 
+%\begin{tikzpicture}[remember picture]
+%\begin{scope}
+%\begin{pgfinterruptboundingbox}
+%\draw [clip] DIE FLÄCHE, IN DER OBJEKT NICHT ERSCHEINEN SOLL [reverseclip];
+%\end{pgfinterruptboundingbox}
+%\draw DAS OBJEKT;
+%\end{scope}
+%\end{tikzpicture}
+]	% Achtung: dafür muss doppelt kompliert werden!
+\usepackage{graphpap}	% Grid für Graphen
+\tikzset{every state/.style={inner sep=2pt, minimum size=2em}}
+\usetikzlibrary{mindmap, backgrounds}
+%\usepackage{tikz-uml}	% braucht Dateien: http://perso.ensta-paristech.fr/~kielbasi/tikzuml/
+
+% Tabular
+\usepackage{longtable}	% Große Tabellen über mehrere Seiten
+\usepackage{multirow}	% Multirow/-column: \multirow{2[Anzahl der Zeilen]}{*[Format]}{Test[Inhalt]} oder \multicolumn{7[Anzahl der Reihen]}{|c|[Format]}{Test2[Inhalt]}
+\renewcommand{\arraystretch}{1.3} % Tabellenlinien nicht zu dicht
+\usepackage{colortbl}
+\arrayrulecolor{gray}	% heller Tabellenlinien
+\usepackage{array}	% für folgende 3 Zeilen (für Spalten fester breite mit entsprechender Ausrichtung):
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{\dimexpr#1\columnwidth-2\tabcolsep-1.5\arrayrulewidth}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{\dimexpr#1\columnwidth-2\tabcolsep-1.5\arrayrulewidth}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{\dimexpr#1\columnwidth-2\tabcolsep-1.5\arrayrulewidth}}
+\usepackage{booktabs}	% Kompatibilität für array und \hrule
+\usepackage{caption}	% Um auch unbeschriftete Captions mit \caption* zu machen
+
+% Nützliches
+\usepackage{verbatim}	% u.a. zum auskommentieren via \begin{comment} \end{comment}
+\usepackage{tabto}	% Tabs: /tab zum nächsten Tab oder /tabto{.5 \CurrentLineWidth} zur Stelle in der Linie
+\NumTabs{6}	% Anzahl von Tabs pro Zeile zum springen
+\usepackage{listings} % Source-Code mit Tabs
+\usepackage{lstautogobble} 
+\makeatletter%
+\@ifclassloaded{beamer}%
+  {}%
+  {%
+\usepackage{enumitem}	% Anpassung der enumerates
+%\setlist[enumerate,1]{label=(\arabic*)}	% global andere Enum-Items
+\renewcommand{\labelitemiii}{$\scriptscriptstyle ^\blacklozenge$}}%
+\makeatother%
+\usepackage{letltxmacro} % neue Definiton von Grundbefehlen
+% Nutzen:
+%\LetLtxMacro{\oldemph}{\emph}
+%\renewcommand{\emph}[1]{\oldemph{#1}}
+\RequirePackage{xpatch}	% ua. Konkatenieren von Strings/Variablen (etoolbox)
+\usepackage{xstring}	% String Operationen
+\usepackage{minibox}	% Minibox anstatt \fbox{} für Boxen mit (manuellen) Zeilenumbruch
+\usepackage{framed}		% \begin{framed} statt minibox/fbox mit automatischem Zeilenumbruch
+\usepackage{microtype}	% Verfeinerte Hyphenation
+\usepackage{import}		
+\usepackage{standalone}	% Zusammen mit import: Einfügen von separaten Latex-Dateien (die schon header haben)
+
+% Einrichtung von lst
+%\renewcommand*{\ttdefault}{qcr}
+\lstset{
+basicstyle=\ttfamily, 
+%basicstyle=\footnotesize\sffamily\color{black},
+%mathescape=true, 
+%escapeinside=^^, 
+autogobble, 
+tabsize=2,
+frame=single,
+rulecolor=\color{lightgray},
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny\color{gray},
+commentstyle=\color{gray},
+keywordstyle=\color{htwblue},
+stringstyle=\color{htworange},
+morecomment=[l][\color{magenta}]{\#}
+showspaces=false,
+showstringspaces=false,
+breaklines=true,
+literate=%
+    {Ö}{{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}1
+    {ü}{{\"u}}1
+    {ä}{{\"a}}1
+    {ö}{{\"o}}1
+    {„}{{\glqq}}1
+    {“}{{\grqq}}1
+    {~}{{\textasciitilde}}1
+}
+\usepackage{scrhack} % Fehler umgehen
+\def\ContinueLineNumber{\lstset{firstnumber=last}} % vor lstlisting. Zum wechsel zum nicht-kontinuierlichen muss wieder \StartLineAt1 eingegeben werden
+\def\StartLineAt#1{\lstset{firstnumber=#1}} % vor lstlisting \StartLineAt30 eingeben, um bei Zeile 30 zu starten
+\let\numberLineAt\StartLineAt
+
+\makeatletter%
+\@ifclassloaded{beamer}%
+  {}%
+  {
+% BibTeX
+\usepackage[
+%backend=bibtex8,
+bibencoding=ascii,
+%style=authortitle, citestyle=authortitle-ibid,
+%doi=false,
+%isbn=false,
+%url=false
+]{biblatex}	% BibTeX
+\usepackage{makeidx}
+%\makeglossary
+%\makeindex
+}%
+\makeatother%
+
+% Grafiken
+\usepackage{graphicx}
+\usepackage{epstopdf}	% eps-Vektorgrafiken einfügen
+\usepackage{transparent}	% transparent nutzen: {\transparent{0.4} ...}
+%\epstopdfsetup{outdir=\customDir}
+% Prüft, ob Grafik existiert (mit \ifvalidimage{}{}) [Quelle: https://tex.stackexchange.com/a/99176]:
+\makeatletter
+\newif\ifgraphicexist
+\catcode`\*=11
+\newcommand\ifvalidimage[1]{%
+    \begingroup
+    \global\graphicexisttrue
+    \let\input@path\Ginput@path
+    \filename@parse{#1}%
+    \ifx\filename@ext\relax
+    \@for\Gin@temp:=\Gin@extensions\do{%
+        \ifx\Gin@ext\relax
+        \Gin@getbase\Gin@temp
+        \fi}%
+    \else
+    \Gin@getbase{\Gin@sepdefault\filename@ext}%
+    \ifx\Gin@ext\relax
+    \global\graphicexistfalse
+    \def\Gin@base{\filename@area\filename@base}%
+    \edef\Gin@ext{\Gin@sepdefault\filename@ext}%
+    \fi
+    \fi
+    \ifx\Gin@ext\relax
+    \global\graphicexistfalse
+    \else 
+    \@ifundefined{Gin@rule@\Gin@ext}%
+    {\global\graphicexistfalse}%
+    {}%
+    \fi  
+    \ifx\Gin@ext\relax 
+    \gdef\imageextension{unknown}%
+    \else
+    \xdef\imageextension{\Gin@ext}%
+    \fi 
+    \endgroup 
+    \ifgraphicexist
+    \expandafter \@firstoftwo
+    \else
+    \expandafter \@secondoftwo
+    \fi 
+} 
+\catcode`\*=12
+\makeatother
+\LetLtxMacro{\forceincludegraphics}{\includegraphics}	% neuer Befehl für includegraphics
+\renewcommand{\includegraphics}[2][]{	% altes includegraphics neu definieren, damit es auch nicht vorhandene einfügt
+\ifvalidimage{#2}{
+\forceincludegraphics[#1]{#2}
+}{
+\message{Achtung: Grafik wurde nicht gefunden: '#2'}
+\minibox[frame]{
+\textbf{\StrSubstitute{#2}{_}{\_}}%  \ifthenelse{\isempty{#1}}{}{\\\textit{#1}}
+}}}
+
+% pdf-Setup
+\usepackage{pdfpages}
+
+\makeatletter
+\@ifclassloaded{beamer}%
+  {}%
+  {\usepackage[bookmarks,
+  bookmarksopen=false,
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=red,
+  urlcolor=black]{hyperref}
+% Nach Dokumentenbeginn ausführen:
+\makeatletter
+\AtBeginDocument{	
+	% pdf Informationen
+	\hypersetup{
+		pdfauthor={\@author},
+		pdftitle={\@title},
+		pdfproducer={LaTeX Layout erstellt von Falk-Jonatan Strube}
+	}
+}
+\makeatother
+}%
+\makeatother%
+
+
+
+%%% ==================================================
+%%% ===================== MACROS =====================
+%%% ==================================================
+% Horizontale Linie:
+\newcommand{\HRule}[1][\medskipamount]{\par
+  \vspace*{\dimexpr-\parskip-\baselineskip+#1}
+  \noindent\rule[0.2ex]{\linewidth}{0.2mm}\par
+  \vspace*{\dimexpr-\parskip-.5\baselineskip+#1}}
+% Gestrichelte horizontale Linie:
+\RequirePackage{dashrule}
+\newcommand{\HDRule}[1][\medskipamount]{\par
+  \vspace*{\dimexpr-\parskip-\baselineskip+#1}
+  \noindent\hdashrule[0.2ex]{\linewidth}{0.2mm}{1mm} \par
+  \vspace*{\dimexpr-\parskip-.5\baselineskip+#1}}
+% Mathe in Anführungszeichen:
+\newsavebox{\mathbox}\newsavebox{\mathquote}
+\makeatletter
+\newcommand{\mq}[1]{% \mathquotes{<stuff>}
+  \savebox{\mathquote}{\text{"}}% Save quotes
+  \savebox{\mathbox}{$\displaystyle #1$}% Save <stuff>
+  \raisebox{\dimexpr\ht\mathbox-\ht\mathquote\relax}{"}#1\raisebox{\dimexpr\ht\mathbox-\ht\mathquote\relax}{''}
+}
+\makeatother
+
+% Paragraph mit Zähler (Section-Weise)
+\newcounter{cparagraphC}
+\newcommand{\cparagraph}[1]{
+\stepcounter{cparagraphC}
+\paragraph{\thesection{}-\thecparagraphC{} #1}
+%\addcontentsline{toc}{subsubsection}{\thesection{}-\thecparagraphC{} #1}
+\label{\thesection-\thecparagraphC}
+}
+\makeatletter
+\@addtoreset{cparagraphC}{section}
+\makeatother
+
+
+% (Vorlesungs-)Folien einbinden:
+\makeatletter
+% Folien-Pfad (inkl. Dateiname ohne Endung und ggf. ohne Nummerierung)
+\newcommand{\@slidePath}{}
+\newcommand{\slidePath}[1]{\renewcommand{\@slidePath}{#1}}
+% Folien Eigenschaften
+\newcommand{\@slideScale}{0.5}
+\newcommand{\slideScale}[1]{\renewcommand{\@slideScale}{#1}}
+\AtBeginDocument{
+% Folien von einer Datei skaliert
+\newcommand{\slide}[2][\@slideScale]{\slides[#1]{}{#2}}
+\newcommand{\slideTrim}[6][\@slideScale]{\slides[#1 , clip,  trim = #5cm #4cm #6cm #3cm]{}{#2}}
+% Folien von mehreren nummerierten Dateien skaliert
+\newcommand{\slides}[3][\@slideScale]{\begin{center}
+\includegraphics[page=#3, scale=#1]{\@slidePath #2.pdf}
+\end{center}}
+}
+\makeatother
+
+% \emph{} anders definieren
+%\makeatletter
+%\DeclareRobustCommand{\em}{%
+%  \@nomath\em \if b\expandafter\@car\f@series\@nil
+%  \normalfont \else \scshape \fi}
+%\makeatother
+
+% unwichtiges
+\newcommand{\unimptnt}[1]{{\transparent{0.5}#1}}
+
+% alph. enumerate
+\newenvironment{anumerate}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}} % Alphabetische Aufzählung
+
+% Hanging parameters
+\newcommand{\hangpara}[1]{\par\noindent\hangindent+2em\hangafter=1 #1\par\noindent}
+
+\makeatletter
+\@ifclassloaded{beamer}%
+{}%
+{%
+\usepackage{footnote}
+\makesavenoteenv{tabular}
+\makesavenoteenv{table}
+}%
+\makeatother
+
+%% EINFACHE BEFEHLE
+
+% Abkürzungen Mathe
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\PP}{\mathbb{P}}
+\renewcommand{\SS}{\mathbb{S}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cV}{\mathcal{V}}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\theta}{\vartheta}
+
+% Verschiedene als Mathe-Operatoren
+\DeclareMathOperator{\arccot}{arccot}
+\DeclareMathOperator{\arccosh}{arccosh}
+\DeclareMathOperator{\arcsinh}{arcsinh}
+\DeclareMathOperator{\arctanh}{arctanh}
+\DeclareMathOperator{\arccoth}{arccoth} 
+\DeclareMathOperator{\var}{Var} % Varianz 
+\DeclareMathOperator{\cov}{Cov} % Co-Varianz 
+
+% Farbdefinitionen
+\definecolor{red}{RGB}{180,0,0}
+\definecolor{green}{RGB}{75,160,0}
+\definecolor{blue}{RGB}{0,75,200}
+\definecolor{orange}{RGB}{255,128,0}
+\definecolor{yellow}{RGB}{255,245,0}
+\definecolor{purple}{RGB}{75,0,160}
+\definecolor{cyan}{RGB}{0,160,160}
+\definecolor{brown}{RGB}{120,60,10}
+
+\definecolor{itteny}{RGB}{244,229,0}
+\definecolor{ittenyo}{RGB}{253,198,11}
+\definecolor{itteno}{RGB}{241,142,28}
+\definecolor{ittenor}{RGB}{234,98,31}
+\definecolor{ittenr}{RGB}{227,35,34}
+\definecolor{ittenrp}{RGB}{196,3,125}
+\definecolor{ittenp}{RGB}{109,57,139}
+\definecolor{ittenpb}{RGB}{68,78,153}
+\definecolor{ittenb}{RGB}{42,113,176}
+\definecolor{ittenbg}{RGB}{6,150,187}
+\definecolor{itteng}{RGB}{0,142,91}
+\definecolor{ittengy}{RGB}{140,187,38}
+
+% Textfarbe ändern
+\newcommand{\tred}[1]{\textcolor{red}{#1}}
+\newcommand{\tgreen}[1]{\textcolor{green}{#1}}
+\newcommand{\tblue}[1]{\textcolor{blue}{#1}}
+\newcommand{\torange}[1]{\textcolor{orange}{#1}}
+\newcommand{\tyellow}[1]{\textcolor{yellow}{#1}}
+\newcommand{\tpurple}[1]{\textcolor{purple}{#1}}
+\newcommand{\tcyan}[1]{\textcolor{cyan}{#1}}
+\newcommand{\tbrown}[1]{\textcolor{brown}{#1}}
+
+% Umstellen der Tabellen Definition
+\newcommand{\mpb}[1][.3]{\begin{minipage}[t]{#1\textwidth}\vspace*{3pt}}
+\newcommand{\mpe}{\vspace*{3pt}\end{minipage}}
+
+\newcommand{\resultul}[1]{\underline{\underline{#1}}}
+\newcommand{\parskp}{$ $\\}	% new line after paragraph
+\newcommand{\parnl}{\unskip\parfillskip 0pt \par} % justified new line (brace line!)
+
+% mathematische Abkürzungen
+\newcommand{\corr}{\;\widehat{=}\;}
+\newcommand{\mdeg}{^{\circ}}
+\newcommand{\nok}[2]{\binom{#1}{#2}}	% n über k BESSER: \binom{n}{k}
+\newcommand{\mtr}[1]{\begin{pmatrix}#1\end{pmatrix}}	% Matrix
+\newcommand{\dtr}[1]{\begin{vmatrix}#1\end{vmatrix}}	% Determinante (Betragsmatrix)
+\LetLtxMacro{\originalVec}{\vec}
+\renewcommand{\vec}[1]{\underline{#1}}	% Vektorschreibweise
+\newcommand{\imptnt}[1]{\colorbox{red!30}{#1}}	% Wichtiges
+\newcommand{\intd}[1]{\,\mathrm{d}#1}
+\newcommand{\diffd}[1]{\mathrm{d}#1}
+% für Module-Rechnung: \pmod{}
+\newcommand{\unit}[1]{\,\mathrm{#1}}
+%\LetLtxMacro{\ntilde}{\tilde}
+%\renewcommand{\tilde}{\widetilde}
+
+% weiter Abkürzungen
+\newcommand{\gdw}{genau dann wenn}
+\newcommand{\lecdate}[1]{\marginpar{\small\textcolor{gray}{Vorlesung\newline #1}}}
+
+\newcommand{\chbox}[1]{%
+	\hspace*{-.3em}%
+	\fbox{%
+		\begin{minipage}{1.3em}%
+			\centering%
+			#1\strut
+		\end{minipage}%
+	}%
+	\hspace*{-.3em}%
+}
+
+\newcommand{\interviewScala}[9]{
+\begin{center}
+	\begin{tabular}{r c c c c c c c l}
+		&$-$ &  &  & $\sim$ &  &  & $+$&\\
+		#8&\chbox{#1} & \chbox{#2} & \chbox{#3} & \chbox{#4} & \chbox{#5} & \chbox{#6} & \chbox{#7}&#9\\
+	\end{tabular}
+\end{center}
+}
+
+\newcommand{\interviewText}[1]{%
+\begin{center}
+	\fbox{%
+		\begin{minipage}{.95\linewidth}%
+			#1\strut
+		\end{minipage}%
+	}%
+\end{center}
+}
+
+\newcommand{\interviewTextS}{}
+\newcommand{\interviewTextM}{\vspace*{2.5cm}}
+\newcommand{\interviewTextL}{\vspace*{5cm}}
+
+\newcommand{\interviewScalaResult}[3]{%
+\begin{tikzpicture} 
+\fill [ittenr](1,0.5) rectangle (1.5,0);
+\fill [ittenr!80!itteno](1.5,0.5) rectangle (2,0);
+\fill [ittenr!60!itteno](2,0.5) rectangle (2.5,0);
+\fill [ittenr!40!itteno](2.5,0.5) rectangle (3,0);
+\fill [ittenr!20!itteno](3,0.5) rectangle (3.5,0);
+\fill [ittenr!5!itteno](3.5,0.5) rectangle (4,0);
+\fill [itteno!95!itteng](4,0.5) rectangle (4.5,0);
+\fill [itteno!80!itteng](4.5,0.5) rectangle (5,0);
+\fill [itteno!60!itteng](5,0.5) rectangle (5.5,0);
+\fill [itteno!40!itteng](5.5,0.5) rectangle (6,0);
+\fill [itteno!20!itteng](6,0.5) rectangle (6.5,0);
+\fill [itteng](6.5,0.5) rectangle (7,0); 
+%\fill [shading = axis,rectangle, left color=ittenr, right color=itteno,shading angle=90] (1,0.5) rectangle (4,0);
+%\fill [shading = axis,rectangle, left color=itteno, right color=itteng,shading angle=90] (4,0.5) rectangle (7,0);
+\node [below] at (1,0) {#2};
+\node [below] at (7,0) {#3};
+\draw [ultra thick] (#1,0.6) node[above]{#1} -- (#1,-0.1);
+\end{tikzpicture}%
+}
+
+\newcommand{\bewA}{\colorbox{itteng}{\textcolor{white}{1.0}\strut}}
+\newcommand{\bewAb}{\colorbox{itteng!80!itteno}{\textcolor{white}{1.5}\strut}}
+\newcommand{\bewB}{\colorbox{itteng!60!itteno}{\textcolor{white}{2.0}\strut}}
+\newcommand{\bewBc}{\colorbox{itteng!40!itteno}{\textcolor{white}{2.5}\strut}}
+\newcommand{\bewC}{\colorbox{itteng!20!itteno}{\textcolor{white}{3.0}\strut}}
+\newcommand{\bewCd}{\colorbox{itteno}{\textcolor{white}{3.5}\strut}}
+\newcommand{\bewD}{\colorbox{itteno!80!ittenr}{\textcolor{white}{4.0}\strut}}
+\newcommand{\bewDe}{\colorbox{itteno!60!ittenr}{\textcolor{white}{4.5}\strut}}
+\newcommand{\bewE}{\colorbox{itteno!40!ittenr}{\textcolor{white}{5.0}\strut}}
+\newcommand{\bewEf}{\colorbox{itteno!20!ittenr}{\textcolor{white}{5.5}\strut}}
+\newcommand{\bewF}{\colorbox{ittenr}{\textcolor{white}{6.0}\strut}}
+
+\newcommand{\nielA}{\colorbox{itteng}{\textcolor{white}{~1~}\strut}}
+\newcommand{\nielB}{\colorbox{ittenyo!95!black}{\textcolor{white}{~2~}\strut}}
+\newcommand{\nielC}{\colorbox{itteno}{\textcolor{white}{~3~}\strut}}
+\newcommand{\nielD}{\colorbox{ittenr}{\textcolor{white}{~4~}\strut}}

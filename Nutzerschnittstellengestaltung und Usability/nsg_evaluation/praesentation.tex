@@ -1,0 +1,64 @@
+\documentclass[11pt, 
+% Für Animationen und Ausblendung von Handout-Inhalten auskommentieren:
+%handout
+]{beamer}
+\gdef\pathtomaster{_LaTeX_master}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\input{\pathtomaster/htwcd_beamer.sty}
+
+\author[]{Jan Brose\texorpdfstring{\strut\\}{, }
+Simon Retsch\texorpdfstring{\strut\\}{, }
+Ben Schönherr\texorpdfstring{\strut\\}{, }
+Eric Schmidtgen\texorpdfstring{\strut\\}{, }
+Falk-Jonatan Strube}
+\title{Evaluierung fj-strube.de}
+
+\usepackage{pgfpages}
+\setbeameroption{show notes on second screen=right}
+\setbeamertemplate{note page}[plain]
+\setbeamercolor{section in toc}{fg=black,bg=white}
+\setbeamertemplate{section in toc}[sections numbered]
+\setcounter{tocdepth}{1}
+
+\begin{document}
+\begin{frame}[plain]
+\begin{center}
+\includegraphics[width=.7\textwidth]{\pathtomaster/HTW.eps}
+\end{center}
+\maketitle
+\end{frame}
+
+%**************************************************************************************
+\section*{Inhalt}
+\begin{frame}
+\tableofcontents
+\end{frame}
+
+%**************************************************************************************
+\section{Einführung}
+\input{praesentation_1_einfuehrung.tex}
+
+%**************************************************************************************
+\section{Personae}
+\input{praesentation_2_personas.tex}
+
+%**************************************************************************************
+\section{Interview}
+\input{praesentation_3_interview.tex}
+
+%**************************************************************************************
+\section{Analyse}
+\input{praesentation_4_analyse.tex}
+
+%**************************************************************************************
+\section{Redesign}
+\input{praesentation_5_redesign.tex}
+
+\begin{frame}[plain]
+\begin{center}
+\includegraphics[width=.7\textwidth]{\pathtomaster/HTW.eps}
+\end{center}
+\maketitle
+\end{frame}
+
+\end{document}

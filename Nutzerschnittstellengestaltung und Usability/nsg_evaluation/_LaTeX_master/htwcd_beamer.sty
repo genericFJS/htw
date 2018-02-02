@@ -1,0 +1,110 @@
+\definecolor{htworange}{RGB}{249,155,28}	% Corporate Design orange CMYK(0/45/100/0)
+\definecolor{htwblue}{RGB}{0,116,188}			% Corporate Design blau CMYK(90/50/0/0)
+\definecolor{htwgrey}{RGB}{128,128,128}		% Corporate Design gray 60% Schwarz [Annahme: CMYK(0,0,0,60)]
+\RequirePackage{helvet}	% Corporate Design schreibt Arial/Helvetica vor
+\renewcommand{\familydefault}{\sfdefault}	% s.o.
+
+\usenavigationsymbolstemplate{}
+\setbeamercolor{author in head/foot}{fg=black}
+\setbeamercolor{title}{fg=black}
+\setbeamercolor{bibliography entry author}{fg=htworange!70}
+%\setbeamercolor{bibliography entry title}{fg=blue} 
+\setbeamercolor{bibliography entry location}{fg=htworange!60} 
+\setbeamercolor{bibliography entry note}{fg=htworange!60}  
+\setbeamercolor{caption name}{fg=htworange}
+\setbeamercolor{frametitle}{fg=black}
+\setbeamerfont{frametitle}{size=\large}
+\setbeamertemplate{frametitle}{\hspace*{-.75em}\insertframetitle}
+
+\setbeamercolor{itemize item}{fg=black,bg=white}
+\setbeamercolor{enumerate item}{fg=black,bg=white}
+\setbeamercolor{itemize subitem}{fg=black,bg=white}
+\setbeamercolor{enumerate subitem}{fg=black,bg=white}
+\setbeamercolor{itemize subsubitem}{fg=black,bg=white}
+\setbeamercolor{enumerate subsubitem}{fg=black,bg=white}
+\setbeamertemplate{itemize item}{$\bullet$}
+\setbeamertemplate{itemize subitem}{--}
+\setbeamertemplate{itemize subsubitem}{$\bullet$}
+\setbeamercolor{section in toc}{fg=black,bg=white}
+\setbeamertemplate{section in toc}[sections numbered]
+\setcounter{tocdepth}{1}
+\makeatletter
+\setbeamertemplate{footline}{
+	\textcolor{htwgrey}{
+		\parbox{.33\textwidth}{
+			\hspace*{2em}
+			\strut\insertshortauthor \hfill
+		}
+		\parbox{.33\textwidth}{
+			\hfil \strut \insertshorttitle \hfil
+		}
+		\parbox{.33\textwidth}{
+			\hfill \strut Folie \insertframenumber{}% / \inserttotalframenumber{}
+			\qquad
+			\@date
+			\hspace*{2em}
+		}
+		\vspace*{1em}
+	}
+}
+\setbeamertemplate{headline}{%
+\leavevmode%
+\setlength{\arrayrulewidth}{1pt}%
+\hspace*{2em}	%
+\begin{tabular}{p{0.63\textwidth}}%
+\rule{0pt}{3em}{\normalsize%
+\textbf{%
+\insertsectionhead%
+%\setbox0=\hbox{\subsecname\unskip}\ifdim\wd0=0pt\else%
+%~--~\insertsubsectionhead%
+%\fi%
+\ifx\insertsubsection\empty\else%
+ \ifdefempty{\subsecname}{\relax}{%
+  ~--~\insertsubsectionhead%
+ }%
+\fi
+\strut}%
+}\\%
+\arrayrulecolor{htworange}%
+\hline%
+\end{tabular}%
+\begin{tabular}{l}%
+\rule{0pt}{4em}%
+\includegraphics[width=3.2cm]{\pathtomaster/HTW.eps}\\%
+\end{tabular}%
+}%
+\makeatother
+
+% Recalculate the head of head- and footlines for each frame
+% (http://tex.stackexchange.com/a/61788/3323)
+\usepackage{etoolbox}
+\makeatletter
+\pretocmd{\beamer@@@@frame}{%
+  \addtocounter{framenumber}{1}%
+  \beamer@calculateheadfoot%
+  \addtocounter{framenumber}{-1}}{}{}
+\makeatother
+
+% Größerer Zeilenabstand auf allen Folien:
+\makeatletter
+\def\beamer@framenotesbegin{% at beginning of slide
+  \gdef\beamer@noteitems{}%
+  \gdef\beamer@notes{{}}% used to be totally empty.
+  \setstretch{1.5}
+}
+\AtBeginNote{\vspace*{1em}\setstretch{1.5}}
+\makeatother
+
+\AtBeginSection[]{
+  \begin{frame}[plain]
+  \centering
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{frame}
+}
+
+\newcommand{\sectionFrame}[1]{
+  \begin{frame}[plain]
+  \centering
+    \usebeamerfont{title}#1\par%
+  \end{frame}
+}

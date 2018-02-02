@@ -1,0 +1,146 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrreprt}
+\gdef\pathtomaster{_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+\faculty{Fakultät Informatik/Mathematik}
+\chair{Lehrstuhl für Multimediale Werkzeuge}
+\subject{project}
+\title{Evaluierung fj-strube.de}
+\subtitle{Nutzerschnittstellen\-gestaltung und Usability}
+\author{Jan Brose\texorpdfstring{\strut\\}{, }
+Simon Retsch\texorpdfstring{\strut\\}{, }
+Eric Schmidtgen\texorpdfstring{\strut\\}{, }
+Ben Schönherr\texorpdfstring{\strut\\}{, }
+Falk-Jonatan Strube}
+\professor{Prof. Dr. Teresa Merino}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter{Personae}
+\input{nsg_beleg_personas.tex}
+
+\chapter{Interviewvorlagen}
+\input{nsg_beleg_interviewer.tex}
+\clearpage
+\input{nsg_beleg_interview_tasks.tex}
+\input{nsg_beleg_interview_interview.tex}
+
+\chapter{Durchgeführte Interviews}
+\renewcommand{\interviewText}[1]{%
+\begin{center}
+	\fbox{%
+		\begin{minipage}{.95\linewidth}%
+			#1
+		\end{minipage}%
+	}%
+\end{center}
+}
+\section{N. Hahn}
+\input{nsg_beleg_interview_tasks_nadin_h.tex}
+\input{nsg_beleg_interview_nadin_h.tex}
+\clearpage
+\section{T. Schmidtgen}
+\input{nsg_beleg_interview_tasks_tom_s.tex}
+\input{nsg_beleg_interview_tom_s.tex}
+\clearpage
+\section{T. Schönherr}
+\input{nsg_beleg_interview_tasks_teresa_s.tex}
+\input{nsg_beleg_interview_teresa_s.tex}
+\clearpage
+\section{P. Glock}
+\input{nsg_beleg_interview_tasks_p_glock.tex}
+\input{nsg_beleg_interview_p_glock.tex}
+\clearpage
+\section{R. Glaser}
+\input{nsg_beleg_interview_tasks_raiko_g.tex}
+\input{nsg_beleg_interview_raiko_g.tex}
+\clearpage
+\section{T. Rother}
+\input{nsg_beleg_interview_tasks_tobias_r.tex}
+\input{nsg_beleg_interview_tobias_r.tex}
+\clearpage
+
+\chapter{Auswertung und Analyse}
+\input{nsg_beleg_analyse.tex}
+
+\chapter{Präsentation}
+Auf den folgenden Seiten ist die Präsentation zu finden, wie sie gehalten wurde. Darin wird vor allem auch auf das auf die Analyse aufbauende Redesign eingegangen.
+
+Auf der linken Seite sind jeweils die Folien abgebildet, rechts sind die dazugehörigen erläuternden Notizen zu finden.
+\includepdf[
+pages=-, 
+nup=1x3, 
+delta = 0 1cm,
+width=.9\paperwidth,
+pagecommand={}
+%, frame
+]{praesentation_komplett.pdf}
+
+\chapter{Redesign}
+An dieser Stelle sind -- ergänzend zu der Präsentation -- alle Bilder aufgeführt, die als finaler Redesign-Vorschlag erarbeitet wurden.
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=.22]{remaster/UHD-4k-Startseite/HD-Startseite+Suche_desktop.jpg}
+\caption{Redesign Webseite (Desktop)}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=.22]{remaster/UHD-4k-Startseite/HD-AWS_mobil.jpg}
+\caption{Redesign Webseite (Mobil)}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=.22]{remaster/UHD-4k-Startseite/HD-AWS+Suche_mobil.jpg}
+\caption{Redesign Suche (Mobil)}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=.33, trim={0 0 5cm 0},clip]{remaster/AWS-Simon/AWS-NeueWichtel-Desktop-Neu.png}
+\caption{Redesign Wichtel eintragen (Desktop, Ausschnitt)}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=.33]{remaster/AWS-Simon/AWS-NeueWichtel-Mobile-Neu.png}
+\caption{Redesign Wichtel eintragen (Mobil, Ausschnitt)}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=.33, trim={0 0 15cm 0},clip]{remaster/AWS-Ben/Desktop-AWS-Neu.png}
+\caption{Redesign Wichtel zuweisen (Desktop, Ausschnitt)}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=.33]{remaster/AWS-Ben/Mobile-AWS-Neu.png}
+\caption{Redesign Wichtel zuweisen (Mobil, Ausschnitt)}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=.33]{remaster/AWS-Mail-Eric/mails_desktop.png}
+\caption{Redesign Wichtel-Mail anpassen (Desktop, Ausschnitt)}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=.33]{remaster/AWS-Mail-Eric/mails_mobile.png}
+\caption{Redesign Wichtel-Mail anpassen (Mobil, Ausschnitt)}
+\end{figure}
+
+\chapter{Bildnachweis}
+Bilder Personae © Falk-Jonatan Strube\\
+Bilder Webseite (Original) © Falk-Jonatan Strube\\
+Bilder Webseite (Redesign) © Jan Brose, Simon Retsch, Eric Schmidtgen, Ben Schönherr, Falk-Jonatan Strube
+
+
+
+\end{document}

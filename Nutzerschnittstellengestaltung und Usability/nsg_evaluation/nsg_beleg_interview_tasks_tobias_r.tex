@@ -1,0 +1,74 @@
+\subsection*{Begrüßung}
+[...]
+
+Wenn Du dem zustimmst, unterschreibe bitte hier:
+
+\vspace*{1em}
+Tobias Rother [18.01.2018]\vspace*{-.9em}\\
+\noindent\rule{8cm}{0.4pt}
+
+\subsection*{Einführung}
+[...]
+
+
+\subsection*{Test-Aufgaben}
+\subsubsection*{Alle Seiten besuchen}
+\begin{enumerate}
+\item Wie lautet die Email-Adresse des Admins der Website? Wie ist der Name des Seiteninhabers?
+\interviewText{Sucht Impressum, findet Inhaber in der Fußzeile, klickt auf Über, um Email-Adresse zu erfahren.}
+\item Finde eine Seite, die den Text „schwarz-lila“ enthält. Wie ist der Titel dieser Seite?
+\interviewText{Ist verwirrt. Geht auf "Home". Nutz die Suchfunktion des Browsers (nicht der Webseite). Das gleiche mit "Kreativ" und "Code". Dann geht er alle Seiten einzeln durch und sucht sie mit der Browser-Text-Suche. Findet die Seite nicht auf diesem Weg. Findet kein schwarz-lila. (Vielleicht, weil er es in der Suche nicht groß schreibt). Unter der Suche hat er keine Volltextsuche erwartet (sondern Suche der Titel). Landet am Schluss im Impressum.}
+\item Für welche Spiele werden auf der Seite Karten/Maps/Level angeboten?
+\interviewText{Ist schon in der Sitemap und zählt dort die beiden Spiele auf.}
+\item Finde den Sammelband mit drei Geschichten. Was assoziierst du mit dem Titelbild?
+\interviewText{Geht auf Home->Kreativ und dort Ohne Namen. Verwendet nicht die Navigationszeile. Assoziation: Umrisse eines weiblichen Körpers}
+\item Was für Software wird auf der Webseite vorgestellt?
+\interviewText{Auf Code in Navigationszeile: Findet Ausleihbibliothek (in zwei Sprachen) und das Wichtelsystem.}
+\item Unter welchem Betriebssystem ist die Ausleihbibliothek in C++ ausführbar?
+\interviewText{Geht auf Ausleihbibliothek und findet nach Durchlesen des kompletten Textes die Antwort.}
+\item Welche Medien sind in der Ausleihbibliothek in C ausleihbar?
+\interviewText{Bleibt auf der Seite für C++, zählt die Medien dort auf.}
+\item Wo sind Studiendokumente zu finden?
+\interviewText{Zuvor gesehen unter Code->Studienmitschriften (dort unter github bzw. dem externen Link).}
+\item Stelle die Sprache auf Englisch um. Findest Du eine Seite, die nicht auf Englisch übersetzt ist? Wenn ja, wie ist der Titel dieser Seite?
+\interviewText{Findet intuitiv die Sprachumstellung. Geht auf Sitemap und findet "Ohne Namen", die aber doch auf Englisch ist. Geht wieder auf Sitemap und hangelt sich durch. Einmal wird die Fußzeile von der Cookie-Einblendung verdeckt, das führt zu kurzer Verwirrung. Dann wird die Meldung sofort weg gedrückt. AWS wird gefunden.}
+\end{enumerate}
+
+
+\subsubsection*{Automatisiertes Wichtel System}
+\begin{enumerate}
+\item Benutze das Automatisierte Wichtel System:
+[...]
+\interviewText{
+\begin{itemize}
+\item Fängt an den Text zu lesen, überspringt ihn aber dann
+\item Gibt Wichtel intuitiv ein (nutzt Abkürzungen, weil schreibfaul), findet alle Schaltflächen, keine Probleme beim Hinzufügen von Wichteln.
+\item Das Zuweisungssystem erschließt sich ihm gleich. Er lobt und kritisiert, dass die Zuordnung immer in beide Richtungen geht: Vielleicht soll Hans Brunhilde beschenken können, aber nicht von ihr beschenkt werden.
+\item Gibt seinen Namen ein und passt Email-Text ein. Der Aufbau ist ihm klar, ändert ein paar Stellen z.B. den Preisbereich beim Wichteln. Passt sogar den Seed an.
+\item In der Zusammenfassung fällt auf, dass die Farbverteilung nicht gleichmäßig ist (entweder ganz grün oder ganz rot).\\
+Dort gibt er den Code von der Mail ein und drückt enter. Damit wird das Formular bestätigt. Die Tabelle und Email-Überprüfung der Übersicht verschwindet damit, er wollte sie aber noch ansehen. Durch (2x Browser eigener Button) zurück kommt er nicht direkt auf die Seite zuvor. Er drückt refresh und landet auf der Seite zuvor, die Session ist aber zurück gesetzt, daher sind keine Inhalte mehr da. Er bestätigt das und kommt auf eine fehlerhafte Seite. Er ist der Meinung das etwas falsch lief und fängt von Vorne an.\\
+Bei der erneuten Eingabe der Wichtel Teilnehmer fällt ihm auf, dass die Autovervollständigung nicht bei allen Feldern geht (nur bei neu hinzugefügten Mail Feldern). Auf der Übersichtseite steht nicht, wie die Tabelle zu interpretieren ist. Er wundert sich, warum bei der Mail ein Name/Emailadresse fehlt.\\
+Die Mail enthält keine Umlaute.
+\end{itemize}
+}
+\end{enumerate}
+
+\subsubsection*{Responsive Design}
+\begin{enumerate}
+\item Rufe die Website auf deinem Handy auf:
+[...]
+\interviewText{
+\begin{itemize}
+\item Wie gewohnt auf Code und besucht die entsprechende Seite.\\
+Schlecht: Überschrift ist in zwei Zeilen geschrieben.\\
+Hier nutzt er die Breadcrumbs.\\
+Auf der C++ Seite beziehen sich die Bilder eher auf den Text, sind aber unter den Links. Nicht wie erwartet im Text. Die Überschrift über 2 Zeilen findet er nicht gut.
+\item Drückt auf das Icon über der Navbar und landet auf home, von dort aus zum AWS.\\
+Der Button ist zu breit.\\
+Übersicht der Namenseingabe ist etwas verwirrend. Im Hochformat alles untereinander. Im Querformat das Minus immer in extra Zeile. Nicht gut, da ist der Sinn nicht klar, was das Minus bedeutet.\\
+Zuweisung der Wichtel funktioniert und sieht aus wie erwartet.\\
+Bei Hochformat ist bei der Mail-vorlage bspw. bei "Hallo Name des Wichtels" der Name des Wichtels in der nächsten Zeile… verwirrend. Die Felder sind scrollbar, nicht sofort erkennbar.\\
+Bei Nichtzuweisung werden endlos Fehler ausgegeben.
+\end{itemize}
+}
+\end{enumerate}

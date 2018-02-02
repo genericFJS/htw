@@ -1,0 +1,17 @@
+﻿Personas:
+- Bild
+- Zitat
+- 
+
+3. Persona:
+- Schüler (Alter geringer)
+
+
+Test:
+Als konkrete Aufgabe formulieren!
+
+Grenze der Evalution:
+Mobile version wurden erst benutzt, nachdem die Desktop benutzt wurde (sind "vorbelastet"). Die nächste könnte den Schwerpunkt verschieben
+
+Anmerkung zur Verbesserung:
+Mehr Bilder, um Lehrkraft zufrieden zu stellen. Schicker! Besser! Unbrauchbarer!

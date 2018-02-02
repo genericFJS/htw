@@ -1,0 +1,243 @@
+%% HTW Dresden Corporate Design
+%% Copyright (C) Falk-Jonatan Strube <falkjonatanstrube@gmail.com>, 2017
+%%% === Anfang Paket htwscr ===
+\makeatletter
+\ifcsname KOMAoption\endcsname%
+\KOMAoption{footheight}{11mm}	% mehr Platz für Wasserzeichen o.ä. in der Fußzeile
+\recalctypearea	% s.o.
+\RequirePackage{geometry}
+\geometry{top=25mm, bottom=25mm, headsep=10mm, inner=25mm, outer=25mm, footskip=15mm, marginparsep=2mm}
+\RequirePackage{helvet}	% Corporate Design schreibt Arial/Helvetica vor
+\renewcommand{\familydefault}{\sfdefault}	% s.o.
+\RequirePackage{graphicx}	% für Grafiken
+\RequirePackage{xcolor}		% für Farben
+\definecolor{htworange}{RGB}{249,155,28}	% Corporate Design orange CMYK(0/45/100/0)
+\definecolor{htwblue}{RGB}{0,116,188}			% Corporate Design blau CMYK(90/50/0/0)
+\definecolor{htwgrey}{RGB}{128,128,128}		% Corporate Design gray 60% Schwarz [Annahme: CMYK(0,0,0,60)]
+\RequirePackage{ifthen,xifthen}	% für Bedingungen/Optionen
+\RequirePackage{etoolbox}				% s.o.
+
+%%% Format des HTW-Headers (wird hier als Texteelement verwenden) nach dem Style der PowerPoint-Vorlagen. Weiterhin inspiriert durch das Paket tudscr (Corporate Design der TU Dresden)
+%%% Dateipfad des Logos abhängig von der Verwendung als Paket/Input
+\ifdefined\@isHTWCDpackage%
+	\gdef\@pathtoimage{HTW}%
+\else%
+	\ifdefined\pathtomaster%
+		\gdef\@pathtoimage{\pathtomaster /HTW}%
+	\else 
+		\gdef\@pathtoimage{HTW}%
+	\fi%
+\fi%
+\newcommand{\pathtologo}[1]{\gdef\@pathtoimage{#1}}
+%%% Berechnung der Größe des Logos
+\newlength{\htwLogoHeight}
+\setlength{\htwLogoHeight}{12mm}	% Mindesthöhe des Logos laut Corporate Design: 11mm
+\newlength{\@htwLogoWidth}
+\AtBeginDocument{
+\def\printLogo{\includegraphics[height=\htwLogoHeight]{\@pathtoimage}}
+\setlength\@htwLogoWidth{\widthof{\printLogo}}
+}
+%%% Definition des Header
+\newcommand{\@htwheader}{{\noindent%
+%%% Header ist abhängig von dem Vorhandensein von department, institute und chair
+\newcommand{\hasDepInsCh}{\gdef\@hasDepInsCh{}}%
+\ifdefined\@department\hasDepInsCh\fi%
+\ifdefined\@institute\hasDepInsCh\fi%
+\ifdefined\@chair\hasDepInsCh\fi%
+\begin{minipage}[b][\htwLogoHeight]{\dimexpr \textwidth - \@htwLogoWidth - 2mm \relax}% 2mm Abstand zwischen Logo und Linie
+{\small{\bfseries%
+\ifdefined\@faculty\@faculty{}\fi} %
+\strut}%
+{\color{htworange}\hrule height 1pt}%
+\vspace{.1mm}%
+\end{minipage}
+\hfill%
+\begin{minipage}[b][\htwLogoHeight]{\@htwLogoWidth}
+\includegraphics[height=\htwLogoHeight]{\@pathtoimage}
+\end{minipage}
+\ifdefined\@hasDepInsCh%
+\\%
+\begin{minipage}{\textwidth}
+\small%
+\ifdefined\@department\@department{}\fi%
+\ifdefined\@institute\ifdefined\@department,~\fi \@institute\fi%
+\ifdefined\@chair\ifdefined\@department,~\else\ifdefined\@institute,~\fi\fi\@chair\fi\strut
+%{\color{htworange}\hrule height 0.5pt}
+\end{minipage}
+\fi
+}}
+
+%%% Definition der Fußzeilen
+\usepackage{scrlayer-scrpage}
+\@ifclassloaded{scrreprt}{%
+\renewcommand*{\partpagestyle}{scrheadings}
+\renewcommand*{\chapterpagestyle}{scrheadings}%
+}{}
+\pagestyle{scrheadings}
+\cfoot{\vfill\pagemark}
+\chead{}
+
+%%% Einstellungen
+\newcommand{\simpledate}{\gdef\@simpledate{}}		% Datum nicht mit "Eingereicht am:" Vorsatz
+\newcommand{\nouppercase}{\gdef\@nouppercase{}}	% Titel/Parts/Chapters usw. nicht in Großbuchstaben
+
+%%% Einiges erst zu Beginn des Dokumentes ausführen, um Einstellungen zu berücksichtigen
+\AtBeginDocument{
+\renewcommand\SS{SS}	% fix big ß
+%%% Sektionen usw. ggf. in Großbuchstaben:
+\providecommand{\chapterlinesformat}[3]{}	% compatibility
+\providecommand{\chapterlineswithprefixformat}[3]{}	% compatibility
+\providecommand{\sectionlinesformat}[4]{}	% compatibility
+\ifdefined\@nouppercase\relax\else
+\renewcommand\sectionlinesformat[4]{\@hangfrom{\hskip#2 #3}{\MakeUppercase{#4}}}
+\@ifclassloaded{scrreprt}{%
+\renewcommand\chapterlinesformat[3]{\@hangfrom{#2}{\MakeUppercase{#3}}}
+\renewcommand\chapterlineswithprefixformat[3]{\MakeUppercase{#2#3}}%
+}{}
+\fi
+%%% Anpassung der Part-Seite
+\renewcommand*{\partheadstartvskip}{\@htwheader\vspace*{30mm}}
+\renewcommand*{\raggedpart}{\raggedright}
+\renewcommand*{\partformat}{\huge\ifdefined\@nouppercase \partname~\thepart\else\MakeUppercase{\partname~\thepart}\fi.}
+\ifdefined\@nouppercase\setkomafont{part}{\Huge}\else\setkomafont{part}{\Huge\MakeUppercase}\fi
+}
+
+\newcommand{\bilingual}[3]{\ifdefined #1 \let #1\undefined\fi\newcommand{#1}{\iflanguage{english}{#3}{#2}}}	% Übersetzung von einigen Variablen in mehrere Sprachen
+
+\newcommand{\checkThesis}[2]{\ifthenelse{\equal{#1}{diss}\OR\equal{#1}{doctoral}\OR\equal{#1}{phd}}{
+\gdef#2{\dissertationname}}{
+\ifthenelse{\equal{#1}{diploma}}{
+\gdef#2{\diplomathesisname}}{
+\ifthenelse{\equal{#1}{master}}{
+\gdef#2{\masterthesisname}}{
+\ifthenelse{\equal{#1}{bachelor}}{
+\gdef#2{\bachelorthesisname}}{
+\ifthenelse{\equal{#1}{student}}{
+\gdef#2{\studentthesisname}}{
+\ifthenelse{\equal{#1}{evidence}}{
+\gdef#2{\studentresearchname}}{
+\ifthenelse{\equal{#1}{project}}{
+\gdef#2{\projectpapername}}{
+\ifthenelse{\equal{#1}{seminar}}{
+\gdef#2{\seminarpapername}}{
+\ifthenelse{\equal{#1}{term}}{
+\gdef#2{\termpapername}}{
+\ifthenelse{\equal{#1}{research}}{
+\gdef#2{\researchname}}{
+\ifthenelse{\equal{#1}{log}}{
+\gdef#2{\logname}}{
+\ifthenelse{\equal{#1}{report}}{
+\gdef#2{\reportname}}{
+\ifthenelse{\equal{#1}{internship}}{
+\gdef#2{\internshipname}}{
+\ifthenelse{\equal{#1}{lecture}\OR\equal{#1}{lesson}\OR\equal{#1}{pract}}{
+\bilingual{\professorname}{Vorlesung von}{Lecture by}
+\simpledate
+\gdef\@islecture{\relax}
+\ifthenelse{\equal{#1}{lecture}}{\gdef#2{\lecturename}}{
+\ifthenelse{\equal{#1}{lesson}}{\gdef#2{\lessonname}}{
+\gdef#2{\practname}
+}}}{
+\gdef#2{#1}}}}}}}}}}}}}}}}
+
+%%% Textfragmente der Titelseite in deutsch und englisch
+\bilingual{\dateofbirthname}{Geboren am:}{Born on:}
+\bilingual{\placeofbirthname}{in}{in}
+\bilingual{\coursename}{Studiengang:}{Course:}
+\bilingual{\disciplinename}{Studienrichtung:}{Discipline:}
+\bilingual{\matriculationnumbername}{Matrikelnummer:}{Matriculation number:}
+\bilingual{\matriculationyearname}{Immatrikulationsjahr}{Matriculation year:}
+\bilingual{\graduationname}{zur Erlangung des akademischen Grades}{to achieve the academic degree}
+\bilingual{\refereename}{Gutachter}{Referee}
+\bilingual{\advisorname}{Fachreferent}{Advisor}
+\bilingual{\supervisorname}{Betreuer}{Supervisor}
+\bilingual{\professorname}{Betreuender Hochschullehrer}{Supervising professor}
+\bilingual{\datename}{Eingereicht am:}{Submitted on:}
+%% Thesis Typen (inspiriert von dem Paket tudscr):
+\bilingual{\dissertationname}{Dissertation}{Dissertation} % diss, doctoral, phd 
+\bilingual{\diplomathesisname}{Diplomarbeit}{Diploma Thesis} % diploma 
+\bilingual{\masterthesisname}{Master-Arbeit}{Master Thesis} % master 
+\bilingual{\bachelorthesisname}{Bachelor-Arbeit}{Bachelor Thesis} % bachelor 
+\bilingual{\studentthesisname}{Studienarbeit}{Student Thesis} % student 
+\bilingual{\studentresearchname}{Großer Beleg}{Student Research Project} % evidence 
+\bilingual{\projectpapername}{Projektarbeit}{Project Paper} % project
+\bilingual{\seminarpapername}{Seminararbeit}{Seminar Paper} % seminar
+\bilingual{\termpapername}{Hausarbeit}{Term Paper} % term
+\bilingual{\researchname}{Forschungsbericht}{Research Report} % research 
+\bilingual{\logname}{Protokoll}{Log} % log 
+\bilingual{\reportname}{Bericht}{Report} % report
+\bilingual{\internshipname}{Praktikumsbericht}{Internship Report} % internship 
+\bilingual{\lecturename}{Vorlesungsmitschrift}{Lecture Notes} % lecture 
+\bilingual{\lectureauthorname}{Mitschrift von}{Notes by} % lecture  
+\bilingual{\lessonname}{\"Ubungsmitschrift}{Lesson Notes} % lecture  
+\bilingual{\practname}{Praktikumsmitschrift}{Pracital Course Notes} % lecture 
+%%% Variablen für die Titelseite (inspiriert von dem Paket tudscr):
+\renewcommand{\subject}[1]{\checkThesis{#1}{\@subject}}
+\newcommand{\faculty}[1]{\gdef\@faculty{#1}}
+\newcommand{\department}[1]{\gdef\@department{#1}}
+\newcommand{\institute}[1]{\gdef\@institute{#1}}
+\newcommand{\chair}[1]{\gdef\@chair{#1}}
+\newcommand{\authormore}[1]{\gdef\@authormore{#1}}
+\newcommand{\dateofbirth}[1]{\gdef\@dateofbirth{#1}}
+\newcommand{\placeofbirth}[1]{\gdef\@placeofbirth{#1}}
+\newcommand{\course}[1]{\gdef\@course{#1}}
+\newcommand{\discipline}[1]{\gdef\@discipline{#1}}
+\newcommand{\matriculationnumber}[1]{\gdef\@matriculationnumber{#1}}
+\newcommand{\matriculationyear}[1]{\gdef\@matriculationyear{#1}}
+\newcommand{\thesis}[1]{\checkThesis{#1}{\@thesis}}
+\newcommand{\graduation}[2][]{\gdef\@graduation{#2}\gdef\@graduationshort{#1}}
+\newcommand{\supervisor}[1]{\gdef\@supervisor{#1}}
+\newcommand{\referee}[1]{\gdef\@referee{#1}}
+\newcommand{\advisor}[1]{\gdef\@advisor{#1}}
+\newcommand{\professor}[1]{\gdef\@professor{#1}}
+%%% Titelseite (inspiriert von dem Paket tudscr):
+\renewcommand*{\maketitle}{%
+\begin{titlepage}%
+\begin{flushleft}
+\renewcommand{\thefootnote}{$\star$}%
+%%% Kopfzeile HTW-Style:
+\@htwheader\\[13mm]
+%%% Die Zeilen für titlehead, subject, title, subtitle und author sind immer vorhanden (spacing)
+{\noindent\@titlehead{}\strut}\\[3mm]%
+{\Large\@subject{}\strut}\\[8mm]%
+{\Huge\bfseries%
+\ifdefined\@nouppercase\@title{}\else\MakeUppercase{\@title{}}\fi%
+\strut}\\
+{\Large\bfseries%
+\ifdefined\@nouppercase\@subtitle{}\else\MakeUppercase{\@subtitle{}}\fi%
+\strut}\\[11mm]
+\ifdefined\@islecture\strut\else{\Large\@author{}\strut}\fi % Autor wird bei Vorlesungsmitschrift unten angezeigt
+%%% Weitere Felder werden nur angezeigt, wenn sie definiert wurden
+\ifdefined\@authormore\ifdefined\@islecture\else\\\fi{\@authormore{}\strut}\fi
+\ifdefined\@dateofbirth\\\dateofbirthname{} \@dateofbirth{} \ifdefined\@placeofbirth\placeofbirthname{} \@placeofbirth{}\strut\fi\fi
+\ifdefined\@course\\\coursename{} \@course{}\strut\fi
+\ifdefined\@discipline\\\disciplinename{} \@discipline{}\strut\fi
+\ifdefined\@matriculationnumber\\\matriculationnumbername{} \@matriculationnumber{}\strut\fi
+\ifdefined\@matriculationyear\\\matriculationyearname{} \@matriculationyear{}\strut\fi
+\ifdefined\@thesis\\[10mm]{\LARGE\bfseries
+\ifdefined\@nouppercase\@thesis{}\else\MakeUppercase{\@thesis{}}\fi
+\strut}
+\ifdefined\@graduation\\[2mm]{\graduationname{}\strut}
+\\[5mm]{\LARGE\bfseries
+\ifdefined\@nouppercase\relax\else\MakeUppercase{\fi%
+\@graduation{} \ifdefined\@graduationshort(\@graduationshort{})\fi
+\ifdefined\@nouppercase\relax\else}\fi\strut}\fi\fi
+\vfill\noindent
+\ifdefined\@islecture\\[1mm]{\lectureauthorname{}\strut}\\[.7mm]{\Large\@author{}\strut}\fi
+\ifdefined\@referee{\refereename{}\strut}\\[.7mm]{\Large\@referee{}\strut}\fi
+\ifdefined\@advisor\\[1mm]{\advisorname{}\strut}\\[.7mm]{\Large\@advisor{}\strut}\fi
+\ifdefined\@supervisor\\[1mm]{\supervisorname{}\strut}\\[.7mm]{\Large\@supervisor{}\strut}\fi
+\ifdefined\@professor\\[1mm]{\professorname{}\strut}\\[.7mm]{\Large\@professor{}\strut}\fi
+\ifdefempty{\@date}{}{\ifdefined\@simpledate\\[6mm]\relax\else\\[3mm]\datename{}~\fi\@date{}\strut}
+\ifdefempty{\@publishers}{}{\\[4.5mm]{\Large\@publishers{}\strut}}%
+\renewcommand\footnoterule{}
+\@thanks\global\let\@thanks\@empty
+\end{flushleft}
+\end{titlepage}
+\setcounter{footnote}{0}
+}
+\else%
+\PackageError{htwcd}{htwcd needs a KOMA class!}%
+\fi%
+\makeatother
+%%% === Ende Paket htwscr ===

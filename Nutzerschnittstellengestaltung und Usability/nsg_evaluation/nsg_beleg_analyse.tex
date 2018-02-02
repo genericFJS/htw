@@ -1,0 +1,244 @@
+\newcounter{id}
+\newcommand{\id}[1]{\refstepcounter{id}\label{#1}\theid}
+\renewcommand{\arraystretch}{1.5}
+%=================================================================
+%-----------------------------------------------------------------
+%=================================================================
+
+Während der Tests und der Interviews wurden, wenn möglich und von dem Probanden gestattet, Audio- und Videoaufnahmen angefertigt. Diese haben dabei geholfen die angefertigten Protokoll zu überarbeiten und ergänzen.
+
+Auf Basis der Protokolle wurde eine Fehleridentifizierung und anschließende Priorisierung durchgeführt.
+
+Bei dem Erfassen von Problemen sind verschiedene Nutzergruppen aufgefallen: Entsprechend der Personae gibt es mindestens eine Gruppe, die vor allem auf Inhalt bedacht ist, und sich wenig an dem zurückhaltendem Design und der Farbgebung gestört hat. Eine andere Gruppe hat gerade dieses stark kritisiert. Aus den Interviews ergab sich, dass die Gruppe, welche ein weniger neutrales Design bevorzugt, überwiegt. Diese Nutzerzentrierung wurde zur Bewertung mit in Betracht genommen.
+
+\section{Gesamteindruck}
+Die Erfragung eines Gesamteindrucks im Interview (erfragt auf der Skala von 1 bis 7) gibt einen guten Überblick, wo die großen Problemfelder liegen: Das Hauptproblem scheint bei der farblichen Gestaltung zu liegen. Davon beeinflusst ist nicht nur der Gesamteindruck, in den auch das Layout und die erkannten Probleme rein spielen, sondern entsprechend auch die Veränderungswürdigkeit der Webseite. Die im Folgenden abgebildeten Werte geben den Durchschnitt aller Interviews wieder.
+
+\subsection{Allgemein}
+\begin{center}
+Orientierung:\\
+\interviewScalaResult{6.2}{schwer}{leicht}\\\bigskip
+Probleme beim Bedienen (Desktop):\\
+\interviewScalaResult{6.5}{viele}{wenige}\\\bigskip
+Bedienbarkeit Mobil:\\
+\interviewScalaResult{6.5}{schwer}{leicht}\\\bigskip
+\clearpage
+Veränderungswürdig:\\
+\interviewScalaResult{3.7}{viel}{wenig}
+\end{center}
+\subsection{Design}
+\begin{center}
+Gesamteindruck:\\
+\interviewScalaResult{3.5}{schlecht}{gut}\\\bigskip
+Farbwahl:\\
+\interviewScalaResult{2.8}{schlecht}{gut}\\\bigskip
+Anordnung:\\
+\interviewScalaResult{5.5}{schlecht}{gut}\\\bigskip
+Präsentation:\\
+\interviewScalaResult{6.2}{unangemessen}{angemessen}\\\bigskip
+Lesbarkeit:\\
+\interviewScalaResult{6.5}{schlecht}{gut}
+\end{center}
+
+
+\section{Fehleridentifizierung und -Priorisierung}
+Anhand folgender Faktoren wurden die erkannten Fehler/Probleme/Problemfelder bewertet:
+\begin{itemize}
+\item[$H$] Häufigkeit:\\
+Wie vielen Probanden sind diesem Problem begegnet? 
+
+Hierfür wurden diese Vorkommnisse gezählt und entsprechend mit Schulnoten von 1 (nur bei einer Person vorgekommen) bis 6 (sechs Personen vorgekommen).
+\item[$A$] Hartnäckigkeit (Auffälligkeit):\\
+Wie oft ist diesen Probanden diesem Problem begegnet? 
+
+Hierfür wurde die Hartnäckigkeit, basierend auf den Protokollen, mit Schulnoten von 1 (sehr gering) bis 6 (sehr hartnäckig) bewertet.
+\item[$F$] Folgen:\\
+Wie schwer sind die Folgen, wenn das Problem aufgetreten ist? 
+
+Hierfür wurden die Folgen, basierend auf den Protokollen und persönlichen Einschätzungen, mit Schulnoten von 1 (sehr gering) bis 6 (sehr schwer) bewertet.
+\end{itemize}
+%\clearpage
+Die Farbverteilung der Schulnoten/Häufigkeit gestaltet sich wie folgt -- Analog zu den Schulnoten warnt eine rote Farbe vor größeren Problemstellen:
+\begin{center}
+\bewA ~
+\bewAb ~
+\bewB ~
+\bewBc ~
+\bewC ~
+\bewCd ~
+\bewD ~
+\bewDe ~
+\bewE ~
+\bewEf ~
+\bewF
+\end{center}
+Die Priorisierung nach Nielsen wurde basierend auf diesen Faktoren mit folgender Formel vorgenommen:
+$$P=\lceil H\cdot 30\%+A\cdot 20\%+F \cdot 50\%\rceil$$
+Daraus ergibt sich die Bewertung der Probleme in folgende Einteilung:
+\begin{enumerate}[label=\arabic*]
+\item[\nielA] Geringes Problem
+\item[\nielB] Relatives Problem
+\item[\nielC] Ernsthaftes Problem
+\item[\nielD] Usability Katastrophe
+\end{enumerate}
+
+Im Folgenden sind die Probleme in die des \emph{Automatisierten Wichtel Systems} und seitenübergreifend unterteilt.
+
+\subsection{Automatisiertes Wichtel System}
+
+\subsubsection{Allgemein}
+\begin{center}
+\begin{tabular}{C{.06} L{.62} | C{.08} C{.08} C{.08} | C{.08}}
+ID & Beschreibung& $H$ & $A$ & $F$ & $P$\\\hline
+\id{wa-a} & Start-Button zu breit (mobil) & \bewF & \bewE & \bewA & \nielC\\
+\id{wa-d} & Unsensibel: Wichtel wissen, wer wen (nicht) beschenken darf & \bewA & \bewD & \bewD & \nielC\\
+\id{wa-e} & „Funktioniert“ auch für einen Wichtel & \bewA & \bewA & \bewDe & \nielC\\
+\id{wa-f} & Unkonstruktive Fehlermeldungen, wenn Zuweisung nicht erfolgreich & \bewA & \bewE & \bewE & \nielC\\
+\id{wa-g} & Navigation über Browser-Zurück nicht immer fehlerfrei möglich & \bewA & \bewD & \bewF & \nielC\\
+\id{wa-h} & Programmschritte immer erreichbar (über direkte Adresse)\footnote{Es wird in dem Fall fälschlicher Weise angezeigt, als ob alles ok ist, bloß dass einige Daten fehlen. Es fehlt eine Fehlerseite.} & \bewA & \bewD & \bewD & \nielC\\
+\id{wa-b} & Fehlender Disclaimer, dass Email-Adressen nicht gespeichert werden & \bewA & \bewAb & \bewD & \nielB\\
+\id{wa-c} & Zufalls-Seed nicht verständlich & \bewB & \bewE & \bewAb & \nielB\\
+\id{wa-i} & Mail(-Betreff) enthält keine Umlaute / zeigt sie fehlerhaft an & \bewB & \bewB & \bewB & \nielB\\
+\end{tabular}
+\end{center}
+
+\subsubsection{Wichtel hinzufügen}
+\begin{center}
+\begin{tabular}{C{.06} L{.62} | C{.08} C{.08} C{.08} | C{.08}}
+ID & Beschreibung& $H$ & $A$ & $F$ & $P$\\\hline
+\id{wh-a} & Anordnung der Eingabeflächen nicht eindeutig (mobil) & \bewB & \bewCd & \bewE & \nielC\\
+\id{wh-c} & Teils keine Auto-Vervollständigung & \bewB & \bewB & \bewB & \nielB\\
+\id{wh-b} & Elemente nicht mittig (mobil) & \bewB & \bewAb & \bewA & \nielA\\
+\end{tabular}
+\end{center}
+
+\subsubsection{Wichtel zuweisen}
+\begin{center}
+\begin{tabular}{C{.06} L{.62} | C{.08} C{.08} C{.08} | C{.08}}
+ID & Beschreibung& $H$ & $A$ & $F$ & $P$\\\hline
+\id{wz-a} & Tabelle ohne Legend nicht intuitiv benutzbar & \bewD & \bewDe & \bewEf & \nielD\\
+\id{wz-b} & Namen von Spalten schwer zu lesen & \bewB & \bewCd & \bewAb & \nielB\\
+\id{wz-c} & Immer nur beidseitig einstellbar\footnote{Wenn A B nicht beschenken darf, darf B A auch nicht beschenken. Gegebenenfalls ist das aber erwünscht.} & \bewA & \bewB & \bewB & \nielB\\
+\end{tabular}
+\end{center}
+
+\subsubsection{Verifikationsvorbereitung und Mail anpassen}
+\begin{center}
+\begin{tabular}{C{.06} L{.62} | C{.08} C{.08} C{.08} | C{.08}}
+ID & Beschreibung& $H$ & $A$ & $F$ & $P$\\\hline
+\id{wm-a} & Textfelder zu klein $\to$ scrollt „doppelt“ (mobil) & \bewC & \bewD & \bewBc & \nielC\\
+\id{wm-b} & Zu viel Text & \bewB & \bewD & \bewB & \nielB\\
+\id{wm-c} & Verifikationsmail eingeben: Nicht klar, welche & \bewA & \bewB & \bewB & \nielB\\
+\id{wm-d} & Platzhalter nicht klar & \bewA & \bewC & \bewD & \nielB\\
+\end{tabular}
+\end{center}
+
+\subsubsection{Kontrollübersicht}
+\begin{center}
+\begin{tabular}{C{.06} L{.62} | C{.08} C{.08} C{.08} | C{.08}}
+ID & Beschreibung& $H$ & $A$ & $F$ & $P$\\\hline
+\id{wk-a} & Zuordnungstabelle nicht verständlich\footnote{Ist farblich nicht gut gestaltet: Es gibt nur rot/grün, keine Farben dazwischen.} & \bewB & \bewDe & \bewAb & \nielB\\
+\id{wk-b} & Eingabe des Codes und bestätigen mit Enter-Taste „überspringt“ Zusammenfassung & \bewA & \bewB & \bewCd & \nielB\\
+\end{tabular}
+\end{center}
+
+\subsection{Seitenübergreifend}
+\subsubsection{Bedienung}
+\begin{center}
+\begin{tabular}{C{.06} L{.62} | C{.08} C{.08} C{.08} | C{.08}}
+ID & Beschreibung& $H$ & $A$ & $F$ & $P$\\\hline
+\id{sb-b} & Seiten nicht eindeutig/intuitiv/konsistent kategorisiert & \bewD & \bewC & \bewCd & \nielC\\
+\id{sb-d} & Passwortgeschützte Datei(en) nicht sofort als solche erkennbar & \bewA & \bewBc & \bewAb & \nielC\\
+\id{sb-a} & Impressum nicht intuitiv benannt & \bewD & \bewD & \bewAb & \nielB\\
+\id{sb-c} & Suche nicht intuitiv benutzbar & \bewB & \bewAb & \bewCd & \nielB\\
+\id{sb-e} & Schwere Orientierung durch fehlende Icons\footnote{Zur besseren Erkennbarkeit/Navigation: Suche/Kategorien} & \bewA & \bewB & \bewBc & \nielB\\
+\id{sb-h} & Cookie-Banner verdeckt ggf. Fußzeile & \bewA & \bewCd & \bewB & \nielB\\
+\id{sb-f} & Unterpunkte von Kategorien nicht direkt im Menübanner (Dropdown o.ä.) & \bewA & \bewAb & \bewA & \nielA\\
+\id{sb-g} & Index in der rechten Spalte der Übersichtsseiten der Bedienung überflüssig & \bewA & \bewAb & \bewA & \nielA\\
+\id{sb-i} & Breadcrumbs überflüssig, da Inhalte zu wenig (Beginnt bei Home -> Überflüssig) & \bewA & \bewAb & \bewA & \nielA\\
+\end{tabular}
+\end{center}
+\subsubsection{Design}
+\begin{center}
+\begin{tabular}{C{.06} L{.62} | C{.08} C{.08} C{.08} | C{.08}}
+ID & Beschreibung& $H$ & $A$ & $F$ & $P$\\\hline
+\id{sd-a} & Farben trist/blass (geringe Sättigung) & \bewE & \bewDe & \bewBc & \nielC\\
+\id{sd-b} & Farben kontrastarm/eintönig (verschwimmen) & \bewC & \bewD & \bewCd & \nielC\\
+\id{sd-i} & Menüleiste zu groß (mobil und auf Desktop) & \bewA & \bewDe & \bewDe & \nielC\\
+\id{sd-c} & Fehlende Bilder (allgemein bzw. zur Auflockerung des Textes) & \bewB & \bewCd & \bewB & \nielB\\
+\id{sd-d} & Überladen mit Text (viel Text ohne Serifen) & \bewB & \bewC & \bewB & \nielB\\
+\id{sd-e} & Unseriöser Eindruck & \bewA & \bewC & \bewC & \nielB\\
+\id{sd-f} & Zweck der Webseite nicht eindeutig \footnote{AWS? Vorstellung von Inhalten? Blog-artig?} & \bewA & \bewCd & \bewAb & \nielB\\
+\id{sd-g} & Unfertiger Eindruck (Webseite als Baustelle) & \bewA & \bewC & \bewC & \nielB\\
+\id{sd-h} & Überschriften teils ungünstig auf mehreren Zeilen (mobil) & \bewA & \bewD & \bewBc & \nielB\\
+\id{sd-j} & Aktuelle Seite im Menüband nicht eindeutig erkennbar & \bewA & \bewC & \bewBc & \nielB\\
+\end{tabular}
+\end{center}
+
+\section{Positive Rückmeldung}
+Wichtig zur Einordnung der Problemen ist auch positive Rückmeldung einzubeziehen. Dadurch kann in Erfahrung gebracht werden, ob es gegebenenfalls eine Nutzergruppe gibt, die nie mit bestimmten Problemen konfrontiert wird. Wenn diese Nutzergruppe die Zielgruppe ist, dann können einige zuvor identifizierte Fehler hinfällig werden.
+
+Positive Rückmeldungen waren:
+\begin{center}
+\begin{tabular}{L{.92} | C{.08}}
+Beschreibung& $H$ \\\hline
+Sprachumschaltung intuitiv & 6\\
+Suche intuitiv benutzbar & 3\\
+Schlichtes Design & 3\\
+Index in der rechten Spalte der Übersichtsseiten der Bedienung zuträglich & 1\\
+„Mut zur Lücke“: Nicht jede Fläche ist überfüllt mit Inhalt / es gibt weiße Flächen & 1\\
+AWS ohne Anmeldung möglich & 1\\
+AWS mit Missbrauchssicherung (Mail-Authentifzierung) & 1\\
+\end{tabular}
+\end{center}
+
+\section{Auswertung}
+Entsprechend der Priorisierung wurden die Probleme 
+\begin{itemize}
+\item \ref{wh-a} (AWS Anordnung der Eingabeflächen für die Wichteleingabe), 
+\item \ref{wz-a} (Legende Wichtelzuweisungtabelle), 
+\item \ref{wm-a} (AWS Mail-Anpassung), 
+\item \ref{sd-a} und \ref{sd-b} (Farben) sowie 
+\item \ref{sd-i} (Gestaltung Menüleiste) 
+\end{itemize}
+für das Redesign behandelt. 
+
+Einige Probleme ähnlicher Priorisierung wurden nicht beachtet, da sie eher technischer und weniger gestalterischer Natur sind.\bigskip
+
+Da die Befragung ergeben hat, dass das \emph{Automatisierte Wichtel System} der Hauptgrund ist, die Webseite potentiell wieder zu besuchen, besteht ein großer Teil des Redesigns aus diesem. Dadurch bewegt sich die Webseite von der schlichten hin zu einer farbenfrohen und spielerischen Gestaltung. 
+
+Eine sinnvolle Alternative -- die den Umfang dieses Belegs sprengen würde -- wäre, das \emph{Automatisierte Wichtel System} auf eine eigene Seite auszulagern. Dann wäre zum Einen der Zweck der jeweiligen Seite deutlicher erkennbar (die Präsentation der Position im Vergleich zum \emph{Automatisierten Wichtel System}) und die getrennten Seiten könnten mit ihren unterschiedlichen Nutzergruppen entsprechend gestaltet werden.\bigskip
+
+Da die wichtigsten identifizierten Fehler und Probleme nicht nur Kleinigkeiten sind, ist ein umfangreiches Redesign nötig. Das bedeutet, dass für die ausgewählten Fehler Vorschläge für die Veränderung erstellt wurden, die aufgrund des zeitlich eingeschränkten Rahmens teils nicht zur Perfektion ausgearbeitet werden konnten.
+
+Dies steht im Kontrast zu einer Evaluierung, die eine bereits erprobte und von Fachkräften designte Webseite (wie beispielsweise Opal oder die HTW-Seite) bewertet: Dabei müssen potentiell nur minimale Änderungen vorgenommen werden -- wenn bspw. die Anordnung leicht ungünstig muss nur ein Element verschoben werden. 
+
+Bei diesem Redesign sind deutlich komplexere strukturelle Änderungen vorzunehmen.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

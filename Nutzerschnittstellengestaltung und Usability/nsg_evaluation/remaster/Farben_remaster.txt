@@ -1,0 +1,12 @@
+﻿Vorschlag Farbenfroh:
+---------------------
+(Nav-)Leisten: #748934
+Nav-Active Hintergrund: #c4cfa3
+Nav Hintergrund: #fcfff2
+Hintergrund Seite: #e7f4c0
+Hintergrund Main/Text: #fcfff2
+Link-Text: #384510
+
+Grundsätzlich:
+--------------
+Schriften: Arial (ggf. Fett, Narrow oder Kursiv)
