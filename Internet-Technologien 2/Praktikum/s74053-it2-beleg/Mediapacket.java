@@ -1,5 +1,3 @@
-﻿import java.util.Arrays;
-
 public class Mediapacket {
 	byte[]	data;
 	int			timeStamp;
