@@ -44,15 +44,15 @@ Potenzdarstellung & Polynomdarstellung & Bin & Dez\\\hline
 $\alpha^{-\infty}$ & $= 0$& $=0\,0\,0$ & 0\\
 $\alpha^0$ & $= \alpha^0$ & $=1\,0\,0$ & 1\\
 $\alpha^1$ & $= \alpha^1$ & $=0\,1\,0$ & 2\\
-$\alpha^2$ & $= \alpha^2$ & $=0\,0\,1$ & 3\\
-$\alpha^3$ & $=\alpha^2+1$ & $=1\,0\,1$ & 4\\
-$\alpha^4$ & $=\alpha(\alpha^3) = \alpha^3+\alpha = \alpha^2+\alpha+1$ & $=1\,1\,1$ & 5\\
-$\alpha^5$ & $=\alpha(\alpha^4)=\alpha^3+\alpha^2+\alpha = \alpha^2 +1 + \alpha^2 + \alpha$ & $=1\,1\,0$ & 6\\
+$\alpha^2$ & $= \alpha^2$ & $=0\,0\,1$ & 4\\
+$\alpha^3$ & $=\alpha^2+1$ & $=1\,0\,1$ & 5\\
+$\alpha^4$ & $=\alpha(\alpha^3) = \alpha^3+\alpha = \alpha^2+\alpha+1$ & $=1\,1\,1$ & 7\\
+$\alpha^5$ & $=\alpha(\alpha^4)=\alpha^3+\alpha^2+\alpha = \alpha^2 +1 + \alpha^2 + \alpha$ & $=1\,1\,0$ & 3\\
 $\alpha^6$ & $=\alpha(\alpha^5)=\alpha^2+\alpha$ & $=0\,1\,1$ &7\\
 $\alpha^7$ & $=\alpha^3+\alpha^2=1$ & $=1\,0\,0$ & 1\\
 \end{tabular}\\
 
-Anmerkung: $\alpha^2+\alpha^2=0$, da $2\alpha^2\mod 2 = 0$
+Anmerkung: $\alpha^2+\alpha^2=0$, da $2\alpha^2\mod 2 = 0$, gleiches mit $\alpha+\alpha=0$
 
 Man sieht: $\alpha^0=\alpha^7$. Daher rechnet man immer mit $p-1$ und nicht mit $p$.
 
@@ -66,6 +66,10 @@ $\alpha + \alpha^6 = \alpha + \alpha^2+\alpha = \alpha^2$ (entsprechend der Tabe
 Daraus: $\alpha^2 x^4+\alpha^6x^3+\alpha^2x^2$\\
 Nach weiteren Schritten erhält man den Rest: $\alpha^4x+\alpha^6x^0$
 
+Berechnung von $\alpha$:\\
+$\alpha^3\cdot \alpha^4=\alpha^{3+4=7}=\alpha^{7\mod 7} =\alpha^0=1$ und bswp. analog: \\
+$\alpha^9 = \alpha^{9\mod 7}=\alpha^2$\\
+$\alpha^3+\alpha^4 = (\alpha+1) +(\alpha^2+\alpha) = \alpha^2+1 = \alpha^6$
 \end{enumerate}
 
 
