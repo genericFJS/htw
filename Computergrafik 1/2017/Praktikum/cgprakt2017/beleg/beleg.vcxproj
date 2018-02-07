@@ -145,19 +145,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
+    <ClCompile Include="Beleg.cpp" />
+    <ClCompile Include="Geometry.cpp" />
+    <ClCompile Include="LoadShaders.cpp" />
+    <ClCompile Include="LoadTextures.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\OpenGL-01\Dreiecke.cpp" />
-    <ClCompile Include="..\OpenGL-01\LoadShader.cpp" />
-    <ClCompile Include="beleg.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClInclude Include="Beleg.h" />
+    <ClInclude Include="Geometry.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\OpenGL-01\Dreiecke.fs" />
-    <None Include="..\OpenGL-01\Dreiecke.vs" />
+    <Image Include="ressources\Beleg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ressources\colorShader.fs" />
+    <None Include="ressources\shader.vs" />
+    <None Include="ressources\textureShader.fs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
