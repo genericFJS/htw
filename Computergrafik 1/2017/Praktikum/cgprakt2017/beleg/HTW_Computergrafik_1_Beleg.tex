@@ -1,0 +1,200 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrreprt}
+\gdef\pathtomaster{../../../../../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\bibliography{HTW_Computergrafik_1_Beleg.bib}
+\makeatletter
+\gdef\@islecture{\relax}
+\bilingual{\lectureauthorname}{Beleg von}{}
+%\bilingual{\professorname}{}{}
+\makeatother
+
+\faculty{Fakultät Informatik/Mathematik}
+%\department{Einrichtung}
+%\institute{Institut}
+\chair{Lehrstuhl für Computergrafik}
+\thesis{Belegarbeit OpenGL}
+\title{Computergrafik 1}
+%\subtitle{Untertitel}
+\author{Falk-Jonatan Strube (s74053)}
+\professor{Prof. Dr. Wolfgang Oertel}
+%\date{19.06.2017}
+\setstretch{1.2}
+
+\usepackage{chngcntr}
+\counterwithout{figure}{chapter}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\chapter{Aufgabenbeschreibung}
+
+Der Beleg im Fach \emph{Computergrafik 1} im Wintersemester 2017/18 umfasst folgende Aufgabenbereiche\footcite{Oertel2017}:\bigskip
+
+Schreiben Sie ein Programm in C/C++, das unter Verwendung von OpenGL, Vertex- und
+Fragment-Shadern folgende Aufgaben realisiert.
+\begin{enumerate}
+\item \label{aufg:obj} Geometrische Objekte: Erzeugen Sie eine interaktive zeitlich animierte Szene mit mehreren unterschiedlichen farblichen und texturierten dreidimensionalen geometrischen Objekten.
+\item \label{aufg:light} Beleuchtung: Beleuchten Sie die Szene mit mehreren Lichtquellen so, dass auf den Objekten unterschiedliche Beleuchtungseffekte sichtbar werden.
+\item \label{aufg:view} Ansicht: Stellen Sie die Szene gleichzeitig in verschiedenen Ansichten und Projektionen in mehreren Viewports des Anzeigefensters dar.
+\item \label{aufg:doc} Dokumentation: Stellen Sie das Programm in ausführbarer Form mit Quelltext als Visual-Studio-C++-Projekt bereit. Fertigen Sie eine Systemdokumentation in Form eines pdf-Dokumentes von etwa 10 Seiten an, die Deckblatt, Gliederung, Aufgabenbeschreibung, Lösungsansatz, Lösungsumsetzung, Installations- und Bedienungsanleitung, einige Bild\-schirm-Snapshots, Probleme, Ergebnisse, Literatur- und Quellenverzeichnis enthält.
+\end{enumerate}
+
+Durch dieses Dokument wird der Aufgabenteil \ref{aufg:doc} umgesetzt und dadurch Aufgabenteile \ref{aufg:obj}, \ref{aufg:light} und \ref{aufg:view} erläutert.
+
+\chapter{Lösung}
+
+\section{Ansatz}
+
+Die Vorüberlegung ist, die Anforderungen der Aufgabenstellung zu erfüllen und dabei den Aufwand minimal zu halten. Dazu wurde zu jeder Anforderung ein Ansatz erarbeitet.
+\subsection{Animation und Interaktivität}
+Eine einfache Art der Animation kann das drehen eines Objekts sein. Dem entsprechend wurde entschieden ein Objekt in der Mitte der Szene wie in einem Schaukasten zu drehen.
+
+Die Interaktivität soll erreicht werden, indem die Kamera mit Maus und/oder Tastatur manipulierbar ist.
+
+\subsection{Objekte}
+Es sollten mehrere unterschiedliche Objekte mit verschiedenen Texturierungen und Färbungen angezeigt werden. Um in OpenGL Objekte zu erstellen, muss man jede Ecke einzeln angeben und daraus Polygone erstellen. Da dies vor allem manuell sehr aufwendig ist, wurde entschieden mehrere vorgefertigte Objekte zu nehmen und diese gegebenenfalls zu größeren zusammenzusetzen. 
+
+
+Dem entsprechend soll ein Würfel, eine Kugel und eine Fläche erstellt werden. Aus dem Würfel soll durch Verformung und Verschiebung ein größeres Objekt gebildet werden, das den Schriftzug RGB darstellt (siehe \autoref{img:rgb}). %
+\begin{figure}[!ht]
+\centering
+\begin{tikzpicture}[scale=.5]
+% R
+\draw[fill=red!20]  (-11,0) rectangle (-9,6) node[pos=.5]{a};
+\draw[fill=red!20]  (-9,5) rectangle (-6,6) node[pos=.5]{b};
+\draw[fill=red!20]  (-7,3) rectangle (-5,5) node[pos=.5]{c};
+\draw[fill=red!20]  (-9,2) rectangle (-6,3) node[pos=.5]{d};
+\draw[fill=red!20]  (-8,1) rectangle (-7,2) node[pos=.5]{e};
+\draw[fill=red!20]  (-7,0) rectangle (-5,1) node[pos=.5]{f};
+% G
+\draw[fill=green!20]  (-3,1) rectangle (-1,5) node[pos=.5]{a};
+\draw[fill=green!20]  (-2,5) rectangle (2,6) node[pos=.5]{b};
+\draw[fill=green!20]  (1,4) rectangle (3,5) node[pos=.5]{c};
+\draw[fill=green!20]  (-2,0) rectangle (1,1) node[pos=.5]{d};
+\draw[fill=green!20]  (1,0) rectangle (3,3) node[pos=.5]{e};
+\draw[fill=green!20]  (0,2) rectangle (1,3) node[pos=.5]{f};
+% B
+\draw[fill=blue!20]  (5,0) rectangle (7,6) node[pos=.5]{a};
+\draw[fill=blue!20]  (7,5) rectangle (10,6) node[pos=.5]{b};
+\draw[fill=blue!20]  (9,4) rectangle (11,5) node[pos=.5]{c};
+\draw[fill=blue!20]  (7,3) rectangle (10,4) node[pos=.5]{d};
+\draw[fill=blue!20]  (9,1) rectangle (11,3) node[pos=.5]{e};
+\draw[fill=blue!20]  (7,0) rectangle (10,1) node[pos=.5]{f};
+\draw [gray, -latex, thick] (0,-2) -- (0,8);
+\draw [gray, -latex, thick](-13,0) -- (13,0);
+\foreach \x in {-12,-10,...,12}
+    \draw [gray, thick](\x,0.1) -- (\x,-0.2) node [below] {\x};
+\foreach \y in {2,4,6}
+    \draw [gray, thick](0.1,\y) -- (-0.2,\y) node [left] {\y};
+\end{tikzpicture}
+\caption{Skizze des Schriftzugs.}
+\label{img:rgb}
+\end{figure}%
+Als Schriftart wurde die durch Pixel/Würfel sehr gut darstellbare Schrift der alten Gameboy-Systeme gewählt. Die Buchstaben sollen entsprechend eingefärbt werden. Diese Buchstaben sollen drehend auf einer texturierten Fläche präsentiert werden. Auf dieser Fläche soll in einer Ecke das FJS-Logo zu sehen sein, was über eine transparente Textur realisiert werden soll. Die die Szene beleuchtenden Lichter sollen durch Kugeln visualisiert werden.
+
+\subsection{Lichtquellen}
+Zwei Lichtquellen sollen die Szene von verschiedenen Winkeln beleuchten. Diese sollen steuerbar sein, um die Auswirkung von unterschiedlichen Lichtverhältnissen auf die Objekte beobachten zu können.
+
+\subsection{Ansichten}
+Die Szene soll in mehreren Ansichten dargestellt werden. Zum Einen in der steuerbaren perspektivischen Ansicht. Zum Anderen in zwei Ansichten aus der Vogelperspektive: Eine perspektivische und eine orthogonale. Durch den direkten Vergleich soll die Auswirkung des Perspektivwechsels auf die Anzeige hinsichtlich der Shader und wahrgenommenen Objektposition verdeutlicht werden.
+
+\section{Umsetzung}
+Die in den Praktika programmierten Aufgaben bildeten die Grundlage für die Umsetzung dieses Belegs. Die wichtigste Stütze neben den Vorlesungsunterlagen\footcite{Oertel2017vl} bildete der Dialog mit Kommilitonen\footcite{kommilitonen}.
+
+Davon ausgehend konnte der Beleg weitestgehend problemlos entwickelt werden.
+
+Die Würfel-Vorlagen wurden mit Transformationen und Verschiebungen in der Weise kopiert, dass dadurch der geplante Schriftzug entstanden ist. Dazu wurde das Koordinatensystem aus \autoref{img:rgb} zu Rate gezogen.
+
+\subsection{Probleme}
+
+Das Grundsätzliche Problem mit OpenGL ist, dass man ganz genau wissen muss, was man wo haben will, da man alles manuell einprogrammieren muss. Das bedeutet, dass die Position von jeder Ecke im Vornherein berechnet werden muss -- Ausprobieren durch kompilieren und verschieben ist sehr aufwendig. Das hat dazu geführt, dass der Inhalt des Belegs sehr limitiert geplant wurde. Im Gegensatz zu der Arbeit wie Programmen wie \emph{3dsmax} kann man nicht „einfach nur machen“. Dem Umstand ist auch zu verschulden, dass die Szene nicht unbedingt optimal gestaltet wurde: Durch das mehrfache Verwenden von einfachen Objekten kommt es teils dazu, dass eingefügte Polygone nie gesehen werden, da sie von anderen verdeckt sind.
+
+Auch Schrägen (solange sie nicht im Nachhinein durch Transformationen erreicht werden) sind schwer einzufügen, da die Normalen aufwendig berechnet werden müssen.
+
+Das alles hat dazu geführt, dass der Beleg nicht nur relativ simpel gehalten wurde, sondern auch keinen Spaß gemacht hat (Spaß macht es [mir], wenn das Ergebnis toll wird -- das ist mit OpenGL nur mit großen Aufwand zu erreichen). Dem Hochschullehrer sei an dieser Stelle ans Herz gelegt diese Form des Beleges zu überdenken und ihn in einer anderen Form einzufordern: \emph{Internettechnologien 2} und \emph{Datenbanksysteme 2} machen vor, wie das Praktikum selber der Beleg sein kann. Das spart Student und Professor Zeit und Nerven. Vor allem bei etwas so zeitaufwendigem wie OpenGL.
+
+
+\subsection{Eregbnis}
+
+Am Ergebnis ist in den seitlichen Viewports anhand der Licht-Objekten und Licht-Spiegelungen sehr gut der Unterschied zwischen der perspektivischen und orthogonalen Projektion zu sehen. Ansonsten verhält sich das Programm wie erwartet.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=.8\textwidth]{screenshot_standard.png}
+\caption{Standardszene.}
+\label{img:standard}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=.8\textwidth]{screenshot_kamera.png}
+\caption{Kamera wurde manuell in andere Position gebracht.}
+\label{img:kamera}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=.3\textwidth]{screenshot_ani1.png}
+\includegraphics[width=.3\textwidth]{screenshot_ani2.png}
+\includegraphics[width=.3\textwidth]{screenshot_ani3.png}
+\caption{Unterschiedliche Animationsschritte.}
+\label{img:ani}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=.8\textwidth]{screenshot_1aus.png}
+\caption{Lichtquelle 1 ist ausgeschaltet.}
+\label{img:1aus}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=.8\textwidth]{screenshot_1medium.png}
+\caption{Lichtquelle 1 leuchtet weniger stark.}
+\label{img:1medium}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=.8\textwidth]{screenshot_1medium2aus.png}
+\caption{Lichtquelle 1 leuchtet weniger stark, Lichtquelle 2 ist ausgeschaltet.}
+\label{img:1medium2aus}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=.8\textwidth]{screenshot_2aus.png}
+\caption{Lichtquelle 2 ist ausgeschaltet.}
+\label{img:2aus}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=.8\textwidth]{screenshot_2blau.png}
+\caption{Lichtquelle 2 leuchtet blau.}
+\label{img:2blau}
+\end{figure}
+
+\chapter{Anleitung}
+Bevor das Visual Studio-Projekt in Visual Studio geöffnet wird, sollte sichergestellt werden, dass die Datei \lstinline`beleg.vcxproj` dem System entsprechend angepasst wird. Dazu müssen vor allem die Einträge \lstinline`<AdditionalIncludeDirectories>`, \lstinline`<AdditionalLibraryDirectories>` und \lstinline`<AdditionalDependencies>` so geändert werden, dass die Pfade in die Installationsordner von den verschiedenen OpenGL-Bibliotheken zeigen. Dies kann gegebenenfalls auch im Nachhinein im Editor angepasst werden.
+
+Sind die Verweise auf die Bibliotheken eingerichtet, kann das Projekt geöffnet, kompiliert und gestartet werden.
+
+Das Programm kann mit der Tastatur bedient werden (siehe \autoref{img:control}). Die Kamera kann weiterhin durch Mausklicks im Viewport gesteuert werden.
+\begin{table}[!ht]
+\centering
+\begin{tabular}{l | l}
+Taste(n) & Befehl\\\hline
+Pfeiltasten & Steuerung der Kamera\\
+w/s bzw. +/- & Zoom der Kamera\\
+p & Pausierung der Animation\\
+y/x/c/v/b & Steuerung Intensität Licht 1 (dunkel/…/hell)\\
+1/2/3/4/5 & Steuerung Farbe Licht 2 (rot/grün/blau/weiß/schwarz)\\
+\end{tabular}
+\caption{Steuerung mit der Tastatur}
+\label{img:control}
+\end{table}
+\chapter*{Quellen}
+\addcontentsline{toc}{chapter}{Quellen}
+\renewcommand{\emph}[1]{\textit{#1}}
+\printbibliography[heading=none]
+\clearpage
+\listoffigures
+\end{document}

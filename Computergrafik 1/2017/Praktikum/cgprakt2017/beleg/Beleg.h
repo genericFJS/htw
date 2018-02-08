@@ -6,9 +6,9 @@ GLuint loadShaders(const char* vertexFilePath, const char* fragmentFilePath, con
 GLuint loadTextures(const char* filename, GLenum minification_filter, GLenum magnification_filter);
 
 void DisplayFunc();
-void ReshapeFunc(int w, int h);
-void MotionFunc(int mouseX, int mouseY);
+void ReshapeFunc(int width, int height);
 void UpdateAnimation(int value);
-void SpecialFunc(int specKey, int mouseX, int mouseY);
 void KeyboardFunc(unsigned char theKey, int mouseX, int mouseY);
-void DrawViewport(GLuint posx, GLuint posy, GLuint WIDTHz, GLuint HEIGHTz, glm::vec3 Sichtpunkt, glm::vec3 Oben);
+void SpecialFunc(int specKey, int mouseX, int mouseY);
+void MotionFunc(int mouseX, int mouseY);
+void DrawViewport(GLuint viewportPositionX, GLuint viewportPositionY, GLuint viewportWidth, GLuint viewportHeight, glm::vec3 viewpointInput, glm::vec3 viewpointDirection, int perspective);

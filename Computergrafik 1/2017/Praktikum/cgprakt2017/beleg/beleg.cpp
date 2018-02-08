@@ -25,7 +25,7 @@ glm::vec3 cubeColor(1, 1, 1);
 GLfloat viewportRotationZ = 0.2, viewportRotationY = 0.8, viewportDistance = 6, viewportRotationStep = 0.5;
 
 // Vorgefertiges Objekt
-Geometry cube, sphere;
+Geometry cube, sphere, logocube;
 
 // ==================================================
 //                     main
@@ -46,6 +46,7 @@ int main(int argc, char** argv) {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_STENCIL_TEST);
 	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	// Aktivieren von Texturen
 	FreeImage_Initialise(TRUE);
 
@@ -59,11 +60,14 @@ int main(int argc, char** argv) {
 	lightingTexture = loadShaders("ressources/shader.vs", "ressources/textureShader.fs", "");
 	// Textur laden
 	cube.texture = loadTextures("ressources/Schreibtisch.png", GL_LINEAR, GL_LINEAR);
+	logocube.texture = loadTextures("ressources/FJS-logo_black.png", GL_LINEAR, GL_LINEAR);
 
 	// Erstellen der vorgefertigen Objekte
+	logocube.createPlain();
+	logocube.setup();
 	cube.createCube();
 	cube.setup();
-	sphere.createSphere();
+	sphere.createSphere(10);
 	sphere.setup();
 
 	// Zuweisen der glut Funktionen
@@ -94,17 +98,27 @@ void DisplayFunc() {
 		0,
 		windowWidth * 2 / 3,
 		windowHeight,
-		glm::vec3(viewportDistance * sin(viewportRotationY) * sin(viewportRotationZ), viewportDistance * cos(viewportRotationY), viewportDistance * sin(viewportRotationY) * cos(viewportRotationZ)),
-		glm::vec3(0.0, cos(viewportRotationY - PI*0.5), 0.0));
+		glm::vec3(-viewportDistance * sin(viewportRotationY) * sin(viewportRotationZ), viewportDistance * cos(viewportRotationY), -viewportDistance * sin(viewportRotationY) * cos(viewportRotationZ)),
+		glm::vec3(0.0, cos(viewportRotationY - PI*0.5), 0.0),
+		0);
 
 	// Viewport rechts oben (Frontalansicht)
+	//DrawViewport(
+	//	windowWidth / 3 * 2,
+	//	windowHeight / 2,
+	//	windowWidth / 3,
+	//	windowHeight / 2,
+	//	glm::vec3(0, 0.2, 4),
+	//	glm::vec3(0, 1, 0),
+	//	1);
 	DrawViewport(
 		windowWidth / 3 * 2,
 		windowHeight / 2,
 		windowWidth / 3,
 		windowHeight / 2,
-		glm::vec3(0, 0.2, 4),
-		glm::vec3(0, 1, 0));
+		glm::vec3(0, 5, -0.0001),
+		glm::vec3(0, 1, 0),
+		1);
 
 	// Viewport rechts unten (Vogelperspektive)
 	DrawViewport(
@@ -112,8 +126,9 @@ void DisplayFunc() {
 		0,
 		windowWidth / 3,
 		windowHeight / 2,
-		glm::vec3(0, 5, 0.0001),
-		glm::vec3(0, 1, 0));
+		glm::vec3(0, 5, -0.0001),
+		glm::vec3(0, 1, 0),
+		0);
 
 	glFlush();
 
@@ -266,11 +281,19 @@ void MotionFunc(int mouseX, int mouseY) {
 /// <param name="viewportHeight">Höhe des Viewports</param>
 /// <param name="viewpointInput"></param>
 /// <param name="viewpointDirection"></param>
-void DrawViewport(GLuint viewportPositionX, GLuint viewportPositionY, GLuint viewportWidth, GLuint viewportHeight, glm::vec3 viewpointInput, glm::vec3 viewpointDirection) {
+void DrawViewport(GLuint viewportPositionX, GLuint viewportPositionY, GLuint viewportWidth, GLuint viewportHeight, glm::vec3 viewpointInput, glm::vec3 viewpointDirection, int perspective) {
 	// Viewport einrichten
 	glViewport(viewportPositionX, viewportPositionY, viewportWidth, viewportHeight);
 
-	glm::mat4 cameraProjection = glm::perspective(45.0f, 1.0f, 0.1f, 100.f);
+	glm::mat4 cameraProjection;
+	if (perspective == 0) {
+		cameraProjection = glm::perspective(45.0f, 1.0f, 0.1f, 100.f);
+	} else {
+		float orthoHeight = 3 * ((float)viewportWidth / viewportHeight);
+		float orthoWidth = 3;
+
+		cameraProjection = glm::ortho(-1 * orthoHeight, orthoHeight, -1 * orthoWidth, orthoWidth, 0.1f, 100.0f);
+	}
 
 	// Kameraausschnitt einrichten
 	GLfloat viewpoint[3];
@@ -581,4 +604,14 @@ void DrawViewport(GLuint viewportPositionX, GLuint viewportPositionY, GLuint vie
 	glUniformMatrix3fv(normal_mat_loc, 1, FALSE, &normal_mat[0][0]);
 	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &model[0][0]);
 	cube.draw();
+
+	model = glm::mat4(1.0);
+	model = glm::translate(model, glm::vec3(-1.5, -.84, 1.5));
+	model = glm::rotate(model, -1.571f, glm::vec3(1.0, 0.0, 0.0));
+	model = glm::rotate(model, 3.0f, glm::vec3(0.0, 0.0, 1.0));
+
+	normal_mat = glm::mat3(glm::transpose(glm::inverse(model)));
+	glUniformMatrix3fv(normal_mat_loc, 1, FALSE, &normal_mat[0][0]);
+	glUniformMatrix4fv(model_loc, 1, GL_FALSE, &model[0][0]);
+	logocube.draw();
 }

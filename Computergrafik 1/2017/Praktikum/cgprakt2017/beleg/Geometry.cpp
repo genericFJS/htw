@@ -66,32 +66,30 @@ void Geometry::createCube() {
 /// <summary>
 /// Erstellt eine Kugel mit dem Radius 0.5.
 /// </summary>
-void Geometry::createSphere() {
-	double lati_bands = 30;
-	double longi_bands = 30;
+void Geometry::createSphere(double resolution) {
 	double radius = 0.5;
 
-	for (double lati_num = 0; lati_num <= lati_bands; lati_num++) {
-		double theta = lati_num * PI / lati_bands;
-		double sin_theta = sin(theta);
-		double cos_theta = cos(theta);
+	for (double latitude = 0; latitude <= resolution; latitude++) {
+		double theta = latitude * PI / resolution;
+		double sinTheta = sin(theta);
+		double cosTheta = cos(theta);
 
-		for (double longi_num = 0; longi_num <= longi_bands; longi_num++) {
-			double phi = longi_num * 2 * PI / longi_bands;
-			double sin_phi = sin(phi);
-			double cos_phi = cos(phi);
+		for (double longitude = 0; longitude <= resolution; longitude++) {
+			double phi = longitude * 2 * PI / resolution;
+			double sinPhi = sin(phi);
+			double cosPhi = cos(phi);
 
 			vertex va;
-			va.normal = glm::vec3(cos_phi * sin_theta, cos_theta, sin_phi * sin_theta);
-			va.tex_coord = glm::vec2(1 - (longi_num / longi_bands), 1 - (lati_num / lati_bands));
+			va.normal = glm::vec3(cosPhi * sinTheta, cosTheta, sinPhi * sinTheta);
+			va.tex_coord = glm::vec2(1 - (longitude / resolution), 1 - (latitude / resolution));
 			va.position = glm::vec3(radius * va.normal.x, radius * va.normal.y, radius * va.normal.z);
 			vertices.push_back(va);
 		}
 
-		for (int lati_num = 0; lati_num < lati_bands; lati_num++) {
-			for (int longi_num = 0; longi_num < longi_bands; longi_num++) {
-				int first = (lati_num * (longi_bands + 1)) + longi_num;
-				int second = first + longi_bands + 1;
+		for (int latitude = 0; latitude < resolution; latitude++) {
+			for (int longitude = 0; longitude < resolution; longitude++) {
+				int first = (latitude * (resolution + 1)) + longitude;
+				int second = first + resolution + 1;
 
 				indices.push_back(first);
 				indices.push_back(second);
@@ -105,6 +103,26 @@ void Geometry::createSphere() {
 		this->vertices = vertices;
 		this->indices = indices;
 	}
+}
+
+/// <summary>
+/// Erstellt einen Würfel mit der Seitenlänge 1 am Punkt (0,0,0).
+/// Dieser kann mit Transformierungen später vielseitig eingesetzt werden.
+/// </summary>
+void Geometry::createPlain() {
+	vertex vrtx;
+
+	vrtx.position = glm::vec3(-0.5, -0.5, 0.5); vrtx.tex_coord = glm::vec2(0, 0); vrtx.normal = glm::vec3(0, 0, 1); vertices.push_back(vrtx);	// Ecke 0
+	vrtx.position = glm::vec3(0.5, -0.5, 0.5); vrtx.tex_coord = glm::vec2(1, 0); vrtx.normal = glm::vec3(0, 0, 1); vertices.push_back(vrtx);	// Ecke 1
+	vrtx.position = glm::vec3(-0.5, 0.5, 0.5); vrtx.tex_coord = glm::vec2(0, 1); vrtx.normal = glm::vec3(0, 0, 1); vertices.push_back(vrtx);	// Ecke 2
+	vrtx.position = glm::vec3(0.5, 0.5, 0.5); vrtx.tex_coord = glm::vec2(1, 1); vrtx.normal = glm::vec3(0, 0, 1); vertices.push_back(vrtx);		// Ecke 3
+
+	indices = {
+		0, 1, 2, 1, 2, 3
+	};
+
+	this->vertices = vertices;
+	this->indices = indices;
 }
 
 /// <summary>

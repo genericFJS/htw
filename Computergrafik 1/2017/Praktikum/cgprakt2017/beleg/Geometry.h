@@ -27,7 +27,8 @@ public:
 	Geometry(std::vector<vertex> vertices, std::vector<GLuint> indices, GLuint texture = 0);
 
 	void createCube();
-	void createSphere();
+	void createSphere(double resolution);
+	void createPlain();
 
 	void draw();
 	void setup();

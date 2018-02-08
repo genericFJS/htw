@@ -13,17 +13,17 @@ GLuint loadTextures(const char* filename, GLenum minification_filter, GLenum mag
 	FREE_IMAGE_FORMAT format = FreeImage_GetFileType(filename, 0);
 
 	if (format == -1) {
-		std::cout << "Konnte Datei nicht finden: " << filename << " -Beende." << std::endl;
+		std::cout << "Failed to open file: " << filename << std::endl;
 		exit(-1);
 	}
 
 	if (format == FIF_UNKNOWN) {
-		std::cout << "Dateiformat konnte nicht erkannt werden" << std::endl;
+		std::cout << "File format not recognized!" << std::endl;
 
 		format = FreeImage_GetFIFFromFilename(filename);
 
 		if (!FreeImage_FIFSupportsReading(format)) {
-			std::cout << "Gefundenes Bild kann nicht gelesen werden" << std::endl;
+			std::cout << "Image could not be read!" << std::endl;
 			exit(-1);
 		}
 	}
@@ -33,10 +33,10 @@ GLuint loadTextures(const char* filename, GLenum minification_filter, GLenum mag
 	int bitsPerPixel = FreeImage_GetBPP(bitmap);
 	FIBITMAP* bitmap32;
 	if (bitsPerPixel == 32) {
-		std::cout << "Quell-Bild hat" << bitsPerPixel << "Bit pro Pixel. Überspringe Konvertierung." << std::endl;
+		std::cout << "Image has " << bitsPerPixel << " Bit per pixel. Skipping conversion." << std::endl;
 		bitmap32 = bitmap;
 	} else {
-		std::cout << "Quell-Bild hat" << bitsPerPixel << "Bit pro Pixel. Konvertierung in 32-Bit Farbe" << std::endl;
+		std::cout << "Image has " << bitsPerPixel << " Bit per pixel. Converting to 32-Bit." << std::endl;
 		bitmap32 = FreeImage_ConvertTo32Bits(bitmap);
 	}
 
