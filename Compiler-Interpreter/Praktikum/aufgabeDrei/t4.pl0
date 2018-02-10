@@ -1,0 +1,12 @@
+Procedure p1;
+var i;
+begin
+i:=0;
+while i<7 do
+    begin
+        i:=i+1;
+        !I
+    end
+end;
+
+call p1.

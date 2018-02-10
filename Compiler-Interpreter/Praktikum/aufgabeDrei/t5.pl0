@@ -1,0 +1,20 @@
+var a,fac;
+
+Procedure p1;
+ var b,c;
+ begin
+  b := a;
+  a := a-1;
+  c := a;
+  !c;
+  if c>1 then call p1;
+  fac := fac*b;
+  !fac
+ end;
+
+begin
+  ?a;
+  fac := 1;
+  call p1;
+  !fac
+end.

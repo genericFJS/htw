@@ -1,0 +1,39 @@
+
+CONST x = 5;
+
+VAR a,b,c;
+
+PROCEDURE test;
+VAR inputa,inputb,output;
+BEGIN
+  ? inputa;
+  ? inputb;
+  output := inputa+inputb;
+  ! output
+END;
+
+
+
+
+
+
+BEGIN
+  a := 1;
+  b := 2;
+  c := 3;
+
+  IF b < c 
+  THEN
+    !9999999;
+
+  WHILE a < x
+  DO
+    BEGIN
+      ! a;
+      a := a +1
+    END;
+
+  call test
+
+END
+.

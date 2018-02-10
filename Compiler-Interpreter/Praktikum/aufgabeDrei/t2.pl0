@@ -1,0 +1,14 @@
+const d=4,e=5,c=4;
+var a,b,Max;
+
+procedure p1;
+begin
+  if a>=5 then Max:=a;
+  if a< 2 then Max:=b
+end;
+
+begin
+  ?a;?b;
+  call p1;
+  !Max
+end.

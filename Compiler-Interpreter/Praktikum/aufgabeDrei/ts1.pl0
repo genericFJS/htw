@@ -1,0 +1,24 @@
+
+const a = 12, b = 2, c = 8;
+var x, y, z;
+
+PROCEDURE G;
+  var b;
+  BEGIN
+    ?x
+  END;
+
+
+PROCEDURE D;
+  var b;
+  BEGIN
+    ?x
+  END;
+
+
+
+BEGIN
+  call D
+END
+
+.

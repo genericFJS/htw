@@ -1,0 +1,6 @@
+var a;
+begin
+a:=-1+2*3;
+!a;
+if a>1 then !1;
+end.

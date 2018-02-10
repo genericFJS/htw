@@ -1,0 +1,30 @@
+const null=0, EinS=1;
+var a,b;
+  procedure p1;
+  var x;
+    procedure p2;
+    const null=0;
+    var y;
+    begin
+      y:=b;
+      while y>0 do
+      begin
+        while x>null do
+        begin
+          !x;
+          !y;
+          x:=x-1;
+        end;
+        x:=a;
+        y:=y-eins;
+      end;
+    end;
+  begin
+    x:=a;
+    call p2;
+  end;
+begin
+  ?a;
+  ?b;
+  call p1;
+end.
