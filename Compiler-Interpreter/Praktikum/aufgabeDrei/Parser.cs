@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace aufgabeDrei {
     class Parser {
-        private delegate void ActionDelegate();
+        private delegate bool ActionDelegate();
 
         /// <summary>
         /// Art der Kante.
@@ -22,16 +22,16 @@ namespace aufgabeDrei {
         /// Stellt eine Kante dar. 
         /// </summary>
         private struct Edge {
-            EdgeType type;
+            public EdgeType type;
             // Mögliche Kanten-Werte:
             private string symbol;
             private MorphemCode morphemCode;
             private Edge[] graph;
             // Folgeaktion:
-            ActionDelegate action;
+            public ActionDelegate action;
             // Nächste/alterantive Kante
-            int nextEdge;
-            int alternativeEdge;
+            public int nextEdge;
+            public int alternativeEdge;
 
             /// <summary>
             /// Erstellt neue Kante.
@@ -69,7 +69,7 @@ namespace aufgabeDrei {
             public dynamic getValue() {
                 switch (type) {
                     case EdgeType.symbol:
-                        return symbol;
+                        return symbol.ToUpper();
                     case EdgeType.morphem:
                         return morphemCode;
                     case EdgeType.graph:
@@ -80,119 +80,184 @@ namespace aufgabeDrei {
         }
 
         // Definition der Bögen:
-        private Edge[] programmGraph;
-        private Edge[] blockGraph;
-        private Edge[] statementGraph;
-        private Edge[] expressionGraph;
-        private Edge[] termGraph;
-        private Edge[] factorGraph;
-        private Edge[] conditionGraph;
+        private Edge[] programmGraph = new Edge[2];
+        private Edge[] blockGraph = new Edge[22];
+        private Edge[] statementGraph = new Edge[23];
+        private Edge[] expressionGraph = new Edge[10];
+        private Edge[] termGraph = new Edge[7];
+        private Edge[] factorGraph = new Edge[5];
+        private Edge[] conditionGraph = new Edge[10];
 
-        private Morphem currentMorphem;
+        // Definiton Morphem:
+        Morphem currentMorphem;
+        Lexer lexer;
 
-        public Parser() {
+        public Parser(string filePath) {
             // Initialisierung der Bögen:
             // Alternative Bögen -1: es existiert keine Alternative (oder ist letzte Alternative)
             // Nächster Bögen -1: es existiert kein nächster Bogen => Ende vom Graph
-            programmGraph = new Edge[2] {
-				/* 0 */ new Edge(EdgeType.graph,  blockGraph, null,                             1, -1),
-				/* 1 */ new Edge(EdgeType.symbol, ".",        new ActionDelegate(ProgrammEnd), -1, -1)
-                };
+            programmGraph[0] = new Edge(EdgeType.graph, blockGraph, null, 1, -1);
+            programmGraph[1] = new Edge(EdgeType.symbol, ".", new ActionDelegate(ProgrammEnd), -1, -1);
 
-            blockGraph = new Edge[22] {
-				/*  0 */ new Edge(EdgeType.symbol, "const", null, 1, 7), // Bögen const
-				/*  1 */ new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(BlockCheckConstIdentifier), 2, -1),
-				/*  2 */ new Edge(EdgeType.symbol, "=", null, 3, -1),
-				/*  3 */ new Edge(EdgeType.morphem, MorphemCode.number, new ActionDelegate(BlockCheckConstValue), 4, -1),
-				/*  4 */ new Edge(EdgeType.symbol, ",", null, 1, 5),
-				/*  5 */ new Edge(EdgeType.symbol, ";", null, 6, -1),
-				/*  6 */ new Edge(EdgeType.blank, null, null, 8, -1),
-				/*  7 */ new Edge(EdgeType.blank, null, null, 8, -1),
-				/*  8 */ new Edge(EdgeType.symbol, "var", null, 9, 13), // Bögen var
-				/*  9 */ new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(BlockCheckVarIdentifier),10, -1),
-				/* 10 */ new Edge(EdgeType.symbol, ",", null, 9, 11),
-				/* 11 */ new Edge(EdgeType.symbol, ";", null, 12, -1),
-				/* 12 */ new Edge(EdgeType.blank, null, null, 14, -1),
-				/* 13 */ new Edge(EdgeType.blank, null, null, 14, -1),
-				/* 14 */ new Edge(EdgeType.symbol, "procedure", null,  15, -1), // Bögen procedure
-				/* 15 */ new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(BlockCheckProcedureIdentifer), 16, -1),
-				/* 16 */ new Edge(EdgeType.symbol, ";", null, 17, -1),
-				/* 17 */ new Edge(EdgeType.graph, blockGraph, null, 18, -1),
-				/* 18 */ new Edge(EdgeType.symbol, ";", new ActionDelegate(BlockEndProcedure), 19, -1),
-				/* 19 */ new Edge(EdgeType.blank, null, null, 20, -1),
-				/* 20 */ new Edge(EdgeType.blank, null, new ActionDelegate(BlockEnterStatement), 21, -1), // Zum statement
-				/* 21 */ new Edge(EdgeType.graph, statementGraph, null, -1, -1)
-                };
-            statementGraph = new Edge[22] {
-				/*  0 */ new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(StatementCheckVarIdentifier), 1, 3), // Bögen var
-				/*  1 */ new Edge(EdgeType.symbol, ":=", null, 2, -1),
-				/*  2 */ new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(StatementCheckVarValue), -1, -1),
-				/*  3 */ new Edge(EdgeType.symbol, "if", null, 4, 7), // Bögen if
-				/*  4 */ new Edge(EdgeType.graph, conditionGraph, new ActionDelegate(StatementIfCondition), 5, -1),
-				/*  5 */ new Edge(EdgeType.symbol, "then" , null, 6, -1),
-				/*  6 */ new Edge(EdgeType.graph, statementGraph, new ActionDelegate(StatementIfStatement), -1, -1),
-				/*  7 */ new Edge(EdgeType.symbol, "while", new ActionDelegate(StatementWhile), 8, 11), // Bögen while
-				/*  8 */ new Edge(EdgeType.graph, conditionGraph, new ActionDelegate(StatementWhileCondition), 9, -1),
-				/*  9 */ new Edge(EdgeType.symbol, "do", null, 10, -1),
-				/* 10 */ new Edge(EdgeType.graph, statementGraph, new ActionDelegate(StatementWhileStatement), -1, -1),
-				/* 11 */ new Edge(EdgeType.symbol, "begin", null, 12, 15), // Bögen codeblock
-				/* 12 */ new Edge(EdgeType.graph, statementGraph, null, 14, 13),
-				/* 13 */ new Edge(EdgeType.symbol, ";", null, 12, -1),
-				/* 14 */ new Edge(EdgeType.symbol, "end", null, -1, -1),
-				/* 15 */ new Edge(EdgeType.symbol, "call", null, 16, 17), // Bögen call
-				/* 16 */ new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(StatementProcedureCall), -1, -1),
-				/* 17 */ new Edge(EdgeType.symbol, "?", null, 18, 19),  // Bögen input
-				/* 18 */ new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(StatementInput), -1, -1),
-				/* 19 */ new Edge(EdgeType.symbol, "!", null, 20, 21),  // Bögen output
-				/* 20 */ new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(StatementOutput), -1, -1),
-				/* 21 */ new Edge(EdgeType.blank, null, null, -1, -1)
-            };
-            expressionGraph = new Edge[10] {
-				/*  0 */ new Edge(EdgeType.symbol, "-", null, 1, 2),    // Bögen negative term
-				/*  1 */ new Edge(EdgeType.graph, termGraph, new ActionDelegate(ExpressionNegative), 4, -1),
-				/*  2 */ new Edge(EdgeType.blank, null, null, 3, -1),   // Bögen normal term
-				/*  3 */ new Edge(EdgeType.graph, termGraph, null, 4, -1),
-				/*  4 */ new Edge(EdgeType.blank, null, null, 5, -1),
-				/*  5 */ new Edge(EdgeType.symbol, "+", null, 6, 7),   // Bögen addition
-				/*  6 */ new Edge(EdgeType.graph, termGraph, new ActionDelegate(ExpressionAddition), 4, -1),
-				/*  7 */ new Edge(EdgeType.symbol, "-", null, 8, 9),   // Bögen subtraction
-				/*  8 */ new Edge(EdgeType.graph, termGraph, new ActionDelegate(ExpressionSubtraction), 4, -1),
-				/*  9 */ new Edge(EdgeType.blank, null, null, -1, -1)
-            };
-            termGraph = new Edge[7] {
-				/*  0 */ new Edge(EdgeType.graph, factorGraph, null, 1, -1),
-				/*  1 */ new Edge(EdgeType.blank, null, null, 2, -1),
-				/*  2 */ new Edge(EdgeType.symbol, "*", null, 3, 4),    // Bögen multiplication
-				/*  3 */ new Edge(EdgeType.graph, factorGraph, new ActionDelegate(TermMultiplication), 1, -1),
-				/*  4 */ new Edge(EdgeType.symbol, "/", null, 5, 6),    // Bögen division
-				/*  5 */ new Edge(EdgeType.graph, factorGraph, new ActionDelegate(TermDivision), 1, -1),
-				/*  6 */ new Edge(EdgeType.blank, null, null, -1, -1)
-            };
-            factorGraph = new Edge[5] {
-				/*  0 */ new Edge(EdgeType.morphem, MorphemCode.number, new ActionDelegate(FactorCheckNumber), -1, 1),  // Bogen numeral
-				/*  1 */ new Edge(EdgeType.symbol, "(", null, 2, 4),    // Bögen braced
-				/*  2 */ new Edge(EdgeType.graph, expressionGraph, null, 3, -1),
-				/*  3 */ new Edge(EdgeType.symbol, ")", null, -1, -1),
-				/*  4 */ new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(FactorCheckIdentifier), -1, -1)  // Bogen identifier
-            };
-            conditionGraph = new Edge[10] {
-				/*  0 */ new Edge(EdgeType.symbol, "odd", null, 1, 2),  // Bögen odd
-				/*  1 */ new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(ConditionOdd), -1, -1),
-				/*  2 */ new Edge(EdgeType.graph, expressionGraph, null, 3, -1),    // Bögen comparsion
-				/*  3 */ new Edge(EdgeType.symbol, "=", new ActionDelegate(ConditionSaveEq), 9, 4),
-				/*  4 */ new Edge(EdgeType.symbol, "#", new ActionDelegate(ConditionSaveNo), 9, 5),
-				/*  5 */ new Edge(EdgeType.symbol, "<", new ActionDelegate(ConditionSaveLt), 9, 6),
-				/*  6 */ new Edge(EdgeType.symbol, "<=", new ActionDelegate(ConditionSaveLeq), 9, 7),
-				/*  7 */ new Edge(EdgeType.symbol, ">", new ActionDelegate(ConditionSaveGt), 9, 8),
-				/*  8 */ new Edge(EdgeType.symbol, ">=", new ActionDelegate(ConditionSaveGeq), 9, -1),
-				/*  9 */ new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(ConditionApplyOperand), -1, -1)
-            };
+            blockGraph[0] = new Edge(EdgeType.symbol, "const", null, 1, 7); // Bögen const
+            blockGraph[1] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(BlockCheckConstIdentifier), 2, -1);
+            blockGraph[2] = new Edge(EdgeType.symbol, "=", null, 3, -1);
+            blockGraph[3] = new Edge(EdgeType.morphem, MorphemCode.number, new ActionDelegate(BlockCheckConstValue), 4, -1);
+            blockGraph[4] = new Edge(EdgeType.symbol, ",", null, 1, 5);
+            blockGraph[5] = new Edge(EdgeType.symbol, ";", null, 6, -1);
+            blockGraph[6] = new Edge(EdgeType.blank, null, null, 8, -1);
+            blockGraph[7] = new Edge(EdgeType.blank, null, null, 8, -1);
+            blockGraph[8] = new Edge(EdgeType.symbol, "var", null, 9, 13); // Bögen var
+            blockGraph[9] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(BlockCheckVarIdentifier), 10, -1);
+            blockGraph[10] = new Edge(EdgeType.symbol, ",", null, 9, 11);
+            blockGraph[11] = new Edge(EdgeType.symbol, ";", null, 12, -1);
+            blockGraph[12] = new Edge(EdgeType.blank, null, null, 14, -1);
+            blockGraph[13] = new Edge(EdgeType.blank, null, null, 14, -1);
+            blockGraph[14] = new Edge(EdgeType.symbol, "procedure", null, 15, 20); // Bögen procedure
+            blockGraph[15] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(BlockCheckProcedureIdentifer), 16, -1);
+            blockGraph[16] = new Edge(EdgeType.symbol, ";", null, 17, -1);
+            blockGraph[17] = new Edge(EdgeType.graph, blockGraph, null, 18, -1);
+            blockGraph[18] = new Edge(EdgeType.symbol, ";", new ActionDelegate(BlockEndProcedure), 19, -1);
+            blockGraph[19] = new Edge(EdgeType.blank, null, null, 14, 20);
+            blockGraph[20] = new Edge(EdgeType.blank, null, new ActionDelegate(BlockEnterStatement), 21, -1); // Zum statement
+            blockGraph[21] = new Edge(EdgeType.graph, statementGraph, null, -1, -1);
+
+            statementGraph[0] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(StatementCheckVarIdentifier), 1, 3); // Bögen var
+            statementGraph[1] = new Edge(EdgeType.symbol, ":=", null, 2, -1);
+            statementGraph[2] = new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(StatementCheckVarValue), -1, -1);
+            statementGraph[3] = new Edge(EdgeType.symbol, "if", null, 4, 7); // Bögen if
+            statementGraph[4] = new Edge(EdgeType.graph, conditionGraph, new ActionDelegate(StatementIfCondition), 5, -1);
+            statementGraph[5] = new Edge(EdgeType.symbol, "then", null, 6, -1);
+            statementGraph[6] = new Edge(EdgeType.graph, statementGraph, new ActionDelegate(StatementIfStatement), -1, -1);
+            statementGraph[7] = new Edge(EdgeType.symbol, "while", new ActionDelegate(StatementWhile), 8, 11); // Bögen while
+            statementGraph[8] = new Edge(EdgeType.graph, conditionGraph, new ActionDelegate(StatementWhileCondition), 9, -1);
+            statementGraph[9] = new Edge(EdgeType.symbol, "do", null, 10, -1);
+            statementGraph[10] = new Edge(EdgeType.graph, statementGraph, new ActionDelegate(StatementWhileStatement), -1, -1);
+            statementGraph[11] = new Edge(EdgeType.symbol, "begin", null, 12, 15); // Bögen codeblock
+            statementGraph[12] = new Edge(EdgeType.graph, statementGraph, null, 13, 14);
+            statementGraph[13] = new Edge(EdgeType.symbol, ";", null, 12, 14);
+            statementGraph[14] = new Edge(EdgeType.symbol, "end", null, -1, -1);
+            statementGraph[15] = new Edge(EdgeType.symbol, "call", null, 16, 17); // Bögen call
+            statementGraph[16] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(StatementProcedureCall), -1, -1);
+            statementGraph[17] = new Edge(EdgeType.symbol, "?", null, 18, 19);  // Bögen input
+            statementGraph[18] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(StatementInput), -1, -1);
+            statementGraph[19] = new Edge(EdgeType.symbol, "!", null, 22, 21);  // Bögen output
+            statementGraph[20] = new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(StatementOutputExpression), -1, -1);
+            statementGraph[21] = new Edge(EdgeType.blank, null, null, -1, -1);
+            statementGraph[22] = new Edge(EdgeType.morphem, MorphemCode.strings, new ActionDelegate(StatementOutputString), -1, 20); // Erweiterung output String
+
+            expressionGraph[0] = new Edge(EdgeType.symbol, "-", null, 1, 2);    // Bögen negative term
+            expressionGraph[1] = new Edge(EdgeType.graph, termGraph, new ActionDelegate(ExpressionNegative), 4, -1);
+            expressionGraph[2] = new Edge(EdgeType.blank, null, null, 3, -1);   // Bögen normal term
+            expressionGraph[3] = new Edge(EdgeType.graph, termGraph, null, 4, -1);
+            expressionGraph[4] = new Edge(EdgeType.blank, null, null, 5, -1);
+            expressionGraph[5] = new Edge(EdgeType.symbol, "+", null, 6, 7);   // Bögen addition
+            expressionGraph[6] = new Edge(EdgeType.graph, termGraph, new ActionDelegate(ExpressionAddition), 4, -1);
+            expressionGraph[7] = new Edge(EdgeType.symbol, "-", null, 8, 9);   // Bögen subtraction
+            expressionGraph[8] = new Edge(EdgeType.graph, termGraph, new ActionDelegate(ExpressionSubtraction), 4, -1);
+            expressionGraph[9] = new Edge(EdgeType.blank, null, null, -1, -1);
+
+            termGraph[0] = new Edge(EdgeType.graph, factorGraph, null, 1, -1);
+            termGraph[1] = new Edge(EdgeType.blank, null, null, 2, -1);
+            termGraph[2] = new Edge(EdgeType.symbol, "*", null, 3, 4);   // Bögen multiplication
+            termGraph[3] = new Edge(EdgeType.graph, factorGraph, new ActionDelegate(TermMultiplication), 1, -1);
+            termGraph[4] = new Edge(EdgeType.symbol, "/", null, 5, 6);    // Bögen division
+            termGraph[5] = new Edge(EdgeType.graph, factorGraph, new ActionDelegate(TermDivision), 1, -1);
+            termGraph[6] = new Edge(EdgeType.blank, null, null, -1, -1);
+
+            factorGraph[0] = new Edge(EdgeType.morphem, MorphemCode.number, new ActionDelegate(FactorCheckNumber), -1, 1);  // Bogen numeral
+            factorGraph[1] = new Edge(EdgeType.symbol, "(", null, 2, 4);    // Bögen braced
+            factorGraph[2] = new Edge(EdgeType.graph, expressionGraph, null, 3, -1);
+            factorGraph[3] = new Edge(EdgeType.symbol, ")", null, -1, -1);
+            factorGraph[4] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(FactorCheckIdentifier), -1, -1);  // Bogen identifier
+
+            conditionGraph[0] = new Edge(EdgeType.symbol, "odd", null, 1, 2);  // Bögen odd
+            conditionGraph[1] = new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(ConditionOdd), -1, -1);
+            conditionGraph[2] = new Edge(EdgeType.graph, expressionGraph, null, 3, -1);    // Bögen comparsion
+            conditionGraph[3] = new Edge(EdgeType.symbol, "=", new ActionDelegate(ConditionSaveEq), 9, 4);
+            conditionGraph[4] = new Edge(EdgeType.symbol, "#", new ActionDelegate(ConditionSaveNo), 9, 5);
+            conditionGraph[5] = new Edge(EdgeType.symbol, "<", new ActionDelegate(ConditionSaveLt), 9, 6);
+            conditionGraph[6] = new Edge(EdgeType.symbol, "<=", new ActionDelegate(ConditionSaveLeq), 9, 7);
+            conditionGraph[7] = new Edge(EdgeType.symbol, ">", new ActionDelegate(ConditionSaveGt), 9, 8);
+            conditionGraph[8] = new Edge(EdgeType.symbol, ">=", new ActionDelegate(ConditionSaveGeq), 9, -1);
+            conditionGraph[9] = new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(ConditionApplyOperand), -1, -1);
+
+            currentMorphem = new Morphem();
+            currentMorphem.Init();
+            lexer = new Lexer(filePath);
         }
 
-        public int Parse() {
-            int success = 0;
+        public bool Parse() {
+            if (Parse(programmGraph)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
-            return success;
+        private bool Parse(Edge[] currentGraph) {
+            int currentEdgeNumber = 0;
+            bool success = false;
+            Edge currentEdge;
+            if (currentMorphem.code == MorphemCode.empty)
+                currentMorphem = lexer.NextMorphem();
+            while (true) {
+                currentEdge = currentGraph[currentEdgeNumber];
+                //Console.WriteLine("\tType von currentEdge(" + currentEdgeNumber + ") aus currentGraph: " + currentEdge.type);
+                switch (currentEdge.type) {
+                    case EdgeType.blank:
+                        success = true;
+                        break;
+                    case EdgeType.symbol:
+                        //Console.WriteLine(currentMorphem.getValue() + " vs(symbol) " + currentEdge.getValue());
+                        success = (currentMorphem.code == MorphemCode.symbol && currentMorphem.getValue().ToUpper() == currentEdge.getValue().ToUpper());
+                        break;
+                    case EdgeType.morphem:
+                        //Console.WriteLine(currentMorphem.code + " vs(morphem) " + currentEdge.getValue());
+                        success = (currentMorphem.code == currentEdge.getValue());
+                        break;
+                    case EdgeType.graph:
+                        success = Parse(currentEdge.getValue());
+                        break;
+                }
+                if (!success) {
+                    // Bei nicht passendem Bogen Alternativbogen ausprobieren (falls vorhanden).
+                    if (currentEdge.alternativeEdge != -1)
+                        currentEdgeNumber = currentEdge.alternativeEdge;
+                    else {
+                        Console.WriteLine("Fehler in Zeile " + currentMorphem.position[1] + ", Spalte " + currentMorphem.position[0] + " (Habe " + currentEdge.getValue() + " erwartet)");
+                        return false;
+                    }
+                } else {
+                    // Codegenerierungsfunktion aufrufen, falls vorhanden. Bei Fehlschlag parsen beenden.
+                    if (currentEdge.action != null) {
+                        if (!((ActionDelegate)currentEdge.action)())
+                            return false;
+                    }
+                    // Gegebenenfalls Symbol/Morphem akzeptieren und nächstes holen.
+                    if (currentEdge.type == EdgeType.symbol || currentEdge.type == EdgeType.morphem) {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(currentMorphem.getValue());
+                        Console.ResetColor();
+                        Console.Write(" konsumiert");
+                        currentMorphem = lexer.NextMorphem();
+                        if (currentMorphem.getValue() != null) {
+                            Console.Write(" (Nächstes: ");
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                            Console.Write(currentMorphem.getValue());
+                            Console.ResetColor();
+                            Console.WriteLine(").");
+                        } else { 
+                        Console.WriteLine(". Kein weiteres Zeichen mehr zu lesen.");
+                    }
+                    }
+                    // Wenn der letzte Bogen akzeptiert wurde, beenden.
+                    if (currentEdge.nextEdge == -1)
+                        return true;
+                    // Nächste Kante untersuchen
+                    currentEdgeNumber = currentEdge.nextEdge;
+                }
+            }
         }
 
         // ============================================================
@@ -201,144 +266,181 @@ namespace aufgabeDrei {
 
         // Bogenfunktionen Programm:
         // ------------------------------------------------------------
-        private void ProgrammEnd() {
-
+        private bool ProgrammEnd() {
+            Console.WriteLine("ProgrammEnd");
+            return true;
         }
 
         // Bogenfunktionen Block:
         // ------------------------------------------------------------
-        private void BlockCheckConstIdentifier() {
-
+        private bool BlockCheckConstIdentifier() {
+            Console.WriteLine("BlockCheckConstIdentifier");
+            return true;
         }
 
-        private void BlockCheckConstValue() {
-
+        private bool BlockCheckConstValue() {
+            Console.WriteLine("BlockCheckConstValue");
+            return true;
         }
 
-        private void BlockCheckVarIdentifier() {
-
+        private bool BlockCheckVarIdentifier() {
+            Console.WriteLine("BlockCheckVarIdentifier");
+            return true;
         }
 
-        private void BlockCheckProcedureIdentifer() {
-
+        private bool BlockCheckProcedureIdentifer() {
+            Console.WriteLine("BlockCheckProcedureIdentifer");
+            return true;
         }
 
-        private void BlockEndProcedure() {
-
+        private bool BlockEndProcedure() {
+            Console.WriteLine("BlockEndProcedure");
+            return true;
         }
 
-        private void BlockEnterStatement() {
-
+        private bool BlockEnterStatement() {
+            Console.WriteLine("BlockEnterStatement");
+            return true;
         }
 
         // Bogenfunktionen Statement:
         // ------------------------------------------------------------
-        private void StatementCheckVarIdentifier() {
-
+        private bool StatementCheckVarIdentifier() {
+            Console.WriteLine("StatementCheckVarIdentifier");
+            return true;
         }
 
-        private void StatementCheckVarValue() {
-
+        private bool StatementCheckVarValue() {
+            Console.WriteLine("StatementCheckVarValue");
+            return true;
         }
 
-        private void StatementIfCondition() {
-
+        private bool StatementIfCondition() {
+            Console.WriteLine("StatementIfCondition");
+            return true;
         }
 
-        private void StatementIfStatement() {
-
+        private bool StatementIfStatement() {
+            Console.WriteLine("StatementIfStatement");
+            return true;
         }
 
-        private void StatementWhile() {
-
+        private bool StatementWhile() {
+            Console.WriteLine("StatementWhile");
+            return true;
         }
 
-        private void StatementWhileCondition() {
-
+        private bool StatementWhileCondition() {
+            Console.WriteLine("StatementWhileCondition");
+            return true;
         }
 
-        private void StatementWhileStatement() {
-
+        private bool StatementWhileStatement() {
+            Console.WriteLine("StatementWhileStatement");
+            return true;
         }
 
-        private void StatementProcedureCall() {
-
+        private bool StatementProcedureCall() {
+            Console.WriteLine("StatementProcedureCall");
+            return true;
         }
 
-        private void StatementInput() {
-
+        private bool StatementInput() {
+            Console.WriteLine("StatementInput");
+            return true;
         }
 
-        private void StatementOutput() {
+        private bool StatementOutputExpression() {
+            Console.WriteLine("StatementOutputExpression");
+            return true;
+        }
 
+        private bool StatementOutputString() {
+            Console.WriteLine("StatementOutputString");
+            return true;
         }
 
         // Bogenfunktionen Expression:
         // ------------------------------------------------------------
-        private void ExpressionNegative() {
-
+        private bool ExpressionNegative() {
+            Console.WriteLine("ExpressionNegative");
+            return true;
         }
 
-        private void ExpressionAddition() {
-
+        private bool ExpressionAddition() {
+            Console.WriteLine("ExpressionAddition");
+            return true;
         }
 
-        private void ExpressionSubtraction() {
-
+        private bool ExpressionSubtraction() {
+            Console.WriteLine("ExpressionSubtraction");
+            return true;
         }
 
         // Bogenfunktionen Term:
         // ------------------------------------------------------------
-        private void TermMultiplication() {
-
+        private bool TermMultiplication() {
+            Console.WriteLine("TermMultiplication");
+            return true;
         }
 
-        private void TermDivision() {
-
+        private bool TermDivision() {
+            Console.WriteLine("TermDivision");
+            return true;
         }
 
         // Bogenfunktionen Factor:
         // ------------------------------------------------------------
-        private void FactorCheckNumber() {
-
+        private bool FactorCheckNumber() {
+            Console.WriteLine("FactorCheckNumber");
+            return true;
         }
 
-        private void FactorCheckIdentifier() {
-
+        private bool FactorCheckIdentifier() {
+            Console.WriteLine("FactorCheckIdentifier");
+            return true;
         }
 
         // Bogenfunktionen Condition:
         // ------------------------------------------------------------
-        private void ConditionOdd() {
-
+        private bool ConditionOdd() {
+            Console.WriteLine("ConditionOdd");
+            return true;
         }
 
-        private void ConditionSaveEq() {
-
+        private bool ConditionSaveEq() {
+            Console.WriteLine("ConditionSaveEq");
+            return true;
         }
 
-        private void ConditionSaveNo() {
-
+        private bool ConditionSaveNo() {
+            Console.WriteLine("ConditionSaveNo");
+            return true;
         }
 
-        private void ConditionSaveLt() {
-
+        private bool ConditionSaveLt() {
+            Console.WriteLine("ConditionSaveLt");
+            return true;
         }
 
-        private void ConditionSaveLeq() {
-
+        private bool ConditionSaveLeq() {
+            Console.WriteLine("ConditionSaveLeq");
+            return true;
         }
 
-        private void ConditionSaveGt() {
-
+        private bool ConditionSaveGt() {
+            Console.WriteLine("ConditionSaveGt");
+            return true;
         }
 
-        private void ConditionSaveGeq() {
-
+        private bool ConditionSaveGeq() {
+            Console.WriteLine("ConditionSaveGeq");
+            return true;
         }
 
-        private void ConditionApplyOperand() {
-
+        private bool ConditionApplyOperand() {
+            Console.WriteLine("ConditionApplyOperand");
+            return true;
         }
 
 

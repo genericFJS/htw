@@ -22,26 +22,31 @@ namespace aufgabeDrei {
 		public string Identifier {
 			get { return stringValue; }
 			set { stringValue = value; code = MorphemCode.identifier; }
-		}
-		public double Number {
-			get { return numberValue; }
-			set { numberValue = value; code = MorphemCode.number; }
-		}
-		// Rückgabe des Morphemwerts abhängig vom Code:
-		public dynamic getValue() {
+        }
+        public double Number {
+            get { return numberValue; }
+            set { numberValue = value; code = MorphemCode.number; }
+        }
+        public string Strings {
+            get { return stringValue; }
+            set { stringValue = value; code = MorphemCode.strings; }
+        }
+        // Rückgabe des Morphemwerts abhängig vom Code:
+        public dynamic getValue() {
 			switch (code) {
 				case MorphemCode.empty:
 					return null;
 				case MorphemCode.identifier:
 				case MorphemCode.symbol:
+                case MorphemCode.strings:
 					return stringValue;
-				case MorphemCode.number:
-					return numberValue;
-				default:
+                case MorphemCode.number:
+                    return numberValue;
+                default:
 					return "none";
 			}
 		}
-		// Initialisierung des Morphems (bei einem neuen Lexer):
+		// Initialisierung des Morphems:
 		public void Init() {
 			Reset();
 			position = new int[] { 1, 1 };
@@ -57,6 +62,7 @@ namespace aufgabeDrei {
 		symbol,
 		number,
 		identifier,
+        strings,
 		invalid
 	}
 }
