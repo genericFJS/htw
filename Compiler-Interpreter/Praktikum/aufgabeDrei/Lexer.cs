@@ -234,7 +234,7 @@ namespace aufgabeDrei {
                     lexedMorphem.Strings = tempMorphemString;
                     break;
                 case 2: // Zahl
-                    lexedMorphem.Number = double.Parse(tempMorphemString);
+                    lexedMorphem.Number = int.Parse(tempMorphemString);
                     break;
                 case 1: // Buchstabe
                     if (IsKeyword(tempMorphemString)) {

@@ -89,8 +89,25 @@ namespace aufgabeDrei {
         private Edge[] conditionGraph = new Edge[10];
 
         // Definiton Morphem:
-        Morphem currentMorphem;
-        Lexer lexer;
+        private Morphem currentMorphem = new Morphem();
+        private Lexer lexer;
+
+        // Code-Generator
+        private CodeGenerator codeGenerator;
+
+        // Definition Namensliste:
+        private NamelistProcedure currentProcedure = new NamelistProcedure();
+        // Zwischenspeicher Konstanten/Variablen/Prozedur-Name und Condition
+        private String currentName, currentCondition;
+        // Prozedurzähler
+        private int numberOfProcedures = 1;
+        // Constantenliste
+        private List<NamelistConstant> constantList = new List<NamelistConstant>();
+        // Labelliste
+        private List<NamelistLabel> labelList = new List<NamelistLabel>();
+
+        // Größe eines Wertes in der Virtuellen Maschine (4 Byte)
+        private readonly int VALUE_SIZE = 4;
 
         public Parser(string filePath) {
             // Initialisierung der Bögen:
@@ -182,9 +199,10 @@ namespace aufgabeDrei {
             conditionGraph[8] = new Edge(EdgeType.symbol, ">=", new ActionDelegate(ConditionSaveGeq), 9, -1);
             conditionGraph[9] = new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(ConditionApplyOperand), -1, -1);
 
-            currentMorphem = new Morphem();
             currentMorphem.Init();
             lexer = new Lexer(filePath);
+
+            codeGenerator = new CodeGenerator(filePath);
         }
 
         public bool Parse() {
@@ -209,11 +227,9 @@ namespace aufgabeDrei {
                         success = true;
                         break;
                     case EdgeType.symbol:
-                        //Console.WriteLine(currentMorphem.getValue() + " vs(symbol) " + currentEdge.getValue());
-                        success = (currentMorphem.code == MorphemCode.symbol && currentMorphem.getValue().ToUpper() == currentEdge.getValue().ToUpper());
+                        success = (currentMorphem.code == MorphemCode.symbol && currentMorphem.GetValue().ToUpper() == currentEdge.getValue().ToUpper());
                         break;
                     case EdgeType.morphem:
-                        //Console.WriteLine(currentMorphem.code + " vs(morphem) " + currentEdge.getValue());
                         success = (currentMorphem.code == currentEdge.getValue());
                         break;
                     case EdgeType.graph:
@@ -225,7 +241,7 @@ namespace aufgabeDrei {
                     if (currentEdge.alternativeEdge != -1)
                         currentEdgeNumber = currentEdge.alternativeEdge;
                     else {
-                        Console.WriteLine("Fehler in Zeile " + currentMorphem.position[1] + ", Spalte " + currentMorphem.position[0] + " (Habe " + currentEdge.getValue() + " erwartet)");
+                        PrintError("Fehler in Zeile ", currentMorphem.position[1], " (Spalte " + currentMorphem.position[0] + "). Habe " + currentEdge.getValue() + " erwartet");
                         return false;
                     }
                 } else {
@@ -236,20 +252,13 @@ namespace aufgabeDrei {
                     }
                     // Gegebenenfalls Symbol/Morphem akzeptieren und nächstes holen.
                     if (currentEdge.type == EdgeType.symbol || currentEdge.type == EdgeType.morphem) {
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(currentMorphem.getValue());
-                        Console.ResetColor();
-                        Console.Write(" konsumiert");
+                        PrintProgressA("", currentMorphem.GetValue(), " konsumiert");
                         currentMorphem = lexer.NextMorphem();
-                        if (currentMorphem.getValue() != null) {
-                            Console.Write(" (Nächstes: ");
-                            Console.ForegroundColor = ConsoleColor.DarkYellow;
-                            Console.Write(currentMorphem.getValue());
-                            Console.ResetColor();
-                            Console.WriteLine(").");
-                        } else { 
-                        Console.WriteLine(". Kein weiteres Zeichen mehr zu lesen.");
-                    }
+                        if (currentMorphem.GetValue() != null) {
+                            PrintProgressB(" (Nächstes: ", currentMorphem.GetValue(), ").");
+                        } else {
+                            PrintProgressB("", "", ". Kein weiteres Zeichen mehr zu lesen.");
+                        }
                     }
                     // Wenn der letzte Bogen akzeptiert wurde, beenden.
                     if (currentEdge.nextEdge == -1)
@@ -267,182 +276,270 @@ namespace aufgabeDrei {
         // Bogenfunktionen Programm:
         // ------------------------------------------------------------
         private bool ProgrammEnd() {
-            Console.WriteLine("ProgrammEnd");
+            PrintCodeGen("\tProgrammEnd");
             return true;
         }
 
         // Bogenfunktionen Block:
         // ------------------------------------------------------------
         private bool BlockCheckConstIdentifier() {
-            Console.WriteLine("BlockCheckConstIdentifier");
+            String name = currentMorphem.GetValue();
+            PrintCodeGen("\tBlockCheckConstIdentifier " + name);
+            if (currentProcedure.HasEntry(name)) {
+                PrintError("Der Bezeichner ", name, " existiert bereits in diesem Kontext.");
+                return false;
+            }
+            currentName = name;
             return true;
         }
 
         private bool BlockCheckConstValue() {
-            Console.WriteLine("BlockCheckConstValue");
+            PrintCodeGen("\tBlockCheckConstValue " + currentMorphem.GetValue());
+            int value = currentMorphem.GetValue();
+            // Index des Konstantenwerts herausfinden.
+            int index = FindConstantValuePosition(value);
+            // Bei neuem Wert, neuen Eintrag in Konstantenliste anlegen.
+            if (index < 0) {
+                // Index berechnet sich aus der Größe der Konstantenliste und der Größe einer Konstante.
+                index = constantList.Count() * VALUE_SIZE;
+                // Konstantenliste um neuen Eintrag ergänzen.
+                constantList.Add(new NamelistConstant(currentProcedure.ProcedureID, currentName, value, index));
+            }
+            // Konstante in Namensliste der aktuellen Prozedur einfügen.
+            currentProcedure.namelist.Add(new NamelistConstant(currentProcedure.ProcedureID, currentName, value, index));
             return true;
         }
 
         private bool BlockCheckVarIdentifier() {
-            Console.WriteLine("BlockCheckVarIdentifier");
+            String name = currentMorphem.GetValue();
+            PrintCodeGen("\tBlockCheckVarIdentifier " + name);
+            if (currentProcedure.HasEntry(name)) {
+                PrintError("Der Bezeichner ", name, " existiert bereits in diesem Kontext.");
+                return false;
+            }
+            // Variable in Namenliste der aktuellen Prozedur einfügen
+            currentProcedure.namelist.Add(new NamelistVariable(currentProcedure.ProcedureID, name, currentProcedure.nextVariableAdress));
+            // Relativadresse für nächsten Eintrag erhöhen.
+            currentProcedure.nextVariableAdress += VALUE_SIZE;
             return true;
         }
 
         private bool BlockCheckProcedureIdentifer() {
-            Console.WriteLine("BlockCheckProcedureIdentifer");
-            return true;
-        }
-
-        private bool BlockEndProcedure() {
-            Console.WriteLine("BlockEndProcedure");
+            String name = currentMorphem.GetValue();
+            PrintCodeGen("\tBlockCheckProcedureIdentifer " + name);
+            if (currentProcedure.HasEntry(name)) {
+                PrintError("Der Bezeichner ", name, " existiert bereits in diesem Kontext.");
+                return false;
+            }
+            // Prozedur in Namenliste der aktuellen Prozedur einfügen.
+            currentProcedure.namelist.Add(new NamelistProcedure(currentProcedure.ProcedureID, name, numberOfProcedures, currentProcedure));
+            // Prozedurzähler erhöhen.
+            numberOfProcedures++;
+            // Neue Prozedur ist jetzt aktuelle Prozedur.
+            currentProcedure = (NamelistProcedure)currentProcedure.namelist.Last<NamelistEntry>();
             return true;
         }
 
         private bool BlockEnterStatement() {
-            Console.WriteLine("BlockEnterStatement");
+            PrintCodeGen("\tBlockEnterStatement " + currentProcedure.Name);
+
+            return true;
+        }
+
+        private bool BlockEndProcedure() {
+            PrintCodeGen("\tBlockEndProcedure " + currentProcedure.Name);
+            codeGenerator.GenerateCode(CommandCode.retProc);
             return true;
         }
 
         // Bogenfunktionen Statement:
         // ------------------------------------------------------------
         private bool StatementCheckVarIdentifier() {
-            Console.WriteLine("StatementCheckVarIdentifier");
+            PrintCodeGen("\tStatementCheckVarIdentifier");
             return true;
         }
 
         private bool StatementCheckVarValue() {
-            Console.WriteLine("StatementCheckVarValue");
+            PrintCodeGen("\tStatementCheckVarValue");
             return true;
         }
 
         private bool StatementIfCondition() {
-            Console.WriteLine("StatementIfCondition");
+            PrintCodeGen("\tStatementIfCondition");
             return true;
         }
 
         private bool StatementIfStatement() {
-            Console.WriteLine("StatementIfStatement");
+            PrintCodeGen("\tStatementIfStatement");
             return true;
         }
 
         private bool StatementWhile() {
-            Console.WriteLine("StatementWhile");
+            PrintCodeGen("\tStatementWhile");
             return true;
         }
 
         private bool StatementWhileCondition() {
-            Console.WriteLine("StatementWhileCondition");
+            PrintCodeGen("\tStatementWhileCondition");
             return true;
         }
 
         private bool StatementWhileStatement() {
-            Console.WriteLine("StatementWhileStatement");
+            PrintCodeGen("\tStatementWhileStatement");
             return true;
         }
 
         private bool StatementProcedureCall() {
-            Console.WriteLine("StatementProcedureCall");
+            PrintCodeGen("\tStatementProcedureCall");
             return true;
         }
 
         private bool StatementInput() {
-            Console.WriteLine("StatementInput");
+            PrintCodeGen("\tStatementInput");
             return true;
         }
 
         private bool StatementOutputExpression() {
-            Console.WriteLine("StatementOutputExpression");
+            PrintCodeGen("\tStatementOutputExpression");
             return true;
         }
 
         private bool StatementOutputString() {
-            Console.WriteLine("StatementOutputString");
+            PrintCodeGen("\tStatementOutputString");
             return true;
         }
 
         // Bogenfunktionen Expression:
         // ------------------------------------------------------------
         private bool ExpressionNegative() {
-            Console.WriteLine("ExpressionNegative");
+            PrintCodeGen("\tExpressionNegative");
             return true;
         }
 
         private bool ExpressionAddition() {
-            Console.WriteLine("ExpressionAddition");
+            PrintCodeGen("\tExpressionAddition");
             return true;
         }
 
         private bool ExpressionSubtraction() {
-            Console.WriteLine("ExpressionSubtraction");
+            PrintCodeGen("\tExpressionSubtraction");
             return true;
         }
 
         // Bogenfunktionen Term:
         // ------------------------------------------------------------
         private bool TermMultiplication() {
-            Console.WriteLine("TermMultiplication");
+            PrintCodeGen("\tTermMultiplication");
             return true;
         }
 
         private bool TermDivision() {
-            Console.WriteLine("TermDivision");
+            PrintCodeGen("\tTermDivision");
             return true;
         }
 
         // Bogenfunktionen Factor:
         // ------------------------------------------------------------
         private bool FactorCheckNumber() {
-            Console.WriteLine("FactorCheckNumber");
+            PrintCodeGen("\tFactorCheckNumber");
             return true;
         }
 
         private bool FactorCheckIdentifier() {
-            Console.WriteLine("FactorCheckIdentifier");
+            PrintCodeGen("\tFactorCheckIdentifier");
             return true;
         }
 
         // Bogenfunktionen Condition:
         // ------------------------------------------------------------
         private bool ConditionOdd() {
-            Console.WriteLine("ConditionOdd");
+            PrintCodeGen("\tConditionOdd");
             return true;
         }
 
         private bool ConditionSaveEq() {
-            Console.WriteLine("ConditionSaveEq");
+            PrintCodeGen("\tConditionSaveEq");
             return true;
         }
 
         private bool ConditionSaveNo() {
-            Console.WriteLine("ConditionSaveNo");
+            PrintCodeGen("\tConditionSaveNo");
             return true;
         }
 
         private bool ConditionSaveLt() {
-            Console.WriteLine("ConditionSaveLt");
+            PrintCodeGen("\tConditionSaveLt");
             return true;
         }
 
         private bool ConditionSaveLeq() {
-            Console.WriteLine("ConditionSaveLeq");
+            PrintCodeGen("\tConditionSaveLeq");
             return true;
         }
 
         private bool ConditionSaveGt() {
-            Console.WriteLine("ConditionSaveGt");
+            PrintCodeGen("\tConditionSaveGt");
             return true;
         }
 
         private bool ConditionSaveGeq() {
-            Console.WriteLine("ConditionSaveGeq");
+            PrintCodeGen("\tConditionSaveGeq");
             return true;
         }
 
         private bool ConditionApplyOperand() {
-            Console.WriteLine("ConditionApplyOperand");
+            PrintCodeGen("\tConditionApplyOperand");
             return true;
         }
 
+        // ============================================================
+        // Codegenerierung Hilfsfunktionen
+        // ============================================================
+        /// <summary>
+        /// Findet die Position der Konstanten in der Konstantenliste, falls vorhanden.
+        /// Ist Null, wenn Wert noch nicht existiert.
+        /// </summary>
+        /// <returns></returns>
+        int FindConstantValuePosition(int value) {
+            foreach (var entry in constantList) {
+                if (entry.Value == value)
+                    return entry.Index;
+            }
+            return -1;
+        }
+
+        // ============================================================
+        // Ausgabe Hilfsfunktionen
+        // ============================================================
+        private void PrintProgressA(String a, dynamic b, String c) {
+            Console.Write(a);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(b);
+            Console.ResetColor();
+            Console.Write(c);
+        }
+
+        private void PrintProgressB(String a, dynamic b, String c) {
+            Console.Write(a);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(b);
+            Console.ResetColor();
+            Console.WriteLine(c);
+        }
+
+        private void PrintError(String a, dynamic b, String c) {
+            Console.Write(a);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(b);
+            Console.ResetColor();
+            Console.WriteLine(c);
+        }
+
+        private void PrintCodeGen(String a) {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(a);
+            Console.ResetColor();
+        }
 
     }
 }

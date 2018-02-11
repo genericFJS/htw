@@ -13,7 +13,7 @@ namespace aufgabeDrei {
 		// Der Wert, wenn Morphem eine Zeichenkette ist (Symbol/Identifier):
 		string stringValue;
 		// Der Wert, wenn Morphem eine Zahl ist:
-		double numberValue;
+		int numberValue;
 		// Beim setzen eines Morphemwerts wird der Code automatisch angepasst:
 		public string Symbol {
 			get { return stringValue; }
@@ -23,7 +23,7 @@ namespace aufgabeDrei {
 			get { return stringValue; }
 			set { stringValue = value; code = MorphemCode.identifier; }
         }
-        public double Number {
+        public int Number {
             get { return numberValue; }
             set { numberValue = value; code = MorphemCode.number; }
         }
@@ -32,7 +32,7 @@ namespace aufgabeDrei {
             set { stringValue = value; code = MorphemCode.strings; }
         }
         // Rückgabe des Morphemwerts abhängig vom Code:
-        public dynamic getValue() {
+        public dynamic GetValue() {
 			switch (code) {
 				case MorphemCode.empty:
 					return null;

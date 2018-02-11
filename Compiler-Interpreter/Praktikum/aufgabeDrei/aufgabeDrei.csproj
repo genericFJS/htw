@@ -43,8 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AufgabeDrei.cs" />
+    <Compile Include="CodeGenerator.cs" />
     <Compile Include="Lexer.cs" />
     <Compile Include="Morphem.cs" />
+    <Compile Include="Namelist.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
