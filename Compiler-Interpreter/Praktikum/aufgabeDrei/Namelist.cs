@@ -67,7 +67,7 @@ namespace aufgabeDrei {
         /// Konstruktor für die main-Prozedur.
         /// </summary>
         public NamelistProcedure() {
-            Init(-1, "", 0, null);
+            Init(-1, "***main***", 0, null);
         }
 
         private void Init(int currentProcedureID, String name, int procedureID, NamelistProcedure parentProcedure) {

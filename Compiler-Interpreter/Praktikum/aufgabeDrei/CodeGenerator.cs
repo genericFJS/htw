@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,10 +23,10 @@ namespace aufgabeDrei {
         vzMinus,        //0A ()						 	[Vorzeichen ]
         odd,            //0B ()						 	[ungerade -> 0/1]
                         /*--- binäre Operatoren kellern 2 Operanden aus und das Ergebnis ein ---*/
-        OpAdd,          //0C ()						 	[Addition]
-        OpSub,          //0D ()						 	[Subtraktion ]
-        OpMult,         //0E ()						 	[Multiplikation ]
-        OpDiv,          //0F ()						 	[Division ]
+        opAdd,          //0C ()						 	[Addition]
+        opSub,          //0D ()						 	[Subtraktion ]
+        opMult,         //0E ()						 	[Multiplikation ]
+        opDiv,          //0F ()						 	[Division ]
         cmpEQ,          //10 ()						 	[Vergleich =  -> 0/1]
         cmpNE,          //11 ()						 	[Vergleich #  -> 0/1]
         cmpLT,          //12 ()						 	[Vergleich <  -> 0/1]
@@ -53,12 +54,22 @@ namespace aufgabeDrei {
 
         private int currentProcedureLengthPosition;
         private int currentProcedureLength;
+        private int procedureCount = 0;
 
         private String cl0FilePath;
 
+        /// <summary>
+        /// Erzeuge CodeGenerator mit dem Pfad der Quelldatei. 
+        /// Die kompilierte Datei den gleichen Namen haben (mit der Endung .cl0).
+        /// </summary>
+        /// <param name="filePath"></param>
         public CodeGenerator(String filePath) {
             cl0FilePath = filePath.Remove(filePath.Length - 3);
             cl0FilePath += "cl0";
+            if (!BitConverter.IsLittleEndian) {
+                Parser.PrintError("Byteformat ", "Big Endian", " ist nicht erlaubt. Beende.");
+                Environment.Exit(1);
+            }
         }
 
         /// <summary>
@@ -66,33 +77,34 @@ namespace aufgabeDrei {
         /// </summary>
         public void GenerateCode(CommandCode command, params int[] parameters) {
             // Befehl einfügen.
-            InsertByte((int)command);
+            Insert1Byte((int)command);
             // Bei entryProc Position für Prozedurlänge merken und diese zurück setzen.
             if (command == CommandCode.entryProc) {
                 currentProcedureLengthPosition = codeBuffer.Count();
                 currentProcedureLength = 1;
+                procedureCount++;
             }
             // Alle Parameter einfügen.
             if (command != CommandCode.putStrg) {
                 // Gewöhnliche Parameter als Bytepaar einfügen.
                 foreach (var parameter in parameters) {
-                    InsertBytes(parameter);
+                    Insert2Byte(parameter);
                 }
             } else {
                 // Buchstaben von String als Byte einfügen.
                 foreach (var parameter in parameters) {
-                    InsertByte(parameter);
+                    Insert1Byte(parameter);
                 }
                 // Stringende einfügen.
-                InsertByte(0);
+                Insert1Byte(0);
             }
         }
 
         /// <summary>
         /// Füge ein Byte ein. Beispielsweise für Befehlscodes und Buchstaben eines Strings.
         /// </summary>
-        /// <param name="value">Zahl kleiner 655356.</param>
-        private void InsertByte(int value) {
+        /// <param name="value">Zahl kleiner 256.</param>
+        private void Insert1Byte(int value) {
             // Konvertiere Zahl zu Byte-Arary (Beispiel: 42 -> 2A 00 00 00)
             byte[] byteArray = BitConverter.GetBytes(value);
             // Füge erstes Byte (little Endian) in Liste ein.
@@ -102,10 +114,10 @@ namespace aufgabeDrei {
         }
 
         /// <summary>
-        /// Füge zwei Bytes ein. Beispielsweise für Adressen und Variablen-/Konstantenwerte.
+        /// Füge zwei Bytes ein. Beispielsweise für Adressen.
         /// </summary>
-        /// <param name="value">Zahl kleiner 256.</param>
-        private void InsertBytes(int value) {
+        /// <param name="value">Zahl kleiner 655356.</param>
+        private void Insert2Byte(int value) {
             // Konvertiere Zahl zu Byte-Arary (Beispiel: 12345 -> 39 30 00 00)
             byte[] byteArray = BitConverter.GetBytes(value);
             // Füge ersten beiden Bytes (little Endian) in Liste ein.
@@ -116,14 +128,63 @@ namespace aufgabeDrei {
         }
 
         /// <summary>
+        /// Füge vier Bytes ein. Beispielsweise Konstantenwerte.
+        /// </summary>
+        /// <param name="value">Zahl kleiner 655356.</param>
+        private void Insert4Byte(int value) {
+            // Konvertiere Zahl zu Byte-Arary (Beispiel: 123456789 -> 15 CD 5B 07)
+            byte[] byteArray = BitConverter.GetBytes(value);
+            // Füge ersten beiden Bytes (little Endian) in Liste ein.
+            codeBuffer.Add(byteArray[0]);
+            codeBuffer.Add(byteArray[1]);
+            codeBuffer.Add(byteArray[2]);
+            codeBuffer.Add(byteArray[3]);
+            // Prozedurlänge erhöhen.
+            currentProcedureLength += 4;
+        }
+
+        /// <summary>
         /// Aktualisiere Länge der aktuellen Prozedur.
         /// </summary>
         /// <param name="length"></param>
-        private void UpdateProcedureLength() {
+        public void UpdateProcedureLength() {
             byte[] byteArray = BitConverter.GetBytes(currentProcedureLength);
             // Aktualisiere Byte an der Stelle, wo die Prozedurlänge der aktuellen Prozedur gespeichert ist.
             codeBuffer[currentProcedureLengthPosition] = byteArray[0];
             codeBuffer[currentProcedureLengthPosition + 1] = byteArray[1];
+        }
+
+        /// <summary>
+        /// Ergänze Code um Konstantenblock.
+        /// </summary>
+        /// <param name="constants"></param>
+        public void GenerateConstantBlock(List<NamelistConstant> constants) {
+            // Jede Konstante als Bytepaar einfügen.
+            foreach(var constant in constants) {
+                Insert4Byte(constant.Value);
+            }
+        }
+
+        /// <summary>
+        /// Schreibe den gepufferten Code in die Datei.
+        /// </summary>
+        public void WriteCodeToFile() {
+            try {
+                using (var fileStream = new FileStream(cl0FilePath, FileMode.Create, FileAccess.Write)) {
+                    // Anzahl der Prozeduren schreiben.
+                    byte[] byteArray = BitConverter.GetBytes(procedureCount);
+                    fileStream.WriteByte(byteArray[0]);
+                    fileStream.WriteByte(byteArray[1]);
+                    fileStream.WriteByte(byteArray[2]);
+                    fileStream.WriteByte(byteArray[3]);
+                    // gepufferten Code schreiben.
+                    foreach (var codeByte in codeBuffer){
+                        fileStream.WriteByte(codeByte);
+                    }
+                }
+            } catch (Exception ex) {
+                Console.WriteLine("Exception caught in process: {0}", ex);
+            }
         }
     }
 }

@@ -97,8 +97,10 @@ namespace aufgabeDrei {
 
         // Definition Namensliste:
         private NamelistProcedure currentProcedure = new NamelistProcedure();
-        // Zwischenspeicher Konstanten/Variablen/Prozedur-Name und Condition
-        private String currentName, currentCondition;
+        // Zwischenspeicher Konstanten/Variablen/Prozedur-Name
+        private String currentName;
+        // Zwischenspeicher Condition
+        private CommandCode currentCondition;
         // Prozedurzähler
         private int numberOfProcedures = 1;
         // Constantenliste
@@ -107,7 +109,7 @@ namespace aufgabeDrei {
         private List<NamelistLabel> labelList = new List<NamelistLabel>();
 
         // Größe eines Wertes in der Virtuellen Maschine (4 Byte)
-        private readonly int VALUE_SIZE = 4;
+        private static readonly int VALUE_SIZE = 4;
 
         public Parser(string filePath) {
             // Initialisierung der Bögen:
@@ -191,12 +193,12 @@ namespace aufgabeDrei {
             conditionGraph[0] = new Edge(EdgeType.symbol, "odd", null, 1, 2);  // Bögen odd
             conditionGraph[1] = new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(ConditionOdd), -1, -1);
             conditionGraph[2] = new Edge(EdgeType.graph, expressionGraph, null, 3, -1);    // Bögen comparsion
-            conditionGraph[3] = new Edge(EdgeType.symbol, "=", new ActionDelegate(ConditionSaveEq), 9, 4);
-            conditionGraph[4] = new Edge(EdgeType.symbol, "#", new ActionDelegate(ConditionSaveNo), 9, 5);
-            conditionGraph[5] = new Edge(EdgeType.symbol, "<", new ActionDelegate(ConditionSaveLt), 9, 6);
-            conditionGraph[6] = new Edge(EdgeType.symbol, "<=", new ActionDelegate(ConditionSaveLeq), 9, 7);
-            conditionGraph[7] = new Edge(EdgeType.symbol, ">", new ActionDelegate(ConditionSaveGt), 9, 8);
-            conditionGraph[8] = new Edge(EdgeType.symbol, ">=", new ActionDelegate(ConditionSaveGeq), 9, -1);
+            conditionGraph[3] = new Edge(EdgeType.symbol, "=", new ActionDelegate(ConditionSaveEQ), 9, 4);
+            conditionGraph[4] = new Edge(EdgeType.symbol, "#", new ActionDelegate(ConditionSaveNE), 9, 5);
+            conditionGraph[5] = new Edge(EdgeType.symbol, "<", new ActionDelegate(ConditionSaveLT), 9, 6);
+            conditionGraph[6] = new Edge(EdgeType.symbol, "<=", new ActionDelegate(ConditionSaveLE), 9, 7);
+            conditionGraph[7] = new Edge(EdgeType.symbol, ">", new ActionDelegate(ConditionSaveGT), 9, 8);
+            conditionGraph[8] = new Edge(EdgeType.symbol, ">=", new ActionDelegate(ConditionSaveGE), 9, -1);
             conditionGraph[9] = new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(ConditionApplyOperand), -1, -1);
 
             currentMorphem.Init();
@@ -221,7 +223,6 @@ namespace aufgabeDrei {
                 currentMorphem = lexer.NextMorphem();
             while (true) {
                 currentEdge = currentGraph[currentEdgeNumber];
-                //Console.WriteLine("\tType von currentEdge(" + currentEdgeNumber + ") aus currentGraph: " + currentEdge.type);
                 switch (currentEdge.type) {
                     case EdgeType.blank:
                         success = true;
@@ -277,6 +278,12 @@ namespace aufgabeDrei {
         // ------------------------------------------------------------
         private bool ProgrammEnd() {
             PrintCodeGen("\tProgrammEnd");
+            // Mainprozedur beenden.
+            BlockEndProcedure();
+            // Konstantenblock schreiben.
+            codeGenerator.GenerateConstantBlock(constantList);
+            // Fertig kompilierten Code schreiben.
+            codeGenerator.WriteCodeToFile();
             return true;
         }
 
@@ -342,13 +349,21 @@ namespace aufgabeDrei {
 
         private bool BlockEnterStatement() {
             PrintCodeGen("\tBlockEnterStatement " + currentProcedure.Name);
-
+            // Generiere entryProc mit zunächst unbekannter Länge, der Prozedur-ID und die Größe des Variablenbereichs.
+            codeGenerator.GenerateCode(CommandCode.entryProc, 0, currentProcedure.ProcedureID, currentProcedure.nextVariableAdress);
             return true;
         }
 
         private bool BlockEndProcedure() {
             PrintCodeGen("\tBlockEndProcedure " + currentProcedure.Name);
+            // Generiere retProc.
             codeGenerator.GenerateCode(CommandCode.retProc);
+            // Aktualisiere die Prozedurlänge
+            codeGenerator.UpdateProcedureLength();
+            // Namenliste der Prozedur löschen
+            currentProcedure.namelist.Clear();
+            // Elternprozedur ist nun aktuelle Prozedur
+            currentProcedure = currentProcedure.ParentProcedure;
             return true;
         }
 
@@ -413,16 +428,22 @@ namespace aufgabeDrei {
         // ------------------------------------------------------------
         private bool ExpressionNegative() {
             PrintCodeGen("\tExpressionNegative");
+            // Generiere vzMinus, um negativen Term anzukündigen.
+            codeGenerator.GenerateCode(CommandCode.vzMinus);
             return true;
         }
 
         private bool ExpressionAddition() {
             PrintCodeGen("\tExpressionAddition");
+            // Generiere opAdd, um weiter Terme zu addieren.
+            codeGenerator.GenerateCode(CommandCode.opAdd);
             return true;
         }
 
         private bool ExpressionSubtraction() {
             PrintCodeGen("\tExpressionSubtraction");
+            // Generiere opSub, um weiter Terme zu subtrahieren.
+            codeGenerator.GenerateCode(CommandCode.opSub);
             return true;
         }
 
@@ -430,23 +451,36 @@ namespace aufgabeDrei {
         // ------------------------------------------------------------
         private bool TermMultiplication() {
             PrintCodeGen("\tTermMultiplication");
+            // Generiere opMul, um weiter Faktoren zu multiplizieren.
+            codeGenerator.GenerateCode(CommandCode.opSub);
             return true;
         }
 
         private bool TermDivision() {
             PrintCodeGen("\tTermDivision");
+            // Generiere opDiv, um weiter Faktoren zu dividieren.
+            codeGenerator.GenerateCode(CommandCode.opDiv);
             return true;
         }
 
         // Bogenfunktionen Factor:
         // ------------------------------------------------------------
         private bool FactorCheckNumber() {
-            PrintCodeGen("\tFactorCheckNumber");
+            PrintCodeGen("\tFactorCheckNumber " + currentMorphem.GetValue());
+            // Konstante suchen und ggf. anlegen.
+
+            // Codegenerierung puConst(ConstIndex) mit dem Index der Konstante.
+
             return true;
         }
 
         private bool FactorCheckIdentifier() {
-            PrintCodeGen("\tFactorCheckIdentifier");
+            PrintCodeGen("\tFactorCheckIdentifier " + currentMorphem.GetValue());
+            // Identifier global suchen.
+
+            // Überprüfen, ob Identifier eine Variable/Konstante
+
+            // Codegenerierung abhängig vom Fundort:
             return true;
         }
 
@@ -454,41 +488,57 @@ namespace aufgabeDrei {
         // ------------------------------------------------------------
         private bool ConditionOdd() {
             PrintCodeGen("\tConditionOdd");
+            // Generiere odd, um einfachen Ungerade-Vergleich durchzuführen.
+            codeGenerator.GenerateCode(CommandCode.odd);
             return true;
         }
 
-        private bool ConditionSaveEq() {
-            PrintCodeGen("\tConditionSaveEq");
+        private bool ConditionSaveEQ() {
+            PrintCodeGen("\tConditionSaveEQ");
+            // Speichere Vergleichsoperator
+            currentCondition = CommandCode.cmpEQ;
             return true;
         }
 
-        private bool ConditionSaveNo() {
-            PrintCodeGen("\tConditionSaveNo");
+        private bool ConditionSaveNE() {
+            PrintCodeGen("\tConditionSaveNE");
+            // Speichere Vergleichsoperator
+            currentCondition = CommandCode.cmpNE;
             return true;
         }
 
-        private bool ConditionSaveLt() {
-            PrintCodeGen("\tConditionSaveLt");
+        private bool ConditionSaveLT() {
+            PrintCodeGen("\tConditionSaveLT");
+            // Speichere Vergleichsoperator
+            currentCondition = CommandCode.cmpLT;
             return true;
         }
 
-        private bool ConditionSaveLeq() {
-            PrintCodeGen("\tConditionSaveLeq");
+        private bool ConditionSaveLE() {
+            PrintCodeGen("\tConditionSaveLE");
+            // Speichere Vergleichsoperator
+            currentCondition = CommandCode.cmpLE;
             return true;
         }
 
-        private bool ConditionSaveGt() {
-            PrintCodeGen("\tConditionSaveGt");
+        private bool ConditionSaveGT() {
+            PrintCodeGen("\tConditionSaveGT");
+            // Speichere Vergleichsoperator
+            currentCondition = CommandCode.cmpGT;
             return true;
         }
 
-        private bool ConditionSaveGeq() {
-            PrintCodeGen("\tConditionSaveGeq");
+        private bool ConditionSaveGE() {
+            PrintCodeGen("\tConditionSaveGE");
+            // Speichere Vergleichsoperator
+            currentCondition = CommandCode.cmpGE;
             return true;
         }
 
         private bool ConditionApplyOperand() {
             PrintCodeGen("\tConditionApplyOperand");
+            // Generiere gespeicherten Operand, um Vergleich auszuwerten.
+            codeGenerator.GenerateCode(currentCondition);
             return true;
         }
 
@@ -511,7 +561,7 @@ namespace aufgabeDrei {
         // ============================================================
         // Ausgabe Hilfsfunktionen
         // ============================================================
-        private void PrintProgressA(String a, dynamic b, String c) {
+        public static void PrintProgressA(String a, dynamic b, String c) {
             Console.Write(a);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(b);
@@ -519,7 +569,7 @@ namespace aufgabeDrei {
             Console.Write(c);
         }
 
-        private void PrintProgressB(String a, dynamic b, String c) {
+        public static void PrintProgressB(String a, dynamic b, String c) {
             Console.Write(a);
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write(b);
@@ -527,7 +577,7 @@ namespace aufgabeDrei {
             Console.WriteLine(c);
         }
 
-        private void PrintError(String a, dynamic b, String c) {
+        public static void PrintError(String a, dynamic b, String c) {
             Console.Write(a);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(b);
@@ -535,7 +585,7 @@ namespace aufgabeDrei {
             Console.WriteLine(c);
         }
 
-        private void PrintCodeGen(String a) {
+        public static void PrintCodeGen(String a) {
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine(a);
             Console.ResetColor();
