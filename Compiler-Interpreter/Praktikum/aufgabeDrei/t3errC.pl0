@@ -1,0 +1,30 @@
+const k=1,l=2,L=3;
+var a,b,Max,Min,i;
+
+procedure p1;
+begin
+  if a>=b then Max:=a;
+  if a< b then Max:=b
+end;
+procedure p2;
+begin
+  if a<=b then Min:=a;
+  if a> b then Min:=b
+end;
+begin
+  !"Eingabe einer Zahl:";
+  ?a;
+  !"Eingabe einer Zahl:";
+  ?b;
+  call p1;
+  call p2;
+  !"Min:";!Min;
+  !"Max:";!Max;
+  !"Ausgabe der Zahlen von Min bis Max:";
+  i:=Min;
+  while i<=Max do
+  begin
+    !i;
+    i:=i+1
+  end
+end.

@@ -1,0 +1,15 @@
+var i,j;
+begin
+	i:=1;
+	while i<=2 do
+	begin
+		j:=1;
+		while j<=2 do
+		begin
+			j:=j+1;
+			!j;
+		end;
+		i:=i+1;
+		!i;
+	end
+end.
