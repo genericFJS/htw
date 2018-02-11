@@ -1,3 +1,4 @@
+const nie=0;
 var a,b,Max,Min,i;
 
 procedure p1;
