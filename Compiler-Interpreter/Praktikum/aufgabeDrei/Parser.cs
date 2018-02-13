@@ -523,7 +523,7 @@ namespace aufgabeDrei {
         private bool TermMultiplication() {
             PrintCodeGen("TermMultiplication");
             // Generiere opMul, um weiter Faktoren zu multiplizieren.
-            codeGenerator.GenerateCode(CommandCode.opSub);
+            codeGenerator.GenerateCode(CommandCode.opMult);
             return true;
         }
 

@@ -197,11 +197,11 @@ namespace aufgabeDrei {
         public void PrepareJumpBackward() {
             // Position des Labels: noch unbekannt.
             // Startadresse: noch unbekannt.
-            // Zieladresse: nächste Adresse.
+            // Zieladresse: diese Adresse.
             jumpLabelList.Push(new JumpLabel(-1, -1, currentCodePosition));
         }
 
-        public void UpdateJumpFoward(int commandSize = 1) {
+        public void UpdateJumpFoward(int commandSize = 0) {
             // Label holen.
             JumpLabel jumpLabel = jumpLabelList.Pop();
             // Relative Sprungadresse berechnen (Ziel - Start). Wobei das Ziel die nächste Adresse ist (diese ist abhängig von der Größe des Befehls).
