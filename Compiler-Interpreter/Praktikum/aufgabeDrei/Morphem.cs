@@ -5,64 +5,47 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace aufgabeDrei {
-	struct Morphem {
-		// Gibt an, welche Art von Morhpem vorliegt:
-		public MorphemCode code { get; private set; }
-		// Die Position des Morphems im Quelltext [Zeile, Spalte]:
-		public int[] position;
-		// Der Wert, wenn Morphem eine Zeichenkette ist (Symbol/Identifier):
-		string stringValue;
-		// Der Wert, wenn Morphem eine Zahl ist:
-		int numberValue;
-		// Beim setzen eines Morphemwerts wird der Code automatisch angepasst:
-		public string Symbol {
-			get { return stringValue; }
-			set { stringValue = value; code = MorphemCode.symbol; }
-		}
-		public string Identifier {
-			get { return stringValue; }
-			set { stringValue = value; code = MorphemCode.identifier; }
+    struct Morphem {
+        // Gibt an, welche Art von Morhpem vorliegt:
+        public MorphemCode Code { get; private set; }
+        // Die Position des Morphems im Quelltext [Zeile, Spalte]:
+        public int[] position;
+        public dynamic Value { get; private set; }
+        // Beim setzen eines Morphemwerts wird der Code automatisch angepasst:
+        public string Symbol {
+            get { return Value; }
+            set { Value = value; Code = MorphemCode.symbol; }
+        }
+        public string Identifier {
+            get { return Value; }
+            set { Value = value; Code = MorphemCode.identifier; }
         }
         public int Number {
-            get { return numberValue; }
-            set { numberValue = value; code = MorphemCode.number; }
+            get { return Value; }
+            set { Value = value; Code = MorphemCode.number; }
         }
         public string Strings {
-            get { return stringValue; }
-            set { stringValue = value; code = MorphemCode.strings; }
+            get { return Value; }
+            set { Value = value; Code = MorphemCode.strings; }
         }
-        // Rückgabe des Morphemwerts abhängig vom Code:
-        public dynamic GetValue() {
-			switch (code) {
-				case MorphemCode.empty:
-					return null;
-				case MorphemCode.identifier:
-				case MorphemCode.symbol:
-                case MorphemCode.strings:
-					return stringValue;
-                case MorphemCode.number:
-                    return numberValue;
-                default:
-					return "none";
-			}
-		}
-		// Initialisierung des Morphems:
-		public void Init() {
-			Reset();
-			position = new int[] { 1, 1 };
-		}
-		// Zurücksetzen des Morphems (beim Lesen des nächsten Morphems):
-		public void Reset() {
-			code = MorphemCode.empty;
-		}
-	}
+        // Initialisierung des Morphems:
+        public Morphem(bool init) {
+            Code = MorphemCode.empty;
+            Value = null;
+            position = new int[] { 1, 1 };
+        }
+        // Zurücksetzen des Morphems (beim Lesen des nächsten Morphems):
+        public void Reset() {
+            Code = MorphemCode.empty;
+        }
+    }
 
-	enum MorphemCode {
-		empty,
-		symbol,
-		number,
-		identifier,
+    enum MorphemCode {
+        empty,
+        symbol,
+        number,
+        identifier,
         strings,
-		invalid
-	}
+        invalid
+    }
 }

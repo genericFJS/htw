@@ -8,12 +8,6 @@ using System.Threading.Tasks;
 namespace aufgabeDrei {
     class MainClass {
         static void Main(string[] args) {
-
-            // Tests:
-            int jump = 14-98;
-            //TestPrint(testIntArr);
-            //TestPrint(jump);
-
             while (true) {
                 Console.Write("Dateiname: ");
                 string filePath = Console.ReadLine();
@@ -31,15 +25,6 @@ namespace aufgabeDrei {
                     }
                     Console.WriteLine("========================");
                 }
-            }
-        }
-
-        private static void TestPrint(params int[] parameters) {
-            foreach (var parameter in parameters) {
-                byte[] byteArray = BitConverter.GetBytes(parameter);
-                // Füge erstes Byte (little Endian) in Liste ein.
-                Console.WriteLine("{0}", byteArray[0].ToString("X"));
-                Console.WriteLine("{0}", byteArray[1].ToString("X"));
             }
         }
     }

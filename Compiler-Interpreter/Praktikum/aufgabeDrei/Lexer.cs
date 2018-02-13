@@ -139,8 +139,7 @@ namespace aufgabeDrei {
 				/* Z9 */{ {  9, WR},    {  9, WR},    {  9, WR},    {  9, WR},    {  9, WR},    {  9, WR},    {  9, WR},    {  9, WR},    { -1, QR} }
             };
             // Morphem initialisieren:
-            lexedMorphem = new Morphem();
-            lexedMorphem.Init();
+            lexedMorphem = new Morphem(true);
             ReadNext();
         }
 

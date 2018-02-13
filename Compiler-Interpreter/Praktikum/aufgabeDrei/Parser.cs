@@ -22,16 +22,14 @@ namespace aufgabeDrei {
         /// Stellt eine Kante dar. 
         /// </summary>
         private struct Edge {
-            public EdgeType type;
+            public EdgeType Type { private set; get; }
             // Mögliche Kanten-Werte:
-            private string symbol;
-            private MorphemCode morphemCode;
-            private Edge[] graph;
+            public dynamic Value { private set; get; }
             // Folgeaktion:
-            public ActionDelegate action;
+            public ActionDelegate Action { private set; get; }
             // Nächste/alterantive Kante
-            public int nextEdge;
-            public int alternativeEdge;
+            public int NextEdge { private set; get; }
+            public int AlternativeEdge { private set; get; }
 
             /// <summary>
             /// Erstellt neue Kante.
@@ -42,40 +40,11 @@ namespace aufgabeDrei {
             /// <param name="newNextEdge"> Nächste Kante </param>
             /// <param name="newAlternativeEdge"> Kantenalternativen </param>
             public Edge(EdgeType newType, dynamic newValue, ActionDelegate newAction, int newNextEdge, int newAlternativeEdge) {
-                type = newType;
-                symbol = null;
-                morphemCode = MorphemCode.invalid;
-                graph = null;
-                switch (newType) {
-                    case EdgeType.symbol:
-                        symbol = (string)newValue;
-                        break;
-                    case EdgeType.morphem:
-                        morphemCode = (MorphemCode)newValue;
-                        break;
-                    case EdgeType.graph:
-                        graph = (Edge[])newValue;
-                        break;
-                }
-                action = newAction;
-                nextEdge = newNextEdge;
-                alternativeEdge = newAlternativeEdge;
-            }
-
-            /// <summary>
-            /// Gibt den Wert der Kante wieder.
-            /// </summary>
-            /// <returns> Wert der Kante abhängig vom Typ (Symbol/Morphemcode/Graph). </returns>
-            public dynamic getValue() {
-                switch (type) {
-                    case EdgeType.symbol:
-                        return symbol.ToUpper();
-                    case EdgeType.morphem:
-                        return morphemCode;
-                    case EdgeType.graph:
-                        return graph;
-                }
-                return null;
+                Type = newType;
+                Value = newValue;
+                Action = newAction;
+                NextEdge = newNextEdge;
+                AlternativeEdge = newAlternativeEdge;
             }
         }
 
@@ -89,7 +58,7 @@ namespace aufgabeDrei {
         private Edge[] conditionGraph = new Edge[10];
 
         // Definiton Morphem:
-        private Morphem currentMorphem = new Morphem();
+        private Morphem currentMorphem = new Morphem(true);
         private Lexer lexer;
 
         // Code-Generator
@@ -198,8 +167,7 @@ namespace aufgabeDrei {
             conditionGraph[7] = new Edge(EdgeType.symbol, ">", new ActionDelegate(ConditionSaveGT), 9, 8);
             conditionGraph[8] = new Edge(EdgeType.symbol, ">=", new ActionDelegate(ConditionSaveGE), 9, -1);
             conditionGraph[9] = new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(ConditionApplyOperand), -1, -1);
-
-            currentMorphem.Init();
+            
             lexer = new Lexer(filePath);
 
             codeGenerator = new CodeGenerator(filePath);
@@ -217,53 +185,53 @@ namespace aufgabeDrei {
             int currentEdgeNumber = 0;
             bool success = false;
             Edge currentEdge;
-            if (currentMorphem.code == MorphemCode.empty)
+            if (currentMorphem.Code == MorphemCode.empty)
                 currentMorphem = lexer.NextMorphem();
             while (true) {
                 currentEdge = currentGraph[currentEdgeNumber];
-                switch (currentEdge.type) {
+                switch (currentEdge.Type) {
                     case EdgeType.blank:
                         success = true;
                         break;
                     case EdgeType.symbol:
-                        success = (currentMorphem.code == MorphemCode.symbol && currentMorphem.GetValue().ToUpper() == currentEdge.getValue().ToUpper());
+                        success = (currentMorphem.Code == MorphemCode.symbol && currentMorphem.Value.ToUpper() == currentEdge.Value.ToUpper());
                         break;
                     case EdgeType.morphem:
-                        success = (currentMorphem.code == currentEdge.getValue());
+                        success = (currentMorphem.Code == currentEdge.Value);
                         break;
                     case EdgeType.graph:
-                        success = Parse(currentEdge.getValue());
+                        success = Parse(currentEdge.Value);
                         break;
                 }
                 if (!success) {
                     // Bei nicht passendem Bogen Alternativbogen ausprobieren (falls vorhanden).
-                    if (currentEdge.alternativeEdge != -1)
-                        currentEdgeNumber = currentEdge.alternativeEdge;
+                    if (currentEdge.AlternativeEdge != -1)
+                        currentEdgeNumber = currentEdge.AlternativeEdge;
                     else {
-                        PrintError("Fehler in Zeile ", currentMorphem.position[1], " (Spalte " + currentMorphem.position[0] + "). Habe " + currentEdge.getValue() + " erwartet");
+                        PrintError("Fehler in Zeile ", currentMorphem.position[1], " (Spalte " + currentMorphem.position[0] + "). Habe " + currentEdge.Value + " erwartet");
                         return false;
                     }
                 } else {
                     // Codegenerierungsfunktion aufrufen, falls vorhanden. Bei Fehlschlag parsen beenden.
-                    if (currentEdge.action != null) {
-                        if (!((ActionDelegate)currentEdge.action)())
+                    if (currentEdge.Action != null) {
+                        if (!((ActionDelegate)currentEdge.Action)())
                             return false;
                     }
                     // Gegebenenfalls Symbol/Morphem akzeptieren und nächstes holen.
-                    if (currentEdge.type == EdgeType.symbol || currentEdge.type == EdgeType.morphem) {
-                        PrintProgressA("", currentMorphem.GetValue(), " konsumiert");
+                    if (currentEdge.Type == EdgeType.symbol || currentEdge.Type == EdgeType.morphem) {
+                        PrintProgressA("", currentMorphem.Value, " konsumiert");
                         currentMorphem = lexer.NextMorphem();
-                        if (currentMorphem.GetValue() != null) {
-                            PrintProgressB(" (Nächstes: ", currentMorphem.GetValue(), ").");
+                        if (currentMorphem.Value != null) {
+                            PrintProgressB(" (Nächstes: ", currentMorphem.Value, ").");
                         } else {
                             PrintProgressB("", "", ". Kein weiteres Zeichen mehr zu lesen.");
                         }
                     }
                     // Wenn der letzte Bogen akzeptiert wurde, beenden.
-                    if (currentEdge.nextEdge == -1)
+                    if (currentEdge.NextEdge == -1)
                         return true;
                     // Nächste Kante untersuchen
-                    currentEdgeNumber = currentEdge.nextEdge;
+                    currentEdgeNumber = currentEdge.NextEdge;
                 }
             }
         }
@@ -288,7 +256,7 @@ namespace aufgabeDrei {
         // Bogenfunktionen Block:
         // ------------------------------------------------------------
         private bool BlockCheckConstIdentifier() {
-            String name = currentMorphem.GetValue();
+            String name = currentMorphem.Value;
             PrintCodeGen("BlockCheckConstIdentifier " + name);
             if (currentProcedure.HasEntry(name)) {
                 PrintError("Der Bezeichner ", name, " existiert bereits in diesem Kontext.");
@@ -299,8 +267,8 @@ namespace aufgabeDrei {
         }
 
         private bool BlockCheckConstValue() {
-            PrintCodeGen("BlockCheckConstValue " + currentMorphem.GetValue());
-            int value = currentMorphem.GetValue();
+            PrintCodeGen("BlockCheckConstValue " + currentMorphem.Value);
+            int value = currentMorphem.Value;
             // Index des Konstantenwerts herausfinden.
             int index = FindConstantValuePosition(value);
             // Bei neuem Wert, neuen Eintrag in Konstantenliste anlegen.
@@ -316,7 +284,7 @@ namespace aufgabeDrei {
         }
 
         private bool BlockCheckVarIdentifier() {
-            String name = currentMorphem.GetValue();
+            String name = currentMorphem.Value;
             PrintCodeGen("BlockCheckVarIdentifier " + name);
             if (currentProcedure.HasEntry(name)) {
                 PrintError("Der Bezeichner ", name, " existiert bereits in diesem Kontext.");
@@ -330,7 +298,7 @@ namespace aufgabeDrei {
         }
 
         private bool BlockCheckProcedureIdentifer() {
-            String name = currentMorphem.GetValue();
+            String name = currentMorphem.Value;
             PrintCodeGen("BlockCheckProcedureIdentifer " + name);
             if (currentProcedure.HasEntry(name)) {
                 PrintError("Der Bezeichner ", name, " existiert bereits in diesem Kontext.");
@@ -368,7 +336,7 @@ namespace aufgabeDrei {
         // Bogenfunktionen Statement:
         // ------------------------------------------------------------
         private bool StatementCheckVarIdentifier() {
-            String identifier = currentMorphem.GetValue();
+            String identifier = currentMorphem.Value;
             PrintCodeGen("StatementCheckVarIdentifier " + identifier);
             // Identifier global suchen. 
             NamelistEntry identifierEntry = FindGlobalEntry(identifier);
@@ -454,7 +422,7 @@ namespace aufgabeDrei {
         }
 
         private bool StatementProcedureCall() {
-            String identifier = currentMorphem.GetValue();
+            String identifier = currentMorphem.Value;
             PrintCodeGen("StatementProcedureCall " + identifier);
             // Identifier global suchen. 
             NamelistEntry identifierEntry = FindGlobalEntry(identifier);
@@ -475,7 +443,7 @@ namespace aufgabeDrei {
         }
 
         private bool StatementInput() {
-            String identifier = currentMorphem.GetValue();
+            String identifier = currentMorphem.Value;
             PrintCodeGen("StatementInput " + identifier);
             // Identifier global suchen. 
             NamelistEntry identifierEntry = FindGlobalEntry(identifier);
@@ -520,7 +488,7 @@ namespace aufgabeDrei {
         }
 
         private bool StatementOutputString() {
-            String value = currentMorphem.GetValue();
+            String value = currentMorphem.Value;
             PrintCodeGen("StatementOutputString " + value);
             // Generiere putStrg mit dem auszugebenden String.
             codeGenerator.GenerateCode(CommandCode.putStrg, value);
@@ -569,7 +537,7 @@ namespace aufgabeDrei {
         // Bogenfunktionen Factor:
         // ------------------------------------------------------------
         private bool FactorCheckNumber() {
-            int value = currentMorphem.GetValue();
+            int value = currentMorphem.Value;
             PrintCodeGen("FactorCheckNumber " + value);
             // Index des Konstantenwerts herausfinden.
             int index = FindConstantValuePosition(value);
@@ -586,7 +554,7 @@ namespace aufgabeDrei {
         }
 
         private bool FactorCheckIdentifier() {
-            String identifier = currentMorphem.GetValue();
+            String identifier = currentMorphem.Value;
             PrintCodeGen("FactorCheckIdentifier " + identifier);
             // Identifier global suchen. 
             NamelistEntry identifierEntry = FindGlobalEntry(identifier);
