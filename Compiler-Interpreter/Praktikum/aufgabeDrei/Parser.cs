@@ -305,8 +305,8 @@ namespace aufgabeDrei {
             int index = FindConstantValuePosition(value);
             // Bei neuem Wert, neuen Eintrag in Konstantenliste anlegen.
             if (index < 0) {
-                // Index berechnet sich aus der Größe der Konstantenliste und der Größe einer Konstante.
-                index = constantList.Count() * VALUE_SIZE;
+                // Index berechnet sich aus der Größe der Konstantenliste.
+                index = constantList.Count();
                 // Konstantenliste um neuen Eintrag ergänzen.
                 constantList.Add(new NamelistConstant(currentProcedure.ProcedureID, currentName, value, index));
             }
@@ -323,9 +323,9 @@ namespace aufgabeDrei {
                 return false;
             }
             // Variable in Namenliste der aktuellen Prozedur einfügen
-            currentProcedure.namelist.Add(new NamelistVariable(currentProcedure.ProcedureID, name, currentProcedure.nextVariableAdress));
+            currentProcedure.namelist.Add(new NamelistVariable(currentProcedure.ProcedureID, name, currentProcedure.nextVariableAddress));
             // Relativadresse für nächsten Eintrag erhöhen.
-            currentProcedure.nextVariableAdress += VALUE_SIZE;
+            currentProcedure.nextVariableAddress += VALUE_SIZE;
             return true;
         }
 
@@ -348,7 +348,7 @@ namespace aufgabeDrei {
         private bool BlockEnterStatement() {
             PrintCodeGen("BlockEnterStatement " + currentProcedure.Name);
             // Generiere entryProc mit zunächst unbekannter Länge, der Prozedur-ID und die Größe des Variablenbereichs.
-            codeGenerator.GenerateCode(CommandCode.entryProc, 0, currentProcedure.ProcedureID, currentProcedure.nextVariableAdress);
+            codeGenerator.GenerateCode(CommandCode.entryProc, 0, currentProcedure.ProcedureID, currentProcedure.nextVariableAddress);
             return true;
         }
 
@@ -575,8 +575,8 @@ namespace aufgabeDrei {
             int index = FindConstantValuePosition(value);
             // Bei neuem Wert, neuen Eintrag in Konstantenliste anlegen.
             if (index < 0) {
-                // Index berechnet sich aus der Größe der Konstantenliste und der Größe einer Konstante.
-                index = constantList.Count() * VALUE_SIZE;
+                // Index berechnet sich aus der Größe der Konstantenliste.
+                index = constantList.Count();
                 // Konstantenliste um neuen Eintrag (ohne Prozedurzugehörigkeit) ergänzen.
                 constantList.Add(new NamelistConstant(-1, currentName, value, index));
             }

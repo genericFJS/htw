@@ -41,7 +41,7 @@ namespace aufgabeDrei {
         public int ProcedureID { private set; get; }
         public NamelistProcedure ParentProcedure { private set; get; }
         public List<NamelistEntry> namelist;
-        public int nextVariableAdress;
+        public int nextVariableAddress;
 
         /// <summary>
         /// Allgemeiner Konstruktor für neue Prozedureinträge.
@@ -67,7 +67,7 @@ namespace aufgabeDrei {
             ProcedureID = procedureID;
             ParentProcedure = parentProcedure;
             this.namelist = new List<NamelistEntry>();
-            this.nextVariableAdress = 0;
+            this.nextVariableAddress = 0;
         }
 
         public bool HasEntry(String name) {
