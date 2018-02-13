@@ -47,6 +47,19 @@ namespace aufgabeDrei {
     }
 
     class CodeGenerator {
+
+        struct JumpLabel {
+            public int jumpLabelPosition;
+            public int jumpFrom;
+            public int jumpTo;
+
+            public JumpLabel(int labelPosition, int from, int to) {
+                jumpLabelPosition = labelPosition;
+                jumpFrom = from;
+                jumpTo = to;
+            }
+        }
+
         /// <summary>
         /// Buffert des gesamten Code, bevor er in Datei geschrieben wird.
         /// </summary>
@@ -55,6 +68,9 @@ namespace aufgabeDrei {
         private int currentProcedureLengthPosition;
         private int currentProcedureLength;
         private int procedureCount = 0;
+        private int currentCodePosition = 0;
+
+        private Stack<JumpLabel> jumpLabelList = new Stack<JumpLabel>();
 
         private String cl0FilePath;
 
@@ -80,7 +96,8 @@ namespace aufgabeDrei {
             Insert1Byte((int)command);
             // Bei entryProc Position für Prozedurlänge merken und diese zurück setzen.
             if (command == CommandCode.entryProc) {
-                currentProcedureLengthPosition = codeBuffer.Count();
+                // Position der Länge merken.
+                currentProcedureLengthPosition = currentCodePosition;
                 currentProcedureLength = 1;
                 procedureCount++;
             }
@@ -100,6 +117,13 @@ namespace aufgabeDrei {
             }
         }
 
+        public void GenerateCode(CommandCode command, String stringValue) {
+            // String in Char-Array umwandeln, damit es als Parameterliste zu übergeben ist.
+            char[] parameters = stringValue.ToCharArray();
+            // GenerateCode mit Int-Array aufrufen, in dem die Werte der Chars stecken.
+            GenerateCode(command, Array.ConvertAll(parameters, c => (int)c));
+        }
+
         /// <summary>
         /// Füge ein Byte ein. Beispielsweise für Befehlscodes und Buchstaben eines Strings.
         /// </summary>
@@ -111,6 +135,8 @@ namespace aufgabeDrei {
             codeBuffer.Add(byteArray[0]);
             // Prozedurlänge erhöhen.
             currentProcedureLength++;
+            // Codeposition erhöhen.
+            currentCodePosition++;
         }
 
         /// <summary>
@@ -125,6 +151,8 @@ namespace aufgabeDrei {
             codeBuffer.Add(byteArray[1]);
             // Prozedurlänge erhöhen.
             currentProcedureLength += 2;
+            // Codeposition erhöhen.
+            currentCodePosition += 2;
         }
 
         /// <summary>
@@ -141,6 +169,8 @@ namespace aufgabeDrei {
             codeBuffer.Add(byteArray[3]);
             // Prozedurlänge erhöhen.
             currentProcedureLength += 4;
+            // Codeposition erhöhen.
+            currentCodePosition += 4;
         }
 
         /// <summary>
@@ -155,12 +185,49 @@ namespace aufgabeDrei {
         }
 
         /// <summary>
+        /// Erstellt Sprunglabel für den Sprung vorwärts.
+        /// </summary>
+        public void PrepareJumpForward() {
+            // Position des Labels: fängt an der nächsten Stelle an (Position nach Sprungbefehl)
+            // Startadresse: Adresse nach dem Sprungbefehl (inklusive 3 Byte Sprungbefehl)
+            // Zieladresse: noch unbekannt
+            jumpLabelList.Push(new JumpLabel(currentCodePosition + 1, currentCodePosition + 3, 0));
+        }
+
+        public void PrepareJumpBackward() {
+            // Position des Labels: noch unbekannt.
+            // Startadresse: noch unbekannt.
+            // Zieladresse: nächste Adresse.
+            jumpLabelList.Push(new JumpLabel(-1, -1, currentCodePosition));
+        }
+
+        public void UpdateJumpFoward(int commandSize = 1) {
+            // Label holen.
+            JumpLabel jumpLabel = jumpLabelList.Pop();
+            // Relative Sprungadresse berechnen (Ziel - Start). Wobei das Ziel die nächste Adresse ist (diese ist abhängig von der Größe des Befehls).
+            int targetAddress = (currentCodePosition + commandSize) - jumpLabel.jumpFrom;
+            // Sprungadresse an entsprechende Stelle nachtragen.
+            byte[] byteArray = BitConverter.GetBytes(targetAddress);
+            codeBuffer[jumpLabel.jumpLabelPosition] = byteArray[0];
+            codeBuffer[jumpLabel.jumpLabelPosition + 1] = byteArray[1];
+        }
+
+        public int GetJumpBackwardAddress() {
+            // Label holen.
+            JumpLabel jumpLabel = jumpLabelList.Pop();
+            // Relative Sprungadresse berechnen (Ziel - Start ... ergibt negative Zahl bspw. 21 - 42 = -21 = 0xFF FF FF EB)
+            // Bei der Startadresse muss noch die Länge des Sprungbefehls (3) aufgerechnet werden.
+            // Berechnete Adresse zurück geben. 
+            return jumpLabel.jumpTo - (currentCodePosition + 3) ;
+        }
+
+        /// <summary>
         /// Ergänze Code um Konstantenblock.
         /// </summary>
         /// <param name="constants"></param>
         public void GenerateConstantBlock(List<NamelistConstant> constants) {
             // Jede Konstante als Bytepaar einfügen.
-            foreach(var constant in constants) {
+            foreach (var constant in constants) {
                 Insert4Byte(constant.Value);
             }
         }
@@ -178,7 +245,7 @@ namespace aufgabeDrei {
                     fileStream.WriteByte(byteArray[2]);
                     fileStream.WriteByte(byteArray[3]);
                     // gepufferten Code schreiben.
-                    foreach (var codeByte in codeBuffer){
+                    foreach (var codeByte in codeBuffer) {
                         fileStream.WriteByte(codeByte);
                     }
                 }

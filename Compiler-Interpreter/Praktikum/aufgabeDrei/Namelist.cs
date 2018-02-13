@@ -10,17 +10,17 @@ namespace aufgabeDrei {
     /// </summary>
     abstract class NamelistEntry {
         // ID der Prozedur, in der Eintrag existiert.
-        public int CurrentProcedureID { protected set; get; }
+        public int MemberProcedureID { protected set; get; }
         public String Name { protected set; get; }
     }
 
     class NamelistVariable : NamelistEntry {
         public int Displacement { private set; get; }
 
-        public NamelistVariable(int currentProcedureID, String name, int displacement) {
-            CurrentProcedureID = currentProcedureID;
+        public NamelistVariable(int memberProcedureID, String name, int displacement) {
+            MemberProcedureID = memberProcedureID;
             Name = name;
-            this.Displacement = displacement;
+            Displacement = displacement;
         }
     }
 
@@ -28,25 +28,16 @@ namespace aufgabeDrei {
         public int Value { private set; get; }
         public int Index { private set; get; }
 
-        public NamelistConstant(int currentProcedureID, String name, int value, int index) {
-            CurrentProcedureID = currentProcedureID;
+        public NamelistConstant(int memberProcedureID, String name, int value, int index) {
+            MemberProcedureID = memberProcedureID;
             Name = name;
             Value = value;
             Index = index;
         }
     }
 
-    class NamelistLabel : NamelistEntry {
-        public int JumpPosition { private set; get; }
-        public NamelistLabel(int currentProcedureID, String name, int jumpPosition) {
-            CurrentProcedureID = currentProcedureID;
-            Name = name;
-            JumpPosition = jumpPosition;
-        }
-    }
-
     class NamelistProcedure : NamelistEntry {
-        // ID der Prozedur. Nicht zu verwechseln mit der CurrentProcedureID, die angibt, in welcher Prozedur diese Prozedur existiert.
+        // ID der Prozedur. Nicht zu verwechseln mit der memberProcedureID, die angibt, in welcher Prozedur diese Prozedur existiert.
         public int ProcedureID { private set; get; }
         public NamelistProcedure ParentProcedure { private set; get; }
         public List<NamelistEntry> namelist;
@@ -55,12 +46,12 @@ namespace aufgabeDrei {
         /// <summary>
         /// Allgemeiner Konstruktor für neue Prozedureinträge.
         /// </summary>
-        /// <param name="currentProcedureID"></param>
+        /// <param name="memberProcedureID"></param>
         /// <param name="name"></param>
         /// <param name="procedureID"></param>
         /// <param name="parentProcedure"></param>
-        public NamelistProcedure(int currentProcedureID, String name, int procedureID, NamelistProcedure parentProcedure) {
-            Init(currentProcedureID, name, procedureID, parentProcedure);
+        public NamelistProcedure(int memberProcedureID, String name, int procedureID, NamelistProcedure parentProcedure) {
+            Init(memberProcedureID, name, procedureID, parentProcedure);
         }
 
         /// <summary>
@@ -70,8 +61,8 @@ namespace aufgabeDrei {
             Init(-1, "***main***", 0, null);
         }
 
-        private void Init(int currentProcedureID, String name, int procedureID, NamelistProcedure parentProcedure) {
-            CurrentProcedureID = currentProcedureID;
+        private void Init(int memberProcedureID, String name, int procedureID, NamelistProcedure parentProcedure) {
+            MemberProcedureID = memberProcedureID;
             Name = name;
             ProcedureID = procedureID;
             ParentProcedure = parentProcedure;

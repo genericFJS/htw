@@ -105,8 +105,6 @@ namespace aufgabeDrei {
         private int numberOfProcedures = 1;
         // Constantenliste
         private List<NamelistConstant> constantList = new List<NamelistConstant>();
-        // Labelliste
-        private List<NamelistLabel> labelList = new List<NamelistLabel>();
 
         // Größe eines Wertes in der Virtuellen Maschine (4 Byte)
         private static readonly int VALUE_SIZE = 4;
@@ -143,7 +141,7 @@ namespace aufgabeDrei {
 
             statementGraph[0] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(StatementCheckVarIdentifier), 1, 3); // Bögen var
             statementGraph[1] = new Edge(EdgeType.symbol, ":=", null, 2, -1);
-            statementGraph[2] = new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(StatementCheckVarValue), -1, -1);
+            statementGraph[2] = new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(StatementStoreVarValue), -1, -1);
             statementGraph[3] = new Edge(EdgeType.symbol, "if", null, 4, 7); // Bögen if
             statementGraph[4] = new Edge(EdgeType.graph, conditionGraph, new ActionDelegate(StatementIfCondition), 5, -1);
             statementGraph[5] = new Edge(EdgeType.symbol, "then", null, 6, -1);
@@ -277,7 +275,7 @@ namespace aufgabeDrei {
         // Bogenfunktionen Programm:
         // ------------------------------------------------------------
         private bool ProgrammEnd() {
-            PrintCodeGen("\tProgrammEnd");
+            PrintCodeGen("ProgrammEnd");
             // Mainprozedur beenden.
             BlockEndProcedure();
             // Konstantenblock schreiben.
@@ -291,7 +289,7 @@ namespace aufgabeDrei {
         // ------------------------------------------------------------
         private bool BlockCheckConstIdentifier() {
             String name = currentMorphem.GetValue();
-            PrintCodeGen("\tBlockCheckConstIdentifier " + name);
+            PrintCodeGen("BlockCheckConstIdentifier " + name);
             if (currentProcedure.HasEntry(name)) {
                 PrintError("Der Bezeichner ", name, " existiert bereits in diesem Kontext.");
                 return false;
@@ -301,7 +299,7 @@ namespace aufgabeDrei {
         }
 
         private bool BlockCheckConstValue() {
-            PrintCodeGen("\tBlockCheckConstValue " + currentMorphem.GetValue());
+            PrintCodeGen("BlockCheckConstValue " + currentMorphem.GetValue());
             int value = currentMorphem.GetValue();
             // Index des Konstantenwerts herausfinden.
             int index = FindConstantValuePosition(value);
@@ -319,7 +317,7 @@ namespace aufgabeDrei {
 
         private bool BlockCheckVarIdentifier() {
             String name = currentMorphem.GetValue();
-            PrintCodeGen("\tBlockCheckVarIdentifier " + name);
+            PrintCodeGen("BlockCheckVarIdentifier " + name);
             if (currentProcedure.HasEntry(name)) {
                 PrintError("Der Bezeichner ", name, " existiert bereits in diesem Kontext.");
                 return false;
@@ -333,7 +331,7 @@ namespace aufgabeDrei {
 
         private bool BlockCheckProcedureIdentifer() {
             String name = currentMorphem.GetValue();
-            PrintCodeGen("\tBlockCheckProcedureIdentifer " + name);
+            PrintCodeGen("BlockCheckProcedureIdentifer " + name);
             if (currentProcedure.HasEntry(name)) {
                 PrintError("Der Bezeichner ", name, " existiert bereits in diesem Kontext.");
                 return false;
@@ -348,14 +346,14 @@ namespace aufgabeDrei {
         }
 
         private bool BlockEnterStatement() {
-            PrintCodeGen("\tBlockEnterStatement " + currentProcedure.Name);
+            PrintCodeGen("BlockEnterStatement " + currentProcedure.Name);
             // Generiere entryProc mit zunächst unbekannter Länge, der Prozedur-ID und die Größe des Variablenbereichs.
             codeGenerator.GenerateCode(CommandCode.entryProc, 0, currentProcedure.ProcedureID, currentProcedure.nextVariableAdress);
             return true;
         }
 
         private bool BlockEndProcedure() {
-            PrintCodeGen("\tBlockEndProcedure " + currentProcedure.Name);
+            PrintCodeGen("BlockEndProcedure " + currentProcedure.Name);
             // Generiere retProc.
             codeGenerator.GenerateCode(CommandCode.retProc);
             // Aktualisiere die Prozedurlänge
@@ -370,78 +368,183 @@ namespace aufgabeDrei {
         // Bogenfunktionen Statement:
         // ------------------------------------------------------------
         private bool StatementCheckVarIdentifier() {
-            PrintCodeGen("\tStatementCheckVarIdentifier");
+            String identifier = currentMorphem.GetValue();
+            PrintCodeGen("StatementCheckVarIdentifier " + identifier);
+            // Identifier global suchen. 
+            NamelistEntry identifierEntry = FindGlobalEntry(identifier);
+            // Überprüfen, ob Identifier existiert und eine Variable ist.
+            // Codegenerierung dann davon und vom Fundort abhängig.
+            if (identifierEntry == null) {
+                // Bezeichner nicht vorhanden. Fehler!
+                PrintError("Der Bezeichner ", identifier, " existiert in diesem Kontext nicht.");
+                return false;
+            } else if (identifierEntry.GetType() == typeof(NamelistProcedure)) {
+                // Bezeichner ist Prozedur. Fehler!
+                PrintError("Der Bezeichner ", identifier, " beschreibt eine Prozedur und keine Variable.");
+                return false;
+            } else if (identifierEntry.GetType() == typeof(NamelistConstant)) {
+                // Bezeichner ist Konstante. Fehler!
+                PrintError("Der Bezeichner ", identifier, " beschreibt eine Konstante und keine Variable.");
+                return false;
+            } else {
+                // Bezeichner ist Variable. Unterscheide, woher sie kommt:
+                NamelistVariable variableEntry = (NamelistVariable)identifierEntry;
+                if (variableEntry.MemberProcedureID == currentProcedure.ProcedureID) {
+                    // Variable ist lokale Variable. Generiere puAdrVrLocl mit der entsprechenden Verschiebung.
+                    codeGenerator.GenerateCode(CommandCode.puAdrVrLocl, variableEntry.Displacement);
+                } else if (variableEntry.MemberProcedureID == 0) {
+                    // Variable befindet sich in der Main-Funktion. Generiere puAdrVrMain mit der entsprechenden Verschiebung.
+                    codeGenerator.GenerateCode(CommandCode.puAdrVrMain, variableEntry.Displacement);
+                } else {
+                    // Variable ist globale Variable. Generiere puAdrVrGlob mit der entsprechenden Verschiebung und der dazugehörigen Prozedurnummer.
+                    codeGenerator.GenerateCode(CommandCode.puAdrVrGlob, variableEntry.Displacement, variableEntry.MemberProcedureID);
+                }
+            }
             return true;
         }
 
-        private bool StatementCheckVarValue() {
-            PrintCodeGen("\tStatementCheckVarValue");
+        private bool StatementStoreVarValue() {
+            PrintCodeGen("StatementStoreVarValue");
+            // Wert vom Stack im Adresse vom Stack schreiben. Generiere storeVal.
+            codeGenerator.GenerateCode(CommandCode.storeVal);
             return true;
         }
 
         private bool StatementIfCondition() {
-            PrintCodeGen("\tStatementIfCondition");
+            PrintCodeGen("StatementIfCondition");
+            // Sprung vorbereiten, indem ein Label generiert wird. Das Ziel ist die Position nach dem if-Block.
+            codeGenerator.PrepareJumpForward();
+            // Generiere jnot mit noch unbestimmter Sprunggröße.
+            codeGenerator.GenerateCode(CommandCode.jnot, 0);
             return true;
         }
 
         private bool StatementIfStatement() {
-            PrintCodeGen("\tStatementIfStatement");
+            PrintCodeGen("StatementIfStatement");
+            // Sprungadresse nachtragen.
+            codeGenerator.UpdateJumpFoward();
             return true;
         }
 
         private bool StatementWhile() {
-            PrintCodeGen("\tStatementWhile");
+            PrintCodeGen("StatementWhile");
+            // Sprung vorbereiten, indem ein Label generiert wird.
+            codeGenerator.PrepareJumpBackward();
             return true;
         }
 
         private bool StatementWhileCondition() {
-            PrintCodeGen("\tStatementWhileCondition");
+            PrintCodeGen("StatementWhileCondition");
+            // Sprung vorbereiten, indem ein Label generiert wird. Das Ziel ist die Position nach dem while-Block.
+            codeGenerator.PrepareJumpForward();
+            // Generiere jnot mit noch unbestimmter Sprunggröße.
+            codeGenerator.GenerateCode(CommandCode.jnot, 0);
             return true;
         }
 
         private bool StatementWhileStatement() {
-            PrintCodeGen("\tStatementWhileStatement");
+            PrintCodeGen("StatementWhileStatement");
+            // Sprungadresse für den Sprung des Überspringens der while-Schleife nachtragen.
+            codeGenerator.UpdateJumpFoward(3);
+            // Sprungadresse für den Rücksprung zum Anfang der Schleife herausfinden.
+            int jumpAddress = codeGenerator.GetJumpBackwardAddress();
+            // Mit Sprungadressen jmp generieren.
+            codeGenerator.GenerateCode(CommandCode.jmp, jumpAddress);                        
             return true;
         }
 
         private bool StatementProcedureCall() {
-            PrintCodeGen("\tStatementProcedureCall");
+            String identifier = currentMorphem.GetValue();
+            PrintCodeGen("StatementProcedureCall " + identifier);
+            // Identifier global suchen. 
+            NamelistEntry identifierEntry = FindGlobalEntry(identifier);
+            // Überprüfen, ob Identifier existiert und eine Prozedur ist.
+            if (identifierEntry == null) {
+                // Bezeichner nicht vorhanden. Fehler!
+                PrintError("Der Bezeichner ", identifier, " existiert in diesem Kontext nicht.");
+                return false;
+            } else if (identifierEntry.GetType() != typeof(NamelistProcedure)) {
+                // Bezeichner ist keine Prozedur. Fehler!
+                PrintError("Der Bezeichner ", identifier, " beschreibt keine Prozedur.");
+                return false;
+            } else {
+                // Generiere call, um die Prozedur mit dem gefundenen Index aufzurufen.
+                codeGenerator.GenerateCode(CommandCode.call, ((NamelistProcedure)identifierEntry).ProcedureID);
+            }
             return true;
         }
 
         private bool StatementInput() {
-            PrintCodeGen("\tStatementInput");
+            String identifier = currentMorphem.GetValue();
+            PrintCodeGen("StatementInput " + identifier);
+            // Identifier global suchen. 
+            NamelistEntry identifierEntry = FindGlobalEntry(identifier);
+            // Überprüfen, ob Identifier existiert und eine Variable/Konstante ist.
+            // Codegenerierung dann davon und vom Fundort abhängig.
+            if (identifierEntry == null) {
+                // Bezeichner nicht vorhanden. Fehler!
+                PrintError("Der Bezeichner ", identifier, " existiert in diesem Kontext nicht.");
+                return false;
+            } else if (identifierEntry.GetType() == typeof(NamelistProcedure)) {
+                // Bezeichner ist Prozedur. Fehler!
+                PrintError("Der Bezeichner ", identifier, " beschreibt eine Prozedur und keine Variable.");
+                return false;
+            } else if (identifierEntry.GetType() == typeof(NamelistConstant)) {
+                // Bezeichner ist Konstante. Fehler!
+                PrintError("Der Bezeichner ", identifier, " beschreibt eine Konstante und keine Variable.");
+                return false;
+            } else {
+                // Bezeichner ist Variable. Unterscheide, woher sie kommt:
+                NamelistVariable variableEntry = (NamelistVariable)identifierEntry;
+                if (variableEntry.MemberProcedureID == currentProcedure.ProcedureID) {
+                    // Variable ist lokale Variable. Generiere puAdrVrLocl mit der entsprechenden Verschiebung.
+                    codeGenerator.GenerateCode(CommandCode.puAdrVrLocl, variableEntry.Displacement);
+                } else if (variableEntry.MemberProcedureID == 0) {
+                    // Variable befindet sich in der Main-Funktion. Generiere puAdrVrMain mit der entsprechenden Verschiebung.
+                    codeGenerator.GenerateCode(CommandCode.puAdrVrMain, variableEntry.Displacement);
+                } else {
+                    // Variable ist globale Variable. Generiere puAdrVrGlob mit der entsprechenden Verschiebung und der dazugehörigen Prozedurnummer.
+                    codeGenerator.GenerateCode(CommandCode.puAdrVrGlob, variableEntry.Displacement, variableEntry.MemberProcedureID);
+                }
+            }
+            // Generiere getVal, um den Wert, der in diese Variable gespeichert werden soll, abzufragen.
+            codeGenerator.GenerateCode(CommandCode.getVal);
             return true;
         }
 
         private bool StatementOutputExpression() {
-            PrintCodeGen("\tStatementOutputExpression");
+            PrintCodeGen("StatementOutputExpression");
+            // Generiere putVal für die Ausgabe eines Ausdrucks.
+            codeGenerator.GenerateCode(CommandCode.putVal);
             return true;
         }
 
         private bool StatementOutputString() {
-            PrintCodeGen("\tStatementOutputString");
+            String value = currentMorphem.GetValue();
+            PrintCodeGen("StatementOutputString " + value);
+            // Generiere putStrg mit dem auszugebenden String.
+            codeGenerator.GenerateCode(CommandCode.putStrg, value);
             return true;
         }
 
         // Bogenfunktionen Expression:
         // ------------------------------------------------------------
         private bool ExpressionNegative() {
-            PrintCodeGen("\tExpressionNegative");
+            PrintCodeGen("ExpressionNegative");
             // Generiere vzMinus, um negativen Term anzukündigen.
             codeGenerator.GenerateCode(CommandCode.vzMinus);
             return true;
         }
 
         private bool ExpressionAddition() {
-            PrintCodeGen("\tExpressionAddition");
+            PrintCodeGen("ExpressionAddition");
             // Generiere opAdd, um weiter Terme zu addieren.
             codeGenerator.GenerateCode(CommandCode.opAdd);
             return true;
         }
 
         private bool ExpressionSubtraction() {
-            PrintCodeGen("\tExpressionSubtraction");
+            PrintCodeGen("ExpressionSubtraction");
             // Generiere opSub, um weiter Terme zu subtrahieren.
             codeGenerator.GenerateCode(CommandCode.opSub);
             return true;
@@ -450,14 +553,14 @@ namespace aufgabeDrei {
         // Bogenfunktionen Term:
         // ------------------------------------------------------------
         private bool TermMultiplication() {
-            PrintCodeGen("\tTermMultiplication");
+            PrintCodeGen("TermMultiplication");
             // Generiere opMul, um weiter Faktoren zu multiplizieren.
             codeGenerator.GenerateCode(CommandCode.opSub);
             return true;
         }
 
         private bool TermDivision() {
-            PrintCodeGen("\tTermDivision");
+            PrintCodeGen("TermDivision");
             // Generiere opDiv, um weiter Faktoren zu dividieren.
             codeGenerator.GenerateCode(CommandCode.opDiv);
             return true;
@@ -466,77 +569,110 @@ namespace aufgabeDrei {
         // Bogenfunktionen Factor:
         // ------------------------------------------------------------
         private bool FactorCheckNumber() {
-            PrintCodeGen("\tFactorCheckNumber " + currentMorphem.GetValue());
-            // Konstante suchen und ggf. anlegen.
-
-            // Codegenerierung puConst(ConstIndex) mit dem Index der Konstante.
-
+            int value = currentMorphem.GetValue();
+            PrintCodeGen("FactorCheckNumber " + value);
+            // Index des Konstantenwerts herausfinden.
+            int index = FindConstantValuePosition(value);
+            // Bei neuem Wert, neuen Eintrag in Konstantenliste anlegen.
+            if (index < 0) {
+                // Index berechnet sich aus der Größe der Konstantenliste und der Größe einer Konstante.
+                index = constantList.Count() * VALUE_SIZE;
+                // Konstantenliste um neuen Eintrag (ohne Prozedurzugehörigkeit) ergänzen.
+                constantList.Add(new NamelistConstant(-1, currentName, value, index));
+            }
+            // Codegenerierung puConst mit dem Index der Konstante.
+            codeGenerator.GenerateCode(CommandCode.puConst, index);
             return true;
         }
 
         private bool FactorCheckIdentifier() {
-            PrintCodeGen("\tFactorCheckIdentifier " + currentMorphem.GetValue());
-            // Identifier global suchen.
-
-            // Überprüfen, ob Identifier eine Variable/Konstante
-
-            // Codegenerierung abhängig vom Fundort:
+            String identifier = currentMorphem.GetValue();
+            PrintCodeGen("FactorCheckIdentifier " + identifier);
+            // Identifier global suchen. 
+            NamelistEntry identifierEntry = FindGlobalEntry(identifier);
+            // Überprüfen, ob Identifier existiert und eine Variable/Konstante ist.
+            // Codegenerierung dann davon und vom Fundort abhängig.
+            if (identifierEntry == null) {
+                // Bezeichner nicht vorhanden. Fehler!
+                PrintError("Der Bezeichner ", identifier, " existiert in diesem Kontext nicht.");
+                return false;
+            } else if (identifierEntry.GetType() == typeof(NamelistProcedure)) {
+                // Bezeichner ist Prozedur. Fehler!
+                PrintError("Der Bezeichner ", identifier, " beschreibt eine Prozedur und keinen Wert.");
+                return false;
+            } else if (identifierEntry.GetType() == typeof(NamelistConstant)) {
+                // Bezeichner ist Konstante. Generiere puConst mit dem Index der Konstante.
+                codeGenerator.GenerateCode(CommandCode.puConst, ((NamelistConstant)identifierEntry).Index);
+            } else {
+                // Bezeichner ist Variable. Unterscheide, woher sie kommt:
+                NamelistVariable variableEntry = (NamelistVariable)identifierEntry;
+                if (variableEntry.MemberProcedureID == currentProcedure.ProcedureID) {
+                    // Variable ist lokale Variable. Generiere puValVrLocl mit der entsprechenden Verschiebung.
+                    codeGenerator.GenerateCode(CommandCode.puValVrLocl, variableEntry.Displacement);
+                } else if (variableEntry.MemberProcedureID == 0) {
+                    // Variable befindet sich in der Main-Funktion. Generiere puValVrMain mit der entsprechenden Verschiebung.
+                    codeGenerator.GenerateCode(CommandCode.puValVrMain, variableEntry.Displacement);
+                } else {
+                    // Variable ist globale Variable. Generiere puValVrGlob mit der entsprechenden Verschiebung und der dazugehörigen Prozedurnummer.
+                    codeGenerator.GenerateCode(CommandCode.puValVrGlob, variableEntry.Displacement, variableEntry.MemberProcedureID);
+                }
+            }
             return true;
         }
 
         // Bogenfunktionen Condition:
         // ------------------------------------------------------------
         private bool ConditionOdd() {
-            PrintCodeGen("\tConditionOdd");
+            PrintCodeGen("ConditionOdd");
             // Generiere odd, um einfachen Ungerade-Vergleich durchzuführen.
             codeGenerator.GenerateCode(CommandCode.odd);
             return true;
         }
 
         private bool ConditionSaveEQ() {
-            PrintCodeGen("\tConditionSaveEQ");
+            PrintCodeGen("ConditionSaveEQ");
             // Speichere Vergleichsoperator
             currentCondition = CommandCode.cmpEQ;
             return true;
         }
 
         private bool ConditionSaveNE() {
-            PrintCodeGen("\tConditionSaveNE");
+            PrintCodeGen("ConditionSaveNE");
             // Speichere Vergleichsoperator
             currentCondition = CommandCode.cmpNE;
             return true;
         }
 
         private bool ConditionSaveLT() {
-            PrintCodeGen("\tConditionSaveLT");
+            PrintCodeGen("ConditionSaveLT");
             // Speichere Vergleichsoperator
             currentCondition = CommandCode.cmpLT;
             return true;
         }
 
         private bool ConditionSaveLE() {
-            PrintCodeGen("\tConditionSaveLE");
+            PrintCodeGen("ConditionSaveLE");
             // Speichere Vergleichsoperator
             currentCondition = CommandCode.cmpLE;
             return true;
         }
 
         private bool ConditionSaveGT() {
-            PrintCodeGen("\tConditionSaveGT");
+            PrintCodeGen("ConditionSaveGT");
             // Speichere Vergleichsoperator
             currentCondition = CommandCode.cmpGT;
             return true;
         }
 
         private bool ConditionSaveGE() {
-            PrintCodeGen("\tConditionSaveGE");
+            PrintCodeGen("ConditionSaveGE");
             // Speichere Vergleichsoperator
             currentCondition = CommandCode.cmpGE;
             return true;
         }
 
         private bool ConditionApplyOperand() {
-            PrintCodeGen("\tConditionApplyOperand");
+            PrintCodeGen("ConditionApplyOperand");
             // Generiere gespeicherten Operand, um Vergleich auszuwerten.
             codeGenerator.GenerateCode(currentCondition);
             return true;
@@ -556,6 +692,22 @@ namespace aufgabeDrei {
                     return entry.Index;
             }
             return -1;
+        }
+
+        NamelistEntry FindGlobalEntry(String name) {
+            NamelistProcedure procedureToSearch = currentProcedure;
+            while (procedureToSearch != null) {
+                // Namensliste der aktuellen Prozedur suchen
+                foreach (var entry in procedureToSearch.namelist) {
+                    // Wenn Name übereinstimmt, diesen Eintrag ausgeben
+                    if (entry.Name == name) {
+                        return entry;
+                    }
+                }
+                // Übergeordnete Prozedur als nächstes durchsuchen
+                procedureToSearch = procedureToSearch.ParentProcedure;
+            }
+            return null;
         }
 
         // ============================================================
@@ -587,7 +739,7 @@ namespace aufgabeDrei {
 
         public static void PrintCodeGen(String a) {
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine(a);
+            Console.WriteLine("\t" + a);
             Console.ResetColor();
         }
 

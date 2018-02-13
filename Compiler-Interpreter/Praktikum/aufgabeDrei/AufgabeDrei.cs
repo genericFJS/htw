@@ -10,13 +10,9 @@ namespace aufgabeDrei {
         static void Main(string[] args) {
 
             // Tests:
-            //TestPrint(42);
-            String testString = "Hallo!";
-            // String zu char Array
-            char[] testCharArr = testString.ToCharArray();
-            // Char Array to int array
-            int[] testIntArr = Array.ConvertAll(testCharArr, c => (int)c);
+            int jump = 14-98;
             //TestPrint(testIntArr);
+            //TestPrint(jump);
 
             while (true) {
                 Console.Write("Dateiname: ");
@@ -42,7 +38,8 @@ namespace aufgabeDrei {
             foreach (var parameter in parameters) {
                 byte[] byteArray = BitConverter.GetBytes(parameter);
                 // Füge erstes Byte (little Endian) in Liste ein.
-                Console.WriteLine(byteArray[0]);
+                Console.WriteLine("{0}", byteArray[0].ToString("X"));
+                Console.WriteLine("{0}", byteArray[1].ToString("X"));
             }
         }
     }
