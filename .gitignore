@@ -436,6 +436,9 @@ Internet-Technologien 2/Praktikum/s74053-it2-beleg/*.md
 Programmierung von Benutzeroberflächen/Praktikum/PBO_HTML_CSS/*
 Programmierung von Benutzeroberflächen/pbo_processview/
 Computergrafik 1/2017/Praktikum/cgprakt2017/Beispiele/*
+Compiler-Interpreter/Praktikum/CL0-Interpreter/CL0-out/*
+Compiler-Interpreter/Praktikum/CL0-Interpreter/CL0-run/*
+Compiler-Interpreter/Praktikum/CL0-Interpreter/CL0-run_nl/*
 # ignoriere Dateien
 *.pdf
 *.psd
