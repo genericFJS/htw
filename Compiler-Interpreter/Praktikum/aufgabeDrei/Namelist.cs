@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace aufgabeDrei {
+namespace pl0Compiler {
     /// <summary>
     /// Abstrakter Eintrag in der Namensliste enthält den Typ (
     /// </summary>

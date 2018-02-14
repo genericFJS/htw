@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace aufgabeDrei {
+namespace pl0Compiler {
     class Parser {
         private delegate bool ActionDelegate();
 
@@ -85,7 +85,7 @@ namespace aufgabeDrei {
             programmGraph[0] = new Edge(EdgeType.graph, blockGraph, null, 1, -1);
             programmGraph[1] = new Edge(EdgeType.symbol, ".", new ActionDelegate(ProgrammEnd), -1, -1);
 
-            blockGraph[0] = new Edge(EdgeType.symbol, "const", null, 1, 7); // Bögen const
+            blockGraph[0] = new Edge(EdgeType.symbol, "CONST", null, 1, 7); // Bögen const
             blockGraph[1] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(BlockCheckConstIdentifier), 2, -1);
             blockGraph[2] = new Edge(EdgeType.symbol, "=", null, 3, -1);
             blockGraph[3] = new Edge(EdgeType.morphem, MorphemCode.number, new ActionDelegate(BlockCheckConstValue), 4, -1);
@@ -93,13 +93,13 @@ namespace aufgabeDrei {
             blockGraph[5] = new Edge(EdgeType.symbol, ";", null, 6, -1);
             blockGraph[6] = new Edge(EdgeType.blank, null, null, 8, -1);
             blockGraph[7] = new Edge(EdgeType.blank, null, null, 8, -1);
-            blockGraph[8] = new Edge(EdgeType.symbol, "var", null, 9, 13); // Bögen var
+            blockGraph[8] = new Edge(EdgeType.symbol, "VAR", null, 9, 13); // Bögen var
             blockGraph[9] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(BlockCheckVarIdentifier), 10, -1);
             blockGraph[10] = new Edge(EdgeType.symbol, ",", null, 9, 11);
             blockGraph[11] = new Edge(EdgeType.symbol, ";", null, 12, -1);
             blockGraph[12] = new Edge(EdgeType.blank, null, null, 14, -1);
             blockGraph[13] = new Edge(EdgeType.blank, null, null, 14, -1);
-            blockGraph[14] = new Edge(EdgeType.symbol, "procedure", null, 15, 20); // Bögen procedure
+            blockGraph[14] = new Edge(EdgeType.symbol, "PROCEDURE", null, 15, 20); // Bögen procedure
             blockGraph[15] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(BlockCheckProcedureIdentifer), 16, -1);
             blockGraph[16] = new Edge(EdgeType.symbol, ";", null, 17, -1);
             blockGraph[17] = new Edge(EdgeType.graph, blockGraph, null, 18, -1);
@@ -111,19 +111,19 @@ namespace aufgabeDrei {
             statementGraph[0] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(StatementCheckVarIdentifier), 1, 3); // Bögen var
             statementGraph[1] = new Edge(EdgeType.symbol, ":=", null, 2, -1);
             statementGraph[2] = new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(StatementStoreVarValue), -1, -1);
-            statementGraph[3] = new Edge(EdgeType.symbol, "if", null, 4, 7); // Bögen if
+            statementGraph[3] = new Edge(EdgeType.symbol, "IF", null, 4, 7); // Bögen if
             statementGraph[4] = new Edge(EdgeType.graph, conditionGraph, new ActionDelegate(StatementIfCondition), 5, -1);
-            statementGraph[5] = new Edge(EdgeType.symbol, "then", null, 6, -1);
+            statementGraph[5] = new Edge(EdgeType.symbol, "THEN", null, 6, -1);
             statementGraph[6] = new Edge(EdgeType.graph, statementGraph, new ActionDelegate(StatementIfStatement), -1, -1);
-            statementGraph[7] = new Edge(EdgeType.symbol, "while", new ActionDelegate(StatementWhile), 8, 11); // Bögen while
+            statementGraph[7] = new Edge(EdgeType.symbol, "WHILE", new ActionDelegate(StatementWhile), 8, 11); // Bögen while
             statementGraph[8] = new Edge(EdgeType.graph, conditionGraph, new ActionDelegate(StatementWhileCondition), 9, -1);
-            statementGraph[9] = new Edge(EdgeType.symbol, "do", null, 10, -1);
+            statementGraph[9] = new Edge(EdgeType.symbol, "DO", null, 10, -1);
             statementGraph[10] = new Edge(EdgeType.graph, statementGraph, new ActionDelegate(StatementWhileStatement), -1, -1);
-            statementGraph[11] = new Edge(EdgeType.symbol, "begin", null, 12, 15); // Bögen codeblock
+            statementGraph[11] = new Edge(EdgeType.symbol, "BEGIN", null, 12, 15); // Bögen codeblock
             statementGraph[12] = new Edge(EdgeType.graph, statementGraph, null, 13, 14);
             statementGraph[13] = new Edge(EdgeType.symbol, ";", null, 12, 14);
-            statementGraph[14] = new Edge(EdgeType.symbol, "end", null, -1, -1);
-            statementGraph[15] = new Edge(EdgeType.symbol, "call", null, 16, 17); // Bögen call
+            statementGraph[14] = new Edge(EdgeType.symbol, "END", null, -1, -1);
+            statementGraph[15] = new Edge(EdgeType.symbol, "CALL", null, 16, 17); // Bögen call
             statementGraph[16] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(StatementProcedureCall), -1, -1);
             statementGraph[17] = new Edge(EdgeType.symbol, "?", null, 18, 19);  // Bögen input
             statementGraph[18] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(StatementInput), -1, -1);
@@ -157,7 +157,7 @@ namespace aufgabeDrei {
             factorGraph[3] = new Edge(EdgeType.symbol, ")", null, -1, -1);
             factorGraph[4] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(FactorCheckIdentifier), -1, -1);  // Bogen identifier
 
-            conditionGraph[0] = new Edge(EdgeType.symbol, "odd", null, 1, 2);  // Bögen odd
+            conditionGraph[0] = new Edge(EdgeType.symbol, "ODD", null, 1, 2);  // Bögen odd
             conditionGraph[1] = new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(ConditionOdd), -1, -1);
             conditionGraph[2] = new Edge(EdgeType.graph, expressionGraph, null, 3, -1);    // Bögen comparsion
             conditionGraph[3] = new Edge(EdgeType.symbol, "=", new ActionDelegate(ConditionSaveEQ), 9, 4);
@@ -194,7 +194,7 @@ namespace aufgabeDrei {
                         success = true;
                         break;
                     case EdgeType.symbol:
-                        success = (currentMorphem.Code == MorphemCode.symbol && currentMorphem.Value.ToUpper() == currentEdge.Value.ToUpper());
+                        success = (currentMorphem.Code == MorphemCode.symbol && currentMorphem.Value == currentEdge.Value);
                         break;
                     case EdgeType.morphem:
                         success = (currentMorphem.Code == currentEdge.Value);

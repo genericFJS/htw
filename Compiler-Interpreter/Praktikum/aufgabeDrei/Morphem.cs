@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace aufgabeDrei {
+namespace pl0Compiler {
     struct Morphem {
         // Gibt an, welche Art von Morhpem vorliegt:
         public MorphemCode Code { get; private set; }

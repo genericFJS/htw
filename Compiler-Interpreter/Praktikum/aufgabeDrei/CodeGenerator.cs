@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace aufgabeDrei {
+namespace pl0Compiler {
 
     enum CommandCode : int {
         /*--- Kellerbefehle ---*/

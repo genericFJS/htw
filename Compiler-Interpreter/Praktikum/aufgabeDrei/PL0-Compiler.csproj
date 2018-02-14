@@ -7,7 +7,7 @@
     <ProjectGuid>{B61A0E40-43AF-4664-BEA0-DB539433591F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>aufgabeDrei</RootNamespace>
-    <AssemblyName>aufgabeDrei</AssemblyName>
+    <AssemblyName>compile</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AufgabeDrei.cs" />
+    <Compile Include="Compiler.cs" />
     <Compile Include="CodeGenerator.cs" />
     <Compile Include="Lexer.cs" />
     <Compile Include="Morphem.cs" />

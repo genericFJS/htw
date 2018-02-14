@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace aufgabeDrei {
+namespace pl0Compiler {
     class Lexer {
         // Stream der zu lexenden Datei:
         private StreamReader fileReader;
@@ -16,7 +16,7 @@ namespace aufgabeDrei {
         // Aktueller Character als Zahl:
         private int currentCharCode;
         // Aktueller Morphemwert (wird bei längeren Morphemen stets erweitert):
-        private string tempMorphemString;
+        private String tempMorphemString;
         // Das erarbeitete Morhpem (zur Rückgabe):
         private Morphem lexedMorphem;
         // Delegate für die Nächste Aktion im der categoryNextActionTable:
@@ -229,8 +229,8 @@ namespace aufgabeDrei {
                 case 0: // Sonderzeichen
                     lexedMorphem.Symbol = tempMorphemString;
                     break;
-                case 9: // String
-                    lexedMorphem.Strings = tempMorphemString;
+                case 9: // String (ersetze newline und tab Escapesequenzen mit entsprechenden Zeichen)
+                    lexedMorphem.Strings = tempMorphemString.Replace("\\n", "\n").Replace("\\t", "\t");
                     break;
                 case 2: // Zahl
                     lexedMorphem.Number = int.Parse(tempMorphemString);
