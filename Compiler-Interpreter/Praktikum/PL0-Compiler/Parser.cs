@@ -1,11 +1,17 @@
-﻿using System;
+﻿// Code von Falk-Jonatan Strube (mail@fj-strube.de)
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pl0Compiler {
+namespace PL0Compiler {
+    /// <summary>
+    /// Der Parser parst den Code. Dazu wird eine lexikalische Analyse durchgeführt und die korrekte Grammatik erkannt.
+    /// Dieser Parser leitet weiterhin Aktionen an den Codegenerator weiter, damit der passende Code dazu generiert werden kann.
+    /// </summary>
     class Parser {
+        // Delegate für die (potentielle) Aktion einer Kante.
         private delegate bool ActionDelegate();
 
         /// <summary>
@@ -19,26 +25,26 @@ namespace pl0Compiler {
         }
 
         /// <summary>
-        /// Stellt eine Kante dar. 
+        /// Stellt eine Kante in einem Graphen dar. 
         /// </summary>
         private struct Edge {
             public EdgeType Type { private set; get; }
-            // Mögliche Kanten-Werte:
+            // Mögliche Kanten-Werte.
             public dynamic Value { private set; get; }
-            // Folgeaktion:
+            // Folgeaktion.
             public ActionDelegate Action { private set; get; }
-            // Nächste/alterantive Kante
+            // Nächste/alterantive Kante.
             public int NextEdge { private set; get; }
             public int AlternativeEdge { private set; get; }
 
             /// <summary>
             /// Erstellt neue Kante.
             /// </summary>
-            /// <param name="newType"> Typ der Kante </param>
-            /// <param name="newValue"> Wert der Kante (Symbol/Morphemcode/Graph)</param>
-            /// <param name="newAction"> Aktion der Kante</param>
-            /// <param name="newNextEdge"> Nächste Kante </param>
-            /// <param name="newAlternativeEdge"> Kantenalternativen </param>
+            /// <param name="newType">Typ der Kante</param>
+            /// <param name="newValue">Wert der Kante (Symbol/Morphemcode/Graph)</param>
+            /// <param name="newAction">Aktion der Kante</param>
+            /// <param name="newNextEdge">Folgekante</param>
+            /// <param name="newAlternativeEdge">Kantenalternative</param>
             public Edge(EdgeType newType, dynamic newValue, ActionDelegate newAction, int newNextEdge, int newAlternativeEdge) {
                 Type = newType;
                 Value = newValue;
@@ -48,44 +54,166 @@ namespace pl0Compiler {
             }
         }
 
-        // Definition der Bögen:
-        private Edge[] programmGraph = new Edge[2];
-        private Edge[] blockGraph = new Edge[22];
-        private Edge[] statementGraph = new Edge[23];
-        private Edge[] expressionGraph = new Edge[10];
-        private Edge[] termGraph = new Edge[7];
-        private Edge[] factorGraph = new Edge[5];
-        private Edge[] conditionGraph = new Edge[10];
+        // Größe der Graphen.
+        private const int PROGRAMMGRAPH_SIZE = 2;
+        private const int BLOCKGRAPH_SIZE = 22;
+        private const int STATEMENTGRAPH_SIZE = 23;
+        private const int EXPRESSIONGRAPH_SIZE = 10;
+        private const int TERMGRAPH_SIZE = 7;
+        private const int FACTORGRAPH_SIZE = 5;
+        private const int CONDITIONGRAPH_SIZE = 10;
+        // Definition der Graphen.
+        private Edge[] programmGraph = new Edge[PROGRAMMGRAPH_SIZE];
+        private Edge[] blockGraph = new Edge[BLOCKGRAPH_SIZE];
+        private Edge[] statementGraph = new Edge[STATEMENTGRAPH_SIZE];
+        private Edge[] expressionGraph = new Edge[EXPRESSIONGRAPH_SIZE];
+        private Edge[] termGraph = new Edge[TERMGRAPH_SIZE];
+        private Edge[] factorGraph = new Edge[FACTORGRAPH_SIZE];
+        private Edge[] conditionGraph = new Edge[CONDITIONGRAPH_SIZE];
 
-        // Definiton Morphem:
+        // Definiton Morphem und Lexer.
         private Morphem currentMorphem = new Morphem(true);
         private Lexer lexer;
 
-        // Code-Generator
+        // Code-Generator.
         private CodeGenerator codeGenerator;
 
-        // Definition Namensliste:
+        // Definition Namensliste.
         private NamelistProcedure currentProcedure = new NamelistProcedure();
-        // Zwischenspeicher Konstanten/Variablen/Prozedur-Name
+        // Zwischenspeicher Konstanten/Variablen/Prozedur-Name.
         private String currentName;
-        // Zwischenspeicher Condition
+        // Zwischenspeicher Condition.
         private CommandCode currentCondition;
-        // Prozedurzähler
+        // Prozedurzähler.
         private int numberOfProcedures = 1;
-        // Constantenliste
+        // Konstantenliste.
         private List<NamelistConstant> constantList = new List<NamelistConstant>();
 
-        // Größe eines Wertes in der Virtuellen Maschine (4 Byte)
+        // Größe eines Wertes in der Virtuellen Maschine (4 Byte).
         private static readonly int VALUE_SIZE = 4;
 
+        /// <summary>
+        /// Initialisiere den Parser mit der zu kompilierenden Datei. 
+        /// Graphen werden dazu mit den Kanten belegt. 
+        /// Der Lexer und CodeGenerator werden mit der Datei erstellt.
+        /// </summary>
+        /// <param name="filePath">Zu kompilierende Datei</param>
         public Parser(string filePath) {
-            // Initialisierung der Bögen:
-            // Alternative Bögen -1: es existiert keine Alternative (oder ist letzte Alternative)
-            // Nächster Bögen -1: es existiert kein nächster Bogen => Ende vom Graph
+            // Initialisierung der Kanten entsprechend der (analog) angefertigten Nummerierungen der Graphen: 
+            // { Typ, Wert, Aktion, Folgekante, Alternativkante }
+            // Alternativkante -1: es existiert keine Alternative (oder ist letzte Alternative)
+            // Folgekante      -1: es existiert kein nächste Kante => Ende vom Graph
+            Edge[] programmGraphTemp = new Edge[PROGRAMMGRAPH_SIZE] {
+                /* 0 */ new Edge(EdgeType.graph,  blockGraph, null,                             1, -1),
+                /* 1 */ new Edge(EdgeType.symbol, ".",        new ActionDelegate(ProgrammEnd), -1, -1)
+            };
+
+            Edge[] blockGraphTemp = new Edge[BLOCKGRAPH_SIZE] {
+                /*  0 */ new Edge(EdgeType.symbol,  "CONST",                null,                                              1,  7), // Kanten const
+                /*  1 */ new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(BlockCheckConstIdentifier),     2, -1),
+                /*  2 */ new Edge(EdgeType.symbol,  "=",                    null,                                              3, -1),
+                /*  3 */ new Edge(EdgeType.morphem, MorphemCode.number,     new ActionDelegate(BlockCheckConstValue),          4, -1),
+                /*  4 */ new Edge(EdgeType.symbol,  ",",                    null,                                              1,  5),
+                /*  5 */ new Edge(EdgeType.symbol,  ";",                    null,                                              6, -1),
+                /*  6 */ new Edge(EdgeType.blank,   null,                   null,                                              8, -1),
+                /*  7 */ new Edge(EdgeType.blank,   null,                   null,                                              8, -1),
+                /*  8 */ new Edge(EdgeType.symbol,  "VAR",                  null,                                              9, 13), // Kanten var
+                /*  9 */ new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(BlockCheckVarIdentifier),      10, -1),
+                /* 10 */ new Edge(EdgeType.symbol,  ",",                    null,                                              9, 11),
+                /* 11 */ new Edge(EdgeType.symbol,  ";",                    null,                                             12, -1),
+                /* 12 */ new Edge(EdgeType.blank,   null,                   null,                                             14, -1),
+                /* 13 */ new Edge(EdgeType.blank,   null,                   null,                                             14, -1),
+                /* 14 */ new Edge(EdgeType.symbol,  "PROCEDURE",            null,                                             15, 20), // Kanten procedure
+                /* 15 */ new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(BlockCheckProcedureIdentifer), 16, -1),
+                /* 16 */ new Edge(EdgeType.symbol,  ";",                    null,                                             17, -1),
+                /* 17 */ new Edge(EdgeType.graph,   blockGraph,             null,                                             18, -1),
+                /* 18 */ new Edge(EdgeType.symbol,  ";",                    new ActionDelegate(BlockEndProcedure),            19, -1),
+                /* 19 */ new Edge(EdgeType.blank,   null,                   null,                                             14, 20),
+                /* 20 */ new Edge(EdgeType.blank,   null,                   new ActionDelegate(BlockEnterStatement),          21, -1), // Zum statement
+                /* 21 */ new Edge(EdgeType.graph,   statementGraph,         null,                                             -1, -1)
+            };
+
+            Edge[] statementGraphTemp = new Edge[STATEMENTGRAPH_SIZE] {
+                /*  0 */ new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(StatementCheckVarIdentifier),  1,  3), // Kanten var
+                /*  1 */ new Edge(EdgeType.symbol,  ":=",                   null,                                             2, -1),
+                /*  2 */ new Edge(EdgeType.graph,   expressionGraph,        new ActionDelegate(StatementStoreVarValue),      -1, -1),
+                /*  3 */ new Edge(EdgeType.symbol,  "IF",                   null,                                             4,  7), // Kanten if
+                /*  4 */ new Edge(EdgeType.graph,   conditionGraph,         new ActionDelegate(StatementIfCondition),         5, -1),
+                /*  5 */ new Edge(EdgeType.symbol,  "THEN",                 null,                                             6, -1),
+                /*  6 */ new Edge(EdgeType.graph,   statementGraph,         new ActionDelegate(StatementIfStatement),        -1, -1),
+                /*  7 */ new Edge(EdgeType.symbol,  "WHILE",                new ActionDelegate(StatementWhile),               8, 11), // Kanten while
+                /*  8 */ new Edge(EdgeType.graph,   conditionGraph,         new ActionDelegate(StatementWhileCondition),      9, -1),
+                /*  9 */ new Edge(EdgeType.symbol,  "DO",                   null,                                            10, -1),
+                /* 10 */ new Edge(EdgeType.graph,   statementGraph,         new ActionDelegate(StatementWhileStatement),     -1, -1),
+                /* 11 */ new Edge(EdgeType.symbol,  "BEGIN",                null,                                            12, 15), // Kanten codeblock
+                /* 12 */ new Edge(EdgeType.graph,   statementGraph,         null,                                            13, 14),
+                /* 13 */ new Edge(EdgeType.symbol,  ";",                    null,                                            12, 14),
+                /* 14 */ new Edge(EdgeType.symbol,  "END",                  null,                                            -1, -1),
+                /* 15 */ new Edge(EdgeType.symbol,  "CALL",                 null,                                            16, 17), // Kanten call
+                /* 16 */ new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(StatementProcedureCall),      -1, -1),
+                /* 17 */ new Edge(EdgeType.symbol,  "?",                    null,                                            18, 19), // Kanten input
+                /* 18 */ new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(StatementInput),              -1, -1),
+                /* 19 */ new Edge(EdgeType.symbol,  "!",                    null,                                            22, 21), // Kanten output
+                /* 20 */ new Edge(EdgeType.graph,   expressionGraph,        new ActionDelegate(StatementOutputExpression),   -1, -1),
+                /* 21 */ new Edge(EdgeType.blank,   null,                   null,                                            -1, -1),
+                /* 22 */ new Edge(EdgeType.morphem, MorphemCode.strings,    new ActionDelegate(StatementOutputString),       -1, 20)  // Erweiterung String output
+            };
+
+            Edge[] expressionGraphTemp = new Edge[EXPRESSIONGRAPH_SIZE] {
+                /* 0 */ new Edge(EdgeType.symbol, "-",       null,                                      1,  2), // Kanten negative term
+                /* 1 */ new Edge(EdgeType.graph,  termGraph, new ActionDelegate(ExpressionNegative),    4, -1),
+                /* 2 */ new Edge(EdgeType.blank,  null,      null,                                      3, -1), // Kanten normal term
+                /* 3 */ new Edge(EdgeType.graph,  termGraph, null,                                      4, -1),
+                /* 4 */ new Edge(EdgeType.blank,  null,      null,                                      5, -1),
+                /* 5 */ new Edge(EdgeType.symbol, "+",       null,                                      6,  7), // Kanten addition
+                /* 6 */ new Edge(EdgeType.graph,  termGraph, new ActionDelegate(ExpressionAddition),    4, -1),
+                /* 7 */ new Edge(EdgeType.symbol, "-",       null,                                      8,  9), // Kanten subtraction
+                /* 8 */ new Edge(EdgeType.graph,  termGraph, new ActionDelegate(ExpressionSubtraction), 4, -1),
+                /* 9 */ new Edge(EdgeType.blank,  null,      null,                                     -1, -1)
+            };
+
+            Edge[] termGraphTemp = new Edge[TERMGRAPH_SIZE] {
+                /* 0 */ new Edge(EdgeType.graph,  factorGraph, null,                                    1, -1),
+                /* 1 */ new Edge(EdgeType.blank,  null,        null,                                    2, -1),
+                /* 2 */ new Edge(EdgeType.symbol, "*",         null,                                    3,  4), // Kanten multiplication
+                /* 3 */ new Edge(EdgeType.graph,  factorGraph, new ActionDelegate(TermMultiplication),  1, -1),
+                /* 4 */ new Edge(EdgeType.symbol, "/",         null,                                    5,  6), // Kanten division
+                /* 5 */ new Edge(EdgeType.graph,  factorGraph, new ActionDelegate(TermDivision),        1, -1),
+                /* 6 */ new Edge(EdgeType.blank,  null,        null,                                   -1, -1)
+            };
+
+
+            Edge[] factorGraphTemp = new Edge[FACTORGRAPH_SIZE] {
+                /* 0 */ new Edge(EdgeType.morphem, MorphemCode.number,     new ActionDelegate(FactorCheckNumber),     -1,  1), // Kante numeral
+                /* 1 */ new Edge(EdgeType.symbol,  "(",                    null,                                       2,  4), // Kanten braced
+                /* 2 */ new Edge(EdgeType.graph,   expressionGraph,        null,                                       3, -1),
+                /* 3 */ new Edge(EdgeType.symbol,  ")",                    null,                                      -1, -1),
+                /* 4 */ new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(FactorCheckIdentifier), -1, -1)  // Kante identifier
+            };
+
+            Edge[] conditionGraphTemp = new Edge[CONDITIONGRAPH_SIZE] {
+                /* 0 */ new Edge(EdgeType.symbol, "ODD",           null,                                       1,  2), // Kanten odd
+                /* 1 */ new Edge(EdgeType.graph,  expressionGraph, new ActionDelegate(ConditionOdd),          -1, -1),
+                /* 2 */ new Edge(EdgeType.graph,  expressionGraph, null,                                       3, -1), // Kanten comparsion
+                /* 3 */ new Edge(EdgeType.symbol, "=",             new ActionDelegate(ConditionSaveEQ),        9,  4),
+                /* 4 */ new Edge(EdgeType.symbol, "#",             new ActionDelegate(ConditionSaveNE),        9,  5),
+                /* 5 */ new Edge(EdgeType.symbol, "<",             new ActionDelegate(ConditionSaveLT),        9,  6),
+                /* 6 */ new Edge(EdgeType.symbol, "<=",            new ActionDelegate(ConditionSaveLE),        9,  7),
+                /* 7 */ new Edge(EdgeType.symbol, ">",             new ActionDelegate(ConditionSaveGT),        9,  8),
+                /* 8 */ new Edge(EdgeType.symbol, ">=",            new ActionDelegate(ConditionSaveGE),        9, -1),
+                /* 9 */ new Edge(EdgeType.graph,  expressionGraph, new ActionDelegate(ConditionApplyOperand), -1, -1)
+            };
+
+            /* 
+             * Da die Kanten der Graphen in Parse() angesteuert werden, müssen sie zuvor global initialisiert werden (new Edge[...]).
+             * Somit können sie nicht einfach mit einem neun Graphen überschrieben werden, da bereits auf die Einträge der initialen Graphen verwiesen wird.
+             * Damit müssen entweder (wie hier auskommentiert) den Einträgen die tatsächliche Kanten zugewiesen (wird vom Autoformater zerschossen) oder wie 
+             * oberhalb temporärere Graphen erstellt werden, dessen Einträge dann in die globalen Graphen eingetragen werden (damit kann man Leerzeichen 
+             * einfügen, ohne dass sie vom Autoformater entfernt werden - das ist tabellarisch gut übersichtlich).
             programmGraph[0] = new Edge(EdgeType.graph, blockGraph, null, 1, -1);
             programmGraph[1] = new Edge(EdgeType.symbol, ".", new ActionDelegate(ProgrammEnd), -1, -1);
 
-            blockGraph[0] = new Edge(EdgeType.symbol, "CONST", null, 1, 7); // Bögen const
+            blockGraph[0] = new Edge(EdgeType.symbol, "CONST", null, 1, 7); // Kanten const
             blockGraph[1] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(BlockCheckConstIdentifier), 2, -1);
             blockGraph[2] = new Edge(EdgeType.symbol, "=", null, 3, -1);
             blockGraph[3] = new Edge(EdgeType.morphem, MorphemCode.number, new ActionDelegate(BlockCheckConstValue), 4, -1);
@@ -93,13 +221,13 @@ namespace pl0Compiler {
             blockGraph[5] = new Edge(EdgeType.symbol, ";", null, 6, -1);
             blockGraph[6] = new Edge(EdgeType.blank, null, null, 8, -1);
             blockGraph[7] = new Edge(EdgeType.blank, null, null, 8, -1);
-            blockGraph[8] = new Edge(EdgeType.symbol, "VAR", null, 9, 13); // Bögen var
+            blockGraph[8] = new Edge(EdgeType.symbol, "VAR", null, 9, 13); // Kanten var
             blockGraph[9] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(BlockCheckVarIdentifier), 10, -1);
             blockGraph[10] = new Edge(EdgeType.symbol, ",", null, 9, 11);
             blockGraph[11] = new Edge(EdgeType.symbol, ";", null, 12, -1);
             blockGraph[12] = new Edge(EdgeType.blank, null, null, 14, -1);
             blockGraph[13] = new Edge(EdgeType.blank, null, null, 14, -1);
-            blockGraph[14] = new Edge(EdgeType.symbol, "PROCEDURE", null, 15, 20); // Bögen procedure
+            blockGraph[14] = new Edge(EdgeType.symbol, "PROCEDURE", null, 15, 20); // Kanten procedure
             blockGraph[15] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(BlockCheckProcedureIdentifer), 16, -1);
             blockGraph[16] = new Edge(EdgeType.symbol, ";", null, 17, -1);
             blockGraph[17] = new Edge(EdgeType.graph, blockGraph, null, 18, -1);
@@ -108,58 +236,58 @@ namespace pl0Compiler {
             blockGraph[20] = new Edge(EdgeType.blank, null, new ActionDelegate(BlockEnterStatement), 21, -1); // Zum statement
             blockGraph[21] = new Edge(EdgeType.graph, statementGraph, null, -1, -1);
 
-            statementGraph[0] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(StatementCheckVarIdentifier), 1, 3); // Bögen var
+            statementGraph[0] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(StatementCheckVarIdentifier), 1, 3); // Kanten var
             statementGraph[1] = new Edge(EdgeType.symbol, ":=", null, 2, -1);
             statementGraph[2] = new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(StatementStoreVarValue), -1, -1);
-            statementGraph[3] = new Edge(EdgeType.symbol, "IF", null, 4, 7); // Bögen if
+            statementGraph[3] = new Edge(EdgeType.symbol, "IF", null, 4, 7); // Kanten if
             statementGraph[4] = new Edge(EdgeType.graph, conditionGraph, new ActionDelegate(StatementIfCondition), 5, -1);
             statementGraph[5] = new Edge(EdgeType.symbol, "THEN", null, 6, -1);
             statementGraph[6] = new Edge(EdgeType.graph, statementGraph, new ActionDelegate(StatementIfStatement), -1, -1);
-            statementGraph[7] = new Edge(EdgeType.symbol, "WHILE", new ActionDelegate(StatementWhile), 8, 11); // Bögen while
+            statementGraph[7] = new Edge(EdgeType.symbol, "WHILE", new ActionDelegate(StatementWhile), 8, 11); // Kanten while
             statementGraph[8] = new Edge(EdgeType.graph, conditionGraph, new ActionDelegate(StatementWhileCondition), 9, -1);
             statementGraph[9] = new Edge(EdgeType.symbol, "DO", null, 10, -1);
             statementGraph[10] = new Edge(EdgeType.graph, statementGraph, new ActionDelegate(StatementWhileStatement), -1, -1);
-            statementGraph[11] = new Edge(EdgeType.symbol, "BEGIN", null, 12, 15); // Bögen codeblock
+            statementGraph[11] = new Edge(EdgeType.symbol, "BEGIN", null, 12, 15); // Kanten codeblock
             statementGraph[12] = new Edge(EdgeType.graph, statementGraph, null, 13, 14);
             statementGraph[13] = new Edge(EdgeType.symbol, ";", null, 12, 14);
             statementGraph[14] = new Edge(EdgeType.symbol, "END", null, -1, -1);
-            statementGraph[15] = new Edge(EdgeType.symbol, "CALL", null, 16, 17); // Bögen call
+            statementGraph[15] = new Edge(EdgeType.symbol, "CALL", null, 16, 17); // Kanten call
             statementGraph[16] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(StatementProcedureCall), -1, -1);
-            statementGraph[17] = new Edge(EdgeType.symbol, "?", null, 18, 19);  // Bögen input
+            statementGraph[17] = new Edge(EdgeType.symbol, "?", null, 18, 19);  // Kanten input
             statementGraph[18] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(StatementInput), -1, -1);
-            statementGraph[19] = new Edge(EdgeType.symbol, "!", null, 22, 21);  // Bögen output
+            statementGraph[19] = new Edge(EdgeType.symbol, "!", null, 22, 21);  // Kanten output
             statementGraph[20] = new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(StatementOutputExpression), -1, -1);
             statementGraph[21] = new Edge(EdgeType.blank, null, null, -1, -1);
-            statementGraph[22] = new Edge(EdgeType.morphem, MorphemCode.strings, new ActionDelegate(StatementOutputString), -1, 20); // Erweiterung output String
+            statementGraph[22] = new Edge(EdgeType.morphem, MorphemCode.strings, new ActionDelegate(StatementOutputString), -1, 20); // Erweiterung String output
 
-            expressionGraph[0] = new Edge(EdgeType.symbol, "-", null, 1, 2);    // Bögen negative term
+            expressionGraph[0] = new Edge(EdgeType.symbol, "-", null, 1, 2);    // Kanten negative term
             expressionGraph[1] = new Edge(EdgeType.graph, termGraph, new ActionDelegate(ExpressionNegative), 4, -1);
-            expressionGraph[2] = new Edge(EdgeType.blank, null, null, 3, -1);   // Bögen normal term
+            expressionGraph[2] = new Edge(EdgeType.blank, null, null, 3, -1);   // Kanten normal term
             expressionGraph[3] = new Edge(EdgeType.graph, termGraph, null, 4, -1);
             expressionGraph[4] = new Edge(EdgeType.blank, null, null, 5, -1);
-            expressionGraph[5] = new Edge(EdgeType.symbol, "+", null, 6, 7);   // Bögen addition
+            expressionGraph[5] = new Edge(EdgeType.symbol, "+", null, 6, 7);   // Kanten addition
             expressionGraph[6] = new Edge(EdgeType.graph, termGraph, new ActionDelegate(ExpressionAddition), 4, -1);
-            expressionGraph[7] = new Edge(EdgeType.symbol, "-", null, 8, 9);   // Bögen subtraction
+            expressionGraph[7] = new Edge(EdgeType.symbol, "-", null, 8, 9);   // Kanten subtraction
             expressionGraph[8] = new Edge(EdgeType.graph, termGraph, new ActionDelegate(ExpressionSubtraction), 4, -1);
             expressionGraph[9] = new Edge(EdgeType.blank, null, null, -1, -1);
-
+            
             termGraph[0] = new Edge(EdgeType.graph, factorGraph, null, 1, -1);
             termGraph[1] = new Edge(EdgeType.blank, null, null, 2, -1);
-            termGraph[2] = new Edge(EdgeType.symbol, "*", null, 3, 4);   // Bögen multiplication
+            termGraph[2] = new Edge(EdgeType.symbol, "*", null, 3, 4);   // Kanten multiplication
             termGraph[3] = new Edge(EdgeType.graph, factorGraph, new ActionDelegate(TermMultiplication), 1, -1);
-            termGraph[4] = new Edge(EdgeType.symbol, "/", null, 5, 6);    // Bögen division
+            termGraph[4] = new Edge(EdgeType.symbol, "/", null, 5, 6);    // Kanten division
             termGraph[5] = new Edge(EdgeType.graph, factorGraph, new ActionDelegate(TermDivision), 1, -1);
             termGraph[6] = new Edge(EdgeType.blank, null, null, -1, -1);
 
-            factorGraph[0] = new Edge(EdgeType.morphem, MorphemCode.number, new ActionDelegate(FactorCheckNumber), -1, 1);  // Bogen numeral
-            factorGraph[1] = new Edge(EdgeType.symbol, "(", null, 2, 4);    // Bögen braced
+            factorGraph[0] = new Edge(EdgeType.morphem, MorphemCode.number, new ActionDelegate(FactorCheckNumber), -1, 1);  // Kante numeral
+            factorGraph[1] = new Edge(EdgeType.symbol, "(", null, 2, 4);    // Kanten braced
             factorGraph[2] = new Edge(EdgeType.graph, expressionGraph, null, 3, -1);
             factorGraph[3] = new Edge(EdgeType.symbol, ")", null, -1, -1);
-            factorGraph[4] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(FactorCheckIdentifier), -1, -1);  // Bogen identifier
+            factorGraph[4] = new Edge(EdgeType.morphem, MorphemCode.identifier, new ActionDelegate(FactorCheckIdentifier), -1, -1);  // Knte identifier
 
-            conditionGraph[0] = new Edge(EdgeType.symbol, "ODD", null, 1, 2);  // Bögen odd
+            conditionGraph[0] = new Edge(EdgeType.symbol, "ODD", null, 1, 2);  // Kanten odd
             conditionGraph[1] = new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(ConditionOdd), -1, -1);
-            conditionGraph[2] = new Edge(EdgeType.graph, expressionGraph, null, 3, -1);    // Bögen comparsion
+            conditionGraph[2] = new Edge(EdgeType.graph, expressionGraph, null, 3, -1);    // Kanten comparsion
             conditionGraph[3] = new Edge(EdgeType.symbol, "=", new ActionDelegate(ConditionSaveEQ), 9, 4);
             conditionGraph[4] = new Edge(EdgeType.symbol, "#", new ActionDelegate(ConditionSaveNE), 9, 5);
             conditionGraph[5] = new Edge(EdgeType.symbol, "<", new ActionDelegate(ConditionSaveLT), 9, 6);
@@ -167,12 +295,35 @@ namespace pl0Compiler {
             conditionGraph[7] = new Edge(EdgeType.symbol, ">", new ActionDelegate(ConditionSaveGT), 9, 8);
             conditionGraph[8] = new Edge(EdgeType.symbol, ">=", new ActionDelegate(ConditionSaveGE), 9, -1);
             conditionGraph[9] = new Edge(EdgeType.graph, expressionGraph, new ActionDelegate(ConditionApplyOperand), -1, -1);
-            
+            */
+
+            // Kopiere die temporären Graphen in die tätschlich benutzten.
+            for (int i = 0; i < PROGRAMMGRAPH_SIZE; i++)
+                programmGraph[i] = programmGraphTemp[i];
+            for (int i = 0; i < BLOCKGRAPH_SIZE; i++)
+                blockGraph[i] = blockGraphTemp[i];
+            for (int i = 0; i < STATEMENTGRAPH_SIZE; i++)
+                statementGraph[i] = statementGraphTemp[i];
+            for (int i = 0; i < EXPRESSIONGRAPH_SIZE; i++)
+                expressionGraph[i] = expressionGraphTemp[i];
+            for (int i = 0; i < TERMGRAPH_SIZE; i++)
+                termGraph[i] = termGraphTemp[i];
+            for (int i = 0; i < FACTORGRAPH_SIZE; i++)
+                factorGraph[i] = factorGraphTemp[i];
+            for (int i = 0; i < CONDITIONGRAPH_SIZE; i++)
+                conditionGraph[i] = conditionGraphTemp[i];
+
+            // Initialisiere Lexer mit der zu parsenden Datei.
             lexer = new Lexer(filePath);
 
+            // Initialisiere CodeGenerator mit der zu parsenden Datei (entspricht - ausgenommen der Endung - der Ausgabedatei).
             codeGenerator = new CodeGenerator(filePath);
         }
 
+        /// <summary>
+        /// Starte einen neuen Parse-/Kompiliervorgang. Das Parsen wird demnach mit dem Programmgraphen aufgerufen.
+        /// </summary>
+        /// <returns>Erfolg des Kompilierens</returns>
         public bool Parse() {
             if (Parse(programmGraph)) {
                 return true;
@@ -181,34 +332,46 @@ namespace pl0Compiler {
             }
         }
 
+        /// <summary>
+        /// Parse einen Graphen, indem Schrittweise vergleichen wird, ob das nächste untersuchte Zeichen an der entsprechend Stelle stehen darf oder nicht.
+        /// Gegebenenfalls werden Aktionen an den Codegenerator weitergeleitet.
+        /// </summary>
+        /// <param name="currentGraph">Zu parsender Graph</param>
+        /// <returns>Erfolg des Parsens des Graphen</returns>
         private bool Parse(Edge[] currentGraph) {
             int currentEdgeNumber = 0;
             bool success = false;
             Edge currentEdge;
+            // Wenn das Morphem leer ist, lasse Lexer das nächste holen.
             if (currentMorphem.Code == MorphemCode.empty)
                 currentMorphem = lexer.NextMorphem();
             while (true) {
+                // Wähle die zu untersuchende Kante aus
                 currentEdge = currentGraph[currentEdgeNumber];
                 switch (currentEdge.Type) {
                     case EdgeType.blank:
+                        // Leere Kanten sind erlaubt und werden übersprungen.
                         success = true;
                         break;
                     case EdgeType.symbol:
+                        // Bei einem Symbol muss der tatsächlich dem erwarteten Wert entsprechen.
                         success = (currentMorphem.Code == MorphemCode.symbol && currentMorphem.Value == currentEdge.Value);
                         break;
                     case EdgeType.morphem:
+                        // Bei einem Morphem das kein Symbol ist, muss der Morphemcode stimmen.
                         success = (currentMorphem.Code == currentEdge.Value);
                         break;
                     case EdgeType.graph:
+                        // Wenn die Kante ein Graph ist, muss dieser erfolgreich geparst werden.
                         success = Parse(currentEdge.Value);
                         break;
                 }
                 if (!success) {
-                    // Bei nicht passendem Bogen Alternativbogen ausprobieren (falls vorhanden).
+                    // Bei nicht passender Kante Alternativkante ausprobieren (falls vorhanden).
                     if (currentEdge.AlternativeEdge != -1)
                         currentEdgeNumber = currentEdge.AlternativeEdge;
                     else {
-                        PrintError("Fehler in Zeile ", currentMorphem.position[1], " (Spalte " + currentMorphem.position[0] + "). Habe " + currentEdge.Value + " erwartet");
+                        PrintError("Error in line ", currentMorphem.position[1], " (Column " + currentMorphem.position[0] + "). Expected " + currentEdge.Value + "!");
                         return false;
                     }
                 } else {
@@ -219,28 +382,28 @@ namespace pl0Compiler {
                     }
                     // Gegebenenfalls Symbol/Morphem akzeptieren und nächstes holen.
                     if (currentEdge.Type == EdgeType.symbol || currentEdge.Type == EdgeType.morphem) {
-                        PrintProgressA("", currentMorphem.Value, " konsumiert");
+                        PrintProgressA("Consumed ", currentMorphem.Value, "");
                         currentMorphem = lexer.NextMorphem();
                         if (currentMorphem.Value != null) {
-                            PrintProgressB(" (Nächstes: ", currentMorphem.Value, ").");
+                            PrintProgressB(" (Next: ", currentMorphem.Value, ").");
                         } else {
-                            PrintProgressB("", "", ". Kein weiteres Zeichen mehr zu lesen.");
+                            PrintProgressB("", "", ". Nothing more to read.");
                         }
                     }
-                    // Wenn der letzte Bogen akzeptiert wurde, beenden.
+                    // Wenn die letzte Kante akzeptiert wurde, beenden.
                     if (currentEdge.NextEdge == -1)
                         return true;
-                    // Nächste Kante untersuchen
+                    // Nächste Kante untersuchen.
                     currentEdgeNumber = currentEdge.NextEdge;
                 }
             }
         }
 
         // ============================================================
-        // Bogenfunktionen
+        // Kantenfunktionen
         // ============================================================
 
-        // Bogenfunktionen Programm:
+        // Kantefunktionen Programm:
         // ------------------------------------------------------------
         private bool ProgrammEnd() {
             PrintCodeGen("ProgrammEnd");
@@ -253,15 +416,17 @@ namespace pl0Compiler {
             return true;
         }
 
-        // Bogenfunktionen Block:
+        // Kantefunktionen Block:
         // ------------------------------------------------------------
         private bool BlockCheckConstIdentifier() {
             String name = currentMorphem.Value;
             PrintCodeGen("BlockCheckConstIdentifier " + name);
+            // Überprüfe, ob bereits ein Eintrag mit dem gleichen Bezeichner existiert.
             if (currentProcedure.HasEntry(name)) {
-                PrintError("Der Bezeichner ", name, " existiert bereits in diesem Kontext.");
+                PrintError("The identifier ", name, " already exists in this context.");
                 return false;
             }
+            // Speichere den Namen.
             currentName = name;
             return true;
         }
@@ -286,22 +451,24 @@ namespace pl0Compiler {
         private bool BlockCheckVarIdentifier() {
             String name = currentMorphem.Value;
             PrintCodeGen("BlockCheckVarIdentifier " + name);
+            // Überprüfe, ob bereits ein Eintrag mit dem gleichen Bezeichner existiert.
             if (currentProcedure.HasEntry(name)) {
-                PrintError("Der Bezeichner ", name, " existiert bereits in diesem Kontext.");
+                PrintError("The identifier ", name, " already exists in this context.");
                 return false;
             }
-            // Variable in Namenliste der aktuellen Prozedur einfügen
-            currentProcedure.namelist.Add(new NamelistVariable(currentProcedure.ProcedureID, name, currentProcedure.nextVariableAddress));
+            // Variable in Namenliste der aktuellen Prozedur einfügen.
+            currentProcedure.namelist.Add(new NamelistVariable(currentProcedure.ProcedureID, name, currentProcedure.variablesMemorySize));
             // Relativadresse für nächsten Eintrag erhöhen.
-            currentProcedure.nextVariableAddress += VALUE_SIZE;
+            currentProcedure.variablesMemorySize += VALUE_SIZE;
             return true;
         }
 
         private bool BlockCheckProcedureIdentifer() {
             String name = currentMorphem.Value;
             PrintCodeGen("BlockCheckProcedureIdentifer " + name);
+            // Überprüfe, ob bereits ein Eintrag mit dem gleichen Bezeichner existiert.
             if (currentProcedure.HasEntry(name)) {
-                PrintError("Der Bezeichner ", name, " existiert bereits in diesem Kontext.");
+                PrintError("The identifier ", name, " already exists in this context.");
                 return false;
             }
             // Prozedur in Namenliste der aktuellen Prozedur einfügen.
@@ -316,7 +483,7 @@ namespace pl0Compiler {
         private bool BlockEnterStatement() {
             PrintCodeGen("BlockEnterStatement " + currentProcedure.Name);
             // Generiere entryProc mit zunächst unbekannter Länge, der Prozedur-ID und die Größe des Variablenbereichs.
-            codeGenerator.GenerateCode(CommandCode.entryProc, 0, currentProcedure.ProcedureID, currentProcedure.nextVariableAddress);
+            codeGenerator.GenerateCode(CommandCode.entryProc, 0, currentProcedure.ProcedureID, currentProcedure.variablesMemorySize);
             return true;
         }
 
@@ -324,16 +491,16 @@ namespace pl0Compiler {
             PrintCodeGen("BlockEndProcedure " + currentProcedure.Name);
             // Generiere retProc.
             codeGenerator.GenerateCode(CommandCode.retProc);
-            // Aktualisiere die Prozedurlänge
+            // Aktualisiere die Prozedurlänge.
             codeGenerator.UpdateProcedureLength();
-            // Namenliste der Prozedur löschen
+            // Namenliste der Prozedur löschen.
             currentProcedure.namelist.Clear();
-            // Elternprozedur ist nun aktuelle Prozedur
+            // Elternprozedur ist nun aktuelle Prozedur.
             currentProcedure = currentProcedure.ParentProcedure;
             return true;
         }
 
-        // Bogenfunktionen Statement:
+        // Kantefunktionen Statement:
         // ------------------------------------------------------------
         private bool StatementCheckVarIdentifier() {
             String identifier = currentMorphem.Value;
@@ -344,15 +511,15 @@ namespace pl0Compiler {
             // Codegenerierung dann davon und vom Fundort abhängig.
             if (identifierEntry == null) {
                 // Bezeichner nicht vorhanden. Fehler!
-                PrintError("Der Bezeichner ", identifier, " existiert in diesem Kontext nicht.");
+                PrintError("The identifier ", identifier, " does not exists in this context.");
                 return false;
             } else if (identifierEntry.GetType() == typeof(NamelistProcedure)) {
                 // Bezeichner ist Prozedur. Fehler!
-                PrintError("Der Bezeichner ", identifier, " beschreibt eine Prozedur und keine Variable.");
+                PrintError("The identifier ", identifier, " describes a procedure and not a variable.");
                 return false;
             } else if (identifierEntry.GetType() == typeof(NamelistConstant)) {
                 // Bezeichner ist Konstante. Fehler!
-                PrintError("Der Bezeichner ", identifier, " beschreibt eine Konstante und keine Variable.");
+                PrintError("The identifier ", identifier, " describes a constant and not a variable.");
                 return false;
             } else {
                 // Bezeichner ist Variable. Unterscheide, woher sie kommt:
@@ -417,7 +584,7 @@ namespace pl0Compiler {
             // Sprungadresse für den Rücksprung zum Anfang der Schleife herausfinden.
             int jumpAddress = codeGenerator.GetJumpBackwardAddress();
             // Mit Sprungadressen jmp generieren.
-            codeGenerator.GenerateCode(CommandCode.jmp, jumpAddress);                        
+            codeGenerator.GenerateCode(CommandCode.jmp, jumpAddress);
             return true;
         }
 
@@ -429,11 +596,11 @@ namespace pl0Compiler {
             // Überprüfen, ob Identifier existiert und eine Prozedur ist.
             if (identifierEntry == null) {
                 // Bezeichner nicht vorhanden. Fehler!
-                PrintError("Der Bezeichner ", identifier, " existiert in diesem Kontext nicht.");
+                PrintError("The identifier ", identifier, " does not exists in this context.");
                 return false;
             } else if (identifierEntry.GetType() != typeof(NamelistProcedure)) {
                 // Bezeichner ist keine Prozedur. Fehler!
-                PrintError("Der Bezeichner ", identifier, " beschreibt keine Prozedur.");
+                PrintError("The identifier ", identifier, " does not describe a procedure.");
                 return false;
             } else {
                 // Generiere call, um die Prozedur mit dem gefundenen Index aufzurufen.
@@ -451,15 +618,15 @@ namespace pl0Compiler {
             // Codegenerierung dann davon und vom Fundort abhängig.
             if (identifierEntry == null) {
                 // Bezeichner nicht vorhanden. Fehler!
-                PrintError("Der Bezeichner ", identifier, " existiert in diesem Kontext nicht.");
+                PrintError("The identifier ", identifier, " does not exists in this context.");
                 return false;
             } else if (identifierEntry.GetType() == typeof(NamelistProcedure)) {
                 // Bezeichner ist Prozedur. Fehler!
-                PrintError("Der Bezeichner ", identifier, " beschreibt eine Prozedur und keine Variable.");
+                PrintError("The identifier ", identifier, " describes a procedure and not a variable.");
                 return false;
             } else if (identifierEntry.GetType() == typeof(NamelistConstant)) {
                 // Bezeichner ist Konstante. Fehler!
-                PrintError("Der Bezeichner ", identifier, " beschreibt eine Konstante und keine Variable.");
+                PrintError("The identifier ", identifier, " describes a constant and not a variable.");
                 return false;
             } else {
                 // Bezeichner ist Variable. Unterscheide, woher sie kommt:
@@ -495,7 +662,7 @@ namespace pl0Compiler {
             return true;
         }
 
-        // Bogenfunktionen Expression:
+        // Kantefunktionen Expression:
         // ------------------------------------------------------------
         private bool ExpressionNegative() {
             PrintCodeGen("ExpressionNegative");
@@ -518,7 +685,7 @@ namespace pl0Compiler {
             return true;
         }
 
-        // Bogenfunktionen Term:
+        // Kantefunktionen Term:
         // ------------------------------------------------------------
         private bool TermMultiplication() {
             PrintCodeGen("TermMultiplication");
@@ -534,7 +701,7 @@ namespace pl0Compiler {
             return true;
         }
 
-        // Bogenfunktionen Factor:
+        // Kantefunktionen Factor:
         // ------------------------------------------------------------
         private bool FactorCheckNumber() {
             int value = currentMorphem.Value;
@@ -562,11 +729,11 @@ namespace pl0Compiler {
             // Codegenerierung dann davon und vom Fundort abhängig.
             if (identifierEntry == null) {
                 // Bezeichner nicht vorhanden. Fehler!
-                PrintError("Der Bezeichner ", identifier, " existiert in diesem Kontext nicht.");
+                PrintError("The identifier ", identifier, " does not exists in this context.");
                 return false;
             } else if (identifierEntry.GetType() == typeof(NamelistProcedure)) {
                 // Bezeichner ist Prozedur. Fehler!
-                PrintError("Der Bezeichner ", identifier, " beschreibt eine Prozedur und keinen Wert.");
+                PrintError("The identifier ", identifier, " describes a procedure and not a value.");
                 return false;
             } else if (identifierEntry.GetType() == typeof(NamelistConstant)) {
                 // Bezeichner ist Konstante. Generiere puConst mit dem Index der Konstante.
@@ -588,7 +755,7 @@ namespace pl0Compiler {
             return true;
         }
 
-        // Bogenfunktionen Condition:
+        // Kantefunktionen Condition:
         // ------------------------------------------------------------
         private bool ConditionOdd() {
             PrintCodeGen("ConditionOdd");
@@ -599,42 +766,42 @@ namespace pl0Compiler {
 
         private bool ConditionSaveEQ() {
             PrintCodeGen("ConditionSaveEQ");
-            // Speichere Vergleichsoperator
+            // Speichere Vergleichsoperator.
             currentCondition = CommandCode.cmpEQ;
             return true;
         }
 
         private bool ConditionSaveNE() {
             PrintCodeGen("ConditionSaveNE");
-            // Speichere Vergleichsoperator
+            // Speichere Vergleichsoperator.
             currentCondition = CommandCode.cmpNE;
             return true;
         }
 
         private bool ConditionSaveLT() {
             PrintCodeGen("ConditionSaveLT");
-            // Speichere Vergleichsoperator
+            // Speichere Vergleichsoperator.
             currentCondition = CommandCode.cmpLT;
             return true;
         }
 
         private bool ConditionSaveLE() {
             PrintCodeGen("ConditionSaveLE");
-            // Speichere Vergleichsoperator
+            // Speichere Vergleichsoperator.
             currentCondition = CommandCode.cmpLE;
             return true;
         }
 
         private bool ConditionSaveGT() {
             PrintCodeGen("ConditionSaveGT");
-            // Speichere Vergleichsoperator
+            // Speichere Vergleichsoperator.
             currentCondition = CommandCode.cmpGT;
             return true;
         }
 
         private bool ConditionSaveGE() {
             PrintCodeGen("ConditionSaveGE");
-            // Speichere Vergleichsoperator
+            // Speichere Vergleichsoperator.
             currentCondition = CommandCode.cmpGE;
             return true;
         }
@@ -653,21 +820,28 @@ namespace pl0Compiler {
         /// Findet die Position der Konstanten in der Konstantenliste, falls vorhanden.
         /// Ist Null, wenn Wert noch nicht existiert.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Position der Konstanten in der Konstanetliste</returns>
         int FindConstantValuePosition(int value) {
+            // Konstantenlisteneinträge einzeln überprufen.
             foreach (var entry in constantList) {
+                // Wenn Wert übereinstimmt, die Position von diesem Eintrag ausgeben.
                 if (entry.Value == value)
                     return entry.Index;
             }
             return -1;
         }
 
+        /// <summary>
+        /// Globale suche nach einem Eintrag in der Namenliste mit dem gegebenen Namen.
+        /// </summary>
+        /// <param name="name">Zu suchender Eintragsname</param>
+        /// <returns></returns>
         NamelistEntry FindGlobalEntry(String name) {
             NamelistProcedure procedureToSearch = currentProcedure;
             while (procedureToSearch != null) {
-                // Namensliste der aktuellen Prozedur suchen
+                // Namensliste der aktuellen Prozedur suchen.
                 foreach (var entry in procedureToSearch.namelist) {
-                    // Wenn Name übereinstimmt, diesen Eintrag ausgeben
+                    // Wenn Name übereinstimmt, diesen Eintrag ausgeben.
                     if (entry.Name == name) {
                         return entry;
                     }

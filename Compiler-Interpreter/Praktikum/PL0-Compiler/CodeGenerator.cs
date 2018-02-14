@@ -1,12 +1,16 @@
-﻿using System;
+﻿// Code von Falk-Jonatan Strube (mail@fj-strube.de)
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pl0Compiler {
+namespace PL0Compiler {
 
+    /// <summary>
+    /// Art des Befehls. Nummer des Enums entspricht der Bytenummer des Befehls.
+    /// </summary>
     enum CommandCode : int {
         /*--- Kellerbefehle ---*/
         puValVrLocl,    //00 (short Displ)              [Kellern Wert lokale Variable]
@@ -46,13 +50,25 @@ namespace pl0Compiler {
         EndOfCode 	    //1E
     }
 
+    /// <summary>
+    /// Generiert Bytecode eines PL0-Programms.
+    /// </summary>
     class CodeGenerator {
 
+        /// <summary>
+        /// Sprunglabel, das in einen Stack geschrieben wird, um später die relative Sprungadresse festzustellen.
+        /// </summary>
         struct JumpLabel {
             public int jumpLabelPosition;
             public int jumpFrom;
             public int jumpTo;
 
+            /// <summary>
+            /// Weise dem Label die entsprechenden Werte zu.
+            /// </summary>
+            /// <param name="labelPosition">Position des Labels im Bytecode, wo später die relative Sprungadresse nachgetragen werden muss</param>
+            /// <param name="from">Sprunganfang</param>
+            /// <param name="to">Sprungende</param>
             public JumpLabel(int labelPosition, int from, int to) {
                 jumpLabelPosition = labelPosition;
                 jumpFrom = from;
@@ -65,13 +81,16 @@ namespace pl0Compiler {
         /// </summary>
         private List<Byte> codeBuffer = new List<Byte>();
 
+        // Zähler zum Zwischenspeichern.
         private int currentProcedureLengthPosition;
         private int currentProcedureLength;
         private int procedureCount = 0;
         private int currentCodePosition = 0;
 
-        private Stack<JumpLabel> jumpLabelList = new Stack<JumpLabel>();
+        // Stack der Sprunglabel.
+        private Stack<JumpLabel> jumpLabelStack = new Stack<JumpLabel>();
 
+        // Das Ziel: die kompilierte cl0-Datei.
         private String cl0FilePath;
 
         /// <summary>
@@ -80,17 +99,21 @@ namespace pl0Compiler {
         /// </summary>
         /// <param name="filePath"></param>
         public CodeGenerator(String filePath) {
+            // Dateiendung von pl0 auf cl0 ändern.
             cl0FilePath = filePath.Remove(filePath.Length - 3);
             cl0FilePath += "cl0";
+            // Sicherstellen, dass im Little Endian gearbeitet wird.
             if (!BitConverter.IsLittleEndian) {
-                Parser.PrintError("Byteformat ", "Big Endian", " ist nicht erlaubt. Beende.");
+                Parser.PrintError("Byteformat ", "'Big Endian'", " is not allowed. Quitting.");
                 Environment.Exit(1);
             }
         }
 
         /// <summary>
-        /// Generiert Code von dem Befehl.
+        /// Generiert Code vom Befehl und den dazugehörigen Parametern.
         /// </summary>
+        /// <param name="command">Befehl</param>
+        /// <param name="parameters">Befehlsparameter</param>
         public void GenerateCode(CommandCode command, params int[] parameters) {
             // Befehl einfügen.
             Insert1Byte((int)command);
@@ -117,6 +140,11 @@ namespace pl0Compiler {
             }
         }
 
+        /// <summary>
+        /// Generiert Code vom Befehl und einem dazugehörigen String.
+        /// </summary>
+        /// <param name="command">Befehl</param>
+        /// <param name="stringValue">Stringparameter des Befehls</param>
         public void GenerateCode(CommandCode command, String stringValue) {
             // String in Char-Array umwandeln, damit es als Parameterliste zu übergeben ist.
             char[] parameters = stringValue.ToCharArray();
@@ -125,11 +153,11 @@ namespace pl0Compiler {
         }
 
         /// <summary>
-        /// Füge ein Byte ein. Beispielsweise für Befehlscodes und Buchstaben eines Strings.
+        /// Fügt ein Byte ein. Beispielsweise für Befehlscodes und Buchstaben eines Strings.
         /// </summary>
         /// <param name="value">Zahl kleiner 256.</param>
         private void Insert1Byte(int value) {
-            // Konvertiere Zahl zu Byte-Arary (Beispiel: 42 -> 2A 00 00 00)
+            // Konvertiere Zahl zu Byte-Arary (Beispiel: 42 -> 2A 00 00 00).
             byte[] byteArray = BitConverter.GetBytes(value);
             // Füge erstes Byte (little Endian) in Liste ein.
             codeBuffer.Add(byteArray[0]);
@@ -140,11 +168,11 @@ namespace pl0Compiler {
         }
 
         /// <summary>
-        /// Füge zwei Bytes ein. Beispielsweise für Adressen.
+        /// Fügt zwei Bytes ein. Beispielsweise für Adressen.
         /// </summary>
         /// <param name="value">Zahl kleiner 655356.</param>
         private void Insert2Byte(int value) {
-            // Konvertiere Zahl zu Byte-Arary (Beispiel: 12345 -> 39 30 00 00)
+            // Konvertiere Zahl zu Byte-Arary (Beispiel: 12345 -> 39 30 00 00).
             byte[] byteArray = BitConverter.GetBytes(value);
             // Füge ersten beiden Bytes (little Endian) in Liste ein.
             codeBuffer.Add(byteArray[0]);
@@ -156,13 +184,13 @@ namespace pl0Compiler {
         }
 
         /// <summary>
-        /// Füge vier Bytes ein. Beispielsweise Konstantenwerte.
+        /// Fügt vier Bytes ein. Beispielsweise Konstantenwerte.
         /// </summary>
         /// <param name="value">Zahl kleiner 655356.</param>
         private void Insert4Byte(int value) {
-            // Konvertiere Zahl zu Byte-Arary (Beispiel: 123456789 -> 15 CD 5B 07)
+            // Konvertiere Zahl zu Byte-Arary (Beispiel: 123456789 -> 15 CD 5B 07).
             byte[] byteArray = BitConverter.GetBytes(value);
-            // Füge ersten beiden Bytes (little Endian) in Liste ein.
+            // Füge ersten vier Bytes (little Endian) in Liste ein.
             codeBuffer.Add(byteArray[0]);
             codeBuffer.Add(byteArray[1]);
             codeBuffer.Add(byteArray[2]);
@@ -174,9 +202,8 @@ namespace pl0Compiler {
         }
 
         /// <summary>
-        /// Aktualisiere Länge der aktuellen Prozedur.
+        /// Aktualisiert Länge der aktuellen Prozedur im Bytecode.
         /// </summary>
-        /// <param name="length"></param>
         public void UpdateProcedureLength() {
             byte[] byteArray = BitConverter.GetBytes(currentProcedureLength);
             // Aktualisiere Byte an der Stelle, wo die Prozedurlänge der aktuellen Prozedur gespeichert ist.
@@ -191,19 +218,26 @@ namespace pl0Compiler {
             // Position des Labels: fängt an der nächsten Stelle an (Position nach Sprungbefehl)
             // Startadresse: Adresse nach dem Sprungbefehl (inklusive 3 Byte Sprungbefehl)
             // Zieladresse: noch unbekannt
-            jumpLabelList.Push(new JumpLabel(currentCodePosition + 1, currentCodePosition + 3, 0));
+            jumpLabelStack.Push(new JumpLabel(currentCodePosition + 1, currentCodePosition + 3, 0));
         }
 
+        /// <summary>
+        /// Erstellt Sprunglabel für den Sprung vorwärts.
+        /// </summary>
         public void PrepareJumpBackward() {
             // Position des Labels: noch unbekannt.
             // Startadresse: noch unbekannt.
             // Zieladresse: diese Adresse.
-            jumpLabelList.Push(new JumpLabel(-1, -1, currentCodePosition));
+            jumpLabelStack.Push(new JumpLabel(-1, -1, currentCodePosition));
         }
 
+        /// <summary>
+        /// Aktualisiere relative Sprungadresse im Bytecode.
+        /// </summary>
+        /// <param name="commandSize">Bytes die auf relative Sprungadresse addiert werden müssen</param>
         public void UpdateJumpFoward(int commandSize = 0) {
             // Label holen.
-            JumpLabel jumpLabel = jumpLabelList.Pop();
+            JumpLabel jumpLabel = jumpLabelStack.Pop();
             // Relative Sprungadresse berechnen (Ziel - Start). Wobei das Ziel die nächste Adresse ist (diese ist abhängig von der Größe des Befehls).
             int targetAddress = (currentCodePosition + commandSize) - jumpLabel.jumpFrom;
             // Sprungadresse an entsprechende Stelle nachtragen.
@@ -212,19 +246,23 @@ namespace pl0Compiler {
             codeBuffer[jumpLabel.jumpLabelPosition + 1] = byteArray[1];
         }
 
+        /// <summary>
+        /// Hole die relative Sprungadresse des Rückwärtsprungs.
+        /// </summary>
+        /// <returns>Relative Sprungadresse</returns>
         public int GetJumpBackwardAddress() {
             // Label holen.
-            JumpLabel jumpLabel = jumpLabelList.Pop();
+            JumpLabel jumpLabel = jumpLabelStack.Pop();
             // Relative Sprungadresse berechnen (Ziel - Start ... ergibt negative Zahl bspw. 21 - 42 = -21 = 0xFF FF FF EB)
             // Bei der Startadresse muss noch die Länge des Sprungbefehls (3) aufgerechnet werden.
             // Berechnete Adresse zurück geben. 
-            return jumpLabel.jumpTo - (currentCodePosition + 3) ;
+            return jumpLabel.jumpTo - (currentCodePosition + 3);
         }
 
         /// <summary>
-        /// Ergänze Code um Konstantenblock.
+        /// Ergänze Code um Konstantenblock um alle Konstanten.
         /// </summary>
-        /// <param name="constants"></param>
+        /// <param name="constants">Liste aller Konstanten</param>
         public void GenerateConstantBlock(List<NamelistConstant> constants) {
             // Jede Konstante als Bytepaar einfügen.
             foreach (var constant in constants) {
@@ -233,7 +271,7 @@ namespace pl0Compiler {
         }
 
         /// <summary>
-        /// Schreibe den gepufferten Code in die Datei.
+        /// Schreibe den gepufferten Code in die Datei und ergänze die Prozeduranzahl zu beginn.
         /// </summary>
         public void WriteCodeToFile() {
             try {
@@ -244,13 +282,13 @@ namespace pl0Compiler {
                     fileStream.WriteByte(byteArray[1]);
                     fileStream.WriteByte(byteArray[2]);
                     fileStream.WriteByte(byteArray[3]);
-                    // gepufferten Code schreiben.
+                    // Gepufferten Code schreiben.
                     foreach (var codeByte in codeBuffer) {
                         fileStream.WriteByte(codeByte);
                     }
                 }
-            } catch (Exception ex) {
-                Console.WriteLine("Exception caught in process: {0}", ex);
+            } catch (Exception) {
+                Parser.PrintError("Error while writing compiled code to file ", cl0FilePath, ".");
             }
         }
     }

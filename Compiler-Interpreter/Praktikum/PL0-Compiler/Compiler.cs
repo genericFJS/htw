@@ -1,14 +1,15 @@
-﻿using System;
+﻿// Code von Falk-Jonatan Strube (mail@fj-strube.de)
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pl0Compiler {
+namespace PL0Compiler {
     class MainClass {
         static void Main(string[] args) {
-            Console.Write("Dateiname: ");
+            Console.Write("Codefile: ");
             if (args == null || args.Length == 0) {
                 // Kein Argument beim Ausführen: frage Dateiname manuell ab.
                 string filePath = Console.ReadLine();
@@ -24,13 +25,13 @@ namespace pl0Compiler {
             if (!filePath.EndsWith(".pl0"))
                 filePath += ".pl0";
             if (!File.Exists(filePath)) {
-                Parser.PrintError("Datei nicht gefunden: ", filePath, ".");
+                Parser.PrintError("File not found: ", filePath, ".");
             } else {
                 Console.WriteLine("========================");
                 Parser parser = new Parser(filePath);
                 if (parser.Parse()) {
                     Console.WriteLine("------------------------");
-                    Console.WriteLine("Parsen erfolgreich");
+                    Console.WriteLine("Compilation successfull.");
                 }
             }
             Console.WriteLine("========================");

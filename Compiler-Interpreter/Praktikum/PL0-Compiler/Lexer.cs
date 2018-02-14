@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Code von Falk-Jonatan Strube (mail@fj-strube.de)
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -7,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace pl0Compiler {
+namespace PL0Compiler {
     class Lexer {
         // Stream der zu lexenden Datei:
         private StreamReader fileReader;
@@ -243,7 +244,7 @@ namespace pl0Compiler {
                     }
                     break;
                 default:
-                    Console.WriteLine("Unknown morphem: {0}", tempMorphemString);
+                    Parser.PrintError("Unknown morphem ", tempMorphemString, ".");
                     break;
             }
         }
