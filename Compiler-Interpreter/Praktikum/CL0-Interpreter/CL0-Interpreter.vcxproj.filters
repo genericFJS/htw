@@ -23,13 +23,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="r.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="rdbg.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="outCl0.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="r.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

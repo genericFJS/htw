@@ -443,9 +443,18 @@ int main(int argc, char*argv[]) {
 	char vName[128 + 1];
 
 	/*--- Datei oeffnen ---*/
-	if (argc <= 1) { printf("No Codefile\n"); exit(-1); }
-	strcpy(vName, argv[1]);
-	if (strstr(vName, ".cl0") == NULL) strcat(vName, ".cl0");
+	if (argc <= 1) {
+		printf("Codefile: ");
+		fgets(vName, sizeof(vName), stdin);
+		size_t ln = strlen(vName) - 1;
+		if (vName[ln] == '\n')
+			vName[ln] = '\0';
+		printf("========================\n");
+	} else {
+		strcpy(vName, argv[1]);
+	}
+	if (strstr(vName, ".cl0") == NULL) 
+		strcat(vName, ".cl0");
 	pCodeFile = fopen(vName, "rb");
 	if (pCodeFile == NULL) {
 		fprintf(stderr, "Could not open Codefile %s\n", vName);
@@ -535,9 +544,6 @@ int main(int argc, char*argv[]) {
 	}
 	free(pCode);
 	free(pInfProc);
-#ifndef NEWLINE
-	printf("\n");
-#endif
 	return OK;
 }
 

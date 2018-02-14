@@ -301,10 +301,17 @@ int main(int argc, char*argv[]) {
 
 	/*--- Datei oeffnen ---*/
 	if (argc <= 1) {
-		printf("No Codefile\n"); exit(-1);
+		printf("Codefile: ");
+		fgets(vName, sizeof(vName), stdin);
+		size_t ln = strlen(vName) - 1;
+		if (vName[ln] == '\n')
+			vName[ln] = '\0';
+		printf("========================\n");
+	} else {
+		strcpy(vName, argv[1]);
 	}
-	strcpy(vName, argv[1]);
-	if (strstr(vName, ".cl0") == NULL) strcat(vName, ".cl0");
+	if (strstr(vName, ".cl0") == NULL)
+		strcat(vName, ".cl0");
 	pCodeFile = fopen(vName, "rb");
 
 	/*--- Speicher bereitstellen ---*/

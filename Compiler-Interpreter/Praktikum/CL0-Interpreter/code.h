@@ -1,5 +1,7 @@
-﻿typedef __int32 int32_t;
+﻿#ifdef WIN32
+typedef __int32 int32_t;
 typedef unsigned __int32 uint32_t;
+#endif
 
 typedef enum TCODE
 {
