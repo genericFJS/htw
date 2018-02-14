@@ -16,38 +16,38 @@ namespace PL0Compiler {
         puValVrLocl,    //00 (short Displ)              [Kellern Wert lokale Variable]
         puValVrMain,    //01 (short Displ)              [Kellern Wert Main Variable]
         puValVrGlob,    //02 (short Displ,short Proc)   [Kellern Wert globale Variable]
-        puAdrVrLocl,    //03 (short Displ)	            [Kellern Adresse lokale Variable]
-        puAdrVrMain,    //04 (short Displ)	            [Kellern Adresse Main Variable]
+        puAdrVrLocl,    //03 (short Displ)              [Kellern Adresse lokale Variable]
+        puAdrVrMain,    //04 (short Displ)              [Kellern Adresse Main Variable]
         puAdrVrGlob,    //05 (short Displ,short Proc)   [Kellern Adresse globale Variable]
-        puConst,        //06 (short Index)	            [Kellern einer Konstanten]
-        storeVal,       //07 ()							[Speichern Wert ->Adresse, beides aus Keller]
-        putVal,         //08 ()							[Ausgabe eines Wertes aus Keller nach stdout]
-        getVal,         //09 () 		                [Eingabe eines Wertes von stdin -> Addr. im Keller ]
+        puConst,        //06 (short Index)              [Kellern einer Konstanten]
+        storeVal,       //07 ()                         [Speichern Wert ->Adresse, beides aus Keller]
+        putVal,         //08 ()                         [Ausgabe eines Wertes aus Keller nach stdout]
+        getVal,         //09 ()                         [Eingabe eines Wertes von stdin -> Addr. im Keller ]
                         /*--- arithmetische Befehle ---*/
-        vzMinus,        //0A ()						 	[Vorzeichen ]
-        odd,            //0B ()						 	[ungerade -> 0/1]
+        vzMinus,        //0A ()                         [Vorzeichen]
+        odd,            //0B ()                         [ungerade -> 0/1]
                         /*--- binäre Operatoren kellern 2 Operanden aus und das Ergebnis ein ---*/
-        opAdd,          //0C ()						 	[Addition]
-        opSub,          //0D ()						 	[Subtraktion ]
-        opMult,         //0E ()						 	[Multiplikation ]
-        opDiv,          //0F ()						 	[Division ]
-        cmpEQ,          //10 ()						 	[Vergleich =  -> 0/1]
-        cmpNE,          //11 ()						 	[Vergleich #  -> 0/1]
-        cmpLT,          //12 ()						 	[Vergleich <  -> 0/1]
-        cmpGT,          //13 ()						 	[Vergleich >  -> 0/1]
-        cmpLE,          //14 ()						 	[Vergleich <= -> 0/1]
-        cmpGE,          //15 ()						 	[Vergleich >= -> 0/1]
+        opAdd,          //0C ()                         [Addition]
+        opSub,          //0D ()                         [Subtraktion]
+        opMult,         //0E ()                         [Multiplikation]
+        opDiv,          //0F ()                         [Division ]
+        cmpEQ,          //10 ()                         [Vergleich =  -> 0/1]
+        cmpNE,          //11 ()                         [Vergleich #  -> 0/1]
+        cmpLT,          //12 ()                         [Vergleich <  -> 0/1]
+        cmpGT,          //13 ()                         [Vergleich >  -> 0/1]
+        cmpLE,          //14 ()                         [Vergleich <= -> 0/1]
+        cmpGE,          //15 ()                         [Vergleich >= -> 0/1]
                         /*--- Sprungbefehle ---*/
         call,           //16 (short ProzNr) [Prozeduraufruf]
-        retProc,        //17 ()							[Rücksprung]
+        retProc,        //17 ()                         [Rücksprung]
         jmp,            //18 (short RelAdr)             [SPZZ innerhalb der Funktion]
         jnot,           //19 (short RelAdr)             [SPZZ innerhalb der Funkt.,Beding.aus Keller]
         entryProc,      //1A (short lenCode,short ProcIdx,short lenVar)
-                        /*--- Zusätzliche, (für uns) nicht benötigte Befehle ---*/
         putStrg,        //1B (char[])
+                        /*--- Zusätzliche, (für uns) nicht benötigte Befehle ---*/
         pop,            //1C
-        swap,           //1D							[Austausch Adresse gegen Wert]
-        EndOfCode 	    //1E
+        swap,           //1D                            [Austausch Adresse gegen Wert]
+        EndOfCode       //1E
     }
 
     /// <summary>
