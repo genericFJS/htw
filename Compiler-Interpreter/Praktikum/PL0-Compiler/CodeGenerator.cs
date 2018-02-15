@@ -20,9 +20,9 @@ namespace PL0Compiler {
         puAdrVrMain,    //04 (short Displ)              [Kellern Adresse Main Variable]
         puAdrVrGlob,    //05 (short Displ,short Proc)   [Kellern Adresse globale Variable]
         puConst,        //06 (short Index)              [Kellern einer Konstanten]
-        storeVal,       //07 ()                         [Speichern Wert ->Adresse, beides aus Keller]
+        storeVal,       //07 ()                         [Speichern Wert in Adresse, beides aus Keller]
         putVal,         //08 ()                         [Ausgabe eines Wertes aus Keller nach stdout]
-        getVal,         //09 ()                         [Eingabe eines Wertes von stdin -> Addr. im Keller ]
+        getVal,         //09 ()                         [Eingabe eines Wertes von stdin in Addr. im Keller ]
                         /*--- arithmetische Befehle ---*/
         vzMinus,        //0A ()                         [Vorzeichen]
         odd,            //0B ()                         [ungerade -> 0/1]
@@ -38,10 +38,10 @@ namespace PL0Compiler {
         cmpLE,          //14 ()                         [Vergleich <= -> 0/1]
         cmpGE,          //15 ()                         [Vergleich >= -> 0/1]
                         /*--- Sprungbefehle ---*/
-        call,           //16 (short ProzNr) [Prozeduraufruf]
-        retProc,        //17 ()                         [Rücksprung]
-        jmp,            //18 (short RelAdr)             [SPZZ innerhalb der Funktion]
-        jnot,           //19 (short RelAdr)             [SPZZ innerhalb der Funkt.,Beding.aus Keller]
+        call,           //16 (short ProzNr)             [Prozeduraufruf]
+        retProc,        //17 ()                         [Rücksprung aus Prozedur]
+        jmp,            //18 (short RelAdr)             [Sprung innerhalb der Funktion]
+        jnot,           //19 (short RelAdr)             [Sprung innerhalb der Funktion, Bedingung stammt aus Keller]
         entryProc,      //1A (short lenCode,short ProcIdx,short lenVar)
         putStrg,        //1B (char[])
                         /*--- Zusätzliche, (für uns) nicht benötigte Befehle ---*/
