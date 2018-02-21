@@ -14,11 +14,13 @@ Der Compiler kann wie oben beschrieben selbst kompiliert werden. Alternativ steh
 
 Die zu kompilierende Datei kann dem Compiler entweder beim Aufruf als Parameter übergeben oder nach dem Aufruf in die Kommandozeile eingegeben werden. Genau so verhält es sich mit den virtuellen Maschinen und dem Bytecode.
 
-Zu beachten ist, dass die zu kompilierende Datei, wenn sie nicht in den `bin`-Ordner verschoben wird, mit einem relativen Pfad angegeben werden muss. Für die Datei `test.cl0` im Ordner `tests` muss also `tests/test` oder `tests/test.cl0` eingegeben werden.
+Zu beachten ist, dass die zu kompilierende Datei, wenn sie nicht in den `bin`-Ordner verschoben wird, mit einem relativen Pfad angegeben werden muss. Für die Datei `test.cl0` im Ordner `tests` muss also `../tests/test` oder `../tests/test.cl0` eingegeben werden.
 
 ### Windows ###
 
 Zum kompilieren die Datei muss die Datei `compile.exe` ausgeführt werden. Um das Ergebnis anzusehen wird empfohlen dies über die Kommandozeile zu tun. Die dafür bereitgestellte `OpenCommandPromptHere.bat` öffnet in dem `bin`-Ordner eine solche. 
+
+Alternativ ist für alle Programme eine `bat`-Datei bereit gestellt, mit der diese direkt aus dem Explorer geöffnet werden können ohne die Befehle in der Kommandozeile eingeben zu müssen. Diese `bat`-Datei navigiert auch automatisch in den übergeordneten Ordner, sodass bspw. anstatt `../tests/test` nur noch `tests/test` eingegeben werden muss.
 
 ### Linux ###
 
