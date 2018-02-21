@@ -1,0 +1,389 @@
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass%[twoside]
+{scrreprt}
+\gdef\pathtomaster{../../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
+
+%\geometry{inner=35mm, outer=15mm}
+
+\faculty{Fakultät Informatik/Mathematik}
+\chair{Lehrstuhl für Computergrafik}
+\subject{lecture}
+\title{Computergrafik 1}
+\author{Falk-Jonatan Strube}
+\professor{Prof. Dr. Wolfgang Oertel}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\slidePath{Vorlesung/CG1-01-15}
+
+\chapter{OpenGL: System und Programm}
+
+\section{Grundbegriffe}
+\slide{4}
+\subsection{Systematisierung}
+\slide{5}
+
+\section{Systemarchitektur}
+\slide{6}
+
+\section{OpenGL}
+\slide{8}
+\subsection{Bibliotheken}
+\slide{10}
+\subsection{Initialisierung}
+\slide{11}
+
+\section{Renderpipeline}
+\slide{12}
+\slide{13}
+\slide{14}
+
+\section{Rahmenprogramm}
+\slide{15}
+\slide{16}
+\slide{17}
+
+\section{Sprachsyntax Hauptprogramm}
+\slide{18}
+
+\section{Funktionen GL und GLUT}
+\slide{19}
+\slide{20}
+
+\chapter{OpenGL: Shader und Sprache}
+
+\section{Vorgehensweise}
+\slide{22}
+
+\section{Shader-Einbindung}
+\slide{23}
+\subsection{Programmbeispiel}
+\slide{24}
+
+\section{Rasterisierung und obligatorische Shader}
+\slide{26}
+\subsection{Vertex-Shader}
+\slide{27}
+\subsection{Fragment-Shader}
+\slide{28}
+\subsection{Beispiele}
+\slide{29}
+
+\section{Shader-Sprache}
+\slide{30}
+\subsection{Operatoren und Ausdrücke}
+\slide{31}
+\slide{32}
+\subsection{Qualifikatoren}
+\slide{33}
+\slide{34}
+\slide{35}
+\subsection{Vordefinierte Funktionen und Variablen}
+\slide{36}
+\slide{37}
+\slide{38}
+\subsection{Programmbeispiel}
+\slide{39}
+\slide{40}
+
+\chapter{OpenGL: Raum und Ansicht}
+\section{Modelle und Operationen}
+\slide{42}
+\subsection{Kamera Analogie und Geometrie Pipeline}
+\slide{43}
+\subsection{Vektoren und Matrizen}
+\slide{44}
+\subsection{Koordinatensysteme}
+\slide{45}
+
+\section{Transformation}
+\slide{46}
+
+\section{Projektion}
+\slide{47}
+\slide{51}
+
+\section{Viewport}
+\slide{48}
+
+\section{Matrizen}
+\slide{49}
+\slide{50}
+
+\section{Bibliotheksoperationen}
+\slide{53}
+
+\subsection{Programmbeispiel}
+\slide{54}
+\slide{55}
+
+\chapter{OpenGL: Zeichnung und Attribut}
+\section{Vorgehensweise}
+\slide{57}
+
+\section{Zeichenprimitive}
+\slide{58}
+\subsection{Punkte, Linien}
+\slide{59}
+\subsection{Dreiecke}
+\slide{60}
+\subsection{Darstellungsattribute}
+\slide{61}
+\subsection{Programmeinbindung}
+\slide{62}
+
+\section{Zeichenfarbe}
+\slide{63}
+\subsection{Farbe als Attribut}
+\slide{64}
+\subsection{Schattierungsarten}
+\slide{65}
+\subsection{Programmeinbindung Vordergrundfarbe}
+\slide{66}
+
+\section{Pufferobjekte}
+\slide{67}
+\slide{68}
+\subsection{Zeichenbefehle}
+\slide{69}
+\subsection{Programmbeispiele}
+\subsubsection{Interpolation von Eckpunkten und Farben zweier Dreiecke}
+\slide{70}
+\slide{71}
+\subsubsection{Indexierte Zeichnung eines Würfels}
+\slide{72}
+\slide{73}
+
+\chapter{OpenGL: Pixel und Puffer}
+\section{Pufferstrukturen}
+\slide{73}
+\section{Pufferoperationen}
+\slide{74}
+\slide{75}
+\slide{76}
+\slide{77}
+\slide{78}
+\slide{79}
+\subsection{Antialiasing}
+\slide{82}
+\subsection{Multisampling}
+\slide{83}
+\subsection{Programmbeispiel}
+\slide{84}
+
+\section{Framebuffer Objekte}
+\slide{85}
+\subsection{Multiple Renderpuffer}
+\slide{86}
+\section{Lesen und Kopieren von Pixeldaten}
+\slide{87}
+\subsection{Programmbeispiel}
+\slide{88}
+
+\chapter{OpenGL: Bild und Textur}
+
+\section{Arbeit mit Bildern}
+\slide{90}
+\subsection{Programmbeispiel}
+\slide{91}
+
+\section{Grundlegende Texturierungsverfahren}
+\slide{92}
+\subsection{Anlegen und Verwenden von Texturen}
+\slide{93}
+\slide{94}
+\slide{95}
+\slide{96}
+\slide{97}
+\subsubsection{Programmbeispiel}
+\slide{98}
+\slide{99}
+
+\section{Aufbauende Texturierungsverfahren}
+\slide{100}
+\slide{101}
+\slide{102}
+\subsection{Programmbeispiel}
+\slide{103}
+\slide{104}
+
+\chapter{Licht und Material}
+\section{Licht}
+\slide{106}
+\slide{107}
+
+\section{Material}
+\slide{108}
+
+\section{Beleuchtungsrechnung}
+\slide{110}
+\slide{111}
+\slide{112}
+\subsection{Normalenvektor}
+\slide{113}
+\subsection{Fog}
+\slide{114}
+
+\section{Shaderbasierte Beleuchtung}
+\slide{115}
+\subsection{Programmbeispiel}
+\slide{116}
+\slide{117}
+\slide{118}
+\slide{119}
+\slide{120}
+
+\chapter{Shader und Parallelisierung}
+\section{Shader-Gesamtkonzept}
+\slide{123}
+\slide{125}
+
+\section{Programm- und Datenübergabe}
+\slide{126}
+\subsection{Interface Blöcke}
+\slide{127}
+\subsection{Programmbeispiel}
+\slide{129}
+
+\section{Tesselations-Shader}
+\slide{130}
+
+\subsection{Programmbeispiel}
+\slide{131}
+
+\section{Geometrie-Shader}
+\slide{132}
+\subsection{Programmbeispiel}
+\slide{133}
+
+\section{Compute-Shader}
+\slide{134}
+\subsection{Programmbeispiel}
+\slide{135}
+
+\chapter{Transformation und Matrix}
+\section{2D Koordinatensysteme}
+\slide{140}
+
+\section{Elementare 2D Transformationen}
+\slide{141}
+\slide{142}
+
+\section{Komposite 2D Transformationen}
+\slide{143}
+\slide{144}
+
+\section{3D Koordinatensysteme}
+\slide{145}
+
+\section{Elementare 2D Transformationen}
+\slide{146}
+\slide{147}
+\slide{148}
+
+\section{Komposite 3D Transformationen}
+\slide{149}
+
+\section{Wechsel von Koordinatensystemen}
+\slide{150}
+
+\chapter{Projektion und Matrix}
+\section{Projektion}
+\slide{154}
+\slide{155}
+\slide{156}
+
+\section{Spezifikation von 3D Sichten}
+\slide{157}
+\slide{158}
+\subsection{Beispiele}
+\slide{159}
+\slide{160}
+
+\section{Formale Darstellung von Projektionen}
+\slide{161}
+
+\section{Normalisierung von Sichtvolumen}
+\slide{163}
+\slide{165}
+
+\chapter{Helligkeit und Farbe}
+\section{Helligkeitsmetrik}
+\slide{171}
+
+\section{Helligkeitsreduktion}
+\slide{172}
+\slide{173}
+
+\section{Farbmetrik}
+\slide{175}
+
+\section{Farbmodelle}
+\slide{177}
+\slide{178}
+\slide{180}
+
+\chapter{Linie und Fläche}
+\section{Rastern von Linien}
+\slide{183}
+\slide{184}
+\slide{185}
+\slide{186}
+\slide{187}
+
+\section{Füllen von Flächen}
+\slide{188}
+\slide{189}
+\slide{190}
+\slide{191}
+
+\chapter{Klippen und Glätten}
+\section{Klippen von Objekten}
+\slide{196}
+\slide{197}
+\slide{198}
+\slide{199}
+\slide{200}
+
+\section{Glätten von Kanten}
+\slide{201}
+\slide{202}
+\slide{203}
+\slide{204}
+
+\chapter{Sichtbarkeit und Verdeckung}
+\section{Problematik}
+\slide{208}
+
+\section{Sichtbarkeitsalgorithmus}
+\slide{211}
+\slide{212}
+\slide{213}
+\slide{214}
+\slide{215}
+
+\chapter{Technologieumfeld und Computergrafik}
+\section{Grafik-Hardware}
+\slide{220}
+\subsection{Displaytechnik}
+\slide{221}
+\subsection{Druckertechnik}
+\slide{227}
+\subsection{Eingabetechnik}
+\slide{228}
+\subsection{Verarbeitungstechnik}
+\slide{229}
+\section{Grafiksoftware}
+\slide{231}
+\subsection{Grafik-Standards}
+\slide{232}
+\section{Grafik-Anwendungen}
+\slide{233}
+
+%\newpage
+%\printbibliography
+
+\end{document}
