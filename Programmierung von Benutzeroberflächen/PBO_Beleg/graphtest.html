@@ -1,0 +1,102 @@
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="lib/bootstrap.min.css">
+	<script src="lib/jquery.slim.min.js"></script>
+	<script src="lib/popper.min.js"></script>
+	<script src="lib/bootstrap2.min.js"></script>
+
+	<!-- VUE -->
+	<script src="lib/vue.js"></script>
+
+	<!-- Highcharts -->
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/highcharts-more.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+</head>
+
+<body>
+	<div id="app"></div>
+	<!-- <embed src="Anlagen/1 Grundsatzbeschluss.pdf" width="500" height="375" type='application/pdf'> -->
+	<div id="content" style="min-width: 310px; height: 800px; margin: 0 auto"></div>
+	<!-- http://jsfiddle.net/xPSXQ/1/ -->
+
+	<!-- https://www.highcharts.com/demo/columnrange / http://jsfiddle.net/r8xd2j8v/ -->
+</body>
+
+<script src="source.js"></script>
+<script>
+	var chartProcesses = [];
+	var chartData = [];
+
+	function graphData() {
+		// Fülle Prozesse und Daten:
+		vue.children.forEach(function (entry) {
+			//console.log(entry.id.split("/")[entry.id.split("/").length - 1]);
+			chartProcesses.push(entry.id.split("/")[entry.id.split("/").length - 1]);
+			var startDate = Date.parse(entry["start"]);
+			var endDate = Date.now();
+			if (entry["end (optional)"]) {
+				endDate = Date.parse(entry["end (optional)"]);
+			};
+			chartData.push({
+				low: startDate,
+				high: endDate
+				// color: "green"
+			})
+		});
+		showGraph();
+	}
+
+	function showGraph() {
+		Highcharts.chart('content', {
+			chart: {
+				type: 'columnrange',
+				inverted: true
+			},
+			title: {
+				text: 'Fortschritt der Prozesse'
+			},
+			xAxis: {
+				categories: chartProcesses,
+				labels: {
+					enabled: false
+				},
+				visible: false
+			},
+			yAxis: {
+				type: 'datetime',
+				title: {
+					text: ''
+				}
+			},
+			plotOptions: {
+				series: {
+					cursor: 'pointer',
+					animation: false,
+					point: {
+						events: {
+							click: function () {
+								alert('Process/' + this.category);
+							}
+						}
+					}
+				}
+			},
+			tooltip: {
+				headerFormat: '<b> Process/{point.key} </b> <br > ',
+				pointFormat: '{point.low:%d.%m.%Y} bis {point.high:%d.%m.%Y}',
+			},
+			legend: {
+				enabled: false
+			},
+			series: [{
+				name: 'Prozess',
+				data: chartData
+			}]
+		});
+	};
+</script>

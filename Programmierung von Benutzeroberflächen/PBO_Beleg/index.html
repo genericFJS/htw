@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <title>PBO Beleg</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="lib/bootstrap.min.css">
+    <script src="lib/jquery.slim.min.js"></script>
+    <script src="lib/popper.min.js"></script>
+    <script src="lib/bootstrap2.min.js"></script>
+
+    <!-- VUE -->
+    <script src="lib/vue.js"></script>
+
+    <!-- Highcharts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+
+
+<body class="mx-3 my-2 bg-light">
+    <div id="app">
+        <nav class="navbar navbar-light">
+            <div class="navbar-brand">
+                {{jsonData.system.name}}
+                <span class="small ml-3">Prozess: {{jsonData.process.name}}</span>
+            </div>
+        </nav>
+
+        <!-- Searchbar  -->
+        <!-- <div id=searchbar>Searchbar</div> -->
+
+        <!-- Sidebar  -->
+        <ul id=menu class="nav nav-tabs mb-2" role="tablist">
+            <li class="nav-item"></li>
+            <a id="sidebarProcesses" href="#" class="nav-link" v-bind:class="{ active: listElement1}" v-on:click="clickHandlerSidebar">Prozesse</a>
+            </li>
+            <li class="nav-item"></li>
+            <a id="sidebarLocations" href="#" class="nav-link" v-bind:class="{ active: listElement2}" v-on:click="clickHandlerSidebar">Orte</a>
+            </li>
+            <li class="nav-item"></li>
+            <a id="sidebarStakeholder" href="#" class="nav-link" v-bind:class="{ active: listElement3}" v-on:click="clickHandlerSidebar">Stakeholder</a>
+            </li>
+            <!--
+                            <a id="sidebarSystem" href="#" class="list-group-item list-group-item-action" v-bind:class="{ active: listElement4}" v-on:click="clickHandlerSidebar">System</a>
+                                <a id="sidebarEntrypoint" href="#" class="list-group-item list-group-item-action" v-bind:class="{ active: listElement5}"
+                                v-on:click="clickHandlerSidebar">Entrypoint</a>
+                            -->
+            <li class="nav-item"></li>
+            <a id="sidebarMainprocess" href="#" class="nav-link" v-bind:class="{ active: listElement6}" v-on:click="clickHandlerSidebar">Hauptprozess</a>
+            </li>
+            <li class="nav-item"></li>
+            <a id="sidebarStatistics" href="#" class="nav-link" v-bind:class="{ active: listElement7}" v-on:click="clickHandlerSidebar">Statistiken</a>
+            </li>
+        </ul>
+
+        <div class="row tab-content">
+
+            <!-- Informationarea -->
+            <div class="col-md mb-3">
+                <div class="row">
+
+                    <!-- Sortbar -->
+                    <div id="sortbar" class="small" v-if="!noSortbar">
+                        <ul class="nav nav-pills">
+                            <li>
+                                <a class="nav-link">Sortiere nach:</a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="sortbarCol1" class="nav-link" href="#" v-bind:class="{ active: activeSort1}" v-on:click="clickHandlerSortbar">{{sortLabel1}}</a>
+                            </li>
+                            <li class="nav-itemName">
+                                <a id="sortbarCol2" class="nav-link" href="#" v-bind:class="{ active: activeSort2}" v-on:click="clickHandlerSortbar">{{sortLabel2}}</a>
+                            </li>
+                            <li class="nav-itemName" v-if="!noSortItem3">
+                                <a id="sortbarCol3" class="nav-link" href="#" v-bind:class="{ active: activeSort3}" v-on:click="clickHandlerSortbar">{{sortLabel3}}</a>
+                            </li>
+                            <li class="nav-itemName" v-if="!noSortItem4">
+                                <a id="sortbarCol4" class="nav-link" href="#" v-bind:class="{ active: activeSort4}" v-on:click="clickHandlerSortbar">{{sortLabel4}}</a>
+                            </li>
+                            <li v-if="!noFilter1">
+                                <a class="nav-link">Filter:</a>
+                            </li>
+                            <li class="nav-item" v-if="!noFilter1">
+                                <a id="filter1" class="nav-link" href="#" v-bind:class="{ active: activeFilter1}" v-on:click="clickHandlerFilter">{{filterLabel1}}</a>
+                            </li>
+                            <li class="nav-item ml-1" v-if="!noFilter2">
+                                <a id="filter2" class="nav-link" href="#" v-bind:class="{ active: activeFilter2}" v-on:click="clickHandlerFilter">{{filterLabel2}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row px-3 mt-3" v-if="selectedContentView">
+                    <h4>{{selectedContentViewMessage}}</h4>
+                </div>
+
+                <!-- new row for button -->
+                <!-- Back Button -->
+                <button class="btn btn-primary" v-if="!noBackButton" v-on:click="fillContent" style="width: 10rem">Zurück</button>
+
+                <!-- content view -->
+                <div id="content" class="row" v-if="contentView">
+                    <div class="col-md-auto mt-2" v-for="item in contentList">
+                        <a href="#" class="list-group-item-action" v-on:click="clickHandlerArticle" v-html="item"></a>
+                    </div>
+                </div>
+
+                <!-- detail view -->
+                <div id="content" class="row mt-2" v-if="detailView">
+                    <div class="col-3-auto card mb-3 mx-3 text-black" v-bind:style="{ 'border-color': cardColor}">
+                        <div id="detailHeader" class="card-header text-white" v-bind:style="{ 'background-color': cardColor }">{{detailCardHeader}}</div>
+                        <div id="detailBody" class="card-body">
+                            <table class="table">
+                                <tbody v-html="contentList[0]"></tbody>
+                                <tfoot v-if="detailTableClickable">
+                                    <tr style="cursor: pointer" v-on:click="clickHandlerArticle" v-html="detailTableClickRow"></tr>
+                                </tfoot>
+                            </table>
+                            <div id="detailAttachment" v-html="detailAttachment"></div>
+                        </div>
+                    </div>
+                    <!--
+                        <a href="#" class="list-group-item-action" v-on:click="clickHandlerArticle" v-html="contentList[0]">
+                        </a>
+                    -->
+                </div>
+
+                <div class="row m-2 mb-3" v-bind:class="{ 'd-none': !graphView }">
+                    <div class="w-100 mb-3" id="processGraph" style="height:600px">Prozessgraph</div>
+                    <div class="w-100" id="stakeholderGraph">Stakeholdergraph</div>
+                </div>
+            </div>
+        </div>
+        <div class="footer navbar fixed-bottom bg-light">
+            © {{jsonData.system.contact}} ({{jsonData.system.email}}}
+            <a href="#">{{jsonData.system.website}}</a>
+        </div>
+    </div>
+</body>
+
+<script src="source.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("button").click(function () {
+            $("#menu").fadeOut("slow");
+        });
+        $("button").click(function () {
+            $("#menu").fadeIn("slow");
+        });
+    });
+</script>
+
+</html>
+
+
+<!-- <button>Click to fade in boxes</button> -->
+
+<!--
+<div class="row">
+    <div class="col-md">
+        <div id="visualization"></div>
+        <script type="text/javascript">
+            var container = document.getElementById('visualization');
+            var items = [
+                { x: 11, y: 10 },
+                { x: 12, y: 30 },
+                { x: 13, y: 25 },
+                { x: 14, y: 30 },
+                { x: 15, y: 10 },
+                { x: 16, y: 15 },
+                { x: 17, y: 30 }
+            ];
+
+            var dataset = new vis.DataSet(items);
+            var options = {
+                start: 10,
+                end: 18
+            };
+            var graph2d = new vis.Graph2d(container, dataset, options);
+        </script>
+    </div>
+</div>
+-->
