@@ -439,6 +439,7 @@ Computergrafik 1/2017/Praktikum/cgprakt2017/Beispiele/*
 Compiler-Interpreter/Praktikum/CL0-Interpreter/outCl0/*
 Compiler-Interpreter/Praktikum/CL0-Interpreter/runCl0/*
 Compiler-Interpreter/Praktikum/CL0-Interpreter/runCl0_nl/*
+Projektseminar/tests/*
 # ignoriere Dateien
 *.pdf
 *.psd

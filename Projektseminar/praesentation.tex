@@ -1,0 +1,212 @@
+\documentclass[11pt
+%, handout
+]{beamer}
+\gdef\pathtomaster{_LaTeX_master}
+\input{\pathtomaster/fjs_packages-macros.sty}
+\input{\pathtomaster/htwcd_beamer.sty}
+
+\author{Falk-Jonatan Strube}
+\title{Verteilte HashMap unter MPI}
+\date{25.01.2018}
+
+\usepackage{pgfpages}
+%\setbeameroption{show notes on second screen=right}
+\setbeamercolor{section in toc}{fg=black,bg=white}
+\setbeamertemplate{section in toc}[sections numbered]
+\setcounter{tocdepth}{1}
+
+
+\begin{document}
+
+\begin{frame}[plain]
+\begin{center}
+\includegraphics[width=.7\textwidth]{\pathtomaster/HTW.eps}
+\end{center}
+\maketitle
+\end{frame}
+
+\section*{Inhalt}
+\begin{frame}
+\tableofcontents
+\end{frame}
+
+\section{Aufgabenstellung}
+\begin{frame}
+\setstretch{1.5}
+\begin{itemize}
+\item Verteilte HashMap
+\item Parallele Verarbeitung von:
+\begin{itemize}
+\item Anwendungsanweisungen
+\item HashMap-Aktivitäten
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Aufteilung der Einträge}
+\begin{frame}[fragile]
+\setstretch{1.5}
+Beispiel mit $n=3$ MPI-Prozessen, HashMap-Größe $m=2$.
+
+Zuordnung Prozess: \hspace*{1.42cm}$\boxed{p=x\mod n}$
+
+Zuordnung Tabelleneintrag: \hspace*{.2cm}$\boxed{t=(x/n)\mod m}$
+
+\begin{center}
+\begin{tikzpicture}[scale=.65]
+%\node [right] at (9,0) {Mit MPI-Prozessen $n=3$ und HashMap-Größe $m=2$};
+%\node [right] at (9,-1.5) {Aufteilung: $k=x\mod n$};
+%\node [right] at (9,-4.5) {Aufteilung: $l=(x/n)\mod m$};
+\node (v1) at (0,0) {0 1 2 3 4 5 6 7 8 9 10 11};
+\node (v2) at (-6,-3) {0 3 6 9};
+\node (v3) at (0,-3) {1 4 7 10};
+\node (v8) at (6,-3) {2 5 8 11};
+\node (v4) at (-7,-6) {1 7};
+\node (v5) at (-5,-6) {4 10};
+\node (v6) at (-1,-6) {2 8};
+\node (v7) at (1,-6) {5 11};
+\node (v9) at (5,-6) {3 9};
+\node (v10) at (7,-6) {0 6};
+\draw (v1) -- node[pos=.5, left, htwgrey]{$p=0$} (v2);
+\draw (v1) -- node[pos=.5, right, htwgrey]{$p=1$} (v3);
+\draw (v1) -- node[pos=.5, right, htwgrey]{$p=2$} (v8);
+\draw (v2) -- node[pos=.5, left, htwgrey]{$t=0$} (v4);
+\draw (v2) -- node[pos=.5, right, htwgrey]{$t=1$} (v5);
+\draw (v3) -- node[pos=.5, left, htwgrey]{$t=0$} (v6);
+\draw (v3) -- node[pos=.5, right, htwgrey]{$t=1$} (v7);
+\draw (v8) -- node[pos=.5, left, htwgrey]{$t=0$} (v9);
+\draw (v8) -- node[pos=.5, right, htwgrey]{$t=1$} (v10);
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\section{Kommunikation}
+
+\subsection{Funktionsweise Threads}
+\begin{frame}[fragile]
+\begin{center}
+\resizebox{.85\textwidth}{!}{
+\small
+\begin{tikzpicture}[scale=.68]
+\draw  (7,1) rectangle (-2,-10);
+\draw  (-1,-5.5) rectangle (7,-10);
+\node at (2.5,0.5) {Prozess $i$};
+\node at (3,-6) {Thread $i'$};
+\node [below right, align=left] at (-1.5,0) {\emph{Anwendungsverarbeitung}\\
+Können bspw. enthalten:\\
+-- Insert\\
+-- Get\\
+-- Delete\\
+%-- Algorithmen zur Verarbeitung\\
+(und allgemeine Algorithmen;\\
+abhängig von einprogrammierten\\
+Abläufen / Nutzereingabe)};
+\node [below right, align=left] at (-0.5,-6.5) {\emph{HashMap-Aktivitäten}\\
+Abarbeitung von:\\
+-- Insert\\
+-- Get\\
+-- Delete};
+\draw  (15,2) rectangle (11,-1);
+\draw  (12,0) rectangle (15,-1);
+\node at (13,1.5) {Prozess $j$};
+\node at (13.5,-0.5) {Thread $j'$};
+\draw  (15,-5) rectangle (11,-8);
+\draw  (12,-7) rectangle (15,-8);
+\node at (13,-5.5) {Prozess $k$};
+\node at (13.5,-7.5) {Thread $k'$};
+%\draw [latex-latex, shorten >=5, shorten <=5, dashed] (12,2) -- (12,3) -- (9,3) -- (9,-8) -- (7,-8);
+\draw [latex-latex, shorten >=5, shorten <=5] (7,-4) -- (9,-4) -- (9,-2) -- (13,-2) -- (13,-1);
+%\draw [-latex, shorten >=5, dashed] (9,-3) -- (12,-3) -- (12,-5);
+\draw [-latex, shorten >=5] (9,-4) -- (9,-9) -- (13,-9) -- (13,-8);
+\draw [-latex, shorten >=5] (9,-9) -- (9,-11) -- (5,-11) -- (5,-10);
+\end{tikzpicture}
+}
+\end{center}
+\end{frame}
+
+\subsection{Insert}
+\begin{frame}[fragile]
+$i$ möchte Element $(p,q)$ in HashMap einfügen, das in $j$ gehört.
+\begin{center}
+\resizebox{.98\textwidth}{!}{
+\begin{tikzpicture}[scale=.68]
+\draw  (5,0.5) rectangle (0,-7);
+\draw  (1,-6) rectangle (5,-7);
+\node at (3,0) {Prozess $i$};
+\node at (3.5,-6.5) {Thread $i'$};
+\draw  (21.5,0.5) rectangle (15,-7);
+\draw  (15,-0.5) rectangle (20.5,-7);
+\node at (17,0) {Prozess $j$};
+\node at (16.5,-6.5) {Thread $j'$};
+\draw [-latex, shorten >=5, shorten <=5] (5,-1.5) node[left]{Sende zu $j'$} -- node[above]{Aktion \lstinline`INS`} (15,-1.5) node[right]{Empfange von allen};
+\draw [-latex, shorten >=5, shorten <=5] (5,-2.5) node[left]{$\vdots$\hspace*{2em}} -- node[above]{\lstinline`key` $p$} (15,-2.5)  node[right]{Empfange von $i$};
+\draw [-latex, shorten >=5, shorten <=5] (5,-3.5) -- node[above]{Länge von \lstinline`value` $q$ (String)} (15,-3.5) node[right]{\hspace*{2em}$\vdots$};
+\draw [-latex, shorten >=5, shorten <=5] (5,-4.5) -- node[above]{\lstinline`value` $q$} (15,-4.5);
+\end{tikzpicture}
+}
+\end{center}
+\end{frame}
+\subsection{Delete}
+\begin{frame}[fragile]
+$i$ möchte Element $p$ aus HashMap löschen, das in $j$ liegt.
+\begin{center}
+\resizebox{.98\textwidth}{!}{
+\begin{tikzpicture}[scale=.68]
+\draw  (5,0.5) rectangle (0,-7);
+\draw  (1,-6) rectangle (5,-7);
+\node at (3,0) {Prozess $i$};
+\node at (3.5,-6.5) {Thread $i'$};
+\draw  (21.5,0.5) rectangle (15,-7);
+\draw  (15,-0.5) rectangle (20.5,-7);
+\node at (17,0) {Prozess $j$};
+\node at (16.5,-6.5) {Thread $j'$};
+\draw [-latex, shorten >=5, shorten <=5] (5,-1.5) node[left]{Sende zu $j'$} -- node[above]{Aktion \lstinline`DEL`} (15,-1.5) node[right]{Empfange von allen};
+\draw [-latex, shorten >=5, shorten <=5] (5,-2.5) node[left]{$\vdots$\hspace*{2em}} -- node[above]{\lstinline`key` $p$} (15,-2.5)  node[right]{Empfange von $i$};
+\draw [-latex, shorten >=5, shorten <=5] (15,-3.5) node[right]{Sende zu $i$} -- node[above]{Feedback} (5,-3.5) node[left]{Empfange von $j'$};
+\end{tikzpicture}
+}
+\end{center}
+\end{frame}
+
+\subsection{Get}
+\begin{frame}[fragile]
+$i$ möchte Element $(p,q)$ aus HashMap erfahren, das in $j$ liegt.
+\begin{center}
+\resizebox{.98\textwidth}{!}{
+\begin{tikzpicture}[scale=.68]
+\draw  (5,0.5) rectangle (0,-7);
+\draw  (1,-6) rectangle (5,-7);
+\node at (3,0) {Prozess $i$};
+\node at (3.5,-6.5) {Thread $i'$};
+\draw  (21.5,0.5) rectangle (15,-7);
+\draw  (15,-0.5) rectangle (20.5,-7);
+\node at (17,0) {Prozess $j$};
+\node at (16.5,-6.5) {Thread $j'$};
+\draw [-latex, shorten >=5, shorten <=5] (5,-1.5) node[left]{Sende zu $j'$} -- node[above]{Aktion \lstinline`GET`} (15,-1.5) node[right]{Empfange von allen};
+\draw [-latex, shorten >=5, shorten <=5] (5,-2.5) node[left]{$\vdots$\hspace*{2em}} -- node[above]{\lstinline`key` $p$} (15,-2.5)  node[right]{Empfange von $i$};
+\draw [-latex, shorten >=5, shorten <=5] (15,-3.5) node[right]{Sende zu $i$} -- node[above]{Länge von \lstinline`value` $q$ (String)} (5,-3.5) node[left]{Empfange von $j'$};
+\draw [-latex, shorten >=5, shorten <=5, htwblue] (15,-4.5) node[right]{\hspace*{2em}$\vdots$} -- node[above]{\lstinline`value` $q$} (5,-4.5) node[left]{$\vdots$\hspace*{2em}};
+\end{tikzpicture}
+}
+\end{center}
+{
+\footnotesize
+\textcolor{htwblue}{\lstinline`value` $q$ wird nur bei gültiger Länge versandt (wenn Eintrag vorhanden).}
+}
+\end{frame}
+
+\section{Vergleich}
+\begin{frame}[fragile]
+\setstretch{1.5}
+\footnotesize
+\begin{center}
+\begin{tabular}{L{0.5} | c c}
+& Geschwindigkeit & Speichergröße\\\hline
+Lokale HashMap & + & --\\
+Einzelne HashMap über Netzwerk & -- & --\\
+Verteilte HashMap & \Circle & +\\
+\end{tabular}
+\end{center}
+\end{frame}
+
+\end{document}
