@@ -79,6 +79,7 @@
 % Tabular
 \usepackage{longtable}	% Große Tabellen über mehrere Seiten
 \usepackage{multirow}	% Multirow/-column: \multirow{2[Anzahl der Zeilen]}{*[Format]}{Test[Inhalt]} oder \multicolumn{7[Anzahl der Reihen]}{|c|[Format]}{Test2[Inhalt]}
+\usepackage{multicol}
 \renewcommand{\arraystretch}{1.3} % Tabellenlinien nicht zu dicht
 \usepackage{colortbl}
 \arrayrulecolor{gray}	% heller Tabellenlinien
@@ -109,6 +110,8 @@
 \usepackage{microtype}	% Verfeinerte Hyphenation
 \usepackage{import}		
 \usepackage{standalone}	% Zusammen mit import: Einfügen von separaten Latex-Dateien (die schon header haben)
+\usepackage{datetime}	% eigenes Datum bspw. mit \newdate{date}{06}{09}{2012} und dann \date{\displaydate{date}}
+\usepackage{chngcntr} % Counter verändern, bspw. Abbildungen \counterwithout{figure}{chapter} und Tabellen \counterwithout{table}{chapter}
 
 % Einrichtung von lst
 %\renewcommand*{\ttdefault}{qcr}
@@ -151,14 +154,16 @@ literate=%
 % BibTeX
 \usepackage[
 backend=biber,
-sortlocale=de_DE,
+sortlocale=de_DE, 
 bibencoding=utf8,
 %bibencoding=ascii,
-style=authoryear, citestyle=authoryear-ibid,
+style=authoryear, 
+citestyle=authoryear-ibid,
 %doi=false,
 %isbn=false,
 %url=false
 ]{biblatex}	% BibTeX
+%\bibliographystyle{acm}
 \usepackage{makeidx}
 %\makeglossary
 %\makeindex
@@ -246,7 +251,7 @@ urlcolor=htworange,%
 	% signierte Fußzeile
 	%\providecommand{\ofootname}{Mitschrift von}
 	\providecommand{\pathtomaster}{../}
-	\ofoot{%
+	\cfoot{%
 	%\ifdefined\ofoottext
 	%\else
 	%\begin{minipage}{40mm}
@@ -258,7 +263,9 @@ urlcolor=htworange,%
 	%\end{minipage}
 	%\fi%
 	%\hspace*{1mm}%
+	\vspace*{-4mm}
 	\begin{minipage}{10 mm}
+	\vspace*{-2mm}
 	\includegraphics[height=9mm]{\pathtomaster/FJS-logo_gray}
 	\end{minipage}%
 	}
@@ -318,7 +325,15 @@ urlcolor=htworange,%
 \newcommand{\slideTrim}[6][\@slideScale]{\slides[#1 , clip,  trim = #5cm #4cm #6cm #3cm]{}{#2}}
 % Folien von mehreren nummerierten Dateien skaliert
 \newcommand{\slides}[3][\@slideScale]{\begin{center}
-\includegraphics[page=#3, scale=#1]{\@slidePath #2.pdf}
+\IfFileExists{\@slidePath #2.pdf}{
+	\includegraphics[page=#3, scale=#1]{\@slidePath #2.pdf}
+}{
+	\ClassWarning{graphics}{Missing included slide: '\@slidePath #2.pdf'}
+	\minibox[frame]{
+		\textbf{\StrSubstitute{\@slidePath #2.pdf}{_}{\_}}\\
+		Folie #3
+	}
+}
 \end{center}}
 }
 \makeatother
