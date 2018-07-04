@@ -1,32 +1,24 @@
-\newcommand{\customDir}{../}
-\input{\customDir _LaTeX_master/LaTeX_master_setup.sty}
+% LaTeX master Datei(en) zusammengestellt von Falk-Jonatan Strube zur Nutzung an der Hochschule für Technik und Wirtschaft Dresden: https://github.com/genericFJS/htw
+\documentclass{scrreprt}
+\gdef\pathtomaster{../_LaTeX_master}
+\input{\pathtomaster/htwcd_content.sty}
+\input{\pathtomaster/fjs_packages-macros.sty}
 
-%\setboolean{twosided}{true}
-%\setCustomDocumentClass{scrartcl}
-%\setCustomDesign{htw}
-%\setCustomSlidePath{Folien}
-
-\setCustomTitle{Programmierung I}
-\setCustomSubtitle{Übungsskript}
-\setCustomAuthor{Falk-Jonatan Strube}
-%\setCustomNoteA{TitlepageNoteBeforeAuthor}
-\setCustomNoteB{Vorlesung von Prof. Dr.-Ing. Beck}
-
-%\setcustomSignature{\footnotesize{\textcolor{darkgray}{Mitschrift von\\ \customAuthor}}	% Formatierung der Signatur in der Fußzeile
-%\setcustomTitleAuthor{\textcolor{darkgray}{Mitschrift von #1}}	% Formatierung des Autors auf dem Titelblatt
-
-\input{\customDir _LaTeX_master/LaTeX_master.sty}
-\input{\customDir _LaTeX_master/LaTeX_master_macros.sty}
-
-%\bibliography{\customDir _Literatur/HTW_Literatur.bib}
+\faculty{Fakultät Informatik/Mathematik}
+\chair{Lehrstuhl für Programmierung, Compilerbau/Interpreter, Mikrocontroller}
+\subject{Übungsmitschrift}
+\title{Programmierung 1}
+\author{Falk-Jonatan Strube}
+\professor{Prof. Dr.-Ing. Arnold Beck}
+\renewcommand{\professorname}{Übung von}
+\simpledate
+\makeatletter
+\gdef\@islecture{}
+\makeatother
 
 \begin{document}
-
-%\selectlanguage{english}
 \maketitle
-\newpage
 \tableofcontents
-\newpage
 
 \chapter{Eingebaute Datentypen}
 
@@ -446,7 +438,7 @@ Union:
 Datensätze werden im Vergleich zum Struct übereinander geschrieben.
 
 \chapter{Listen}
-\paragraph{Implementation 1}(Ringliste)
+\paragraph{Implementation 1}(Ringliste)\\
 \begin{tikzpicture}[scale=.4]
 \draw  (0,4) rectangle (6,6);
 \node [right] at (0,5) {first};
