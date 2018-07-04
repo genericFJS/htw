@@ -3,10 +3,18 @@
 %%% === Anfang Paket htwscr ===
 \makeatletter
 \ifcsname KOMAoption\endcsname%
-\KOMAoption{footheight}{11mm}	% mehr Platz für Wasserzeichen o.ä. in der Fußzeile
+%\KOMAoption{footheight}{11mm}	% mehr Platz für Wasserzeichen o.ä. in der Fußzeile
 \recalctypearea	% s.o.
 \RequirePackage{geometry}
-\geometry{top=25mm, bottom=25mm, headsep=10mm, inner=25mm, outer=25mm, footskip=15mm, marginparsep=2mm}
+\geometry{
+	top=25mm, 
+	bottom=25mm, 
+	%headsep=10mm, 
+	inner=25mm, 
+	outer=25mm, 
+	%footskip=15mm, 
+	marginparsep=2mm
+}
 \RequirePackage{helvet}	% Corporate Design schreibt Arial/Helvetica vor
 \renewcommand{\familydefault}{\sfdefault}	% s.o.
 \RequirePackage{graphicx}	% für Grafiken
@@ -74,8 +82,8 @@
 \renewcommand*{\chapterpagestyle}{scrheadings}%
 }{}
 \pagestyle{scrheadings}
-\cfoot{\vfill\pagemark}
-\chead{}
+\ofoot{\pagemark}
+%\chead{}
 
 %%% Einstellungen
 \newcommand{\simpledate}{\gdef\@simpledate{}}		% Datum nicht mit "Eingereicht am:" Vorsatz
