@@ -33,7 +33,7 @@
 	\ifdefined\pathtomaster%
 		\gdef\@pathtoimage{\pathtomaster /HTW}%
 	\else 
-		\gdef\@pathtoimage{HTW}%
+		\gdef\@pathtoimage{htwcd/HTW}%
 	\fi%
 \fi%
 \newcommand{\pathtologo}[1]{\gdef\@pathtoimage{#1}}
@@ -82,8 +82,15 @@
 \renewcommand*{\chapterpagestyle}{scrheadings}%
 }{}
 \pagestyle{scrheadings}
-\ofoot{\pagemark}
-%\chead{}
+% Definition der Seitenzahl-Position:
+\newif \if@twoside \@twosidefalse
+\if@twoside%
+	%
+\else%
+	% Beim einseitigen Dokument Seitenzahl auch außen/rechts.
+	\ofoot{\pagemark}%
+	\cfoot{}%
+\fi%  
 
 %%% Einstellungen
 \newcommand{\simpledate}{\gdef\@simpledate{}}		% Datum nicht mit "Eingereicht am:" Vorsatz
