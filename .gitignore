@@ -440,6 +440,7 @@ Compiler-Interpreter/Praktikum/CL0-Interpreter/outCl0/*
 Compiler-Interpreter/Praktikum/CL0-Interpreter/runCl0/*
 Compiler-Interpreter/Praktikum/CL0-Interpreter/runCl0_nl/*
 Projektseminar/tests/*
+*_noslides.tex
 # ignoriere Dateien
 *.pdf
 *.psd
