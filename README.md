@@ -3,7 +3,7 @@
 Hier sind einige Unterlagen (Skripte, Übungen, Praktika) vom Studiengang Bachelor Informatik der HTW Dresden zu finden. Zusammengestellt von Jonatan Strube.
 Alle Dateien sind (solange nicht anders besprochen) aussschließlich für den privaten Gebrauch zugelassen.
 
-Aus verschiedenen Gründen enthält das Repository keine kompilierten (.pdf-)Dateien, Bilder oder ähnliche Binärdateien. Das komplette Repository (inklusive aller Dateien, die auf Grund der *.gitignore* hier nicht zu finden sind), ist unter https://www.htw-dresden.de/~s74053 für Informatikstudenten der HTW Dresden abrufbar.
+Aus verschiedenen Gründen enthält das Repository keine kompilierten (.pdf-)Dateien, Bilder oder ähnliche Binärdateien. Einige kompiliert pdfs (bei denen externe Inhalte entfernt wurden), sind unter [https://fj-strube.de/de/studium/aufzeichnungen-bsc/](https://fj-strube.de/de/studium/aufzeichnungen-bsc/) zu finden.
 
 ## LaTeX
 
