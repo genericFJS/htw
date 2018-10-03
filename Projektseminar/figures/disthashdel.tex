@@ -1,0 +1,27 @@
+\documentclass[border=5pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{listings}
+%\gdef\pathtomaster{../../_LaTeX_master}
+%\input{\pathtomaster/htwcd_content.sty}
+\begin{document}
+\begin{tikzpicture}[scale=.68]
+\draw  (5,0.5) rectangle (0,-7);
+\draw  (1,-6) rectangle (5,-7);
+\node at (3,0) {Prozess $i$};
+\node at (3.5,-6.5) {Thread $i'$};
+\draw  (21.5,0.5) rectangle (15,-7);
+\draw  (15,-0.5) rectangle (20.5,-7);
+\node at (17,0) {Prozess $j$};
+\node at (16.5,-6.5) {Thread $j'$};
+\draw [-latex, shorten >=5, shorten <=5] (5,-1.5) node[left]{Sende zu $j'$} -- node[above]{Aktion \lstinline`DEL`} (15,-1.5) node[right]{Empfange von allen};
+\draw [-latex, shorten >=5, shorten <=5] (5,-2.5) node[left]{$\vdots$\hspace*{2em}} -- node[above]{\lstinline`key` $p$} (15,-2.5)  node[right]{Empfange von $i$};
+\draw [-latex, shorten >=5, shorten <=5] (15,-3.5) node[right]{Sende zu $i$} -- node[above]{Feedback} (5,-3.5) node[left]{Empfange von $j'$};
+\end{tikzpicture}
+\end{document}

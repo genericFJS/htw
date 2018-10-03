@@ -1,0 +1,37 @@
+\documentclass[]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+%\gdef\pathtomaster{../../_LaTeX_master}
+%\input{\pathtomaster/htwcd_content.sty}
+\begin{document}
+\begin{tikzpicture}[scale=.65]
+%\node [right] at (9,0) {Mit MPI-Prozessen $n=3$ und HashMap-Größe $m=2$};
+%\node [right] at (9,-1.5) {Aufteilung: $k=x\mod n$};
+%\node [right] at (9,-4.5) {Aufteilung: $l=(x/n)\mod m$};
+\node (v1) at (0,0) {0~~1~~2~~3~~4~~5~~6~~7~~8~~9~~10~~11};
+\node (v2) at (-6,-3) {0~~3~~6~~9};
+\node (v3) at (0,-3) {1~~4~~7~~10};
+\node (v8) at (6,-3) {2~~5~~8~~11};
+\node (v4) at (-7,-6) {0~~6};
+\node (v5) at (-5,-6) {3~~9};
+\node (v6) at (-1,-6) {4~~10};
+\node (v7) at (1,-6) {1~~7};
+\node (v9) at (5,-6) {2~~8};
+\node (v10) at (7,-6) {5~~11};
+\draw (v1) -- node[pos=.5, left=.2, gray]{$p=0$} (v2);
+\draw (v1) -- node[pos=.5, right, gray]{$p=1$} (v3);
+\draw (v1) -- node[pos=.5, right=.3, gray]{$p=2$} (v8);
+\draw (v2) -- node[pos=.5, left, gray]{$t=0$} (v4);
+\draw (v2) -- node[pos=.5, right, gray]{$t=1$} (v5);
+\draw (v3) -- node[pos=.5, left, gray]{$t=0$} (v6);
+\draw (v3) -- node[pos=.5, right, gray]{$t=1$} (v7);
+\draw (v8) -- node[pos=.5, left, gray]{$t=0$} (v9);
+\draw (v8) -- node[pos=.5, right, gray]{$t=1$} (v10);
+\end{tikzpicture}
+\end{document}

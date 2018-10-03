@@ -1,0 +1,24 @@
+\documentclass[border=5pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{listings}
+%\gdef\pathtomaster{../../_LaTeX_master}
+%\input{\pathtomaster/htwcd_content.sty}
+\begin{document}
+\begin{tikzpicture}[scale=.9]
+\draw (0,0) rectangle (2,2);
+\draw (-4,0) rectangle (-2,2);
+\draw (-4,-4) rectangle (-2,-2);
+\draw (0,-4) rectangle (2,-2);
+\draw [-latex] (-3,0) -- (-3,-2);
+\draw [-latex] (-2,-3) -- (0,-3);
+\draw [-latex] (1,-2) -- (1,0);
+\draw [-latex] (0,1) -- (-2,1);
+\end{tikzpicture}
+\end{document}
